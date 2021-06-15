@@ -40,9 +40,9 @@ Hooks.once('init', async function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ARd20", ARd20ActorSheet, { makeDefault: true });
+  Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("ARd20", ARd20ItemSheet, { makeDefault: true });
+  Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
