@@ -62,12 +62,28 @@
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
+    "weapon":{
+      "templates": ["base"],
+      "quantity":1,
+      "weight": 0,
+      "equiped":0,
+      "type":["Ambush", "Axe", "Bludgeon", "Bow", "Sling", "Combat Blade", "Crossbow", "Dueling Blade", "Firearm", "Flail", "Whip", "Hammer", "Pick", "Polearm", "Spear", "Throwing"],
+      "Untrained property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
+      "Proficiency": ["Untrained", "Basic", "Master"],
+      "Basic property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
+      "Master property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
+      "Untrained Damage":"1d4",
+      "Basic Damage":"1d6",
+      "Master Damage":"1d8"
+    },
     "feature": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "source":["Martial", "Magical", "Divine", "Primal", "Psyhic"]
     },
     "spell": {
       "templates": ["base"],
-      "spellLevel": 1
+      "spellLevel": 1,
+      "school":["Music","Time","Conjuration", "Abjuration"]
     }
   }
 }
