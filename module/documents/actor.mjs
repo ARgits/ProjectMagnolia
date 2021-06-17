@@ -54,7 +54,7 @@ export class ARd20Actor extends Actor {
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
     let prof = new Object();
-    prof.bonus = 1 + Math.ceil(data.level/4);
+    prof.bonus = 1 + Math.ceil(data.level.value/4);
     let reaction = 8+prof.bonus+data.abilities.dex.mod;
   }
 
