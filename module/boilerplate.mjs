@@ -1,12 +1,12 @@
 // Import document classes.
-import { ARd20Actor } from "./documents/actor.mjs";
-import { ARd20Item } from "./documents/item.mjs";
+import { ard20Actor } from "./documents/actor.mjs";
+import { ard20Item } from "./documents/item.mjs";
 // Import sheet classes.
-import { ARd20ActorSheet } from "./sheets/actor-sheet.mjs";
-import { ARd20ItemSheet } from "./sheets/item-sheet.mjs";
+import { ard20ActorSheet } from "./sheets/actor-sheet.mjs";
+import { ard20ItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
-import { ARd20 } from "./helpers/config.mjs";
+import { ard20 } from "./helpers/config.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -16,14 +16,14 @@ Hooks.once('init', async function() {
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.ARd20 = {
-    ARd20Actor,
-    ARd20Item,
+  game.ard20 = {
+    ard20Actor,
+    ard20Item,
     rollItemMacro
   };
 
   // Add custom constants for configuration.
-  CONFIG.ARd20 = ARd20;
+  CONFIG.ard20 = ard20;
 
   /**
    * Set an initiative formula for the system
@@ -35,14 +35,14 @@ Hooks.once('init', async function() {
   };
 
   // Define custom Document classes
-  CONFIG.Actor.documentClass = ARd20Actor;
-  CONFIG.Item.documentClass = ARd20Item;
+  CONFIG.Actor.documentClass = ard20Actor;
+  CONFIG.Item.documentClass = ard20Item;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
+  Actors.registerSheet("ard20", ard20ActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
+  Items.registerSheet("ard20", ard20ItemSheet, { makeDefault: true });
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
@@ -93,7 +93,7 @@ async function createItemMacro(data, slot) {
   const item = data.data;
 
   // Create the macro command
-  const command = `game.ARd20.rollItemMacro("${item.name}");`;
+  const command = `game.ard20.rollItemMacro("${item.name}");`;
   let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
   if (!macro) {
     macro = await Macro.create({
@@ -101,7 +101,7 @@ async function createItemMacro(data, slot) {
       type: "script",
       img: item.img,
       command: command,
-      flags: { "ARd20.itemMacro": true }
+      flags: { "ard20.itemMacro": true }
     });
   }
   game.user.assignHotbarMacro(macro, slot);

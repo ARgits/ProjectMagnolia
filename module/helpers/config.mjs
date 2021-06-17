@@ -1,23 +1,23 @@
-export const BOILERPLATE = {};
+export const ard20 = {};
 
 /**
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
- BOILERPLATE.abilities = {
-  "str": "BOILERPLATE.AbilityStr",
-  "dex": "BOILERPLATE.AbilityDex",
-  "con": "BOILERPLATE.AbilityCon",
-  "int": "BOILERPLATE.AbilityInt",
-  "wis": "BOILERPLATE.AbilityWis",
-  "cha": "BOILERPLATE.AbilityCha"
+ ard20.abilities = {
+  "str": "ard20.AbilityStr",
+  "dex": "ard20.AbilityDex",
+  "con": "ard20.AbilityCon",
+  "int": "ard20.AbilityInt",
+  "wis": "ard20.AbilityWis",
+  "cha": "ard20.AbilityCha"
 };
 
-BOILERPLATE.abilityAbbreviations = {
-  "str": "BOILERPLATE.AbilityStrAbbr",
-  "dex": "BOILERPLATE.AbilityDexAbbr",
-  "con": "BOILERPLATE.AbilityConAbbr",
-  "int": "BOILERPLATE.AbilityIntAbbr",
-  "wis": "BOILERPLATE.AbilityWisAbbr",
-  "cha": "BOILERPLATE.AbilityChaAbbr"
+ard20.abilityAbbreviations = {
+  "str": "ard20.AbilityStrAbbr",
+  "dex": "ard20.AbilityDexAbbr",
+  "con": "ard20.AbilityConAbbr",
+  "int": "ard20.AbilityIntAbbr",
+  "wis": "ard20.AbilityWisAbbr",
+  "cha": "ard20.AbilityChaAbbr"
 };
