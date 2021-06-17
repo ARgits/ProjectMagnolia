@@ -57,7 +57,13 @@ export class ARd20Actor extends Actor {
     for (let i=1; i<21; i++){
         if (data.xp.learned>=levels[i-1] && data.xp.learned<levels[i]){
           let data.lvl=i;
-          let data.xp.req = levels[i];
+          return data.lvl
+       };
+    };
+    for (let i=1; i<21; i++){
+      if (data.xp.learned>=levels[i-1] && data.xp.learned<levels[i]){
+        let data.xp.req=levels[i];
+        return data.xp.req
        };
     };
     data.prof=Math.floor((7+data.lvl)/4);
