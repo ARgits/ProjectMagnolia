@@ -2,7 +2,7 @@
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class ard20ItemSheet extends ItemSheet {
+export class ARd20ItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {

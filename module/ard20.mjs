@@ -1,12 +1,12 @@
 // Import document classes.
-import { ard20Actor } from "./documents/actor.mjs";
-import { ard20Item } from "./documents/item.mjs";
+import { ARd20Actor } from "./documents/actor.mjs";
+import { ARd20Item } from "./documents/item.mjs";
 // Import sheet classes.
-import { ard20ActorSheet } from "./sheets/actor-sheet.mjs";
-import { ard20ItemSheet } from "./sheets/item-sheet.mjs";
+import { ARd20ActorSheet } from "./sheets/actor-sheet.mjs";
+import { ARd20ItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
-import { ard20 } from "./helpers/config.mjs";
+import { ARd20 } from "./helpers/config.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -17,13 +17,13 @@ Hooks.once('init', async function() {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.ard20 = {
-    ard20Actor,
-    ard20Item,
+    ARd20Actor,
+    ARd20Item,
     rollItemMacro
   };
 
   // Add custom constants for configuration.
-  CONFIG.ard20 = ard20;
+  CONFIG.ARd20 = ARd20;
 
   /**
    * Set an initiative formula for the system
@@ -35,14 +35,14 @@ Hooks.once('init', async function() {
   };
 
   // Define custom Document classes
-  CONFIG.Actor.documentClass = ard20Actor;
-  CONFIG.Item.documentClass = ard20Item;
+  CONFIG.Actor.documentClass = ARd20Actor;
+  CONFIG.Item.documentClass = ARd20Item;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ard20", ard20ActorSheet, { makeDefault: true });
+  Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("ard20", ard20ItemSheet, { makeDefault: true });
+  Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();

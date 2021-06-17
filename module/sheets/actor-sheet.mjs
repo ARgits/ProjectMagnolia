@@ -4,7 +4,7 @@ import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/ef
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class ard20ActorSheet extends ActorSheet {
+export class ARd20ActorSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
@@ -69,7 +69,7 @@ export class ard20ActorSheet extends ActorSheet {
   _prepareCharacterData(context) {
     // Handle ability scores.
     for (let [k, v] of Object.entries(context.data.abilities)) {
-      v.label = game.i18n.localize(CONFIG.ard20.abilities[k]) ?? k;
+      v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
     }
   }
 

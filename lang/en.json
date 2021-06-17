@@ -1,22 +1,22 @@
 {
-  "ard20.AbilityStr": "Strength",
-  "ard20.AbilityCon": "Constitution",
-  "ard20.AbilityDex": "Dexterity",
-  "ard20.AbilityInt": "Intelligence",
-  "ard20.AbilityWis": "Wisdom",
-  "ard20.AbilityCha": "Charisma",
+  "ARd20.AbilityStr": "Strength",
+  "ARd20.AbilityCon": "Constitution",
+  "ARd20.AbilityDex": "Dexterity",
+  "ARd20.AbilityInt": "Intelligence",
+  "ARd20.AbilityWis": "Wisdom",
+  "ARd20.AbilityCha": "Charisma",
 
-  "ard20.AbilityStrAbbr": "str",
-  "ard20.AbilityConAbbr": "con",
-  "ard20.AbilityDexAbbr": "dex",
-  "ard20.AbilityIntAbbr": "int",
-  "ard20.AbilityWisAbbr": "wis",
-  "ard20.AbilityChaAbbr": "cha",
+  "ARd20.AbilityStrAbbr": "str",
+  "ARd20.AbilityConAbbr": "con",
+  "ARd20.AbilityDexAbbr": "dex",
+  "ARd20.AbilityIntAbbr": "int",
+  "ARd20.AbilityWisAbbr": "wis",
+  "ARd20.AbilityChaAbbr": "cha",
 
-  "ard20.EffectCreate": "Create Effect",
-  "ard20.EffectToggle": "Toggle Effect",
-  "ard20.EffectEdit": "Edit Effect",
-  "ard20.EffectDelete": "Delete Effect",
+  "ARd20.EffectCreate": "Create Effect",
+  "ARd20.EffectToggle": "Toggle Effect",
+  "ARd20.EffectEdit": "Edit Effect",
+  "ARd20.EffectDelete": "Delete Effect",
 
-  "ard20.Add": "Add"
+  "ARd20.Add": "Add"
 }
