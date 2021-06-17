@@ -1,8 +1,8 @@
 {
   "name": "ard20",
   "title": "ARd20",
-  "description": "The Boilerplate system for FoundryVTT!",
-  "version": "0.0.1.2.12",
+  "description": "Попытки сделать свою систему",
+  "version": "0.0.1.2.13",
   "minimumCoreVersion": "0.8.3",
   "compatibleCoreVersion": "0.8.6",
   "author": "ARgits",
