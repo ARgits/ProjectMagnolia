@@ -46,15 +46,20 @@ export class ARd20Actor extends Actor {
     };
     if (data.xp.learned) {
       xp = data.xp.learned ?? 0;
-    }
-
-   const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-   for (let i=1; i<21; i++){
+    };
+    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+    for (let i=1; i<21; i++){
      if (xp>=levels[i-1] && xp<levels[i]){
        let data.lvl=i;
-       }
-      }
+       return data.lvl
+      };
+    };
     data.prof=Math.floor((7+data.lvl)/4);
+    const data.defence {
+      reflex:0,
+      fortitude:0,
+      will:0,
+    };
     let data.defence.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
     let data.defence.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
     let data.defence.will=8+data.prof+data.abilities.wil.mod+data.abilities.cha.mod;
