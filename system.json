@@ -2,7 +2,7 @@
   "name": "ard20",
   "title": "ARd20",
   "description": "The Boilerplate system for FoundryVTT!",
-  "version": "0.0.1.1.11",
+  "version": "0.0.1.1.12",
   "minimumCoreVersion": "0.8.3",
   "compatibleCoreVersion": "0.8.6",
   "author": "ARgits",
