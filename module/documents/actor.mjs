@@ -55,11 +55,7 @@ export class ARd20Actor extends Actor {
       };
     }
     let data.lvl = this.getLevel(data.xp.learned);
-    getLevelExp(data.lvl) {
-      let data.xp.req= levels[Math.min(data.lvl, levels.length - 1)];
-      return data.xp.req;
-    }
-    data.xp.req=this.getLevelExp(data.lvl);
+
     data.prof=Math.floor((7+data.lvl)/4);
     data.defence.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
     data.defence.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
