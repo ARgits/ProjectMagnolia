@@ -53,8 +53,8 @@ export class ARd20Actor extends Actor {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
-    let prof = new Object();
-    prof.bonus = Math.floor((7+data.attributes.level.value)/4);
+    const prof = {
+    bonus: Math.floor((7+data.attributes.level.value)/4)};
     let reaction = 8+data.prof.bonus+data.abilities.dex.mod;
   }
 
