@@ -57,8 +57,8 @@ export class ARd20Actor extends Actor {
     if (data.attributes.level) {
       data.lvl = data.attributes.level.value ?? 0;
     }
-    let prof=Math.floor((7+data.level)/4);
-    let reaction = 8+data.prof+data.abilities.dex.mod;
+    data.prof=Math.floor((7+data.level)/4);
+    data.reaction = 8+data.prof+data.abilities.dex.mod;
   }
 
   /**
