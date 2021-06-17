@@ -22,7 +22,7 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "https://gitlab.com/ARgits/boilerplate",
-  "manifest": "https://gitlab.com/ARgits/boilerplate/-/blob/master/system.json",
+  "manifest": "https://gitlab.com/ARgits/boilerplate/-/raw/master/system.json",
   "download": "https://gitlab.com/ARgits/boilerplate/-/archive/master/boilerplate-master.zip",
   "license": "LICENSE.txt"
 }
