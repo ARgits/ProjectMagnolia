@@ -53,7 +53,11 @@ export class ARd20Actor extends Actor {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
-    let prof=Math.floor((7+data.attributes.level.value)/4);
+        // Add level for easier access, or fall back to 0.
+    if (data.attributes.level) {
+      data.lvl = data.attributes.level.value ?? 0;
+    }
+    let prof=Math.floor((7+data.level)/4);
     let reaction = 8+data.prof+data.abilities.dex.mod;
   }
 
@@ -93,11 +97,6 @@ export class ARd20Actor extends Actor {
       for (let [k, v] of Object.entries(data.abilities)) {
         data[k] = foundry.utils.deepClone(v);
       }
-    }
-
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
     }
   }
 
