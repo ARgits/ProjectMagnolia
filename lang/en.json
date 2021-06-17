@@ -1,22 +1,22 @@
 {
-  "BOILERPLATE.AbilityStr": "Strength",
-  "BOILERPLATE.AbilityCon": "Constitution",
-  "BOILERPLATE.AbilityDex": "Dexterity",
-  "BOILERPLATE.AbilityInt": "Intelligence",
-  "BOILERPLATE.AbilityWis": "Wisdom",
-  "BOILERPLATE.AbilityCha": "Charisma",
+  "ard20.AbilityStr": "Strength",
+  "ard20.AbilityCon": "Constitution",
+  "ard20.AbilityDex": "Dexterity",
+  "ard20.AbilityInt": "Intelligence",
+  "ard20.AbilityWis": "Wisdom",
+  "ard20.AbilityCha": "Charisma",
 
-  "BOILERPLATE.AbilityStrAbbr": "str",
-  "BOILERPLATE.AbilityConAbbr": "con",
-  "BOILERPLATE.AbilityDexAbbr": "dex",
-  "BOILERPLATE.AbilityIntAbbr": "int",
-  "BOILERPLATE.AbilityWisAbbr": "wis",
-  "BOILERPLATE.AbilityChaAbbr": "cha",
+  "ard20.AbilityStrAbbr": "str",
+  "ard20.AbilityConAbbr": "con",
+  "ard20.AbilityDexAbbr": "dex",
+  "ard20.AbilityIntAbbr": "int",
+  "ard20.AbilityWisAbbr": "wis",
+  "ard20.AbilityChaAbbr": "cha",
 
-  "BOILERPLATE.EffectCreate": "Create Effect",
-  "BOILERPLATE.EffectToggle": "Toggle Effect",
-  "BOILERPLATE.EffectEdit": "Edit Effect",
-  "BOILERPLATE.EffectDelete": "Delete Effect",
+  "ard20.EffectCreate": "Create Effect",
+  "ard20.EffectToggle": "Toggle Effect",
+  "ard20.EffectEdit": "Edit Effect",
+  "ard20.EffectDelete": "Delete Effect",
 
-  "BOILERPLATE.Add": "Add"
+  "ard20.Add": "Add"
 }
