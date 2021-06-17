@@ -1,9 +1,5 @@
 export const ARd20 = {};
 
-/**
- * The set of Ability Scores used within the sytem.
- * @type {Object}
- */
  ARd20.abilities = {
   "str": "ARd20.AbilityStr",
   "dex": "ARd20.AbilityDex",
@@ -21,7 +17,7 @@ ARd20.abilityAbbreviations = {
   "wis": "ARd20.AbilityWisAbbr",
   "cha": "ARd20.AbilityChaAbbr"
 };
+
 ARd20.CHARACTER_EXP_LEVELS =  [
   0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
-  120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
-  ;
+  120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
