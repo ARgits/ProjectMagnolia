@@ -67,7 +67,7 @@
       "quantity":1,
       "weight": 0,
       "equiped":0,
-      "type":["Ambush", "Axe", "Bludgeon", "Bow", "Sling", "Combat Blade", "Crossbow", "Dueling Blade", "Firearm", "Flail", "Whip", "Hammer", "Pick", "Polearm", "Spear", "Throwing"],
+     "type":["Ambush", "Axe", "Bludgeon", "Bow", "Sling", "Combat Blade", "Crossbow", "Dueling Blade", "Firearm", "Flail", "Whip", "Hammer", "Pick", "Polearm", "Spear", "Throwing"],
       "Untrained property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
       "Proficiency": ["Untrained", "Basic", "Master"],
       "Basic property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],

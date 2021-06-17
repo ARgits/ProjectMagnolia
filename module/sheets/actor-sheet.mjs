@@ -10,7 +10,7 @@ export class ARd20ActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["ard20", "sheet", "actor"],
-      template: "systems/ard20/templates/actor/actor-sheet.html",
+      template: "systems/ard20/templates/actor/actor-${this.actor.data.type}-sheet.html",
       width: 600,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
