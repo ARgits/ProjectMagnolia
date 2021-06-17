@@ -13,10 +13,9 @@
     },
     "character": {
       "templates": ["base"],
-      "attributes": {
-        "level": {
-          "value": 1
-        }
+      "xp":{
+        "get":0,
+        "learned":0
       },
       "abilities": {
         "str": {

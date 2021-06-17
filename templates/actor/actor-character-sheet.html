@@ -25,17 +25,20 @@
         <div class="resource flex-group-center">
           <label for="data.reaction" class="resource-label">REA and prof bonus</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <span class="resource-label" data-label="data.reaction">{{numberFormat data.reaction decimals=0 sign=true}}</span>
+          <span class="resource-content" data-label="data.reaction">{{numberFormat data.reaction decimals=0 sign=true}}</span>
           <span> / </span>
-          <span class="resource-label"data-label="data.prof">{{numberFormat data.prof decimals=0 sign=true}}</span>
+          <span class="resource-content"data-label="data.prof">{{numberFormat data.prof decimals=0 sign=false}}</span>
           </div>
         </div>
-
         <div class="resource flex-group-center">
-          <label for="data.attributes.level.value" class="resource-label">Level</label>
+          <label for="data.xp.learned" class="resource-label">XP</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number"/>
+          <input type="text" name="data.xp.learned" value="{{data.xp.learned}}" data-dtype="Number"/>
           </div>
+        </div>
+        <div class="resource flex-group-center">
+          <label for="data.lvl" class="resource-label">Level</label>
+          <span class="resource-content" data-label="data.lvl">{{numberFormat data.lvl decimals=0 sign=false}}</span>
         </div>
 
       </div>
