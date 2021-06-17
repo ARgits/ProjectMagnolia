@@ -48,16 +48,16 @@ export class ARd20Actor extends Actor {
       data.xp = data.xp ?? 0;
     };
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-    for (let i=1; i<21; i++){
-     if (data.xp>=levels[i-1] && data.xp<levels[i]){
-       let data.lvl=i;
-       return data.lvl
+    getlevel(data.xp){
+      for (let i=1; i<21; i++){
+        if (data.xp>=levels[i-1] && data.xp<levels[i]){
+          data.lvl=i;
+          return data.lvl
+        };
       };
-    };
+    }
     data.prof=Math.floor((7+data.lvl)/4);
     let data.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
-    let data.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
-    let data.will=8+data.prof+data.abilities.wil.mod+data.abilities.cha.mod;
   }
 
   /**
