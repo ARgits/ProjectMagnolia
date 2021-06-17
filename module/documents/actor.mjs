@@ -55,7 +55,7 @@ export class ARd20Actor extends Actor {
     };
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
     for (let i=1; i<21; i++){
-        if (data.xp.learned>=levels[i-1] && data.xp.learned<levels[il]){
+        if (data.xp.learned>=levels[i-1] && data.xp.learned<levels[i]){
           data.lvl=i;
           return data.lvl
         }
