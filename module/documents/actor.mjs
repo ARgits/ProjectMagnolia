@@ -45,10 +45,10 @@ export class ARd20Actor extends Actor {
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+   let xp = data.xp.learned ?? 0
    for (let i=1; i<21; i++){
-     if (data.xp.learned>=levels[i-1] && data.xp.learned<levels[i]){
+     if (xp>=levels[i-1] && xp<levels[i]){
        let data.lvl=i;
-       return data.lvl
        };
       };
     data.prof=Math.floor((7+data.lvl)/4);
