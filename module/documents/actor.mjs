@@ -33,22 +33,14 @@ export class ARd20Actor extends Actor {
     const data = actorData.data;
     const flags = actorData.flags.ard20 || {};
 
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
     this._prepareCharacterData(actorData);
     this._prepareNpcData(actorData);
   }
 
-  /**
-   * Prepare Character type specific data
-   */
+
   _prepareCharacterData(actorData) {
     if (actorData.type !== 'character') return;
-
-    // Make modifications to data here. For example:
     const data = actorData.data;
-
-    // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(data.abilities)) {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
@@ -62,11 +54,12 @@ export class ARd20Actor extends Actor {
         };
       };
     }
+    let data.lvl = this.getLevel(data.xp.learned);
     getLevelExp(data.lvl) {
-      const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-      return levels[Math.min(data.lvl, levels.length - 1)];
-      }
-
+      let data.xp.req= levels[Math.min(data.lvl, levels.length - 1)];
+      return data.xp.req;
+    }
+    data.xp.req=this.getLevelExp(data.lvl);
     data.prof=Math.floor((7+data.lvl)/4);
     data.defence.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
     data.defence.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
