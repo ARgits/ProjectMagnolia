@@ -5,7 +5,7 @@
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      <div class="resources grid grid-6col">
+      <div class="resources grid grid-5col">
         <div class="resource flex-group-center">
           <label for="data.health.value" class="resource-label">Health</label>
           <div class="resource-content flexrow flex-center flex-between">
@@ -24,9 +24,9 @@
           <label for="data.xp.learned" class="resource-label">XP</label>
           <div class="resource-content flexrow flex-center flex-between">
           <input type="text" name="data.xp.learned" value="{{data.xp.learned}}" data-dtype="Number"/>
-          </div>
           <span>/</span>
           <span class="resource-content" data-label="data.xp.req">{{numberFormat data.xp.req decimals sign=false}}</span>
+          </div>
         </div>
         <div class="resource flex-group-center">
           <label for="data.lvl" class="resource-label">Level</label>
