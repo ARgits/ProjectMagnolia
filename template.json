@@ -13,10 +13,7 @@
     },
     "character": {
       "templates": ["base"],
-      "xp":{
-        "get":0,
-        "learned":0
-      },
+      "xp":0,
       "abilities": {
         "str": {
           "value": 10
