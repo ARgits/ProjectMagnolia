@@ -53,19 +53,13 @@ export class ARd20Actor extends Actor {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
-      getLevel(data.xp.learned){
-      const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-      for (let i=1; i<21; i++){
-        if (i>=levels[i-1] && i<levels[il]){
+    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+    for (let i=1; i<21; i++){
+        if (data.xp.learned>=levels[i-1] && data.xp.learned<levels[il]){
           data.lvl=i;
           return data.lvl
         }
       };
-    };
-    getLevelExp(data.lvl) {
-      const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-      return levels[Math.min(data.lvl, levels.length - 1)];
-    };
     data.prof=Math.floor((7+data.lvl)/4) ?? 0;
     data.defence.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
     data.defence.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
