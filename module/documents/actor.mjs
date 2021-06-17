@@ -42,13 +42,12 @@ export class ARd20Actor extends Actor {
     if (actorData.type !== 'character') return;
     const data = actorData.data;
     for (let [key, ability] of Object.entries(data.abilities)) {
-      // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
     data.prof=Math.floor((7+data.lvl)/4);
-    data.defence.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
-    data.defence.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
-    data.defence.will=8+data.prof+data.abilities.wil.mod+data.abilities.cha.mod;
+    let data.defence.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
+    let data.defence.fortitude = 8+data.prof+data.abilities.str.mod+data.abilities.con.mod;
+    let data.defence.will=8+data.prof+data.abilities.wil.mod+data.abilities.cha.mod;
   }
 
   /**
