@@ -27,9 +27,13 @@
           <div class="resource-content flexrow flex-center flex-between">
           <span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level decimals=0 sign=false}}</span>
           </div>
-          <label for="data.attributes.prof" class="resource-label">prof</label>
-          <div class="resource-content flexrow flex-center flex-between">
-          <span class="resource-content"data-label="data.attributes.prof">{{numberFormat data.attributes.prof decimals=0 sign=false}}</span>
+          <div class="resources grid-2col">
+            <div class="resource-content flexrow flex-center flex-between">
+            <label for="data.attributes.prof.bonus" class="resource-label">prof-bonus</label>
+            <span class="resource-content"data-label="data.attributes.prof">{{numberFormat data.attributes.prof.bonus decimals=0 sign=false}}</span>
+            <label for="data.attributes.prof.die" class="resource-label">prof-die</label>
+            <span class="resource-content"data-label="data.attributes.prof">{{data.attributes.prof.die}}</span>
+          </div>
           </div>
         </div>
       </div>

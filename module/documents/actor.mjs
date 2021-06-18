@@ -63,7 +63,8 @@
         data.attributes.xp.level=levels[i]
       }
     }
-    data.attributes.prof=Math.floor((7+data.attributes.level)/4);
+    data.attributes.prof.bonus=Math.floor((7+data.attributes.level)/4);
+    data.attributes.prof.die="1d"+data.attributes.prof.bonus*2;
   }
 
   /**
