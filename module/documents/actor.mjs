@@ -54,6 +54,9 @@
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
     const levels=CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+    if (data.attributes.xp.used){
+      data.attributes.xp.used=data.attributes.xp.used ?? 0
+    }
     for (let i=1;i<21;i++){
       if (data.attributes.xp.used>=levels[i-1] && data.attributes.xp.used<levels[i]){
         data.attributes.level=i;
