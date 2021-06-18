@@ -58,7 +58,7 @@
 
     {{!-- Owned Features Tab --}}
     <div class="tab features" data-group="primary" data-tab="features">
-      <section class="grid grid-1col">
+      <section class="grid grid-3col">
         <aside class="sidebar">
 
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
@@ -72,8 +72,6 @@
               <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
             </div>
             {{/each}}
-          </div>
-          <div class="abilities flexcol">
             {{#each data.defences as |defence key|}}
             <div class="ability flexrow flex-group-center">
               <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
