@@ -64,7 +64,7 @@
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
           <div class="grid grid-2col">
-          <div class="abilities flexcol">
+          <div class="abilities flexcol grid grid-3col">
             {{#each data.abilities as |ability key|}}
               <div class="ability flexcol flex-group-center">
                 <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
