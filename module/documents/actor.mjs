@@ -2,7 +2,7 @@
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class ARd20Actor extends Actor {
+ export class ARd20Actor extends Actor {
 
   /** @override */
   prepareData() {
@@ -33,21 +33,26 @@ export class ARd20Actor extends Actor {
     const data = actorData.data;
     const flags = actorData.flags.ard20 || {};
 
+    // Make separate methods for each Actor type (character, npc, etc.) to keep
+    // things organized.
     this._prepareCharacterData(actorData);
     this._prepareNpcData(actorData);
   }
 
-
+  /**
+   * Prepare Character type specific data
+   */
   _prepareCharacterData(actorData) {
     if (actorData.type !== 'character') return;
+
+    // Make modifications to data here. For example:
     const data = actorData.data;
+
+    // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(data.abilities)) {
+      // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
-    };
-    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-    let data.lvl=1;
-    data.prof=Math.floor((7+data.lvl)/4);
-    let data.reflex = 8+data.prof+data.abilities.dex.mod+data.abilities.int.mod;
+    }
   }
 
   /**
@@ -58,7 +63,7 @@ export class ARd20Actor extends Actor {
 
     // Make modifications to data here. For example:
     const data = actorData.data;
-    data.xp.npc = (data.cr * data.cr) * 100;
+    data.xp = (data.cr * data.cr) * 100;
   }
 
   /**
@@ -87,9 +92,11 @@ export class ARd20Actor extends Actor {
         data[k] = foundry.utils.deepClone(v);
       }
     }
-    if (data.lvl){
-      lvl=data.lvl ?? 0
-    };
+
+    // Add level for easier access, or fall back to 0.
+    if (data.attributes.level) {
+      data.lvl = data.attributes.level.value ?? 0;
+    }
   }
 
   /**
