@@ -65,7 +65,7 @@
     }
     
     data.attributes.prof_bonus=Math.floor((7+data.attributes.level)/4);
-    data.attributes.prof_die="1d"+data.attributes.prof_bonus*2;
+    data.attributes.prof_die=data.attributes.prof_bonus*2;
   }
 
   /**
