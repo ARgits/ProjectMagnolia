@@ -55,8 +55,9 @@
     };
     const levels=CONFIG.ARd20.CHARACTER_EXP_LEVELS;
     for (let i=1;i<21;i++){
-      if (data.attributes.xp>=levels[i-1] && data.attributes.xp<levels[i]){
+      if (data.attributes.xp.used>=levels[i-1] && data.attributes.xp.used<levels[i]){
         data.attributes.level=i;
+        data.attributes.xp.level=levels[i]
       }
     }
     data.attributes.prof=Math.floor((7+data.attributes.level)/4);

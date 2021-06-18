@@ -15,9 +15,11 @@
           </div>
         </div>
         <div class="resource flex-group-center">
-          <label for="data.attributes.xp" class="resource-label">xp</label>
+          <label for="data.attributes.xp.used" class="resource-label">xp</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.attributes.xp" value="{{data.attributes.xp}}" data-dtype="Number"/>
+            <input type="text" name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" data-dtype="Number"/>
+            <span>/</span>
+            <span class="resource-content" data-label="data.attributes.xp.level">{{numberFormat data.attributes.xp.level decimals=0 sign=false}}</span>
           </div>
         </div>
         <div class="resource flex-group-center">

@@ -14,7 +14,10 @@
     "character": {
       "templates": ["base"],
       "attributes":{
-        "xp":0,
+        "xp":{
+          "get":0,
+          "used":0
+        },
         "level":1
       },
       "abilities": {
