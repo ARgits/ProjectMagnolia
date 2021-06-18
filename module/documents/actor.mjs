@@ -75,7 +75,7 @@
         label : "fortitude"
       },
       will:{
-        value : 8 + data.attributes.prof_bonus + data.abilities.wil.mod + data.abilities.cha.mod,
+        value : 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod,
         label : "will"
       }
     }
