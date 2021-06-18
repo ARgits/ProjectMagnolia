@@ -28,6 +28,7 @@
           <span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level decimals=0 sign=false}}</span>
           </div>
         </div>
+        <div class="resource flex-group=center">
           <div class="resource-content flexrow flex-center flex-between">
             <label for="data.attributes.prof_bonus" class="resource-label">bonus</label>
             <span class="resource-content" data-label="data.attributes.prof_bonus">{{numberFormat data.attributes.prof_bonus decimals=0 sign=false}}</span>
@@ -36,10 +37,9 @@
             <label for="data.attributes.prof_die" class="resource-label">die</label>
            <span class="resource-content rollable" data-roll="@attributes.prof_die" data-label="data.attributes.prof_die">{{data.attributes.prof_die}}</span>
           </div>
-          </div>
+        </div>
        </div>
       </div>
-   </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
