@@ -58,9 +58,9 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features flexcol grid grid-2col" data-group="primary" data-tab="features">
-        <div class="abilities grid grid-2col">
-          <div class="ability flexcol">
+    <div class="tab features flexcol flex-group-center grid grid-2col" data-group="primary" data-tab="features">
+        <div class="abilities flexcol flex-group-center grid grid-2col">
+          <div class="ability flexcol flex-group-center">
           {{#each data.abilities as |ability key|}}
             <div class="ability flexrow flex-group-center">
               <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
@@ -69,7 +69,7 @@
             </div>
           {{/each}}
           </div>
-          <div class="ability">
+          <div class="ability flexcol flex-group-center">
           {{#each data.defences as |defence key|}}
             <div class="ability flexrow flex-group-center">
               <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
