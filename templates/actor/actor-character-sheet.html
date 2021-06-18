@@ -59,7 +59,7 @@
 
     {{!-- Owned Features Tab --}}
     <section class="tab features" data-group="primary" data-tab="features">
-          <div class="abilities flexcol grid grid-4col">
+          <div class="abilities flexcol grid grid-8col">
             {{#each data.abilities as |ability key|}}
               <div class="ability flexcol flex-group-center grid grid-3col">
                 <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
