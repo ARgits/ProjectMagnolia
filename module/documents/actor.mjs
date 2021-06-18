@@ -53,6 +53,7 @@
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
+    
   }
 
   /**
