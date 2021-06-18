@@ -60,7 +60,7 @@
     {{!-- Owned Features Tab --}}
     <section class="tab features" data-group="primary" data-tab="features">
           <div class="abilities flexcol grid grid-2col">
-            <div class="ability flexcol grid grid-3col">
+            <div class="ability flexcol">
             {{#each data.abilities as |ability key|}}
               <div class="ability flexrow flex-group-center">
                 <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
@@ -69,7 +69,7 @@
               </div>
             {{/each}}
             </div>
-            <div class="ability flexcol grid grid-2col">
+            <div class="ability flexcol">
             {{#each data.defences as |defence key|}}
               <div class="ability flexrow flex-group-center">
                 <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
