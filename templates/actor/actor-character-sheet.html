@@ -57,7 +57,7 @@
 
     {{!-- Owned Features Tab --}}
     <div class="tab features grid grid-4col data-group="primary" data-tab="features">
-      <section class="grid grid-3col">
+      <div class="grid grid-2col">
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
@@ -79,7 +79,7 @@
             {{/each}}
             </div>      
         {{!-- For the main features list, span the right two columns --}}
-      </section>
+      </div>
       <section class="main grid-span-1">
         {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
         {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
