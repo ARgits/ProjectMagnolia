@@ -67,16 +67,16 @@
     data.attributes.prof_die="1d"+data.attributes.prof_bonus*2;
     let defence = {
       reflex:{
-        value = 8+data.attributes.prof_bonus+data.abilities.dex.mod+data.abilities.int.mod,
-        label = "reflex"
+        value : 8+data.attributes.prof_bonus+data.abilities.dex.mod+data.abilities.int.mod,
+        label : "reflex"
       },
       fortitude:{
-        value = 8+data.attributes.prof_bonus+data.abilities.con.mod+data.abilities.str.mod,
-        label = "fortitude"
+        value : 8+data.attributes.prof_bonus+data.abilities.con.mod+data.abilities.str.mod,
+        label : "fortitude"
       },
       will:{
-        value = 8+data.attributes.prof_bonus+data.abilities.wil.mod+data.abilities.cha.mod,
-        label = "will"
+        value : 8+data.attributes.prof_bonus+data.abilities.wil.mod+data.abilities.cha.mod,
+        label : "will"
       }
     }
     data.defence=defence;
