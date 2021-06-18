@@ -223,14 +223,6 @@
   text-align: center;
 }
 
-/* Styles limited to ard20 sheets */
-.ard20 {
-  /* ----------------------------------------- */
-  /*  Items Lists                              */
-  /* ----------------------------------------- */
-  /* Example style for ard20 (can be removed if not needed) */
-}
-
 .ard20 .item-form {
   font-family: "Roboto", sans-serif;
 }
