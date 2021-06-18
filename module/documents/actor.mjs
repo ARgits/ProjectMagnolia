@@ -53,7 +53,12 @@
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
-    data.attributes.level=1;
+    const levels=CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+    for (let i=1;i<21;i++){
+      if (data.attributes.xp>=levels[i-1] && data.attributes.xp<levels[i]){
+        data.attributes.level=i;
+      }
+    }
     data.attributes.prof=Math.floor((7+data.attributes.level)/4);
   }
 
