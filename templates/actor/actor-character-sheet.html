@@ -6,7 +6,7 @@
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
       <div class="resources grid grid-3col">
-        <div class="resource flex-group-center">
+        <div class="resource">
           <label for="data.health.value" class="resource-label">Health</label>
           <div class="resource-content flexrow flex-center flex-between">
           <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
@@ -14,7 +14,7 @@
           <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
           </div>
         </div>
-        <div class="resource flex-group-center">
+        <div class="resource">
           <label for="data.attributes.xp.used" class="resource-label">xp</label>
           <div class="resource-content flexrow flex-center flex-between">
             <input type="text" name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" data-dtype="Number"/>
@@ -22,7 +22,7 @@
             <span class="resource-content flex-center" data-label="data.attributes.xp.level">{{numberFormat data.attributes.xp.level decimals=0 sign=false}}</span>
           </div>
         </div>
-        <div class="flex-group-center resource grid grid-2col">
+        <div class="resource grid grid-2col">
           <div class="resource ">
             <label for="data.attributes.level" class="resource-label">Level</label>
             <div class="resource-content flexrow flex-center flex-between">
@@ -58,7 +58,7 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <section class="tab features" data-group="primary" data-tab="features">
+    <section class="tab features grid grid-2col" data-group="primary" data-tab="features">
           <div class="abilities flexcol grid grid-2col">
             <div class="ability flexcol">
             {{#each data.abilities as |ability key|}}
