@@ -31,11 +31,11 @@
         <div class="resource flex-group=center">
           <div class="resource-content flexrow flex-center flex-between">
             <label for="data.attributes.prof_bonus" class="resource-label">bonus</label>
-            <span class="resource-content" data-label="data.attributes.prof_bonus">{{numberFormat data.attributes.prof_bonus decimals=0 sign=false}}</span>
+            <span class="resource-content flex-center data-label="data.attributes.prof_bonus">{{numberFormat data.attributes.prof_bonus decimals=0 sign=false}}</span>
           </div>
           <div class="resource-content flexrow flex-center flex-between">
             <label for="data.attributes.prof_die" class="resource-label">die</label>
-           <span class="resource-content rollable" data-roll="@attributes.prof_die" data-label="data.attributes.prof_die">{{data.attributes.prof_die}}</span>
+           <span class="resource-content rollable flex-center" data-roll="@attributes.prof_die" data-label="data.attributes.prof_die">{{data.attributes.prof_die}}</span>
           </div>
         </div>
        </div>
@@ -56,7 +56,7 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab features grid grid-2col data-group="primary" data-tab="features">
+    <div class="tab features grid grid-3col data-group="primary" data-tab="features">
       <section class="grid grid-2col">
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
@@ -74,7 +74,7 @@
             {{#each data.defences as |defence key|}}
               <div class="ability flexrow flex-group-center">
                 <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
-                <span class="ability-mod" data-label="{{defence.label}}">{{numberFormat defence.value decimals=0 sign=false}}
+                <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0 sign=false}}
               </div>
             {{/each}}
             </div>      
