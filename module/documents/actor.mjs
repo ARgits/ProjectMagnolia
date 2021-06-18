@@ -52,7 +52,9 @@
     for (let [key, ability] of Object.entries(data.abilities)) {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
-    }
+    };
+    data.attributes.level=1;
+    data.attributes.prof=Math.floor((7+data.attributes.level)/4);
   }
 
   /**
