@@ -73,6 +73,14 @@
             </div>
             {{/each}}
           </div>
+          <div class="abilities flexcol">
+            {{#each data.defence as |defence key|}}
+            <div class="ability flexrow flex-group-center">
+              <label for="data.defence.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
+              <span class="ability-mod" data-label="{{defence.{{key}}}}">{{numberFormat defence.value decimals=0 sign=false}}
+            </div>
+            {{#each}}
+          </div>
         </aside>
 
         {{!-- For the main features list, span the right two columns --}}
