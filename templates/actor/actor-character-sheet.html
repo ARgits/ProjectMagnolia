@@ -58,7 +58,7 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <section class="tab features grid grid-2col" data-group="primary" data-tab="features">
+    <div class="tab features grid grid-2col" data-group="primary" data-tab="features">
           <div class="abilities flexcol grid grid-2col">
             <div class="ability flexcol">
             {{#each data.abilities as |ability key|}}
@@ -79,11 +79,11 @@
             </div>
             </div>      
         {{!-- For the main features list, span the right two columns --}}
-      <section class="main grid-span-1">
+      <div class="main grid-span-1">
         {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
         {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
-      </section>
-    </section>
+      </div>
+    </div>
 
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
