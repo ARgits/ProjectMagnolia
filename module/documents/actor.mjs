@@ -53,7 +53,7 @@
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
-    let data.prof = Math.floor((7+data.attributes.level)/4);
+    let data.attributes.prof = Math.floor((7+data.attributes.level)/4);
   }
 
   /**
