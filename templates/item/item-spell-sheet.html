@@ -23,9 +23,11 @@
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{!-- As you add new fields, add them in here! --}}
-      <div class="resource grid grid-3col">
-        <label class="resource-label">Spell Level</label>
+      <div class="resource grid grid-4col">
+        <label class="resource-label">Level</label>
         <input type="text" name="data.spellLevel" value="{{data.spellLevel}}" data-dtype="Number"/>
+        <label class="resource-label">School</label>
+        <select name="school">{{selectOptions spell_school selected=spell_school_value localize=true}}</select>
       </div>
     </div>
   </section>
