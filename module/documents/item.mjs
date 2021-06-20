@@ -24,8 +24,8 @@ export class ARd20Item extends Item {
   _prepareSpellData(itemData) {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
-    let spell_school = { m: "Music", t: "Time" };
-    let spell_school_value = "m";
+    data.spell_school = { m: "Music", t: "Time" };
+    data.spell_school_value = "m";
   }
   _prepareWeaponData(itemData) {
     if (itemData.type !== "weapon") return;
