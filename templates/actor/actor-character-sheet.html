@@ -63,9 +63,9 @@
 
     {{!-- Owned Features Tab --}}
     <div class="tab features" data-group="primary" data-tab="features">
-      <section class="ability flexcol flex-group-center grid grid-3col">
-        <aside class="sidebar">
-        <div class="ability flexcol">
+      <section class="grid grid-3col">
+        <aside class="ability flexcol flex-group-center sidebar grid grid-2col">
+        <div class="ability">
           {{#each data.abilities as |ability key|}}
           <div class="ability flexrow">
             <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
@@ -76,7 +76,7 @@
           </div>
           {{/each}}
         </div>
-        <div class="ability flexcol">
+        <div class="flexcol">
           {{#each data.defences as |defence key|}}
           <div class="ability flexrow">
             <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left"
