@@ -47,7 +47,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "feature", "spell","weapon"],
     "templates": {
       "base": {
         "description": ""
