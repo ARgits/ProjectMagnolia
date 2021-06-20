@@ -11,9 +11,9 @@ export class ARd20Item extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
-  prepareBaseData(){
+  prepareBaseData() {
   }
-  prepareDerivedData(){
+  prepareDerivedData() {
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
@@ -21,11 +21,17 @@ export class ARd20Item extends Item {
     this._prepareWeaponData(itemData);
     this._prepateFeatureData(itemData);
   }
-  _prepareSpellData(itemData){
+  _prepareSpellData(itemData) {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
-    let spell_school = {m: "Music", t:"Time"};
+    let spell_school = { m: "Music", t: "Time" };
     let spell_school_value = "m";
+  }
+  _prepareWeaponData(itemData) {
+    if (itemData.type !== "weapon") return;
+  }
+  _prepateFeatureData(itemData) {
+    if (itemData.type !== "feature") return;
   }
 
   /**
