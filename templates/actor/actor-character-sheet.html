@@ -65,7 +65,7 @@
     <div class="tab features" data-group="primary" data-tab="features">
       <section class="grid grid-5col">
         <aside class="ability flexcol sidebar grid grid-2col">
-        <div class="ability flex-group-center>
+        <div class="ability flex-group-center grid-span-2">
           {{#each data.abilities as |ability key|}}
           <div class="ability flexrow">
             <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
@@ -88,7 +88,7 @@
         </div>
         </aside>
       {{!-- For the main features list, span the right two columns --}}
-        <section class="main grid-span-2">
+        <section class="main grid-start-4 grid-span-2">
           {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in
           module/helpers/templates.mjs --}}
           {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
