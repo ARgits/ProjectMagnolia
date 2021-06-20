@@ -14,7 +14,7 @@ export class ARd20Item extends Item {
     const data = itemData;
     const actorData = this.actor ? this.actor.data : {};
     function prepareSpellData() {
-      if (this.data.type !== "spell") return;
+      if (data.type !== "spell") return;
       let spell_school = { m: "Music", t: "Time" };
       let spell_school_value = "m";
     }
