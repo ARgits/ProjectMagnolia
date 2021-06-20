@@ -34,7 +34,7 @@
           <div class="resource flexcol flex-group-center grid grid-2col">
             <div class="resource-content flexrow flex-center flex-between">
               <label for="data.attributes.prof_bonus" class="resource-label">bonus</label>
-              <span class="resource-content flex-center data-label=" data.attributes.prof_bonus">{{numberFormat
+              <span class="resource-content flex-center" data-label=" data.attributes.prof_bonus">{{numberFormat
                 data.attributes.prof_bonus decimals=0 sign=false}}</span>
             </div>
             <div class="resource-content flexrow flex-center flex-between">
@@ -64,37 +64,37 @@
     {{!-- Owned Features Tab --}}
     <div class="tab features" data-group="primary" data-tab="features">
       <section class="grid grid-6col">
-        <aside class="ability flexcol sidebar grid grid-2col">
-        <div class="ability flex-group-center grid-span-2">
-          {{#each data.abilities as |ability key|}}
-          <div class="ability flexrow">
-            <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
-              data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
-            <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-            <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod"
-              data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+        <aside class="ability flexcol sidebar grid grid-3col">
+          <div class="ability flex-group-center grid-span-2">
+            {{#each data.abilities as |ability key|}}
+            <div class="ability flexrow">
+              <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
+                data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
+              <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+              <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod"
+                data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+            </div>
+            {{/each}}
           </div>
-          {{/each}}
-        </div>
-        <div class="flexcol">
-          {{#each data.defences as |defence key|}}
-          <div class="ability flexrow">
-            <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left"
-              data-label="{{defence.label}}">{{defence.label}}</label>
-            <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
-              sign=false}}
+          <div class="flexcol">
+            {{#each data.defences as |defence key|}}
+            <div class="ability flexrow">
+              <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left"
+                data-label="{{defence.label}}">{{defence.label}}</label>
+              <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
+                sign=false}}
+            </div>
+            {{/each}}
           </div>
-          {{/each}}
-        </div>
         </aside>
-      {{!-- For the main features list, span the right two columns --}}
-        <section class="main grid-start-5 grid-span-2">
+        {{!-- For the main features list, span the right two columns --}}
+        <section class="main grid-start-4 grid-span-3">
           {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in
           module/helpers/templates.mjs --}}
           {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
         </section>
       </section>
-      </div>
+    </div>
 
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
