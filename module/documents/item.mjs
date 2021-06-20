@@ -11,12 +11,14 @@ export class ARd20Item extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
     const itemData = this.data;
-    function prepareSpellData(){
-      if (this.itemData.type !== "spell") return;
+    const data = itemData;
+    const actorData = this.actor ? this.actor.data : {};
+    function prepareSpellData() {
+      if (this.data.type !== "spell") return;
       let spell_school = { m: "Music", t: "Time" };
       let spell_school_value = "m";
     }
-    this.prepareSpellData();
+    prepareSpellData();
   }
 
   /**
