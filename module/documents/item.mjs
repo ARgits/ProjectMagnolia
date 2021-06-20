@@ -10,22 +10,22 @@ export class ARd20Item extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
-    function preparespellData() {
-      if (this.data.type !== "spell") return;
-      let spell_school = {m: "Music", t:"Time"};
+    const itemData = this.data;
+    function prepareSpellData(){
+      if (this.itemData.type !== "spell") return;
+      let spell_school = { m: "Music", t: "Time" };
       let spell_school_value = "m";
     }
-    preparespellData();
-
+    this.prepareSpellData();
   }
 
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-   getRollData() {
+  getRollData() {
     // If present, return the actor's roll data.
-    if ( !this.actor ) return null;
+    if (!this.actor) return null;
     const rollData = this.actor.getRollData();
     rollData.item = foundry.utils.deepClone(this.data.data);
 
