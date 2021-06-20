@@ -5,7 +5,7 @@
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      <div class="resources grid flexcol flex-group-center grid-3col">
+      <div class="resources grid flexcol flex-group-center grid-4col">
         <div class="resource">
           <label for="data.health.value" class="resource-label">Health</label>
           <div class="resource-content flexrow flex-center flex-between">
@@ -22,7 +22,7 @@
             <span class="resource-content flex-center" data-label="data.attributes.xp.level">{{numberFormat data.attributes.xp.level decimals=0 sign=false}}</span>
           </div>
         </div>
-        <div class="resource flexcol flex-group-center">
+        <div class="resource flexcol flex-group-center grid-span-2">
           <div class="resource flexcol flex-group-center">
             <label for="data.attributes.level" class="resource-label">Level</label>
             <div class="resource-content flexrow flex-center flex-between">
