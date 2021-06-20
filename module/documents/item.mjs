@@ -10,15 +10,22 @@ export class ARd20Item extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+  }
+  prepareBaseData(){
+  }
+  prepareDerivedData(){
     const itemData = this.data;
-    const data = itemData;
     const actorData = this.actor ? this.actor.data : {};
-    function prepareSpellData() {
-      if (data.type !== "spell") return;
-      let spell_school = { m: "Music", t: "Time" };
-      let spell_school_value = "m";
-    }
-    prepareSpellData();
+    const data = itemData.data;
+    this._prepareSpellData(itemData);
+    this._prepareWeaponData(itemData);
+    this._prepateFeatureData(itemData);
+  }
+  _prepareSpellData(itemData){
+    if (itemData.type !== "spell") return;
+    const data = itemData.data;
+    let spell_school = {m: "Music", t:"Time"};
+    let spell_school_value = "m";
   }
 
   /**
