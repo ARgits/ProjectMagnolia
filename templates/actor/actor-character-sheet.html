@@ -77,10 +77,12 @@
           {{/each}}
         </div>      
         {{!-- For the main features list, span the right two columns --}}
-        <div class="main grid-span-2">
+        <aside>
+          <div class="main grid-span-2">
           {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
           {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
         </div>
+        </aside>
     </div>
 
     {{!-- Biography Tab --}}
