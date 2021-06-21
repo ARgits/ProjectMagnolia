@@ -20,5 +20,6 @@
 
   "ARd20.Add": "Add",
   "ARd20.SpellSchoolTime":"Time",
-  "ARd20.SpellSchoolMusic":"Music"
+  "ARd20.SpellSchoolMusic":"Music",
+  "ARd20.SpellSchool":"Spell School"
 }
