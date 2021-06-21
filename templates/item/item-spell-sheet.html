@@ -29,7 +29,7 @@
         <label class="resource-label">School</label>
         <select name="data.school">
           {{#select data.school}}
-          {{#each CONFIG.ARd20.SpellSchool as |name sch|}}
+          {{#each config.SpellSchool as |name sch|}}
           <option value="{{sch}}">{{name}}</option>
           {{/each}}
           {{/select}}
