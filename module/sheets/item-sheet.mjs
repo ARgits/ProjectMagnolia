@@ -42,6 +42,9 @@ export class ARd20ItemSheet extends ItemSheet {
     if (actor) {
       context.rollData = actor.getRollData();
     }
+    for (let [k, v] of Object.entries(context.config.SpellSchool)) {
+      v.name = game.i18n.localize(CONFIG.ARd20.SpellSchool[k]) ?? k;
+    }
 
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
