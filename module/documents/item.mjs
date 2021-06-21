@@ -21,15 +21,9 @@ export class ARd20Item extends Item {
     const labels = this.labels = {};
 
     if (itemData.type === "spell") {
-      labels.school = C.spell_schools[data.school];    
+      labels.school = C.spell_schools[data.school];
+    }
   }
-  _prepareWeaponData(itemData) {
-    if (itemData.type !== "weapon") return;
-  }
-  _prepateFeatureData(itemData) {
-    if (itemData.type !== "feature") return;
-  }
-
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
