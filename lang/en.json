@@ -18,5 +18,7 @@
   "ARd20.EffectEdit": "Edit Effect",
   "ARd20.EffectDelete": "Delete Effect",
 
-  "ARd20.Add": "Add"
+  "ARd20.Add": "Add",
+  "ARd20.SpellSchoolTime":"Time",
+  "ARd20.SpellSchoolMusic":"Music"
 }

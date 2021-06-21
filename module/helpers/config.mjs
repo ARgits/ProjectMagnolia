@@ -22,7 +22,7 @@ ARd20.CHARACTER_EXP_LEVELS = [
   0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
   120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
 
-ARd20.spell_schools = {
-  "time": "ARd20.SpellSchoolTime",
-  "music": "ARd20.SpellSchoolMusic"
+ARd20.SpellSchool = {
+  "tim": "ARd20.SpellSchoolTime",
+  "mus": "ARd20.SpellSchoolMusic"
 }
