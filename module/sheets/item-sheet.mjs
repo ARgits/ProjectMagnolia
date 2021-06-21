@@ -42,7 +42,7 @@ export class ARd20ItemSheet extends ItemSheet {
     if (actor) {
       context.rollData = actor.getRollData();
     }
-    for (let [k, v] of Object.entries(context.data.school)) {
+    for (let [k, v] of Object.entries(context.data.labels.school)) {
       v.name = game.i18n.localize(CONFIG.ARd20.SpellSchool[k]) ?? k;
     }
 
