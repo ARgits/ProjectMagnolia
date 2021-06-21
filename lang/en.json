@@ -5,21 +5,24 @@
   "ARd20.AbilityInt": "Intelligence",
   "ARd20.AbilityWis": "Wisdom",
   "ARd20.AbilityCha": "Charisma",
-
   "ARd20.AbilityStrAbbr": "str",
   "ARd20.AbilityConAbbr": "con",
   "ARd20.AbilityDexAbbr": "dex",
   "ARd20.AbilityIntAbbr": "int",
   "ARd20.AbilityWisAbbr": "wis",
   "ARd20.AbilityChaAbbr": "cha",
-
   "ARd20.EffectCreate": "Create Effect",
   "ARd20.EffectToggle": "Toggle Effect",
   "ARd20.EffectEdit": "Edit Effect",
   "ARd20.EffectDelete": "Delete Effect",
-
   "ARd20.Add": "Add",
-  "ARd20.SpellSchoolTime":"Time",
-  "ARd20.SpellSchoolMusic":"Music",
-  "ARd20.SpellSchool":"Spell School"
+  "DND5E.SchoolAbj": "Abjuration",
+  "DND5E.SchoolCon": "Conjuration",
+  "DND5E.SchoolDiv": "Divination",
+  "DND5E.SchoolEnc": "Enchantment",
+  "DND5E.SchoolEvo": "Evocation",
+  "DND5E.SchoolIll": "Illusion",
+  "DND5E.SchoolNec": "Necromancy",
+  "DND5E.SchoolTrs": "Transmutation",
+  "ARd20.SpellSchool": "Spell School"
 }
