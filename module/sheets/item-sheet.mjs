@@ -34,7 +34,8 @@ export class ARd20ItemSheet extends ItemSheet {
 
     // Use a safe clone of the item data for further operations.
     const itemData = context.item.data;
-    context.config = CONFIG.ARd20;
+    data.labels= this.item.labels;
+    data.config=CONFIG.ARd20;
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
     let actor = this.object?.parent ?? null;
