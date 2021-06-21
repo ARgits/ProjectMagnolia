@@ -31,7 +31,7 @@
           <label class="resource-label">{{localize "ARd20.SpellSchool"}}</label>
           <select name="data.school">
             {{#select data.school}}
-            {{#each config.SpellSchool as |name sch|}}
+            {{#each config.ARd20.SpellSchool as |name sch|}}
             <option value="{{sch}}">{{name}}</option>
             {{/each}}
             {{/select}}
