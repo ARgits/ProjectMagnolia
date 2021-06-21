@@ -17,7 +17,7 @@ export class ARd20Item extends Item {
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
-    const C = config.ARd20;
+    const C = CONFIG.ARd20;
     const labels = this.labels = {};
 
     if (itemData.type === "spell") {
