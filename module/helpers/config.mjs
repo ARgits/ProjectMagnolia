@@ -23,12 +23,12 @@ ARd20.CHARACTER_EXP_LEVELS = [
   120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
 
 ARd20.SpellSchool = {
-  "abj": "DND5E.SchoolAbj",
-  "con": "DND5E.SchoolCon",
-  "div": "DND5E.SchoolDiv",
-  "enc": "DND5E.SchoolEnc",
-  "evo": "DND5E.SchoolEvo",
-  "ill": "DND5E.SchoolIll",
-  "nec": "DND5E.SchoolNec",
-  "trs": "DND5E.SchoolTrs"
+  "abj": "ARd20.SchoolAbj",
+  "con": "ARd20.SchoolCon",
+  "div": "ARd20.SchoolDiv",
+  "enc": "ARd20.SchoolEnc",
+  "evo": "ARd20.SchoolEvo",
+  "ill": "ARd20.SchoolIll",
+  "nec": "ARd20.SchoolNec",
+  "trs": "ARd20.SchoolTrs"
 }
