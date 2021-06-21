@@ -32,7 +32,7 @@
           <select name="data.school">
             {{#select data.school}}
             {{#each config.SpellSchool as |name sch|}}
-            <option value="{{sch}}">{{name}}</option>
+            <option value="{{sch}}">{{localize "{{name}}"}}</option>
             {{/each}}
             {{/select}}
           </select>
