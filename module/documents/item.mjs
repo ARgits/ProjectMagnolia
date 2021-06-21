@@ -14,6 +14,7 @@ export class ARd20Item extends Item {
   prepareBaseData() {
   }
   prepareDerivedData() {
+    super.prepareDerivedData();
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
