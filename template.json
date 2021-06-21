@@ -79,8 +79,7 @@
     },
     "spell": {
       "templates": ["base"],
-      "spellLevel": 1,
-      "school":["Music","Time","Conjuration", "Abjuration"]
+      "spellLevel": 1
     }
   }
 }

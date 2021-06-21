@@ -27,7 +27,13 @@
         <label class="resource-label">Level</label>
         <input type="text" name="data.spellLevel" value="{{data.spellLevel}}" data-dtype="Number"/>
         <label class="resource-label">School</label>
-        <select name="school">{{selectOptions data.spell_school selected=data.spell_school_value localize=true}}</select>
+        <select name="data.school">
+          {{#select data.school}}
+          {{#each {{config.ARd20.spell_schools as |name sch|}}
+          <option value="{{sch}}">{{name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
       </div>
     </div>
   </section>

@@ -1,6 +1,6 @@
 export const ARd20 = {};
 
- ARd20.abilities = {
+ARd20.abilities = {
   "str": "ARd20.AbilityStr",
   "dex": "ARd20.AbilityDex",
   "con": "ARd20.AbilityCon",
@@ -18,6 +18,11 @@ ARd20.abilityAbbreviations = {
   "cha": "ARd20.AbilityChaAbbr"
 };
 
-ARd20.CHARACTER_EXP_LEVELS =  [
+ARd20.CHARACTER_EXP_LEVELS = [
   0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
   120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
+
+ARd20.spell_schools = {
+  "time": "ARd20.SpellSchoolTime",
+  "music": "ARd20.SpellSchoolMusic"
+}

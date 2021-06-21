@@ -17,15 +17,11 @@ export class ARd20Item extends Item {
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
-    this._prepareSpellData(itemData);
-    this._prepareWeaponData(itemData);
-    this._prepateFeatureData(itemData);
-  }
-  _prepareSpellData(itemData) {
-    if (itemData.type !== "spell") return;
-    const data = itemData.data;
-    data.spell_school = { m: "Music", t: "Time" };
-    data.spell_school_value = ["m","t"];
+    const C = config.ARd20;
+    const labels = this.labels = {};
+
+    if (itemData.type === "spell") {
+      labels.school = C.spell_schools[data.school];    
   }
   _prepareWeaponData(itemData) {
     if (itemData.type !== "weapon") return;
