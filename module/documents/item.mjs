@@ -22,7 +22,7 @@ export class ARd20Item extends Item {
     const labels = this.labels = {};
 
     if (itemData.type === "spell") {
-      labels.school = C.spell_schools[data.school];
+      labels.school = C.SpellSchool[data.school];
     }
   }
   /**
