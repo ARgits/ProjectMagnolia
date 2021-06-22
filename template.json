@@ -172,7 +172,7 @@
         "Spear",
         "Throwing"
       ],
-      "Untrained property": [
+      "property": [
         "Affixed",
         "Awkward",
         "Conceal",
@@ -204,63 +204,7 @@
         "Basic",
         "Master"
       ],
-      "Basic property": [
-        "Affixed",
-        "Awkward",
-        "Conceal",
-        "Brace",
-        "Deflect",
-        "Disarm",
-        "Double Ended",
-        "Entangle",
-        "Finesse",
-        "Firearm",
-        "Heavy",
-        "Launch",
-        "Light",
-        "Lunge",
-        "Melee",
-        "One-Handed",
-        "Penetrate",
-        "Ranged",
-        "Reach",
-        "Reload",
-        "Stagger",
-        "Thrown",
-        "Trip",
-        "Two-Handed",
-        "Versatile"
-      ],
-      "Master property": [
-        "Affixed",
-        "Awkward",
-        "Conceal",
-        "Brace",
-        "Deflect",
-        "Disarm",
-        "Double Ended",
-        "Entangle",
-        "Finesse",
-        "Firearm",
-        "Heavy",
-        "Launch",
-        "Light",
-        "Lunge",
-        "Melee",
-        "One-Handed",
-        "Penetrate",
-        "Ranged",
-        "Reach",
-        "Reload",
-        "Stagger",
-        "Thrown",
-        "Trip",
-        "Two-Handed",
-        "Versatile"
-      ],
-      "Untrained Damage": "1d4",
-      "Basic Damage": "1d6",
-      "Master Damage": "1d8"
+      "Damage": "1d4"
     },
     "feature": {
       "templates": [
