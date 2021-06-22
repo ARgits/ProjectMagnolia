@@ -82,5 +82,5 @@ ARd20.skills = {
     "thr": "ARd20.Thrown",
     "tri": "ARd20.Trip",
     "two": "ARd20.Two-Handed",
-    "ver": "Versatile"
+    "ver": "ARd20.Versatile"
   }

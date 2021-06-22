@@ -29,7 +29,7 @@
           <label class="flex0">{{localize "ARd20.Untrained"}}</label>
           <div>
             {{#each config.Prop as |name prop|}}
-            <label>
+            <label class="checkbox">
               <input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup ../data.property.untrained
                 prop)}}/>{{name}}
             </label>
