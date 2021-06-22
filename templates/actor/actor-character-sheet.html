@@ -16,7 +16,7 @@
         </div>
         <div class="resource flexcol grid-span-2">
           <label for="data.attributes.xp.used" class="resource-label">xp</label>
-          <div class="resource-content flexrow flex-center">
+          <div class="resource-content flexrow flex0 flex-center">
             <input type="text" name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" data-dtype="Number" />
             <span>/</span>
             <span data-label="data.attributes.xp.level">{{numberFormat
@@ -88,13 +88,13 @@
           </div>
           <div class="grid-span-2">
             {{#each data.skills as |skill key|}}
-            <div class="grid grid-2col flexcol flex-group-center">
+            <div class="grid grid-2col flexrow flex-group-center">
               <div>
-                <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left rollable"
+                <label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable"
                   data-roll="{{skill.roll}}" data-label="{{skill.hover}}">{{skill.hover}}</label>
               </div>
               <div>
-                <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left rollable"
+                <label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable"
                   data-roll="{{skill.roll}}" data-label="{{skill.label}}">{{skill.label}}</label>
               </div>
             </div>
