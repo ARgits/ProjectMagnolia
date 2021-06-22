@@ -86,13 +86,12 @@
             </div>
             {{/each}}
           </div>
-          <ul class="grid-span-2">
+          <div class="grid-span-2">
             {{#each data.skills as |skill key|}}
-            <li class="flexrow resource" value="{{key}}">
-              {{localize key.hover}} {{localize skill}}
-            </li>
+            <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label>
+            <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
             {{/each}}
-          </ul>
+          </div>
         </aside>
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-start-4 grid-span-3">
