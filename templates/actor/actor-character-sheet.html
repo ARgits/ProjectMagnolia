@@ -88,7 +88,8 @@
           </div>
           <ul class="grid-span-2">
             {{#each config.skills as |name sch|}}
-            <li class="flexrow resource" value="{{sch}}">{{localize name}}
+            <li class="flexrow resource" value="{{sch}}">
+              {{localize sch.prof}} {{localize name}}
             </li>
             {{/each}}
           </ul>
