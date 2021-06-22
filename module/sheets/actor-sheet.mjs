@@ -1,4 +1,4 @@
-import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -38,7 +38,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = actorData.data;
     context.flags = actorData.flags;
-    context.config=CONFIG.ARd20;
+    context.config = CONFIG.ARd20;
 
     // Prepare character data and items.
     if (actorData.type == 'character') {
@@ -72,8 +72,9 @@ export class ARd20ActorSheet extends ActorSheet {
     for (let [k, v] of Object.entries(context.data.abilities)) {
       v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
     };
-    for (let [k,v] of Object.entries(context.data.skills)){
-      v.label = game.i18n.localize(CONFIG.ARd20.skills[k])??k
+    for (let [k, v] of Object.entries(context.data.skills)) {
+      v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k
+      v.hover = CONFIG.ARd20.skills[v.prof];
     };
   }
 
@@ -124,7 +125,7 @@ export class ARd20ActorSheet extends ActorSheet {
     context.gear = gear;
     context.features = features;
     context.spells = spells;
-   }
+  }
 
   /* -------------------------------------------- */
 
@@ -195,7 +196,7 @@ export class ARd20ActorSheet extends ActorSheet {
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return await Item.create(itemData, { parent: this.actor });
   }
 
   /**

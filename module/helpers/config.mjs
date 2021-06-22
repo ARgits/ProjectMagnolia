@@ -52,8 +52,8 @@ ARd20.skills = {
   "ste": "ARd20.SkillSte",
   "sur": "ARd20.SkillSur"
 },
-ARd20.prof={
-  0:"ARd20.Untrained",
-  1:"ARd20.Basic",
-  2:"ARd20.Master"
-}
+  ARd20.prof = {
+    0: "ARd20.Untrained",
+    1: "ARd20.Basic",
+    2: "ARd20.Master"
+  }

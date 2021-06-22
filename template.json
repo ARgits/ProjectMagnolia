@@ -1,6 +1,9 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": [
+      "character",
+      "npc"
+    ],
     "templates": {
       "base": {
         "health": {
@@ -12,13 +15,15 @@
       }
     },
     "character": {
-      "templates": ["base"],
-      "attributes":{
-        "xp":{
-          "get":0,
-          "used":0
+      "templates": [
+        "base"
+      ],
+      "attributes": {
+        "xp": {
+          "get": 0,
+          "used": 0
         },
-        "level":1
+        "level": 1
       },
       "abilities": {
         "str": {
@@ -40,121 +45,241 @@
           "value": 10
         }
       },
-      "skills":{
-        "acr":{
-          "prof":0,
-          "label":""
+      "skills": {
+        "acr": {
+          "prof": 0,
+          "label": ""
         },
-        "ath":{
-          "prof":0,
-          "label":""
+        "ath": {
+          "prof": 0,
+          "label": ""
         },
-        "ani":{
-          "prof":0,
-          "label":""
+        "ani": {
+          "prof": 0,
+          "label": ""
         },
-        "arc":{
-          "prof":0,
-          "label":""
+        "arc": {
+          "prof": 0,
+          "label": ""
         },
-        "dec":{
-          "prof":0,
-          "label":""
+        "dec": {
+          "prof": 0,
+          "label": ""
         },
-        "his":{
-          "prof":0,
-          "label":""
+        "his": {
+          "prof": 0,
+          "label": ""
         },
-        "ins":{
-          "prof":0,
-          "label":""
+        "ins": {
+          "prof": 0,
+          "label": ""
         },
-        "itm":{
-          "prof":0,
-          "label":""
+        "itm": {
+          "prof": 0,
+          "label": ""
         },
-        "inv":{
-          "prof":0,
-          "label":""
+        "inv": {
+          "prof": 0,
+          "label": ""
         },
-        "med":{
-          "prof":0,
-          "label":""
+        "med": {
+          "prof": 0,
+          "label": ""
         },
-        "nat":{
-          "prof":0,
-          "label":""
+        "nat": {
+          "prof": 0,
+          "label": ""
         },
-        "prc":{
-          "prof":0,
-          "label":""
+        "prc": {
+          "prof": 0,
+          "label": ""
         },
-        "prf":{
-          "prof":0,
-          "label":""
+        "prf": {
+          "prof": 0,
+          "label": ""
         },
-        "per":{
-          "prof":0,
-          "label":""
+        "per": {
+          "prof": 0,
+          "label": ""
         },
-        "rel":{
-          "prof":0,
-          "label":""
+        "rel": {
+          "prof": 0,
+          "label": ""
         },
-        "slt":{
-          "prof":0,
-          "label":""
+        "slt": {
+          "prof": 0,
+          "label": ""
         },
-        "ste":{
-          "prof":0,
-          "label":""
+        "ste": {
+          "prof": 0,
+          "label": ""
         },
-        "sur":{
-          "prof":0,
-          "label":""
+        "sur": {
+          "prof": 0,
+          "label": ""
         }
       }
     },
     "npc": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "cr": 0
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell","weapon"],
+    "types": [
+      "item",
+      "feature",
+      "spell",
+      "weapon"
+    ],
     "templates": {
       "base": {
         "description": ""
       }
     },
     "item": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "quantity": 1,
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
-    "weapon":{
-      "templates": ["base"],
-      "quantity":1,
+    "weapon": {
+      "templates": [
+        "base"
+      ],
+      "quantity": 1,
       "weight": 0,
-      "equiped":0,
-     "type":["Ambush", "Axe", "Bludgeon", "Bow", "Sling", "Combat Blade", "Crossbow", "Dueling Blade", "Firearm", "Flail", "Whip", "Hammer", "Pick", "Polearm", "Spear", "Throwing"],
-      "Untrained property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
-      "Proficiency": ["Untrained", "Basic", "Master"],
-      "Basic property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
-      "Master property":["Affixed", "Awkward", "Conceal", "Brace", "Deflect", "Disarm", "Double Ended", "Entangle", "Finesse", "Firearm", "Heavy", "Launch", "Light", "Lunge", "Melee", "One-Handed", "Penetrate", "Ranged", "Reach", "Reload", "Stagger", "Thrown", "Trip", "Two-Handed", "Versatile"],
-      "Untrained Damage":"1d4",
-      "Basic Damage":"1d6",
-      "Master Damage":"1d8"
+      "equiped": 0,
+      "type": [
+        "Ambush",
+        "Axe",
+        "Bludgeon",
+        "Bow",
+        "Sling",
+        "Combat Blade",
+        "Crossbow",
+        "Dueling Blade",
+        "Firearm",
+        "Flail",
+        "Whip",
+        "Hammer",
+        "Pick",
+        "Polearm",
+        "Spear",
+        "Throwing"
+      ],
+      "Untrained property": [
+        "Affixed",
+        "Awkward",
+        "Conceal",
+        "Brace",
+        "Deflect",
+        "Disarm",
+        "Double Ended",
+        "Entangle",
+        "Finesse",
+        "Firearm",
+        "Heavy",
+        "Launch",
+        "Light",
+        "Lunge",
+        "Melee",
+        "One-Handed",
+        "Penetrate",
+        "Ranged",
+        "Reach",
+        "Reload",
+        "Stagger",
+        "Thrown",
+        "Trip",
+        "Two-Handed",
+        "Versatile"
+      ],
+      "Proficiency": [
+        "Untrained",
+        "Basic",
+        "Master"
+      ],
+      "Basic property": [
+        "Affixed",
+        "Awkward",
+        "Conceal",
+        "Brace",
+        "Deflect",
+        "Disarm",
+        "Double Ended",
+        "Entangle",
+        "Finesse",
+        "Firearm",
+        "Heavy",
+        "Launch",
+        "Light",
+        "Lunge",
+        "Melee",
+        "One-Handed",
+        "Penetrate",
+        "Ranged",
+        "Reach",
+        "Reload",
+        "Stagger",
+        "Thrown",
+        "Trip",
+        "Two-Handed",
+        "Versatile"
+      ],
+      "Master property": [
+        "Affixed",
+        "Awkward",
+        "Conceal",
+        "Brace",
+        "Deflect",
+        "Disarm",
+        "Double Ended",
+        "Entangle",
+        "Finesse",
+        "Firearm",
+        "Heavy",
+        "Launch",
+        "Light",
+        "Lunge",
+        "Melee",
+        "One-Handed",
+        "Penetrate",
+        "Ranged",
+        "Reach",
+        "Reload",
+        "Stagger",
+        "Thrown",
+        "Trip",
+        "Two-Handed",
+        "Versatile"
+      ],
+      "Untrained Damage": "1d4",
+      "Basic Damage": "1d6",
+      "Master Damage": "1d8"
     },
     "feature": {
-      "templates": ["base"],
-      "source":["Martial", "Magical", "Divine", "Primal", "Psyhic"]
+      "templates": [
+        "base"
+      ],
+      "source": [
+        "Martial",
+        "Magical",
+        "Divine",
+        "Primal",
+        "Psyhic"
+      ]
     },
     "spell": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "spellLevel": 1,
-      "school":""
+      "school": ""
     }
   }
 }

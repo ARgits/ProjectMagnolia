@@ -2,7 +2,7 @@
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
- export class ARd20Actor extends Actor {
+export class ARd20Actor extends Actor {
 
   /** @override */
   prepareData() {
@@ -53,42 +53,43 @@
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     };
-    const levels=CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-    if (data.attributes.xp.used){
-      data.attributes.xp.used=data.attributes.xp.used ?? 0
+    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+    if (data.attributes.xp.used) {
+      data.attributes.xp.used = data.attributes.xp.used ?? 0
     }
-    for (let i=1;i<21;i++){
-      if (data.attributes.xp.used>=levels[i-1] && data.attributes.xp.used<levels[i]){
-        data.attributes.level=i;
-        data.attributes.xp.level=levels[i]
+    for (let i = 1; i < 21; i++) {
+      if (data.attributes.xp.used >= levels[i - 1] && data.attributes.xp.used < levels[i]) {
+        data.attributes.level = i;
+        data.attributes.xp.level = levels[i]
       }
     }
-    data.attributes.prof_bonus=Math.floor((7+data.attributes.level)/4);
-    data.attributes.prof_die="1d"+data.attributes.prof_bonus*2;
+    data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
+    data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
     let defence = {
-      reflex:{
-        value : 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod,
-        label : "reflex"
+      reflex: {
+        value: 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod,
+        label: "reflex"
       },
-      fortitude:{
-        value : 8 + data.attributes.prof_bonus + data.abilities.con.mod + data.abilities.str.mod,
-        label : "fortitude"
+      fortitude: {
+        value: 8 + data.attributes.prof_bonus + data.abilities.con.mod + data.abilities.str.mod,
+        label: "fortitude"
       },
-      will:{
-        value : 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod,
-        label : "will"
+      will: {
+        value: 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod,
+        label: "will"
       }
     }
-    data.defences=defence;
-    for( let [key,skill] of Object.entries(data.skills)){
-      if (skill.prof===0){
-        skill.roll="1d20"
+    data.defences = defence;
+
+    for (let [key, skill] of Object.entries(data.skills)) {
+      if (skill.prof == 0) {
+        skill.roll = "1d20"
       };
-      if (skill.prof===1){
-        skill.roll="1d20"+data.attributes.prof_die
+      if (skill.prof == 1) {
+        skill.roll = "1d20" + data.attributes.prof_die
       };
-      if (skill.prof===2){
-        skill.roll="1d20"+data.attributes.prof_die+data.attributes.prof_bonus
+      if (skill.prof == 2) {
+        skill.roll = "1d20" + data.attributes.prof_die + data.attributes.prof_bonus
       }
     }
   }
