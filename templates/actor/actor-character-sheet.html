@@ -86,22 +86,12 @@
             </div>
             {{/each}}
           </div>
-          <div class="grid-span-2">
-            {{#each config.skills as |label s|}}
-            {{#with (lookup ../data.skills s) as |skill|}}
-                <li class="skill flexrow {{#if skill.prof}}proficient{{/if}}" data-skill="{{s}}">
-                    <input type="hidden" name="data.skills.{{s}}.prof" value="{{skill.prof}}" data-dtype="Number"/>
-                    <select>
-                      {{#select skill.prof}}
-                      {{#each config.prof as |label key|}}
-                      <option value="key">{{label}}</option>
-                      {{/each}}
-                      {{/select}}
-                    </select>
-                </li>
-            {{/with}}
+          <ul class="grid-span-2">
+            {{#each config.skills as |name sch|}}
+            <li class="flexrow resource" value="{{sch}}">{{localize name}}
+            </li>
             {{/each}}
-          </div>
+          </ul>
         </aside>
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-start-4 grid-span-3">
