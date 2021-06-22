@@ -31,4 +31,29 @@ ARd20.SpellSchool = {
   "ill": "ARd20.SchoolIll",
   "nec": "ARd20.SchoolNec",
   "trs": "ARd20.SchoolTrs"
+};
+ARd20.skills = {
+  "acr": "ARd20.SkillAcr",
+  "ani": "ARd20.SkillAni",
+  "arc": "ARd20.SkillArc",
+  "ath": "ARd20.SkillAth",
+  "dec": "ARd20.SkillDec",
+  "his": "ARd20.SkillHis",
+  "ins": "ARd20.SkillIns",
+  "itm": "ARd20.SkillItm",
+  "inv": "ARd20.SkillInv",
+  "med": "ARd20.SkillMed",
+  "nat": "ARd20.SkillNat",
+  "prc": "ARd20.SkillPrc",
+  "prf": "ARd20.SkillPrf",
+  "per": "ARd20.SkillPer",
+  "rel": "ARd20.SkillRel",
+  "slt": "ARd20.SkillSlt",
+  "ste": "ARd20.SkillSte",
+  "sur": "ARd20.SkillSur"
+},
+ARd20.prof={
+  0:"ARd20.Untrained",
+  1:"ARd20.Basic",
+  2:"ARd20.Master"
 }

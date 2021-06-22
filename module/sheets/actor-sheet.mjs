@@ -38,6 +38,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = actorData.data;
     context.flags = actorData.flags;
+    context.config=CONFIG.ARd20;
 
     // Prepare character data and items.
     if (actorData.type == 'character') {
@@ -70,7 +71,10 @@ export class ARd20ActorSheet extends ActorSheet {
     // Handle ability scores.
     for (let [k, v] of Object.entries(context.data.abilities)) {
       v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
-    }
+    };
+    for (let [k,v] of Object.entries(context.data.skills)){
+      v.label = game.i18n.localize(CONFIG.ARd20.skills[k])??k
+    };
   }
 
   /**

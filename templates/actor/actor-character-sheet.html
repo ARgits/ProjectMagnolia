@@ -86,6 +86,20 @@
             </div>
             {{/each}}
           </div>
+          <div>
+            {{#each data.skills as |skill key|}}
+            <div class="ability flexrow">
+              <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
+              <select name="data.prof">
+                {{#select skill.prof}}
+                {{#each config.prof as |name key|}}
+                <option value="{{key}}">{{localize name}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+            {{/each}}
+          </div>
         </aside>
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-start-4 grid-span-3">
