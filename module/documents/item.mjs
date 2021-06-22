@@ -29,6 +29,7 @@ export class ARd20Item extends Item {
         data.property.basic.v = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
         data.property.master.v = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k
       };
+      
     }
   }
   /**

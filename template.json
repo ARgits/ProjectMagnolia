@@ -182,7 +182,11 @@
         "Basic",
         "Master"
       ],
-      "Damage": "1d4"
+      "Damage":{
+        "untrained":"",
+        "basic":"",
+        "master":""
+      }
     },
     "feature": {
       "templates": [
