@@ -31,11 +31,31 @@
             {{#each config.Prop as |name prop|}}
             <label class="checkbox">
               <input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup ../data.property.untrained
-                prop)}}/>{{name}}
+                prop)}}/>{{localize name}}
             </label>
             {{/each}}
           </div>
+          <div>
+            <label class="flex0">{{localize "ARd20.Basic"}}</label>
+            <div>
+              {{#each config.Prop as |name prop|}}
+              <label class="checkbox">
+                <input type="checkbox" name="data.property.basic.{{prop}}" {{checked (lookup ../data.property.basic
+                  prop)}}/>{{localize name}}
+              </label>
+              {{/each}}
+            </div>
         </div>
+        <div>
+          <label class="flex0">{{localize "ARd20.Master"}}</label>
+          <div>
+            {{#each config.Prop as |name prop|}}
+            <label class="checkbox">
+              <input type="checkbox" name="data.property.master.{{prop}}" {{checked (lookup ../data.property.master
+                prop)}}/>{{localize name}}
+            </label>
+            {{/each}}
+          </div>
       </div>
     </div>
   </section>
