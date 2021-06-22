@@ -74,7 +74,7 @@ export class ARd20ActorSheet extends ActorSheet {
     };
     for (let [k, v] of Object.entries(context.data.skills)) {
       v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k
-      v.hover = CONFIG.ARd20.skills[v.prof];
+      v.hover = CONFIG.ARd20.prof[v.prof];
     };
   }
 
