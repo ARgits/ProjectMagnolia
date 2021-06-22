@@ -44,7 +44,7 @@ export class ARd20ItemSheet extends ItemSheet {
       context.rollData = actor.getRollData();
     }
     if ( itemData.type === "weapon" ) {
-      props.push(...Object.entries(itemData.data.property)
+      props.push(...Object.entries(itemData.property)
         .filter(e => e[1] === true)
         .map(e => CONFIG.ARd20.Prop[e[0]]));
     }
