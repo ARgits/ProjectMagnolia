@@ -23,9 +23,11 @@ export class ARd20Item extends Item {
     if (itemData.type === "spell") {
       labels.school = CONFIG.ARd20.SpellSchool[data.school];
     }
-    if (itemData.type === "weapon"){
-      property.labels = CONFIG.ARd20.WeaponProperty[data.property];
-      for (let [key, prop] of Object.entries(data.property)){
+    if (itemData.type === "weapon") {
+      for (let [k, v] of Object.entries(data.property)) {
+        v.label = game.i18n.localize(CONFIG.ARd20.WeaponProperty[k]) ?? k
+      };
+      for (let [key, prop] of Object.entries(data.property)) {
         prop.untrained = 0;
         prop.basic = 0;
         prop.master = 0;
