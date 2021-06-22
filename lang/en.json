@@ -748,7 +748,7 @@
   "ARd20.Untrained":"Untrained",
   "ARd20.Basic":"Basic",
   "ARd20.Master":"Master",
-  "ARd20.Prop":"Properties",
+  "ARd20.properties":"Properties",
   
   "SETTINGS.5eAllowPolymorphingL": "Allow players to polymorph their own actors.",
   "SETTINGS.5eAllowPolymorphingN": "Allow Polymorphing",
