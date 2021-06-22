@@ -87,9 +87,9 @@
             {{/each}}
           </div>
           <ul class="grid-span-2">
-            {{#each config.skills as |name sch|}}
-            <li class="flexrow resource" value="{{sch}}">
-              {{localize sch.prof}} {{localize name}}
+            {{#each data.skills as |skill key|}}
+            <li class="flexrow resource" value="{{key}}">
+              {{localize key.hover}} {{localize skill}}
             </li>
             {{/each}}
           </ul>
