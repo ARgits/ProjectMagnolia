@@ -28,9 +28,9 @@ export class ARd20Item extends Item {
         v.label = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k
       };
       for (let [key, prop] of Object.entries(data.property)) {
-        prop.untrained = 0;
-        prop.basic = 0;
-        prop.master = 0;
+        prop.untrained = "";
+        prop.basic = "";
+        prop.master = "";
       }
     }
   }
