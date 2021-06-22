@@ -30,8 +30,8 @@
           <div>
             {{#each config.Prop as |name prop|}}
             <label>
-              <input type="checkbox" name="data.property.{{prop}}.untrained" {{checked (lookup ../data.property
-                prop.untrained)}}/>{{name.label}}
+              <input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup ../data.property.untrained
+                prop)}}/>{{name}}
             </label>
             {{/each}}
           </div>
