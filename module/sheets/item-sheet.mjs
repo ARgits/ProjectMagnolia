@@ -38,11 +38,12 @@ export class ARd20ItemSheet extends ItemSheet {
     context.config = CONFIG.ARd20;
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
+    const props = [];
     let actor = this.object?.parent ?? null;
     if (actor) {
       context.rollData = actor.getRollData();
     }
-    if ( itemData.type === "weapon" ) {
+    if (itemData.type === "weapon") {
       props.push(...Object.entries(itemData.data.property)
         .filter(e => e[1] === true)
         .map(e => CONFIG.ARd20.Prop[e[0]]));
