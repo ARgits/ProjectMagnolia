@@ -83,7 +83,7 @@ export class ARd20Actor extends Actor {
 
     for (let [key, skill] of Object.entries(data.skills)) {
       if (skill.prof == 0) {
-        skill.roll = "1d20+"
+        skill.roll = "1d20"
       };
       if (skill.prof == 1) {
         skill.roll = "1d20+" + data.attributes.prof_die
