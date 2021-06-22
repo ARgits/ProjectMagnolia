@@ -89,7 +89,7 @@
           <div>
             {{#each data.skills as |skill key|}}
             <div class="ability flexrow">
-              <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
+              <label for="data.skills.{{key}}.prof" class="resource-label flexlarge align-left" data-roll="{{skill.roll}}" data-label="{{skill.label}}">{{skill.label}}</label>
               <select name="data.prof">
                 {{#select skill.prof}}
                 {{#each config.prof as |name key|}}
