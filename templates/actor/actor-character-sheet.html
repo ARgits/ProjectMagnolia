@@ -10,7 +10,7 @@
           <label for="data.health.value" class="resource-label">Health</label>
           <div class="resource-content flexrow flex-center flex-between">
             <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number" />
-            <span> / </span>
+            <span>/</span>
             <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
           </div>
         </div>
@@ -19,19 +19,19 @@
           <div class="resource-content flexrow flex-center">
             <input type="text" name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" data-dtype="Number" />
             <span>/</span>
-            <span class="resource-content flex-center" data-label="data.attributes.xp.level">{{numberFormat
+            <span data-label="data.attributes.xp.level">{{numberFormat
               data.attributes.xp.level decimals=0 sign=false}}</span>
           </div>
         </div>
         <div class="resource flexcol">
-          <div class="resource flexcol">
+          <div>
             <label for="data.attributes.level" class="resource-label">Level</label>
             <div class="resource-content flexrow flex-center flex-between">
               <span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level
                 decimals=0 sign=false}}</span>
             </div>
           </div>
-          <div class="resource flexcol flex-group-center grid grid-2col">
+          <div class="flex-group-center grid grid-2col">
             <div class="resource-content flexrow flex-center flex-between">
               <label for="data.attributes.prof_bonus" class="resource-label">bonus</label>
               <span class="resource-content flex-center" data-label=" data.attributes.prof_bonus">{{numberFormat
