@@ -32,15 +32,15 @@
       </div>
       <div><label class="resource-label">{{localize "ARd20.Untrained"}}: </label>
         {{#each config.Prop as |name prop|}}
-        {{#if lookup(../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
+        {{#if (lookup ../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
       </div>
       <div><label class="resource-label">{{localize "ARd20.Basic"}}: </label>
         {{#each config.Prop as |name prop|}}
-        {{#if lookup(../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
+        {{#if (lookup ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
       </div>
       <div><label class="resource-label">{{localize "ARd20.Master"}}: </label>
         {{#each config.Prop as |name prop|}}
-        {{#if lookup(../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
+        {{#if (lookup ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
       </div>
     </div>
 
