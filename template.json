@@ -173,7 +173,6 @@
         "Throwing"
       ],
       "property": {
-        "untrained":{
           "aff": {
           },
           "awk": {
@@ -224,9 +223,6 @@
           },
           "ver": {
           }
-        },
-        "basic":{},
-        "master":{}
       },
       "Proficiency": [
         "Untrained",
