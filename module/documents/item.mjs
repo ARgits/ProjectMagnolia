@@ -26,6 +26,7 @@ export class ARd20Item extends Item {
     if (itemData.type === "weapon") {
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
+        v.checked;
       }
       for (let [k, v] of Object.entries(data.property.basic)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
