@@ -173,7 +173,108 @@
         "Throwing"
       ],
       "property": {
-        "untrained":{},
+        "untrained":{
+          "aff": {
+            "label":"",
+            "value":0
+          },
+          "awk": {
+            "label":"",
+            "value":0
+          },
+          "con": {
+            "label":"",
+            "value":0
+          },
+          "bra": {
+            "label":"",
+            "value":0
+          },
+          "def": {
+            "label":"",
+            "value":0
+          },
+          "dis": {
+            "label":"",
+            "value":0
+          },
+          "dou": {
+            "label":"",
+            "value":0
+          },
+          "ent": {
+            "label":"",
+            "value":0
+          },
+          "fin": {
+            "label":"",
+            "value":0
+          },
+          "fir": {
+            "label":"",
+            "value":0
+          },
+          "hea": {
+            "label":"",
+            "value":0
+          },
+          "lau": {
+            "label":"",
+            "value":0
+          },
+          "lig": {
+            "label":"",
+            "value":0
+          },
+          "lun": {
+            "label":"",
+            "value":0
+          },
+          "mel": {
+            "label":"",
+            "value":0
+          },
+          "one": {
+            "label":"",
+            "value":0
+          },
+          "pen": {
+            "label":"",
+            "value":0
+          },
+          "ran": {
+            "label":"",
+            "value":0
+          },
+          "rea": {
+            "label":"",
+            "value":0
+          },
+          "rel": {
+            "label":"",
+            "value":0
+          },
+          "sta": {
+            "label":"",
+            "value":0
+          },
+          "thr": {
+            "label":"",
+            "value":0
+          },
+          "tri": {
+            "label":"",
+            "value":0
+          },
+          "two": {
+            "label":"",
+            "value":0
+          },
+          "ver": {
+            "label":"",
+            "value":0
+          }
+        },
         "basic":{},
         "master":{}
       },
