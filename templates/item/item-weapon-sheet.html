@@ -23,6 +23,7 @@
       {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner
       editable=editable}}
     </div>
+
     {{!-- Info Tab --}}
     <div class="tab" data-group="primary" data-tab="info">
       <div>
@@ -31,17 +32,18 @@
       </div>
       <div><label class="resource-label">{{localize "ARd20.Untrained"}}: </label>
         {{#each data.property.untrained as |name prop|}}
-        {{#if prop}}<span>{{localize name}}</span>{{/if}}
+        {{#if prop}}<span>{{localize name}}</span>{{/if}}{{/each}}
       </div>
       <div><label class="resource-label">{{localize "ARd20.Basic"}}: </label>
         {{#each data.property.basic as |name prop|}}
-        {{#if prop}}<span>{{localize name}}</span>{{/if}}
+        {{#if prop}}<span>{{localize name}}</span>{{/if}}{{/each}}
       </div>
       <div><label class="resource-label">{{localize "ARd20.Master"}}: </label>
         {{#each data.property.master as |name prop|}}
-        {{#if prop}}<span>{{localize name}}</span>{{/if}}
+        {{#if prop}}<span>{{localize name}}</span>{{/if}}{{/each}}
       </div>
     </div>
+
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       <div class="flexcol">
