@@ -50,6 +50,16 @@ export class ARd20ItemSheet extends ItemSheet {
     for (let [k,v] of Object.entries(CONFIG.ARd20.Prop)){
       v = game.i18n.localize(CONFIG.ARd20.Prop[k])
     }
+    for (let v of Object.entries(context.data.property.basic)){
+      if((data.property.untrained[v]==true)&&(v!="awk")){
+      data.property.basic[v]=true;
+        }
+    }
+    for (let v of Object.entries(context.data.property.master)){
+      if((data.property.basic[v]==true)&&(v!="awk")){
+      data.property.master[v]=true;
+      }
+    }
     return context
   }
 
