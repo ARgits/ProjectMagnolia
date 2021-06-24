@@ -24,18 +24,11 @@ export class ARd20Item extends Item {
       labels.school = CONFIG.ARd20.SpellSchool[data.school];
     }
     if (itemData.type === "weapon") {
-      for (let [k, v] of Object.entries(data.property)) {
-        v.label = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k
-        v.untrained;
-        v.basic;
-        v.master;
-       /**  if ((v.untrained === true) && (v !== "awk")) {
-          v.basic = true;
-        };
-        if ((v.basic === true) && (v !== "awk")) {
-          v.master = true;
-        };*/
-      };
+      for (let [k, v] of Object.entries(CONFIG.ARd20.Prop)) {
+        data.property.untrained[v] = game.i18n.localize(CONFIG.ARd20.Prop[k])??k
+        data.property.basic[v] = game.i18n.localize(CONFIG.ARd20.Prop[k])??k
+        data.property.master[v] = game.i18n.localize(CONFIG.ARd20.Prop[k])??k
+      }
     }
   }
   /**

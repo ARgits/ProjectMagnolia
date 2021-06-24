@@ -173,56 +173,9 @@
         "Throwing"
       ],
       "property": {
-          "aff": {
-          },
-          "awk": {
-          },
-          "con": {
-          },
-          "bra": {
-          },
-          "def": {
-          },
-          "dis": {
-          },
-          "dou": {
-          },
-          "ent": {
-          },
-          "fin": {
-          },
-          "fir": {
-          },
-          "hea": {
-          },
-          "lau": {
-          },
-          "lig": {
-          },
-          "lun": {
-          },
-          "mel": {
-          },
-          "one": {
-          },
-          "pen": {
-          },
-          "ran": {
-          },
-          "rea": {
-          },
-          "rel": {
-          },
-          "sta": {
-          },
-          "thr": {
-          },
-          "tri": {
-          },
-          "two": {
-          },
-          "ver": {
-          }
+        "untrained":{},
+        "basic":{},
+        "master":{}
       },
       "Proficiency": [
         "Untrained",
