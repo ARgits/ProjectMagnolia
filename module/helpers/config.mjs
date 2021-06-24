@@ -83,4 +83,22 @@ ARd20.skills = {
     "tri": "ARd20.Trip",
     "two": "ARd20.Two-Handed",
     "ver": "ARd20.Versatile"
+  },
+  ARd20.WeaponType = {
+    "amb":"ARd20.Ambush",
+    "axe":"ARd20.Axe",
+    "blu":"ARd20.Bludgeon",
+    "bow":"ARd20.Bow",
+    "sli":"ARd20.Sling",
+    "cbl":"ARd20.Combat Blade",
+    "cro":"ARd20.Crossbow",
+    "dbl":"ARd20.Dueling Blade",
+    "fir":"ARd20.Firearm",
+    "fla":"ARd20.Flail",
+    "whi":"ARd20.Whip",
+    "ham":"ARd20.Hammer",
+    "pic":"ARd20.Pick",
+    "pol":"ARd20.Polearm",
+    "spe":"ARd20.Spear",
+    "thr":"ARd20.Throwing"
   }

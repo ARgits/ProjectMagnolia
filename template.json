@@ -154,24 +154,7 @@
       "quantity": 1,
       "weight": 0,
       "equiped": 0,
-      "type": [
-        "Ambush",
-        "Axe",
-        "Bludgeon",
-        "Bow",
-        "Sling",
-        "Combat Blade",
-        "Crossbow",
-        "Dueling Blade",
-        "Firearm",
-        "Flail",
-        "Whip",
-        "Hammer",
-        "Pick",
-        "Polearm",
-        "Spear",
-        "Throwing"
-      ],
+      "type": "",
       "property": {
         "untrained": {
           "aff": "",
