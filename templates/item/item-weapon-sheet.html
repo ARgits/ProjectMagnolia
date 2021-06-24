@@ -3,7 +3,7 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
-      <label class="resource-label">Weapon Type</label><span>{{data.type}}</span>
+      <label class="resource-label">Weapon Type: </label><span>{{localize data.type}}</span>
     </div>
   </header>
 
@@ -11,7 +11,9 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="attributes">Data</a>
+    {{#if item.isGM}}
     <a class="item" data-tab="description">Shit</a>
+    {{/if}}
   </nav>
 
   {{!-- Sheet Body --}}

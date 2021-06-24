@@ -46,7 +46,7 @@ export class ARd20ItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
-    itemData.isGM = game.user.isGM;
+    item.isGM = game.user.isGM;
     for (let [k,v] of Object.entries(CONFIG.ARd20.Prop)){
       v = game.i18n.localize(CONFIG.ARd20.Prop[k])
     }
