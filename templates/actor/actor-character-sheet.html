@@ -88,14 +88,10 @@
           </div>
           <div class="grid-span-2">
             {{#each data.skills as |skill key|}}
-            <div class="grid grid-2col flexrow">
+            <div class="flexrow">
               <div>
                 <label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable"
-                  data-roll="{{skill.roll}}" data-label="{{skill.hover}}">{{skill.hover}}</label>
-              </div>
-              <div>
-                <label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable"
-                  data-roll="{{skill.roll}}" data-label="{{skill.label}}">{{skill.label}}</label>
+                  data-roll="{{skill.roll}}" data-label="{{skill.hover}}">{{skill.hover}}{{skill.hover}}</label>
               </div>
             </div>
             {{/each}}
