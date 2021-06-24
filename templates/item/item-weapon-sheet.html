@@ -49,11 +49,16 @@
           <label>{{localize "ARd20.Basic"}}</label>
           <div>
             {{#each config.Prop as |name prop|}}
-            {{#if data,property.untrained.prop}}
-            <span data-label="">{{checked (lookup ../data.property prop)}}</span>{else}}<label class="checkbox">
+            {{#if data.property.untrained.prop}}
+            <span data-label="">
+              {{checked (lookup ../data.property.basic prop.value)}}
+            </span>
+            {{else}}
+            <label class="checkbox">
               <input type="checkbox" name="data.property.basic.{{prop}}" {{checked (lookup ../data.property.basic
                 prop.value)}} />{{localize name}
-            </label>{{/if}}
+            </label>
+            {{/if}}
             {{/each}}
           </div>
           <div class="grid grid-6col flex-group-center">
