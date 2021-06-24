@@ -31,7 +31,7 @@
             {{#each config.Prop as |name prop|}}
             <label class="checkbox">
               <input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup
-                ../data.property.untrained prop)}} />{{localize name}}
+                ../data.property.untrained prop.value)}} />{{localize name}}
             </label>
             {{/each}}
           </div>
@@ -49,10 +49,11 @@
           <label>{{localize "ARd20.Basic"}}</label>
           <div>
             {{#each config.Prop as |name prop|}}
-            <label class="checkbox">
+            {{#if data,property.untrained.prop}}
+            <span data-label="">{{checked (lookup ../data.property prop)}}</span>{else}}<label class="checkbox">
               <input type="checkbox" name="data.property.basic.{{prop}}" {{checked (lookup ../data.property.basic
-                prop)}} />{{localize name}}
-            </label>
+                prop.value)}} />{{localize name}
+            </label>{{/if}}
             {{/each}}
           </div>
           <div class="grid grid-6col flex-group-center">
@@ -71,22 +72,19 @@
             {{#each config.Prop as |name prop|}}
             <label class="checkbox">
               <input type="checkbox" name="data.property.master.{{prop}}" {{checked (lookup ../data.property.master
-                prop)}} />{{localize name}}
-            </label>
-            {{/each}}
-          </div>
-          <div class="grid grid-6col flex-group-center">
-            Damage<input type="text" name="data.damage.master">
-            {{#if data.property.master.ran}}
-            Range<input type="text" name="master.range.field">
-            {{/if}}
-            {{#if data.property.master.ver}}
-            Versatile Damage<input type="text" name="master.versatile_damage.field">
-            {{/if}}
+                prop.value) {{/each}} </div>
+              <div class="grid grid-6col flex-group-center">
+                Damage<input type="text" name="data.damage.master">
+                {{#if data.property.master.ran}}
+                Range<input type="text" name="master.range.field">
+                {{/if}}
+                {{#if data.property.master.ver}}
+                Versatile Damage<input type="text" name="master.versatile_damage.field">
+                {{/if}}
+              </div>
           </div>
         </div>
       </div>
-    </div>
   </section>
 
 </form>

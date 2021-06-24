@@ -25,17 +25,20 @@ export class ARd20Item extends Item {
     }
     if (itemData.type === "weapon") {
       for (let [k, v] of Object.entries(CONFIG.ARd20.Prop)) {
-        data.property.untrained.v = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
-        data.property.basic.v = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
-        if((data.property.untrained.v==true)&&(v!="awk")){
-          data.property.basic.v=true
-        };
-        data.property.master.v = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
-        if((data.property.basic.v==true)&&(v!="awk")){
-          data.property.master.v=true
-        };
+        data.property.untrained.v.label = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
+        data.property.untrained.v.value = Boolean();
+        data.property.basic.v.label = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
+        data.property.basic.v.value = Boolean();
+        //if((data.property.untrained.v==true)&&(v!="awk")){
+        //  data.property.basic.v=true
+        //};
+        data.property.master.v.label = game.i18n.localize(CONFIG.ARd20.Prop[k]) ?? k;
+        data.property.master.v.value = Boolean;
+        //if((data.property.basic.v==true)&&(v!="awk")){
+        //  data.property.master.v=true
+        //};
       };
-      
+
     }
   }
   /**
