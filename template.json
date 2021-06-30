@@ -238,12 +238,12 @@
           "ver": ""
         }
       },
-      "Proficiency": [
+      "proficiency": [
         "Untrained",
         "Basic",
         "Master"
       ],
-      "Damage": {
+      "damage": {
         "untrained": "",
         "basic": "",
         "master": ""

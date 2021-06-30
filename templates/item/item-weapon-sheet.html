@@ -39,10 +39,10 @@
 					{{#if (lookup ../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
 				</div>
 				<div>
-					<label class="resource-label">Damage: </label>
+					<label class="resource-label rollable" data-roll="@data.damage.untrained">Damage: </label>
 					<span>{{data.damage.untrained}}</span>
 				</div>
-				<span></span>
+				{{#if data.property.untrained.ver}}
 			</div>
 			<hr>
 			<div>
@@ -52,7 +52,7 @@
 					{{#each config.Prop as |name prop|}}
 					{{#if (lookup ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}</div>
 				<div>
-					<label class="resource-label">Damage: </label>
+					<label class="resource-label rollable" data-roll="@data.damage.basic"">Damage: </label>
 					<span>{{data.damage.basic}}</span>
 				</div>
 			</div>
@@ -65,7 +65,7 @@
 					{{#if (lookup ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
 				</div>
 				<div>
-					<label class="resource-label">Damage: </label>
+					<label class="resource-label rollable" data-roll="@data.damage.master"">Damage: </label>
 					<span>{{data.damage.master}}</span>
 				</div>
 			</div>
