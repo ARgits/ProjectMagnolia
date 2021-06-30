@@ -65,7 +65,7 @@
 		<div class="tab features" data-group="primary" data-tab="features">
 			<section class="grid grid-6col flexcol">
 				<aside class="ability grid grid-3col">
-					<div class="ability flex-group-center grid-span-2">
+					<details><div class="ability flex-group-center grid-span-2"><summary>Stats</summary>
 						{{#each data.abilities as |ability key|}}
 						<div class="ability flexrow">
 							<label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
@@ -75,7 +75,7 @@
                 data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
 						</div>
 						{{/each}}
-					</div>
+					</div></details>
 					<div>
 						{{#each data.defences as |defence key|}}
 						<div class="ability flexrow">
