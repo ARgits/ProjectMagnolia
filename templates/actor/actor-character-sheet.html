@@ -25,9 +25,12 @@
 						</div>
 						<div class="resource flexcol grid-span-3">
 							<div>
-								<progress max="data.attributes.xp.level" value="{{data.attributes.xp.used}}"></progress><label for="data.attributes.level" class="resource-label">Level</label>
+								<progress max="{{data.attributes.xp.level}}"
+									value="{{data.attributes.xp.used}}"></progress>
+								<span data-label="data.attributes.xp.level">{{numberFormat
+              data.attributes.xp.level decimals=0 sign=false}}</span>
 								<div class="resource-content flexrow flex-center flex-between">
-									<span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level
+									<label for="data.attributes.level" class="resource-label">Level </label><span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level
                 decimals=0 sign=false}}</span>
 								</div>
 							</div>
