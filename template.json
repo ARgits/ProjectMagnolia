@@ -247,6 +247,19 @@
         "untrained": "",
         "basic": "",
         "master": ""
+      },
+      "range":{
+        "untrained":{
+          "min":"",
+          "max":""
+        },
+        "basic":{
+          "min":"",
+          "max":""
+        },
+        "master":{
+          
+        }
       }
     },
     "feature": {
