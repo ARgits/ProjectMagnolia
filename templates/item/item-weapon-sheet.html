@@ -58,11 +58,15 @@
 			</div>
 			<hr>
 			<div>
-				<h3 class="resource-label">{{localize "ARd20.Master"}}</h3>
+				<h2 class="resource-label">{{localize "ARd20.Master"}}</h2>
 				<div>
 					<label class="resource-label">Properties:</label>
 					{{#each config.Prop as |name prop|}}
 					{{#if (lookup ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
+				</div>
+				<div>
+					<label class="resource-label">Damage: </label>
+					<span>{{data.damage.master}}</span>
 				</div>
 			</div>
 		</div>
