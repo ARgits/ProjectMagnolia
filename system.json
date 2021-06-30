@@ -26,7 +26,7 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "https://gitlab.com/ARgits/boilerplate",
-  "manifest": "https://gitlab.com/ARgits/boilerplate/-/raw/master/system.json",
-  "download": "https://gitlab.com/ARgits/boilerplate/-/archive/master/boilerplate-master.zip",
+  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/master/system.json",
+  "download": "https://gitlab.com/ARgits/ard20/-/archive/master/ard20-master.zip",
   "license": "LICENSE.txt"
 }
