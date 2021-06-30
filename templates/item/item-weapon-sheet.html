@@ -83,9 +83,9 @@
 				</div>
 				<div>
 					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
-					<div class="flex2">
+					<div>
 						<label>{{localize "ARd20.Untrained"}}</label>
-						<div>
+						<div class="grid grid-6col">
 							{{#each config.Prop as |name prop|}}
 							<label class="checkbox">
                 <input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup
@@ -103,9 +103,9 @@
               {{/if}}
             </div>
 						</div>
-						<div class="flex2">
+						<div>
 							<label>{{localize "ARd20.Basic"}}</label>
-							<div>
+							<div class="grid grid-6col">
 								{{#each config.Prop as |name prop|}}
 								{{#if data.property.untrained.prop}}
 								<span>
@@ -129,9 +129,9 @@
               {{/if}}
             </div>
 							</div>
-							<div class="flex2">
+							<div>
 								<label>{{localize "ARd20.Master"}}</label>
-								<div>
+								<div class="grid grid-6col">
 									{{#each config.Prop as |name prop|}}
 									<label class="checkbox">
                 <input type="checkbox" name="data.property.master.{{prop}}" {{checked (lookup ../data.property.master
