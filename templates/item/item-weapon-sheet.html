@@ -30,7 +30,8 @@
 				<label class="resource-label">Weapon Type: </label>
 				<span>{{localize labels.type}}</span>
 			</div>
-			<div><label class="resource-label">{{localize "ARd20.Untrained"}}: </label>
+			<hr>
+			<div><h2 class="resource-label">{{localize "ARd20.Untrained"}}</h2>
 				<div>
 					<label class="resource-label">Properties:</label>
 					{{#each config.Prop as |name prop|}}
@@ -42,7 +43,8 @@
 				</div>
 				<span></span>
 			</div>
-			<div><label class="resource-label">{{localize "ARd20.Basic"}}: </label>
+			<hr>
+			<div><h2 class="resource-label">{{localize "ARd20.Basic"}}</h2>
 				<div>{{#each config.Prop as |name prop|}}
 					{{#if (lookup ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}</div>
 				<div>
