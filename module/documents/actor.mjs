@@ -68,15 +68,15 @@ export class ARd20Actor extends Actor {
     let defence = {
       reflex: {
         value: 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod,
-        label: "reflex"
+        label: "Reflex"
       },
       fortitude: {
         value: 8 + data.attributes.prof_bonus + data.abilities.con.mod + data.abilities.str.mod,
-        label: "fortitude"
+        label: "Fortitude"
       },
       will: {
         value: 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod,
-        label: "will"
+        label: "Will"
       }
     }
     data.defences = defence;

@@ -29,9 +29,15 @@ export class ARd20Item extends Item {
       }
       for (let [k, v] of Object.entries(data.property.basic)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
+        if (data.property.untrained[v]===true){
+          data.property.basic[v]=true
+        }
       }
       for (let [k, v] of Object.entries(data.property.master)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
+        if (data.property.basic[v]===true){
+          data.property.master[v]=true
+        }
       }
       labels.type = CONFIG.ARd20.WeaponType[data.type];
     }
