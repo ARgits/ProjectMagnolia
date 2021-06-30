@@ -27,11 +27,11 @@ export class ARd20Item extends Item {
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
         if ((v===true)&&(k==="ver")){
-          data.damage.ver.untrained="";
+          data.damage.ver.untrained;
         }
         if ((v===true)&&(k==="ran")){
-          data.range.untrained.min=""
-          data.range.untrained.max=""
+          data.range.untrained.min
+          data.range.untrained.max
         }
       }
       for (let [k, v] of Object.entries(data.property.basic)) {
@@ -40,11 +40,11 @@ export class ARd20Item extends Item {
           data.property.basic[k]=true
         }
         if ((v===true)&&(k==="ver")){
-          data.damage.ver.basic="";
+          data.damage.ver.basic;
         }
         if ((v===true)&&(k==="ran")){
-          data.range.basic.min=""
-          data.range.basic.max=""
+          data.range.basic.min
+          data.range.basic.max
         }
       }
       for (let [k, v] of Object.entries(data.property.master)) {
@@ -53,11 +53,11 @@ export class ARd20Item extends Item {
           data.property.master[k]=true
         }
         if ((v===true)&&(k==="ver")){
-          data.damage.ver.master="";
+          data.damage.ver.master;
         }
         if ((v===true)&&(k==="ran")){
-          data.range.master.min=""
-          data.range.master.max=""
+          data.range.master.min
+          data.range.master.max
         }
       }
       labels.type = CONFIG.ARd20.WeaponType[data.type];
