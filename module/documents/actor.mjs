@@ -61,6 +61,7 @@ export class ARd20Actor extends Actor {
       if (data.attributes.xp.used >= levels[i - 1] && data.attributes.xp.used < levels[i]) {
         data.attributes.level = i;
         data.attributes.xp.level = levels[i]
+        data.attributes.xp.level_min = levels[i-1]
       }
     }
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
