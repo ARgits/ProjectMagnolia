@@ -32,47 +32,46 @@
 			</div>
 			<hr>
 			<details>
-				<summary><h2 class="resource-label">
-						{{localize "ARd20.Untrained"}}</h2></summary>
-					<div>
-						<label class="resource-label">Properties:</label>
-						{{#each config.Prop as |name prop|}}
-						{{#if (lookup ../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-					</div>
-					<div>
-						<label class="resource-label rollable" data-roll="@damage.untrained">Damage: </label>
-						<span>{{data.damage.untrained}}</span>
-					</div>
-				</div></details>
-				<hr>
-				<h2 class="resource-label">{{localize "ARd20.Basic"}}</h2>
-				<div class="panel-collapse collapse" id="properties2">
-					<div>
-						<label class="resource-label">Properties:</label>
-						{{#each config.Prop as |name prop|}}
-						{{#if (lookup ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}</div>
-					<div>
-						<label class="resource-label rollable" data-roll="@damage.basic">Damage: </label>
-						<span>{{data.damage.basic}}</span>
-					</div>
-				</div>
-				<hr>
+				<summary>
+					{{localize "ARd20.Untrained"}}</summary>
 				<div>
-					<h2 class="resource-label"><a data-toggle="collapse" data-parent="#property"
-							href="#properties3">{{localize "ARd20.Master"}}</a></h2>
-					<div class="panel-collapse collapse" id="properties3">
-						<div>
-							<label class="resource-label">Properties:</label>
-							{{#each config.Prop as |name prop|}}
-							{{#if (lookup ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-						</div>
-						<div>
-							<label class="resource-label rollable" data-roll="@damage.master">Damage: </label>
-							<span>{{data.damage.master}}</span>
-						</div>
+					<label class="resource-label">Properties:</label>
+					{{#each config.Prop as |name prop|}}
+					{{#if (lookup ../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
+				</div>
+				<div>
+					<label class="resource-label rollable" data-roll="@damage.untrained">Damage: </label>
+					<span>{{data.damage.untrained}}</span>
+				</div>
+			</details>
+			<hr>
+			<details>
+				<summary>{{localize "ARd20.Basic"}}</summary>
+				<div>
+					<label class="resource-label">Properties:</label>
+					{{#each config.Prop as |name prop|}}
+					{{#if (lookup ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}</div>
+				<div>
+					<label class="resource-label rollable" data-roll="@damage.basic">Damage: </label>
+					<span>{{data.damage.basic}}</span>
+				</div>
+			</details>
+			<hr>
+			<details>
+				<summary>
+					{{localize "ARd20.Master"}}</summary>
+				<div class="panel-collapse collapse" id="properties3">
+					<div>
+						<label class="resource-label">Properties:</label>
+						{{#each config.Prop as |name prop|}}
+						{{#if (lookup ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
+					</div>
+					<div>
+						<label class="resource-label rollable" data-roll="@damage.master">Damage: </label>
+						<span>{{data.damage.master}}</span>
 					</div>
 				</div>
-			</div>
+			</details>
 		</div>
 		{{!-- Attributes Tab --}}
 		<div class="tab attributes" data-group="primary" data-tab="attributes">
