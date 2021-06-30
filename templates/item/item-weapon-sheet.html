@@ -31,10 +31,9 @@
 				<span>{{localize labels.type}}</span>
 			</div>
 			<hr>
-			<div class="panel-group" id="property">
-				<h2 class="resource-label"><a data-toggle="collapse" data-parent="#property" href="#properties1">
-						{{localize "ARd20.Untrained"}}</a></h2>
-				<div class="panel-collapse collapse in" id="properties1">
+			<details>
+				<summary><h2 class="resource-label">
+						{{localize "ARd20.Untrained"}}</h2></summary>
 					<div>
 						<label class="resource-label">Properties:</label>
 						{{#each config.Prop as |name prop|}}
@@ -44,10 +43,9 @@
 						<label class="resource-label rollable" data-roll="@damage.untrained">Damage: </label>
 						<span>{{data.damage.untrained}}</span>
 					</div>
-				</div>
+				</div></details>
 				<hr>
-				<h2 class="resource-label"><a data-toggle="collapse" data-parent="#property"
-						href="#properties2">{{localize "ARd20.Basic"}}</a></h2>
+				<h2 class="resource-label">{{localize "ARd20.Basic"}}</h2>
 				<div class="panel-collapse collapse" id="properties2">
 					<div>
 						<label class="resource-label">Properties:</label>
