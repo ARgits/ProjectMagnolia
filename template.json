@@ -244,10 +244,21 @@
         "Master"
       ],
       "damage": {
-        "untrained": "",
-        "basic": "",
-        "master": ""
-      },
+        "common":{
+          "untrained": "",
+          "basic": "",
+          "master": ""
+        },
+        "ver":{
+          "untrained": "",
+          "basic": "",
+          "master": ""
+        },
+        "crit"::{
+          "untrained": "",
+          "basic": "",
+          "master": ""
+        },
       "range":{
         "untrained":{
           "min":"",
@@ -258,7 +269,8 @@
           "max":""
         },
         "master":{
-          
+          "min":"",
+          "max":""         
         }
       }
     },

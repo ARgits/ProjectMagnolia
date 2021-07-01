@@ -26,38 +26,17 @@ export class ARd20Item extends Item {
     if (itemData.type === "weapon") {
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
-        if ((v===true)&&(k==="ver")){
-          data.damage.ver.untrained;
-        }
-        if ((v===true)&&(k==="ran")){
-          data.range.untrained.min
-          data.range.untrained.max
-        }
       }
       for (let [k, v] of Object.entries(data.property.basic)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
         if ((data.property.untrained[k]===true)&&(k!="awk")){
           data.property.basic[k]=true
         }
-        if ((v===true)&&(k==="ver")){
-          data.damage.ver.basic;
-        }
-        if ((v===true)&&(k==="ran")){
-          data.range.basic.min
-          data.range.basic.max
-        }
       }
       for (let [k, v] of Object.entries(data.property.master)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
         if ((data.property.basic[k]===true)&&(k!="awk")){
           data.property.master[k]=true
-        }
-        if ((v===true)&&(k==="ver")){
-          data.damage.ver.master;
-        }
-        if ((v===true)&&(k==="ran")){
-          data.range.master.min
-          data.range.master.max
         }
       }
       labels.type = CONFIG.ARd20.WeaponType[data.type];
