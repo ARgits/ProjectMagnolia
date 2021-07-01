@@ -52,9 +52,9 @@
 				{{#if data.property.untrained.ran}}
 				<div>
 					<label class="resource-label">Range: </label>
-					<span>{{data.range.untrained.min}}</span>
+					<span>{{numberFormat data.range.untrained.min decimals=0 sign=false}}</span>
 					<span>/</span>
-					<span>{{data.range.untrained.max}}</span>
+					<span>{{numberFormat data.range.untrained.max decimals=0 sign=false}}</span>
 				</div>
 				{{/if}}
 			</details>
@@ -74,7 +74,7 @@
 			<details>
 				<summary>
 					{{localize "ARd20.Master"}}</summary>
-				<div class="panel-collapse collapse" id="properties3">
+				<div>
 					<div>
 						<label class="resource-label">Properties:</label>
 						{{#each config.Prop as |name prop|}}
