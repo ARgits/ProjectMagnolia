@@ -64,8 +64,8 @@ export class ARd20Actor extends Actor {
         data.attributes.xp.level_min = levels[i-1]
       }
     }
-    data.attributes.xp.bar.max=data.attributes.xp.level-data.attributes.xp.level_min;
-    data.attributes.xp.bat.min=data.attributes.xp.used-data.attributes.xp.level_min;
+    data.attributes.xp.bar_max=data.attributes.xp.level-data.attributes.xp.level_min;
+    data.attributes.xp.bat_min=data.attributes.xp.used-data.attributes.xp.level_min;
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
     data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
     let defence = {
