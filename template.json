@@ -238,11 +238,7 @@
           "ver": ""
         }
       },
-      "proficiency": [
-        "Untrained",
-        "Basic",
-        "Master"
-      ],
+      "proficiency":"",
       "damage": {
         "common": {
           "untrained": "1d4",
@@ -269,10 +265,10 @@
           "max": 90
         }
       },
-      "deflect":{
-        "untrained":"",
-        "basic":"",
-        "master":""
+      "deflect": {
+        "untrained": "",
+        "basic": "",
+        "master": ""
       }
     },
     "feature": {

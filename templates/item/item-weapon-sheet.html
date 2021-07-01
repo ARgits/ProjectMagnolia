@@ -29,6 +29,8 @@
 			<div>
 				<label class="resource-label">Weapon Type: </label>
 				<span>{{localize labels.type}}</span>
+				<label class="resource-label">Proficiency: </label>
+				<span>{{data.proficiency}}</span>
 			</div>
 			<hr>
 			<details>
@@ -138,6 +140,7 @@
 		{{!-- Attributes Tab --}}
 		<div class="tab attributes" data-group="primary" data-tab="attributes">
 			<div class="flexcol">
+				<div class="grid grid-2col">
 				<div>
 					<select name="data.type">
             {{#select data.type}}
@@ -146,6 +149,18 @@
             {{/each}}
             {{/select}}
           </select>
+				</div>
+				<div>
+					<div>
+					<select name="data.proficiency">
+            {{#select data.proficiency}}
+            {{#each config.prof as |name sch|}}
+            <option value="{{sch}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+				</div>					
+				</div>
 				</div>
 				<div>
 					<label class="flexlarge">{{localize "ARd20.properties"}}</label>

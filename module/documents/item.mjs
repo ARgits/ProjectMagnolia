@@ -40,6 +40,7 @@ export class ARd20Item extends Item {
         }
       }
       labels.type = CONFIG.ARd20.WeaponType[data.type];
+      labels.prof = CONFIG.ARd20.prof[data.proficiency];
     }
   }
   /**
