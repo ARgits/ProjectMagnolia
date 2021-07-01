@@ -56,6 +56,7 @@
 		{{!-- Default tab is specified in actor-sheet.mjs --}}
 		<a class="item" data-tab="features">Features</a>
 		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="weapon">Weapons</a>
 		<a class="item" data-tab="items">Items</a>
 		<a class="item" data-tab="spells">Spells</a>
 		<a class="item" data-tab="effects">Effects</a>
@@ -118,6 +119,11 @@
       the rollData property. --}}
       {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner
       editable=editable}}
+    </div>
+
+    {{!-- Owned Weapon Tab --}}
+    <div class="tab items" data-group="primary" data-tab="weapons">
+      {{> "systems/ard20/templates/actor/parts/actor-weapon.html"}}
     </div>
 
     {{!-- Owned Items Tab --}}

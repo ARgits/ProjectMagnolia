@@ -89,6 +89,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Initialize containers.
     const gear = [];
     const features = [];
+    const weapons = [];
     const spells = {
       0: [],
       1: [],
@@ -119,12 +120,16 @@ export class ARd20ActorSheet extends ActorSheet {
           spells[i.data.spellLevel].push(i);
         }
       }
+      else if (i.type==='weapon'){
+        weapons.push(i);
+      }
     }
 
     // Assign and return
     context.gear = gear;
     context.features = features;
     context.spells = spells;
+    context.weapons = weapons;
   }
 
   /* -------------------------------------------- */
