@@ -62,6 +62,8 @@ export class ARd20Actor extends Actor {
         data.attributes.level = i;
         data.attributes.xp.level = levels[i]
         data.attributes.xp.level_min = levels[i-1]
+        data.attributes.xp.level_bar.max=levels[i]-levels[i-1]
+        data.attibutes.xp.level_bar.min=levels[i-1]-data.attributes.xp.used
       }
     }
     data.attributes.xp.proggress_max=data.attributes.xp.level-data.attributes.xp.level_min
