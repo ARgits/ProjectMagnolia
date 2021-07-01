@@ -244,34 +244,34 @@
         "Master"
       ],
       "damage": {
-        "common":{
+        "common": {
           "untrained": "",
           "basic": "",
           "master": ""
         },
-        "ver":{
+        "ver": {
           "untrained": "",
           "basic": "",
           "master": ""
         },
-        "crit":{
+        "crit": {
           "untrained": "",
           "basic": "",
           "master": ""
         }
       },
-      "range":{
-        "untrained":{
-          "min":0,
-          "max":0
+      "range": {
+        "untrained": {
+          "min": 0,
+          "max": 0
         },
-        "basic":{
-          "min":0,
-          "max":0
+        "basic": {
+          "min": 0,
+          "max": 0
         },
-        "master":{
-          "min":0,
-          "max":0         
+        "master": {
+          "min": 0,
+          "max": 0
         }
       }
     },
