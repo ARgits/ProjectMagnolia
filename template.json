@@ -254,11 +254,12 @@
           "basic": "",
           "master": ""
         },
-        "crit"::{
+        "crit":{
           "untrained": "",
           "basic": "",
           "master": ""
-        },
+        }
+      },
       "range":{
         "untrained":{
           "min":"",
