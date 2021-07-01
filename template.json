@@ -262,16 +262,16 @@
       },
       "range":{
         "untrained":{
-          "min":"",
-          "max":""
+          "min":0,
+          "max":0
         },
         "basic":{
-          "min":"",
-          "max":""
+          "min":0,
+          "max":0
         },
         "master":{
-          "min":"",
-          "max":""         
+          "min":0,
+          "max":0         
         }
       }
     },
