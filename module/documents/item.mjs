@@ -41,7 +41,14 @@ export class ARd20Item extends Item {
       }
       labels.type = CONFIG.ARd20.WeaponType[data.type];
       labels.prof = CONFIG.ARd20.prof[data.proficiency];
-      
+      if (data.property[data.proficiency].fin===true){
+        atk.abil=actorData.abilities.dex.mod+2;
+      }else if (data.property[data.proficiency].hea===true){
+        atk.abil=actorData.abilities.dex.mod-2;
+      }else{
+        atk.abil=actorData.abilities.dex.mod
+      }
+      itemData.formula="1d20+"atk.abil;
     }
   }
   /**
