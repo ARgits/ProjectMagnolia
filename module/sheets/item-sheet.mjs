@@ -47,17 +47,19 @@ export class ARd20ItemSheet extends ItemSheet {
     context.data = itemData.data;
     context.flags = itemData.flags;
     context.item.isGM = game.user.isGM;
-    for (let [k,v] of Object.entries(CONFIG.ARd20.Prop)){
+    if(itemData.type==="weapon"){
+      for (let [k,v] of Object.entries(CONFIG.ARd20.Prop)){
       v = game.i18n.localize(CONFIG.ARd20.Prop[k])
-    }
-    for (let v of Object.entries(context.data.property.basic)){
-      if((context.data.property.untrained[v]==true)&&(v!="awk")){
-      data.property.basic[v]=true;
+      }
+      for (let v of Object.entries(context.data.property.basic)){
+        if((context.data.property.untrained[v]==true)&&(v!="awk")){
+        data.property.basic[v]=true;
+         }
+      }
+      for (let v of Object.entries(context.data.property.master)){
+        if((context.data.property.basic[v]==true)&&(v!="awk")){
+        data.property.master[v]=true;
         }
-    }
-    for (let v of Object.entries(context.data.property.master)){
-      if((context.data.property.basic[v]==true)&&(v!="awk")){
-      data.property.master[v]=true;
       }
     }
     return context
