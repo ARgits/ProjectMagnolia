@@ -238,7 +238,7 @@
           "ver": ""
         }
       },
-      "proficiency":"",
+      "proficiency":0,
       "damage": {
         "common": {
           "untrained": "1d4",
