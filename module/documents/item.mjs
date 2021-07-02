@@ -42,17 +42,19 @@ export class ARd20Item extends Item {
       labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
       data.prof.label=labels.prof
       data.type.label=labels.type
-      let atk={};
-      if(data.property[data.prof.label.toLowerCase()].fin===true){
-        atk.abil=2+actorData?.dex?.mod ?? 2;
+      if (isOwned){
+        let atk={};
+        if(data.property[data.prof.label.toLowerCase()].fin===true){
+          atk.abil=2+actorData?.dex?.mod ?? 2;
+        }
+        else if(data.property[data.prof.label.toLowerCase()].hea===true){
+          atk.abil=-2+actorData?.dex?.mod ?? -2;
+        }
+        else{
+          atk.abil=actorData?.dex?.mod
+        }
+        data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+actorData?.str?.mod
       }
-      else if(data.property[data.prof.label.toLowerCase()].hea===true){
-        atk.abil=-2+actorData?.dex?.mod ?? -2;
-      }
-      else{
-        atk.abil=actorData?.dex?.mod
-      }
-      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+actorData?.data?.str?.mod ?? data.damage.common[data.prof.label.toLowerCase()];
     }
   }
   /**
