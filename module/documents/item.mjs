@@ -41,7 +41,7 @@ export class ARd20Item extends Item {
       }
       labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type])??CONFIG.ARd20.WeaponType[data.type];
       labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
-      prof_label=labels.prof;
+      let prof_label=labels.prof;
       prof_label=prof_label.toLowerCase();
       let atk={};
       if(data.property[data.prof.label].fin===true){
