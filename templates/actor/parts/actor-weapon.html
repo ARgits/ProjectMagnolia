@@ -19,7 +19,7 @@
       {{log item}}
       <div class="item-prop">{{item.data.type.label}}</div>
       <div class="item-prop">{{item.data.prof.label}}</div>
-      <div class="item-prop rollable" data-roll="{{item.data.damage.common.current}}">{{item.data.damage.common.current}}</div>
+      <div class="item-prop rollable" data-roll="{{item.data.damage.common.current}}">{{item.data.damage.common.current}}+{{data.abilities.str.mod}}</div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
