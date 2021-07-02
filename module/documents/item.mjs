@@ -16,14 +16,9 @@ export class ARd20Item extends Item {
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
-    if (this.actor){
-    const actorData = this.actor.data}
-    else {
-      actorData=null
-    }
+    const actorData = this.actor ? this.actor.data:{}
     const data = itemData.data;
     const labels = this.labels = {};
-
     if (itemData.type === "spell") {
       labels.school = CONFIG.ARd20.SpellSchool[data.school];
     }
@@ -49,15 +44,15 @@ export class ARd20Item extends Item {
       data.type.label=labels.type
       let atk={};
       if(data.property[data.prof.label.toLowerCase()].fin===true){
-        atk.abil=2+actorData.dex.mod ?? 2;
+        atk.abil=2+actorData?.dex?.mod ?? 2;
       }
       else if(data.property[data.prof.label.toLowerCase()].hea===true){
-        atk.abil=-2+actorData.dex.mod ?? -2;
+        atk.abil=-2+actorData?.dex?.mod ?? -2;
       }
       else{
         atk.abil=actorData?.dex?.mod
       }
-      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+actorData.data.str.mod ?? data.damage.common[data.prof.label.toLowerCase()];
+      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+actorData?.data?.str?.mod ?? data.damage.common[data.prof.label.toLowerCase()];
     }
   }
   /**
