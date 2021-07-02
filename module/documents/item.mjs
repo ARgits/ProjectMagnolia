@@ -40,22 +40,8 @@ export class ARd20Item extends Item {
         }
       }
       labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type])??CONFIG.ARd20.WeaponType[data.type];
-      labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.proficiency])??CONFIG.ARd20.prof[data.proficiency];
-      for (let [k,v] of Object.entries(CONFIG.ARd20.prof)){
-        v=game.i18n.localize(CONFIG.ARd20.prof[k])
-        if (k===data.proficiency){
-          if (data.property[v].fin===true){
-            atk.abil=actorData.abilities.dex.mod+2;
-          }else if (data.property[v].hea===true){
-            atk.abil=actorData.abilities.dex.mod-2;
-          }else{
-            atk.abil=actorData.abilities.dex.mod
-            }
-      itemData.formula="1d20+"+atk.abil;
-      data.damage.common.current=data.damage.common[v]
-      data.damage.ver.current=data.damage.ver[v]
-        }
-      }
+      labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
+      data.prof.label=labels.prof;
     }
   }
   /**
