@@ -44,11 +44,11 @@ export class ARd20Item extends Item {
       data.prof.label=labels.prof.toLowerCase();
       let atk={};
       if(data.property[data.prof.label].fin===true){
-        atk.abil=actorData.abilities.dex.mod+2
+        atk.abil=actorData.dex.mod+2
       }else if(data.property[data.prof.label].hea===true){
-        atk.abil=actorData.abilities.dex.mod-2
+        atk.abil=actorData.dex.mod-2
       }else{
-        atk.abil=actorData.abilities.dex.mod
+        atk.abil=actorData.dex.mod
       }
       data.damage.common.current=data.damage.common[data.prof.label]
     }
