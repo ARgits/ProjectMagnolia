@@ -45,13 +45,13 @@ export class ARd20Item extends Item {
       data.type.label=labels.type
       let atk={};
       if(data.property[data.prof.label.toLowerCase()].fin===true){
-        atk.abil=actorData?.data.dex?.mod+2
+        atk.abil=2+(actorData.dex.mod ? 0)
       }else if(data.property[data.prof.label.toLowerCase()].hea===true){
-        atk.abil=actorData?.data.dex?.mod-2
+        atk.abil=-2+(actorData.dex.mod ? 0)
       }else{
-        atk.abil=actorData?.data.dex?.mod
+        atk.abil=actorData?.dex?.mod
       }
-      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+actorData.data.str.mod
+      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+ (actorData.data.str.mod ? 0)
     }
   }
   /**
