@@ -49,6 +49,8 @@ export class ARd20Item extends Item {
         atk.abil=actorData.abilities.dex.mod
       }
       itemData.formula="1d20+"+atk.abil;
+      data.damage.common.current=data.damage.common[data.proficiency]
+      data.damage.ver.current = data.damage.ver[data.proficiency]
     }
   }
   /**
