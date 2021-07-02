@@ -92,7 +92,7 @@ export class ARd20Item extends Item {
     // Otherwise, create a roll and send a chat message from it.
     else if (item.type==='weapon'){
       const rollData = this.getRollData();
-      const damageRoll = new Roll(rolldata.item.damage.common.current, rollData).roll();
+      const damageRoll = new Roll(rollData.item.damage.common.current, rollData).roll();
       roll.toMessage({
         speaker: speaker,
         rollMode:rollMode,
