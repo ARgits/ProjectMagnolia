@@ -46,9 +46,9 @@ export class ARd20Item extends Item {
       if(data.property[data.prof.label].fin===true){
         atk.abil=actorData.data.abilities.dex.mod+2
       }else if(data.property[data.prof.label].hea===true){
-        atk.abil=actorData.data.abilities.dex.mod-2
+        atk.abil=actorData.abilities.dex.mod-2
       }else{
-        atk.abil=actorData.data.abilities.dex.mod
+        atk.abil=actorData.abilities.dex.mod
       }
       data.damage.common.current=data.damage.common[data.prof.label]
     }
