@@ -17,8 +17,8 @@
         <h4>{{item.name}}</h4>
       </div>
       {{log item}}
-      <div class="item-name">{{localize item.labels.type}}</div>
-      <div class="item-name">{{localize item.labels.prof}}</div>
+      <div class="item-name">{{item.data.type.label}}</div>
+      <div class="item-name">{{item.data.prof.label}}</div>
       <div class="item-name rollable" data-roll-type="item" data-roll="@item.data.damage.common.current">{{item.data.damage.common.current}}</div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>

@@ -154,7 +154,10 @@
       "quantity": 1,
       "weight": 0,
       "equiped": 0,
-      "type": "",
+      "type": {
+        "value":"",
+        "label":""
+      },
       "property": {
         "untrained": {
           "aff": "",
