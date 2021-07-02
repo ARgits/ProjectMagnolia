@@ -53,7 +53,7 @@ export class ARd20Item extends Item {
         else{
           atk.abil=actorData?.dex?.mod
         }
-        data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+"+@str"
+        data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+"+@str.mod"
       }
     }
   }
