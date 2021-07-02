@@ -42,7 +42,7 @@ export class ARd20Item extends Item {
       labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
       data.prof.label=labels.prof
       data.type.label=labels.type
-      if (this.isOwned){
+      if (this.actor){
         let atk={};
         if(data.property[data.prof.label.toLowerCase()].fin===true){
           atk.abil=2+actorData?.dex?.mod ?? 2;
