@@ -48,7 +48,7 @@ export class ARd20Item extends Item {
       }else{
         atk.abil=actorData.abilities.dex.mod
       }
-      itemData.formula="1d20+"atk.abil;
+      itemData.formula="1d20+"+atk.abil;
     }
   }
   /**
