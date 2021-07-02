@@ -39,8 +39,8 @@ export class ARd20Item extends Item {
           data.property.master[k]=true
         }
       }
-      labels.type = CONFIG.ARd20.WeaponType[data.type];
-      labels.prof = CONFIG.ARd20.prof[data.proficiency];
+      labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type])??CONFIG.ARd20.WeaponType[data.type];
+      labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.proficiency])??CONFIG.ARd20.prof[data.proficiency];
       if (data.property[labels.prof]['fin']===true){
         atk.abil=actorData.abilities.dex.mod+2;
       }else if (data.property[labels.prof]['hea']===true){
