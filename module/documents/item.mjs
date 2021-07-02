@@ -51,7 +51,7 @@ export class ARd20Item extends Item {
       }else{
         atk.abil=actorData?.dex?.mod
       }
-      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]
+      data.damage.common.current=data.damage.common[data.prof.label.toLowerCase()]+"+"+actorData?.str?.mod
     }
   }
   /**
@@ -90,7 +90,16 @@ export class ARd20Item extends Item {
       });
     }
     // Otherwise, create a roll and send a chat message from it.
-    else {
+    elseif (item.type==='weapon'){
+      const rollData = this.getRollData();
+      const damageRoll = new Roll(rolldata.item.damage.common.current, rollData).roll();
+      roll.toMessage({
+        speaker: speaker,
+        rollMode:rollMode,
+        flavor: label,
+      });
+      return roll;
+    }else {
       // Retrieve roll data.
       const rollData = this.getRollData();
 
