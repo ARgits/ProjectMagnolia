@@ -62,9 +62,11 @@ export class ARd20Item extends Item {
     if (!this.isOwned) this.prepareFinalAttributes();
   }
   prepareFinalAttributes(){
+    if (this.data.type==="weapon"){
     const abil = this.data.data.abil={};
       abil.str = this.isOwned ? getProperty(this.actor.data, `data.abilities.str.mod`) : null
     this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] +"+"+ abil.str;
+    }
   }
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
