@@ -70,8 +70,6 @@
 			<section class="grid grid-6col flexcol">
 				<aside class="ability grid grid-3col">
 					<div class="ability flex-group-center grid-span-2">
-						<details>
-							<summary>Stats</summary>
 							{{#each data.abilities as |ability key|}}
 							<div class="ability flexrow">
 								<label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
@@ -81,7 +79,6 @@
                 data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
 							</div>
 							{{/each}}
-						</details>
 					</div>
 					<div>
 						{{#each data.defences as |defence key|}}
