@@ -120,7 +120,7 @@ export class ARd20Item extends Item {
         rollMode:rollMode,
         flavor: label,
       });
-      return roll;
+      return damageRoll;
     }else {
       // Retrieve roll data.
       const rollData = this.getRollData();
