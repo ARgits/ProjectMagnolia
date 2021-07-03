@@ -16,7 +16,7 @@ export class ARd20Item extends Item {
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
-    const actorData = this.actor ? this.actor.prepareData():{}
+    const actorData = this.actor ? this.actor.data:{}
     const data = itemData.data;
     const labels = this.labels = {};
     if (itemData.type === "spell") {
