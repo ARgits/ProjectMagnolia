@@ -13,7 +13,7 @@ export class ARd20Item extends Item {
   }
   prepareBaseData() {
   }
-  get ability.mod(){
+  get abilityMod(){
     const itemData = this.data.data;
     if (!("ability" in itemData)) return null;
     if (itemData.ability) return itemData.ability;
