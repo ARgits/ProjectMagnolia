@@ -39,7 +39,9 @@ export class ARd20Item extends Item {
         }
       }
       for (let [k,v] of Object.entries(CONFIG.ARd20.prof)){
-        data.deflect[k]=data.deflect[k]?data.deflect[k]:data.damage.common[k]
+        v = game.i18n.localize(CONFIG.ARd20.prof[k])??k;
+        v = v.toLowerCase();
+        data.deflect[v] = data.deflect[v] || data.damage.common[v];
       }
       labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value])??CONFIG.ARd20.WeaponType[data.type.value];
       labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
