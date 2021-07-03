@@ -59,9 +59,9 @@ export class ARd20Item extends Item {
       data.prof.label=labels.prof
       data.type.label=labels.type
     }
-    if (!this.isOwned) this.prepareFinalData();
+    if (!this.isOwned) this.prepareFinalAttributes();
   }
-  prepareFinalData(){
+  prepareFinalAttributes(){
     const abil = this.data.data.abil={};
     for (let [k,v] of Object.entries(CONFIG.ARd20.abilities)){
       abil[v] = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null
