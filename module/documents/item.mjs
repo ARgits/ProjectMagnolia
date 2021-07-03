@@ -59,8 +59,9 @@ export class ARd20Item extends Item {
       data.prof.label=labels.prof
       data.type.label=labels.type
     }
-    let str = this.isOwned ? getProperty(this.actor.data, "data.abilities.str.mod") : null;
-    data.damage.common.current = data.damage.common[labels.prof.toLowerCase()] +"+"+ str;
+    const abil = this.data.data?.abil;
+    abil.str = this.isOwned ? getProperty(this.actor.data, "data.abilities.str.mod") : null;
+    data.damage.common.current = data.damage.common[labels.prof.toLowerCase()] +"+"+ abil.str;
   }
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
