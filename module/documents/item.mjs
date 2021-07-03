@@ -54,6 +54,7 @@ export class ARd20Item extends Item {
         v = v.toLowerCase();
         data.deflect[v] = data.deflect[v] || data.damage.common[v];
       }
+      data.type.value = data.type.value || "amb";
       labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value])??CONFIG.ARd20.WeaponType[data.type.value];
       labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
       data.prof.label=labels.prof
