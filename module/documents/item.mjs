@@ -107,9 +107,9 @@ export class ARd20Item extends Item {
     if (item.type==='weapon'){
       const rollData = this.getRollData();
       const damageRoll = new Roll(rollData.item.damage.common.current, rollData).roll();
-      roll.toMessage({
+      damageRoll.toMessage({
         speaker: speaker,
-        rollMode:rollMode,
+        rollMode: rollMode,
         flavor: label,
       });
       return damageRoll;
