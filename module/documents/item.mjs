@@ -59,7 +59,7 @@ export class ARd20Item extends Item {
       data.prof.label=labels.prof
       data.type.label=labels.type
     }
-    const abil = this.data.data?.abil;
+    const abil = this.data.data.abil={};
     abil.str = this.isOwned ? getProperty(this.actor.data, "data.abilities.str.mod") : null;
     data.damage.common.current = data.damage.common[labels.prof.toLowerCase()] +"+"+ abil.str;
   }
