@@ -66,7 +66,7 @@ export class ARd20Item extends Item {
     for (let [k,v] of Object.entries(CONFIG.ARd20.abilities)){
       abil[v] = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null
     }
-    data.damage.common.current = data.damage.common[labels.prof.toLowerCase()] +"+"+ abil.str;
+    this.data.data.damage.common.current = this.data.data.damage.common[labels.prof.toLowerCase()] +"+"+ abil.str;
   }
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
