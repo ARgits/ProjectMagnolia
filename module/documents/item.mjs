@@ -102,17 +102,9 @@ export class ARd20Item extends Item {
     const rollMode = game.settings.get('core', 'rollMode');
     const label = `[${item.type}] ${item.name}`;
 
-    // If there's no roll data, send a chat message.
-    if (!this.data.data.formula) {
-      ChatMessage.create({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-        content: item.data.description ?? ''
-      });
-    }
+
     // Otherwise, create a roll and send a chat message from it.
-    else if (item.type==='weapon'){
+    if (item.type==='weapon'){
       const rollData = this.getRollData();
       const damageRoll = new Roll(rollData.item.damage.common.current, rollData).roll();
       roll.toMessage({
@@ -121,6 +113,15 @@ export class ARd20Item extends Item {
         flavor: label,
       });
       return damageRoll;
+    }
+    // If there's no roll data, send a chat message.
+    else if (!this.data.data.formula) {
+      ChatMessage.create({
+        speaker: speaker,
+        rollMode: rollMode,
+        flavor: label,
+        content: item.data.description ?? ''
+      });
     }else {
       // Retrieve roll data.
       const rollData = this.getRollData();
