@@ -38,6 +38,9 @@ export class ARd20Item extends Item {
           data.property.master[k]=true
         }
       }
+      for (let [k,v] of Object.entries(CONFIG.ARd20.prof)){
+        data.deflect[k]=data.deflect[k]?data.deflect[k]:data.damage.common[k]
+      }
       labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value])??CONFIG.ARd20.WeaponType[data.type.value];
       labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value])??CONFIG.ARd20.prof[data.prof.value];
       data.prof.label=labels.prof
