@@ -122,7 +122,7 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             const attack = [ attackRoll, damageRoll ]
-            attack.roMessage( {
+            attack.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: label,
