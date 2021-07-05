@@ -64,7 +64,9 @@ export class ARd20Item extends Item {
     prepareFinalAttributes() {
             if (this.data.type === "weapon") {
                 const abil = this.data.data.abil = {};
-                abil.str = this.isOwned ? getProperty(this.actor.data, `data.abilities.str.mod`) : null
+                for (let [k, v] of Object.entries(this.actor.data.data.abilities)) {
+                    abil[v] = this.isOwned ? getProperty(this.actor.data, `data.abilities[${ v }].mod`) : null
+                }
                 this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
             }
         }
@@ -81,7 +83,7 @@ export class ARd20Item extends Item {
         if (abl) {
             const ability = rollData.abilities[abl];
             if (!ability) {
-                console.warn(`Item ${this.name} in Actor ${this.actor.name} has an invalid item ability modifier of ${abl} defined`);
+                console.warn(`Item ${ this.name } in Actor ${ this.actor.name } has an invalid item ability modifier of ${ abl } defined`);
             }
             rollData["mod"] = ability ? .mod || 0;
         }
@@ -99,7 +101,7 @@ export class ARd20Item extends Item {
         // Initialize chat data.
         const speaker = ChatMessage.getSpeaker({ actor: this.actor });
         const rollMode = game.settings.get('core', 'rollMode');
-        const label = `[${item.type}] ${item.name}`;
+        const label = `[${ item.type }] ${ item.name }`;
 
 
         // Otherwise, create a roll and send a chat message from it.
