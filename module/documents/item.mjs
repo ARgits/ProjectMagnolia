@@ -130,8 +130,10 @@ export class ARd20Item extends Item {
                     if ( attackRoll.total >= value.actor.data.data.defences.reflex.value ) {
                         console.log('попал')
                         console.log(value.actor.data.data.health.value)
-                        value.actor.data.data.health.value -= damageRoll.total;
-                        value.actor.data.data.health.value.update();
+                        hp = value.actor.data.data.health.value-damageRoll.total;
+                        value.actor.data.data.health.update({
+                            value: hp
+                        });
                         console.log(value.actor.data.data.health.value);
                         
                     } else {
