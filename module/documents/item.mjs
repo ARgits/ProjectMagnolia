@@ -127,10 +127,13 @@ export class ARd20Item extends Item {
             if ( targets.size > 0 ) {
                 targets.forEach((value, valueAgain, targets)=>{
                     console.log(attackRoll.total, value.actor.data.data.defences.reflex.value);
-                    if ( attackRoll.total >= value.document._actor.data.data.defences.reflex.value ) {
+                    if ( attackRoll.total >= value.actor.data.data.defences.reflex.value ) {
+                        console.log('попал')
+                        console.log(value.actor.data.data.health.value)
                         value.actor.data.data.health.value -= damageRoll.total;
-                        value.actor.prepareData();
-                        console.log( 'попал' )
+                        value.actor.prepareData()
+                        console.log(value.actor.data.data.health.value);
+                        
                     } else {
                         console.log( 'не попал' )
                     }
