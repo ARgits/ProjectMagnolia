@@ -90,13 +90,8 @@ export class ARd20Item extends Item {
         return rollData
     }
     getAttack () {
-        if ( attackRoll = this.document._actor.data.data.defences.reflex.value ) {
-            console.log( 'попал' )
-        } else {
-            console.log( 'не попал' )
-        }
-    }
 
+    }
     /**
      * Handle clickable rolls.
      * @param {Event} event   The originating click event
@@ -119,8 +114,15 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            if ( game.users.current.targets.size > 0 ) {
-                game.users.current.targets.forEach(getAttack);
+            const targets = game.users.current.targets;
+            if ( targets.size > 0 ) {
+                targets.forEach((value, valueAgain, targets)=>{
+                    if ( attackRoll = value.document._actor.data.data.defences.reflex.value ) {
+                        console.log( 'попал' )
+                    } else {
+                        console.log( 'не попал' )
+                    }
+                });
             } else { console.log( 'нет целей' ) }
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
