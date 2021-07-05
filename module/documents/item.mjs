@@ -34,28 +34,28 @@ export class ARd20Item extends Item {
         }
         if (itemData.type === "weapon") {
             for (let [k, v] of Object.entries(data.property.untrained)) {
-                v = CONFIG.ARd20.Prop[k] ? ? k;
+                v = CONFIG.ARd20.Prop[k] ?? k;
             }
             for (let [k, v] of Object.entries(data.property.basic)) {
-                v = CONFIG.ARd20.Prop[k] ? ? k;
+                v = CONFIG.ARd20.Prop[k] ?? k;
                 if ((data.property.untrained[k] === true) && (k != "awk")) {
                     data.property.basic[k] = true
                 }
             }
             for (let [k, v] of Object.entries(data.property.master)) {
-                v = CONFIG.ARd20.Prop[k] ? ? k;
+                v = CONFIG.ARd20.Prop[k] ?? k;
                 if ((data.property.basic[k] === true) && (k != "awk")) {
                     data.property.master[k] = true
                 }
             }
             for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
-                v = game.i18n.localize(CONFIG.ARd20.prof[k]) ? ? k;
+                v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
                 v = v.toLowerCase();
                 data.deflect[v] = data.deflect[v] || data.damage.common[v];
             }
             data.type.value = data.type.value || "amb";
-            labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ? ? CONFIG.ARd20.WeaponType[data.type.value];
-            labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ? ? CONFIG.ARd20.prof[data.prof.value];
+            labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
+            labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
             data.prof.label = labels.prof
             data.type.label = labels.type
         }
@@ -121,7 +121,7 @@ export class ARd20Item extends Item {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: label,
-                content: item.data.description ? ? ''
+                content: item.data.description ?? ''
             });
         } else {
             // Retrieve roll data.

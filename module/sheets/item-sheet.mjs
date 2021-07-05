@@ -39,7 +39,7 @@ export class ARd20ItemSheet extends ItemSheet {
         // Retrieve the roll data for TinyMCE editors.
         context.rollData = {};
         const props = [];
-        let actor = this.object ? .parent ? ? null;
+        let actor = this.object ? .parent ?? null;
         if (actor) {
             context.rollData = actor.getRollData();
         }
