@@ -112,9 +112,9 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            if (game.users.current.targets.size>0){
-                game.users.current.targets.forEach(target => target.getAttack())
-            }
+            if ( game.users.current.targets.size > 0 ) {
+                game.users.current.targets.forEach( target => target.getAttack() )
+            } else { console.log( 'нет целей' ) }
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
@@ -149,11 +149,11 @@ export class ARd20Item extends Item {
             return roll
         }
     }
-    getAttack(){
-        if (attackRoll = this.document._actor.data.data.defences.reflex.value){
-            console.log('попал')
+    getAttack () {
+        if ( attackRoll = this.document._actor.data.data.defences.reflex.value ) {
+            console.log( 'попал' )
         } else {
-            console.log('не попал')
+            console.log( 'не попал' )
         }
     }
 }
