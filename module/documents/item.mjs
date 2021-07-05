@@ -56,7 +56,7 @@ export class ARd20Item extends Item {
                 abil.str = this.isOwned ? getProperty(this.actor.data, `data.abilities.str.mod`):null;
                 for (let [k,v] of Object.entries(CONFIG.ARd20.abilities)){
                     v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`):null
-                    abil[v] = v
+                    abil[k] = v
                 }
                 this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
             }
