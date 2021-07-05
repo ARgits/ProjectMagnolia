@@ -53,9 +53,7 @@ export class ARd20Item extends Item {
     prepareFinalAttributes() {
             if (this.data.type === "weapon") {
                 const abil = this.data.data.abil = {};
-                for (let [k, v] of Object.entries(this.actor.data.data.abilities)) {
-                    abil[v] = this.isOwned ? getProperty(this.actor.data, `data.abilities[${k}].mod`) : null
-                }
+                abil.str = this.isOwned ? getProperty(this.actor.data, `data.abilties.str.mod`):null;
                 this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
             }
         }
