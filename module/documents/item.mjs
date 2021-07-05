@@ -114,7 +114,7 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            const targets = game.users.current.targets;
+            const targets = game.user.targets;
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
@@ -126,9 +126,10 @@ export class ARd20Item extends Item {
             } );
             if ( targets.size > 0 ) {
                 targets.forEach((value, valueAgain, targets)=>{
-                    console.log(attackRoll.total, value.document._actor.data.data.defences.reflex.value);
+                    console.log(attackRoll.total, value.actor.data.data.defences.reflex.value);
                     if ( attackRoll.total >= value.document._actor.data.data.defences.reflex.value ) {
-                        value.document._actor.data.data.health.value -= damageRoll.total;
+                        value.actor.data.data.health.value -= damageRoll.total;
+                        value.actor.prepareData();
                         console.log( 'попал' )
                     } else {
                         console.log( 'не попал' )
