@@ -114,34 +114,34 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            const targets = game.user.targets;
+            const targets = game.user.targets
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
-            ).roll();
+            ).roll()
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: label,
-            } );
+            } )
             if ( targets.size > 0 ) {
-                targets.forEach((value, valueAgain, targets)=>{
-                    console.log(attackRoll.total, value.actor.data.data.defences.reflex.value);
+                targets.forEach( ( value, valueAgain, targets ) => {
+                    console.log( attackRoll.total, value.actor.data.data.defences.reflex.value )
                     if ( attackRoll.total >= value.actor.data.data.defences.reflex.value ) {
-                        console.log('попал')
-                        console.log(value.actor.data.data.health.value)
-                        hp = value.actor.data.data.health.value-damageRoll.total;
-                        value.actor.data.data.health.update({
+                        console.log( 'попал' )
+                        console.log( value.actor.data.data.health.value )
+                        let hp = value.actor.data.data.health.value - damageRoll.total
+                        value.actor.data.data.health.update( {
                             value: hp
-                        });
-                        console.log(value.actor.data.data.health.value);
-                        
+                        } )
+                        console.log( value.actor.data.data.health.value )
+
                     } else {
                         console.log( 'не попал' )
                     }
-                });
+                } )
             } else { console.log( 'нет целей' ) }
-            const attack = [ attackRoll, damageRoll ];
+            const attack = [ attackRoll, damageRoll ]
             return attack
         }
         // If there's no roll data, send a chat message.
