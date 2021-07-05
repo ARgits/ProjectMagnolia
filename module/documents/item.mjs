@@ -66,7 +66,7 @@ export class ARd20Item extends Item {
             this.data.data.damage.common[ this.labels.prof.toLowerCase() ] +
             "+" +
             abil.str
-        this.data.data.attack = "1d20+"+abil.dex
+        this.data.data.attack = "1d20+" + abil.dex
     }
     /**
      * Prepare a data object which is passed to any Roll formulas which are created related to this Item
@@ -96,12 +96,12 @@ export class ARd20Item extends Item {
         // Otherwise, create a roll and send a chat message from it.
         if ( item.type === "weapon" ) {
             const rollData = this.getRollData()
-            const attackRoll = new Roll(rollData.item.attack, rollData).roll
-            attackRoll.toMessage({
-                speaker:speaker,
+            const attackRoll = new Roll( rollData.item.attack, rollData ).roll()
+            attackRoll.toMessage( {
+                speaker: speaker,
                 rollMode,
-                flavor:label,
-            })
+                flavor: label,
+            } )
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
@@ -111,7 +111,7 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            const attack = [attackRoll, damageRoll]
+            const attack = [ attackRoll, damageRoll ]
             return attack
         }
         // If there's no roll data, send a chat message.
