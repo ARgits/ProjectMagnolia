@@ -12,17 +12,6 @@ export class ARd20Item extends Item {
         super.prepareData();
     }
     prepareBaseData() {}
-    get abilityMod() {
-        const itemData = this.data.data;
-        if (!("ability" in itemData)) return null;
-        if (itemData.ability) return itemData.ability;
-        else if (this.actor) {
-            const actorData = this.actor.data.data;
-            if (this.data.type === "weapon") {
-                return "str"
-            }
-        }
-    }
     prepareDerivedData() {
         super.prepareDerivedData();
         const itemData = this.data;
@@ -79,14 +68,6 @@ export class ARd20Item extends Item {
         if (!this.actor) return null;
         const rollData = this.actor.getRollData();
         rollData.item = foundry.utils.deepClone(this.data.data);
-        const abl = this.abilityMod;
-        if (abl) {
-            const ability = rollData.abilities[abl];
-            if (!ability) {
-                console.warn(`Item ${ this.name } in Actor ${ this.actor.name } has an invalid item ability modifier of ${ abl } defined`);
-            }
-            rollData["mod"] = ability?.mod || 0;
-        }
         return rollData;
     }
 
