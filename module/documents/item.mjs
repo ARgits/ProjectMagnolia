@@ -55,7 +55,17 @@ export class ARd20Item extends Item {
         if ( !this.isOwned ) this.prepareFinalAttributes()
     }
     prepareFinalAttributes () {
-        const abil = ( this.data.data.abil = {} )
+        const data = this.data.data
+        const abil = ( data.abil = {} )
+        const prof = data.prof.value
+        const prof_bonus
+        if ( prof === 0 ) {
+            prof_bonus = 0
+        } else if ( prof === 1 ) {
+            prof_bonus = this.actor.data.data.prof.prof_die
+        } else if ( prof === 2 ) {
+            prof_bonus = this.actor.data.data.prof.prof_die + "+" + this.actor.data.data.prof.prof_bonus
+        }
         for ( let [ k, v ] of Object.entries( CONFIG.ARd20.abilities ) ) {
             v = this.isOwned
                 ? getProperty( this.actor.data, `data.abilities.${ k }.mod` )
@@ -66,7 +76,7 @@ export class ARd20Item extends Item {
             this.data.data.damage.common[ this.labels.prof.toLowerCase() ] +
             "+" +
             abil.str
-        this.data.data.attack = "1d20+" + abil.dex
+        this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex
     }
     /**
      * Prepare a data object which is passed to any Roll formulas which are created related to this Item
@@ -99,7 +109,7 @@ export class ARd20Item extends Item {
             const attackRoll = new Roll( rollData.item.attack, rollData ).roll()
             attackRoll.toMessage( {
                 speaker: speaker,
-                rollMode,
+                rollMode: rollMode,
                 flavor: label,
             } )
             const damageRoll = new Roll(
