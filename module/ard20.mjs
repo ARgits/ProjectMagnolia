@@ -14,38 +14,38 @@ import { ARd20 } from "./helpers/config.mjs";
 
 Hooks.once('init', async function() {
 
-  // Add utility classes to the global game object so that they're more easily
-  // accessible in global contexts.
-  game.ard20 = {
-    ARd20Actor,
-    ARd20Item,
-    rollItemMacro
-  };
+    // Add utility classes to the global game object so that they're more easily
+    // accessible in global contexts.
+    game.ard20 = {
+        ARd20Actor,
+        ARd20Item,
+        rollItemMacro
+    };
 
-  // Add custom constants for configuration.
-  CONFIG.ARd20 = ARd20;
+    // Add custom constants for configuration.
+    CONFIG.ARd20 = ARd20;
 
-  /**
-   * Set an initiative formula for the system
-   * @type {String}
-   */
-  CONFIG.Combat.initiative = {
-    formula: "1d20 + @abilities.dex.mod",
-    decimals: 2
-  };
+    /**
+     * Set an initiative formula for the system
+     * @type {String}
+     */
+    CONFIG.Combat.initiative = {
+        formula: "1d20 + @abilities.dex.mod",
+        decimals: 2
+    };
 
-  // Define custom Document classes
-  CONFIG.Actor.documentClass = ARd20Actor;
-  CONFIG.Item.documentClass = ARd20Item;
+    // Define custom Document classes
+    CONFIG.Actor.documentClass = ARd20Actor;
+    CONFIG.Item.documentClass = ARd20Item;
 
-  // Register sheet application classes
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
-  Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
+    // Register sheet application classes
+    Actors.unregisterSheet("core", ActorSheet);
+    Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
+    Items.unregisterSheet("core", ItemSheet);
+    Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
 
-  // Preload Handlebars templates.
-  return preloadHandlebarsTemplates();
+    // Preload Handlebars templates.
+    return preloadHandlebarsTemplates();
 });
 
 /* -------------------------------------------- */
@@ -54,17 +54,17 @@ Hooks.once('init', async function() {
 
 // If you need to add Handlebars helpers, here are a few useful examples:
 Handlebars.registerHelper('concat', function() {
-  var outStr = '';
-  for (var arg in arguments) {
-    if (typeof arguments[arg] != 'object') {
-      outStr += arguments[arg];
+    var outStr = '';
+    for (var arg in arguments) {
+        if (typeof arguments[arg] != 'object') {
+            outStr += arguments[arg];
+        }
     }
-  }
-  return outStr;
+    return outStr;
 });
 
 Handlebars.registerHelper('toLowerCase', function(str) {
-  return str.toLowerCase();
+    return str.toLowerCase();
 });
 
 /* -------------------------------------------- */
@@ -72,8 +72,8 @@ Handlebars.registerHelper('toLowerCase', function(str) {
 /* -------------------------------------------- */
 
 Hooks.once("ready", async function() {
-  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
+    // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+    Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 
 /* -------------------------------------------- */
@@ -88,24 +88,24 @@ Hooks.once("ready", async function() {
  * @returns {Promise}
  */
 async function createItemMacro(data, slot) {
-  if (data.type !== "Item") return;
-  if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
-  const item = data.data;
+    if (data.type !== "Item") return;
+    if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
+    const item = data.data;
 
-  // Create the macro command
-  const command = `game.ard20.rollItemMacro("${item.name}");`;
-  let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
-  if (!macro) {
-    macro = await Macro.create({
-      name: item.name,
-      type: "script",
-      img: item.img,
-      command: command,
-      flags: { "ard20.itemMacro": true }
-    });
-  }
-  game.user.assignHotbarMacro(macro, slot);
-  return false;
+    // Create the macro command
+    const command = `game.ard20.rollItemMacro("${item.name}");`;
+    let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
+    if (!macro) {
+        macro = await Macro.create({
+            name: item.name,
+            type: "script",
+            img: item.img,
+            command: command,
+            flags: { "ard20.itemMacro": true }
+        });
+    }
+    game.user.assignHotbarMacro(macro, slot);
+    return false;
 }
 
 /**
@@ -115,13 +115,13 @@ async function createItemMacro(data, slot) {
  * @return {Promise}
  */
 function rollItemMacro(itemName) {
-  const speaker = ChatMessage.getSpeaker();
-  let actor;
-  if (speaker.token) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
-  const item = actor ? actor.items.find(i => i.name === itemName) : null;
-  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+    const speaker = ChatMessage.getSpeaker();
+    let actor;
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    if (!actor) actor = game.actors.get(speaker.actor);
+    const item = actor ? actor.items.find(i => i.name === itemName) : null;
+    if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
-  // Trigger the item roll
-  return item.roll();
+    // Trigger the item roll
+    return item.roll();
 }
