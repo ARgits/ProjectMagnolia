@@ -131,6 +131,7 @@ export class ARd20Item extends Item {
                         console.log('попал')
                         console.log(value.actor.data.data.health.value)
                         value.actor.data.data.health.value -= damageRoll.total;
+                        value.actor.data.data.health.value.update();
                         console.log(value.actor.data.data.health.value);
                         
                     } else {
