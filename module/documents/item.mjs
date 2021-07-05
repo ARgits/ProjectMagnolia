@@ -112,7 +112,7 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            if (game.users.current.targets>0){
+            if (game.users.current.targets.size>0){
                 game.users.current.targets.forEach(target => target.getAttack())
             }
             const damageRoll = new Roll(
