@@ -113,18 +113,18 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             if ( game.users.current.targets.size > 0 ) {
-                game.users.current.targets.forEach( target => target.getAttack() )
+                game.users.current.targets.forEach( target => target.getAttack() );
             } else { console.log( 'нет целей' ) }
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
-            ).roll()
+            ).roll();
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: label,
-            } )
-            const attack = [ attackRoll, damageRoll ]
+            } );
+            const attack = [ attackRoll, damageRoll ];
             return attack
         }
         // If there's no roll data, send a chat message.
