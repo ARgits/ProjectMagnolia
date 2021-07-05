@@ -55,7 +55,7 @@ export class ARd20Item extends Item {
                 const abil = this.data.data.abil = {};
                 abil.str = this.isOwned ? getProperty(this.actor.data, `data.abilities.str.mod`):null;
                 for (let [k,v] of Object.entries(this.actor.data.data.abilities)){
-                    v = this.isOwned ? getProperty(this.actor.data, `data.abilities[${v}].mod`):null
+                    v = this.isOwned ? getProperty(this.actor.data, `data.abilities[${k}].mod`):null
                     abil[v] = v
                 }
                 this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
