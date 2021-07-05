@@ -85,7 +85,7 @@ export class ARd20Item extends Item {
             if (!ability) {
                 console.warn(`Item ${ this.name } in Actor ${ this.actor.name } has an invalid item ability modifier of ${ abl } defined`);
             }
-            rollData["mod"] = ability ? .mod || 0;
+            rollData["mod"] = ability?.mod || 0;
         }
         return rollData;
     }
