@@ -89,6 +89,13 @@ export class ARd20Item extends Item {
         rollData.item = foundry.utils.deepClone( this.data.data )
         return rollData
     }
+    getAttack () {
+        if ( attackRoll = this.document._actor.data.data.defences.reflex.value ) {
+            console.log( 'попал' )
+        } else {
+            console.log( 'не попал' )
+        }
+    }
 
     /**
      * Handle clickable rolls.
@@ -147,13 +154,6 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             return roll
-        }
-    }
-    getAttack () {
-        if ( attackRoll = this.document._actor.data.data.defences.reflex.value ) {
-            console.log( 'попал' )
-        } else {
-            console.log( 'не попал' )
         }
     }
 }
