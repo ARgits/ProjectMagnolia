@@ -1,32 +1,30 @@
 {
-  "name": "ard20",
-  "title": "ARd20",
-  "description": "Попытки сделать свою систему",
-  "version": "0.0.1.5.216",
-  "minimumCoreVersion": "0.8.3",
-  "compatibleCoreVersion": "0.8.7",
-  "author": "ARgits",
-  "esmodules": [
-    "module/ard20.mjs"
-  ],
-  "styles": [
-    "css/ard20.css"
-  ],
-  "scripts": [],
-  "packs": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
-  ],
-  "gridDistance": 5,
-  "gridUnits": "ft",
-  "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power",
-  "url": "https://gitlab.com/ARgits/boilerplate",
-  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/master/system.json",
-  "download": "https://gitlab.com/ARgits/ard20/-/archive/master/ard20-master.zip",
-  "license": "LICENSE.txt"
+    "name": "ard20",
+    "title": "ARd20",
+    "description": "Попытки сделать свою систему",
+    "version": "0.0.1.5.217",
+    "minimumCoreVersion": "0.8.3",
+    "compatibleCoreVersion": "0.8.7",
+    "author": "ARgits",
+    "esmodules": [
+        "module/ard20.mjs"
+    ],
+    "styles": [
+        "css/ard20.css"
+    ],
+    "scripts": [],
+    "packs": [],
+    "languages": [{
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+    }],
+    "gridDistance": 5,
+    "gridUnits": "ft",
+    "primaryTokenAttribute": "health",
+    "secondaryTokenAttribute": "power",
+    "url": "https://gitlab.com/ARgits/boilerplate",
+    "manifest": "https://gitlab.com/ARgits/ard20/-/raw/master/system.json",
+    "download": "https://gitlab.com/ARgits/ard20/-/archive/master/ard20-master.zip",
+    "license": "LICENSE.txt"
 }
