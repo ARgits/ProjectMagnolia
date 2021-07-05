@@ -115,16 +115,6 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             const targets = game.users.current.targets;
-            if ( targets.size > 0 ) {
-                targets.forEach((value, valueAgain, targets)=>{
-                    console.log(attackRoll.total, value.document._actor.data.data.defences.reflex.value);
-                    if ( attackRoll.total >= value.document._actor.data.data.defences.reflex.value ) {
-                        console.log( 'попал' )
-                    } else {
-                        console.log( 'не попал' )
-                    }
-                });
-            } else { console.log( 'нет целей' ) }
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
@@ -134,6 +124,17 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } );
+            if ( targets.size > 0 ) {
+                targets.forEach((value, valueAgain, targets)=>{
+                    console.log(attackRoll.total, value.document._actor.data.data.defences.reflex.value);
+                    if ( attackRoll.total >= value.document._actor.data.data.defences.reflex.value ) {
+                        value.document._actor.data.data.health.value -= damageRoll.total;
+                        console.log( 'попал' )
+                    } else {
+                        console.log( 'не попал' )
+                    }
+                });
+            } else { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ];
             return attack
         }
