@@ -112,6 +112,9 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
+            if (game.users.current.targets>0){
+                game.users.current.targets.forEach(target => target.getAttack())
+            }
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
@@ -122,11 +125,6 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             const attack = [ attackRoll, damageRoll ]
-            attack.toMessage( {
-                speaker: speaker,
-                rollMode: rollMode,
-                flavor: label,
-            } )
             return attack
         }
         // If there's no roll data, send a chat message.
@@ -149,6 +147,13 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             return roll
+        }
+    }
+    getAttack(){
+        if (attackRoll = this.document._actor.data.data.defences.reflex.value){
+            console.log('попал')
+        } else {
+            console.log('не попал')
         }
     }
 }
