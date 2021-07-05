@@ -122,6 +122,11 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             const attack = [ attackRoll, damageRoll ]
+            attack.roMessage( {
+                speaker: speaker,
+                rollMode: rollMode,
+                flavor: label,
+            } )
             return attack
         }
         // If there's no roll data, send a chat message.
