@@ -62,9 +62,9 @@ export class ARd20Item extends Item {
         if ( prof == 0 ) {
             prof_bonus = 0
         } else if ( prof == 1 ) {
-            prof_bonus = this.actor.data.data.prof.prof_die
+            prof_bonus = this.actor.data.data.attributes.prof_die
         } else if ( prof == 2 ) {
-            prof_bonus = this.actor.data.data.prof.prof_die + "+" + this.actor.data.data.prof.prof_bonus
+            prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus
         }
         for ( let [ k, v ] of Object.entries( CONFIG.ARd20.abilities ) ) {
             v = this.isOwned
