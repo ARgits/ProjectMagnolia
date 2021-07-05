@@ -120,7 +120,7 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             if ( game.users.current.targets.size > 0 ) {
-                game.users.current.targets.forEach( target => target.getAttack() );
+                game.users.current.targets.forEach(getAttack);
             } else { console.log( 'нет целей' ) }
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
