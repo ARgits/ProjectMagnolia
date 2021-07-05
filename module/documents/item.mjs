@@ -59,11 +59,11 @@ export class ARd20Item extends Item {
         const abil = ( data.abil = {} )
         const prof = data.prof.value
         let prof_bonus = 0
-        if ( prof === 0 ) {
+        if ( prof == 0 ) {
             prof_bonus = 0
-        } else if ( prof === 1 ) {
+        } else if ( prof == 1 ) {
             prof_bonus = this.actor.data.data.prof.prof_die
-        } else if ( prof === 2 ) {
+        } else if ( prof == 2 ) {
             prof_bonus = this.actor.data.data.prof.prof_die + "+" + this.actor.data.data.prof.prof_bonus
         }
         for ( let [ k, v ] of Object.entries( CONFIG.ARd20.abilities ) ) {
