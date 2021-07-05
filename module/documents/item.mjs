@@ -58,7 +58,7 @@ export class ARd20Item extends Item {
         const data = this.data.data
         const abil = ( data.abil = {} )
         const prof = data.prof.value
-        const prof_bonus
+        let prof_bonus = 0
         if ( prof === 0 ) {
             prof_bonus = 0
         } else if ( prof === 1 ) {
