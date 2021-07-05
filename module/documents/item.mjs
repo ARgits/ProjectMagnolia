@@ -117,7 +117,7 @@ export class ARd20Item extends Item {
             const targets = game.users.current.targets;
             if ( targets.size > 0 ) {
                 targets.forEach((value, valueAgain, targets)=>{
-                    if ( attackRoll = value.document._actor.data.data.defences.reflex.value ) {
+                    if ( attackRoll === value.document._actor.data.data.defences.reflex.value ) {
                         console.log( 'попал' )
                     } else {
                         console.log( 'не попал' )
