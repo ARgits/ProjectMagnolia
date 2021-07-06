@@ -141,7 +141,7 @@
 
 
 		{{!-- Attributes Tab --}}
-		<div class="tab attributes" data-group="primary" data-tab="attributes">
+		<div class="tab" data-group="primary" data-tab="attributes">
 			<div class="grid grid-2col">
 				<div>
 					<select name="data.type.value">
@@ -169,7 +169,8 @@
 				<a class="item" data-tab="basic">{{localize "ARd20.Basic"}}</a>
 				<a class="item" data-tab="master">{{localize "ARd20.Master"}}</a>
 			</nav>
-			<div class="tab attributes" data-group="secondary" data-tab="untrained">
+			{{!-- Untrained properties}}
+			<div class="tab" data-group="secondary" data-tab="untrained">
 				<div class="flexcol">
 					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
 					<div>
@@ -205,7 +206,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="tab attributes" data-group="secondary" data-tab="basic">
+			{{!-- Basic properties}}
+			<div class="tab" data-group="secondary" data-tab="basic">
 				<div class="flexcol">
 					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
 					<div>
@@ -238,7 +240,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="tab attributes" data-group="secondary" data-tab="master">
+			{{!-- Master properties}}
+			<div class="tab" data-group="secondary" data-tab="master">
 				<div class="flexcol">
 					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
 					<div>
