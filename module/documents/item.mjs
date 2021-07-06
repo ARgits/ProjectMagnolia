@@ -135,7 +135,7 @@ export class ARd20Item extends Item {
                         value -= damageRoll.total;
                         let obj = {};
                         obj[ 'data.health.value' ] = value;
-                        await actor.update( obj )
+                        await actor.update( obj );
                         console.log( actor.data.data.health.value )
                     } else {
                         console.log( 'не попал' )
