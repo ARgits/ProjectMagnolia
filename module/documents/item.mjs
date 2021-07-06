@@ -125,16 +125,17 @@ export class ARd20Item extends Item {
                 flavor: label,
             } )
             if ( targets.size > 0 ) {
-                targets.forEach( function (token) {
+                targets.forEach( function ( token ) {
                     const actor = token.actor
                     console.log( attackRoll.total, actor.data.data.defences.reflex.value )
                     if ( attackRoll.total >= actor.data.data.defences.reflex.value ) {
-                        console.log( 'попал' )
-                        let {value} = actor.data.data.health
-                        console.log( actor.data.data.health.value )
-                        value -= damageRoll.total
-                        obj['data.health.value'] = value
-                        await actor.update(obj);
+                        console.log( 'попал' );
+                        let { value } = actor.data.data.health;
+                        console.log( actor.data.data.health.value );
+                        value -= damageRoll.total;
+                        let obj = {};
+                        obj[ 'data.health.value' ] = value;
+                        await actor.update( obj )
                         console.log( actor.data.data.health.value )
                     } else {
                         console.log( 'не попал' )
