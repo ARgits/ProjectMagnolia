@@ -132,10 +132,10 @@ export class ARd20Item extends Item {
                         console.log( 'попал' );
                         let { value } = actor.data.data.health;
                         console.log( actor.data.data.health.value );
-                        value -= damageRoll.total;
+                        new_hp = value - damageRoll.total;
                         let obj = {};
                         obj[ 'data.health.value' ] = value;
-                        await actor.update( obj );
+                        await actor.update( {obj:new_hp} );
                         console.log( actor.data.data.health.value )
                     } else {
                         console.log( 'не попал' )
