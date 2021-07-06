@@ -142,30 +142,35 @@
 
 		{{!-- Attributes Tab --}}
 		<div class="tab attributes" data-group="primary" data-tab="attributes">
-			<div class="flexcol">
-				<div class="grid grid-2col">
+			<div class="grid grid-2col">
+				<div>
+					<select name="data.type.value">
+						{{#select data.type.value}}
+							{{#each config.WeaponType as |name sch|}}
+								<option value="{{sch}}">{{localize name}}</option>
+							{{/each}}
+						{{/select}}
+					</select>
+				</div>
+				<div>
 					<div>
-						<select name="data.type.value">
-							{{#select data.type.value}}
-								{{#each config.WeaponType as |name sch|}}
+						<select name="data.prof.value">
+							{{#select data.prof.value}}
+								{{#each config.prof as |name sch|}}
 									<option value="{{sch}}">{{localize name}}</option>
 								{{/each}}
 							{{/select}}
 						</select>
 					</div>
-					<div>
-						<div>
-							<select name="data.prof.value">
-								{{#select data.prof.value}}
-									{{#each config.prof as |name sch|}}
-										<option value="{{sch}}">{{localize name}}</option>
-									{{/each}}
-								{{/select}}
-							</select>
-						</div>
-					</div>
 				</div>
-				<div>
+			</div>
+			<nav class="sheet-tabs tabs" data-group="secondary">
+				<a class="item" data-tab="untrained">{{localize ARd20.untrained}}</a>
+				<a class="item" data-tab="basic">{{localize ARd20.basic}}</a>
+				<a class="item" data-tab="master">{{localize ARd20.master}}</a>
+			</nav>
+			<div class="tab attributes" data-group="secondary" data-tab="untrained">
+				<div class="flexcol">
 					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
 					<div>
 						<label>{{localize "ARd20.Untrained"}}</label>
@@ -198,6 +203,11 @@
 							{{/if}}
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="tab attributes" data-group="secondary" data-tab="basic">
+				<div class="flexcol">
+					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
 					<div>
 						<label>{{localize "ARd20.Basic"}}</label>
 						<div class="grid grid-5col">
@@ -226,6 +236,11 @@
 							{{/if}}
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="tab attributes" data-group="secondary" data-tab="basic">
+				<div class="flexcol">
+					<label class="flexlarge">{{localize "ARd20.properties"}}</label>
 					<div>
 						<label>{{localize "ARd20.Master"}}</label>
 						<div class="grid grid-5col">
