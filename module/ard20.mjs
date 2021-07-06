@@ -25,7 +25,7 @@ Hooks.once('init', async function() {
 
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20;
-    game.socker.on('system.ard20', (actor)=>{
+    game.socket.on('system.ard20', (actor)=>{
         if (data.operation === 'updateActorData')ARd20SocketHandler.updateActorData(actor)
     })
 
