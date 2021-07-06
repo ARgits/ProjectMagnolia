@@ -7,7 +7,7 @@ import { ARd20ItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { ARd20 } from "./helpers/config.mjs";
-import {ARd20SocketHandler} from "./helpers/socket.js"
+import ARd20SocketHandler from "./helpers/socket.js"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
