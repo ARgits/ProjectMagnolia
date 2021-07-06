@@ -130,13 +130,21 @@ export class ARd20Item extends Item {
                     console.log( attackRoll.total, actor.data.data.defences.reflex.value )
                     if ( attackRoll.total >= actor.data.data.defences.reflex.value ) {
                         console.log( 'попал' )
-                        let { value } = actor.data.data.health;
-                        console.log( actor.data.data.health.value )
-                        value -= damageRoll.total;
-                        let obj = {};
-                        obj[ 'data.health.value' ] = value;
-                        await actor.update( obj );
-                        console.log( actor.data.data.health.value )
+                        if ( game.user.isGM ) {
+                            let { value } = actor.data.data.health
+                            console.log( actor.data.data.health.value )
+                            value -= damageRoll.total
+                            let obj = {}
+                            obj[ 'data.health.value' ] = value
+                            await actor.update( obj )
+                            console.log( actor.data.data.health.value )
+                        } else {
+                            game.socket.emit( 'system.ard20', {
+                                operation: 'updateCharacterData',
+                                actor: actor,
+                                update: obj
+                            } )
+                        }
                     } else {
                         console.log( 'не попал' )
                     }

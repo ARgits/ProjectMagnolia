@@ -7,6 +7,7 @@ import { ARd20ItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { ARd20 } from "./helpers/config.mjs";
+import {ARd20SocketHandler} from "./helpers/socket.js"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -24,6 +25,9 @@ Hooks.once('init', async function() {
 
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20;
+    game.socker.on('system.ard20', (actor)=>{
+        if (data.operation === 'updateActorData')ARd20SocketHandler.updateActorData(actor)
+    })
 
     /**
      * Set an initiative formula for the system
