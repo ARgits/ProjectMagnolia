@@ -134,7 +134,7 @@ export class ARd20Item extends Item {
                         if (attackRoll.total>=reflex){
                             console.log('HIT!');
                             console.log(actorData.health.value)
-                            let {value} = actorData.health.value
+                            let {value} = actorData.health
                             let obj={}
                             value -=damageRoll.total;
                             obj['data.data.health.value']=value
