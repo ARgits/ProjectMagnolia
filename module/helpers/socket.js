@@ -1,9 +1,9 @@
 export default class ARd20SocketHandler {
     static async updateCharacterData ( data ) {
         if ( game.user.isGM ) {
-            if ( target.data.attack >= reflex ) {
+            if ( data.target.data.attack >= data.reflex ) {
                 console.log( 'HIT!' )
-                await actor.update( obj )
+                await data.actor.update( data.obj )
             } else console.log( "miss" )
         }
     }
