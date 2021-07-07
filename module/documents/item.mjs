@@ -157,23 +157,31 @@ export class ARd20Item extends Item {
         }
     }
     async AttackCheck () {
-        if ( game.user.isGM ) {
-            console.log( 'GM' )
-            const targets = game.user.targets
-            for ( let target of targets ) {
-                const actor = target.actor
-                console.log( actor )
-                const reflex = actor.data.data.defences.reflex.value
+        const targets = game.user.targets
+        for ( let target of targets ) {
+            let actor = target.actor
+            const reflex = actor.data.data.defences.reflex.value
+            let { value } = actor.data.data.health
+            let obj = {}
+            value -= target.data.damage
+            obj[ 'data.health.value' ] = value
+
+            if ( game.user.isGM ) {
+                console.log( 'GM' )
                 if ( target.data.attack >= reflex ) {
                     console.log( 'HIT!' )
-                    console.log( actor.data.data.health.value )
-                    let { value } = actor.data.data.health
-                    let obj = {}
-                    value -= target.data.damage
-                    obj[ 'data.health.value' ] = value
                     await actor.update( obj )
                 } else console.log( "miss" )
+            } else {
+                console.log( 'not GM' )
+                game.socket.emit( 'system.ard20', {
+                    operation: 'updateCharacterData',
+                    target: target,
+                    actor: actor,
+                    reflex: reflex,
+                    obj: obj
+                } )
             }
-        } else console.log( 'not GM' )
+        }
     }
 }
