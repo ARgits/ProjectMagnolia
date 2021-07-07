@@ -89,22 +89,6 @@ export class ARd20Item extends Item {
         rollData.item = foundry.utils.deepClone( this.data.data )
         return rollData
     }
-    async AttackCheck (target, attackRoll, damageRoll ) {
-        if ( game.user.isGM ) {
-            console.log( 'GM' )
-            actorData = target.actor.data
-            let reflex = actorData.data.defences.reflex.value
-            if ( attackRoll.total >= reflex ) {
-                console.log( 'попал' )
-                let { value } = actorData.data.health.value
-                let obj = {}
-                value -= damageRoll.total
-                obj[ 'data.health.value' ] = value
-                await actor.update
-                console.log( actorData.data.health.value )
-            }
-        } else console.log( 'not a GM' )
-    }
     /**
      * Handle clickable rolls.
      * @param {Event} event   The originating click event
@@ -141,7 +125,7 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(target => target.AttackCheck(target,attackRoll,damageRoll))
+                targets.forEach(target => target.AttackCheck());
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -167,5 +151,21 @@ export class ARd20Item extends Item {
             } )
             return roll
         }
+    }
+    async AttackCheck () {
+        if ( game.user.isGM ) {
+            console.log( 'GM' )
+            actorData = this.actor.data
+            let reflex = actorData.data.defences.reflex.value
+            if ( attackRoll.total >= reflex ) {
+                console.log( 'попал' )
+                let { value } = actorData.data.health.value
+                let obj = {}
+                value -= damageRoll.total
+                obj[ 'data.health.value' ] = value
+                await actor.update
+                console.log( actorData.data.health.value )
+            }
+        } else console.log( 'not a GM' )
     }
 }
