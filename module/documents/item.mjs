@@ -108,12 +108,12 @@ export class ARd20Item extends Item {
                 const actor = token.actor
                 const actorData = actor.data.data
                 const reflex = actorData.defences.reflex.value
-                if ( attackRoll.total >= reflex ) {
+                if ( this.data.attack.total >= reflex ) {
                     console.log( 'HIT!' )
                     console.log( actorData.health.value )
                     let { value } = actorData.health
                     let obj = {}
-                    value -= damageRoll.total
+                    value -= this.data.damage.total
                     obj[ 'data.health.value' ] = value
                     await actor.update( obj )
                 } else console.log( "miss" )
@@ -135,7 +135,8 @@ export class ARd20Item extends Item {
                 rollData.item.damage.common.current,
                 rollData
             ).roll()
-            rollData.item.damage.total = damageRoll.total
+            this.data.damage.total = damageRoll.total
+            this.data.attack.total = attackRoll.total            
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
