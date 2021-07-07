@@ -22,8 +22,6 @@ export class ARd20Item extends Item {
             labels.school = CONFIG.ARd20.SpellSchool[ data.school ]
         }
         if ( itemData.type === "weapon" ) {
-            const attack = (this.data.attack={})
-            const damage = (this.data.damage={})
             for ( let [ k, v ] of Object.entries( data.property.untrained ) ) {
                 v = CONFIG.ARd20.Prop[ k ] ?? k
             }
@@ -104,23 +102,6 @@ export class ARd20Item extends Item {
         const speaker = ChatMessage.getSpeaker( { actor: this.actor } )
         const rollMode = game.settings.get( "core", "rollMode" )
         const label = `[${ item.type }] ${ item.name }`
-        async function AttackCheck ( token, value1, set ) {
-            if ( game.user.isGM ) {
-                console.log( 'GM' )
-                const actor = token.actor
-                const actorData = actor.data.data
-                const reflex = actorData.defences.reflex.value
-                if ( this.data.attack.total >= reflex ) {
-                    console.log( 'HIT!' )
-                    console.log( actorData.health.value )
-                    let { value } = actorData.health
-                    let obj = {}
-                    value -= this.data.damage.total
-                    obj[ 'data.health.value' ] = value
-                    await actor.update( obj )
-                } else console.log( "miss" )
-            } else console.log( 'not GM' )
-        }
 
         // Otherwise, create a roll and send a chat message from it.
         if ( item.type === "weapon" ) {
@@ -136,9 +117,7 @@ export class ARd20Item extends Item {
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
-            ).roll()
-            this.data.damage.total = damageRoll.total
-            this.data.attack.total = attackRoll.total            
+            ).roll()          
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
@@ -146,7 +125,11 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(AttackCheck);
+                for (let token of targets){
+                    token.data.damage = damageRoll.total;
+                    token.data.attack = attackRoll.total;
+                    token.AttackCheck()
+                }
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -172,5 +155,22 @@ export class ARd20Item extends Item {
             } )
             return roll
         }
+    }
+    async AttackCheck () {
+        if ( game.user.isGM ) {
+            console.log( 'GM' )
+            const actor = this.actor
+            const actorData = actor.data.data
+            const reflex = actorData.defences.reflex.value
+            if ( this.data.attack >= reflex ) {
+                console.log( 'HIT!' )
+                console.log( actorData.health.value )
+                let { value } = actorData.health
+                let obj = {}
+                value -= this.data.damage
+                obj[ 'data.health.value' ] = value
+                await actor.update( obj )
+            } else console.log( "miss" )
+        } else console.log( 'not GM' )
     }
 }
