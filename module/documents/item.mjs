@@ -125,7 +125,7 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(target => target.AttackCheck());
+                targets.forEach(AttackCheck());
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -152,10 +152,10 @@ export class ARd20Item extends Item {
             return roll
         }
     }
-    async AttackCheck () {
+    async  AttackCheck () {
         if ( game.user.isGM ) {
             console.log( 'GM' )
-            actorData = this.actor.data
+            actorData = target.actor.data
             let reflex = actorData.data.defences.reflex.value
             if ( attackRoll.total >= reflex ) {
                 console.log( 'попал' )
