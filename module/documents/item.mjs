@@ -137,7 +137,7 @@ export class ARd20Item extends Item {
                             let {value} = actorData.health.value
                             let obj={}
                             value -=damageRoll.total;
-                            obj['data.health.value']=value
+                            obj['data.data.health.value']=value
                             await actor.update(obj)
                             console.log(actorData.health.value)
                         }else console.log("miss")
