@@ -159,7 +159,7 @@ export class ARd20Item extends Item {
     async AttackCheck () {
         if ( game.user.isGM ) {
             console.log( 'GM' )
-            targets = game.user.targets
+            const targets = game.user.targets
             for ( let target in targets ) {
                 const actor = target.actor
                 const actorData = actor.data.data
