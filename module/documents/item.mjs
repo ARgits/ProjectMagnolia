@@ -160,7 +160,7 @@ export class ARd20Item extends Item {
         if ( game.user.isGM ) {
             console.log( 'GM' )
             const targets = game.user.targets
-            for ( let target in targets ) {
+            for ( let target of targets ) {
                 const actor = target.actor
                 console.log( actor )
                 const reflex = actor.data.data.defences.reflex.value
