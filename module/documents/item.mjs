@@ -125,20 +125,21 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(async (token)=>{
+                targets.forEach(async function(token){
                     if (game.user.isGM){
                         console.log('GM');
-                        const actorData = token.actor.data;
-                        const reflex = actorData.data.defences.reflex.value
+                        const actor = token.actor;
+                        const actorData = actor.data.data;
+                        const reflex = actorData.defences.reflex.value
                         if (attackRoll.total>=reflex){
                             console.log('HIT!');
-                            console.log(actorData.data.health.value)
-                            let {value} = actorData.data.health.value
+                            console.log(actorData.health.value)
+                            let {value} = actorData.health.value
                             let obj={}
                             value -=damageRoll.total;
                             obj['data.health.value']=value
                             await actor.update(obj)
-                            console.log(actorData.data.health.value)
+                            console.log(actorData.health.value)
                         }else console.log("miss")
                     }else console.log('not GM')
                 });
