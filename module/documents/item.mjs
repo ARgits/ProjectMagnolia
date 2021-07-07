@@ -135,6 +135,7 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } );
+            console.log(targets.size);
             if ( targets.sise > 0 ) {
                 targets.forEach( async function ( target ) {
                     if ( game.user.isGM ) {
