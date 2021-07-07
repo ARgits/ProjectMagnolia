@@ -129,7 +129,7 @@ export class ARd20Item extends Item {
                     target.data.attack = attackRoll.total
                     target.data.damage = damageRoll.total
                 }
-                this.AttackCheck();
+                this.AttackCheck()
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -162,6 +162,7 @@ export class ARd20Item extends Item {
             const targets = game.user.targets
             for ( let target in targets ) {
                 const actor = target.actor
+                console.log( actor )
                 const reflex = actor.data.data.defences.reflex.value
                 if ( target.data.attack >= reflex ) {
                     console.log( 'HIT!' )
