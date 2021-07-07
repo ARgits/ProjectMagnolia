@@ -125,10 +125,10 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(async function(){
+                targets.forEach(async (token)=>{
                     if (game.user.isGM){
                         console.log('GM');
-                        const actorData = this.actor.data;
+                        const actorData = token.actor.data;
                         const reflex = actorData.data.defences.reflex.value
                         if (attackRoll.total>=reflex){
                             console.log('HIT!');
