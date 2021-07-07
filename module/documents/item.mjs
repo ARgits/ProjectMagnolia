@@ -22,6 +22,8 @@ export class ARd20Item extends Item {
             labels.school = CONFIG.ARd20.SpellSchool[ data.school ]
         }
         if ( itemData.type === "weapon" ) {
+            const attack = (this.data.attack={})
+            const damage = (this.data.damage={})
             for ( let [ k, v ] of Object.entries( data.property.untrained ) ) {
                 v = CONFIG.ARd20.Prop[ k ] ?? k
             }
