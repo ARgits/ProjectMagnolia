@@ -165,23 +165,21 @@ export class ARd20Item extends Item {
             let obj = {}
             value -= target.data.damage
             obj[ 'data.health.value' ] = value
-
-            if ( game.user.isGM ) {
-                console.log( 'GM' )
-                if ( target.data.attack >= reflex ) {
-                    console.log( 'HIT!' )
+            if ( target.data.attack >= reflex ) {
+                console.log( 'HIT!' )
+                if ( game.user.isGM ) {
+                    console.log( 'GM' )
                     await actor.update( obj )
-                } else console.log( "miss" )
-            } else {
-                console.log( 'not GM' )
-                game.socket.emit( 'system.ard20', {
-                    operation: 'updateActorData',
-                    target: target,
-                    reflex: reflex,
-                    actor: actor,
-                    obj: obj
-                } )
-            }
+
+                } else {
+                    console.log( 'not GM' )
+                    game.socket.emit( 'system.ard20', {
+                        operation: 'updateActorData',
+                        actor: actor,
+                        obj: obj
+                    } )
+                }
+            } else console.log( "miss" )
         }
     }
 }
