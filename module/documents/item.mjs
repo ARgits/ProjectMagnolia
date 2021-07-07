@@ -125,7 +125,23 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(target => target.AttackCheck());
+                targets.forEach(async function(){
+                    if (game.user.isGM){
+                        console.log('GM');
+                        const actorData = this.actor.data;
+                        const reflex = actorData.data.defences.reflex.value
+                        if (attackRoll.total>=reflex){
+                            console.log('HIT!');
+                            console.log(actorData.data.health.value)
+                            let {value} = actorData.data.health.value
+                            let obj={}
+                            value -=damageRoll.total;
+                            obj['data.health.value']=value
+                            await actor.update(obj)
+                            console.log(actorData.data.health.value)
+                        }else console.log("miss")
+                    }else console.log('not GM')
+                });
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -152,10 +168,10 @@ export class ARd20Item extends Item {
             return roll
         }
     }
-    async  AttackCheck (value) {
+    async AttackCheck () {
         if ( game.user.isGM ) {
             console.log( 'GM' )
-            actorData = value.actor.data
+            actorData = this.actor.data
             let reflex = actorData.data.defences.reflex.value
             if ( attackRoll.total >= reflex ) {
                 console.log( 'попал' )
