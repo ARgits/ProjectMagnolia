@@ -146,7 +146,7 @@ export class ARd20Item extends Item {
                         console.log( 'not GM' )
                     }
                 } )
-            } else if ( ts = 0 ) { console.log( 'нет целей' ) }
+            } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
         }
