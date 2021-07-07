@@ -117,7 +117,7 @@ export class ARd20Item extends Item {
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
-            ).roll()          
+            ).roll()
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
@@ -125,11 +125,11 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                for (let token of targets){
-                    token.data.damage = damageRoll.total;
-                    token.data.attack = attackRoll.total;
-                    token.AttackCheck()
+                for ( let target in targets ) {
+                    target.data.attack = attackRoll.total
+                    target.data.damage = damageRoll.total
                 }
+                this.AttackCheck();
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -159,18 +159,21 @@ export class ARd20Item extends Item {
     async AttackCheck () {
         if ( game.user.isGM ) {
             console.log( 'GM' )
-            const actor = this.actor
-            const actorData = actor.data.data
-            const reflex = actorData.defences.reflex.value
-            if ( this.data.attack >= reflex ) {
-                console.log( 'HIT!' )
-                console.log( actorData.health.value )
-                let { value } = actorData.health
-                let obj = {}
-                value -= this.data.damage
-                obj[ 'data.health.value' ] = value
-                await actor.update( obj )
-            } else console.log( "miss" )
+            targets = game.user.targets
+            for ( let target in targets ) {
+                const actor = target.actor
+                const actorData = actor.data.data
+                const reflex = actorData.defences.reflex.value
+                if ( target.data.attack >= reflex ) {
+                    console.log( 'HIT!' )
+                    console.log( actorData.health.value )
+                    let { value } = actorData.health
+                    let obj = {}
+                    value -= target.data.damage
+                    obj[ 'data.health.value' ] = value
+                    await actor.update( obj )
+                } else console.log( "miss" )
+            }
         } else console.log( 'not GM' )
     }
 }
