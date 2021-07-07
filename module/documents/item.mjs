@@ -176,7 +176,8 @@ export class ARd20Item extends Item {
                     game.socket.emit( 'system.ard20', {
                         operation: 'updateActorData',
                         actor: actor,
-                        obj: obj
+                        update: obj,
+                        value: value
                     } )
                 }
             } else console.log( "miss" )
