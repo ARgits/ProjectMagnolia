@@ -118,23 +118,23 @@ export class ARd20Item extends Item {
 
         // Otherwise, create a roll and send a chat message from it.
         if ( item.type === "weapon" ) {
-            const rollData = this.getRollData()
-            const attackRoll = new Roll( rollData.item.attack, rollData ).roll()
+            const rollData = this.getRollData();
+            const targets = game.user.targets;
+            const attackRoll = new Roll( rollData.item.attack, rollData ).roll();
             attackRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: label,
-            } )
+            } );
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
-            ).roll()
+            ).roll();
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
                 flavor: label,
-            } )
-            const targets = game.user.targets
+            } );
             if ( targets.sise > 0 ) {
                 targets.forEach( async function ( target ) {
                     if ( game.user.isGM ) {
@@ -145,7 +145,7 @@ export class ARd20Item extends Item {
                     }
                 } )
             } else { console.log( 'нет целей' ) }
-            const attack = [ attackRoll, damageRoll ]
+            const attack = [ attackRoll, damageRoll ];
             return attack
         }
         // If there's no roll data, send a chat message.
