@@ -1,5 +1,5 @@
 export default class ARd20SocketHandler {
-    static async updateCharacterData ( data ) {
+    static async updateActorData ( data ) {
         if ( game.user.isGM ) {
             if ( data.target.data.attack >= data.reflex ) {
                 console.log( 'HIT!' )

@@ -175,7 +175,7 @@ export class ARd20Item extends Item {
             } else {
                 console.log( 'not GM' )
                 game.socket.emit( 'system.ard20', {
-                    operation: 'updateCharacterData',
+                    operation: 'updateActorData',
                     target: target,
                     actor: actor,
                     reflex: reflex,
