@@ -1,12 +1,11 @@
 export default class ARd20SocketHandler {
-    static async updateCharacterData ( actor ) {
+    static async updateCharacterData ( data ) {
         if ( game.user.isGM ) {
-            let { value } = actor.data.data.health
-            console.log( actor.data.data.health.value )
-            value -= damageRoll.total
-            let obj = {}
-            obj[ 'data.health.value' ] = value
-            await actor.update( obj )
+            const targets = game.user.targets
+            if (targets>0){
+                targets.forEach(async function(token){
+                })
+            }
             console.log( actor.data.data.health.value )
         }
     }

@@ -89,14 +89,25 @@ export class ARd20Item extends Item {
         rollData.item = foundry.utils.deepClone( this.data.data )
         return rollData
     }
-    getAttack () {
-
+    async AttackCheck ( target, attackRoll, damageRoll ) {
+        actorData = target.actor.data
+        let reflex = actorData.data.defences.reflex.value
+        if ( attackRoll.total >= reflex ) {
+            console.log( 'попал' )
+            let { value } = actorData.data.health.value
+            let obj = {}
+            value -= damageRoll.total
+            obj[ 'data.health.value' ] = value
+            await actor.update
+            console.log( actorData.data.health.value )
+        }
     }
     /**
      * Handle clickable rolls.
      * @param {Event} event   The originating click event
      * @private
      */
+
     async roll () {
         const item = this.data
 
@@ -124,29 +135,13 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            if ( targets.size > 0 ) {
-                targets.forEach( async function ( token ) {
-                    const actor = token.actor
-                    console.log( attackRoll.total, actor.data.data.defences.reflex.value )
-                    if ( attackRoll.total >= actor.data.data.defences.reflex.value ) {
-                        console.log( 'попал' )
-                        let { value } = actor.data.data.health
-                        console.log( actor.data.data.health.value )
-                        value -= damageRoll.total
-                        let obj = {}
-                        obj[ 'data.health.value' ] = value
-                        if ( game.user.isGM ) {
-                            await actor.update( obj )
-                            console.log( actor.data.data.health.value )
-                        } else {
-                            game.socket.emit( 'system.ard20', {
-                                operation: 'updateCharacterData',
-                                actor: actor,
-                                update: obj
-                            } )
-                        }
+            if ( targets.sise > 0 ) {
+                targets.forEach( async function ( target ) {
+                    if ( game.user.isGM ) {
+                        console.log( 'GM' )
+                        this.AttackCheck( target, attackRoll, damageRoll )
                     } else {
-                        console.log( 'не попал' )
+                        console.log('not GM')
                     }
                 } )
             } else { console.log( 'нет целей' ) }
