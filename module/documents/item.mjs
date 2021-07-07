@@ -162,12 +162,11 @@ export class ARd20Item extends Item {
             const targets = game.user.targets
             for ( let target in targets ) {
                 const actor = target.actor
-                const actorData = actor.data.data
-                const reflex = actorData.defences.reflex.value
+                const reflex = actor.data.data.defences.reflex.value
                 if ( target.data.attack >= reflex ) {
                     console.log( 'HIT!' )
-                    console.log( actorData.health.value )
-                    let { value } = actorData.health
+                    console.log( actor.data.data.health.value )
+                    let { value } = actor.data.data.health
                     let obj = {}
                     value -= target.data.damage
                     obj[ 'data.health.value' ] = value
