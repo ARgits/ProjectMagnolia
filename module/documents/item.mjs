@@ -102,6 +102,23 @@ export class ARd20Item extends Item {
         const speaker = ChatMessage.getSpeaker( { actor: this.actor } )
         const rollMode = game.settings.get( "core", "rollMode" )
         const label = `[${ item.type }] ${ item.name }`
+        async function AttackCheck ( token, value1, set ) {
+            if ( game.user.isGM ) {
+                console.log( 'GM' )
+                const actor = token.actor
+                const actorData = actor.data.data
+                const reflex = actorData.defences.reflex.value
+                if ( attackRoll.total >= reflex ) {
+                    console.log( 'HIT!' )
+                    console.log( actorData.health.value )
+                    let { value } = actorData.health
+                    let obj = {}
+                    value -= damageRoll.total
+                    obj[ 'data.health.value' ] = value
+                    await actor.update( obj )
+                } else console.log( "miss" )
+            } else console.log( 'not GM' )
+        }
 
         // Otherwise, create a roll and send a chat message from it.
         if ( item.type === "weapon" ) {
@@ -118,6 +135,7 @@ export class ARd20Item extends Item {
                 rollData.item.damage.common.current,
                 rollData
             ).roll()
+            rollData.item.damage.total = damageRoll.total
             damageRoll.toMessage( {
                 speaker: speaker,
                 rollMode: rollMode,
@@ -125,24 +143,7 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                targets.forEach(async function(token){
-                    if (game.user.isGM){
-                        console.log('GM');
-                        const actor = token.actor;
-                        const actorData = actor.data.data;
-                        const reflex = actorData.defences.reflex.value
-                        if (attackRoll.total>=reflex){
-                            console.log('HIT!');
-                            console.log(actorData.health.value)
-                            let {value} = actorData.health
-                            let obj={}
-                            value -=damageRoll.total;
-                            obj['data.health.value']=value
-                            await actor.update(obj)
-                            console.log(actorData.health.value)
-                        }else console.log("miss")
-                    }else console.log('not GM')
-                });
+                targets.forEach(AttackCheck);
             } else if ( ts === 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
@@ -168,21 +169,5 @@ export class ARd20Item extends Item {
             } )
             return roll
         }
-    }
-    async AttackCheck () {
-        if ( game.user.isGM ) {
-            console.log( 'GM' )
-            actorData = this.actor.data
-            let reflex = actorData.data.defences.reflex.value
-            if ( attackRoll.total >= reflex ) {
-                console.log( 'попал' )
-                let { value } = actorData.data.health.value
-                let obj = {}
-                value -= damageRoll.total
-                obj[ 'data.health.value' ] = value
-                await actor.update
-                console.log( actorData.data.health.value )
-            }
-        } else console.log( 'not a GM' )
     }
 }
