@@ -125,7 +125,6 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            const targets = game.user.targets
             const damageRoll = new Roll(
                 rollData.item.damage.common.current,
                 rollData
@@ -135,13 +134,14 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
+            const targets = game.user.targets
             if ( targets.sise > 0 ) {
                 targets.forEach( async function ( target ) {
                     if ( game.user.isGM ) {
                         console.log( 'GM' )
                         this.AttackCheck( target, attackRoll, damageRoll )
                     } else {
-                        console.log('not GM')
+                        console.log( 'not GM' )
                     }
                 } )
             } else { console.log( 'нет целей' ) }
