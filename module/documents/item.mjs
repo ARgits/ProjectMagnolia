@@ -125,7 +125,7 @@ export class ARd20Item extends Item {
             } )
             console.log( ts )
             if ( ts >= 1 ) {
-                for ( let target in targets ) {
+                for ( let target of targets ) {
                     target.data.attack = attackRoll.total
                     target.data.damage = damageRoll.total
                 }
