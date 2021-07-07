@@ -120,6 +120,7 @@ export class ARd20Item extends Item {
         if ( item.type === "weapon" ) {
             const rollData = this.getRollData()
             const targets = game.user.targets
+            const ts = targets.size
             const attackRoll = new Roll( rollData.item.attack, rollData ).roll()
             attackRoll.toMessage( {
                 speaker: speaker,
@@ -135,8 +136,8 @@ export class ARd20Item extends Item {
                 rollMode: rollMode,
                 flavor: label,
             } )
-            console.log( targets.size )
-            if ( targets.sise >= 1 ) {
+            console.log( ts )
+            if ( ts >= 1 ) {
                 targets.forEach( async function ( target ) {
                     if ( game.user.isGM ) {
                         console.log( 'GM' )
@@ -145,7 +146,7 @@ export class ARd20Item extends Item {
                         console.log( 'not GM' )
                     }
                 } )
-            } else if ( targets.size = 0 ) { console.log( 'нет целей' ) }
+            } else if ( ts = 0 ) { console.log( 'нет целей' ) }
             const attack = [ attackRoll, damageRoll ]
             return attack
         }
