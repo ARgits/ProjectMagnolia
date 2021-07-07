@@ -141,7 +141,7 @@ export class ARd20Item extends Item {
                 targets.forEach( async function ( target ) {
                     if ( game.user.isGM ) {
                         console.log( 'GM' )
-                        this.AttackCheck( target, attackRoll, damageRoll )
+                        target.AttackCheck( target, attackRoll, damageRoll )
                     } else {
                         console.log( 'not GM' )
                     }
