@@ -24,7 +24,7 @@
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{#select data.source.value}}
         {{#each config.source as |name sch|}}
-          <option value="{{sch}}">name</option>
+          <option value="{{sch}}">{{name}}</option>
         {{/each}}
       {{/select}}
     </div>
