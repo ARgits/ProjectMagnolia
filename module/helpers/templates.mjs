@@ -12,7 +12,5 @@
     "systems/ard20/templates/actor/parts/actor-spells.html",
     "systems/ard20/templates/actor/parts/actor-effects.html",
     "systems/ard20/templates/actor/parts/actor-weapon.html",
-    // item partials
-    "systems/ard20/templates/item/parts/item-effects.html"
   ]);
 };
