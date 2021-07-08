@@ -58,6 +58,13 @@ ARd20.skills = {
         1: "ARd20.Basic",
         2: "ARd20.Master"
     },
+    ARd20.source = {
+        "mar" : "ARd20.Martial",
+        "mag":"ARd20.Magical",
+        "div":"ARd20.Divine",
+        "pri":"ARd20.Primal",
+        "psy":"ARd20.Psyhic"
+    }
     ARd20.Prop = {
         "aff": "ARd20.Affixed",
         "awk": "ARd20.Awkward",

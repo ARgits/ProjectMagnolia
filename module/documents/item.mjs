@@ -52,6 +52,9 @@ export class ARd20Item extends Item {
             data.prof.label = labels.prof
             data.type.label = labels.type
         }
+        if (itemData.type === "feature"){
+            data.source.value = data.source.value || "mar"
+        }
         if ( !this.isOwned ) this.prepareFinalAttributes()
     }
     prepareFinalAttributes () {
