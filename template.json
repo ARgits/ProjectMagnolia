@@ -212,7 +212,8 @@
         "Divine",
         "Primal",
         "Psyhic"
-      ]
+      ],
+      "cost":0
     },
     "spell": {
       "templates": [
