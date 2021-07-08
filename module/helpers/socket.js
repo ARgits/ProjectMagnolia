@@ -1,7 +1,8 @@
 export default class ARd20SocketHandler {
     static async updateActorData ( data ) {
         if ( game.user.isGM ) {
-            await data.actor._id.update( data.update, {'data.helath.value':data.value})
+            const actor = game.actors.get(data.actor._id);
+            await actor.update( data.update, {'data.health.value':data.value})
         }
     }
 }
