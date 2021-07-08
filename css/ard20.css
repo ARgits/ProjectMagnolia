@@ -456,3 +456,7 @@
 .ard20 .effects .item .effect-controls {
   border: none;
 }
+nav.data-tabs {
+  border-top: 1px solid #b5b3a4;
+  border-bottom: 1px solid #b5b3a4;
+}
