@@ -57,26 +57,28 @@ export class ARd20Item extends Item {
     prepareFinalAttributes () {
         const data = this.data.data
         const abil = ( data.abil = {} )
-        const prof = data.prof.value
-        let prof_bonus = 0
-        if ( prof == 0 ) {
-            prof_bonus = 0
-        } else if ( prof == 1 ) {
-            prof_bonus = this.actor.data.data.attributes.prof_die
-        } else if ( prof == 2 ) {
-            prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus
-        }
         for ( let [ k, v ] of Object.entries( CONFIG.ARd20.abilities ) ) {
             v = this.isOwned
                 ? getProperty( this.actor.data, `data.abilities.${ k }.mod` )
                 : null
             abil[ k ] = v
         }
-        this.data.data.damage.common.current =
-            this.data.data.damage.common[ this.labels.prof.toLowerCase() ] +
-            "+" +
-            abil.str
-        this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex
+        if ( this.data.type === "weapon" ) {
+            const prof = data.prof.value
+            let prof_bonus = 0
+            if ( prof == 0 ) {
+                prof_bonus = 0
+            } else if ( prof == 1 ) {
+                prof_bonus = this.actor.data.data.attributes.prof_die
+            } else if ( prof == 2 ) {
+                prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus
+            }
+            this.data.data.damage.common.current =
+                this.data.data.damage.common[ this.labels.prof.toLowerCase() ] +
+                "+" +
+                abil.str
+            this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex
+        }
     }
     /**
      * Prepare a data object which is passed to any Roll formulas which are created related to this Item
