@@ -290,7 +290,7 @@
 }
 .ard20 .sheet-body .tab[data-tab="info"] .editor{
   height: 10%;
-  max-height: 25%;
+  max-height: 100%;
 }
 
 .ard20 .tox .tox-editor-container {
