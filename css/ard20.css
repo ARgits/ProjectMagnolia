@@ -274,13 +274,14 @@
   margin: 0;
 }
 
-.ard20 .sheet-tabs .data-section {
+.ard20 .sheet-tabs {
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
 }
 
 .ard20 .sheet-body,
+.ard20 .data-section,
 .ard20 .sheet-body .tab,
 .ard20 .sheet-body .tab .editor {
   height: 100%;
