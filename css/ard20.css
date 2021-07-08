@@ -275,7 +275,7 @@
 }
 
 .ard20 .sheet-tabs,
-.ard20 .data-tabs {
+.ard20 .sheet-body > .data-tabs {
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
