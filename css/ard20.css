@@ -288,7 +288,7 @@
 .ard20 .sheet-body .tab .editor {
   height: 100%;
 }
-.tab[data-tab="info"] .editor{
+.ard20 .sheet-body .tab[data-tab="info"] .editor{
   height: 25%;
 }
 
