@@ -288,6 +288,9 @@
 .ard20 .sheet-body .tab .editor {
   height: 100%;
 }
+.tab[data-tab="info"] .editor{
+  height: 25%;
+}
 
 .ard20 .tox .tox-editor-container {
   background: #fff;
