@@ -1,5 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs"
-import myFormApplication from "../helpers/cha-adv.mjs"
+import myFormApplication from "../documents/cha-adv.mjs"
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
