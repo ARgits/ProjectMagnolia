@@ -48,7 +48,6 @@ export class ARd20Actor extends Actor {
 
         // Make modifications to data here. For example:
         const data = actorData.data
-        this.data.isReady = this.data.isReady ?? false;
 
         // Loop through ability scores, and add their modifiers to our sheet output.
         for (let [key, ability] of Object.entries(data.abilities)) {
@@ -97,6 +96,9 @@ export class ARd20Actor extends Actor {
                 skill.roll = "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus
             }
         }
+        this.data.adv = {}
+        this.data.adv.isReady = this.data.isReady ?? false
+        this.data.adv.data = this.data.adv.data ?? data
     }
 
     /**
