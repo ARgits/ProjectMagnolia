@@ -155,20 +155,17 @@
       "weight": 0,
       "equiped": 0,
       "type": {
-        "value":"",
-        "label":""
+        "value": "",
+        "label": ""
       },
       "property": {
-        "untrained": {
-        },
-        "basic": {
-        },
-        "master": {
-        }
+        "untrained": {},
+        "basic": {},
+        "master": {}
       },
-      "prof":{
-        "value":0,
-        "label":""
+      "prof": {
+        "value": 0,
+        "label": ""
       },
       "damage": {
         "common": {
@@ -213,7 +210,7 @@
         "Primal",
         "Psyhic"
       ],
-      "cost":0
+      "cost": 0
     },
     "spell": {
       "templates": [
