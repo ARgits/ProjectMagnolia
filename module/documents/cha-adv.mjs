@@ -1,4 +1,4 @@
-class myFormApplication extends FormApplication {
+export class myFormApplication extends FormApplication {
     constructor(object, options) {
       super(object, options);
     }
