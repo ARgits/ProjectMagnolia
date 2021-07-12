@@ -1,5 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs"
-import myFormApplication from "../documents/cha-adv.mjs"
+import {myFormApplication} from "../documents/cha-adv.mjs"
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -173,7 +173,7 @@ export class ARd20ActorSheet extends ActorSheet {
                 if (li.classList.contains("inventory-header")) return
                 li.setAttribute("draggable", true)
                 li.addEventListener("dragstart", handler, false)
-            html.find('adv').click(ev => myFormApplication)
+                html.find('adv').click(ev => myFormApplication)
             })
         }
     }
