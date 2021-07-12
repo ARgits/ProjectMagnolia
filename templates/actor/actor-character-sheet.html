@@ -5,50 +5,45 @@
 		<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
 		<div class="header-fields">
 			<h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
-				<div class="resources grid flexcol flex-group-center grid-7col">
-					<div class="resource grid-span-2">
-						<label for="data.health.value" class="resource-label">Health</label>
-						<div class="resource-content flexrow flex-center">
-							<input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number" />
-							<span>/</span>
-							<input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
-          </div>
-						</div>
-						<div class="resource flexcol grid-span-2">
-							<label for="data.attributes.xp.used" class="resource-label">xp</label>
-							<div class="resource-content flexrow flex-center">
-								<input type="text" name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" data-dtype="Number" />
-								<span>/</span>
-								<span data-label="data.attributes.xp.level">{{numberFormat
-              data.attributes.xp.level decimals=0 sign=false}}</span>
-							</div>
-						</div>
-						<div class="resource flexcol grid-span-3">
-							<div>
-								<progress max="{{data.attributes.xp.bar_max}}"
-									value="{{data.attributes.xp.bar_min}}"></progress>
-								<span data-label="data.attributes.xp.level">{{numberFormat
-              data.attributes.xp.level decimals=0 sign=false}}</span>
-								<div class="resource-content flexrow flex-center flex-between">
-									<label for="data.attributes.level" class="resource-label">Level </label><span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level
-                decimals=0 sign=false}}</span>
-								</div>
-							</div>
-							<div class="flex-group-center grid grid-2col">
-								<div class="resource-content flexrow flex-center flex-between">
-									<label for="data.attributes.prof_bonus" class="resource-label">bonus</label>
-									<span class="resource-content flex-center" data-label="data.attributes.prof_bonus">{{numberFormat
-                data.attributes.prof_bonus decimals=0 sign=false}}</span>
-								</div>
-								<div class="resource-content flexrow flex-center flex-between">
-									<label for="data.attributes.prof_die" class="resource-label">die</label>
-									<span class="resource-content rollable flex-center" data-roll="@attributes.prof_die"
-                data-label="data.attributes.prof_die">{{data.attributes.prof_die}}</span>
-								</div>
-							</div>
-						</div>
+			<div class="resources grid flexcol flex-group-center grid-7col">
+				<div class="resource grid-span-2">
+					<label for="data.health.value" class="resource-label">Health</label>
+					<div class="resource-content flexrow flex-center">
+						<input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number" />
+						<span>/</span>
+						<input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
 					</div>
 				</div>
+				<div class="resource flexcol grid-span-2">
+					<label for="data.attributes.xp.used" class="resource-label">xp</label>
+					<div class="resource-content flexrow flex-center">
+						<input type="text" name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" data-dtype="Number" />
+						<span>/</span>
+						<span data-label="data.attributes.xp.level">{{numberFormat data.attributes.xp.level decimals=0 sign=false}}</span>
+					</div>
+				</div>
+				<div class="resource flexcol grid-span-3">
+					<div>
+						<progress max="{{data.attributes.xp.bar_max}}" value="{{data.attributes.xp.bar_min}}"></progress>
+						<span data-label="data.attributes.xp.level">{{numberFormat data.attributes.xp.level decimals=0 sign=false}}</span>
+						<div class="resource-content flexrow flex-center flex-between">
+							<label for="data.attributes.level" class="resource-label">Level </label><span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level decimals=0 sign=false}}</span>
+						</div>
+					</div>
+					<div class="flex-group-center grid grid-5col">
+						<div class="resource-content flexrow flex-center flex-between grid grid-span-2">
+							<label for="data.attributes.prof_bonus" class="resource-label">Bonus</label>
+							<span class="resource-content flex-center" data-label="data.attributes.prof_bonus">{{numberFormat data.attributes.prof_bonus decimals=0 sign=false}}</span>
+						</div>
+						<div class="resource-content flexrow flex-center flex-between grid-span-2">
+							<label for="data.attributes.prof_die" class="resource-label">die</label>
+							<span class="resource-content rollable flex-center" data-roll="@attributes.prof_die" data-label="data.attributes.prof_die">{{data.attributes.prof_die}}</span>
+						</div>
+						<button type="button" name="adv">Advancement</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</header>
 
 	{{!-- Sheet Tab Navigation --}}
@@ -70,73 +65,64 @@
 			<section class="grid grid-6col flexcol">
 				<aside class="ability grid grid-3col">
 					<div class="ability flex-group-center grid-span-2">
-							{{#each data.abilities as |ability key|}}
+						{{#each data.abilities as |ability key|}}
 							<div class="ability flexrow">
-								<label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
-                data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
+								<label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
 								<input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-								<span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod"
-                data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+								<span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
 							</div>
-							{{/each}}
+						{{/each}}
 					</div>
 					<div>
 						{{#each data.defences as |defence key|}}
-						<div class="ability flexrow">
-							<label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left"
-                data-label="{{defence.label}}">{{defence.label}}</label>
-							<span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
+							<div class="ability flexrow">
+								<label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
+								<span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
                 sign=false}}
-            </div>
-            {{/each}}
-          </div>
-          <div class="grid-span-2">
-            {{#each data.skills as |skill key|}}
-            <div class="flexrow">
-              <div>
-                <label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable"
-                  data-roll="{{skill.roll}}">{{skill.hover}}  {{skill.label}}</label>
-              </div>
-            </div>
-            {{/each}}
-          </div>
-        </aside>
-        {{!-- For the main features list, span the right two columns --}}
-        <section class="main grid-start-4 grid-span-3">
-          {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in
-          module/helpers/templates.mjs --}}
-          {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
-        </section>
-      </section>
-    </div>
+							</div>
+						{{/each}}
+					</div>
+					<div class="grid-span-2">
+						{{#each data.skills as |skill key|}}
+							<div class="flexrow">
+								<div>
+									<label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable" data-roll="{{skill.roll}}">{{skill.hover}} {{skill.label}}</label>
+								</div>
+							</div>
+						{{/each}}
+					</div>
+				</aside>
+				{{!-- For the main features list, span the right two columns --}}
+				<section class="main grid-start-4 grid-span-3">
+					{{> "systems/ard20/templates/actor/parts/actor-features.html"}}
+				</section>
+			</section>
+		</div>
 
-    {{!-- Biography Tab --}}
-    <div class="tab biography" data-group="primary" data-tab="description">
-      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to
-      the rollData property. --}}
-      {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner
-      editable=editable}}
-    </div>
+		{{!-- Biography Tab --}}
+		<div class="tab biography" data-group="primary" data-tab="description">
+			{{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
+		</div>
 
-    {{!-- Owned Weapon Tab --}}
-    <div class="tab items" data-group="primary" data-tab="weapon">
-      {{> "systems/ard20/templates/actor/parts/actor-weapon.html"}}
-    </div>
+		{{!-- Owned Weapon Tab --}}
+		<div class="tab items" data-group="primary" data-tab="weapon">
+			{{> "systems/ard20/templates/actor/parts/actor-weapon.html"}}
+		</div>
 
-    {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
-      {{> "systems/ard20/templates/actor/parts/actor-items.html"}}
-    </div>
+		{{!-- Owned Items Tab --}}
+		<div class="tab items" data-group="primary" data-tab="items">
+			{{> "systems/ard20/templates/actor/parts/actor-items.html"}}
+		</div>
 
-    {{!-- Owned Spells Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="spells">
-      {{> "systems/ard20/templates/actor/parts/actor-spells.html"}}
-    </div>
+		{{!-- Owned Spells Tab --}}
+		<div class="tab spells" data-group="primary" data-tab="spells">
+			{{> "systems/ard20/templates/actor/parts/actor-spells.html"}}
+		</div>
 
-    {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/ard20/templates/actor/parts/actor-effects.html"}}
-    </div>
+		{{!-- Active Effects Tab --}}
+		<div class="tab effects flexcol" data-group="primary" data-tab="effects">
+			{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}
+		</div>
 
-  </section>
+	</section>
 </form>

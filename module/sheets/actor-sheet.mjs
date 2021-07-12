@@ -172,6 +172,7 @@ export class ARd20ActorSheet extends ActorSheet {
                 if (li.classList.contains("inventory-header")) return
                 li.setAttribute("draggable", true)
                 li.addEventListener("dragstart", handler, false)
+            html.find('adv').click(ev => )
             })
         }
     }
