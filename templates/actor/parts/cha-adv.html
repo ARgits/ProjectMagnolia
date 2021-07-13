@@ -10,10 +10,10 @@
         {{#each advanced.abilities as |ability key|}}
           <div class="ability flexrow">
             <label for="advanced.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-            <button {{#if (eq original.abilities advanced.abilities)}} disabled {{/if}} onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
+            <button {{#if (eq original.abilities advanced.abilities)}} disabled {{/if}} >+</button>
             <span class="ability">{{numberFormat ability.value decimals=0 sign=false}}</span>
             <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">-</button>
           </div>
         {{/each}}
       </div>

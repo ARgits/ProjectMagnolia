@@ -32,20 +32,23 @@ export class CharacterAdvancement extends FormApplication {
 
     activateListeners (html) {
         super.activateListeners(html)
- //       html.find('.change').click(this._Change(this))
+        html.find('.change').click(this._OnChange(this))
     }
-    /*   _Change(event){
-       super._Change(event);
-           const button = event.currentTarget;
-           let value;
-           switch(button.dataset.action){
-               
-               case "plus": 
-               app = 
-               break;} 
-           }
-   
-           */
+    _OnChange (event) {
+        super._OnChange(event)
+        const button = event.currentTarget
+        
+        switch (button.dataset.action) {
+            case "ability":
+                html.find('plus').click(value => IncreaseValue(value){
+                    
+                })
+                break
+            case "skill":
+                
+                break
+        }
+    }
 
     async _updateObject (event, formData) {
         const data = foundry.utils.expandObject(formData)
