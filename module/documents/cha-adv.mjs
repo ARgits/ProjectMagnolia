@@ -2,7 +2,7 @@ export class CharacterAdvancement extends DocumentSheet {
     static get defaultOptions () {
         return mergeObject(super.defaultOptions, {
             title: 'Character Advancement',
-            template: '/templates/actor/parts/cha-adv.html',
+            template: 'systems/ard20/templates/actor/parts/cha-adv.html',
             id: 'cha-adv',
             width: 600,
             height: 600,
