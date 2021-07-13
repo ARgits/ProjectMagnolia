@@ -1,11 +1,11 @@
 export class CharacterAdvancement extends FormApplication {
 
-    constructor(actor, options){
-        super(actor,{
-            closeOnSubmit:false,
-            submitOnChange:true,
-            submitOnClose:true,
-            title:actor.name
+    constructor (actor, options) {
+        super(actor, {
+            closeOnSubmit: false,
+            submitOnChange: true,
+            submitOnClose: true,
+            title: actor.name
         })
     }
     static get defaultOptions () {
@@ -22,8 +22,8 @@ export class CharacterAdvancement extends FormApplication {
 
     getData () {
         const data = {}
-        data.actor = this.object;
-        return data// the object from the constructor is where we are storing the data
+        data.actor = this.object
+        return data
     }
 
     activateListeners (html) {
@@ -31,8 +31,8 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     async _updateObject (event, formData) {
-        const actor = this.object;
-        let updateData = expandObject(formData);
-        await actor.update(updateData,{diff:false})
+        const actor = this.object
+        let updateData = expandObject(formData)
+        await actor.update(updateData, {diff: false})
     }
 }
