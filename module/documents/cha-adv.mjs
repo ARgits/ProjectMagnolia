@@ -1,4 +1,13 @@
-export class CharacterAdvancement extends DocumentSheet {
+export class CharacterAdvancement extends FormApplication {
+
+    constructor(actor, options){
+        super(actor,{
+            closeOnSubmit:false,
+            submitOnChange:true,
+            submitOnClose:true,
+            title:actor.name
+        })
+    }
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             title: 'Character Advancement',
@@ -14,6 +23,7 @@ export class CharacterAdvancement extends DocumentSheet {
     getData () {
         const data = {}
         data.actor = this.object;
+        data.
         return data// the object from the constructor is where we are storing the data
     }
 
@@ -25,6 +35,5 @@ export class CharacterAdvancement extends DocumentSheet {
         const actor = this.object;
         let updateData = expandObject(formData);
         await actor.update(updateData,{diff:false})
-        return
     }
 }
