@@ -23,7 +23,6 @@ export class CharacterAdvancement extends FormApplication {
     getData () {
         const data = {}
         data.actor = this.object;
-        data.
         return data// the object from the constructor is where we are storing the data
     }
 
