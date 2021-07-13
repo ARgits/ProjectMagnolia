@@ -1,28 +1,20 @@
+import {ARd20Actor} from "./actor.mjs"
 export class CharacterAdvancement extends FormApplication {
-
-    constructor (actor, options) {
-        super(actor, {
-            closeOnSubmit: false,
-            submitOnChange: true,
-            submitOnClose: true,
-            title: actor.name
-        })
-    }
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
+            classes: ["ard20"],
             title: 'Character Advancement',
             template: 'systems/ard20/templates/actor/parts/cha-adv.html',
             id: 'cha-adv',
             width: 600,
-            height: 600,
-            closeOnSubmit: true,
+            height: "auto",
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}]
         })
     }
 
-    getData () {
+    getData (options) {
         const data = {}
-        data.actor = this.object
+        data.abilities = foundry.utils.getProperty(this.object.data.data, 'abilities')
         return data
     }
 
