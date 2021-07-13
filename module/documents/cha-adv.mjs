@@ -13,9 +13,18 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     getData (options) {
-        const data = {}
-        data.abilities = foundry.utils.getProperty(this.object.data.data, 'abilities')
-        return data
+        const data={}
+        const abilities = data.abilities = {
+            value:null,
+            mod:null
+        }
+        for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
+            abilities[k].value = foundry.utils.getProperty(this.actor.data, `data.abilities.${k}.value`)
+            abilities[k].mod = foundry.utils.getProperty(this.actor.data, `data.abilities.${k}.mod`)
+        }
+        return {
+            abilities: abilities
+        }
     }
 
     activateListeners (html) {
@@ -23,8 +32,8 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     async _updateObject (event, formData) {
-        const actor = this.object
-        let updateData = expandObject(formData)
-        await actor.update(updateData, {diff: false})
+       const data = foundry.utils.expandObject(formData);
+       return this.object.update({'data.abilities':data})
+       }
     }
 }
