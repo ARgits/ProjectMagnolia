@@ -1,13 +1,19 @@
-export class myFormApplication extends FormApplication {
-    constructor (object, options) {
-        super(object, options)
-    }
-
+export class CharacterAdvancement extends DocumentSheet {
     static get defaultOptions () {
-        return super.defaultOptions
+        return mergeObject(super.defaultOptions, {
+            title: 'Character Advancement',
+            template: '/templates/actor/parts/cha-adv.html',
+            id: 'cha-adv',
+            width: 600,
+            height: 600,
+            closeOnSubmit: true,
+            tabs: [{navSelector: '.tabs', contentSelector: 'sheet-body', initial: 'stats'}]
+        })
     }
 
-    getData (options = {}) {
+    getData () {
+        const data = {}
+        data.actor = this.object;
         return super.getData().object // the object from the constructor is where we are storing the data
     }
 
@@ -16,28 +22,9 @@ export class myFormApplication extends FormApplication {
     }
 
     async _updateObject (event, formData) {
+        const actor = this.object;
+        let updateData = expandObject(formData);
+        await actor.update(updateData,{diff:false})
         return
     }
 }
-
-const template_file = "templates/actor/parts/cha-adv.html"
-const template_data = {
-    header: "Handlebars header text.",
-    tabs: [{
-        label: "tab1",
-        title: "My First Tab",
-        content: "<em>Fancy tab1 content.</em>"
-    },
-
-    {
-        label: "tab2",
-        title: "My Second Tab",
-        content: "<em>Fancy tab2 content.</em>"
-    }],
-    footer: "Handlebars footer text."
-}
-const my_form = new myFormApplication(template_data, {
-    template: template_file,
-    tabs: [{navSelector: ".tabs", contentSelector: ".content", initial: "tab1"}]
-}) // data, options
-const res = await my_form.render(true)

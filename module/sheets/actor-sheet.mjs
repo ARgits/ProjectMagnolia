@@ -1,5 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs"
-import {myFormApplication} from "../documents/cha-adv.mjs"
+import {CharacterAdvancement} from "../documents/cha-adv.mjs"
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -165,6 +165,7 @@ export class ARd20ActorSheet extends ActorSheet {
 
         // Rollable abilities.
         html.find('.rollable').click(this._onRoll.bind(this))
+        html.find('.adv').click(this._OnAdvanceMenu.bind(this))
 
         // Drag events for macros.
         if (this.actor.isOwner) {
@@ -173,9 +174,13 @@ export class ARd20ActorSheet extends ActorSheet {
                 if (li.classList.contains("inventory-header")) return
                 li.setAttribute("draggable", true)
                 li.addEventListener("dragstart", handler, false)
-                html.find('adv').click(ev => myFormApplication)
             })
         }
+    }
+    _OnAdvanceMenu(event){
+        event.preventDefault();
+        let app = new CharacterAdvancement(this.object)
+        app?.render(true)
     }
 
     /**
