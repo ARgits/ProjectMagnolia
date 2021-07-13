@@ -7,7 +7,7 @@ export class CharacterAdvancement extends DocumentSheet {
             width: 600,
             height: 600,
             closeOnSubmit: true,
-            tabs: [{navSelector: '.tabs', contentSelector: 'sheet-body', initial: 'stats'}]
+            tabs: [{navSelector: '.tabs', contentSelector: '.sheet-body', initial: 'stats'}]
         })
     }
 
