@@ -1,24 +1,19 @@
 <form>
   <nav class="tabs" data-group="primary-tabs">
-    {{#each tabs}}
-      <a class="item" data-tab="{{label}}"><i class="fas fa-dice-d20"></i> {{title}}</a>
-    {{/each}}
+      <a class="item" data-tab="stats">Stats</a>
   </nav>
-
-  <b>Fixed header</b><br>
-  {{header}}
   <hr>
 
-  <section class="content">
-    {{#each tabs}}
-      <div class="tab" data-tab="{{label}}" data-group="primary-tabs">
-        Fixed content for tab {{title}}<br>
-        {{{content}}}
+  <section class="sheet-body">
+      <div class="tab" data-tab="stats" data-group="primary-tabs">
+        <div class="ability flex-group-center grid-span-2">
+          {{#each data.abilities as |ability key|}}
+            <div class="ability flexrow">
+              <label for="data.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
+              <span class="ability">{{numberFormat ability.value decimals=0 sign=false}}
+              <span class="ability-mod " data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+            </div>
+          {{/each}}
       </div>
-    {{/each}}
   </section>
-
-  <hr>
-  Fixed <em>footer</em><br>
-  {{footer}}
 </form>
