@@ -1,6 +1,6 @@
 export class CharacterAdvancement extends DocumentSheet {
     static get defaultOptions () {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             title: 'Character Advancement',
             template: 'systems/ard20/templates/actor/parts/cha-adv.html',
             id: 'cha-adv',
@@ -14,7 +14,7 @@ export class CharacterAdvancement extends DocumentSheet {
     getData () {
         const data = {}
         data.actor = this.object;
-        return super.getData().object // the object from the constructor is where we are storing the data
+        return data// the object from the constructor is where we are storing the data
     }
 
     activateListeners (html) {
