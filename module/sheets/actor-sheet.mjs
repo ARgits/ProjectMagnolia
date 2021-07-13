@@ -165,7 +165,7 @@ export class ARd20ActorSheet extends ActorSheet {
 
         // Rollable abilities.
         html.find('.rollable').click(this._onRoll.bind(this))
-        html.find('.adv').click(this._OnAdvanceMenu.bind(this))
+        html.find('.config-button').click(this._OnAdvanceMenu.bind(this))
 
         // Drag events for macros.
         if (this.actor.isOwner) {
@@ -179,7 +179,12 @@ export class ARd20ActorSheet extends ActorSheet {
     }
     _OnAdvanceMenu(event){
         event.preventDefault();
-        let app = new CharacterAdvancement(this.object)
+        const button = event.currentTarget;
+        let app;
+        switch(button.dataset.action){
+            case "adv": 
+            app = new CharacterAdvancement(this.object)
+            break;}
         app?.render(true)
     }
 

@@ -464,3 +464,7 @@ nav.data-tabs {
   border-top: 1px solid #b5b3a4;
   border-bottom: 1px solid #b5b3a4;
 }
+.config-button {
+  margin:0 0 3px 0;
+  flex:1;
+}
