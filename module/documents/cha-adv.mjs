@@ -17,7 +17,7 @@ export class CharacterAdvancement extends FormApplication {
         const abilities = data.abilities = {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            abilities[k] = k
+            abilities[k] = {}
             abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
             abilities[k].mod = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.mod`)
         }
