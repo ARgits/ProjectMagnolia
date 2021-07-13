@@ -7,7 +7,7 @@
   <section class="sheet-body">
     <div class="tab" data-tab="stats" data-group="primary-tabs">
       <div class="ability flex-group-center grid-span-2">
-        {{#each data.abilities as |ability key|}}
+        {{#each data.actor.data.data.abilities as |ability key|}}
           <div class="ability flexrow">
             <label for="data.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
             <span class="ability">{{numberFormat ability.value decimals=0 sign=false}}
