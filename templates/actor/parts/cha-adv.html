@@ -6,13 +6,17 @@
 
   <section class="sheet-body">
     <div class="tab" data-tab="stats" data-group="primary-tabs">
-        {{#each abilities as |ability key|}}
+      <div class="ability flexcoll flex-group-center">
+        {{#each advanced.abilities as |ability key|}}
           <div class="ability flexrow">
-            <label for="data.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-            <span class="ability">{{numberFormat ability.value decimals=0 sign=false}}
-              <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+            <label for="advanced.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
+            <button {{#if (eq original.abilities advanced.abilities)}} disabled {{/if}} onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
+            <span class="ability">{{numberFormat ability.value decimals=0 sign=false}}</span>
+            <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
           </div>
         {{/each}}
+      </div>
     </div>
   </section>
 </form>
