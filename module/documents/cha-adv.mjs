@@ -13,10 +13,10 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     getData (options) {
-        const data={}
+        const data = {}
         const abilities = data.abilities = {
-            value:null,
-            mod:null
+            value: null,
+            mod: null
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             abilities[k].value = foundry.utils.getProperty(this.actor.data, `data.abilities.${k}.value`)
@@ -32,8 +32,7 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     async _updateObject (event, formData) {
-       const data = foundry.utils.expandObject(formData);
-       return this.object.update({'data.abilities':data})
-       }
+        const data = foundry.utils.expandObject(formData)
+        return this.object.update({'data.abilities': data})
     }
 }
