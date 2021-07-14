@@ -63,6 +63,5 @@ export class CharacterAdvancement extends FormApplication {
         let data = foundry.utils.expandObject(formData)
         const actor = this.object
         await actor.update(data,{diff:false})
-        this.render(true)
     }
 }
