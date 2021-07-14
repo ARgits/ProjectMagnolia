@@ -32,18 +32,20 @@ export class CharacterAdvancement extends FormApplication {
 
     activateListeners (html) {
         super.activateListeners(html)
-        function IncreaseValue (value) {
-            value += 1
-            return value
-        }
-        function DecreaseValue (value) {
-            value -= 1
-            return value
-        }
-        html.find('.plus').click(value => IncreaseValue.bind(this, value))
-        html.find('minus').click(value => DecreaseValue.bind(this, value))
-
+        html.find('.change').click(this._onChange.bind(this))
     }
+    _onChange (event) {
+        const button = event.currentTarget
+        switch (button.dataset.action) {
+            case 'plus':
+                this.advanced.abilities[button.dataset.key].value += 1
+                break
+            case 'minus':
+                this.advanced.abilities[button.dataset.key].value -= 1
+                break
+        }
+    }
+
 
     async _updateObject (event, formData) {
         const data = foundry.utils.expandObject(formData)
