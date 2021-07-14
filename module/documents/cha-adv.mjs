@@ -44,6 +44,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onChange (event,advanced) {
         const button = event.currentTarget
+        const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
                 advanced.abilities[button.dataset.key].value += 1
