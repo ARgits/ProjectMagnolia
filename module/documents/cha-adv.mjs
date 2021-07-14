@@ -16,7 +16,7 @@ export class CharacterAdvancement extends FormApplication {
             height: 800,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
             closeOnSubmit: false,
-            submitOnChange:false,
+            submitOnChange: false,
         })
     }
 
@@ -31,7 +31,7 @@ export class CharacterAdvancement extends FormApplication {
             original.abilities[k].mod = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.mod`)
             original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
-        advanced.abilities = advanced.abilities??original.abilities
+        advanced.abilities = advanced.abilities ?? original.abilities
         return {
             original: original,
             advanced: advanced
@@ -42,7 +42,7 @@ export class CharacterAdvancement extends FormApplication {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
     }
-    _onChange (event,advanced) {
+    _onChange (event, advanced) {
         const button = event.currentTarget
         const data = this.getData()
         console.log(data)
@@ -62,6 +62,6 @@ export class CharacterAdvancement extends FormApplication {
     async _updateObject (event, formData) {
         let data = foundry.utils.expandObject(formData)
         const actor = this.object
-        await actor.update(data,{diff:false})
+        await actor.update(data, {diff: false})
     }
 }
