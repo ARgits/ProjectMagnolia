@@ -40,14 +40,21 @@ export class CharacterAdvancement extends FormApplication {
         
         switch (button.dataset.action) {
             case "ability":
-                html.find('plus').click(value => IncreaseValue(value){
-                    
-                })
+                html.find('plus').click(value => IncreaseValue(value))
+                html.find('minus').click(value => DecreaseValue(value))
                 break
             case "skill":
                 
                 break
         }
+    }
+    IncreaseValue(value){
+        value+=1
+        return value
+    }
+    DecreaseValue(value){
+        value-=1
+        return value
     }
 
     async _updateObject (event, formData) {
