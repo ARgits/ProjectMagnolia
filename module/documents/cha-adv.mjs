@@ -32,21 +32,8 @@ export class CharacterAdvancement extends FormApplication {
 
     activateListeners (html) {
         super.activateListeners(html)
-        html.find('.change').click(() => this._OnChange(this))
-    }
-    _OnChange (event) {
-        super._OnChange(event)
-        const button = event.currentTarget
-
-        switch (button.dataset.action) {
-            case "ability":
-                html.find('plus').click(value => IncreaseValue(value))
-                html.find('minus').click(value => DecreaseValue(value))
-                break
-            case "skill":
-
-                break
-        }
+        html.find('.plus').click(value => this.IncreaseValue(value))
+        html.find('minus').click(value=> this.DecreaseValue(value))
     }
     IncreaseValue (value) {
         value += 1
