@@ -11,7 +11,7 @@
           <div class="ability flexrow">
             <label for="advanced.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
             <button class="change" {{#if (eq original.abilities.key.value advanced.abilities.key.value)}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
-            <input type="text" value="{{ability.value}}"class="ability" data-dtype="Number"/>{{numberFormat ability.value decimals=0 sign=false}}
+            <input type="text" value="{{ability.value}}"class="ability" data-dtype="Number"/>
             <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
             <button class="change" data-action='plus' data-key='{{key}}'>+</button>
           </div>
