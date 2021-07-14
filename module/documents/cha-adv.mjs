@@ -31,7 +31,7 @@ export class CharacterAdvancement extends FormApplication {
             original.abilities[k].mod = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.mod`)
             original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
-        advanced.abilities = original.abilities
+        advanced.abilities = advanced.abilities??original.abilities
         return {
             original: original,
             advanced: advanced
