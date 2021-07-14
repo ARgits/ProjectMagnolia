@@ -10,10 +10,10 @@
         {{#each advanced.abilities as |ability key|}}
           <div class="ability flexrow">
             <label for="advanced.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-            <button class="change minus" {{#if (eq original.abilities.key.value advanced.abilities.key.value)}} disabled {{/if}} onclick="DecreaseValue(ability.value)" >-</button>
+            <button class="change minus" {{#if (eq original.abilities.key.value advanced.abilities.key.value)}} disabled {{/if}} onclick="this.DecreaseValue(ability.value)" >-</button>
             <span class="ability">{{numberFormat ability.value decimals=0 sign=false}}</span>
             <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            <button class="change plus" onclick="IncreaseValue(ability.value)">+</button>
+            <button class="change plus" onclick="this.IncreaseValue(ability.value)">+</button>
           </div>
         {{/each}}
       </div>
