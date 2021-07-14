@@ -1,5 +1,11 @@
 import {ARd20Actor} from "./actor.mjs"
 export class CharacterAdvancement extends FormApplication {
+/*    constructor(object,options){
+        super(object,options);
+        submitOnChange: false
+
+    }
+  */
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
@@ -36,12 +42,13 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onChange (event) {
         const button = event.currentTarget
+        const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
-                this.advanced.abilities[button.dataset.key].value += 1
+                data.advanced.abilities[button.dataset.key].value += 1
                 break
             case 'minus':
-                this.advanced.abilities[button.dataset.key].value -= 1
+                data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
     }
