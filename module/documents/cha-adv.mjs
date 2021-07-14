@@ -1,11 +1,11 @@
 import {ARd20Actor} from "./actor.mjs"
 export class CharacterAdvancement extends FormApplication {
-/*    constructor(object,options){
-        super(object,options);
-        submitOnChange: false
-
-    }
-  */
+    /*    constructor(object,options){
+            super(object,options);
+            submitOnChange: false
+    
+        }
+      */
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
@@ -15,7 +15,7 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 800,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit:false,
+            closeOnSubmit: false,
         })
     }
 
@@ -52,6 +52,7 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
+        return data
     }
 
 
