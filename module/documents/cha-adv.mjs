@@ -42,15 +42,14 @@ export class CharacterAdvancement extends FormApplication {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
     }
-    _onChange (event) {
+    _onChange (event,advanced) {
         const button = event.currentTarget
-        const data = this.object
         switch (button.dataset.action) {
             case 'plus':
-                data.advanced.abilities[button.dataset.key].value += 1
+                advanced.abilities[button.dataset.key].value += 1
                 break
             case 'minus':
-                data.advanced.abilities[button.dataset.key].value -= 1
+                advanced.abilities[button.dataset.key].value -= 1
                 break
         }
         return data
