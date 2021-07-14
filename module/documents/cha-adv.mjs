@@ -32,16 +32,17 @@ export class CharacterAdvancement extends FormApplication {
 
     activateListeners (html) {
         super.activateListeners(html)
-        html.find('.plus').click(value => this.IncreaseValue(value))
-        html.find('minus').click(value=> this.DecreaseValue(value))
-    }
-    IncreaseValue (value) {
-        value += 1
-        return value
-    }
-    DecreaseValue (value) {
-        value -= 1
-        return value
+        function IncreaseValue (value) {
+            value += 1
+            return value
+        }
+        function DecreaseValue (value) {
+            value -= 1
+            return value
+        }
+        html.find('.plus').click(value => IncreaseValue(value))
+        html.find('minus').click(value => DecreaseValue(value))
+
     }
 
     async _updateObject (event, formData) {
