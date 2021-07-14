@@ -40,8 +40,8 @@ export class CharacterAdvancement extends FormApplication {
             value -= 1
             return value
         }
-        html.find('.plus').click(value => IncreaseValue(value))
-        html.find('minus').click(value => DecreaseValue(value))
+        html.find('.plus').click(value => IncreaseValue.bind(this, value))
+        html.find('minus').click(value => DecreaseValue.bind(this, value))
 
     }
 
