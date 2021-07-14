@@ -32,9 +32,9 @@ export class CharacterAdvancement extends FormApplication {
 
     activateListeners (html) {
         super.activateListeners(html)
-        html.find('.change').click(this._OnChange(this))
+        html.find('.change').click(_OnChange(this))
     }
-    _OnChange (event) {
+    _OnChange(event) {
         super._OnChange(event)
         const button = event.currentTarget
         
