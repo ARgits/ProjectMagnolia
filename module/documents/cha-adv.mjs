@@ -54,7 +54,6 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
-        this.render()
     }
 
 
