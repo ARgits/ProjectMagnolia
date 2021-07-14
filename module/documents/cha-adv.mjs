@@ -61,7 +61,7 @@ export class CharacterAdvancement extends FormApplication {
 
     async _updateObject (event, formData) {
         const data = foundry.utils.expandObject(formData)
-        await this.object.update({'data.abilities': data})
+        await this.object.update({'data.data.abilities': data})
         this.render(true)
     }
 }
