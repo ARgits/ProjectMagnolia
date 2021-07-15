@@ -15,8 +15,8 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 'auto',
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit:true,
-            submitOnChange:false
+            closeOnSubmit: true,
+            submitOnChange: false
         })
     }
 
@@ -55,6 +55,11 @@ export class CharacterAdvancement extends FormApplication {
                 break
         }
         return data
+    }
+    _onChangeInput (event) {
+        super._onChangeInput(event)
+        const updateData = foundry.utils.expandObject(this._getSubmitData())
+        this.form['advanced'].value = updateData
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
