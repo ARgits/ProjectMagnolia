@@ -15,7 +15,6 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 800,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit:false
         })
     }
 
@@ -48,11 +47,9 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
             case 'plus':
                 data.advanced.abilities[button.dataset.key].value += 1
-                this.render()
                 break
             case 'minus':
                 data.advanced.abilities[button.dataset.key].value -= 1
-                this.render()
                 break
         }
         return data
@@ -60,7 +57,7 @@ export class CharacterAdvancement extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         const actor = this.object
-        let data = this.getData()
-        //return this.object.update()
+        this.render()
+        return actor.update({'data.attributes':updateData})
     }
 }
