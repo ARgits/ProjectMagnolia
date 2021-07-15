@@ -7,10 +7,10 @@
   <section class="sheet-body">
     <div class="tab" data-tab="stats" data-group="primary-tabs">
       <div class="ability flexcoll flex-group-center">
-        {{#each data.advanced.abilities as |ability key|}}
+        {{#each data.adv.abilities as |ability key|}}
           <div class="ability flexrow">
-            <label for="data.advanced.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-            <button class="change" {{#if (eq data.original.abilities.key.value data.advanced.abilities.key.value)}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
+            <label for="data.adv.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
+            <button class="change" {{#if (eq data.data.abilities.key.value data.adv.abilities.key.value)}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
             <input type="number" value="{{ability.value}}" class="ability" />
             <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
             <button class="change" data-action='plus' data-key='{{key}}'>+</button>

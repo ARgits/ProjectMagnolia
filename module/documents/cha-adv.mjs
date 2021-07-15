@@ -22,6 +22,7 @@ export class CharacterAdvancement extends FormApplication {
 
     getData (options) {
         const data = this.object.data
+        console.log(data)
         const original = data.data
         const advanced = data.adv
         /*for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -45,12 +46,12 @@ export class CharacterAdvancement extends FormApplication {
         console.log(data)
         switch (button.dataset.action) {
             case 'plus':
-                console.log(data.advanced.abilities[button.dataset.key].value)
-                data.advanced.abilities[button.dataset.key].value += 1
-                console.log(data.advanced.abilities[button.dataset.key].value)
+                console.log(data.adv.abilities[button.dataset.key].value)
+                data.adv.abilities[button.dataset.key].value += 1
+                console.log(data.adv.abilities[button.dataset.key].value)
                 break
             case 'minus':
-                data.advanced.abilities[button.dataset.key].value -= 1
+                data.adv.abilities[button.dataset.key].value -= 1
                 break
         }
         return data
