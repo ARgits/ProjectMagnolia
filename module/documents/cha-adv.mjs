@@ -31,7 +31,10 @@ export class CharacterAdvancement extends FormApplication {
             advanced.data.abilities[k].mod = Math.floor((advanced.data.abilities[k].value - 10) / 2)
             //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
-        return advanced
+        return {
+            advanced: advanced,
+            original: original
+        }
     }
 
     activateListeners (html) {
@@ -43,9 +46,9 @@ export class CharacterAdvancement extends FormApplication {
         const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
-                console.log(data.abilities[button.dataset.key].value)
-                data.abilities[button.dataset.key].value += 1
-                console.log(data.abilities[button.dataset.key].value)
+                console.log(data.advanced.abilities[button.dataset.key].value)
+                data.advanced.abilities[button.dataset.key].value += 1
+                console.log(data.advanced.abilities[button.dataset.key].value)
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
@@ -58,12 +61,12 @@ export class CharacterAdvancement extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         const actor = this.object
-        let data = this.getData
-        console.log(data)
-        console.log(this.object.data.data.abilitites)
+        let data = this.getData()
+        console.log(data.advanced)
+        console.log(data.original)
         //await actor.update({'data.data.abilities':updateData})
         this.render()
-        console.log(data)
-        console.log(this.object.data.data.abilitites)
+        console.log(data.advanced)
+        console.log(data.original)
     }
 }
