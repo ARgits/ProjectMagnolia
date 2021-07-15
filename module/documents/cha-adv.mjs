@@ -20,22 +20,23 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     getData (options) {
-        const original = this.object.data.data
-        const advanced = this.object.data.adv
+        const data ={}
+        data.original = this.object.data.data
+        data.advanced = this.object.data.adv
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             //original.abilities[k] = {}
             //original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
-            original.abilities[k].mod = Math.floor((original.abilities[k].value - 10) / 2)
-            advanced.abilities[k].mod = Math.floor((advanced.abilities[k].value - 10) / 2)
+            data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
+            data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
             //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
         console.log('Подготовлены данные')
-        console.log(original)
-        console.log(advanced)
+        console.log(data.original)
+        console.log(data.advanced)
         console.log('----------------------------------')
         return {
-            advanced: advanced,
-            original: original
+            advanced: data.advanced,
+            original: data.original
         }
     }
 
@@ -45,7 +46,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onChange (event) {
         const button = event.currentTarget
-        const data = this.getData()
+        const data = this.getData().data
         switch (button.dataset.action) {
             case 'plus':
                 console.log(data.advanced.abilities[button.dataset.key].value)

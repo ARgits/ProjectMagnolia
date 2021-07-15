@@ -10,7 +10,7 @@
         {{#each advanced.abilities as |ability key|}}
           <div class="ability flexrow">
             <label for="advanced.abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-            <button class="change" {{#if (eq (lookup ../original.abilities ability.value) (lookup ../advanced.abilities ability.value))}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
+            <button class="change" {{#if (eq (lookup ../data/original.abilities ability.value) (lookup ../data/advanced.abilities ability.value))}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
             <input type="number" value="{{ability.value}}" class="ability" />
             <input type="text" value="original.abilities.{{key}}.value" class="ability" />
             <span class="ability-mod " data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
