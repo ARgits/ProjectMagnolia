@@ -28,6 +28,11 @@ export class CharacterAdvancement extends FormApplication {
             //original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
             data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
             data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
+            if (data.original.abilities[k].value===data.advanced.abilities[k].value){
+                data.advanced.abilities[k].isEq=true
+            }else{
+                data.advanced.abilities[k].isEq=false
+            }
             //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
         console.log('Подготовлены данные')
