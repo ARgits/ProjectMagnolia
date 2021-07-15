@@ -48,9 +48,9 @@ export class CharacterAdvancement extends FormApplication {
         const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
-                console.log(data.advanced.abilities[button.dataset.key].value)
-                data.advanced.abilities[button.dataset.key].value += 1
-                console.log(data.advanced.abilities[button.dataset.key].value)
+                console.log(data.advanced.data.abilities[button.dataset.key].value)
+                data.advanced.data.abilities[button.dataset.key].value += 1
+                console.log(data.advanced.data.abilities[button.dataset.key].value)
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
