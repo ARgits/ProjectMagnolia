@@ -15,20 +15,21 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 800,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
+            closeOnSubmit: false
         })
     }
 
     getData (options) {
-        const data ={}
+        const data = {}
         data.original = this.object.data.data
         data.advanced = this.object.data.adv
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
             data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
-            if (data.original.abilities[k].value===data.advanced.abilities[k].value){
-                data.advanced.abilities[k].isEq=true
-            }else{
-                data.advanced.abilities[k].isEq=false
+            if (data.original.abilities[k].value === data.advanced.abilities[k].value) {
+                data.advanced.abilities[k].isEq = true
+            } else {
+                data.advanced.abilities[k].isEq = false
             }
         }
         return {
@@ -51,13 +52,17 @@ export class CharacterAdvancement extends FormApplication {
             case 'minus':
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
+            case 'submit':
+                this.close()
+                break
         }
+        this.render()
         return data
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         const actor = this.object
         this.render()
-        return actor.update({'data.attributes':updateData})
+        return actor.update({'data.attributes': updateData})
     }
 }
