@@ -28,11 +28,13 @@ export class CharacterAdvancement extends FormApplication {
             //original.abilities[k] = {}
             //original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
             original.abilities[k].mod = Math.floor((original.abilities[k].value - 10) / 2)
-            advanced.data.abilities[k].mod = Math.floor((advanced.data.abilities[k].value - 10) / 2)
+            advanced.abilities[k].mod = Math.floor((advanced.abilities[k].value - 10) / 2)
             //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
+        console.log('Подготовлены данные')
         console.log(original)
         console.log(advanced)
+        console.log('----------------------------------')
         return {
             advanced: advanced,
             original: original
@@ -48,9 +50,9 @@ export class CharacterAdvancement extends FormApplication {
         const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
-                console.log(data.advanced.data.abilities[button.dataset.key].value)
-                data.advanced.data.abilities[button.dataset.key].value += 1
-                console.log(data.advanced.data.abilities[button.dataset.key].value)
+                console.log(data.advanced.abilities[button.dataset.key].value)
+                data.advanced.abilities[button.dataset.key].value += 1
+                console.log(data.advanced.abilities[button.dataset.key].value)
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
@@ -64,10 +66,12 @@ export class CharacterAdvancement extends FormApplication {
         let updateData = expandObject(formData)
         const actor = this.object
         let data = this.getData()
+        console.log('Данные обновляются')
         console.log(data.advanced)
         console.log(data.original)
         //await actor.update({'data.data.abilities':updateData})
         this.render()
+        console.log('Данные обновились')
         console.log(data.advanced)
         console.log(data.original)
     }

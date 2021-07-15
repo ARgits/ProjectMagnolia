@@ -98,7 +98,7 @@ export class ARd20Actor extends Actor {
         }
         this.data.adv = {}
         this.data.adv.isReady = this.data.isReady ?? false
-        this.data.adv.data = this.data.adv.data ?? data
+        this.data.adv = this.data.adv ?? data
     }
 
     /**
