@@ -24,8 +24,6 @@ export class CharacterAdvancement extends FormApplication {
         data.original = this.object.data.data
         data.advanced = this.object.data.adv
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            //original.abilities[k] = {}
-            //original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
             data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
             data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
             if (data.original.abilities[k].value===data.advanced.abilities[k].value){
@@ -33,13 +31,7 @@ export class CharacterAdvancement extends FormApplication {
             }else{
                 data.advanced.abilities[k].isEq=false
             }
-            //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
-        console.log('Подготовлены данные')
-        console.log(data)
-        console.log(data.original)
-        console.log(data.advanced)
-        console.log('----------------------------------')
         return {
             advanced: data.advanced,
             original: data.original
@@ -55,29 +47,20 @@ export class CharacterAdvancement extends FormApplication {
         const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
-                console.log(data.advanced.abilities[button.dataset.key].value)
                 data.advanced.abilities[button.dataset.key].value += 1
-                console.log(data.advanced.abilities[button.dataset.key].value)
+                this.render()
                 break
             case 'minus':
                 data.advanced.abilities[button.dataset.key].value -= 1
+                this.render()
                 break
         }
         return data
     }
-
-
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         const actor = this.object
         let data = this.getData()
-        console.log('Данные обновляются')
-        console.log(data.advanced)
-        console.log(data.original)
-        //await actor.update({'data.data.abilities':updateData})
-        this.render()
-        console.log('Данные обновились')
-        console.log(data.advanced)
-        console.log(data.original)
+        //return this.object.update()
     }
 }
