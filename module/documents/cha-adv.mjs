@@ -15,8 +15,7 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 'auto',
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit: true,
-            submitOnChange: false
+            closeOnSubmit: false,
         })
     }
 
@@ -65,6 +64,7 @@ export class CharacterAdvancement extends FormApplication {
         let updateData = expandObject(formData)
         console.log(updateData)
         const actor = this.object
+        this.render()
         return actor.update({'data.attributes': updateData})
     }
 }
