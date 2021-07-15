@@ -55,11 +55,6 @@ export class CharacterAdvancement extends FormApplication {
         }
         return data
     }
-    _onChangeInput (event) {
-        super._onChangeInput(event)
-        const updateData = foundry.utils.expandObject(this._getSubmitData())
-        this.form['advanced'].value = updateData
-    }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
