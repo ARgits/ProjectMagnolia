@@ -13,7 +13,7 @@ export class CharacterAdvancement extends FormApplication {
             template: 'systems/ard20/templates/actor/parts/cha-adv.html',
             id: 'cha-adv',
             width: 600,
-            height: auto,
+            height: 'auto',
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
         })
     }
