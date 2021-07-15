@@ -13,9 +13,8 @@ export class CharacterAdvancement extends FormApplication {
             template: 'systems/ard20/templates/actor/parts/cha-adv.html',
             id: 'cha-adv',
             width: 600,
-            height: 800,
+            height: auto,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit: false
         })
     }
 
@@ -48,24 +47,16 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
             case 'plus':
                 data.advanced.abilities[button.dataset.key].value += 1
-                this.submit()
                 break
             case 'minus':
                 data.advanced.abilities[button.dataset.key].value -= 1
-                this.submit()
-                break
-            case 'submit':
-                this.submit()
-                this.close()
                 break
         }
-        this.render()
-        return data
+        return this.submit({preventClose:true}).then(()=> this.render());
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         const actor = this.object
-        this.render()
         return actor.update({'data.attributes': updateData})
     }
 }
