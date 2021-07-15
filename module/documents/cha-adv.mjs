@@ -60,7 +60,7 @@ export class CharacterAdvancement extends FormApplication {
                 console.log(data.advanced.abilities[button.dataset.key].value)
                 break
             case 'minus':
-                data.abilities[button.dataset.key].value -= 1
+                data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
         return data
