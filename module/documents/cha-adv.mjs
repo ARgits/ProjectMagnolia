@@ -22,7 +22,7 @@ export class CharacterAdvancement extends FormApplication {
 
     getData (options) {
         const original = {}
-        const advanced = advanced ?? {}
+        const advanced = {}
         original.abilities = {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
