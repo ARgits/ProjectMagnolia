@@ -96,7 +96,7 @@ export class ARd20Actor extends Actor {
                 skill.roll = "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus
             }
         }
-        this.data.adv = this.data.adv ?? data
+        this.data.adv = foundry.utils.deepClone(data)
         this.data.adv.isReady = this.data.isReady ?? false
     }
 
