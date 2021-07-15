@@ -48,11 +48,14 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
             case 'plus':
                 data.advanced.abilities[button.dataset.key].value += 1
+                this.submit()
                 break
             case 'minus':
                 data.advanced.abilities[button.dataset.key].value -= 1
+                this.submit()
                 break
             case 'submit':
+                this.submit()
                 this.close()
                 break
         }
