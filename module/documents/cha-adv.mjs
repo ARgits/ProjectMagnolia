@@ -15,13 +15,13 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 800,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
+            closeOnSubmit:false
         })
     }
 
     getData (options) {
-        const data = this.object.data
-        const original = data.data
-        const advanced = data.adv
+        const original = this.object.data.data
+        const advanced = this.object.data.adv
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             //original.abilities[k] = {}
             //original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
