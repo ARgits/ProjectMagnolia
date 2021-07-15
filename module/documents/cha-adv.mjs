@@ -31,6 +31,7 @@ export class CharacterAdvancement extends FormApplication {
             //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
         console.log('Подготовлены данные')
+        console.log(data)
         console.log(data.original)
         console.log(data.advanced)
         console.log('----------------------------------')
@@ -46,7 +47,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onChange (event) {
         const button = event.currentTarget
-        const data = this.getData().data
+        const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
                 console.log(data.advanced.abilities[button.dataset.key].value)
