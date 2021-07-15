@@ -22,7 +22,7 @@ export class CharacterAdvancement extends FormApplication {
 
     getData (options) {
         const original = {}
-        const advanced = {}
+        const advanced = advanced ?? {}
         original.abilities = {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -56,12 +56,14 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
+        return data.advanced.abilities[button.dataset.key].value
     }
 
 
     async _updateObject (event, formData) {
         let data = foundry.utils.expandObject(formData)
-        
+        console.log(data)
+        data.abilities = this.getData().advanced
         console.log(data)
         const actor = this.object
         await actor.update(data, {diff: false})
