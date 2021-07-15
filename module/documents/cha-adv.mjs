@@ -46,12 +46,12 @@ export class CharacterAdvancement extends FormApplication {
         console.log(data)
         switch (button.dataset.action) {
             case 'plus':
-                console.log(data.adv.abilities[button.dataset.key].value)
-                data.adv.abilities[button.dataset.key].value += 1
-                console.log(data.adv.abilities[button.dataset.key].value)
+                console.log(data.adv.data.abilities[button.dataset.key].value)
+                data.adv.data.abilities[button.dataset.key].value += 1
+                console.log(data.adv.data.abilities[button.dataset.key].value)
                 break
             case 'minus':
-                data.adv.abilities[button.dataset.key].value -= 1
+                data.adv.data.abilities[button.dataset.key].value -= 1
                 break
         }
         return data
