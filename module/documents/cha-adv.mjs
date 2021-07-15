@@ -21,28 +21,25 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     getData (options) {
-        const original = {}
-        const advanced = {}
-        original.abilities = {
-        }
-        for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
+        const data = this.object.data
+        const original = data.data
+        const advanced = data.adv
+        /*for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             original.abilities[k] = {}
             original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
             original.abilities[k].mod = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.mod`)
             original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
         advanced.abilities = advanced.abilities ?? original.abilities
-        return {
-            original: original,
-            advanced: advanced
-        }
+        */
+        return data
     }
 
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
     }
-    _onChange (event, advanced) {
+    _onChange (event) {
         const button = event.currentTarget
         const data = this.getData()
         console.log(data)
@@ -56,16 +53,14 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
-        return data.advanced.abilities[button.dataset.key].value
+        return data
     }
 
 
     async _updateObject (event, formData) {
-        let data = foundry.utils.expandObject(formData)
-        console.log(data)
-        data.abilities = this.getData().advanced
+        let updatedata = expandObject(formData)
         console.log(data)
         const actor = this.object
-        await actor.update(data, {diff: false})
+        await actor.update({'data.data.abilities':updatedata})
     }
 }
