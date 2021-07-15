@@ -52,7 +52,7 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
-        return this.submit({preventClose:true}).then(()=> this.render());
+        return this.submit({updateData: data, preventClose: true}).then(() => this.render())
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
