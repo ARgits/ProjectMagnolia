@@ -15,6 +15,7 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 800,
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
+            closeOnSubmit:false,
         })
     }
 
