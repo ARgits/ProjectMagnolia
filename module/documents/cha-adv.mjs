@@ -31,6 +31,8 @@ export class CharacterAdvancement extends FormApplication {
             advanced.data.abilities[k].mod = Math.floor((advanced.data.abilities[k].value - 10) / 2)
             //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
+        console.log(original)
+        console.log(advanced)
         return {
             advanced: advanced,
             original: original
