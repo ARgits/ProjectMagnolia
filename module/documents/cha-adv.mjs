@@ -22,17 +22,15 @@ export class CharacterAdvancement extends FormApplication {
 
     getData (options) {
         const data = this.object.data
-        console.log(data)
         const original = data.data
         const advanced = data.adv
-        /*for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            original.abilities[k] = {}
-            original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
-            original.abilities[k].mod = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.mod`)
-            original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
+        for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
+            //original.abilities[k] = {}
+            //original.abilities[k].value = foundry.utils.getProperty(this.object.data, `data.abilities.${k}.value`)
+            data.data.abilities[k].mod = Math.floor((data.data.abilities[k].value - 10) / 2)
+            data.adv.data.abilities[k].mod = Math.floor((data.adv.data.abilities[k].value - 10) / 2)
+            //original.abilities[k].label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k
         }
-        advanced.abilities = advanced.abilities ?? original.abilities
-        */
         return data
     }
 
