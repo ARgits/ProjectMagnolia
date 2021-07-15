@@ -54,10 +54,11 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[button.dataset.key].value -= 1
                 break
         }
-        return this.submit({updateData: data, preventClose: true}).then(() => this.render())
+        return data
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
+        console.log(updateData)
         const actor = this.object
         return actor.update({'data.attributes': updateData})
     }
