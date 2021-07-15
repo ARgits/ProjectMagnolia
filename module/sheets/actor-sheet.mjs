@@ -40,6 +40,7 @@ export class ARd20ActorSheet extends ActorSheet {
         context.data = actorData.data
         context.flags = actorData.flags
         context.config = CONFIG.ARd20
+        context.adv = actorData.adv
 
         // Prepare character data and items.
         if (actorData.type == 'character') {
