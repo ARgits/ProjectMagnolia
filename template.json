@@ -27,22 +27,22 @@
       },
       "abilities": {
         "str": {
-          "value": 10
+          "value": 5
         },
         "dex": {
-          "value": 10
+          "value": 5
         },
         "con": {
-          "value": 10
+          "value": 5
         },
         "int": {
-          "value": 10
+          "value": 5
         },
         "wis": {
-          "value": 10
+          "value": 5
         },
         "cha": {
-          "value": 10
+          "value": 5
         }
       },
       "skills": {
