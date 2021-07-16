@@ -47,6 +47,7 @@ export class CharacterAdvancement extends FormApplication {
         const data = this.getData()
         console.log('GET DATA')
         console.log(data)
+        console.log(data.abilities)
         console.log('---------------------------------------------------------------')
         switch (button.dataset.action) {
             case 'plus':
