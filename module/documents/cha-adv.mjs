@@ -44,7 +44,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onChange (event) {
         const button = event.currentTarget
-        const data = this.getData()
+        const data = this.getData().then()
         console.log('GET DATA')
         console.log(data)
         console.log(data.abilities)
