@@ -73,6 +73,6 @@ export class CharacterAdvancement extends FormApplication {
         console.log(updateData)
         const actor = this.object
         this.render()
-        await actor.update({'data.abilities': updateData.abilities}, {'data.xp': updateData.xp})
+        await actor.update({'data.abilities': updateData.abilities, 'data.attributes.xp': updateData.xp})
     }
 }
