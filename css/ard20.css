@@ -469,8 +469,7 @@ nav.data-tabs {
   flex:1;
   font-size: 12px;
 }
-.change
-.plus,
-.minus{
+.change[data-action='plus'],
+.change[data-action='minus']{
   color: #5f5fce;
 }
