@@ -19,11 +19,11 @@ export class CharacterAdvancement extends FormApplication {
         })
     }
 
-    getData (options) {
+    async getData (options) {
         const data = {}
         data.actor = this.object
-        data.original = this.object.data.data
-        data.advanced = this.object.data.adv
+        data.original = await duplicate(this.object.data.data)
+        data.advanced = await duplicate(this.object.data.adv)
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
             data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
@@ -53,7 +53,7 @@ export class CharacterAdvancement extends FormApplication {
                 data.abilities[button.dataset.key].value -= 1
                 break
         }
-        this._onChangeInput(event)
+        return data
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
@@ -65,7 +65,7 @@ export class CharacterAdvancement extends FormApplication {
         const data = actor.data.data
         console.log('дата')
         console.log(data)
-        await actor.update({'data.abilities': updateData.abilities})
         this.render()
+        await actor.update({'data.abilities': updateData.abilities})
     }
 }
