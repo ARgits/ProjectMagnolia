@@ -53,7 +53,12 @@ export class CharacterAdvancement extends FormApplication {
                 data.abilities[button.dataset.key].value -= 1
                 break
         }
-        return data
+        this._onChangeInput(event)
+    }
+    _onChangeInput(event){
+        super._onChangeInput(event)
+        const updateData = foundry.utils.expandObject(this._getSubmitData())
+        this.formData = updateData
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
