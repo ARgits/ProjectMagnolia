@@ -59,6 +59,8 @@ export class CharacterAdvancement extends FormApplication {
         let updateData = expandObject(formData)
         console.log(updateData)
         const actor = this.object
+        const data = actor.data.data
+        console.log(data)
         this.render()
         return actor.update(data, {'data.abilities': updateData})
     }
