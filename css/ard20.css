@@ -478,4 +478,10 @@ input:read-only{
 .change[data-action='plus'],
 .change[data-action='minus']{
   color: #5f5fce;
+  font-size: 12px;
+  border-radius: 25%;
+  padding: 16px;
+}
+.change:disabled{
+  color: red;
 }
