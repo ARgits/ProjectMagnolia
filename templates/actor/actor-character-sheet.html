@@ -66,63 +66,63 @@
                 <aside class="ability grid grid-3col">
                     <div class="ability flex-group-center grid-span-2">
                         {{#each data.abilities as |ability key|}}
-                        <div class="ability flexrow">
-                            <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
-                            <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-                            <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-                        </div>
+                            <div class="ability flexrow">
+                                <label for="data.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
+                                <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+                                <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+                            </div>
                         {{/each}}
                     </div>
                     <div>
                         {{#each data.defences as |defence key|}}
-                        <div class="ability flexrow">
-                            <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
-                            <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
+                            <div class="ability flexrow">
+                                <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
+                                <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
                 sign=false}}
-							</div>
-						{{/each}}
-					</div>
-					<div class="grid-span-2">
-						{{#each data.skills as |skill key|}}
-							<div class="flexrow">
-								<div>
-									<label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable" data-roll="{{skill.roll}}">{{skill.hover}} {{skill.label}}</label>
-								</div>
-							</div>
-						{{/each}}
-					</div>
-				</aside>
-				{{!-- For the main features list, span the right two columns --}}
-				<section class="main grid-start-4 grid-span-3">
-					{{> "systems/ard20/templates/actor/parts/actor-features.html"}}
-				</section>
-			</section>
-		</div>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <div class="grid-span-2">
+                        {{#each data.skills as |skill key|}}
+                            <div class="flexrow">
+                                <div>
+                                    <label for="data.skills.{{key}}.prof" class="flex0 resource-label flexlarge align-left rollable" data-roll="{{skill.roll}}">{{skill.hover}} {{skill.label}}</label>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </aside>
+                {{!-- For the main features list, span the right two columns --}}
+                <section class="main grid-start-4 grid-span-3">
+                    {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
+                </section>
+            </section>
+        </div>
 
-		{{!-- Biography Tab --}}
-		<div class="tab biography" data-group="primary" data-tab="description">
-			{{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
-		</div>
+        {{!-- Biography Tab --}}
+        <div class="tab biography" data-group="primary" data-tab="description">
+            {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
+        </div>
 
-		{{!-- Owned Weapon Tab --}}
-		<div class="tab items" data-group="primary" data-tab="weapon">
-			{{> "systems/ard20/templates/actor/parts/actor-weapon.html"}}
-		</div>
+        {{!-- Owned Weapon Tab --}}
+        <div class="tab items" data-group="primary" data-tab="weapon">
+            {{> "systems/ard20/templates/actor/parts/actor-weapon.html"}}
+        </div>
 
-		{{!-- Owned Items Tab --}}
-		<div class="tab items" data-group="primary" data-tab="items">
-			{{> "systems/ard20/templates/actor/parts/actor-items.html"}}
-		</div>
+        {{!-- Owned Items Tab --}}
+        <div class="tab items" data-group="primary" data-tab="items">
+            {{> "systems/ard20/templates/actor/parts/actor-items.html"}}
+        </div>
 
-		{{!-- Owned Spells Tab --}}
-		<div class="tab spells" data-group="primary" data-tab="spells">
-			{{> "systems/ard20/templates/actor/parts/actor-spells.html"}}
-		</div>
+        {{!-- Owned Spells Tab --}}
+        <div class="tab spells" data-group="primary" data-tab="spells">
+            {{> "systems/ard20/templates/actor/parts/actor-spells.html"}}
+        </div>
 
-		{{!-- Active Effects Tab --}}
-		<div class="tab effects flexcol" data-group="primary" data-tab="effects">
-			{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}
-		</div>
+        {{!-- Active Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "systems/ard20/templates/actor/parts/actor-effects.html"}}
+        </div>
 
-	</section>
+    </section>
 </form>

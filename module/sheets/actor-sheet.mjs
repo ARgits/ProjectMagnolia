@@ -180,14 +180,15 @@ export class ARd20ActorSheet extends ActorSheet {
             })
         }
     }
-    _OnAdvanceMenu(event){
-        event.preventDefault();
-        const button = event.currentTarget;
-        let app;
-        switch(button.dataset.action){
-            case "adv": 
-            app = new CharacterAdvancement(this.object)
-            break;}
+    _OnAdvanceMenu (event) {
+        event.preventDefault()
+        const button = event.currentTarget
+        let app
+        switch (button.dataset.action) {
+            case "adv":
+                app = new CharacterAdvancement(this.object)
+                break
+        }
         app?.render(true)
     }
 

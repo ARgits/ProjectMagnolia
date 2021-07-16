@@ -1,4 +1,4 @@
-import { ARd20Actor } from "./actor.mjs"
+import {ARd20Actor} from "./actor.mjs"
 export class CharacterAdvancement extends FormApplication {
     /*    constructor(object,options){
             super(object,options);
@@ -6,7 +6,7 @@ export class CharacterAdvancement extends FormApplication {
     
         }
       */
-    static get defaultOptions() {
+    static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
             title: 'Character Advancement',
@@ -14,12 +14,12 @@ export class CharacterAdvancement extends FormApplication {
             id: 'cha-adv',
             width: 600,
             height: 'auto',
-            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats' }],
+            tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
             closeOnSubmit: false,
         })
     }
 
-    getData(options) {
+    getData (options) {
         if (!this.data) {
             this.data = {}
             this.data.abilities = duplicate(this.object.data.data.abilities)
@@ -47,11 +47,11 @@ export class CharacterAdvancement extends FormApplication {
         }
     }
 
-    activateListeners(html) {
+    activateListeners (html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
     }
-    _onChange(event) {
+    _onChange (event) {
         const button = event.currentTarget
         const data = this.getData()
         console.log(data)
@@ -69,11 +69,11 @@ export class CharacterAdvancement extends FormApplication {
         }
         this.render()
     }
-    async _updateObject(event, formData) {
+    async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
         const actor = this.object
         this.render()
-        await actor.update({ 'data.abilities': updateData.abilities }, { 'data.xp': updateData.xp })
+        await actor.update({'data.abilities': updateData.abilities}, {'data.xp': updateData.xp})
     }
 }

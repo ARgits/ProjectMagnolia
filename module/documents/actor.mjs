@@ -5,7 +5,7 @@
 export class ARd20Actor extends Actor {
 
     /** @override */
-    prepareData() {
+    prepareData () {
         // Prepare data for the actor. Calling the super version of this executes
         // the following, in order: data reset (to clear active effects),
         // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
@@ -15,7 +15,7 @@ export class ARd20Actor extends Actor {
     }
 
     /** @override */
-    prepareBaseData() {
+    prepareBaseData () {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
     }
@@ -29,7 +29,7 @@ export class ARd20Actor extends Actor {
      * available both inside and outside of character sheets (such as if an actor
      * is queried and has a roll executed directly from it).
      */
-    prepareDerivedData() {
+    prepareDerivedData () {
         const actorData = this.data
         const data = actorData.data
         const flags = actorData.flags.ard20 || {}
@@ -43,7 +43,7 @@ export class ARd20Actor extends Actor {
     /**
      * Prepare Character type specific data
      */
-    _prepareCharacterData(actorData) {
+    _prepareCharacterData (actorData) {
         if (actorData.type !== 'character') return
 
         // Make modifications to data here. For example:
@@ -104,7 +104,7 @@ export class ARd20Actor extends Actor {
     /**
      * Prepare NPC type specific data.
      */
-    _prepareNpcData(actorData) {
+    _prepareNpcData (actorData) {
         if (actorData.type !== 'npc') return
 
         // Make modifications to data here. For example:
@@ -115,7 +115,7 @@ export class ARd20Actor extends Actor {
     /**
      * Override getRollData() that's supplied to rolls.
      */
-    getRollData() {
+    getRollData () {
         const data = super.getRollData()
 
         // Prepare character roll data.
@@ -128,7 +128,7 @@ export class ARd20Actor extends Actor {
     /**
      * Prepare character roll data.
      */
-    _getCharacterRollData(data) {
+    _getCharacterRollData (data) {
         if (this.data.type !== 'character') return
 
         // Copy the ability scores to the top level, so that rolls can use
@@ -143,7 +143,7 @@ export class ARd20Actor extends Actor {
     /**
      * Prepare NPC roll data.
      */
-    _getNpcRollData(data) {
+    _getNpcRollData (data) {
         if (this.data.type !== 'npc') return
 
         // Process additional NPC data here.
