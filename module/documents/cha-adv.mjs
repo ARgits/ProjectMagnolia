@@ -25,20 +25,19 @@ export class CharacterAdvancement extends FormApplication {
             this.data.abilities = duplicate(this.object.data.data.abilities)
             this.data.skills = duplicate(this.object.data.data.skills)
             this.data.xp = duplicate(this.object.data.data.attributes.xp)
-        } else {
-            for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-                this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2)
-                this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5]
-                if (this.data.abilities[k].value === this.object.data.data.abilities[k].value) {
-                    this.data.abilities[k].isEq = true
-                } else {
-                    this.data.abilities[k].isEq = false
-                }
-                if (this.data.xp.get >= this.data.abilities[k].xp) {
-                    this.data.abilities[k].isXP = false
-                } else {
-                    this.data.abilities[k].isXP = true
-                }
+        }
+        for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
+            this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2)
+            this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5]
+            if (this.data.abilities[k].value === this.object.data.data.abilities[k].value) {
+                this.data.abilities[k].isEq = true
+            } else {
+                this.data.abilities[k].isEq = false
+            }
+            if (this.data.xp.get >= this.data.abilities[k].xp) {
+                this.data.abilities[k].isXP = false
+            } else {
+                this.data.abilities[k].isXP = true
             }
         }
         return {
