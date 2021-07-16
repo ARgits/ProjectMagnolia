@@ -480,8 +480,9 @@ input:read-only{
   color: #5f5fce;
   font-size: 12px;
   border-radius: 25%;
-  padding: 16px;
+  padding: 10px;
 }
 .change:disabled{
   color: red;
+  cursor: not-allowed;
 }
