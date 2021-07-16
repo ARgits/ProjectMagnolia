@@ -20,17 +20,18 @@ export class CharacterAdvancement extends FormApplication {
     }
 
     getData (options) {
-        const data = {}
-        data.actor = this.object
-        data.original = duplicate(this.object.data.data)
-        data.advanced = duplicate(this.object.data.adv)
-        for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
-            data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
-            if (data.original.abilities[k].value === data.advanced.abilities[k].value) {
-                data.advanced.abilities[k].isEq = true
-            } else {
-                data.advanced.abilities[k].isEq = false
+        if (!this.data) {
+            this.data = {}
+            data.original = duplicate(this.object.data.data)
+            data.advanced = duplicate(this.object.data.adv)
+            for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
+                data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
+                data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
+                if (data.original.abilities[k].value === data.advanced.abilities[k].value) {
+                    data.advanced.abilities[k].isEq = true
+                } else {
+                    data.advanced.abilities[k].isEq = false
+                }
             }
         }
         return {
@@ -48,9 +49,9 @@ export class CharacterAdvancement extends FormApplication {
         console.log(data)
         switch (button.dataset.action) {
             case 'plus':
-                console.log('now',data.abilities[button.dataset.key].value)
+                console.log('now', data.abilities[button.dataset.key].value)
                 data.abilities[button.dataset.key].value += 1
-                console.log('update',data.abilities[button.dataset.key].value)
+                console.log('update', data.abilities[button.dataset.key].value)
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
