@@ -34,7 +34,7 @@ export class CharacterAdvancement extends FormApplication {
             }
         }
         return {
-            advanced: data.advanced
+            abilities: data.advanced.abilities
         }
     }
 
@@ -47,10 +47,10 @@ export class CharacterAdvancement extends FormApplication {
         const data = this.getData()
         switch (button.dataset.action) {
             case 'plus':
-                data.advanced.abilities[button.dataset.key].value += 1
+                data.abilities[button.dataset.key].value += 1
                 break
             case 'minus':
-                data.advanced.abilities[button.dataset.key].value -= 1
+                data.abilities[button.dataset.key].value -= 1
                 break
         }
         return data
@@ -60,7 +60,6 @@ export class CharacterAdvancement extends FormApplication {
         console.log(updateData)
         const actor = this.object
         this.render()
-        updateData = expandObject(formData)
-        console.log(updateData)
+        return actor.update(data, {'data.abilities': updateData})
     }
 }
