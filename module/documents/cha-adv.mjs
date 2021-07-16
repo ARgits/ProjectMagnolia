@@ -62,9 +62,13 @@ export class CharacterAdvancement extends FormApplication {
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
+        console.log('данные для обновления')
         console.log(updateData)
         const actor = this.object
+        console.log('данные объекта')
+        console.log(actor)
         const data = actor.data.data
+        console.log('дата')
         console.log(data)
         this.render()
     }
