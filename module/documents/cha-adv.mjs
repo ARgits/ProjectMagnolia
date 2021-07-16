@@ -55,6 +55,7 @@ export class CharacterAdvancement extends FormApplication {
                 data.abilities[button.dataset.key].value -= 1
                 break
         }
+        this.render()
         return data
     }
     async _updateObject (event, formData) {
