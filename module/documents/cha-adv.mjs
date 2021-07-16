@@ -54,7 +54,6 @@ export class CharacterAdvancement extends FormApplication {
     _onChange (event) {
         const button = event.currentTarget
         const data = this.getData()
-        console.log(data)
         switch (button.dataset.action) {
             case 'plus':
                 data.abilities[button.dataset.key].value += 1
@@ -74,7 +73,10 @@ export class CharacterAdvancement extends FormApplication {
         console.log(updateData)
         const actor = this.object
         this.render()
-        await actor.update({'data.abilities': updateData.abilities})
-        await actor.update({'data.attributes.xp': updateData.xp})
+        const obj={}
+        obj['data.abilities'] = updateData.abilities
+        obj['data.attributes.xp'] = updateData.xp
+        console.log(obj)
+        await actor.update(obj)
     }
 }
