@@ -2,11 +2,11 @@
     <header>
         <div>
             <label class='resource-label flexlarge align-left' for='xp.get'>Полученый опыт</label>
-            <input class='ability' value={{xp.get}} name='xp.get' readonly/>
+            <input type='number'class='ability' value={{xp.get}} name='xp.get' readonly/>
         </div>
         <div>
             <label class='resource-label flexlarge align-left' for='xp.used'>Использованный опыт</label>
-            <input class='ability' value={{xp.used}} name='xp.used' readonly/>
+            <input type='number'class='ability' value={{xp.used}} name='xp.used' readonly/>
         </div>
     </header>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
@@ -21,7 +21,7 @@
                     <div class="ability flexrow">
                         <label for="abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
                         <button class="change" type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
-                        <input readonly class="ability align-center" value ={{ability.value}} name='abilities.{{key}}.value'/>
+                        <input readonly type='number'class="ability align-center" value ={{ability.value}} name='abilities.{{key}}.value'/>
                         <span class="ability-mod" name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span>
                         <button class="change" type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}>+</button>
                         <span class='ability'name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span>
