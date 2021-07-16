@@ -15,7 +15,6 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 'auto',
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit: false,
         })
     }
 
@@ -39,7 +38,7 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.abilities[k].isXP = true
             }
-        }
+        }console.log(this.data)
         return {
             abilities: this.data.abilities,
             xp: this.data.xp
@@ -54,6 +53,7 @@ export class CharacterAdvancement extends FormApplication {
     _onChange (event) {
         const button = event.currentTarget
         const data = this.getData()
+        console.log(data)
         switch (button.dataset.action) {
             case 'plus':
                 data.abilities[button.dataset.key].value += 1
