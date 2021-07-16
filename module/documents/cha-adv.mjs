@@ -38,7 +38,7 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.abilities[k].isXP = true
             }
-        }console.log(this.data)
+        }
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp
@@ -54,7 +54,6 @@ export class CharacterAdvancement extends FormApplication {
     _onChange (event) {
         const button = event.currentTarget
         const data = this.getData()
-        console.log(data)
         switch (button.dataset.action) {
             case 'plus':
                 data.abilities[button.dataset.key].value += 1
