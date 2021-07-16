@@ -15,7 +15,7 @@ export class CharacterAdvancement extends FormApplication {
             width: 600,
             height: 'auto',
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
-            closeOnSubmit:false,
+            closeOnSubmit: false,
         })
     }
 
@@ -55,11 +55,6 @@ export class CharacterAdvancement extends FormApplication {
         }
         this._onChangeInput(event)
     }
-    _onChangeInput(event){
-        super._onChangeInput(event)
-        const updateData = foundry.utils.expandObject(this._getSubmitData())
-        this.formData = updateData
-    }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log('данные для обновления')
@@ -70,6 +65,6 @@ export class CharacterAdvancement extends FormApplication {
         const data = actor.data.data
         console.log('дата')
         console.log(data)
-        await actor.update({'data.abilities':updateData.abilities})
+        await actor.update({'data.abilities': updateData.abilities})
     }
 }
