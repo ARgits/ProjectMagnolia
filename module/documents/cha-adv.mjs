@@ -60,5 +60,6 @@ export class CharacterAdvancement extends FormApplication {
         console.log(updateData)
         const actor = this.object
         this.render()
+        console.log(updateData)
     }
 }
