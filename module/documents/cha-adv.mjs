@@ -39,11 +39,12 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.abilities[k].isXP = true
             }
-            return {
-                abilities: this.data.abilities,
-                xp: this.data.xp
-            }
         }
+        return {
+            abilities: this.data.abilities,
+            xp: this.data.xp
+        }
+
     }
 
     activateListeners (html) {
