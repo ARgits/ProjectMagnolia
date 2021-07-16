@@ -35,9 +35,9 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.abilities[k].isEq = false
                 }
                 if (this.data.xp.get >= this.data.abilities[k].xp) {
-                    this.data.abilities[k].isXP = true
-                } else {
                     this.data.abilities[k].isXP = false
+                } else {
+                    this.data.abilities[k].isXP = true
                 }
             }
         }

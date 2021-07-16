@@ -23,7 +23,7 @@
                         <button class="change" type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
                         <span class="ability" name='abilities.{{key}}.value'>{{numberFormat ability.value decimals=0 sign=false}}</span>
                         <span class="ability-mod" name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span>
-                        <button class="change" type='button' data-action='plus' data-key='{{key}}' {{#unless ability.isXP}} disabled{{/if}}>+</button>
+                        <button class="change" type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}>+</button>
                         <span class='ability' name='abilities.{{key}}.xp'>{{numberFormat ability.value decimals=0 sign=false}}</span>
                     </div>
                 {{/each}}
