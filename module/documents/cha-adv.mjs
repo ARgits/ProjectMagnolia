@@ -56,7 +56,6 @@ export class CharacterAdvancement extends FormApplication {
                 break
         }
         this.render()
-        return data
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
