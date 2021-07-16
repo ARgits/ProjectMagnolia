@@ -471,6 +471,8 @@ nav.data-tabs {
 }
 input:read-only{
   background-color: #d5d3c7;
+  box-shadow: none;
+  border: #d5d3c7;
 }
 .change[data-action='plus'],
 .change[data-action='minus']{
