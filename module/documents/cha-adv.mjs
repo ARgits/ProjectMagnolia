@@ -21,6 +21,7 @@ export class CharacterAdvancement extends FormApplication {
 
     getData (options) {
         const data = {}
+        data.actor = this.object
         data.original = this.object.data.data
         data.advanced = this.object.data.adv
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -33,8 +34,34 @@ export class CharacterAdvancement extends FormApplication {
             }
         }
         return {
-            advanced: data.advanced,
-            original: data.original
+            advanced:{
+            abilitites:{
+                str:{
+                    value:data.advanced.abilities.str.value,
+                    mod:data.advanced.abilities.str.mod
+                },
+                dex:{
+                    value:data.advanced.abilities.dex.value,
+                    mod:data.advanced.abilities.dex.mod
+                },
+                con:{
+                    value:data.advanced.abilities.con.value,
+                    mod:data.advanced.abilities.con.mod
+                },
+                int:{
+                    value:data.advanced.abilities.int.value,
+                    mod:data.advanced.abilities.int.mod
+                },
+                wis:{
+                    value:data.advanced.abilities.wis.value,
+                    mod:data.advanced.abilities.wis.mod
+                },
+                cha:{
+                    value:data.advanced.abilities.cha.value,
+                    mod:data.advanced.abilities.cha.mod
+                }
+            }
+            }
         }
     }
 
