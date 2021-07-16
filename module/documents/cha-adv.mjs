@@ -33,7 +33,9 @@ export class CharacterAdvancement extends FormApplication {
                 data.advanced.abilities[k].isEq = false
             }
         }
-        return advanced
+        return {
+            advanced: data.advanced
+        }
     }
 
     activateListeners (html) {
