@@ -39,6 +39,7 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.abilities[k].isXP = true
             }
+            if(this.data.abilities)
         }
         return {
             abilities: this.data.abilities,
@@ -62,8 +63,8 @@ export class CharacterAdvancement extends FormApplication {
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
-                data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
-                data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
+                data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
+                data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
                 break
         }
         this.render()
@@ -73,6 +74,7 @@ export class CharacterAdvancement extends FormApplication {
         console.log(updateData)
         const actor = this.object
         this.render()
-        await actor.update({'data.abilities': updateData.abilities, 'data.attributes.xp': updateData.xp})
+        await actor.update({'data.abilities': updateData.abilities})
+        await actor.update({'data.attributes.xp': updateData.xp})
     }
 }
