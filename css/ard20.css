@@ -470,7 +470,8 @@ nav.data-tabs {
   font-size: 12px;
 }
 input:read-only{
-  background-image: url(/css/parchment.jpg) repeat;
+  background: url(/css/parchment.jpg) repeat;
+  background-image: url(/css/parchment.jpg);
   box-shadow: none;
   border: #d5d3c7;
 }
