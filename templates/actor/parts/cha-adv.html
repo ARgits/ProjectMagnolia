@@ -6,7 +6,7 @@
         </div>
         <div>
             <label class='resource-label flexlarge align-left' for='xp.used'>Использованный опыт</label>
-            <span class='ability' name='xp.used'>{{numberFormat xp.get}}</span>
+            <span class='ability' name='xp.used'>{{numberFormat xp.used}}</span>
         </div>
     </header>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
@@ -24,7 +24,7 @@
                         <span class="ability" name='abilities.{{key}}.value'>{{numberFormat ability.value decimals=0 sign=false}}</span>
                         <span class="ability-mod" name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span>
                         <button class="change" type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}>+</button>
-                        <span class='ability' name='abilities.{{key}}.xp'>{{numberFormat ability.value decimals=0 sign=false}}</span>
+                        <span class='ability' name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span>
                     </div>
                 {{/each}}
             </div>

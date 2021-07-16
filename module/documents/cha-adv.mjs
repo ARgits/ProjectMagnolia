@@ -63,7 +63,7 @@ export class CharacterAdvancement extends FormApplication {
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
-                data.xp += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
+                data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
                 data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
                 break
         }
