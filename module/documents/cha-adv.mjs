@@ -24,6 +24,7 @@ export class CharacterAdvancement extends FormApplication {
             this.data = {}
             this.data.original = duplicate(this.object.data.data)
             this.data.advanced = duplicate(this.object.data.adv)
+        } else {
             for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
                 this.data.original.abilities[k].mod = Math.floor((this.data.original.abilities[k].value - 10) / 2)
                 this.data.advanced.abilities[k].mod = Math.floor((this.data.advanced.abilities[k].value - 10) / 2)
@@ -33,8 +34,7 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.advanced.abilities[k].isEq = false
                 }
             }
-        }
-        return {
+        } return {
             abilities: this.data.advanced.abilities
         }
     }
