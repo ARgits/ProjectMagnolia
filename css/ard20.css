@@ -478,9 +478,9 @@ input:read-only{
 .change[data-action='plus'],
 .change[data-action='minus']{
   color: #5f5fce;
-  font-size: 12px;
+  font-size: 20px;
   border-radius: 25%;
-  padding: 10px;
+  padding: 1px;
 }
 .change:disabled{
   color: red;
