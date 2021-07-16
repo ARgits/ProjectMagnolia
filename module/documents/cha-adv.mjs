@@ -22,20 +22,20 @@ export class CharacterAdvancement extends FormApplication {
     getData (options) {
         if (!this.data) {
             this.data = {}
-            data.original = duplicate(this.object.data.data)
-            data.advanced = duplicate(this.object.data.adv)
+            this.data.original = duplicate(this.object.data.data)
+            this.data.advanced = duplicate(this.object.data.adv)
             for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-                data.original.abilities[k].mod = Math.floor((data.original.abilities[k].value - 10) / 2)
-                data.advanced.abilities[k].mod = Math.floor((data.advanced.abilities[k].value - 10) / 2)
-                if (data.original.abilities[k].value === data.advanced.abilities[k].value) {
-                    data.advanced.abilities[k].isEq = true
+                this.data.original.abilities[k].mod = Math.floor((this.data.original.abilities[k].value - 10) / 2)
+                this.data.advanced.abilities[k].mod = Math.floor((this.data.advanced.abilities[k].value - 10) / 2)
+                if (this.data.original.abilities[k].value === this.data.advanced.abilities[k].value) {
+                    this.data.advanced.abilities[k].isEq = true
                 } else {
-                    data.advanced.abilities[k].isEq = false
+                    this.data.advanced.abilities[k].isEq = false
                 }
             }
         }
         return {
-            abilities: data.advanced.abilities
+            abilities: this.data.advanced.abilities
         }
     }
 
