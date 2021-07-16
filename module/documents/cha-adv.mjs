@@ -69,7 +69,7 @@ export class CharacterAdvancement extends FormApplication {
         this.render()
     }
     async _updateObject (event, formData) {
-        let updateData = new FormDataExtended (this,{dtypes:{type:span,}})
+        let updateData = expandObject(formData)
         console.log(updateData)
         const actor = this.object
         this.render()
