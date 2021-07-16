@@ -1,4 +1,4 @@
-import {ARd20Actor} from "./actor.mjs"
+import { ARd20Actor } from "./actor.mjs"
 export class CharacterAdvancement extends FormApplication {
     /*    constructor(object,options){
             super(object,options);
@@ -6,7 +6,7 @@ export class CharacterAdvancement extends FormApplication {
     
         }
       */
-    static get defaultOptions () {
+    static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
             title: 'Character Advancement',
@@ -14,57 +14,66 @@ export class CharacterAdvancement extends FormApplication {
             id: 'cha-adv',
             width: 600,
             height: 'auto',
-            tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
+            tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats' }],
             closeOnSubmit: false,
         })
     }
 
-    getData (options) {
+    getData(options) {
         if (!this.data) {
             this.data = {}
-            this.data.original = duplicate(this.object.data.data)
-            this.data.advanced = duplicate(this.object.data.adv)
+            this.data.abilities = duplicate(this.object.data.data.abilities)
+            this.data.skills = duplicate(this.object.data.data.skills)
+            this.data.xp = duplicate(this.object.data.data.attributes.xp)
         } else {
             for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-                this.data.original.abilities[k].mod = Math.floor((this.data.original.abilities[k].value - 10) / 2)
-                this.data.advanced.abilities[k].mod = Math.floor((this.data.advanced.abilities[k].value - 10) / 2)
-                if (this.data.original.abilities[k].value === this.data.advanced.abilities[k].value) {
-                    this.data.advanced.abilities[k].isEq = true
+                this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2)
+                this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5]
+                if (this.data.abilities[k].value === this.object.data.data.abilities[k].value) {
+                    this.data.abilities[k].isEq = true
                 } else {
-                    this.data.advanced.abilities[k].isEq = false
+                    this.data.abilities[k].isEq = false
+                }
+                if (this.data.xp.get >= this.data.abilities[k].xp) {
+                    this.data.abilities[k].isXP = true
+                } else {
+                    this.data.abilities[k].isXP = false
                 }
             }
-        } return {
-            abilities: this.data.advanced.abilities
+        }
+        return {
+            abilities: this.data.abilities,
+            xp: this.data.xp
         }
     }
 
-    activateListeners (html) {
+    activateListeners(html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
     }
-    _onChange (event) {
+    _onChange(event) {
         const button = event.currentTarget
         const data = this.getData()
         console.log(data)
         switch (button.dataset.action) {
             case 'plus':
-                console.log('now', data.abilities[button.dataset.key].value)
                 data.abilities[button.dataset.key].value += 1
-                console.log('update', data.abilities[button.dataset.key].value)
+                data.xp.get -= data.abilities[button.dataset.key].xp
+                data.xp.used += data.abilities[button.dataset.key].xp
                 break
             case 'minus':
                 data.abilities[button.dataset.key].value -= 1
+                data.xp += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
+                data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6]
                 break
         }
         this.render()
     }
-    async _updateObject (event, formData) {
+    async _updateObject(event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
         const actor = this.object
-        const data = actor.data.data
         this.render()
-        await actor.update({'data.abilities': updateData.abilities})
+        await actor.update({ 'data.abilities': updateData.abilities }, { 'data.xp': updateData.xp })
     }
 }

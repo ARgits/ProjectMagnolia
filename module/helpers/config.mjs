@@ -1,4 +1,4 @@
-export const ARd20 = {};
+export const ARd20 = {}
 
 ARd20.abilities = {
     "str": "ARd20.AbilityStr",
@@ -7,7 +7,7 @@ ARd20.abilities = {
     "int": "ARd20.AbilityInt",
     "wis": "ARd20.AbilityWis",
     "cha": "ARd20.AbilityCha"
-};
+}
 
 ARd20.abilityAbbreviations = {
     "str": "ARd20.AbilityStrAbbr",
@@ -16,12 +16,12 @@ ARd20.abilityAbbreviations = {
     "int": "ARd20.AbilityIntAbbr",
     "wis": "ARd20.AbilityWisAbbr",
     "cha": "ARd20.AbilityChaAbbr"
-};
+}
 
 ARd20.CHARACTER_EXP_LEVELS = [
     0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
     120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
-];
+]
 
 ARd20.SpellSchool = {
     "abj": "ARd20.SchoolAbj",
@@ -32,7 +32,7 @@ ARd20.SpellSchool = {
     "ill": "ARd20.SchoolIll",
     "nec": "ARd20.SchoolNec",
     "trs": "ARd20.SchoolTrs"
-};
+}
 ARd20.skills = {
         "acr": "ARd20.SkillAcr",
         "ani": "ARd20.SkillAni",
@@ -59,13 +59,13 @@ ARd20.skills = {
         2: "ARd20.Master"
     },
     ARd20.source = {
-        "mar" : "ARd20.Martial",
-        "mag":"ARd20.Magical",
-        "div":"ARd20.Divine",
-        "pri":"ARd20.Primal",
-        "psy":"ARd20.Psyhic"
+        "mar": "ARd20.Martial",
+        "mag": "ARd20.Magical",
+        "div": "ARd20.Divine",
+        "pri": "ARd20.Primal",
+        "psy": "ARd20.Psyhic"
     }
-    ARd20.Prop = {
+ARd20.Prop = {
         "aff": "ARd20.Affixed",
         "awk": "ARd20.Awkward",
         "con": "ARd20.Conceal",
@@ -109,4 +109,8 @@ ARd20.skills = {
         "pol": "ARd20.Polearm",
         "spe": "ARd20.Spear",
         "thr": "ARd20.Throwing"
-    }
+    },
+    ARd20.abil_xp = [
+        50, 50, 50, 50, 70, 90, 120, 150, 190, 290, 440, 660, 990, 1500,
+        2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000
+    ]

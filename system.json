@@ -2,7 +2,7 @@
     "name": "ard20",
     "title": "ARd20",
     "description": "Попытки сделать свою систему",
-    "version": "0.0.1.6.164",
+    "version": "0.0.1.6.166",
     "minimumCoreVersion": "0.8.3",
     "compatibleCoreVersion": "0.8.8",
     "author": "ARgits",
@@ -19,7 +19,7 @@
         "name": "English",
         "path": "lang/en.json"
     }],
-    "socket":true,
+    "socket": true,
     "gridDistance": 5,
     "gridUnits": "ft",
     "primaryTokenAttribute": "health",
