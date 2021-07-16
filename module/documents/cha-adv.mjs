@@ -39,10 +39,11 @@ export class CharacterAdvancement extends FormApplication {
                 this.data.abilities[k].isXP = true
             }
         }console.log(this.data)
-        return {
+        const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp
         }
+        return templateData
 
     }
 
