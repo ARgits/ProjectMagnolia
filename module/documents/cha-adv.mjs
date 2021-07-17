@@ -31,6 +31,13 @@ export class CharacterAdvancement extends FormApplication {
                     2: 0
                 }
             }
+            if (this.data.skills[k].prof === 0) {
+                this.data.count.skills[0] += 1
+            } else if (this.data.skills[k].prof === 1) {
+                this.data.count.skills[1] += 1
+            } else if (this.data.skills[k].prof === 2) {
+                this.data.count.skills[2] += 1
+            }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2)
@@ -48,13 +55,6 @@ export class CharacterAdvancement extends FormApplication {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof
-            if (this.data.skills[k].prof === 0) {
-                this.data.count.skills[0] += 1
-            } else if (this.data.skills[k].prof === 1) {
-                this.data.count.skills[1] += 1
-            } else if (this.data.skills[k].prof === 2) {
-                this.data.count.skills[2] += 1
-            }
             this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : 0
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
