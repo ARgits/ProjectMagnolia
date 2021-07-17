@@ -50,13 +50,13 @@ export class CharacterAdvancement extends FormApplication {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].hover]) ?? this.data.skills[k].hover
             if (this.data.skills[k].prof === 0) {
                 this.data.count.skills[0] += 1
-            } else if (this.data.skill[k].prof === 1) {
+            } else if (this.data.skills[k].prof === 1) {
                 this.data.count.skills[1] += 1
             } else if (this.data.skills[k].prof === 2) {
                 this.data.count.skills[2] += 1
                 this.data.skills[k].xp = 0
             }
-            this.data.skills[k].xp = this.data.skills[k].xp ?? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof]]
+            this.data.skills[k].xp = this.data.skills[k].xp ?? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof+1]]
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
             } else {
