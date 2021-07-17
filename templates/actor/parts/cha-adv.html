@@ -34,14 +34,15 @@
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class='ability flexcoll flex-group-center'>
                 {{#each skills as |skill key|}}
-                <div class='ability flexrow'>
-                    <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
-                    <button class='change far fa-angle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
-                    <input hidden name='skills.{{key}}.prof' value='skills.{{key}}.value' />
-                    <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label>
-                    <button class='change far fa-angle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
-                    <span class='ability' name='skills.{{key}}.xp'>{{numberFormat skill.xp decimals=0 sign=false}}</span>
-                </div>
+                    <div class='ability flexrow'>
+                        <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
+                        <button class='change far fa-angle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
+                        <input hidden name='skills.{{key}}.prof' value='skills.{{key}}.value' />
+                        <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label>
+                        <button class='change far fa-angle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
+                        <span class='ability' name='skills.{{key}}.xp'>{{numberFormat skill.xp decimals=0 sign=false}}</span>
+                    </div>
+                {{/each}}
             </div>
         </div>
     </section>
