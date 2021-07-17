@@ -48,7 +48,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].hover]) ?? this.data.skills[k].hover
-            if (this.data.skill[k].prof === 0) {
+            if (this.data.skills[k].prof === 0) {
                 this.data.count.skills[0] += 1
             } else if (this.data.skill[k].prof === 1) {
                 this.data.count.skills[1] += 1
