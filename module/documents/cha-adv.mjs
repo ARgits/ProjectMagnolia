@@ -109,8 +109,6 @@ export class CharacterAdvancement extends FormApplication {
                         data.skills[button.dataset.key].prof += 1
                         data.xp.get -= data.skills[button.dataset.key].xp
                         data.xp.used += data.skills[button.dataset.key].xp
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof]+=1
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof-1]-=1
                         break
                     case 'minus':
                         data.skills[button.dataset.key].prof -= 1
