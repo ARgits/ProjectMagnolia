@@ -56,9 +56,6 @@ export class CharacterAdvancement extends FormApplication {
                 this.data.count.skills[2] += 1
                 this.data.skills[k].xp = 0
             }
-            console.log(this.data.count.skills[0])
-            console.log(this.data.count.skills[1])
-            console.log(this.data.count.skills[2])
             this.data.skills[k].xp = CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof+1]]
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
@@ -72,6 +69,9 @@ export class CharacterAdvancement extends FormApplication {
             }
 
         }
+        console.log(this.data.count.skills[0])
+        console.log(this.data.count.skills[1])
+        console.log(this.data.count.skills[2])
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp,
