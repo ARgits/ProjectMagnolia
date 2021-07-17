@@ -24,6 +24,13 @@ export class CharacterAdvancement extends FormApplication {
             this.data.abilities = duplicate(this.object.data.data.abilities)
             this.data.skills = duplicate(this.object.data.data.skills)
             this.data.xp = duplicate(this.object.data.data.attributes.xp)
+            this.data.count = {
+                skills: {
+                    0: 0,
+                    1: 0,
+                    2: 0
+                }
+            }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
             this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2)
@@ -37,13 +44,6 @@ export class CharacterAdvancement extends FormApplication {
                 this.data.abilities[k].isXP = false
             } else {
                 this.data.abilities[k].isXP = true
-            }
-        }
-        this.data.count = {
-            skills: {
-                0: 0,
-                1: 0,
-                2: 0
             }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -109,6 +109,8 @@ export class CharacterAdvancement extends FormApplication {
                         data.skills[button.dataset.key].prof += 1
                         data.xp.get -= data.skills[button.dataset.key].xp
                         data.xp.used += data.skills[button.dataset.key].xp
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof-1]-=1
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof]+=1
                         break
                     case 'minus':
                         data.skills[button.dataset.key].prof -= 1
