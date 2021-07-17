@@ -31,12 +31,14 @@ export class CharacterAdvancement extends FormApplication {
                     2: 0
                 }
             }
-            if (this.data.skills[k].prof === 0) {
-                this.data.count.skills[0] += 1
-            } else if (this.data.skills[k].prof === 1) {
-                this.data.count.skills[1] += 1
-            } else if (this.data.skills[k].prof === 2) {
-                this.data.count.skills[2] += 1
+            for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
+                if (this.data.skills[k].prof === 0) {
+                    this.data.count.skills[0] += 1
+                } else if (this.data.skills[k].prof === 1) {
+                    this.data.count.skills[1] += 1
+                } else if (this.data.skills[k].prof === 2) {
+                    this.data.count.skills[2] += 1
+                }
             }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -109,13 +111,13 @@ export class CharacterAdvancement extends FormApplication {
                         data.skills[button.dataset.key].prof += 1
                         data.xp.get -= data.skills[button.dataset.key].xp
                         data.xp.used += data.skills[button.dataset.key].xp
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof-1]-=1
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof]+=1
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof - 1] -= 1
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
                         break
                     case 'minus':
                         data.skills[button.dataset.key].prof -= 1
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof+1]-=1
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof]+=1
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
                         data.xp.get += CONFIG.ARd20.skill_xp[this.data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof]]
                         data.xp.used -= CONFIG.ARd20.skill_xp[this.data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof]]
                         break
