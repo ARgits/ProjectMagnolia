@@ -63,7 +63,7 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.skills[k].isEq = false
             }
-            if ((this.data.xp.get >= this.data.skills[k].xp) || (this.data.skills[k].prof >= 2)) {
+            if (this.data.xp.get >= this.data.skills[k].xp || this.data.skills[k].prof >= 2) {
                 this.data.skills[k].isXP = false
             } else {
                 this.data.skills[k].isXP = true
@@ -118,8 +118,8 @@ export class CharacterAdvancement extends FormApplication {
                         data.skills[button.dataset.key].prof -= 1
                         this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1
                         this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
-                        data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof+1]]
-                        data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof+1]]
+                        data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
+                        data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
                         break
                 }
 
