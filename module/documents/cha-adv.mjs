@@ -73,6 +73,7 @@ export class CharacterAdvancement extends FormApplication {
         console.log(this.data.count.skills[0])
         console.log(this.data.count.skills[1])
         console.log(this.data.count.skills[2])
+        console.log(this.data.skills)
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp,
