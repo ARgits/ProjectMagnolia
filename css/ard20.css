@@ -292,6 +292,9 @@
   height: auto;
   max-height: 100%;
 }
+.div#cha-adv.app.window-app.ard20 section.sheet-body{
+  height:auto
+}
 
 .ard20 .tox .tox-editor-container {
   background: #fff;
@@ -485,4 +488,8 @@ input:read-only{
 .change:disabled{
   color: red;
   cursor: not-allowed;
+}
+footer button[type='submit']{
+  position: -webkit-sticky;
+  position: sticky;
 }

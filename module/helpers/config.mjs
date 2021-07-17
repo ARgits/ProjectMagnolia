@@ -52,19 +52,19 @@ ARd20.skills = {
     "slt": "ARd20.SkillSlt",
     "ste": "ARd20.SkillSte",
     "sur": "ARd20.SkillSur"
-},
-    ARd20.prof = {
-        0: "ARd20.Untrained",
-        1: "ARd20.Basic",
-        2: "ARd20.Master"
-    },
-    ARd20.source = {
-        "mar": "ARd20.Martial",
-        "mag": "ARd20.Magical",
-        "div": "ARd20.Divine",
-        "pri": "ARd20.Primal",
-        "psy": "ARd20.Psyhic"
-    }
+}
+ARd20.prof = {
+    0: "ARd20.Untrained",
+    1: "ARd20.Basic",
+    2: "ARd20.Master"
+}
+ARd20.source = {
+    "mar": "ARd20.Martial",
+    "mag": "ARd20.Magical",
+    "div": "ARd20.Divine",
+    "pri": "ARd20.Primal",
+    "psy": "ARd20.Psyhic"
+}
 ARd20.Prop = {
     "aff": "ARd20.Affixed",
     "awk": "ARd20.Awkward",
@@ -91,26 +91,30 @@ ARd20.Prop = {
     "tri": "ARd20.Trip",
     "two": "ARd20.Two-Handed",
     "ver": "ARd20.Versatile"
-},
-    ARd20.WeaponType = {
-        "amb": "ARd20.Ambush",
-        "axe": "ARd20.Axe",
-        "blu": "ARd20.Bludgeon",
-        "bow": "ARd20.Bow",
-        "sli": "ARd20.Sling",
-        "cbl": "ARd20.Combat Blade",
-        "cro": "ARd20.Crossbow",
-        "dbl": "ARd20.Dueling Blade",
-        "fir": "ARd20.Firearm",
-        "fla": "ARd20.Flail",
-        "whi": "ARd20.Whip",
-        "ham": "ARd20.Hammer",
-        "pic": "ARd20.Pick",
-        "pol": "ARd20.Polearm",
-        "spe": "ARd20.Spear",
-        "thr": "ARd20.Throwing"
-    },
-    ARd20.abil_xp = [
-        50, 50, 50, 50, 70, 90, 120, 150, 190, 290, 440, 660, 990, 1500,
-        2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000
-    ]
+}
+ARd20.WeaponType = {
+    "amb": "ARd20.Ambush",
+    "axe": "ARd20.Axe",
+    "blu": "ARd20.Bludgeon",
+    "bow": "ARd20.Bow",
+    "sli": "ARd20.Sling",
+    "cbl": "ARd20.Combat Blade",
+    "cro": "ARd20.Crossbow",
+    "dbl": "ARd20.Dueling Blade",
+    "fir": "ARd20.Firearm",
+    "fla": "ARd20.Flail",
+    "whi": "ARd20.Whip",
+    "ham": "ARd20.Hammer",
+    "pic": "ARd20.Pick",
+    "pol": "ARd20.Polearm",
+    "spe": "ARd20.Spear",
+    "thr": "ARd20.Throwing"
+}
+ARd20.abil_xp = [
+    50, 50, 50, 50, 70, 90, 120, 150, 190, 290, 440, 660, 990, 1500,
+    2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000
+]
+ARd20.skill_xp = [
+    [50, 80, 125, 185, 260, 350, 455, 575, 710, 860, 1025, 1205, 1400, 1610, 1835, 2075, 2330, 2600]
+    [115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470]
+]

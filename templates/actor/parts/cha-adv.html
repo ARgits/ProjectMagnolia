@@ -2,15 +2,17 @@
     <header>
         <div>
             <label class='resource-label flexlarge align-left' for='xp.get'>Полученый опыт</label>
-            <input type='number'class='ability' value={{xp.get}} name='xp.get' readonly/>
+            <input type='number' class='ability' value={{xp.get}} name='xp.get' readonly />
         </div>
         <div>
             <label class='resource-label flexlarge align-left' for='xp.used'>Использованный опыт</label>
-            <input type='number'class='ability' value={{xp.used}} name='xp.used' readonly/>
+            <input type='number' class='ability' value={{xp.used}} name='xp.used' readonly />
         </div>
     </header>
+    <hr>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
         <a class="item" data-tab="stats">Stats</a>
+        <a class="item" data-tab='skills'>Skills</a>
     </nav>
     <hr>
 
@@ -20,13 +22,26 @@
                 {{#each abilities as |ability key|}}
                     <div class="ability flexrow">
                         <label for="abilities.{{key}}.value" class="resource-label  flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-                        <button class="change" type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
-                        <input readonly type='number'class="ability align-center" value ={{ability.value}} name='abilities.{{key}}.value'/>
-                        <span class="ability-mod" name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span>
-                        <button class="change" type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}>+</button>
-                        <span class='ability'name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span>
+                        <button class="change" data-type='ability' type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'>-</button>
+                        <input readonly type='number' class="ability align-center" value={{ability.value}} name='abilities.{{key}}.value' />
+                        <span class="ability-mod align-center" name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span>
+                        <button class="change" data-type='ability' type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}>+</button>
+                        <span class='ability' name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span>
                     </div>
                 {{/each}}
+            </div>
+        </div>
+        <div class='tab' data-tab='skills' data-group='primary-tabs'>
+            <div class='ability flexcoll flex-group-center'>
+                {{each skills as |skill key|}}
+                <div class='ability flexrow'>
+                    <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
+                    <button class='change far fa-angle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
+                    <input hidden name='skills.{{key}}.prof' value='skills.{{key}}.value' />
+                    <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label>
+                    <button class='change far fa-angle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
+                    <span class='ability' name='skills.{{key}}.xp'>{{numberFormat skill.xp decimals=0 sign=false}}</span>
+                </div>
             </div>
         </div>
     </section>
