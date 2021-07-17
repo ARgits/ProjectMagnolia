@@ -36,10 +36,10 @@
                 {{#each skills as |skill key|}}
                     <div class='ability flexrow'>
                         <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
-                        <button class='change fas fa-angle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
+                        <button class='change fas fa-arrow-alt-circle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                         <input hidden name='skills.{{key}}.prof' value={{skill.prof}} type="number" />
                         <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label>
-                        <button class='change fas fa-angle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
+                        <button class='change far fa-arrow-alt-circle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
                         <span class='ability' name='skills.{{key}}.xp'>{{numberFormat skill.xp decimals=0 sign=false}}</span>
                     </div>
                 {{/each}}
