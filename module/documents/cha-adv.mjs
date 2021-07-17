@@ -61,7 +61,7 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.skills[k].isEq = false
             }
-            if ((this.data.xp.get >= this.data.skills[k].xp) || (this.data.skills[k].prof == 2)) {
+            if ((this.data.xp.get >= this.data.skills[k].xp) || (this.data.skills[k].prof >= 2)) {
                 this.data.skills[k].isXP = false
             } else {
                 this.data.skills[k].isXP = true
@@ -98,8 +98,8 @@ export class CharacterAdvancement extends FormApplication {
                         break
                     case 'minus':
                         data.abilities[button.dataset.key].value -= 1
-                        data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
-                        data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 6] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
+                        data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
+                        data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
                         break
                 }
                 break
