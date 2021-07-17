@@ -55,7 +55,7 @@ export class CharacterAdvancement extends FormApplication {
             } else if (this.data.skills[k].prof === 2) {
                 this.data.count.skills[2] += 1
             }
-            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof - 1][this.data.count.skills[this.data.skills[k].prof + 1 ?? 2]] : 0
+            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : 0
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
             } else {
