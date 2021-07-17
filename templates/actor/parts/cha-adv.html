@@ -34,7 +34,7 @@
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class='ability flexcoll flex-group-center'>
                 {{#each skills as |skill key|}}
-                    <div class='ability flexrow'>
+                    <div class='ability flexrow grid grid-5col'>
                         <label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.label}}">{{skill.label}}</label>
                         <button class='change far fa-arrow-alt-circle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                         <input hidden name='skills.{{key}}.prof' value={{skill.prof}} type="number" />
