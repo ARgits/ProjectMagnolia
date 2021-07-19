@@ -35,9 +35,9 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {}
             }
             if(!game.folders.filter((folder)=>(folder.type==='JournalEntry')&&((folder.data.name==='Skills')||(folder.data.name===game.i18n.localize("ARd20.skills"))))){
-                this.data.content.skills = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))
+                this.data.content.skills = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
             }else{
-                this.data.content.skills = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))
+                this.data.content.skills = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
             }
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
@@ -143,7 +143,7 @@ export class CharacterAdvancement extends FormApplication {
         const content = this.getData().content
         switch(button.dataset.type){
             case 'skill':
-                skill_hover = content.skills.filter((skill)=>(skill.data.name===button.dataset.label)).data.content
+                const skill_hover = content.skills.filter((skill)=>(skill.data.name===button.dataset.label)).data.content
         }
         return skill_hover
     }
