@@ -79,12 +79,14 @@ export class CharacterAdvancement extends FormApplication {
             }
 
         }
+        this.data.hover=this.data.hover?this.data.hover:""
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp,
             skills: this.data.skills,
             count: this.data.count,
-            content: this.data.content
+            content: this.data.content,
+            hover:this.data.hover
         }
         return templateData
 
@@ -137,14 +139,13 @@ export class CharacterAdvancement extends FormApplication {
     _onHover (event) {
         const button = event.currentTarget
         const content = this.getData().content
-        let hover=0
+        const hover = this.getData().hover
         switch(button.dataset.type){
             case 'skill':
                 hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
         }
         this.render()
         console.log(hover)
-        return hover
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
