@@ -86,6 +86,7 @@ export class ARd20Actor extends Actor {
         data.defences = defence
 
         for (let [key, skill] of Object.entries(data.skills)) {
+            skill.prof=(skill.prof<2)?skill.prof:2
             if (skill.prof == 0) {
                 skill.roll = "1d20"
             };

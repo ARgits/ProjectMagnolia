@@ -31,6 +31,14 @@ export class CharacterAdvancement extends FormApplication {
                     2: 0
                 }
             }
+            this.data.content = {
+                skills: {}
+            }
+            if(!game.folders.filter((folder)=>(folder.type==='JournalEntry')&&((folder.data.name==='skills')||(folder.data.name===game.i18n.localize(ARd20.skills))))){
+                this.data.content.skills = game.packs.filter((pack) => (pack.metadata.name === 'skill') || (pack.metadata.name === game.i18n.localize(ARd20.skills)))
+            }else{
+                this.data.content.skills = game.folders.filter((folder) => (folder.data.name === 'skill') || (folder.data.name === game.i18n.localize(ARd20.skills)))
+            }
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
@@ -58,6 +66,7 @@ export class CharacterAdvancement extends FormApplication {
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof
             this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false
+
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
             } else {
@@ -78,7 +87,8 @@ export class CharacterAdvancement extends FormApplication {
             abilities: this.data.abilities,
             xp: this.data.xp,
             skills: this.data.skills,
-            count: this.data.count
+            count: this.data.count,
+            content: this.data.content.skills
         }
         return templateData
 
@@ -87,6 +97,7 @@ export class CharacterAdvancement extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
+        html.find('label').hover(this._onHover.bind(this))
     }
     _onChange (event) {
         const button = event.currentTarget
@@ -126,6 +137,15 @@ export class CharacterAdvancement extends FormApplication {
 
         }
         this.render()
+    }
+    _onHover (event) {
+        const button = event.currentTarget
+        const content = this.getData().content
+        switch(button.dataset.type){
+            case 'skill':
+                skill_hover = content.skills.filter((skill)=>(skill.data.name===button.dataset.label)).data.content
+        }
+        return skill_hover
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
