@@ -497,4 +497,5 @@ footer button[type='submit'] {
 }
 .verticalLine{
   border-left: thick solid black;
+  padding-left: 3px;
 }
