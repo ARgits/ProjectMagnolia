@@ -142,12 +142,13 @@ export class CharacterAdvancement extends FormApplication {
     _onHover (event) {
         const button = event.currentTarget
         const content = this.getData().content
+        const skill_hover
         switch(button.dataset.type){
             case 'skill':
-                const skill_hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
-                return skill_hover
+                skill_hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
         }
         this.render()
+        return skill_hover
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
