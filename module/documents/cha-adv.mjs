@@ -93,7 +93,7 @@ export class CharacterAdvancement extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
-        html.find('label').hover(this._onHover.bind(this))
+        html.find('label').mouseover(this._onHover.bind(this))
     }
     _onChange (event) {
         const button = event.currentTarget
@@ -137,12 +137,14 @@ export class CharacterAdvancement extends FormApplication {
     _onHover (event) {
         const button = event.currentTarget
         const content = this.getData().content
+        let hover=0
         switch(button.dataset.type){
             case 'skill':
-                this.data.hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
+                hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
         }
         this.render()
-        return this.data.hover
+        console.log(hover)
+        return hover
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
