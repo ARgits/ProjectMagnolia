@@ -144,7 +144,6 @@ export class CharacterAdvancement extends FormApplication {
                 this.data.hover = TextEditor.enrichHTML(content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content)
         }
         this.render()
-        console.log(this.data.hover)
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)

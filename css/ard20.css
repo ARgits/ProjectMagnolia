@@ -495,3 +495,6 @@ footer button[type='submit'] {
   position: -webkit-sticky;
   position: sticky;
 }
+.verticalLine{
+  border-left: thick solid black;
+}
