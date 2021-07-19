@@ -79,7 +79,6 @@ export class CharacterAdvancement extends FormApplication {
             }
 
         }
-        console.log(this.data.content.skills)
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp,
@@ -144,6 +143,7 @@ export class CharacterAdvancement extends FormApplication {
                 hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
         }
         this.render()
+        console.log(hover)
         return hover
     }
     async _updateObject (event, formData) {
