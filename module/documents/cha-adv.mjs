@@ -144,7 +144,7 @@ export class CharacterAdvancement extends FormApplication {
         const content = this.getData().content
         switch(button.dataset.type){
             case 'skill':
-                const skill_hover = content.skills.filter((skill)=>(skill.data.name===button.dataset.label)).data.content
+                const skill_hover = content.skills.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content
                 return skill_hover
         }
         this.render()
