@@ -788,6 +788,7 @@
   "ARd20.Polearm":"Polearm",
   "ARd20.Spear":"Spear",
   "ARd20.Throwing":"Throwing",
+  "ARd20.Skills":"Skills",
   
   "SETTINGS.5eAllowPolymorphingL": "Allow players to polymorph their own actors.",
   "SETTINGS.5eAllowPolymorphingN": "Allow Polymorphing",
