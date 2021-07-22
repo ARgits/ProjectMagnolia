@@ -34,9 +34,9 @@ export class CharacterAdvancement extends FormApplication {
             this.data.content = {
                 skills: {}
             }
-            if(!game.folders.filter((folder)=>(folder.type==='JournalEntry')&&((folder.data.name==='Skills')||(folder.data.name===game.i18n.localize("ARd20.skills"))))){
+            if (!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
                 this.data.content.skills.value = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
-            }else{
+            } else {
                 this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
             }
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -48,9 +48,9 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[2] += 1
                 }
             }
-            this.data.hover={
-                value:"",
-                name:""
+            this.data.hover = {
+                value: "",
+                name: ""
             }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -81,19 +81,21 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.skills[k].isXP = true
             }
-            if(this.data.hover.name===this.data.skills[k].label){
-                if (this.data.skills[k].prof===this.object.data.data.skills[k].prof){
-                    if(this.data.skills[k].prof===0){
+            if (this.data.hover.name === this.data.skills[k].label) {
+                if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
+                    if (this.data.skills[k].prof === 0) {
                         this.data.hover.value.getElementbyIDgetElementsByClassName('')
                     }
                 }
             }
-            
+
 
         }
-        const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/,'gis')
-        console.log(this.data.hover.value.textContent)
+        const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/, 'gis')
         let basic_desc = regex1.exec(this.data.hover.value)
+        if (basic_desc) {
+            this.data.hover.value.replace(regex1, "<font color='red>$1</font>")
+        }
         //console.log(basic_desc[0])
         const templateData = {
             abilities: this.data.abilities,
@@ -101,7 +103,7 @@ export class CharacterAdvancement extends FormApplication {
             skills: this.data.skills,
             count: this.data.count,
             content: this.data.content,
-            hover:this.data.hover
+            hover: this.data.hover
         }
         return templateData
 
@@ -154,9 +156,9 @@ export class CharacterAdvancement extends FormApplication {
     _onHover (event) {
         const button = event.currentTarget
         const content = this.getData().content
-        switch(button.dataset.type){
+        switch (button.dataset.type) {
             case 'skill':
-                this.data.hover.value = TextEditor.enrichHTML(content.skills.value.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content)
+                this.data.hover.value = TextEditor.enrichHTML(content.skills.value.content.filter((skill) => (skill.data.name === button.dataset.label))[0].data.content)
                 this.data.hover.name = button.dataset.label
         }
         this.render()
