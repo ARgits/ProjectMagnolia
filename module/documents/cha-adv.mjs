@@ -91,10 +91,10 @@ export class CharacterAdvancement extends FormApplication {
 
 
         }
-        const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/, 'gis')
+        const regex1 = RegExp(/((?<=(basic<\/h2>)).*?(?=(<h2>master)))/, 'gis')
         let basic_desc = regex1.exec(this.data.hover.value)
-        if (basic_desc!==null) {
-            this.data.hover.value.replace(regex1, "<font color='red'>$&</font>")
+        if (basic_desc !== null) {
+            this.data.hover.value.replace(regex1, '<span style="color:red">$&</span>')
         }
         console.log(this.data.hover.value)
         //console.log(basic_desc[0])
@@ -161,6 +161,7 @@ export class CharacterAdvancement extends FormApplication {
             case 'skill':
                 this.data.hover.value = TextEditor.enrichHTML(content.skills.value.content.filter((skill) => (skill.data.name === button.dataset.label))[0].data.content)
                 this.data.hover.name = button.dataset.label
+                break
         }
         this.render()
     }
