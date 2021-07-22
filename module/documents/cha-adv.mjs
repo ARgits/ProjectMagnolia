@@ -94,7 +94,7 @@ export class CharacterAdvancement extends FormApplication {
         const regex1 = RegExp(/((?<=(basic<\/h2>)).*?(?=(<h2>master)))/, 'gis')
         let basic_desc = regex1.exec(this.data.hover.value)
         if (basic_desc !== null) {
-            this.data.hover.value.replace(regex1, '<span style="color:red">$&</span>')
+            this.data.hover.value.replace(regex1, '<span style="color:red">'+basic_desc+'</span>')
         }
         console.log(this.data.hover.value)
         //console.log(basic_desc[0])
