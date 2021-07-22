@@ -96,7 +96,6 @@ export class CharacterAdvancement extends FormApplication {
         if (basic_desc!==null){
             console.log(basic_desc)
         }
-        console.log(this.data.content.skills.value.content)
         this.data.hover=this.data.hover?this.data.hover:""
         const templateData = {
             abilities: this.data.abilities,
