@@ -91,7 +91,7 @@ export class CharacterAdvancement extends FormApplication {
             
 
         }
-        const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/,'gim')
+        const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/,'gis')
         console.log(this.data.hover.value)
         let basic_desc = regex1.exec(this.data.hover.value)
         console.log(basic_desc)
