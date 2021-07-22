@@ -96,7 +96,7 @@ export class CharacterAdvancement extends FormApplication {
         if (basic_desc!==null){
             console.log(basic_desc)
         }
-        console.log(this.data.content.skills.value)
+        console.log(this.data.content.skills.value.content)
         this.data.hover=this.data.hover?this.data.hover:""
         const templateData = {
             abilities: this.data.abilities,
@@ -159,7 +159,7 @@ export class CharacterAdvancement extends FormApplication {
         const content = this.getData().content
         switch(button.dataset.type){
             case 'skill':
-                this.data.hover.value = TextEditor.enrichHTML(content.skills.value.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content)
+                this.data.hover.value = TextEditor.enrichHTML(content.skills.value.content.filter((skill)=>(skill.data.name===button.dataset.label))[0].data.content)
                 this.data.hover.name = button.dataset.label
         }
         this.render()
