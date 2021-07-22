@@ -35,9 +35,9 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {}
             }
             if(!game.folders.filter((folder)=>(folder.type==='JournalEntry')&&((folder.data.name==='Skills')||(folder.data.name===game.i18n.localize("ARd20.skills"))))){
-                this.data.content.skills.value = duplicate(game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0])
+                this.data.content.skills.value = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
             }else{
-                this.data.content.skills.value = duplicate(game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0])
+                this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
             }
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
