@@ -29,16 +29,27 @@ export class CharacterAdvancement extends FormApplication {
                     0: 0,
                     1: 0,
                     2: 0
+                },
+                features:{
+                    martial:0,
+                    magical:0,
+                    divine:0,
+                    primal:0,
+                    psyhic:0
                 }
             }
             this.data.content = {
-                skills: {}
+                skills: {},
+                features:{}
             }
+            this.data.features = duplicate(this.object.data.items)
             if (!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
                 this.data.content.skills.value = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
             } else {
                 this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
             }
+            this.data.content.features = game.packs.filter((pack)=>(pack.metadata.name==='Features'))
+
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
@@ -46,6 +57,19 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[1] += 1
                 } else if (this.data.skills[k].prof === 2) {
                     this.data.count.skills[2] += 1
+                }
+            }
+            for (let[k,v]of Object.entries(this.data.features)){
+                if(this.data.features[k].data.data.source.value==='mar'){
+                    this.data.count.features.martial+=1
+                }else if(this.data.features[k].data.data.source.value==='div'){
+                    this.data.count.features.divine+=1
+                }else if(this.data.features[k].data.data.source.value==='mag'){
+                    this.data.count.features.magical+=1
+                }else if(this.data.features[k].data.data.source.value==='pri'){
+                    this.data.count.features.primal+=1
+                }else if(this.data.features[k].data.data.source.value==='psy'){
+                    this.data.count.features.psyhic+=1
                 }
             }
             this.data.hover = {
@@ -91,13 +115,7 @@ export class CharacterAdvancement extends FormApplication {
 
 
         }
-        const regex1 = RegExp(/((?<=(basic<\/h2>)).*?(?=(<h2>master)))/, 'gis')
-        let basic_desc = regex1.exec(this.data.hover.value)
-        if (basic_desc !== null) {
-            this.data.hover.value.replace(regex1, '<span style="color:red">'+basic_desc+'</span>')
-        }
-        console.log(this.data.hover.value)
-        //console.log(basic_desc[0])
+       console.log(this.data.count.features)
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp,

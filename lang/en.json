@@ -789,6 +789,11 @@
   "ARd20.Spear":"Spear",
   "ARd20.Throwing":"Throwing",
   "ARd20.Skills":"Skills",
+  "ARd20.Divine":"Divine",
+  "ARd20.Martial":"Martial",
+  "ARd20.Magical":"Magical",
+  "ARd20.Primal":"Primal",
+  "ARd20.Psyhic":"Psyhic",
   
   "SETTINGS.5eAllowPolymorphingL": "Allow players to polymorph their own actors.",
   "SETTINGS.5eAllowPolymorphingN": "Allow Polymorphing",
