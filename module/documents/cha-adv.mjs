@@ -59,7 +59,7 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[2] += 1
                 }
             }
-            for (let[k,v]of Object.entries(this.data.features)){
+            /*for (let[k,v]of Object.entries(this.data.features)){
                 if(this.data.features[k].data.data.source.value==='mar'){
                     this.data.count.features.martial+=1
                 }else if(this.data.features[k].data.data.source.value==='div'){
@@ -71,7 +71,7 @@ export class CharacterAdvancement extends FormApplication {
                 }else if(this.data.features[k].data.data.source.value==='psy'){
                     this.data.count.features.psyhic+=1
                 }
-            }
+            }*/
             this.data.hover = {
                 value: "",
                 name: ""
