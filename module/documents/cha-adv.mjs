@@ -92,7 +92,7 @@ export class CharacterAdvancement extends FormApplication {
 
         }
         const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/,'gis')
-        console.log(this.data.hover.value.innerHTML)
+        console.log(this.data.hover.value.textContent)
         let basic_desc = regex1.exec(this.data.hover.value)
         //console.log(basic_desc[0])
         const templateData = {
