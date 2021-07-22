@@ -92,6 +92,7 @@ export class CharacterAdvancement extends FormApplication {
 
         }
         const regex1 = RegExp(/((?<=(basic)).*?(?=(master)))/,'gim')
+        console.log(this.data.hover.value)
         let basic_desc = regex1.exec(this.data.hover.value)
         console.log(basic_desc)
         this.data.hover=this.data.hover?this.data.hover:""
