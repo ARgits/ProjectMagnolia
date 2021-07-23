@@ -155,8 +155,8 @@
 				<div>
 					<div>
 						<label for='data.isProto'>
-						<input type="radio" name="data.isProto" {{value (lookup ../data isProto)}}/>Prototype</label>
-						<label for='data.hasProto'><input type='radio' name='data.hasProto' {{value (lookup ../data has Proto)}}></label>
+						<input type="radio" name="data.isProto" value="{{data.isProto}}"/>Prototype</label>
+						<label for='data.hasProto'><input type='radio' name='data.hasProto' value="{{data.hasProto}}"></label>
 						<!--<select name="data.prof.value">
 							{{#select data.prof.value}}
 								{{#each config.prof as |name sch|}}
