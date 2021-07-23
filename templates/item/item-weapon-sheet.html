@@ -154,9 +154,12 @@
 				</div>
 				<div>
 					<div>
-						<label for='data.isProto'>
-						<input type="radio" name="data.isProto" value="{{data.isProto}}"/>Prototype</label>
-						<label for='data.hasProto'><input type='radio' name='data.hasProto' value="{{data.hasProto}}"></label>
+						<label>
+							<input type="radio" name="data.proto" value="{{data.isProto}}" />Prototype
+						</label>
+						<label>
+							<input type='radio' name='data.proto' value="{{data.hasProto}}">Has Prototype
+						</label>
 						<!--<select name="data.prof.value">
 							{{#select data.prof.value}}
 								{{#each config.prof as |name sch|}}
