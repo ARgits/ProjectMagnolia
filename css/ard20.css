@@ -495,7 +495,8 @@ input:read-only {
 }
 
 footer button[type='submit'] {
-  position: fixed;
+  position: sticky;
+  position: -webkit-sticky;
 }
 .verticalLine{
   border-left: thick solid black;

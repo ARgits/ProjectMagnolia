@@ -154,13 +154,16 @@
 				</div>
 				<div>
 					<div>
-						<select name="data.prof.value">
+						<label for='data.isProto'>
+						<input type="radio" name="data.isProto" {{value (lookup ../data isProto)}}/>Prototype</label>
+						<label for='data.hasProto'><input type='radio' name='data.hasProto' {{value (lookup ../data has Proto)}}></label>
+						<!--<select name="data.prof.value">
 							{{#select data.prof.value}}
 								{{#each config.prof as |name sch|}}
 									<option value="{{sch}}">{{localize name}}</option>
 								{{/each}}
 							{{/select}}
-						</select>
+						</select>-->
 					</div>
 				</div>
 			</div>
