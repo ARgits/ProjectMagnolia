@@ -154,12 +154,7 @@
 				</div>
 				<div>
 					<div>
-						<label>
-							<input type="radio" name="data.proto" value="isProto" />Prototype
-						  </label>
-						  <label>
-							<input type='radio' name='data.proto' value="hasProto" />Has Prototype
-						  </label>
+						{{radioBoxes "prototype" data.proto checked=data.proto[0] localize = false}}
 						<!--<select name="data.prof.value">
 							{{#select data.prof.value}}
 								{{#each config.prof as |name sch|}}
