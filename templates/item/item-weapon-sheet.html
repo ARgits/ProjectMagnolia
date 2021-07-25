@@ -1,263 +1,357 @@
 <form class="{{cssClass}}" autocomplete="off">
-	<header class="sheet-header">
-		<img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
-		<div class="header-fields">
-			<h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
-		</div>
-	</header>
+  <header class="sheet-header">
+    <img
+      class="profile-img"
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+    />
+    <div class="header-fields">
+      <h1 class="charname">
+        <input
+          name="name"
+          type="text"
+          value="{{item.name}}"
+          placeholder="Name"
+        />
+      </h1>
+    </div>
+  </header>
 
-	{{!-- Sheet Tab Navigation --}}
-	<nav class="sheet-tabs tabs" data-group="primary">
-		<a class="item" data-tab="description">Description</a>
-		<a class="item" data-tab="info">Info</a>
-		{{#if item.isGM}}
-			<a class="item" data-tab="attributes">Data</a>
-		{{/if}}
-	</nav>
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="info">Info</a>
+    {{#if item.isGM}}
+    <a class="item" data-tab="attributes">Data</a>
+    {{/if}}
+  </nav>
 
-	{{!-- Sheet Body --}}
-	<section class="sheet-body" data-group="primary">
+  {{!-- Sheet Body --}}
+  <section class="sheet-body" data-group="primary">
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{{data.description}}}
+    </div>
 
-		{{!-- Description Tab --}}
-		<div class="tab" data-group="primary" data-tab="description">
-			{{{data.description}}}
-		</div>
+    {{!-- Info Tab --}}
+    <div class="tab" data-group="primary" data-tab="info">
+      {{editor content=data.description target="data.description"
+      rollData=rollData button=true owner=owner editable=editable}}
+      <div>
+        <label class="resource-label">Weapon Type: </label>
+        <span>{{labels.type}}</span>
+        <label class="resource-label">Proficiency: </label>
+        <span>{{labels.prof}}</span>
+      </div>
+      <hr />
+      <details>
+        <summary>{{localize "ARd20.Untrained"}}</summary>
+        <div>
+          <label class="resource-label">Properties:</label>
+          {{#each config.Prop as |name prop|}} {{#if (lookup
+          ../data.property.untrained prop)}}<span>{{localize name}}</span
+          >{{/if}}{{/each}}
+        </div>
+        <div>
+          <label
+            class="resource-label rollable"
+            data-roll="@data.damage.common.untrained"
+            >Damage:
+          </label>
+          <span>{{data.damage.common.untrained}}</span>
+        </div>
+        {{#if data.property.untrained.ver}}
+        <div>
+          <label class="resource-label">Versatile Damage: </label>
+          <span>{{data.damage.ver.untrained}}</span>
+        </div>
+        {{/if}} {{#if data.property.untrained.ran}}
+        <div>
+          <label class="resource-label">Range: </label>
+          <span
+            >{{numberFormat data.range.untrained.min decimals=0
+            sign=false}}</span
+          >
+          <span>/</span>
+          <span
+            >{{numberFormat data.range.untrained.max decimals=0
+            sign=false}}</span
+          >
+        </div>
+        {{/if}} {{#if data.property.untrained.def}}
+        <div>
+          <label class="resource-label">Deflect: </label>
+          <span>{{data.deflect.untrained}}</span>
+        </div>
+        {{/if}}
+      </details>
+      <hr />
+      <details>
+        <summary>{{localize "ARd20.Basic"}}</summary>
+        <div>
+          <label class="resource-label">Properties:</label>
+          {{#each config.Prop as |name prop|}} {{#if (lookup
+          ../data.property.basic prop)}}<span>{{localize name}}</span
+          >{{/if}}{{/each}}
+        </div>
+        <div>
+          <label
+            class="resource-label rollable"
+            data-roll="@data.damage.common.basic"
+            >Damage:
+          </label>
+          <span>{{data.damage.common.basic}}</span>
+        </div>
+        {{#if data.property.basic.ver}}
+        <div>
+          <label class="resource-label">Versatile Damage: </label>
+          <span>{{data.damage.ver.basic}}</span>
+        </div>
+        {{/if}} {{#if data.property.basic.ran}}
+        <div>
+          <label class="resource-label">Range: </label>
+          <span
+            >{{numberFormat data.range.basic.min decimals=0 sign=false}}</span
+          >
+          <span>/</span>
+          <span
+            >{{numberFormat data.range.basic.max decimals=0 sign=false}}</span
+          >
+        </div>
+        {{/if}} {{#if data.property.untrained.def}}
+        <div>
+          <label class="resource-label">Deflect: </label>
+          <span>{{data.deflect.basic}}</span>
+        </div>
+        {{/if}}
+      </details>
+      <hr />
+      <details>
+        <summary>{{localize "ARd20.Master"}}</summary>
+        <div>
+          <div>
+            <label class="resource-label">Properties:</label>
+            {{#each config.Prop as |name prop|}} {{#if (lookup
+            ../data.property.master prop)}}<span>{{localize name}}</span
+            >{{/if}}{{/each}}
+          </div>
+          <div>
+            <label
+              class="resource-label rollable"
+              data-roll="@data.damage.common.master"
+              >Damage:
+            </label>
+            <span>{{data.damage.common.master}}</span>
+          </div>
+          {{#if data.property.master.ver}}
+          <div>
+            <label class="resource-label">Versatile Damage: </label>
+            <span>{{data.damage.ver.master}}</span>
+          </div>
+          {{/if}} {{#if data.property.master.ran}}
+          <div>
+            <label class="resource-label">Range: </label>
+            <span
+              >{{numberFormat data.range.master.min decimals=0
+              sign=false}}</span
+            >
+            <span>/</span>
+            <span
+              >{{numberFormat data.range.master.max decimals=0
+              sign=false}}</span
+            >
+          </div>
+          {{/if}} {{#if data.property.master.def}}
+          <div>
+            <label class="resource-label">Deflect: </label>
+            <span>{{data.deflect.master}}</span>
+          </div>
+          {{/if}}
+        </div>
+      </details>
+    </div>
 
-		{{!-- Info Tab --}}
-		<div class="tab" data-group="primary" data-tab="info">
-			{{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
-			<div>
-				<label class="resource-label">Weapon Type: </label>
-				<span>{{labels.type}}</span>
-				<label class="resource-label">Proficiency: </label>
-				<span>{{labels.prof}}</span>
-			</div>
-			<hr>
-			<details>
-				<summary>
-					{{localize "ARd20.Untrained"}}
-				</summary>
-				<div>
-					<label class="resource-label">Properties:</label>
-					{{#each config.Prop as |name prop|}}
-						{{#if (lookup ../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-				</div>
-				<div>
-					<label class="resource-label rollable" data-roll="@data.damage.common.untrained">Damage: </label>
-					<span>{{data.damage.common.untrained}}</span>
-				</div>
-				{{#if data.property.untrained.ver}}
-					<div>
-						<label class="resource-label">Versatile Damage: </label>
-						<span>{{data.damage.ver.untrained}}</span>
-					</div>
-				{{/if}}
-				{{#if data.property.untrained.ran}}
-					<div>
-						<label class="resource-label">Range: </label>
-						<span>{{numberFormat data.range.untrained.min decimals=0 sign=false}}</span>
-						<span>/</span>
-						<span>{{numberFormat data.range.untrained.max decimals=0 sign=false}}</span>
-					</div>
-				{{/if}}
-				{{#if data.property.untrained.def}}
-					<div>
-						<label class="resource-label">Deflect: </label>
-						<span>{{data.deflect.untrained}}</span>
-					</div>
-				{{/if}}
-			</details>
-			<hr>
-			<details>
-				<summary>{{localize "ARd20.Basic"}}</summary>
-				<div>
-					<label class="resource-label">Properties:</label>
-					{{#each config.Prop as |name prop|}}
-						{{#if (lookup ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-				</div>
-				<div>
-					<label class="resource-label rollable" data-roll="@data.damage.common.basic">Damage: </label>
-					<span>{{data.damage.common.basic}}</span>
-				</div>
-				{{#if data.property.basic.ver}}
-					<div>
-						<label class="resource-label">Versatile Damage: </label>
-						<span>{{data.damage.ver.basic}}</span>
-					</div>
-				{{/if}}
-				{{#if data.property.basic.ran}}
-					<div>
-						<label class="resource-label">Range: </label>
-						<span>{{numberFormat data.range.basic.min decimals=0 sign=false}}</span>
-						<span>/</span>
-						<span>{{numberFormat data.range.basic.max decimals=0 sign=false}}</span>
-					</div>
-				{{/if}}
-				{{#if data.property.untrained.def}}
-					<div>
-						<label class="resource-label">Deflect: </label>
-						<span>{{data.deflect.basic}}</span>
-					</div>
-				{{/if}}
-			</details>
-			<hr>
-			<details>
-				<summary>
-					{{localize "ARd20.Master"}}
-				</summary>
-				<div>
-					<div>
-						<label class="resource-label">Properties:</label>
-						{{#each config.Prop as |name prop|}}
-							{{#if (lookup ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-					</div>
-					<div>
-						<label class="resource-label rollable" data-roll="@data.damage.common.master">Damage: </label>
-						<span>{{data.damage.common.master}}</span>
-					</div>
-					{{#if data.property.master.ver}}
-						<div>
-							<label class="resource-label">Versatile Damage: </label>
-							<span>{{data.damage.ver.master}}</span>
-						</div>
-					{{/if}}
-					{{#if data.property.master.ran}}
-						<div>
-							<label class="resource-label">Range: </label>
-							<span>{{numberFormat data.range.master.min decimals=0 sign=false}}</span>
-							<span>/</span>
-							<span>{{numberFormat data.range.master.max decimals=0 sign=false}}</span>
-						</div>
-					{{/if}}
-					{{#if data.property.master.def}}
-						<div>
-							<label class="resource-label">Deflect: </label>
-							<span>{{data.deflect.master}}</span>
-						</div>
-					{{/if}}
-				</div>
-			</details>
-		</div>
-
-
-		{{!-- Attributes Tab --}}
-		<div class="tab" data-group="primary" data-tab="attributes">
-			<div class="grid grid-2col">
-				<div>
-					<select name="data.type.value">
-						{{#select data.type.value}}
-							{{#each config.WeaponType as |name sch|}}
-								<option value="{{sch}}">{{localize name}}</option>
-							{{/each}}
-						{{/select}}
-					</select>
-				</div>
-				<div>
-					<div>
-						{{radioBoxes "prototype" data.proto checked="0" localize = false}}
-						<!--<select name="data.prof.value">
-							{{#select data.prof.value}}
-								{{#each config.prof as |name sch|}}
-									<option value="{{sch}}">{{localize name}}</option>
-								{{/each}}
-							{{/select}}
-						</select>-->
-					</div>
-				</div>
-			</div>
-			<nav class="data-tabs tabs" data-group="secondary">
-				<a class="item" data-tab="untrained">{{localize "ARd20.Untrained"}}</a>
-				<a class="item" data-tab="basic">{{localize "ARd20.Basic"}}</a>
-				<a class="item" data-tab="master">{{localize "ARd20.Master"}}</a>
-			</nav>
-			<section class="data-section" data-group="secondary">
-				{{!-- Untrained properties --}}
-				<div class="tab" data-group="secondary" data-tab="untrained">
-					<div class="flexcol">
-						<label class="flexlarge">{{localize "ARd20.properties"}}</label>
-						<div>
-							<div class="grid grid-5col">
-								{{#each config.Prop as |name prop|}}
-									<label class="checkbox">
-										<input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup ../data.property.untrained prop)}} />{{localize name}}
-									</label>
-								{{/each}}
-							</div>
-							<div class="grid grid-10col flex-group-center">
-								Damage <input type="text" name="data.damage.common.untrained" value="{{data.damage.common.untrained}}">
-								{{#if data.property.untrained.ran}}
-									<div class="grid-span-2">
-										Range <input type="text" name="data.range.untrained.min" value="{{data.range.untrained.min}}" data-dtype="Number">/<input type="text" name="data.range.untrained.max" value="{{data.range.untrained.max}}" data-dtype="Number">
-									</div>
-								{{/if}}
-								{{#if data.property.untrained.ver}}
-									Versatile Damage <input type="text" name="data.damage.ver.untrained" value="{{data.damage.ver.untrained}}">
-								{{/if}}
-								{{#if data.property.untrained.def}}
-									Deflect <input type="text" name="data.deflect.untrained" value="{{data.deflect.untrained}}">
-								{{/if}}
-							</div>
-						</div>
-					</div>
-				</div>
-				{{!-- Basic properties --}}
-				<div class="tab" data-group="secondary" data-tab="basic">
-					<div class="flexcol">
-						<label class="flexlarge">{{localize "ARd20.properties"}}</label>
-						<div>
-							<div class="grid grid-5col">
-								{{#each config.Prop as |name prop|}}
-									<label class="checkbox">
-										<input type="checkbox" name="data.property.basic.{{prop}}" {{checked (lookup ../data.property.basic prop)}} />{{localize name}}
-									</label>
-								{{/each}}
-							</div>
-							<div class="grid grid-10col flex-group-center">
-								Damage<input type="text" name="data.damage.common.basic" value="{{data.damage.common.basic}}">
-								{{#if data.property.basic.ran}}
-									<div class="grid-span-3">
-										Range<input type="text" name="data.range.basic.min" value="{{data.range.basic.min}}" data-dtype="Number">/<input type="text" name="data.range.basic.max" value="{{data.range.basic.max}}" data-dtype="Number"></div>
-								{{/if}}
-								{{#if data.property.basic.ver}}
-									Versatile Damage<input type="text" name="data.damage.ver.basic" value="{{data.damage.ver.basic}}">
-								{{/if}}
-								{{#if data.property.basic.def}}
-									Deflect<input type="text" name="data.deflect.basic" value="{{data.deflect.basic}}">
-								{{/if}}
-							</div>
-						</div>
-					</div>
-				</div>
-				{{!-- Master properties --}}
-				<div class="tab" data-group="secondary" data-tab="master">
-					<div class="flexcol">
-						<label class="flexlarge">{{localize "ARd20.properties"}}</label>
-						<div>
-							<div class="grid grid-5col">
-								{{#each config.Prop as |name prop|}}
-									<label class="checkbox">
-										<input type="checkbox" name="data.property.master.{{prop}}" {{checked (lookup ../data.property.master prop)}}> {{localize name}}</label>
-								{{/each}}
-							</div>
-							<div class="grid grid-10col flex-group-center">
-								Damage<input type="text" name="data.damage.common.master" value="{{data.damage.common.master}}">
-								{{#if data.property.master.ran}}
-									<div class="grid-span-3">
-										Range<input type="text" name="data.range.master.min" value="{{data.range.master.min}}" data-dtype="Number">/<input type="text" name="data.range.master.max" value="{{data.range.master.max}}" data-dtype="Number">
-									</div>
-								{{/if}}
-								{{#if data.property.master.ver}}
-									Versatile Damage<input type="text" name="data.damage.ver.master" value="{{data.damage.ver.master}}">
-								{{/if}}
-								{{#if data.property.master.def}}
-									Deflect<input type="text" name="data.deflect.master" value="{{data.deflect.master}}">
-								{{/if}}
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</section>
-
+    {{!-- Attributes Tab --}}
+    <div class="tab" data-group="primary" data-tab="attributes">
+      <div class="grid grid-2col">
+        <div>
+          <select name="data.type.value">
+            {{#select data.type.value}} {{#each config.WeaponType as |name
+            sch|}}
+            <option value="{{sch}}">{{localize name}}</option>
+            {{/each}} {{/select}}
+          </select>
+        </div>
+        <div>
+          <div>
+            <select name="data.proto">
+              {{#select data.proto}}
+              <option value="0">is proto</option>
+              <option value="1">has proto</option>
+              {{/select}}
+            </select>
+          </div>
+        </div>
+      </div>
+      <nav class="data-tabs tabs" data-group="secondary">
+        <a class="item" data-tab="untrained">{{localize "ARd20.Untrained"}}</a>
+        <a class="item" data-tab="basic">{{localize "ARd20.Basic"}}</a>
+        <a class="item" data-tab="master">{{localize "ARd20.Master"}}</a>
+      </nav>
+      <section class="data-section" data-group="secondary">
+        {{!-- Untrained properties --}}
+        <div class="tab" data-group="secondary" data-tab="untrained">
+          <div class="flexcol">
+            <label class="flexlarge">{{localize "ARd20.properties"}}</label>
+            <div>
+              <div class="grid grid-5col">
+                {{#each config.Prop as |name prop|}}
+                <label class="checkbox">
+                  <input type="checkbox" name="data.property.untrained.{{prop}}"
+                  {{checked (lookup ../data.property.untrained prop)}}
+                  />{{localize name}}
+                </label>
+                {{/each}}
+              </div>
+              <div class="grid grid-10col flex-group-center">
+                Damage
+                <input
+                  type="text"
+                  name="data.damage.common.untrained"
+                  value="{{data.damage.common.untrained}}"
+                />
+                {{#if data.property.untrained.ran}}
+                <div class="grid-span-2">
+                  Range
+                  <input
+                    type="text"
+                    name="data.range.untrained.min"
+                    value="{{data.range.untrained.min}}"
+                    data-dtype="Number"
+                  />/<input
+                    type="text"
+                    name="data.range.untrained.max"
+                    value="{{data.range.untrained.max}}"
+                    data-dtype="Number"
+                  />
+                </div>
+                {{/if}} {{#if data.property.untrained.ver}} Versatile Damage
+                <input
+                  type="text"
+                  name="data.damage.ver.untrained"
+                  value="{{data.damage.ver.untrained}}"
+                />
+                {{/if}} {{#if data.property.untrained.def}} Deflect
+                <input
+                  type="text"
+                  name="data.deflect.untrained"
+                  value="{{data.deflect.untrained}}"
+                />
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{!-- Basic properties --}}
+        <div class="tab" data-group="secondary" data-tab="basic">
+          <div class="flexcol">
+            <label class="flexlarge">{{localize "ARd20.properties"}}</label>
+            <div>
+              <div class="grid grid-5col">
+                {{#each config.Prop as |name prop|}}
+                <label class="checkbox">
+                  <input type="checkbox" name="data.property.basic.{{prop}}"
+                  {{checked (lookup ../data.property.basic prop)}} />{{localize
+                  name}}
+                </label>
+                {{/each}}
+              </div>
+              <div class="grid grid-10col flex-group-center">
+                Damage<input
+                  type="text"
+                  name="data.damage.common.basic"
+                  value="{{data.damage.common.basic}}"
+                />
+                {{#if data.property.basic.ran}}
+                <div class="grid-span-3">
+                  Range<input
+                    type="text"
+                    name="data.range.basic.min"
+                    value="{{data.range.basic.min}}"
+                    data-dtype="Number"
+                  />/<input
+                    type="text"
+                    name="data.range.basic.max"
+                    value="{{data.range.basic.max}}"
+                    data-dtype="Number"
+                  />
+                </div>
+                {{/if}} {{#if data.property.basic.ver}} Versatile Damage<input
+                  type="text"
+                  name="data.damage.ver.basic"
+                  value="{{data.damage.ver.basic}}"
+                />
+                {{/if}} {{#if data.property.basic.def}} Deflect<input
+                  type="text"
+                  name="data.deflect.basic"
+                  value="{{data.deflect.basic}}"
+                />
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{!-- Master properties --}}
+        <div class="tab" data-group="secondary" data-tab="master">
+          <div class="flexcol">
+            <label class="flexlarge">{{localize "ARd20.properties"}}</label>
+            <div>
+              <div class="grid grid-5col">
+                {{#each config.Prop as |name prop|}}
+                <label class="checkbox">
+                  <input type="checkbox" name="data.property.master.{{prop}}"
+                  {{checked (lookup ../data.property.master prop)}}> {{localize
+                  name}}</label
+                >
+                {{/each}}
+              </div>
+              <div class="grid grid-10col flex-group-center">
+                Damage<input
+                  type="text"
+                  name="data.damage.common.master"
+                  value="{{data.damage.common.master}}"
+                />
+                {{#if data.property.master.ran}}
+                <div class="grid-span-3">
+                  Range<input
+                    type="text"
+                    name="data.range.master.min"
+                    value="{{data.range.master.min}}"
+                    data-dtype="Number"
+                  />/<input
+                    type="text"
+                    name="data.range.master.max"
+                    value="{{data.range.master.max}}"
+                    data-dtype="Number"
+                  />
+                </div>
+                {{/if}} {{#if data.property.master.ver}} Versatile Damage<input
+                  type="text"
+                  name="data.damage.ver.master"
+                  value="{{data.damage.ver.master}}"
+                />
+                {{/if}} {{#if data.property.master.def}} Deflect<input
+                  type="text"
+                  name="data.deflect.master"
+                  value="{{data.deflect.master}}"
+                />
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
 </form>
