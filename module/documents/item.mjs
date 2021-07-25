@@ -23,7 +23,7 @@ export class ARd20Item extends Item {
         }
         if (itemData.type === "weapon") {
             data.proto = {
-                0:"Is Proto"
+                0:"Is Proto",
                 1:"Has Proto"
             }
             for (let [k, v] of Object.entries(data.property.untrained)) {
