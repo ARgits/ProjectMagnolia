@@ -8,6 +8,7 @@ import { ARd20ItemSheet } from "./sheets/item-sheet.mjs"
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs"
 import { ARd20 } from "./helpers/config.mjs"
 import ARd20SocketHandler from "./helpers/socket.js"
+import {registerSystemSettings} from "./helpers/settings.mjs"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -47,6 +48,7 @@ Hooks.once( 'init', async function () {
     Actors.registerSheet( "ard20", ARd20ActorSheet, { makeDefault: true } )
     Items.unregisterSheet( "core", ItemSheet )
     Items.registerSheet( "ard20", ARd20ItemSheet, { makeDefault: true } )
+    registerSystemSettings
 
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates()
