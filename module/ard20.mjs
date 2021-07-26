@@ -48,7 +48,7 @@ Hooks.once( 'init', async function () {
     Actors.registerSheet( "ard20", ARd20ActorSheet, { makeDefault: true } )
     Items.unregisterSheet( "core", ItemSheet )
     Items.registerSheet( "ard20", ARd20ItemSheet, { makeDefault: true } )
-    registerSystemSettings
+    registerSystemSettings()
 
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates()
