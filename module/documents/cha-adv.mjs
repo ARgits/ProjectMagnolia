@@ -42,8 +42,8 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {},
                 features: {}
             }
-            this.data.features = duplicate(this.object.data.items.filter((item)=>item.data.type==='feature')
-            if (!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
+            this.data.features = duplicate(this.object.data.items.filter((item)=>item.data.type==='feature'))
+            if(!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
                 this.data.content.skills.value = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
             } else {
                 this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
