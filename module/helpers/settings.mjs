@@ -5,7 +5,7 @@ export const registerSystemSettings = function () {
         scope: "world",
         type: ProfFormApp,
         restricted: false,
-        icon:"fab fa-buffer"
+        icon: "fab fa-buffer"
     })
 }
 class ProfFormApp extends FormApplication {
@@ -20,7 +20,12 @@ class ProfFormApp extends FormApplication {
         })
     }
     getData (options) {
-        console.log(this.object)
+        if (!this.data) {
+            data = this.data = {}
+            prof = data.prof = CONFIG.ARd20.WeaponSubType
+        }
+        console.log(this)
+
     }
     activateListeners (html) {
         super.activateListeners(html)
@@ -28,6 +33,8 @@ class ProfFormApp extends FormApplication {
     }
     _onAdd (event) {
         button = event.currentTarget
+        document.getElementsByClassName('item').add()
+
     }
     async _updateObject (event, formData) {}
 }
