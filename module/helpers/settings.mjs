@@ -32,9 +32,9 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        button = event.currentTarget
         html = this._element[0]
         html.closest('button.add').add(`<div><input class="item" type="text" name="prof1" /><div>`).appendTo(html.closest('input'))
+        this.render()
 
     }
     async _updateObject (event, formData) {}
