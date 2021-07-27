@@ -1,10 +1,11 @@
 export const registerSystemSettings = function () {
-    game.settings.register("ard20", "gearProfManage", {
+    game.settings.registerMenu("ard20", "gearProfManage", {
         name: "SETTINGS.ProfManage",
         label: "SETTINGS.ProfManage",
         scope: "world",
         type: ProfFormApp,
         restricted: false,
+        icon:"fab fa-buffer"
     })
 }
 class ProfFormApp extends FormApplication {
