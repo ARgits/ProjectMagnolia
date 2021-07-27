@@ -35,6 +35,8 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         let html = this._element[0]
         console.log(html)
+        let element = html.closest('button.add')
+        console.log(element)
         this.render()
 
     }
