@@ -34,7 +34,7 @@ class ProfFormApp extends FormApplication {
     }
     _onAdd (event) {
         let html = this._element[0]
-        html.closest('button.add').add(`<div><input class="item" type="text" name="prof1" /><div>`).appendTo(html.closest('input'))
+        console.log(html)
         this.render()
 
     }
