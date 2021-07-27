@@ -17,6 +17,7 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
+            closeOnSubmit: false,
         })
     }
     getData (options) {
@@ -32,7 +33,7 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        html = this._element[0]
+        let html = this._element[0]
         html.closest('button.add').add(`<div><input class="item" type="text" name="prof1" /><div>`).appendTo(html.closest('input'))
         this.render()
 
