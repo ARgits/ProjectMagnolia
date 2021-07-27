@@ -11,20 +11,15 @@ class ProfFormApp extends FormApplication {
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
-            title: 'Character Advancement',
-            template: 'systems/ard20/templates/actor/parts/cha-adv.html',
-            id: 'cha-adv',
-            width: 800,
+            title: 'Armor/Weapon Proficiencies',
+            template: 'systems/ard20/templates/app/prof-settings.html',
+            id: 'prof-settings',
+            width: 600,
             height: 'auto',
-            tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
         })
     }
     getData (options) {
-        if (!this.data) {
-            data = this.data = {}
-            proto = data.proto = {}
-        }
-        return
+        console.log(this.object)
     }
     activateListeners (html) {
         super.activateListeners(html)
@@ -33,4 +28,5 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         button = event.currentTarget
     }
+    async _updateObject (event, formData) {}
 }
