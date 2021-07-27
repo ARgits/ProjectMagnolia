@@ -33,7 +33,7 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        let html = this._element[0].find('div')
+        let html = this._element[0]("div")
         console.log(html)
         let element = html.closest('button.add')
         console.log(element)
