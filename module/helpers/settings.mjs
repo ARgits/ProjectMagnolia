@@ -33,7 +33,7 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        $(document).ready(function(){
+        $(this._element).ready(function(){
             let r=$("div").children()
             console.log(r)
         })
