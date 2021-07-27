@@ -21,8 +21,8 @@ class ProfFormApp extends FormApplication {
     }
     getData (options) {
         if (!this.data) {
-            data = this.data = {}
-            prof = data.prof = CONFIG.ARd20.WeaponSubType
+            const data = this.data = {}
+            const prof = data.prof = CONFIG.ARd20.WeaponSubType
         }
         console.log(this)
 
