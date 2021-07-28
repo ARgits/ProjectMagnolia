@@ -36,7 +36,7 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const html = this.getData().html
+        const html = $(this.getData().html)
         console.log(html)
         let body= html.find('form')
         console.log(body)
