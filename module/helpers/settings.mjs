@@ -24,8 +24,8 @@ class ProfFormApp extends FormApplication {
             this.data = {}
             this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
             this.data.config = duplicate(CONFIG.ARd20)
+            console.log(this.data)
         }
-        console.log(this.data)
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
