@@ -26,7 +26,7 @@ class ProfFormApp extends FormApplication {
             const prof = data.prof = CONFIG.ARd20.WeaponSubType
         }
         this.data.html = $(this._element)
-        console.log(this._element.children)
+        console.log(this._element)
         const templateData = {
             html: this.data.html
         }
