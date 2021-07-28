@@ -25,19 +25,23 @@ class ProfFormApp extends FormApplication {
             const data = this.data = {}
             const prof = data.prof = CONFIG.ARd20.WeaponSubType
         }
+        data.html = $(this._element)
         console.log(this)
-
+        const templateData = {
+            html:this.data.html
+        }
+        return templateData
     }
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const html = $(this._element)
+        const html = this.getData().html
         console.log(html)
-        let div=html.find('div')
+        let div = html.find('div')
         console.log(div)
-        div.clone().add("<input class='item' type='text' name='prof1' />").appendTo(div)
+        div.clone().add("<input class='item' type='text' name='prof1' />").appendTo(html)
         console.log(div)
         this.render()
 
