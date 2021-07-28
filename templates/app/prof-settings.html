@@ -1,15 +1,15 @@
 <form>
     <section>
         {{#each prof as |pr key|}}
-        <div grid grid-2col>
-            <input class="item" type="text" name="{{pr}}.name" />
-            <select name="{{pr}}.type">
-                {{#select pr.type}}
-                    {{#each config.WeaponType as |name sch|}}
-                        <option value="{{sch}}">{{localize name}}</option>
-                    {{/each}} {{/select}}
-            </select>
-        </div>
+            <div grid grid-2col>
+                <input class="item" type="text" name="{{pr}}.name" />
+                <select name="{{pr}}.type">
+                    {{#select pr.type}}
+                        {{#each config.WeaponType as |name sch|}}
+                            <option name='{{sch}}' value="{{sch}}">{{localize name}}</option>
+                        {{/each}} {{/select}}
+                </select>
+            </div>
         {{/each}}
         <button type='button' class='add far fa-plus-square'></button>
     </section>
