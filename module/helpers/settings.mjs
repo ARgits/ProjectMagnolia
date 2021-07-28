@@ -43,5 +43,9 @@ class ProfFormApp extends FormApplication {
         this.render()
 
     }
-    async _updateObject (event, formData) {}
+    async _updateObject (event, formData) {
+        let updateData = expandObject(formData)
+        console.log(updateData)
+        this.render()
+    }
 }
