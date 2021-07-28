@@ -36,6 +36,7 @@ class ProfFormApp extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
+        html.find('input.prof').change(this._onChange.bind(this))
     }
     _onAdd (event) {
         const prof = this.getData().prof
@@ -46,6 +47,12 @@ class ProfFormApp extends FormApplication {
         }
         this.render()
 
+    }
+    _onChange(event){
+        const input = event.currentTarget
+        const prof = this.getData().prof
+        prof[input.dataset.key].name=!prof[input.dataset.key].name
+        this.render()
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
