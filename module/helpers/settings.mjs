@@ -17,7 +17,6 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
-            closeOnSubmit: false,
         })
     }
     getData (options) {
@@ -26,16 +25,19 @@ class ProfFormApp extends FormApplication {
             this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
         }
         console.log(this.data)
-        const data = this.data
+        const templateData={
+            prof:this.data.prof
+        }
 
-        return data
+        return templateData
     }
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const number = Object.keys(this.data.prof).length
+        const prof = this.getData().prof
+        const number = Object.keys(prof).length
         this.data.prof[number] = {
             name:"",
             type:""
