@@ -35,7 +35,7 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         const html = $(this._element)
         console.log(html)
-        let div=html['div']
+        let div=html.find('div')
         console.log(div)
 
     }
