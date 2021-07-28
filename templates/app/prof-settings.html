@@ -1,10 +1,10 @@
 <form>
     <section>
-        {{#each data.prof as |key prof|}}
+        {{#each data.prof as |pr key|}}
         <div>
-            <input class="item" type="text" name="{{prof}}.name" />
-            <select name="{{prof}}.type">
-                {{#select prof.type}}
+            <input class="item" type="text" name="{{pr}}.name" />
+            <select name="{{pr}}.type">
+                {{#select pr.type}}
                     {{#each config.WeaponType as |name sch|}}
                         <option value="{{sch}}">{{localize name}}</option>
                     {{/each}} {{/select}}
