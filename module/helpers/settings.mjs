@@ -38,7 +38,7 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         const html = this.getData().html
         console.log(html)
-        let child= html.children[1]
+        let child= html.children
         console.log(child)
         //div.add("<input class='item' type='text' name='prof1' />").appendTo(html)
         this.render()
