@@ -26,8 +26,9 @@ class ProfFormApp extends FormApplication {
             this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
         }
         console.log(this.data)
+        const data = this.data
 
-        return this.data
+        return data
     }
     activateListeners (html) {
         super.activateListeners(html)
