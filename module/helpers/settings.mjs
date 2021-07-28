@@ -33,7 +33,7 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const html = this._element[0]
+        const html = $(this._element)
         console.log(html)
         let div=html['div']
         console.log(div)
