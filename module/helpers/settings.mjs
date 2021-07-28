@@ -25,7 +25,7 @@ class ProfFormApp extends FormApplication {
             this.data = {}
             this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
         }
-
+        console.log(this.data)
         return this.data
     }
     activateListeners (html) {
@@ -34,12 +34,10 @@ class ProfFormApp extends FormApplication {
     }
     _onAdd (event) {
         const number = Object.keys(this.data.prof).length
-        Object.assign(this.data.prof, {
-            [number]: {
-                name: "",
-                type: ""
-            }
-        })
+        this.data.prof[number] = {
+            name:"",
+            type:""
+        }
         this.render()
 
     }
