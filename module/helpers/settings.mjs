@@ -37,7 +37,7 @@ class ProfFormApp extends FormApplication {
         console.log(html)
         let div=html.find('div')
         console.log(div)
-        div.add('input')
+        div.clone().add("<input class='item' type='text' name='prof1' />").appendTo(div)
         console.log(div)
         this.render()
 
