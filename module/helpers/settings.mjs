@@ -23,7 +23,7 @@ class ProfFormApp extends FormApplication {
     getData (options) {
         if (!this.data) {
             this.data = {}
-            data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
+            this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
         }
 
         return this.data
