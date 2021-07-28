@@ -28,7 +28,7 @@ class ProfFormApp extends FormApplication {
         this.data.html = $(this._element)
         console.log(this)
         const templateData = {
-            html:this.data.html
+            html: this.data.html
         }
         return templateData
     }
@@ -41,7 +41,7 @@ class ProfFormApp extends FormApplication {
         console.log(html)
         let div = html.find('div')
         console.log(div)
-        div.clone().add("<input class='item' type='text' name='prof1' />").appendTo(html)
+        div.add("<input class='item' type='text' name='prof1' />").appendTo(html)
         console.log(div)
         this.render()
 
