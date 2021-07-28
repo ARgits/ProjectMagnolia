@@ -1,7 +1,7 @@
 <form>
     <section>
         {{#each prof as |pr key|}}
-        <div>
+        <div grid grid-2col>
             <input class="item" type="text" name="{{pr}}.name" />
             <select name="{{pr}}.type">
                 {{#select pr.type}}
