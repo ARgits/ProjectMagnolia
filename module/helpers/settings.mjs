@@ -39,7 +39,7 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         const htm = $(this.getData().html)
         console.log(htm)
-        let body= htm.getElementsByTagName(div)
+        let body= htm.getElementsByTagName('div')
         console.log(body)
         //div.add("<input class='item' type='text' name='prof1' />").appendTo(html)
         this.render()
