@@ -26,14 +26,15 @@ class ProfFormApp extends FormApplication {
             const prof = data.prof = CONFIG.ARd20.WeaponSubType
         }
         console.log(this)
-        return 
+        this.data.html = this._element
+        return this.data.html
     }
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const htm = this.getData().html
+        const htm = this.getData()
         console.log(htm)
         let body = htm.getElementsByTagName('div')
         console.log(body)
