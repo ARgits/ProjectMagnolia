@@ -35,6 +35,8 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         const html = this._element[0]
         console.log(html)
+        let div=html['div']
+        console.log(div)
 
     }
     async _updateObject (event, formData) {}
