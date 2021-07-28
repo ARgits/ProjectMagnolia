@@ -3,7 +3,7 @@
         {{#each prof as |pr key|}}
             <div grid grid-2col>
                 <input class="item" type="text" name="{{key}}.name" />
-                <select name="{{key}}}.type">
+                <select name="{{key}}.type">
                     {{#select key.type}}
                         {{#each config.WeaponType as |name sch|}}
                             <option name='{{sch}}' value="{{sch}}">{{localize name}}</option>
