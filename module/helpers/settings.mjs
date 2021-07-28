@@ -26,7 +26,6 @@ class ProfFormApp extends FormApplication {
             const prof = data.prof = CONFIG.ARd20.WeaponSubType
         }
         this.data.html = $(this._element)
-        console.log(this)
         const templateData = {
             html: this.data.html
         }
@@ -39,10 +38,9 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         const html = this.getData().html
         console.log(html)
-        let div = html.find('div')
-        console.log(div)
-        div.add("<input class='item' type='text' name='prof1' />").appendTo(div)
-        console.log(div)
+        let children = html.children
+        console.log(children)
+        //div.add("<input class='item' type='text' name='prof1' />").appendTo(html)
         this.render()
 
     }
