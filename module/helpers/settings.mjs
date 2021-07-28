@@ -22,23 +22,24 @@ class ProfFormApp extends FormApplication {
     }
     getData (options) {
         if (!this.data) {
-            const data = this.data = {}
-            const prof = data.prof = CONFIG.ARd20.WeaponSubType
+            this.data = {}
+            data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
         }
-        console.log(this)
-        this.data.html = this._element
-        return this.data.html
+
+        return this.data
     }
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const htm = this.getData()
-        console.log(htm)
-        let body = htm.getElementsByTagName('div')
-        console.log(body)
-        //div.add("<input class='item' type='text' name='prof1' />").appendTo(html)
+        const number = Object.keys(this.data.prof).length
+        Object.assign(this.data.prof, {
+            [number]: {
+                name: "",
+                type: ""
+            }
+        })
         this.render()
 
     }

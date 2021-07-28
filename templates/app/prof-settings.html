@@ -1,9 +1,18 @@
 <form>
-    <Section>
-        <div data-type="string">prof 1<input class="item" type="text" name="prof1" />
-            <button class='add far fa-plus-square'></button>
+    <section>
+        {{#each data.prof as |key|}}
+        <div>
+            <input class="item" type="text" name="{{key}}.name" />
+            <select name="{{key}}.type">
+                {{#select key.type}}
+                    {{#each config.WeaponType as |name sch|}}
+                        <option value="{{sch}}">{{localize name}}</option>
+                    {{/each}} {{/select}}
+            </select>
         </div>
-    </Section>
+        {{/each}}
+        <button class='add far fa-plus-square'></button>
+    </section>
     <footer>
         <button type="submit" name="submit" value="1">
             <i class="far fa-save"></i> Submit
