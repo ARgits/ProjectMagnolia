@@ -23,10 +23,12 @@ class ProfFormApp extends FormApplication {
         if (!this.data) {
             this.data = {}
             this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
+            this.data.config = duplicate(CONFIG.ARd20.WeaponType)
         }
         console.log(this.data)
-        const templateData={
-            prof:this.data.prof
+        const templateData = {
+            prof: this.data.prof,
+            config: this.data.config
         }
 
         return templateData
@@ -39,8 +41,8 @@ class ProfFormApp extends FormApplication {
         const prof = this.getData().prof
         const number = Object.keys(prof).length
         this.data.prof[number] = {
-            name:"",
-            type:""
+            name: "",
+            type: ""
         }
         this.render()
 
