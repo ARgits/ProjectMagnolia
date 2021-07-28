@@ -36,9 +36,9 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
     }
     _onAdd (event) {
-        const html = $(this.getData().html)
-        console.log(html)
-        let body= $("div[data-type='string']")
+        const htm = $(this.getData().html)
+        console.log(htm)
+        let body= $(htm)
         console.log(body)
         //div.add("<input class='item' type='text' name='prof1' />").appendTo(html)
         this.render()
