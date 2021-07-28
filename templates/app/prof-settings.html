@@ -4,7 +4,7 @@
         <div>
             <input class="item" type="text" name="{{prof}}.name" />
             <select name="{{prof}}.type">
-                {{#select {{prof}}.type}}
+                {{#select prof.type}}
                     {{#each config.WeaponType as |name sch|}}
                         <option value="{{sch}}">{{localize name}}</option>
                     {{/each}} {{/select}}
