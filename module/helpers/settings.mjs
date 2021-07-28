@@ -25,11 +25,12 @@ class ProfFormApp extends FormApplication {
             const data = this.data = {}
             const prof = data.prof = CONFIG.ARd20.WeaponSubType
         }
-        console.log(this)
-        this.data.html = this._element[0]
+        
+        this.data.html = this._element
         const templateData = {
             html: this.data.html
         }
+        console.log(this)
         return templateData
     }
     activateListeners (html) {
