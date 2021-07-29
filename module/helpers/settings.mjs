@@ -3,14 +3,17 @@ export const registerSystemSettings = function () {
         scope: "world",
         config: false,
         default: {},
-        type: Object
+        type: Object,
+        onChange: value =>{
+            console.log(value)
+        }
     })
     game.settings.registerMenu("ard20", "gearProfManage", {
         name: "SETTINGS.ProfManage",
         label: "SETTINGS.ProfManage",
         scope: "world",
         type: ProfFormApp,
-        restricted: false,
+        restricted: true,
         icon: "fab fa-buffer"
     })
 }
@@ -60,7 +63,7 @@ class ProfFormApp extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
-        game.settings.set('ard20', 'profs', {default: updateData.prof})
+        game.settings.set('ard20', 'profs', updateData.prof)
         this.render()
     }
 }
