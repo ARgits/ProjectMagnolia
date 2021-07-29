@@ -63,7 +63,7 @@ class ProfFormApp extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
-        game.settings.get('ard20','profs',updateData.prof)
+        game.settings.set('ard20','profs',{default:updateData})
         this.render()
     }
 }
