@@ -5,7 +5,7 @@ export const registerSystemSettings = function () {
         default: {},
         type: Object,
         onChange: value => {
-            console.log(value)
+            console.log('Настройка изменилась ',value)
         }
     })
     game.settings.registerMenu("ard20", "gearProfManage", {
@@ -35,14 +35,14 @@ class ProfFormApp extends FormApplication {
             this.data = {}
             this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
-            console.log(this)
-            console.log(this.data)
+            console.log('Форма ',this)
+            console.log('Данные формы ',this.data)
         }
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
         }
-        console.log(templateData)
+        console.log('TemplateData ',templateData)
         return templateData
     }
     activateListeners (html) {
@@ -62,7 +62,7 @@ class ProfFormApp extends FormApplication {
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
-        console.log(updateData)
+        console.log('UpdateData',updateData)
         game.settings.set('ard20', 'profs', updateData.prof)
         this.render()
     }
