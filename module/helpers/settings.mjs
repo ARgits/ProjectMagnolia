@@ -17,6 +17,7 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
+            submitOnChange:true,
         })
     }
     getData (options) {
@@ -52,11 +53,6 @@ class ProfFormApp extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
-        const config = CONFIG.ARd20
         this.render()
-        const obj = {}
-        obj['WeaponSubType'] = updateData.prof
-        console.log(obj)
-        await config.update(obj)
     }
 }
