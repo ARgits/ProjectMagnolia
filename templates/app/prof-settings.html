@@ -2,8 +2,8 @@
     <section>
         {{#each prof as |pr key|}}
             <div class='grid grid-2col'>
-                <input class="item" data-key="{{key}}" type="text" name="{{key}}.name" value="{{key}}.name"/>
-                <select name="{{key}}.type">
+                <input class="item" data-key="{{key}}" type="text" name="prof.{{key}}.name" value="{{key.name}}"/>
+                <select name="prof.{{key}}.type">
                     {{#select key.type}}
                         {{#each config as |name sch|}}
                             <option name='{{sch}}' value="{{sch}}">{{localize name}}</option>
