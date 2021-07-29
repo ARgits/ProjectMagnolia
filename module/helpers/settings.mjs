@@ -18,6 +18,7 @@ class ProfFormApp extends FormApplication {
             width: 600,
             height: 'auto',
             submitOnChange:true,
+            closeOnSubmit:false,
         })
     }
     getData (options) {
