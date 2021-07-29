@@ -24,7 +24,7 @@ class ProfFormApp extends FormApplication {
             width: 600,
             height: 'auto',
             closeOnSubmit: false,
-            submitOnChange:true,
+            submitOnChange: true,
         })
     }
     getData (options) {
@@ -34,11 +34,10 @@ class ProfFormApp extends FormApplication {
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
             console.log(this)
             console.log(this.data)
-            const templateData = {
-                prof: this.data.prof,
-                config: this.data.config
-
-            }
+        }
+        const templateData = {
+            prof: this.data.prof,
+            config: this.data.config
         }
         console.log(templateData)
         return templateData
