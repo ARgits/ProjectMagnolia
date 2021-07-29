@@ -37,7 +37,6 @@ class ProfFormApp extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
-        html.find('input.prof').focusin(this._onChange.bind(this))
     }
     _onAdd (event) {
         const prof = this.getData().prof
