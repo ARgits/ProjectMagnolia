@@ -30,6 +30,7 @@ class ProfFormApp extends FormApplication {
             prof: this.data.prof,
             config: this.data.config
         }
+        console.log(templateData)
 
         return templateData
     }
