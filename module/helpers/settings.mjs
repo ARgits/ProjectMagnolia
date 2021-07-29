@@ -30,7 +30,7 @@ class ProfFormApp extends FormApplication {
     getData (options) {
         if (!this.data) {
             this.data = {}
-            this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
+            this.data.prof = game.settings.get('ard20', 'profs')
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
             console.log(this)
             console.log(this.data)
