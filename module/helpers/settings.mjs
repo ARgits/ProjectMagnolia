@@ -2,7 +2,7 @@ export const registerSystemSettings = function () {
     game.settings.register('ard20', 'profs', {
         scope: "world",
         config: false,
-        default: {},
+        default: [],
         type: Object,
         onChange: value => {
             console.log('Настройка изменилась ',value)
@@ -62,7 +62,7 @@ class ProfFormApp extends FormApplication {
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
-        console.log('UpdateData',updateData)
+        console.log('UpdateData ',updateData)
         game.settings.set('ard20', 'profs', updateData.prof)
         this.render()
     }
