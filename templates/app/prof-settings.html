@@ -4,7 +4,11 @@
             <div class='grid grid-2col'>
                 <input class="ability" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
                 <select name="prof.{{key}}.type">
-                    {{selectOptions config selected=amb localize=true}}
+                    {{#select (lookup ../prof key.type)}}
+                        {{#each config as |name sch|}}
+                            <option value="{{sch}}">{{localize name}}</option>
+                        {{/each}}
+                    {{/select}}
                 </select>
             </div>
         {{/each}}
