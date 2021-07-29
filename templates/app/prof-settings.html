@@ -2,7 +2,7 @@
     <section>
         {{#each prof as |pr key|}}
             <div class='grid grid-2col'>
-                <input class="item" type="text" data-key="{{key}}" value='{{key.name}}' name="prof.{{key}}.name" />
+                <input class="item" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name="prof.{{key}}.name" />
                 <select name="prof.{{key}}.type">
                     {{#select key.type}}
                         {{#each config as |name sch|}}

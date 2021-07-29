@@ -37,27 +37,27 @@ class ProfFormApp extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
-        html.find('input.prof').change(this._onChange.bind(this))
+        html.find('input.prof').focusin(this._onChange.bind(this))
     }
     _onAdd (event) {
         const prof = this.getData().prof
         const number = Object.keys(prof).length
         const label = "p" + number
         this.data.prof[label] = {
-            name: "",
-            type: ""
+            name: String,
+            type: String
         }
         this.render()
 
     }
-    _onChange (event) {
-        const input = event.currentTarget
-        this.data.prof[input.dataset.key].name=!this.data.prof[input.dataset.key].name
-        this.render()
-    }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
+        const config = CONFIG.ARd20
         this.render()
+        const obj = {}
+        obj['WeaponSubType'] = updateData.prof
+        console.log(obj)
+        await config.update(obj)
     }
 }
