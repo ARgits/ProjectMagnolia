@@ -33,16 +33,13 @@ class ProfFormApp extends FormApplication {
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
             console.log(this)
             console.log(this.data)
-            
-        }
-        
+            const templateData = {
+                prof: this.data.prof,
+                config: this.data.config
 
-        const templateData = {
-            prof: this.data.prof,
-            config: this.data.config
+            }
         }
         console.log(templateData)
-
         return templateData
     }
     activateListeners (html) {
@@ -63,7 +60,7 @@ class ProfFormApp extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
-        game.settings.set('ard20','profs',{default:updateData})
+        game.settings.set('ard20', 'profs', {default: updateData.prof})
         this.render()
     }
 }
