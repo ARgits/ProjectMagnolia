@@ -31,8 +31,11 @@ class ProfFormApp extends FormApplication {
             this.data = {}
             this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
+            console.log(this.object)
             console.log(this.data)
+            
         }
+        
 
         const templateData = {
             prof: this.data.prof,
