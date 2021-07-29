@@ -2,9 +2,14 @@ export const registerSystemSettings = function () {
     game.settings.register('ard20', 'profs', {
         scope: "world",
         config: false,
-        default: {},
+        default: {
+            key: {
+                name: String,
+                type: String
+            }
+        },
         type: Object,
-        onChange: value =>{
+        onChange: value => {
             console.log(value)
         }
     })
