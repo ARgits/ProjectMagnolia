@@ -4,7 +4,7 @@
             <div class='grid grid-2col'>
                 <input class="ability" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
                 <select name="prof.{{key}}.type">
-                    {{#select (lookup ../prof key.type)}}
+                    {{#select key.type}}
                         {{#each config as |name sch|}}
                             <option value="{{sch}}">{{localize name}}</option>
                         {{/each}}

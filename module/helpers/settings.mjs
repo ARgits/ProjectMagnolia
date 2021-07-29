@@ -2,12 +2,7 @@ export const registerSystemSettings = function () {
     game.settings.register('ard20', 'profs', {
         scope: "world",
         config: false,
-        default: {
-            key: {
-                name: String,
-                type: String
-            }
-        },
+        default: {},
         type: Object,
         onChange: value => {
             console.log(value)
@@ -59,8 +54,8 @@ class ProfFormApp extends FormApplication {
         const number = Object.keys(prof).length
         const label = "p" + number
         this.data.prof[label] = {
-            name: String,
-            type: String
+            name: "",
+            type: ""
         }
         this.render()
 
