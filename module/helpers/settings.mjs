@@ -1,4 +1,10 @@
 export const registerSystemSettings = function () {
+    game.settings.register('ard20', 'profs', {
+        scope: "world",
+        config: false,
+        default: [],
+        type: Object
+    })
     game.settings.registerMenu("ard20", "gearProfManage", {
         name: "SETTINGS.ProfManage",
         label: "SETTINGS.ProfManage",
@@ -17,17 +23,18 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
-            submitOnChange:true,
-            closeOnSubmit:false,
+            submitOnChange: true,
+            closeOnSubmit: false,
         })
     }
     getData (options) {
         if (!this.data) {
             this.data = {}
-            this.data.prof = duplicate(CONFIG.ARd20.WeaponSubType)
+            this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
             console.log(this.data)
         }
+
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
@@ -54,6 +61,7 @@ class ProfFormApp extends FormApplication {
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log(updateData)
+        game.settings.get('ard20','profs',updateData.prof)
         this.render()
     }
 }

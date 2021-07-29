@@ -1,12 +1,12 @@
 // Import document classes.
-import { ARd20Actor } from "./documents/actor.mjs"
-import { ARd20Item } from "./documents/item.mjs"
+import {ARd20Actor} from "./documents/actor.mjs"
+import {ARd20Item} from "./documents/item.mjs"
 // Import sheet classes.
-import { ARd20ActorSheet } from "./sheets/actor-sheet.mjs"
-import { ARd20ItemSheet } from "./sheets/item-sheet.mjs"
+import {ARd20ActorSheet} from "./sheets/actor-sheet.mjs"
+import {ARd20ItemSheet} from "./sheets/item-sheet.mjs"
 // Import helper/utility classes and constants.
-import { preloadHandlebarsTemplates } from "./helpers/templates.mjs"
-import { ARd20 } from "./helpers/config.mjs"
+import {preloadHandlebarsTemplates} from "./helpers/templates.mjs"
+import {ARd20} from "./helpers/config.mjs"
 import ARd20SocketHandler from "./helpers/socket.js"
 import {registerSystemSettings} from "./helpers/settings.mjs"
 
@@ -14,7 +14,7 @@ import {registerSystemSettings} from "./helpers/settings.mjs"
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once( 'init', async function () {
+Hooks.once('init', async function () {
 
     // Add utility classes to the global game object so that they're more easily
     // accessible in global contexts.
@@ -26,9 +26,9 @@ Hooks.once( 'init', async function () {
 
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20
-    game.socket.on( 'system.ard20', ( data ) => {
-        if ( data.operation === 'updateActorData' ) ARd20SocketHandler.updateActorData( data )
-    } )
+    game.socket.on('system.ard20', (data) => {
+        if (data.operation === 'updateActorData') ARd20SocketHandler.updateActorData(data)
+    })
 
     /**
      * Set an initiative formula for the system
@@ -44,43 +44,43 @@ Hooks.once( 'init', async function () {
     CONFIG.Item.documentClass = ARd20Item
 
     // Register sheet application classes
-    Actors.unregisterSheet( "core", ActorSheet )
-    Actors.registerSheet( "ard20", ARd20ActorSheet, { makeDefault: true } )
-    Items.unregisterSheet( "core", ItemSheet )
-    Items.registerSheet( "ard20", ARd20ItemSheet, { makeDefault: true } )
+    Actors.unregisterSheet("core", ActorSheet)
+    Actors.registerSheet("ard20", ARd20ActorSheet, {makeDefault: true})
+    Items.unregisterSheet("core", ItemSheet)
+    Items.registerSheet("ard20", ARd20ItemSheet, {makeDefault: true})
     registerSystemSettings()
 
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates()
-} )
+})
 
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here are a few useful examples:
-Handlebars.registerHelper( 'concat', function () {
+Handlebars.registerHelper('concat', function () {
     var outStr = ''
-    for ( var arg in arguments ) {
-        if ( typeof arguments[ arg ] != 'object' ) {
-            outStr += arguments[ arg ]
+    for (var arg in arguments) {
+        if (typeof arguments[arg] != 'object') {
+            outStr += arguments[arg]
         }
     }
     return outStr
-} )
+})
 
-Handlebars.registerHelper( 'toLowerCase', function ( str ) {
+Handlebars.registerHelper('toLowerCase', function (str) {
     return str.toLowerCase()
-} )
+})
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once( "ready", async function () {
+Hooks.once("ready", async function () {
     // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-    Hooks.on( "hotbarDrop", ( bar, data, slot ) => createItemMacro( data, slot ) )
-} )
+    Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot))
+})
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
@@ -93,24 +93,24 @@ Hooks.once( "ready", async function () {
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise}
  */
-async function createItemMacro ( data, slot ) {
-    if ( data.type !== "Item" ) return
-    if ( !( "data" in data ) ) return ui.notifications.warn( "You can only create macro buttons for owned Items" )
+async function createItemMacro (data, slot) {
+    if (data.type !== "Item") return
+    if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items")
     const item = data.data
 
     // Create the macro command
-    const command = `game.ard20.rollItemMacro("${ item.name }");`
-    let macro = game.macros.entities.find( m => ( m.name === item.name ) && ( m.command === command ) )
-    if ( !macro ) {
-        macro = await Macro.create( {
+    const command = `game.ard20.rollItemMacro("${item.name}");`
+    let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command))
+    if (!macro) {
+        macro = await Macro.create({
             name: item.name,
             type: "script",
             img: item.img,
             command: command,
-            flags: { "ard20.itemMacro": true }
-        } )
+            flags: {"ard20.itemMacro": true}
+        })
     }
-    game.user.assignHotbarMacro( macro, slot )
+    game.user.assignHotbarMacro(macro, slot)
     return false
 }
 
@@ -120,13 +120,13 @@ async function createItemMacro ( data, slot ) {
  * @param {string} itemName
  * @return {Promise}
  */
-function rollItemMacro ( itemName ) {
+function rollItemMacro (itemName) {
     const speaker = ChatMessage.getSpeaker()
     let actor
-    if ( speaker.token ) actor = game.actors.tokens[ speaker.token ]
-    if ( !actor ) actor = game.actors.get( speaker.actor )
-    const item = actor ? actor.items.find( i => i.name === itemName ) : null
-    if ( !item ) return ui.notifications.warn( `Your controlled Actor does not have an item named ${ itemName }` )
+    if (speaker.token) actor = game.actors.tokens[speaker.token]
+    if (!actor) actor = game.actors.get(speaker.actor)
+    const item = actor ? actor.items.find(i => i.name === itemName) : null
+    if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`)
 
     // Trigger the item roll
     return item.roll()
