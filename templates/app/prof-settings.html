@@ -2,11 +2,11 @@
     <section>
         {{#each prof as |pr key|}}
             <div class='grid grid-2col'>
-                <input class="item" data-key="{{key}}" value={{key.name}} type="text" name="prof.{{key}}.name" />
+                <input class="item" type="text" data-key="{{key}}" value={{key.name}}  name="prof.{{key}}.name" />
                 <select name="prof.{{key}}.type">
                     {{#select key.type}}
                         {{#each config as |name sch|}}
-                            <option name='{{sch}}' value="{{sch}}">{{localize name}}</option>
+                            <option name='{{sch}}' value={{sch}}>{{localize name}}</option>
                         {{/each}} {{/select}}
                 </select>
             </div>
