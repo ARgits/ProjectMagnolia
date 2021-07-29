@@ -23,7 +23,6 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
-            submitOnChange: true,
             closeOnSubmit: false,
         })
     }
