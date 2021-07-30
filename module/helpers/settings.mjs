@@ -79,7 +79,7 @@ class ProfFormApp extends FormApplication {
         const input = this.form[`prof.${event.currentTarget.dataset.key}.${event.currentTarget.dataset.name}`].value
         console.log(input)
         this.data.prof[event.currentTarget.dataset.key][event.currentTarget.dataset.name] = input
-        this.render
+        this.render()
 
     }
     async _updateObject (event, formData) {
