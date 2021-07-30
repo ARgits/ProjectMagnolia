@@ -26,6 +26,8 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
+            submitOnChange:true,
+            closeOnSubmit:false,
         })
     }
     getData (options) {
@@ -38,9 +40,6 @@ class ProfFormApp extends FormApplication {
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
-        }
-        for (k in Object.entries(this.data.prof)) {
-
         }
         console.log('Данные формы ', this.data)
         console.log('TemplateData ', templateData)
@@ -55,10 +54,13 @@ class ProfFormApp extends FormApplication {
         const prof = this.data.prof
         const number = Math.floor(math.random() * 100)
         const label = "p" + number
-        while (!this.data.prof[label]) {
-            this.data.prof[label] = {
-                name: "",
-                type: ""
+        if (!this.data.prof.label) {
+            while (!this.data.prof[label]) {
+                label = "p" + Math.floor(math.random() * 100)
+                this.data.prof[label] = {
+                    name: "",
+                    type: ""
+                }
             }
         }
         this.render()
