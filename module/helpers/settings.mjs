@@ -26,17 +26,21 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
-            submitOnChange:true,
-            closeOnSubmit:false,
+            submitOnChange: true,
+            closeOnSubmit: false,
         })
     }
     getData (options) {
         if (!this.data) {
             this.data = {}
+            this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
         }
         this.data.config = duplicate(CONFIG.ARd20.WeaponType)
         console.log('Форма ', this)
-        this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
+        for (let [k, v] of Object.entries(this.data.prof)) {
+            k.name = k.name ?? ""
+            k.type = k.type ?? "amb"
+        }
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
@@ -58,12 +62,12 @@ class ProfFormApp extends FormApplication {
                 label = "p" + Math.floor(Math.random() * 100)
             }
             this.data.prof[label] = {
-                name: "",
+                name: this.data.prof[label].name ?? "",
                 type: ""
             }
         } else {
             this.data.prof[label] = {
-                name: "",
+                name: this.data.prof[label].name ?? "",
                 type: ""
             }
         }
