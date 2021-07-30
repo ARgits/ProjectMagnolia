@@ -154,7 +154,7 @@
             <select name="data.proto">
               {{#select data.proto}}
                 {{#each data.settings as |name key|}}
-                  <option value="{{key.name}}">key.name</option>
+                  <option value="{{key.name}}">{{key}}.name</option>
                 {{/each}}
               {{/select}}
             </select>

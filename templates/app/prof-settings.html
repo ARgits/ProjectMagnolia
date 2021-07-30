@@ -1,7 +1,7 @@
 <form>
     <section>
         {{#each prof as |pr key|}}
-            <div class='grid grid-2col'>
+            <div class='grid grid-3col'>
                 <input class="ability" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
                 <select name="prof.{{key}}.type">
                     {{#select key.type}}
@@ -10,6 +10,7 @@
                         {{/each}}
                     {{/select}}
                 </select>
+                <button type="button" class="minus far fa-minus-square" data-key="{{key}}"></button>
             </div>
         {{/each}}
         <button type='button' class='add far fa-plus-square'></button>

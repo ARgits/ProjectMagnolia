@@ -5,7 +5,7 @@ export const registerSystemSettings = function () {
         default: [],
         type: Object,
         onChange: value => {
-            console.log('Настройка изменилась ',value)
+            console.log('Настройка изменилась ', value)
         }
     })
     game.settings.registerMenu("ard20", "gearProfManage", {
@@ -34,20 +34,21 @@ class ProfFormApp extends FormApplication {
         if (!this.data) {
             this.data = {}
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
-            console.log('Форма ',this)
+            console.log('Форма ', this)
         }
         this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
         }
-        console.log('Данные формы ',this.data)
-        console.log('TemplateData ',templateData)
+        console.log('Данные формы ', this.data)
+        console.log('TemplateData ', templateData)
         return templateData
     }
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
+        html.find('minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
         const prof = this.getData().prof
@@ -58,11 +59,16 @@ class ProfFormApp extends FormApplication {
             type: ""
         }
         this.render()
-
+    }
+    _Delete(event){
+        const prof = this.getData().prof
+        const button = event.currentTarget
+        delete prof[button.dataset.key]
+        this.render()
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
-        console.log('UpdateData ',updateData)
+        console.log('UpdateData ', updateData)
         game.settings.set('ard20', 'profs', updateData.prof)
         this.render()
     }
