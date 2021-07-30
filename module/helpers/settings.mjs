@@ -48,7 +48,7 @@ class ProfFormApp extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.add').click(this._onAdd.bind(this))
-        html.find('minus').click(this._Delete.bind(this))
+        html.find('.minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
         const prof = this.getData().prof
