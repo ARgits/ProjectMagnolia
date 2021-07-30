@@ -153,8 +153,9 @@
           <div>
             <select name="data.proto">
               {{#select data.proto}}
-                <option value="0">is proto</option>
-                <option value="1">has proto</option>
+                {{#each data.settings as |name key|}}
+                  <option value="{{key.name}}">key.name</option>
+                {{/each}}
               {{/select}}
             </select>
           </div>
