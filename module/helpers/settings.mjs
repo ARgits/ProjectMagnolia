@@ -35,8 +35,8 @@ class ProfFormApp extends FormApplication {
             this.data = {}
             this.data.config = duplicate(CONFIG.ARd20.WeaponType)
             console.log('Форма ', this)
+            this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
         }
-        this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
         const templateData = {
             prof: this.data.prof,
             config: this.data.config
@@ -60,9 +60,9 @@ class ProfFormApp extends FormApplication {
         }
         this.render()
     }
-    _Delete(event){
+    _Delete (event) {
         const button = event.currentTarget
-        Reflect.deleteProperty(this.data.prof,[button.dataset.key])
+        Reflect.deleteProperty(this.data.prof, [button.dataset.key])
         this.render()
     }
     async _updateObject (event, formData) {
