@@ -38,8 +38,8 @@ class ProfFormApp extends FormApplication {
         this.data.config = duplicate(CONFIG.ARd20.WeaponType)
         console.log('Форма ', this)
         for (let [k, v] of Object.entries(this.data.prof)) {
-            k.name = k.name ?? ""
-            k.type = k.type ?? "amb"
+            v.name = v.name ?? ""
+            v.type = v.type ?? "amb"
         }
         const templateData = {
             prof: this.data.prof,
