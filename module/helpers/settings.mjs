@@ -26,8 +26,8 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
-            submitOnChange:true,
-            closeOnSubmit:false,
+            submitOnChange: true,
+            closeOnSubmit: false,
         })
     }
     getData (options) {
@@ -53,7 +53,7 @@ class ProfFormApp extends FormApplication {
     _onAdd (event) {
         const prof = this.data.prof
         const number = Math.floor(Math.random() * 100)
-        const label = "p" + number
+        let label = "p" + number
         if (!this.data.prof.label) {
             while (!this.data.prof[label]) {
                 label = "p" + Math.floor(Math.random() * 100)
