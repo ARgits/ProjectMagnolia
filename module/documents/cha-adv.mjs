@@ -93,7 +93,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof
-            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false
+            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][CONFIG.ARd20.skill.xp-this.data.count.skills[this.data.skills[k].prof]] : false
 
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
@@ -124,7 +124,7 @@ export class CharacterAdvancement extends FormApplication {
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
-        html.find('label').mouseover(this._onHover.bind(this))
+        html.find('.skill').mouseover(this._onHover.bind(this))
     }
     _onChange (event) {
         const button = event.currentTarget
@@ -170,7 +170,7 @@ export class CharacterAdvancement extends FormApplication {
         const content = this.getData().content
         switch (button.dataset.type) {
             case 'skill':
-                this.data.hover.value = TextEditor.enrichHTML(content.skills.value.content.filter((skill) => (skill.data.name === button.dataset.label))[0].data.content)
+                this.data.hover.value = TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => (skill.data.name === button.dataset.label))[0].data.content)
                 this.data.hover.name = button.dataset.label
                 break
         }
