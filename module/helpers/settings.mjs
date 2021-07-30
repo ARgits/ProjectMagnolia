@@ -31,13 +31,11 @@ class ProfFormApp extends FormApplication {
     getData (options) {
         if (!this.data) {
             this.data = {}
-            this.data.config = duplicate(CONFIG.ARd20.WeaponType)
             console.log('Форма ', this)
             this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
         }
         const templateData = {
             prof: this.data.prof,
-            config: this.data.config
         }
         console.log('Данные формы ', this.data)
         console.log('TemplateData ', templateData)
@@ -49,8 +47,7 @@ class ProfFormApp extends FormApplication {
         html.find('.minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
-        const prof = this.getData().prof
-        const number = Object.keys(prof).length
+        const number = this.data.prof.length
         const label = "p" + number
         this.data.prof[label] = {
             name: "",
