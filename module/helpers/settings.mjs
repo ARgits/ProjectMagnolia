@@ -26,6 +26,8 @@ class ProfFormApp extends FormApplication {
             id: 'prof-settings',
             width: 600,
             height: 'auto',
+            submitOnChange:true,
+            closeOnSubmit:false,
         })
     }
     getData (options) {
@@ -79,7 +81,6 @@ class ProfFormApp extends FormApplication {
         const input = this.form[`prof.${event.currentTarget.dataset.key}.${event.currentTarget.dataset.name}`].value
         console.log(input)
         this.data.prof[event.currentTarget.dataset.key][event.currentTarget.dataset.name] = input
-        this.render()
 
     }
     async _updateObject (event, formData) {
