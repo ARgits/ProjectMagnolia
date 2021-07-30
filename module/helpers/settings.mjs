@@ -54,13 +54,18 @@ class ProfFormApp extends FormApplication {
         const prof = this.data.prof
         const number = Math.floor(Math.random() * 100)
         let label = "p" + number
-        if (!this.data.prof.label) {
-            while (!this.data.prof[label]) {
+        if (this.data.prof.label) {
+            while (this.data.prof[label]) {
                 label = "p" + Math.floor(Math.random() * 100)
-                this.data.prof[label] = {
-                    name: "",
-                    type: ""
-                }
+            }
+            this.data.prof[label] = {
+                name: "",
+                type: ""
+            }
+        } else {
+            this.data.prof[label] = {
+                name: "",
+                type: ""
             }
         }
         this.render()
