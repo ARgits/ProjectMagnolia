@@ -13,7 +13,7 @@ export const registerSystemSettings = function () {
         label: "SETTINGS.ProfManage",
         scope: "world",
         type: ProfFormApp,
-        restricted: true,
+        restricted: false,
         icon: "fab fa-buffer"
     })
 }
@@ -79,6 +79,7 @@ class ProfFormApp extends FormApplication {
         const input = this.form[`prof.${event.currentTarget.dataset.key}.${event.currentTarget.dataset.name}`].value
         console.log(input)
         this.data.prof[event.currentTarget.dataset.key][event.currentTarget.dataset.name] = input
+        this.render
 
     }
     async _updateObject (event, formData) {
