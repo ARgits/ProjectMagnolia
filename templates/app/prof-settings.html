@@ -1,6 +1,6 @@
 <form>
     <section>
-        {{#each prof as |pr key|}}
+        {{#each ../prof as |pr key|}}
             <div class='grid grid-3col'>
                 <input class="ability" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
                 <select name="prof.{{key}}.type" data-key='{{key}}'>
