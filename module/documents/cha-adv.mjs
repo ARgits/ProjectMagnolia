@@ -93,7 +93,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof
-            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][CONFIG.ARd20.skill_xp[this.data.skills[k].prof].length-this.data.count.skills[this.data.skills[k].prof]] : false
+            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false
 
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
@@ -150,13 +150,11 @@ export class CharacterAdvancement extends FormApplication {
                         data.skills[button.dataset.key].prof += 1
                         data.xp.get -= data.skills[button.dataset.key].xp
                         data.xp.used += data.skills[button.dataset.key].xp
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof - 1] -= 1
                         this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
                         break
                     case 'minus':
                         data.skills[button.dataset.key].prof -= 1
                         this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
                         data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
                         data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
                         break
