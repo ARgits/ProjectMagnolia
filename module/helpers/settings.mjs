@@ -47,7 +47,8 @@ class ProfFormApp extends FormApplication {
         html.find('.minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
-        const number = this.data.prof.length
+        const prof = this.getData().prof
+        const number = Object.keys(prof).length
         const label = "p" + number
         this.data.prof[label] = {
             name: "",
