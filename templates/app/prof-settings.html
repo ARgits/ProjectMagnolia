@@ -5,7 +5,7 @@
                 <input class="ability" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
                 <select name="prof.{{key}}.type">
                     {{#select key.type}}
-                        {{#each config.WeaponType as |name sch|}}
+                        {{#each this.data.config.WeaponType as |name sch|}}
                             <option value="{{sch}}">{{localize name}}</option>
                         {{/each}}
                     {{/select}}
