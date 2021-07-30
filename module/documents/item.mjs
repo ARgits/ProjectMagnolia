@@ -22,7 +22,7 @@ export class ARd20Item extends Item {
       labels.school = CONFIG.ARd20.SpellSchool[data.school];
     }
     if (itemData.type === "weapon") {
-      data.settings = game.settings.get('ard20','profs')
+      data.settings = Object.fromEntries(Object.entries(game.settings.get('ard20','profs')).filter((prof)=>prof[1].type===data.type.value))
       data.proto = data.proto ?? "";
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k;
