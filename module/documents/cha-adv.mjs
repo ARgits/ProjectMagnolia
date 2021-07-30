@@ -128,7 +128,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onChange (event) {
         const button = event.currentTarget
-        const data = this.getData()
+        const data = this.data
         switch (button.dataset.type) {
             case 'ability':
                 switch (button.dataset.action) {
@@ -165,7 +165,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     _onHover (event) {
         const button = event.currentTarget
-        const content = this.getData().content
+        const content = this.data.content
         switch (button.dataset.type) {
             case 'skill':
                 this.data.hover.value = TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => (skill.data.name === button.dataset.label))[0].data.content)

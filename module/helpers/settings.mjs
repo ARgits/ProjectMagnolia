@@ -39,6 +39,9 @@ class ProfFormApp extends FormApplication {
             prof: this.data.prof,
             config: this.data.config
         }
+        for (k in Object.entries(this.data.prof)) {
+
+        }
         console.log('Данные формы ', this.data)
         console.log('TemplateData ', templateData)
         return templateData
@@ -49,12 +52,14 @@ class ProfFormApp extends FormApplication {
         html.find('.minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
-        const prof = this.getData().prof
-        const number = Object.keys(prof).length
+        const prof = this.data.prof
+        const number = Math.floor(math.random() * 100)
         const label = "p" + number
-        this.data.prof[label] = {
-            name: "",
-            type: ""
+        while (!this.data.prof[label]) {
+            this.data.prof[label] = {
+                name: "",
+                type: ""
+            }
         }
         this.render()
     }
