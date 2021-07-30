@@ -59,7 +59,6 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[2] += 1
                 }
             }
-
             for (let [k, v] of Object.entries(this.data.features)) {
                 if (this.data.features[k].data.source.value === 'mar') {
                     this.data.count.features.martial += 1
@@ -117,6 +116,7 @@ export class CharacterAdvancement extends FormApplication {
             content: this.data.content,
             hover: this.data.hover
         }
+        console.log(this.data.count.skills)
         return templateData
 
     }
