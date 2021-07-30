@@ -49,7 +49,6 @@ class ProfFormApp extends FormApplication {
         html.find('.minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
-        const prof = this.data.prof
         const number = Math.floor(Math.random() * 100)
         let label = "p" + number
         if (this.data.prof.label) {
@@ -74,8 +73,11 @@ class ProfFormApp extends FormApplication {
         this.render()
     }
     async _onChangeInput (event) {
+        await super._onChangeInput(event)
         console.log('event', event)
         console.log('event data', this.data.prof[event.currentTarget.dataset.key])
+        const input = this.form[event.currentTarget.dataset.key].value
+        this.data.prof[event.currentTarget.dataset.key][event.currentTarget.dataset.name] = input
         
     }
     async _updateObject (event, formData) {

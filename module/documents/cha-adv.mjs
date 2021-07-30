@@ -24,6 +24,7 @@ export class CharacterAdvancement extends FormApplication {
             this.data.abilities = duplicate(this.object.data.data.abilities)
             this.data.skills = duplicate(this.object.data.data.skills)
             this.data.xp = duplicate(this.object.data.data.attributes.xp)
+            this.data.prof = duplicate(game.settings.get('ard20','profs'))
             this.data.count = {
                 skills: {
                     0: 0,

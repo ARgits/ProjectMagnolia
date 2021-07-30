@@ -2,8 +2,8 @@
     <section>
         {{#each prof as |pr key|}}
             <div class='grid grid-3col'>
-                <input class="ability" type="text" data-dtype="text" data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
-                <select name="prof.{{key}}.type" data-key='{{key}}'>
+                <input class="ability" type="text" data-dtype="text" data-name='name' data-key="{{key}}" value='{{key.name}}' name='prof.{{key}}.name' />
+                <select name="prof.{{key}}.type" data-key='{{key}}' data-name='type'>
                     {{#select key.type}}
                         {{#each ../config as |name sch|}}
                             <option value="{{sch}}"{{#if (eq sch 'amb')}}selected{{/if}}>{{localize name}}</option>
