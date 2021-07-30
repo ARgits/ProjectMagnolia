@@ -75,8 +75,9 @@ class ProfFormApp extends FormApplication {
         Reflect.deleteProperty(this.data.prof, `${[button.dataset.key]}`)
         this.render()
     }
-    async _onChangeInput(event){
-        console.log('event',event)
+    async _onChangeInput (event) {
+        console.log('event', event)
+        console.log('event data', this.data.prof[event.currentTarget.dataset.key])
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
