@@ -76,7 +76,7 @@ class ProfFormApp extends FormApplication {
         await super._onChangeInput(event)
         console.log('event', event)
         console.log('event data', this.data.prof[event.currentTarget.dataset.key])
-        const input = this.form[event.currentTarget.dataset.key]
+        const input = this.form[`prof.${event.currentTarget.dataset.key}.${event.currentTarget.dataset.name}`].value
         console.log(input)
         this.data.prof[event.currentTarget.dataset.key][event.currentTarget.dataset.name] = input
         
