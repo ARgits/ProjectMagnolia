@@ -61,9 +61,8 @@ class ProfFormApp extends FormApplication {
         this.render()
     }
     _Delete(event){
-        const prof = this.getData().prof
         const button = event.currentTarget
-        delete prof[button.dataset.key]
+        Reflect.deleteProperty(this.data.prof,[button.dataset.key])
         this.render()
     }
     async _updateObject (event, formData) {
