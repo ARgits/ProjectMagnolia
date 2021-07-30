@@ -6,7 +6,7 @@
                 <select name="prof.{{key}}.type" data-key='{{key}}' data-name='type'>
                     {{#select key.type}}
                         {{#each ../config as |name sch|}}
-                            <option value="{{sch}}"{{#if (eq sch 'amb')}}selected{{/if}}>{{localize name}}</option>
+                            <option value="{{sch}}">{{localize name}}</option>
                         {{/each}}
                     {{/select}}
                 </select>
