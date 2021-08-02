@@ -84,6 +84,7 @@ export class ARd20Item extends Item {
           "+" +
           this.actor.data.data.attributes.prof_bonus
       }
+      else {console.log('что-то не так')}
       this.data.data.damage.common.current =
         this.data.data.damage.common[this.labels.prof.toLowerCase()] +
         "+" +
