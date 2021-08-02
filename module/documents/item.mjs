@@ -70,7 +70,7 @@ export class ARd20Item extends Item {
     }
     if (this.data.type === "weapon") {
       console.log('Владелец', this.actor?.data.data.profs)
-      data.prof.value = (this.isOwned && this.actor) ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto).value : 0
+      data.prof.value = (this.isOwned && this.actor) ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto)[0].value : 0
       let prof = data.prof.value
       let prof_bonus = 0
       if (prof == 0) {
