@@ -106,6 +106,9 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.skills[k].isXP = true
             }
+            for (let[k,v] of Object.entries(this.data.profs)){
+                v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value]
+            }
 
 
         }
