@@ -51,7 +51,7 @@ class ProfFormApp extends FormApplication {
     }
     async _Delete (event) {
         event.preventDefault()
-        const profs = game.settings.ge('ard20', 'profs')
+        const profs = game.settings.get('ard20', 'profs')
         profs.splice(rowIndex, 1)
         await game.settings.set('ard20', 'profs', profs)
         this.render()
