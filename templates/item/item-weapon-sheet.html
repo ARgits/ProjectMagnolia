@@ -142,6 +142,7 @@
     <div class="tab" data-group="primary" data-tab="attributes">
       <div class="grid grid-2col">
         <div>
+          Type
           <select name="data.type.value">
             {{#select data.type.value}} {{#each config.WeaponType as |name
             sch|}}
@@ -151,6 +152,7 @@
         </div>
         <div>
           <div>
+            Sub-Type
             <select name="data.proto">
               {{#select data.proto}}
                 {{#each data.settings as |prof key|}}

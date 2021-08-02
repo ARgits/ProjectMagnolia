@@ -24,7 +24,7 @@ export class CharacterAdvancement extends FormApplication {
             this.data.abilities = duplicate(this.object.data.data.abilities)
             this.data.skills = duplicate(this.object.data.data.skills)
             this.data.xp = duplicate(this.object.data.data.attributes.xp)
-            this.data.prof = duplicate(game.settings.get('ard20','profs'))
+            this.data.profs = duplicate(game.settings.get('ard20', 'profs'))
             this.data.count = {
                 skills: {
                     0: 0,
@@ -43,8 +43,8 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {},
                 features: {}
             }
-            this.data.features = duplicate(this.object.data.items.filter((item)=>item.data.type==='feature'))
-            if(!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
+            this.data.features = duplicate(this.object.data.items.filter((item) => item.data.type === 'feature'))
+            if (!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
                 this.data.content.skills.value = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
             } else {
                 this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
@@ -115,7 +115,8 @@ export class CharacterAdvancement extends FormApplication {
             skills: this.data.skills,
             count: this.data.count,
             content: this.data.content,
-            hover: this.data.hover
+            hover: this.data.hover,
+            profs: this.data.profs
         }
         console.log(this.data.count.skills)
         return templateData
@@ -160,6 +161,23 @@ export class CharacterAdvancement extends FormApplication {
                         data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
                         break
                 }
+                break
+            case 'prof':
+                switch (button.dataset.action) {
+                    case 'plus':
+                        data.skills[button.dataset.key].prof += 1
+                        data.xp.get -= data.skills[button.dataset.key].xp
+                        data.xp.used += data.skills[button.dataset.key].xp
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
+                        break
+                    case 'minus':
+                        data.skills[button.dataset.key].prof -= 1
+                        this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1
+                        data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
+                        data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
+                        break
+                }
+                break
 
         }
         this.render()
