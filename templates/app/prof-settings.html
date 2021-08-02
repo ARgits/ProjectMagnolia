@@ -4,7 +4,7 @@
             <div class='grid grid-3col'>
                 <input class="ability" type="text" data-dtype="text" data-name='name' data-key="{{key}}" name='{{key}}.name' value="{{pr.name}}" />
                 <select name="{{key}}.type" data-key='{{key}}' data-name='type'>
-                    {{#select key.type}}
+                    {{#select pr.type}}
                         {{#each ../config.WeaponType as |name sch|}}
                             <option value="{{sch}}">{{localize name}}</option>
                         {{/each}}
