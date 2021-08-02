@@ -86,7 +86,7 @@ export class ARd20Actor extends Actor {
         data.defences = defence
 
         for (let [key, skill] of Object.entries(data.skills)) {
-            skill.prof=(skill.prof<2)?skill.prof:2
+            skill.prof = (skill.prof < 2) ? skill.prof : 2
             if (skill.prof == 0) {
                 skill.roll = "1d20"
             };
@@ -99,6 +99,12 @@ export class ARd20Actor extends Actor {
         }
         if (!data.isReady) {
             data.isReady = false
+        }
+        data.profs = duplicate(game.settings.get('ard20', 'profs'))
+        for (let [key, prof] of Object.entries(data.profs)) {
+            key.value = key.value ? key.value : 0
+            key.value = (key.value < 2) ? key.value : 2
+            key.hover = CONFIG.ARd20.WeaponType[key.type]
         }
     }
 
