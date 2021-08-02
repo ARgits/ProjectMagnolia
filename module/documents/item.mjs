@@ -69,7 +69,7 @@ export class ARd20Item extends Item {
       abil[k] = v;
     }
     if (this.data.type === "weapon") {
-      const prof = this.actor.data.data.profs;
+      const prof = this.actor.data.data.profs.filter(pr => pr.name===data.proto)[0].value;
       let prof_bonus = 0;
       if (prof == 0) {
         prof_bonus = 0;
