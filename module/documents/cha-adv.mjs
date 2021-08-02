@@ -199,6 +199,7 @@ export class CharacterAdvancement extends FormApplication {
         obj['data.abilities'] = updateData.abilities
         obj['data.attributes.xp'] = updateData.xp
         obj['data.skills'] = updateData.skills
+        obj['data.profs'] = update.Data.profs
         console.log(obj)
         await actor.update(obj)
     }
