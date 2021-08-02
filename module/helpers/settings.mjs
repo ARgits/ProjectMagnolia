@@ -50,7 +50,7 @@ class ProfFormApp extends FormApplication {
         html.find('.add').click(this._onAdd.bind(this))
         html.find('.minus').click(this._Delete.bind(this))
     }
-    _onAdd (event) {
+    async _onAdd (event) {
         event.preventDefault()
         const profs = game.settings.get('ard20', 'profs')
         profs.push({name: 'name', type: 'amb'})
