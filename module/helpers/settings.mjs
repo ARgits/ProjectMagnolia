@@ -63,12 +63,12 @@ class ProfFormApp extends FormApplication {
                 label = "p" + Math.floor(Math.random() * 100)
             }
             this.data.prof[label] = {
-                name: this.data.prof[label].name ?? "",
+                name: "",
                 type: ""
             }
         } else {
             this.data.prof[label] = {
-                name: this.data.prof[label].name ?? "",
+                name: "",
                 type: ""
             }
         }
