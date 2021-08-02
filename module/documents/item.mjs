@@ -72,15 +72,18 @@ export class ARd20Item extends Item {
     if (this.data.type === "weapon") {
       console.log('Владелец', this.actor?.data.data.profs)
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto)[0].value : 0
-      let prof = data.prof.value
+      labels.prof =
+        game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
+        CONFIG.ARd20.prof[data.prof.value]
+      data.prof.label = labels.prof
       let prof_bonus = 0
-      if (prof === 0) {
+      if (data.prof.value === 0) {
         prof_bonus = 0
         console.log('Untrained')
-      } else if (prof === 1) {
+      } else if (data.prof.value === 1) {
         prof_bonus = this.actor.data.data.attributes.prof_die
         console.log('basic')
-      } else if (prof === 2) {
+      } else if (data.prof.value === 2) {
         prof_bonus =
           this.actor.data.data.attributes.prof_die +
           "+" +
