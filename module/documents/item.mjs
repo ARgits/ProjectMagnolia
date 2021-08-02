@@ -74,11 +74,11 @@ export class ARd20Item extends Item {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto)[0].value : 0
       let prof = data.prof.value
       let prof_bonus = 0
-      if (prof == 0) {
+      if (prof === 0) {
         prof_bonus = 0
-      } else if (prof == 1) {
+      } else if (prof === 1) {
         prof_bonus = this.actor.data.data.attributes.prof_die
-      } else if (prof == 2) {
+      } else if (prof === 2) {
         prof_bonus =
           this.actor.data.data.attributes.prof_die +
           "+" +
