@@ -104,6 +104,9 @@ export class ARd20Actor extends Actor {
             data.profs = {}
         }
         for (let [key, prof] of Object.entries(game.settings.get('ard20', 'profs'))) {
+            if(!data.profs[prof]){
+                data.profs[prof]={}
+            }
             data.profs[prof].value = prof.value ? prof.value : 0
             data.profs[prof].value = (data.profs[prof].value < 2) ? data.profs[prof].value : 2
             data.profs[prof].type_hover = game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs[prof].type]
