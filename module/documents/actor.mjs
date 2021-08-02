@@ -103,9 +103,9 @@ export class ARd20Actor extends Actor {
         if (!data.profs) {
             data.profs = []
         }
-        for (let [key, prof] of game.settings.get('ard20', 'profs')) {
-            if(!data.profs[prof]){
-                data.profs[prof]={}
+        for (let [key, prof] of Object.entries(game.settings.get('ard20', 'profs'))) {
+            if (!data.profs[prof]) {
+                data.profs[prof] = {}
             }
             data.profs[prof].value = data.profs[prof].value ? data.profs[prof].value : 0
             data.profs[prof].value = (data.profs[prof].value < 2) ? data.profs[prof].value : 2
