@@ -54,15 +54,15 @@
                 <div class="ability flexcoll-group-center align-left">
                     {{#each profs as |prof key|}}
                         <div class="ability flexrow grid grid-7col">
-                            <label for='profs.{{key}}.value' class="resource-label prof flexlarge align-left" data-type='prof' data-label="{{prof.name}}">{{prof.name}}</label>
-                            <label for='profs.{{key}}.value' class="resource-label prof flexlarge align-left" data-type='prof' data-label="{{prof.typ}}">{{prof.hover}}</label>
-                            <button class='change far fa-arrow-alt-circle-down' data-type="prof" type="button" data-action='minus' data-key="{{key}}"></button>
+                            <label for='profs.{{key}}.prof' class="resource-label prof flexlarge align-left" data-type='prof' data-label="{{prof.name}}">{{prof.name}}</label>
+                            <label for='profs.{{key}}.prof' class="resource-label prof flexlarge align-left" data-type='prof' data-label="{{prof.type}}">{{prof.type_hover}}</label>
+                            <button class='change far fa-arrow-alt-circle-down' data-type="prof" type="button" {{#if prof.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='profs.{{key}}.value' value={{prof.value}} type="number" />
-                            <label for='profs.{{key}}.value' class="resource-label flexlarge align-left" data-label="{{prof.hover}}">{{prof.hover}}</label>
-                            <button class='change far fa-arrow-alt-circle-up' data-type="prof" type="button" data-action='plus' data-key="{{key}}"></button>
-                            <span class='ability' name='profs.{{key}}.xp'>{{numberFormat prof.xp decimals=0 sign=false}}</span>
+                            <label for='profs.{{key}}.value' class="resource-label flexlarge align-left" data-label="{{prof.hover}}">{{prof.value_hover}}</label>
+                            <button class='change far fa-arrow-alt-circle-up' data-type="prof" type="button" {{#if prof.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
+                            {{#if prof.xp}}<span class='ability' name='profs.{{key}}.xp'>{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
-                    {{/each}}
+                        {{#each}}
                 </div>
             </div>
         </div>
