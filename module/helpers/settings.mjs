@@ -31,19 +31,11 @@ class ProfFormApp extends FormApplication {
         })
     }
     getData (options) {
-        if (!this.data) {
-            this.data = {}
-            this.data.prof = duplicate(game.settings.get('ard20', 'profs'))
-            this.data.config = duplicate(CONFIG.ARd20.WeaponType)
+        const sheetData = {
+            profs: game.settings.get('ard20', 'profs'),
+            config: CONFIG.ARd20
         }
-        console.log('Форма ', this)
-        const templateData = {
-            prof: this.data.prof,
-            config: this.data.config
-        }
-        console.log('Данные формы ', this.data)
-        console.log('TemplateData ', templateData)
-        return templateData
+        return sheetData
     }
     activateListeners (html) {
         super.activateListeners(html)
@@ -59,8 +51,9 @@ class ProfFormApp extends FormApplication {
     }
     _Delete (event) {
         event.preventDefault()
-        const button = event.currentTarget
-        Reflect.deleteProperty(this.data.prof, `${[button.dataset.key]}`)
+        const profs = game.settings.ge('ard20', 'profs')
+        profs.splice(rowIndex, 1)
+        await game.settings.set('ard20', 'profs', profs)
         this.render()
     }
     async _updateObject (event, formData) {

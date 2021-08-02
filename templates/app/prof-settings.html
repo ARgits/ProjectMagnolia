@@ -1,11 +1,11 @@
 <form>
     <section>
-        {{#each prof as |pr key|}}
+        {{#each profs as |pr key|}}
             <div class='grid grid-3col'>
                 <input class="ability" type="text" data-dtype="text" data-name='name' data-key="{{key}}" name='prof.{{key}}.name' />
                 <select name="prof.{{key}}.type" data-key='{{key}}' data-name='type'>
                     {{#select key.type}}
-                        {{#each ../config as |name sch|}}
+                        {{#each ../config.WeaponSubType as |name sch|}}
                             <option value="{{sch}}">{{localize name}}</option>
                         {{/each}}
                     {{/select}}
