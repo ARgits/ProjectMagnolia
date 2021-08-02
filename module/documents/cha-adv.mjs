@@ -118,7 +118,7 @@ export class CharacterAdvancement extends FormApplication {
             hover: this.data.hover,
             profs: this.data.profs
         }
-        console.log(this.data.count.skills)
+        console.log(templateData)
         return templateData
 
     }
