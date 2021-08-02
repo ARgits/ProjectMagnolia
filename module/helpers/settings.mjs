@@ -64,7 +64,7 @@ class ProfFormApp extends FormApplication {
         this.render()
     }
     async _updateObject (event, formData) {
-        const profs = game.settings.get('ard20','profs')
+        const profs = game.settings.get('ard20', 'profs')
         let dirty = false
         for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
             const [index, propertyName] = fieldName.split('.')
