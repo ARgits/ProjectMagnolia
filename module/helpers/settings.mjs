@@ -71,6 +71,7 @@ class ProfFormApp extends FormApplication {
         this.render()
     }
     _Delete (event) {
+        event.preventDefault()
         const button = event.currentTarget
         Reflect.deleteProperty(this.data.prof, `${[button.dataset.key]}`)
         this.render()
