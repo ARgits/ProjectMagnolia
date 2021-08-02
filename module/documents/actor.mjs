@@ -102,9 +102,9 @@ export class ARd20Actor extends Actor {
         }
         data.profs = duplicate(game.settings.get('ard20', 'profs'))
         for (let [key, prof] of Object.entries(data.profs)) {
-            key.value = key.value ? key.value : 0
-            key.value = (key.value < 2) ? key.value : 2
-            key.hover = CONFIG.ARd20.WeaponType[key.type]
+            prof.value = prof.value ? prof.value : 0
+            prof.value = (prof.value < 2) ? prof.value : 2
+            prof.hover = CONFIG.ARd20.WeaponType[prof.type]
         }
     }
 
