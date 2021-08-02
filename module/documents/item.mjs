@@ -23,7 +23,7 @@ export class ARd20Item extends Item {
     }
     if (itemData.type === "weapon") {
       data.settings = Object.fromEntries(Object.entries(game.settings.get('ard20', 'profs')).filter((prof) => prof[1].type === data.type.value))
-      data.proto = data.proto || data.settings[0].name
+      data.proto = data.proto || data.settings[Object.keys(data.settings)[0]].name
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k
       }
