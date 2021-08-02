@@ -52,22 +52,9 @@ class ProfFormApp extends FormApplication {
     }
     _onAdd (event) {
         event.preventDefault()
-        const number = Math.floor(Math.random() * 100)
-        let label = "p" + number
-        if (this.data.prof.label) {
-            while (this.data.prof[label]) {
-                label = "p" + Math.floor(Math.random() * 100)
-            }
-            this.data.prof[label] = {
-                name: "",
-                type: ""
-            }
-        } else {
-            this.data.prof[label] = {
-                name: "",
-                type: ""
-            }
-        }
+        const profs = game.settings.get('ard20', 'profs')
+        profs.push({name: 'name', type: 'amb'})
+        await game.settings.set('ard20', 'profs', profs)
         this.render()
     }
     _Delete (event) {
@@ -77,8 +64,18 @@ class ProfFormApp extends FormApplication {
         this.render()
     }
     async _updateObject (event, formData) {
-        let updateData = expandObject(formData)
-        console.log('UpdateData ', updateData)
-        game.settings.set('ard20', 'profs', updateData.prof)
+        const profs = game.settings.get('ard20','profs')
+        let dirty = false
+        for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
+            const [index, propertyName] = fieldName.split('.')
+            if (profs[index][propertyName] !== value) {
+                //log({index, propertyName, value});
+                profs[index][propertyName] = value
+                dirty = dirty || true
+            }
+            if (dirty) {
+                await game.settings.set('ard20', 'profs', profs)
+            }
+        }
     }
 }
