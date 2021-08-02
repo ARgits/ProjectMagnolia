@@ -75,7 +75,7 @@ export class ARd20Item extends Item {
       this.labels.prof =
         game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
         CONFIG.ARd20.prof[data.prof.value]
-      data.prof.label = labels.prof
+      data.prof.label = this.labels.prof
       let prof_bonus = 0
       if (data.prof.value === 0) {
         prof_bonus = 0
