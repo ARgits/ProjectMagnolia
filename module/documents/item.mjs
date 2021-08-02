@@ -24,7 +24,6 @@ export class ARd20Item extends Item {
     if (itemData.type === "weapon") {
       data.settings = Object.fromEntries(Object.entries(game.settings.get('ard20', 'profs')).filter((prof) => prof[1].type === data.type.value))
       data.proto = data.proto || ""
-      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto)[0].value : 0
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k
       }
@@ -46,6 +45,7 @@ export class ARd20Item extends Item {
         data.deflect[v] = data.deflect[v] || data.damage.common[v]
       }
       data.type.value = data.type.value || "amb"
+      data.prof.value = data.prof.value || 0
       labels.type =
         game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
         CONFIG.ARd20.WeaponType[data.type.value]
@@ -71,6 +71,7 @@ export class ARd20Item extends Item {
     }
     if (this.data.type === "weapon") {
       console.log('Владелец', this.actor?.data.data.profs)
+      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto)[0].value : 0
       let prof = data.prof.value
       let prof_bonus = 0
       if (prof == 0) {
