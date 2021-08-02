@@ -101,10 +101,7 @@ export class ARd20Actor extends Actor {
             data.isReady = false
         }
         if (!data.profs) {
-            data.profs = duplicate(game.settings.get('ard20', 'profs'))
-        }
-        if (data.profs.length === undefined) {
-            data.profs = Object.values(data.profs)
+            data.profs = Object.fromEntries(Object.entries(game.settings.get('ard20', 'profs')))
         }
         for (let prof of Object.keys(game.settings.get('ard20', 'profs'))) {
             data.profs[prof].value = data.profs[prof].value ? data.profs[prof].value : 0
