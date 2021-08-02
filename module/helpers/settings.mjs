@@ -2,7 +2,7 @@ export const registerSystemSettings = function () {
     game.settings.register('ard20', 'profs', {
         scope: "world",
         config: false,
-        default: {},
+        default: [],
         type: Object,
         onChange: value => {
             console.log('Настройка изменилась ', value)
