@@ -60,7 +60,7 @@
                             <input hidden name='profs.{{key}}.value' value={{prof.value}} type="number" />
                             <label for='profs.{{key}}.value' class="resource-label flexlarge align-left" data-label="{{prof.hover}}">{{prof.hover}}</label>
                             <button class='change far fa-arrow-alt-circle-up' data-type="prof" type="button" data-action='plus' data-key="{{key}}"></button>
-                            <span class='ability' name='profs.{{key}}.xp'>{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
+                            <span class='ability' name='profs.{{key}}.xp'>{{numberFormat prof.xp decimals=0 sign=false}}</span>
                         </div>
                     {{/each}}
                 </div>
