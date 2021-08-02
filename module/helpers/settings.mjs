@@ -55,6 +55,7 @@ class ProfFormApp extends FormApplication {
         html.find('.minus').click(this._Delete.bind(this))
     }
     _onAdd (event) {
+        event.preventDefault()
         const number = Math.floor(Math.random() * 100)
         let label = "p" + number
         if (this.data.prof.label) {
@@ -71,24 +72,16 @@ class ProfFormApp extends FormApplication {
                 type: ""
             }
         }
+        this.render()
     }
     _Delete (event) {
         const button = event.currentTarget
         Reflect.deleteProperty(this.data.prof, `${[button.dataset.key]}`)
-    }
-    async _onChangeInput (event) {
-        await super._onChangeInput(event)
-        console.log('event', event)
-        console.log('event data', this.data.prof[event.currentTarget.dataset.key])
-        const input = this.form[`prof.${event.currentTarget.dataset.key}.${event.currentTarget.dataset.name}`].value
-        console.log(input)
-        this.data.prof[event.currentTarget.dataset.key][event.currentTarget.dataset.name] = input
-
+        this.render()
     }
     async _updateObject (event, formData) {
         let updateData = expandObject(formData)
         console.log('UpdateData ', updateData)
         game.settings.set('ard20', 'profs', updateData.prof)
-        this.render()
     }
 }
