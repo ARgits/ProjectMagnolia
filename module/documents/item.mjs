@@ -72,6 +72,7 @@ export class ARd20Item extends Item {
         : null
       abil[k] = v
     }
+    data.isEquiped = data.isEquiped || false
     if (this.data.type === "weapon") {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => (pr.name === data.proto))[0].value : 0
       this.labels.prof =
@@ -81,18 +82,16 @@ export class ARd20Item extends Item {
       let prof_bonus = 0
       if (data.prof.value === 0) {
         prof_bonus = 0
-        console.log('Untrained')
+
       } else if (data.prof.value === 1) {
         prof_bonus = this.actor.data.data.attributes.prof_die
-        console.log('basic')
+
       } else if (data.prof.value === 2) {
         prof_bonus =
           this.actor.data.data.attributes.prof_die +
           "+" +
           this.actor.data.data.attributes.prof_bonus
-        console.log('master')
       }
-      else {console.log('что-то не так')}
       this.data.data.damage.common.current =
         this.data.data.damage.common[this.labels.prof.toLowerCase()] +
         "+" +
