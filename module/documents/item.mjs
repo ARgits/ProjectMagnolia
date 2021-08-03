@@ -22,13 +22,6 @@ export class ARd20Item extends Item {
       labels.school = CONFIG.ARd20.SpellSchool[data.school]
     }
     if (itemData.type === "weapon") {
-      data.type.value = data.type.value || 'amb'
-      data.settings = game.settings.get('ard20', 'profs').filter((prof) => prof.type === data.type.value)
-      if ((!data.proto) || (data.settings.filter((prof) => prof.name === data.proto) === undefined)) {
-        data.proto = data.settings[0].name
-      } else {
-        data.proto = data.proto
-      }
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k
       }
@@ -50,7 +43,12 @@ export class ARd20Item extends Item {
         data.deflect[v] = data.deflect[v] || data.damage.common[v]
       }
       data.type.value = data.type.value || "amb"
-      data.prof.value = data.prof.value || 0
+      data.settings = game.settings.get('ard20', 'profs').filter((prof) => prof.type === data.type.value)
+      if ((!data.proto) || (data.settings.filter((prof) => prof.name === data.proto) === undefined)) {
+        data.proto = data.settings[0].name
+      } else {
+        data.proto = data.proto
+      }
       labels.type =
         game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
         CONFIG.ARd20.WeaponType[data.type.value]
