@@ -92,7 +92,7 @@ export class ARd20Actor extends Actor {
             }
         }
         for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-            if ((key !== 'force') || (key !== 'rad') || (key !== 'psyhic')) {
+            if (!((key === 'force') || (key === 'rad') || (key === 'psyhic'))) {
                 console.log(key)
                 data.defences.damage.physic[key] = {
                     value: data.defences.damage.physic[key]?.value ? data.defences.damage.physic[key].value : 0,
