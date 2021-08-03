@@ -23,7 +23,7 @@ export class ARd20Item extends Item {
     }
     if (itemData.type === "weapon") {
       data.settings = Object.fromEntries(Object.entries(game.settings.get('ard20', 'profs')).filter((prof) => prof[1].type === data.type.value))
-      data.proto = data.proto || ""
+      data.proto = data.proto || Object.values(data.settings)[0].name
       for (let [k, v] of Object.entries(data.property.untrained)) {
         v = CONFIG.ARd20.Prop[k] ?? k
       }
@@ -60,7 +60,7 @@ export class ARd20Item extends Item {
     }
     if (!this.isOwned) this.prepareFinalAttributes()
   }
-  prepareFinalAttributes () {
+   prepareFinalAttributes () {
     const data = this.data.data
     const abil = (data.abil = {})
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
