@@ -92,12 +92,12 @@ export class ARd20Actor extends Actor {
             }
         }
         for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-            data.defences.physic[key] = {
-                value: data.defences.physic[key].value ? data.defences.physic[key].value : 0,
+            data.defences.physic[dr] = {
+                value: data.defences.physic[dr].value ? data.defences.physic[dr].value : 0,
                 label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key]
             }
-            data.defences.magic[key] = {
-                value: data.defences.magic[key].value ? data.defences.magic[key].value : 0,
+            data.defences.magic[dr] = {
+                value: data.defences.magic[dr].value ? data.defences.magic[dr].value : 0,
                 label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key]
             }
         }
