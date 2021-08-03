@@ -225,6 +225,7 @@
   font-family: "Roboto", sans-serif;
 }
 
+
 .ard20 .sheet-header {
   -webkit-box-flex: 0;
   -ms-flex: 0 auto;
@@ -419,6 +420,22 @@ div#cha-adv.app.window-app.ard20 section.sheet-body .tab div{
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
+.item-controls {
+  flex: 0 0 68px;
+}
+.item-controls .item-toggle {
+  color: #b5b3a4;
+}
+.item-controls .item-toggle.active {
+  color: #4b4a44;
+}
+.item-controls .item-toggle.fixed {
+  color: #DC143C;
+}
+.item-controls .item-toggle.fixed:hover {
+  text-shadow: none;
+}
+
 
 .ard20 .items-list .items-header {
   height: 28px;
