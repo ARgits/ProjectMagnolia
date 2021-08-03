@@ -71,7 +71,7 @@ export class ARd20Item extends Item {
     }
     if (this.data.type === "weapon") {
       console.log('Владелец', this.actor?.data.data.profs)
-      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => pr.name === data.proto)[0].value : 0
+      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => (pr.name === data.proto))[0].value : 0
       this.labels.prof =
         game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
         CONFIG.ARd20.prof[data.prof.value]
