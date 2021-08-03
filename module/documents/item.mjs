@@ -47,6 +47,7 @@ export class ARd20Item extends Item {
       if ((!data.proto) || (data.settings.filter((prof) => prof.name === data.proto) === undefined)) {
         console.log('прототип должен поменяться')
         data.proto = data.settings[0].name
+        console.log(data.proto)
       } else {
         data.proto = data.proto
       }
@@ -74,8 +75,6 @@ export class ARd20Item extends Item {
       abil[k] = v
     }
     if (this.data.type === "weapon") {
-      console.log('Владелец', this.actor)
-      console.log('Прототип оружия', this.data.data.proto)
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs).filter(pr => (pr.name === data.proto))[0].value : 0
       this.labels.prof =
         game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
