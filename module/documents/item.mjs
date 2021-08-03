@@ -44,7 +44,7 @@ export class ARd20Item extends Item {
       }
       data.type.value = data.type.value || "amb"
       data.settings = game.settings.get('ard20', 'profs').filter((prof) => prof.type === data.type.value)
-      if ((!data.proto) || (data.settings.filter((prof) => prof.name === data.proto) === undefined)) {
+      if ((!data.proto) || (data.settings.filter((prof) => prof.name === data.proto)[0] === undefined)) {
         console.log('прототип должен поменяться')
         data.proto = data.settings[0].name
         console.log(data.proto)
