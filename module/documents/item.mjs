@@ -22,10 +22,11 @@ export class ARd20Item extends Item {
       labels.school = CONFIG.ARd20.SpellSchool[data.school]
     }
     if (itemData.type === "weapon") {
+      data.type.value = data.type.value || 'amb'
       data.settings = game.settings.get('ard20', 'profs').filter((prof) => prof.type === data.type.value)
-      if((!data.proto) || (data.settings.filter((prof)=>prof.name===data.proto)===undefined)){
+      if ((!data.proto) || (data.settings.filter((prof) => prof.name === data.proto) === undefined)) {
         data.proto = data.settings[0].name
-      } else{
+      } else {
         data.proto = data.proto
       }
       for (let [k, v] of Object.entries(data.property.untrained)) {
@@ -64,7 +65,7 @@ export class ARd20Item extends Item {
     }
     if (!this.isOwned) this.prepareFinalAttributes()
   }
-   prepareFinalAttributes () {
+  prepareFinalAttributes () {
     const data = this.data.data
     const abil = (data.abil = {})
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
