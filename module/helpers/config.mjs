@@ -115,7 +115,30 @@ ARd20.abil_xp = [
     2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000
 ]
 ARd20.skill_xp = {
-    0:[50, 80, 125, 185, 260, 350, 455, 575, 710, 860, 1025, 1205, 1400, 1610, 1835, 2075, 2330, 2600],
-    1:[115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470]
+    0: [50, 80, 125, 185, 260, 350, 455, 575, 710, 860, 1025, 1205, 1400, 1610, 1835, 2075, 2330, 2600],
+    1: [115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470]
 }
-ARd20.WeaponSubType={}
+ARd20.DamageTypes = {
+    'mag': "ARd20.Magical",
+    "phys": "ARd20.Physical"
+}
+ARd20.DamageSubTypes = {
+    "acid": "ARd20.Acid",
+    "blud": "ARd20.Bludgeoning",
+    "cold": "ARd20.Cold",
+    "fire": "ARd20.Fire",
+    "force": "ARd20.Force",
+    "light": "ARd20.Lightning",
+    "necr": "ARd20.Necrotic",
+    "pierc": "ARd20.Piercing",
+    "poison": "ARd20.Poison",
+    "slash": "ARd20.Slashing",
+    "sound": "ARd20.Sound",
+    "rad": "ARd20.Radiant",
+    "psyhic": "ARd20.psyhic"
+}
+ARd20.DRtypes = {
+    "res": "ARd20.Resistance",
+    "vul": "Ard20.Vulnerability",
+    "imm": "ARd20.Immunity"
+}

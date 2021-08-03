@@ -199,6 +199,10 @@
         "master": ""
       }
     },
+    "Armor":{
+      "templates":["base"],
+      "type":"light"
+    },
     "feature": {
       "templates": [
         "base"
