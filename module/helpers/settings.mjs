@@ -71,7 +71,7 @@ class ProfFormApp extends FormApplication {
         const profs = game.settings.get('ard20', 'profs')
         let dirty = false
         for (let key of Object.entries(foundry.utils.flattenObject(formData))) {
-            for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(key))) {
+            for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData[key]))) {
                 const [index, propertyName] = fieldName.split('.')
                 if (profs[index][propertyName] !== value) {
                     //log({index, propertyName, value});
