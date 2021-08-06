@@ -11,8 +11,8 @@
             <div class="ability flexcoll flex-group-center align-center">
                 {{#each profs.weapon as |pr key|}}
                     <div class='grid grid-3col'>
-                        <input class="ability" type="text" data-dtype="text" data-name='name' data-key="{{key}}" name='{{key}}.name' value="{{pr.name}}" />
-                        <select name="{{key}}.type" data-key='{{key}}' data-name='type'>
+                        <input class="ability" type="text" data-dtype="text" data-name='name' data-key="{{key}}" name='weapon.{{key}}.name' value="{{pr.name}}" />
+                        <select name="weapon.{{key}}.type" data-key='{{key}}' data-name='type'>
                             {{#select pr.type}}
                                 {{#each ../config.WeaponType as |name sch|}}
                                     <option value="{{sch}}">{{localize name}}</option>
