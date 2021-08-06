@@ -56,14 +56,14 @@ class ProfFormApp extends FormApplication {
     async _onAdd (event) {
         event.preventDefault()
         const profs = game.settings.get('ard20', 'profs')
-        profs.push({name: 'name', type: 'amb'})
+        profs.weapon.push({name: 'name', type: 'amb'})
         await game.settings.set('ard20', 'profs', profs)
         this.render()
     }
     async _Delete (event) {
         event.preventDefault()
         const profs = game.settings.get('ard20', 'profs')
-        profs.splice(event.currentTarget.dataset.key, 1)
+        profs.weapon.splice(event.currentTarget.dataset.key, 1)
         await game.settings.set('ard20', 'profs', profs)
         this.render()
     }
