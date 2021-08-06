@@ -44,7 +44,8 @@ export class ARd20Item extends Item {
       }
       data.type.value = data.type.value || "amb"
       data.settings = game.settings.get('ard20', 'profs').filter((prof) => prof.type === data.type.value)
-      console.log('прототип ', data.proto, ' итем ', this.id)
+      let id = this.isOwned ? /.(.+)/.exec(data.flags.core.sourceId)[1] : 'not Owned'
+      console.log(id)
       data.proto = (data.settings.filter((prof) => prof.name === data.proto)[0] === undefined) ? data.settings[0].name : data.proto
       labels.type =
         game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
