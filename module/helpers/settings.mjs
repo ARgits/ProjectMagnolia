@@ -69,19 +69,6 @@ class ProfFormApp extends FormApplication {
     }
     async _updateObject (event, formData) {
         const profs = game.settings.get('ard20', 'profs')
-        let dirty = false
-        for (let key of Object.entries((formData))) {
-            for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData[key]))) {
-                const [index, propertyName] = fieldName.split('.')
-                if (profs[index][propertyName] !== value) {
-                    //log({index, propertyName, value});
-                    profs[index][propertyName] = value
-                    dirty = dirty || true
-                }
-                if (dirty) {
-                    await game.settings.set('ard20', 'profs', profs)
-                }
-            }
-        }
+        await game.settings.set('ard20', 'profs', profs)
     }
 }
