@@ -70,7 +70,7 @@ export class ARd20Actor extends Actor {
         data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min
         data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4)
         data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2
-        let defence = {
+        data.defences = {
             reflex: {
                 value: 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod,
                 label: "Reflex"
@@ -84,7 +84,6 @@ export class ARd20Actor extends Actor {
                 label: "Will"
             }
         }
-        data.defences = defence
         if (!data.defences.damage) {
             data.defences.damage = {
                 physic: {},
