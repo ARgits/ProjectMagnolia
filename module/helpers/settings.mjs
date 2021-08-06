@@ -2,7 +2,15 @@ export const registerSystemSettings = function () {
     game.settings.register('ard20', 'profs', {
         scope: "world",
         config: false,
-        default: [],
+        default: {
+            weapon: [{
+                name: "Punch Dagger", type: 'amb'
+            }, {
+                name: 'Whip Dagger', type: 'amb'
+            }, {
+                name: 'Gauntlet', type: 'amb'
+            }]
+        },
         type: Object,
         onChange: value => {
             console.log('Настройка изменилась ', value)
