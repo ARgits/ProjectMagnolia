@@ -9,7 +9,9 @@ export const registerSystemSettings = function () {
                 name: 'Whip Dagger', type: 'amb'
             }, {
                 name: 'Gauntlet', type: 'amb'
-            }]
+            }],
+            armor:[],
+            tools:[]
         },
         type: Object,
         onChange: value => {
