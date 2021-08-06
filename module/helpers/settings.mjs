@@ -36,6 +36,7 @@ class ProfFormApp extends FormApplication {
             height: 'auto',
             submitOnChange: true,
             closeOnSubmit: false,
+            tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'weapons'}]
         })
     }
     getData (options) {
