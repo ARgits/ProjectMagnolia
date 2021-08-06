@@ -3,13 +3,24 @@ export const registerSystemSettings = function () {
         scope: "world",
         config: false,
         default: {
-            weapon: [{
-                name: "Punch Dagger", type: 'amb'
-            }, {
-                name: 'Whip Dagger', type: 'amb'
-            }, {
-                name: 'Gauntlet', type: 'amb'
-            }],
+            weapon: [
+                {name: "Punch Dagger", type: 'amb'},
+                {name: 'Whip Dagger', type: 'amb'},
+                {name: 'Gauntlet', type: 'amb'},
+                {name: 'Hidden Blade', typel: 'amb'},
+                {name: 'Knucke Axe', type: 'amb'},
+                {name: 'Side Baton', type: 'amb'},
+                {name: 'Unarmed strike', type: 'amb'},
+                {name: 'Battle Axe', type: 'axe'},
+                {name: 'Great Axe', type: 'axe'},
+                {name: 'Handaxe', type: 'axe'},
+                {name: 'Hook Sword', type: 'axe'},
+                {name: 'Khopesh', type: 'axe'},
+                {name: 'Poleaxe', type: 'axe'},
+                {name: 'Tomahawk', type: 'axe'},
+                {name: 'Great club', type: 'blu'},
+                {name: 'Heavy club', type: 'blu'},
+                {name: 'Light Club', type: 'blu'}],
             armor: [],
             tools: []
         },
@@ -71,17 +82,17 @@ class ProfFormApp extends FormApplication {
         const profs = game.settings.get('ard20', 'profs')
         console.log(formData)
         let dirty = false
-            for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
-                const [type, index, propertyName] = fieldName.split('.')
-                if (profs[type][index][propertyName] !== value) {
-                    //log({index, propertyName, value});
-                    profs[type][index][propertyName] = value
-                    dirty = dirty || true
-                }
-                if (dirty) {
-                    await game.settings.set('ard20', 'profs', profs)
-                }
-            
+        for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
+            const [type, index, propertyName] = fieldName.split('.')
+            if (profs[type][index][propertyName] !== value) {
+                //log({index, propertyName, value});
+                profs[type][index][propertyName] = value
+                dirty = dirty || true
+            }
+            if (dirty) {
+                await game.settings.set('ard20', 'profs', profs)
+            }
+
         }
     }
 }
