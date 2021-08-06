@@ -10,8 +10,8 @@ export const registerSystemSettings = function () {
             }, {
                 name: 'Gauntlet', type: 'amb'
             }],
-            armor:[],
-            tools:[]
+            armor: [],
+            tools: []
         },
         type: Object,
         onChange: value => {
@@ -70,15 +70,17 @@ class ProfFormApp extends FormApplication {
     async _updateObject (event, formData) {
         const profs = game.settings.get('ard20', 'profs')
         let dirty = false
-        for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
-            const [index, propertyName] = fieldName.split('.')
-            if (profs[index][propertyName] !== value) {
-                //log({index, propertyName, value});
-                profs[index][propertyName] = value
-                dirty = dirty || true
-            }
-            if (dirty) {
-                await game.settings.set('ard20', 'profs', profs)
+        for (let key of Object.entries(foundry.utils.flattenObject(formData))) {
+            for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(key))) {
+                const [index, propertyName] = fieldName.split('.')
+                if (profs[index][propertyName] !== value) {
+                    //log({index, propertyName, value});
+                    profs[index][propertyName] = value
+                    dirty = dirty || true
+                }
+                if (dirty) {
+                    await game.settings.set('ard20', 'profs', profs)
+                }
             }
         }
     }
