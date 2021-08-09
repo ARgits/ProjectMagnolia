@@ -68,9 +68,7 @@ export class ARd20Item extends Item {
       data.level.max = data.level.has ? (data.level.max || 4) : 1
       data.level.current = data.level.current || 1
       //define exp cost
-      data.xp = data.xp ? data.xp : []
-      data.xp[0] = data.xp[0] || 0
-      data.xp.length = (data.xp.length !== data.level.max) ? data.level.max : data.xp.length
+      data.xp.length = data.level.has ? data.level.max : 1
       if (data.xp.length > 1) {
         for (let i = 1; i < data.level.max; i++) {
           data.xp[i] = data.xp[i - 1] * 1.25
