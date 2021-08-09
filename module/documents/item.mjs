@@ -134,7 +134,7 @@ export class ARd20Item extends Item {
       
       let atk = attackRoll
       console.log(atk)
-      atk.total = atk.total >= 0 ? atk.total : 0
+      atk._total = atk._total >= 0 ? atk._total : 0
       /*Object.defineProperty(attackRoll,'total', {
         value: atk_tot >= 0 ? atk_tot : 0,
       })*/
