@@ -73,17 +73,17 @@ export class ARd20Actor extends Actor {
         data.defences = {
             reflex: {
                 bonus : data.defences?.reflex.bonus ?? 0,
-                value: 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod+data.defences.reflex.bonus,
+                value: 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod+data.defences?.reflex.bonus,
                 label: "Reflex"
             },
             fortitude: {
                 bonus : data.defences?.fortitude.bonus ?? 0,
-                value: 8 + data.attributes.prof_bonus + data.abilities.con.mod + data.abilities.str.mod+data.defences.fortitude.bonus,
+                value: 8 + data.attributes.prof_bonus + data.abilities.con.mod + data.abilities.str.mod+data.defences?.fortitude.bonus,
                 label: "Fortitude"
             },
             will: {
                 bonus : data.defences?.will.bonus ?? 0,
-                value: 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod+data.defences.will.bonus,
+                value: 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod+data.defences?.will.bonus,
                 label: "Will"
             }
         }
