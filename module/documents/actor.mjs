@@ -70,23 +70,20 @@ export class ARd20Actor extends Actor {
         data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min
         data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4)
         data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2
-        data.defences = {
-            reflex: {
-                bonus: data.defences?.reflex.bonus ?? 0,
-                value: 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + (data.defences?.reflex.bonus ?? 0),
-                label: "Reflex"
-            },
-            fortitude: {
-                bonus: data.defences?.fortitude.bonus ?? 0,
-                value: 8 + data.attributes.prof_bonus + data.abilities.con.mod + data.abilities.str.mod + (data.defences?.fortitude.bonus ?? 0),
-                label: "Fortitude"
-            },
-            will: {
-                bonus: data.defences?.will.bonus ?? 0,
-                value: 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + (data.defences?.will.bonus ?? 0),
-                label: "Will"
-            }
-        }
+        data.defences = data.defences??{}
+        data.defences.reflex = data.defences.reflex??{}
+        data.defences.reflex.bonus = data.defences.reflex.bonus??0
+        data.defences.reflex.value = 8+data.attributes.prof_bonus+data.abilities.dex.mod+data.abilities.int.mod + data.defences.reflex.bonus
+        data.defences.reflex.label = "Reflex"
+        data.defences.fortitude = data.defences.fortitude??{}
+        data.defences.fortitude.bonus = data.defences.fortitude.bonus??0
+        data.defences.fortitude.value = 8+data.attributes.prof_bonus+data.abilities.str.mod+data.abilities.con.mod + data.defences.fortitude.bonus
+        data.defences.fortitude.label = "Fortitude"
+        data.defences.will = data.defences.will??{}
+        data.defences.will.bonus = data.defences.will.bonus??0
+        data.defences.will.value = 8+data.attributes.prof_bonus+data.abilities.wis.mod+data.abilities.cha.mod + data.defences.will.bonus
+        data.defences.will.label = "will"
+        
         if (!data.defences.damage) {
             data.defences.damage = {
                 physic: {},
