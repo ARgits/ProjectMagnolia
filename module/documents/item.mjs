@@ -64,12 +64,12 @@ export class ARd20Item extends Item {
       data.keys = []
       //define levels
       data.level = data.level || {}
-      data.level.has = data.level.has!==undefined ? data.level.has:false
-      data.level.max = data.level.has ? data.level.max || 4 : 1
-      data.level.current = data.level.has ? data.level.current || 1 : 1
+      data.level.has = data.level.has !== undefined ? data.level.has : false
+      data.level.max = data.level.max || 1
+      data.level.current = data.level.current || 1
       //define exp cost
       data.xp = data.xp ? data.xp : []
-      data.xp[0] = data.xp[0]||0
+      data.xp[0] = data.xp[0] || 0
       data.xp.length = (data.xp.length !== data.level.max) ? data.level.max : data.xp.length
       if (data.xp.length > 1) {
         for (let i = 1; i < data.level.max; i++) {
