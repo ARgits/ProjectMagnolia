@@ -44,10 +44,11 @@ export class ARd20Item extends Item {
       }
       data.type.value = data.type.value || "amb"
       data.settings = game.settings.get('ard20', 'profs').weapon.filter((prof) => prof.type === data.type.value)
-      if(this.isOwned&&itemData.flags.core.sourceId){
-      let id = this.isOwned ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1] : null
-      console.log(id)
-      data.proto = (this.isOwned && (data.proto === undefined)) ? game.items.get(id).data.data.proto : data.proto}
+      if (this.isOwned && itemData.flags?.core.sourceId) {
+        let id = this.isOwned ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1] : null
+        console.log(id)
+        data.proto = (this.isOwned && (data.proto === undefined)) ? game.items.get(id).data.data.proto : data.proto
+      }
       data.proto = (data.settings.filter((prof) => prof.name === data.proto)[0] === undefined) ? data.settings[0].name : data.proto
       labels.type =
         game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
