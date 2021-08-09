@@ -131,6 +131,7 @@ export class ARd20Item extends Item {
       const targets = game.user.targets
       const ts = targets.size
       const attackRoll = new Roll(rollData.item.attack, rollData).roll()
+      attackRoll = attackRoll >= 0 ? attackRoll : 0
       attackRoll.toMessage({
         speaker: speaker,
         rollMode: rollMode,
@@ -140,6 +141,7 @@ export class ARd20Item extends Item {
         rollData.item.damage.common.current,
         rollData
       ).roll()
+      damageRoll = damageRoll >= 0 ? damageRoll : 0
       damageRoll.toMessage({
         speaker: speaker,
         rollMode: rollMode,
