@@ -32,7 +32,7 @@
       </select>
       <div>
         has level <input type="checkbox" name="data.level.has" {{checked (lookup ../data.level has)}} />
-        maximum level <input type="text" name="data.level.max" value="{{data.level.max}}" {{unless data.level.has}}readonly{{/unless}} />
+        maximum level <input type="text" name="data.level.max" value="{{data.level.max}}" {{#unless data.level.has}}readonly{{/unless}} />
       </div>
       <div>
         Cost
