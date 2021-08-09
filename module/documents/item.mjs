@@ -141,6 +141,7 @@ export class ARd20Item extends Item {
         rollData.item.damage.common.current,
         rollData
       ).roll()
+      damageRoll._total = damageRoll._total >= 0 ? damageRoll._total : 0
       damageRoll.toMessage({
         speaker: speaker,
         rollMode: rollMode,
