@@ -61,6 +61,19 @@ export class ARd20Item extends Item {
     }
     if (itemData.type === "feature") {
       data.source.value = data.source.value || "mar"
+      data.keys = []
+      data.level = data.level || {}
+      data.level.has = data.level.has || false
+      data.level.max = data.level.has ? data.level.max || 4 : null
+      data.level.current = data.level.has ? data.level.current || 1 : null
+      if (data.level.has) {
+        data.xp = data.xp || []
+        for (let i = 1; i < data.level.max; i++) {
+          data.xp[i] = data.xp[i - 1] * 1, 25
+        }
+      } else {
+        data.xp = data.xp || 0
+      }
     }
     if (!this.isOwned) this.prepareFinalAttributes()
   }
@@ -138,6 +151,9 @@ export class ARd20Item extends Item {
         flavor: label,
         emote: true,
       })
+      let id = game.messages._source[game.messages.size - 2]._id
+      console.log(id)
+
       const damageRoll = new Roll(
         rollData.item.damage.common.current,
         rollData
@@ -148,6 +164,7 @@ export class ARd20Item extends Item {
         rollMode: rollMode,
         flavor: label,
       })
+
       console.log(ts)
       if (ts >= 1) {
         for (let target of targets) {
