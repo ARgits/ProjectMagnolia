@@ -199,9 +199,11 @@
         "master": ""
       }
     },
-    "Armor":{
-      "templates":["base"],
-      "type":"light"
+    "Armor": {
+      "templates": [
+        "base"
+      ],
+      "type": "light"
     },
     "feature": {
       "templates": [
@@ -213,8 +215,7 @@
         "Divine",
         "Primal",
         "Psyhic"
-      ],
-      "cost": 0
+      ]
     },
     "spell": {
       "templates": [
