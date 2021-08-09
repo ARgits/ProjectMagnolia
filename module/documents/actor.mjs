@@ -118,7 +118,7 @@ export class ARd20Actor extends Actor {
             data.isReady = false
         }
         if (!data.profs) {
-            data.profs = {weapon: Object.values(game.settings.get('ard20','profs').weapon)}
+            data.profs = {weapon: game.settings.get('ard20','profs').weapon}
         }
         for (let prof of Object.keys(game.settings.get('ard20', 'profs'))) {
             data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0
