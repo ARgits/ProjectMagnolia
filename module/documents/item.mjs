@@ -130,14 +130,14 @@ export class ARd20Item extends Item {
       const rollData = this.getRollData()
       const targets = game.user.targets
       const ts = targets.size
-      const attackRoll = new Roll(rollData.item.attack, rollData).roll()
+      let attackRoll = new Roll(rollData.item.attack, rollData).roll()
       attackRoll = attackRoll >= 0 ? attackRoll : 0
       attackRoll.toMessage({
         speaker: speaker,
         rollMode: rollMode,
         flavor: label,
       })
-      const damageRoll = new Roll(
+      let damageRoll = new Roll(
         rollData.item.damage.common.current,
         rollData
       ).roll()
