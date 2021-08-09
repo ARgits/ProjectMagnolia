@@ -120,7 +120,7 @@ export class ARd20Actor extends Actor {
         if (!data.profs) {
             data.profs = {weapon: game.settings.get('ard20','profs').weapon}
         }
-        for (let prof of Object.keys(game.settings.get('ard20', 'profs'))) {
+        for (let prof of Object.keys(game.settings.get('ard20', 'profs').weapon)) {
             data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0
             data.profs.weapon[prof].type = game.settings.get('ard20', 'profs').weapon[prof].type
             data.profs.weapon[prof].name = game.settings.get('ard20', 'profs').weapon[prof].name
