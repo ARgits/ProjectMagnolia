@@ -62,17 +62,18 @@ export class ARd20Item extends Item {
     if (itemData.type === "feature") {
       data.source.value = data.source.value || "mar"
       data.keys = []
+      //define levels
       data.level = data.level || {}
       data.level.has = data.level.has || false
       data.level.max = data.level.has ? data.level.max || 4 : null
       data.level.current = data.level.has ? data.level.current || 1 : null
-      if (data.level.has) {
-        data.xp = data.xp || []
+      //define exp cost
+      data.xp = data.xp ? data.xp : []
+      data.xp.length = (data.xp.length !== data.level.max) ? data.level.max : data.xp.length
+      if (data.xp.length > 1) {
         for (let i = 1; i < data.level.max; i++) {
-          data.xp[i] = data.xp[i - 1] * 1, 25
+          data.xp[i] = data.xp[i - 1] * 1.25
         }
-      } else {
-        data.xp = data.xp || 0
       }
     }
     if (!this.isOwned) this.prepareFinalAttributes()
