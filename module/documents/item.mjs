@@ -131,7 +131,7 @@ export class ARd20Item extends Item {
       const targets = game.user.targets
       const ts = targets.size
       const attackRoll = new Roll(rollData.item.attack, rollData).roll()
-      atk_tot = attackRoll.total
+      let atk_tot = attackRoll.total
       Object.defineProperty(attackRoll,'total', {
         value: atk_tot >= 0 ? atk_tot : 0,
       })
