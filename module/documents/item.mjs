@@ -136,6 +136,7 @@ export class ARd20Item extends Item {
         speaker: speaker,
         rollMode: rollMode,
         flavor: label,
+        emote: true,
       })
       const damageRoll = new Roll(
         rollData.item.damage.common.current,
