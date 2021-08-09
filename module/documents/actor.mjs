@@ -118,17 +118,17 @@ export class ARd20Actor extends Actor {
             data.isReady = false
         }
         if (!data.profs) {
-            data.profs = Object.fromEntries(Object.entries(game.settings.get('ard20', 'profs')))
+            data.profs = {weapon: Object.values(game.settings.get('ard20','profs').weapon)}
         }
         for (let prof of Object.keys(game.settings.get('ard20', 'profs'))) {
-            data.profs[prof].value = data.profs[prof].value ? data.profs[prof].value : 0
-            data.profs[prof].type = game.settings.get('ard20', 'profs')[prof].type
-            data.profs[prof].name = game.settings.get('ard20', 'profs')[prof].name
-            data.profs[prof].type_hover = game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs[prof].type]
-            data.profs[prof].type_value = game.i18n.localize(CONFIG.ARd20.prof[data.profs[prof].value]) ?? CONFIG.ARd20.prof[data.profs[prof].value]
+            data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0
+            data.profs.weapon[prof].type = game.settings.get('ard20', 'profs').weapon[prof].type
+            data.profs.weapon[prof].name = game.settings.get('ard20', 'profs').weapon[prof].name
+            data.profs.weapon[prof].type_hover = game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]
+            data.profs.weapon[prof].type_value = game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.profs.weapon[prof].value]
         }
-        if (data.profs.length > game.settings.get('ard20', 'profs').length) {
-            data.profs.splice(game.settings.get('ard20', 'profs').length + 1, data.profs.length - game.settings.get('ard20', 'profs').length)
+        if (data.profs.weapon.length > game.settings.get('ard20', 'profs').weapon.length) {
+            data.profs.splice(game.settings.get('ard20', 'profs').weapon.length + 1, data.profs.length - game.settings.get('ard20', 'profs').weapon.length)
         }
     }
 
