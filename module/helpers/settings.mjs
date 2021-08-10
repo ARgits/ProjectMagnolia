@@ -37,6 +37,25 @@ export const registerSystemSettings = function () {
         restricted: false,
         icon: "fab fa-buffer"
     })
+    game.settings.register('ard20', 'feat', {
+        scope: 'world',
+        config: false,
+        default: {
+            packs: [],
+            folders: []
+        },
+        type: Object,
+        onChange: value => {
+            console.log('Настройка изменилась', value)
+        }
+    })
+    game.settings.registerMenu('ard20', 'featManage', {
+        name: 'SETTINGS.FeatureManage',
+        label: 'SETTINGS.FeatureManage',
+        scope: 'world',
+        type: FeatFormApp,
+        restricted: false
+    })
 }
 class ProfFormApp extends FormApplication {
     static get defaultOptions () {
@@ -95,4 +114,78 @@ class ProfFormApp extends FormApplication {
 
         }
     }
+}
+class FeatFormApp extends FormApplication {
+    static get defaultOptions () {
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            classes: ["ard20"],
+            title: 'Features Management',
+            template: 'systems/ard20/templates/app/feat-settings.html',
+            id: 'feat-settings',
+            width: 600,
+            height: 'auto',
+            submitOnChange: true,
+            closeOnSubmit: false,
+        })
+    }
+    getData (options) {
+        const sheetData = {
+            feat: game.settings.get('ard20', 'feat')
+        }
+        return sheetData
+    }
+    activateListeners (html) {
+        super.activateListeners(html)
+        html.find('.add').click(this._onAdd.bind(this))
+        html.find('.minus').click(this._Delete.bind(this))
+    }
+    async _onAdd (event) {
+        event.preventDefault()
+        const feat = game.settings.get('ard20', 'feat')
+        const button = event.currentTarget
+        switch (button.dataset.type) {
+            case 'pack':
+                feat.packs.push({name: 'new compendium'})
+                await game.settings.set('ard20', 'feat', feat)
+                break
+            case 'folder':
+                feat.folders.push({name: 'new folder'})
+                await game.settings.set('ard20', 'feat', feat)
+        }
+        this.render()
+    }
+    async _Delete (event) {
+        event.preventDefault()
+        const feat = game.settings.get('ard20', 'feat')
+        const button = event.currentTarget
+        switch (button.dataset.type) {
+            case 'pack':
+                feat.packs.splice(button.dataset.key, 1)
+                await game.settings.set('ard20', 'feat', feat)
+                break
+            case 'folder':
+                feat.folders.splice(button.dataset.key, 1)
+                await game.settings.set('ard20', 'feat', feat)
+                break
+        }
+        this.render()
+    }
+    async _updateObject (event, formData) {
+        const profs = game.settings.get('ard20', 'profs')
+        console.log(formData)
+        let dirty = false
+        for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
+            const [type, index, propertyName] = fieldName.split('.')
+            if (profs[type][index][propertyName] !== value) {
+                //log({index, propertyName, value});
+                profs[type][index][propertyName] = value
+                dirty = dirty || true
+            }
+            if (dirty) {
+                await game.settings.set('ard20', 'profs', profs)
+            }
+
+        }
+    }
+
 }

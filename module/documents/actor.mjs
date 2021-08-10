@@ -55,6 +55,7 @@ export class ARd20Actor extends Actor {
             // Calculate the modifier using d20 rules.
             ability.mod = Math.floor((ability.value - 10) / 2)
         };
+        //calculate level and expierence
         const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS
         if (data.attributes.xp.used) {
             data.attributes.xp.used = data.attributes.xp.used ?? 0
@@ -68,22 +69,24 @@ export class ARd20Actor extends Actor {
         }
         data.attributes.xp.bar_max = data.attributes.xp.level - data.attributes.xp.level_min
         data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min
+        //calculate proficiency bonus and die
         data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4)
         data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2
-        data.defences = data.defences??{}
-        data.defences.reflex = data.defences.reflex??{}
-        data.defences.reflex.bonus = data.defences.reflex.bonus??0
-        data.defences.reflex.value = 8+data.attributes.prof_bonus+data.abilities.dex.mod+data.abilities.int.mod + parseInt(data.defences.reflex.bonus)
+        //calculate character's defences, including damage resistances
+        data.defences = data.defences ?? {}
+        data.defences.reflex = data.defences.reflex ?? {}
+        data.defences.reflex.bonus = data.defences.reflex.bonus ?? 0
+        data.defences.reflex.value = 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.reflex.bonus)
         data.defences.reflex.label = "Reflex"
-        data.defences.fortitude = data.defences.fortitude??{}
-        data.defences.fortitude.bonus = data.defences.fortitude.bonus??0
-        data.defences.fortitude.value = 8+data.attributes.prof_bonus+data.abilities.str.mod+data.abilities.con.mod + parseInt(data.defences.fortitude.bonus)
+        data.defences.fortitude = data.defences.fortitude ?? {}
+        data.defences.fortitude.bonus = data.defences.fortitude.bonus ?? 0
+        data.defences.fortitude.value = 8 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.fortitude.bonus)
         data.defences.fortitude.label = "Fortitude"
-        data.defences.will = data.defences.will??{}
-        data.defences.will.bonus = data.defences.will.bonus??0
-        data.defences.will.value = 8+data.attributes.prof_bonus+data.abilities.wis.mod+data.abilities.cha.mod + parseInt(data.defences.will.bonus)
+        data.defences.will = data.defences.will ?? {}
+        data.defences.will.bonus = data.defences.will.bonus ?? 0
+        data.defences.will.value = 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.will.bonus)
         data.defences.will.label = "will"
-        
+
         if (!data.defences.damage) {
             data.defences.damage = {
                 physic: {},
@@ -102,6 +105,7 @@ export class ARd20Actor extends Actor {
                 label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key]
             }
         }
+        //calculate rolls for character's skills
         for (let [key, skill] of Object.entries(data.skills)) {
             skill.prof = (skill.prof < 2) ? skill.prof : 2
             if (skill.prof == 0) {
@@ -117,8 +121,9 @@ export class ARd20Actor extends Actor {
         if (!data.isReady) {
             data.isReady = false
         }
+        //calculate character's armor,weapon and tool proficinecies
         if (!data.profs) {
-            data.profs = {weapon: game.settings.get('ard20','profs').weapon}
+            data.profs = {weapon: game.settings.get('ard20', 'profs').weapon}
         }
         for (let prof of Object.keys(game.settings.get('ard20', 'profs').weapon)) {
             data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0

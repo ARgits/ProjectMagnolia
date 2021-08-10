@@ -14,5 +14,6 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/ard20/templates/actor/parts/actor-weapon.html",
     "systems/ard20/templates/actor/parts/cha-adv.html",
     "systems/ard20/templates/app/prof-settings.html",
+    "systems/ard20/templates/app/feat-settings.html",
   ])
 }
