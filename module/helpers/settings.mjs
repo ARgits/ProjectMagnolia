@@ -175,10 +175,10 @@ class FeatFormApp extends FormApplication {
         console.log(formData)
         let dirty = false
         for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
-            const [type, index, propertyName] = fieldName.split('.')
-            if (feat[type][index][propertyName] !== value) {
+            const [type, index] = fieldName.split('.')
+            if (feat[type][index] !== value) {
                 //log({index, propertyName, value});
-                feat[type][index][propertyName] = value
+                feat[type][index] = value
                 dirty = dirty || true
             }
             if (dirty) {
