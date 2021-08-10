@@ -71,7 +71,7 @@ export class ARd20Item extends Item {
       data.xp.length = data.level.has ? data.level.max : 1
       if (data.xp.length > 1) {
         for (let i = 1; i < data.level.max; i++) {
-          data.xp[i] = Math.round(data.xp[i - 1] * 1.5)
+          data.xp[i] = Math.round(data.xp[i - 1] * 1.5 / 5) * 5
         }
       }
     }
