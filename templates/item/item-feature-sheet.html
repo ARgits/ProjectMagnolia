@@ -33,7 +33,9 @@
       <div>
         has level <input type="checkbox" name="data.level.has" {{checked data.level.has}} />
         {{#unless data.level.has}}
-          maximum level <input type="text" name="data.level.max" value="{{data.level.max}}" />
+          <label>
+            maximum level <input type="text" name="data.level.max" value="{{data.level.max}}" />
+          </label>
         {{/unless}}
       </div>
       <div>
