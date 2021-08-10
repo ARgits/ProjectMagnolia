@@ -65,13 +65,15 @@ export class ARd20Item extends Item {
       //define levels
       data.level = data.level || {}
       data.level.has = data.level.has !== undefined ? data.level.has : false
-      data.level.max = data.level.has ? (data.level.max || 4) : 1
+      data.level.max = data.level.has ? (data.level.max || 4) : null
       data.level.current = data.level.current || 1
       //define exp cost
       data.xp.length = data.level.has ? data.level.max : 1
       if (data.xp.length > 1) {
+        n = (10 - data.level.max) / data.level.max
+        let k = 1 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100 * Math.sign(n))
         for (let i = 1; i < data.level.max; i++) {
-          data.xp[i] = Math.round(data.xp[i - 1] * 1.5 / 5) * 5
+          data.xp[i] = Math.round(data.xp[i - 1] * k / 5) * 5
         }
       }
     }
