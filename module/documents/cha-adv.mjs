@@ -49,7 +49,9 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
             }
-            this.data.content.features = game.packs.filter((pack) => (pack.metadata.name === 'Features'))
+            this.data.content.features = {
+                packs: game.packs
+            } 
 
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {

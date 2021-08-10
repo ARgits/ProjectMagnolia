@@ -1,13 +1,15 @@
 <form>
     <section class='sheet-body'>
         <div class='ability flexcoll flex-group-center align-center'>
+            packs
             {{#each feat.packs as |feat key|}}
                 <div class='grid grid-2col'>
-                    <input type='text' data-dtype='text' data-name='name' data-key='{{key}}' name='packs.{{key}}.name' value="{{feat.name}}" />
+                    <input type='text' data-dtype='text' data-name='name' data-key='{{key}}' name='packs.{{key}}' value="{{feat}}" />
                     <button type="button" class="minus far fa-minus-square" data-key='{{key}}'></button>
                 </div>
             {{/each}}
             <button type="button" class='add far fa-plus-square' data-type='pack'></button>
+            <hr>
             {{#each feat.folders as |feat key|}}
                 <div class='grid grid-2col'>
                     <input type='text' data-dtype='text' data-name='name' data-key='{{key}}' name='folders.{{key}}.name' value="{{feat.name}}" />

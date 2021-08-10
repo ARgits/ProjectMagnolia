@@ -145,11 +145,11 @@ class FeatFormApp extends FormApplication {
         const button = event.currentTarget
         switch (button.dataset.type) {
             case 'pack':
-                feat.packs.push({name: 'new compendium'})
+                feat.packs.push('new compendium')
                 await game.settings.set('ard20', 'feat', feat)
                 break
             case 'folder':
-                feat.folders.push({name: 'new folder'})
+                feat.folders.push('new folder')
                 await game.settings.set('ard20', 'feat', feat)
         }
         this.render()
@@ -171,18 +171,18 @@ class FeatFormApp extends FormApplication {
         this.render()
     }
     async _updateObject (event, formData) {
-        const profs = game.settings.get('ard20', 'profs')
+        const feat = game.settings.get('ard20', 'feat')
         console.log(formData)
         let dirty = false
         for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
             const [type, index, propertyName] = fieldName.split('.')
-            if (profs[type][index][propertyName] !== value) {
+            if (feat[type][index][propertyName] !== value) {
                 //log({index, propertyName, value});
-                profs[type][index][propertyName] = value
+                feat[type][index][propertyName] = value
                 dirty = dirty || true
             }
             if (dirty) {
-                await game.settings.set('ard20', 'profs', profs)
+                await game.settings.set('ard20', 'feat', feat)
             }
 
         }
