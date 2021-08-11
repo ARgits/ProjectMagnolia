@@ -49,7 +49,7 @@ export class CharacterAdvancement extends FormApplication {
             for (let key of game.settings.get('ard20', 'feat').packs) {
                 console.log(key)
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
-                    feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key)[0].index))
+                    feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key&&pack.metadata.entity==='Item')[0].index))
                     feat_list = feat_list.flat()
                     console.log('feat_list', feat_list)
                     for (let feat of feat_list) {
