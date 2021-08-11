@@ -73,6 +73,8 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             for (let [k, v] of Object.entries(this.data.features)) {
+                console.log(k)
+                console.log(v)
                 if (this.data.features[k].data.data.source.value === 'mar') {
                     this.data.count.features.martial += 1
                 } else if (this.data.features[k].data.data.source.value === 'div') {
