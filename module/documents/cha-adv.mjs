@@ -44,8 +44,8 @@ export class CharacterAdvancement extends FormApplication {
                 features: {}
             }
             this.data.features = []
-            feat_list = []
-            temp_feat_list = []
+            let feat_list = []
+            let temp_feat_list = []
             for (let [key, name] of game.settings.get('ard20', 'feat').packs) {
                 console.log(key, name)
                 if (game.packs.filter(pack => pack.metadata.name === name).length !== 0) {
