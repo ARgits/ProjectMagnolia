@@ -62,7 +62,7 @@ export class CharacterAdvancement extends FormApplication {
             }
             for (let key of game.settings.get('ard20', 'feat').folders) {
                 console.log(key)
-                if (game.folders.filter(folder => folder.data.label === key).length !== 0) {
+                if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
                     temp_feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
                     temp_feat_list = temp_feat_list.flat()
                 }
