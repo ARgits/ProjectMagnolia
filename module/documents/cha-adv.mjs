@@ -18,7 +18,7 @@ export class CharacterAdvancement extends FormApplication {
         })
     }
 
-    getData (options) {
+    async getData (options) {
         if (!this.data) {
             this.data = {}
             this.data.abilities = duplicate(this.object.data.data.abilities)
@@ -43,15 +43,24 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {},
                 features: {}
             }
-            this.data.features = duplicate(this.object.data.items.filter((item) => item.data.type === 'feature'))
-            if (!game.folders.filter((folder) => (folder.type === 'JournalEntry') && ((folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills"))))) {
-                this.data.content.skills.value = game.packs.filter((pack) => (pack.metadata.name === 'Skills') || (pack.metadata.name === game.i18n.localize("ARd20.skills")))[0]
-            } else {
-                this.data.content.skills.value = game.folders.filter((folder) => (folder.data.name === 'Skills') || (folder.data.name === game.i18n.localize("ARd20.skills")))[0]
+            this.data.features = []
+            feat_list = []
+            temp_feat_list = []
+            for (let [key, name] of game.settings.get('ard20', 'feat').packs) {
+                console.log(key, name)
+                if (game.packs.filter(pack => pack.metadata.name === name).length !== 0) {
+                    feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.name === name)[0].index))
+                    feat_list.flat()
+                    console.log(feat_list)
+                    for (let [key, obj] of feat_list) {
+                        console.log(key, obj)
+                        let doc = await game.packs.get(name).getDocument(obj._id)
+                        temp_feat_list.push(doc)
+                    }
+                }
             }
-            this.data.content.features = {
-                packs: game.packs
-            } 
+            this.data.features = temp_feat_list
+
 
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
@@ -108,7 +117,7 @@ export class CharacterAdvancement extends FormApplication {
             } else {
                 this.data.skills[k].isXP = true
             }
-            for (let[k,v] of Object.entries(this.data.profs.weapon)){
+            for (let [k, v] of Object.entries(this.data.profs.weapon)) {
                 v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value]
             }
 
@@ -121,7 +130,8 @@ export class CharacterAdvancement extends FormApplication {
             count: this.data.count,
             content: this.data.content,
             hover: this.data.hover,
-            profs: this.data.profs
+            profs: this.data.profs,
+            feats: this.data.features
         }
         console.log(templateData)
         return templateData
