@@ -51,7 +51,7 @@ export class CharacterAdvancement extends FormApplication {
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key)[0].index))
                     feat_list = feat_list.flat()
-                    console.log('feat_list',feat_list)
+                    console.log('feat_list', feat_list)
                     for (let feat of feat_list) {
                         console.log(feat)
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
@@ -63,7 +63,7 @@ export class CharacterAdvancement extends FormApplication {
             for (let key of game.settings.get('ard20', 'feat').folders) {
                 console.log(key)
                 if (game.folders.filter(folder => folder.data.label === key).length !== 0) {
-                    temp_feat_list.push(game.folders.filter(folder => folder.data.name === key)[0].content)
+                    temp_feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
