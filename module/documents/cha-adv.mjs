@@ -51,7 +51,7 @@ export class CharacterAdvancement extends FormApplication {
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key)[0].index))
                     feat_list.flat()
-                    console.log(feat_list)
+                    console.log('feat_list',feat_list)
                     for (let feat of feat_list) {
                         console.log(feat)
                         key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
@@ -72,7 +72,7 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[2] += 1
                 }
             }
-            for (let [k, v] of Object.entries(this.data.features)) {
+            /*for (let [k, v] of Object.entries(this.data.features)) {
                 if (this.data.features[k].data.source.value === 'mar') {
                     this.data.count.features.martial += 1
                 } else if (this.data.features[k].data.source.value === 'div') {
@@ -84,7 +84,7 @@ export class CharacterAdvancement extends FormApplication {
                 } else if (this.data.features[k].data.source.value === 'psy') {
                     this.data.count.features.psyhic += 1
                 }
-            }
+            }*/
             this.data.hover = {
                 value: "",
                 name: ""
