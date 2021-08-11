@@ -46,15 +46,15 @@ export class CharacterAdvancement extends FormApplication {
             this.data.features = []
             let feat_list = []
             let temp_feat_list = []
-            for (let [key, name] of game.settings.get('ard20', 'feat').packs) {
-                console.log(key, name)
-                if (game.packs.filter(pack => pack.metadata.name === name).length !== 0) {
-                    feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.name === name)[0].index))
+            for (let key of game.settings.get('ard20', 'feat').packs) {
+                console.log(key)
+                if (game.packs.filter(pack => pack.metadata.name === key).length !== 0) {
+                    feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.name === key)[0].index))
                     feat_list.flat()
                     console.log(feat_list)
-                    for (let [key, obj] of feat_list) {
-                        console.log(key, obj)
-                        let doc = await game.packs.get(name).getDocument(obj._id)
+                    for (let feat of feat_list) {
+                        console.log(feat)
+                        let doc = await game.packs.get(key).getDocument(feat._id)
                         temp_feat_list.push(doc)
                     }
                 }
