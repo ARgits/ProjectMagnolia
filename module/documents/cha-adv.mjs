@@ -52,6 +52,7 @@ export class CharacterAdvancement extends FormApplication {
 
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.metadata.entity === 'Item')[0].index))
+                    feat_list = feat_list.flat()
                     for (let feat of feat_list) {
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
@@ -79,7 +80,7 @@ export class CharacterAdvancement extends FormApplication {
             }
             console.log(id_array)
             console.log(name_array)
-            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && ((!(id_array.includes(item.data._id)) || !(name_array.includes(item.data.name)))))
+            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
