@@ -49,6 +49,7 @@ export class CharacterAdvancement extends FormApplication {
             let feat_list = []
             let temp_feat_list = []
             for (let key of game.settings.get('ard20', 'feat').packs) {
+
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.metadata.entity === 'Item')[0].index))
                     for (let feat of feat_list) {
@@ -70,11 +71,14 @@ export class CharacterAdvancement extends FormApplication {
             this.data.feats.learned = this.object.data.items.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
             console.log('learned items')
             let id_array = []
+            let name_array = []
             for (let i of this.data.feats.learned) {
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
+                name_array.push(i.data.name)
             }
             console.log(id_array)
-            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id))))
+            console.log(name_array)
+            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && ((!(id_array.includes(item.data._id)) || !(name_array.includes(item.data.name)))))
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
