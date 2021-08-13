@@ -67,7 +67,7 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             console.log(temp_feat_list)
-            this.data.feats.learned = duplicate(this.object.data.items).filter(item=>(item.data.type==='feature'||item.data.type==='spell'))
+            this.data.feats.learned = this.object.data.items.filter(item=>(item.data.type==='feature'||item.data.type==='spell'))
             let id_array = []
             for (let i of Object.entries(this.data.feats.learned)){
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
