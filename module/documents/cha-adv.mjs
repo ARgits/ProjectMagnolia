@@ -48,11 +48,9 @@ export class CharacterAdvancement extends FormApplication {
             }
             let feat_list = []
             let temp_feat_list = []
-            for (let key of game.settings.get('ard20', 'feat').packs) {
-                console.log(key)
+            for (let key of game.settings.get('ard20', 'feat').packs) {)
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.metadata.entity === 'Item')[0].index))
-                    feat_list = feat_list.flat()
                     for (let feat of feat_list) {
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
@@ -66,14 +64,15 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
+            temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
             console.log(temp_feat_list)
-            this.data.feats.learned = this.object.data.items.filter(item=>(item.data.type==='feature'||item.data.type==='spell'))
+            this.data.feats.learned = this.object.data.items.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
             let id_array = []
-            for (let i of Object.entries(this.data.feats.learned)){
+            for (let i of Object.entries(this.data.feats.learned)) {
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
             }
             console.log(id_array)
-            this.data.feats.awail = temp_feat_list.filter(item=>(item.data.type==='feature'||item.data.type==='spell')&&(!(id_array.includes(item.data._id))))
+            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id))))
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
@@ -84,8 +83,6 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             for (let [k, v] of Object.entries(this.data.feats.learned)) {
-                console.log(k)
-                console.log(v)
                 if (v.data.data.source?.value === 'mar') {
                     this.data.count.feats.mar += 1
                 } else if (v.data.data.source?.value === 'div') {
@@ -202,11 +199,11 @@ export class CharacterAdvancement extends FormApplication {
                 switch (button.dataset.action) {
                     case 'plus':
                         data.feats.awail[button.dataset.key].data.data.isLearned = true
-                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value]+=1
+                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] += 1
                         break
                     case 'minus':
                         data.feats.awail[button.dataset.key].data.data.isLearned = false
-                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value]-=1
+                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] -= 1
                         break
                 }
         }
