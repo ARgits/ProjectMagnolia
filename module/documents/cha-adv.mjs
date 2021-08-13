@@ -72,6 +72,7 @@ export class CharacterAdvancement extends FormApplication {
             for (let i of Object.entries(this.data.feats.learned)){
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
             }
+            console.log(id_array)
             this.data.feats.awail = temp_feat_list.filter(item=>(item.data.type==='feature'||item.data.type==='spell')&&(!(id_array.includes(item.data._id))))
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
