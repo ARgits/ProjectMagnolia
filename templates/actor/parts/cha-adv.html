@@ -72,9 +72,9 @@
                 <div class="ability flexcoll-group-center align-center">
                     {{#each feats.awail as |feat key|}}
                         <div class="ability flexrow grid grid-7col">
-                            <label for='feats.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
+                            <label for='feats.awail.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
                             <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
-                            <input hidden name='feats.{{key}}.data.purchased' value={{feat.data.purchased}} type="number" />
+                            <input hidden name='feats.awail.{{key}}.data.purchased' value={{feat.data.purchased}} type="number" />
                             <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
                             {{#if feat.xp}}<span class='ability' name='feats.{{key}}.xp'>{{numberFormat feat.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
