@@ -1,11 +1,5 @@
 import {ARd20Actor} from "./actor.mjs"
 export class CharacterAdvancement extends FormApplication {
-    /*    constructor(object,options){
-            super(object,options);
-            submitOnChange: false
-    
-        }
-      */
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
@@ -67,19 +61,14 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
-            console.log('temp_feat_list до', temp_feat_list)
             temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
-            console.log('temp_feat_list после', temp_feat_list)
             this.data.feats.learned = this.object.data.items.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
-            console.log('learned items')
             let id_array = []
             let name_array = []
             for (let i of this.data.feats.learned) {
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
                 name_array.push(i.data.name)
             }
-            console.log(id_array)
-            console.log(name_array)
             this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
             let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== 0 && item.data.data.level.current === item.data.data.level.max))
             leveled_feats_array = leveled_feats_array.flat()
@@ -129,7 +118,6 @@ export class CharacterAdvancement extends FormApplication {
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
             this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof
             this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false
-
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
             } else {
