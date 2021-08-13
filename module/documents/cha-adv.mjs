@@ -43,7 +43,10 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {},
                 features: {}
             }
-            this.data.features = []
+            this.data.features = {
+                learned: [],
+                awail: []
+            }
             let feat_list = []
             let temp_feat_list = []
             for (let key of game.settings.get('ard20', 'feat').packs) {
@@ -67,7 +70,8 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
-            this.data.features = temp_feat_list
+            this.data.features.learned = temp_feat_list.filter(feat => feat.data.isLearned === true)
+            this.data.features.awail = temp_feat_list.filter(feat => feat.data.awail === false)
 
 
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -197,6 +201,15 @@ export class CharacterAdvancement extends FormApplication {
                         break
                 }
                 break
+            case 'feat':
+                switch (button.dataset.action) {
+                    case 'learn':
+                        data.feats.awail[button.dataset.key].data.data.isLearned = true
+                        break
+                    case 'unlearn':
+                        data.feats.awail[button.dataset.key].data.data.isLearned = false
+                        break
+                }
 
         }
         this.render()

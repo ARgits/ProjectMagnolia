@@ -68,18 +68,19 @@
             </div>
         </div>
         <div class='tab' data-tab='feats' data-group='primary-tabs'>
-            <div>
+            <div class='grid grid-2col'>
                 <div class="ability flexcoll-group-center align-center">
                     {{#each feats as |feat key|}}
                         <div class="ability flexrow grid grid-7col">
                             <label for='feats.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
-                            <button class='change far fa-arrow-alt-circle-down' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
+                            <button class='change fas fa-minus-square' data-type="prof" type="button" {{#if prof.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='feats.{{key}}.data.purchased' value={{feat.data.purchased}} type="number" />
-                            <button class='change far fa-arrow-alt-circle-up' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
+                            <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
                             {{#if feat.xp}}<span class='ability' name='feats.{{key}}.xp'>{{numberFormat feat.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
                     {{/each}}
                 </div>
+                <aside class='verticalLine'>заглушка</aside>
             </div>
         </div>
         </div>

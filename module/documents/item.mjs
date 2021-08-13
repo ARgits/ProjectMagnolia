@@ -60,6 +60,7 @@ export class ARd20Item extends Item {
       data.type.label = labels.type
     }
     if (itemData.type === "feature") {
+      data.isLearned = this.isOwned? true:false
       data.source.value = data.source.value || "mar"
       data.keys = []
       //define levels
