@@ -32,11 +32,11 @@ export class CharacterAdvancement extends FormApplication {
                     2: 0
                 },
                 feats: {
-                    martial: 0,
-                    magical: 0,
-                    divine: 0,
-                    primal: 0,
-                    psyhic: 0
+                    mar: 0,
+                    mag: 0,
+                    div: 0,
+                    pri: 0,
+                    psy: 0
                 }
             }
             this.data.content = {
@@ -70,8 +70,8 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
-            this.data.feats.learned = temp_feat_list.filter(feat => feat.data.data.isLearned === true)
-            this.data.feats.awail = temp_feat_list.filter(feat => feat.data.data.isLearned === false)
+            this.data.feats.learned = duplicate(temp_feat_list.filter(feat => feat.data.data.isLearned === true))
+            this.data.feats.awail = duplicate(temp_feat_list.filter(feat => feat.data.data.isLearned === false))
 
 
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
