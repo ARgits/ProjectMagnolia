@@ -83,18 +83,18 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[2] += 1
                 }
             }
-            for (let [k, v] of Object.entries(this.data.features)) {
+            for (let [k, v] of Object.entries(this.data.features.learned)) {
                 console.log(k)
                 console.log(v)
-                if (learned[v].data.data.source?.value === 'mar') {
+                if (v.data.data.source?.value === 'mar') {
                     this.data.count.features.martial += 1
-                } else if (learned[v].data.data.source?.value === 'div') {
+                } else if (v.data.data.source?.value === 'div') {
                     this.data.count.features.divine += 1
-                } else if (learned[v].data.data.source?.value === 'mag') {
+                } else if (v.data.data.source?.value === 'mag') {
                     this.data.count.features.magical += 1
-                } else if (learned[v].data.data.source?.value === 'pri') {
+                } else if (v.data.data.source?.value === 'pri') {
                     this.data.count.features.primal += 1
-                } else if (learned[v].data.data.source?.value === 'psy') {
+                } else if (v.data.data.source?.value === 'psy') {
                     this.data.count.features.psyhic += 1
                 }
             }
