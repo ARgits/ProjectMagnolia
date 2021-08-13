@@ -71,7 +71,7 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             this.data.features.learned = temp_feat_list.filter(feat => feat.data.isLearned === true)
-            this.data.features.awail = temp_feat_list.filter(feat => feat.data.awail === false)
+            this.data.features.awail = temp_feat_list.filter(feat => feat.data.isLearned === false)
 
 
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
