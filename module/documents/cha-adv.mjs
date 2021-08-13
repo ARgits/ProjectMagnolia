@@ -132,6 +132,9 @@ export class CharacterAdvancement extends FormApplication {
                 v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value]
             }
         }
+        for (let [key,object] of this.data.feats.awail){
+            object.data.data.level.xp = object.data.data.level.xp[object.data.data.level.current-1]
+        }
         const templateData = {
             abilities: this.data.abilities,
             xp: this.data.xp,

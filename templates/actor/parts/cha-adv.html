@@ -75,7 +75,7 @@
                             <label for='feats.awail.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
                             <button class='change fas fa-minus-square' data-type="feat" type="button" {{#unless feat.data.data.isLearned}}disabled{{/unless}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
-                            <span>{{feat.data.data.xp.[feat.data.data.level.current-1]}}</span>
+                            <span>{{feat.data.data.level.xp}}</span>
                             <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.data.data.isLearned}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
                             {{#if feat.xp}}<span class='ability' name='feats.{{key}}.xp'>{{numberFormat feat.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
