@@ -153,8 +153,6 @@ export class ARd20Item extends Item {
         flavor: label,
         emote: true,
       })
-      let id = game.messages._source[game.messages.size - 2]._id
-      console.log(id)
 
       const damageRoll = new Roll(
         rollData.item.damage.common.current,
