@@ -67,8 +67,8 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             console.log(temp_feat_list)
-            this.data.feats.learned = duplicate(temp_feat_list.filter(feat => feat.data.data.isLearned === true))
-            this.data.feats.awail = duplicate(temp_feat_list.filter(feat => feat.data.data.isLearned === false))
+            this.data.feats.learned = temp_feat_list.filter(feat => feat.data.data.isLearned === true)
+            this.data.feats.awail = temp_feat_list.filter(feat => feat.data.data.isLearned === false)
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
