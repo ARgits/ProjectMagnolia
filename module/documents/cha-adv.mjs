@@ -87,15 +87,15 @@ export class CharacterAdvancement extends FormApplication {
                 console.log(k)
                 console.log(v)
                 if (v.data.data.source?.value === 'mar') {
-                    this.data.count.features.martial += 1
+                    this.data.count.features.mar += 1
                 } else if (v.data.data.source?.value === 'div') {
-                    this.data.count.features.divine += 1
+                    this.data.count.features.div += 1
                 } else if (v.data.data.source?.value === 'mag') {
-                    this.data.count.features.magical += 1
+                    this.data.count.features.mag += 1
                 } else if (v.data.data.source?.value === 'pri') {
-                    this.data.count.features.primal += 1
+                    this.data.count.features.pri += 1
                 } else if (v.data.data.source?.value === 'psy') {
-                    this.data.count.features.psyhic += 1
+                    this.data.count.features.psy += 1
                 }
             }
             this.data.hover = {
@@ -205,9 +205,11 @@ export class CharacterAdvancement extends FormApplication {
                 switch (button.dataset.action) {
                     case 'learn':
                         data.feats.awail[button.dataset.key].data.data.isLearned = true
+                        data.count.features[data.feats.awail[button.dataset.key].data.data.source.value]+=1
                         break
                     case 'unlearn':
                         data.feats.awail[button.dataset.key].data.data.isLearned = false
+                        data.count.features[data.feats.awail[button.dataset.key].data.data.source.value]-=1
                         break
                 }
 
