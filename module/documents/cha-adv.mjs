@@ -56,6 +56,7 @@ export class CharacterAdvancement extends FormApplication {
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
                         temp_feat_list.push(doc)
+                        temp_feat_list = temp_feat_list.flat()
                     }
                 }
             }
