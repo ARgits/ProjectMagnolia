@@ -224,6 +224,5 @@ export class CharacterAdvancement extends FormApplication {
         obj['data.profs'] = updateData.profs
         console.log(obj)
         await actor.update(obj)
-        await 
     }
 }
