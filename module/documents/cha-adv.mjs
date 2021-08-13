@@ -64,11 +64,13 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
+            console.log('temp_feat_list до', temp_feat_list)
             temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
-            console.log(temp_feat_list)
+            console.log('temp_feat_list после', temp_feat_list)
             this.data.feats.learned = this.object.data.items.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
+            console.log('learned items')
             let id_array = []
-            for (let i of Object.entries(this.data.feats.learned)) {
+            for (let i of this.data.feats.learned) {
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
             }
             console.log(id_array)
