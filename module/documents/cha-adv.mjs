@@ -31,7 +31,7 @@ export class CharacterAdvancement extends FormApplication {
                     1: 0,
                     2: 0
                 },
-                features: {
+                feats: {
                     martial: 0,
                     magical: 0,
                     divine: 0,
@@ -41,9 +41,9 @@ export class CharacterAdvancement extends FormApplication {
             }
             this.data.content = {
                 skills: {},
-                features: {}
+                feats: {}
             }
-            this.data.features = {
+            this.data.feats = {
                 learned: [],
                 awail: []
             }
@@ -70,8 +70,8 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
-            this.data.features.learned = temp_feat_list.filter(feat => feat.data.data.isLearned === true)
-            this.data.features.awail = temp_feat_list.filter(feat => feat.data.data.isLearned === false)
+            this.data.feats.learned = temp_feat_list.filter(feat => feat.data.data.isLearned === true)
+            this.data.feats.awail = temp_feat_list.filter(feat => feat.data.data.isLearned === false)
 
 
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -83,19 +83,19 @@ export class CharacterAdvancement extends FormApplication {
                     this.data.count.skills[2] += 1
                 }
             }
-            for (let [k, v] of Object.entries(this.data.features.learned)) {
+            for (let [k, v] of Object.entries(this.data.feats.learned)) {
                 console.log(k)
                 console.log(v)
                 if (v.data.data.source?.value === 'mar') {
-                    this.data.count.features.mar += 1
+                    this.data.count.feats.mar += 1
                 } else if (v.data.data.source?.value === 'div') {
-                    this.data.count.features.div += 1
+                    this.data.count.feats.div += 1
                 } else if (v.data.data.source?.value === 'mag') {
-                    this.data.count.features.mag += 1
+                    this.data.count.feats.mag += 1
                 } else if (v.data.data.source?.value === 'pri') {
-                    this.data.count.features.pri += 1
+                    this.data.count.feats.pri += 1
                 } else if (v.data.data.source?.value === 'psy') {
-                    this.data.count.features.psy += 1
+                    this.data.count.feats.psy += 1
                 }
             }
             this.data.hover = {
@@ -145,7 +145,7 @@ export class CharacterAdvancement extends FormApplication {
             content: this.data.content,
             hover: this.data.hover,
             profs: this.data.profs,
-            feats: this.data.features
+            feats: this.data.feats
         }
         console.log(templateData)
         return templateData
@@ -204,12 +204,12 @@ export class CharacterAdvancement extends FormApplication {
             case 'feat':
                 switch (button.dataset.action) {
                     case 'plus':
-                        data.features.awail[button.dataset.key].data.data.isLearned = true
-                        data.count.features[data.feats.awail[button.dataset.key].data.data.source.value]+=1
+                        data.feats.awail[button.dataset.key].data.data.isLearned = true
+                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value]+=1
                         break
                     case 'minus':
-                        data.features.awail[button.dataset.key].data.data.isLearned = false
-                        data.count.features[data.feats.awail[button.dataset.key].data.data.source.value]-=1
+                        data.feats.awail[button.dataset.key].data.data.isLearned = false
+                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value]-=1
                         break
                 }
 
