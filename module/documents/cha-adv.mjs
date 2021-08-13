@@ -17,7 +17,6 @@ export class CharacterAdvancement extends FormApplication {
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
         })
     }
-
     async getData (options) {
         if (!this.data) {
             this.data = {}
@@ -54,9 +53,7 @@ export class CharacterAdvancement extends FormApplication {
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.metadata.entity === 'Item')[0].index))
                     feat_list = feat_list.flat()
-                    console.log('feat_list', feat_list)
                     for (let feat of feat_list) {
-                        console.log(feat)
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
                         temp_feat_list.push(doc)
@@ -64,16 +61,14 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             for (let key of game.settings.get('ard20', 'feat').folders) {
-                console.log(key)
                 if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
                     temp_feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
+            console.log(temp_feat_list)
             this.data.feats.learned = duplicate(temp_feat_list.filter(feat => feat.data.data.isLearned === true))
             this.data.feats.awail = duplicate(temp_feat_list.filter(feat => feat.data.data.isLearned === false))
-
-
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
@@ -134,8 +129,6 @@ export class CharacterAdvancement extends FormApplication {
             for (let [k, v] of Object.entries(this.data.profs.weapon)) {
                 v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value]
             }
-
-
         }
         const templateData = {
             abilities: this.data.abilities,
@@ -151,7 +144,6 @@ export class CharacterAdvancement extends FormApplication {
         return templateData
 
     }
-
     activateListeners (html) {
         super.activateListeners(html)
         html.find('.change').click(this._onChange.bind(this))
@@ -212,7 +204,6 @@ export class CharacterAdvancement extends FormApplication {
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value]-=1
                         break
                 }
-
         }
         this.render()
     }
