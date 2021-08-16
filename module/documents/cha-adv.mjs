@@ -43,9 +43,7 @@ export class CharacterAdvancement extends FormApplication {
             let feat_list = []
             let temp_feat_list = []
             /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
-
             for (let key of game.settings.get('ard20', 'feat').packs) {
-
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
                     feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.metadata.entity === 'Item')[0].index))
                     feat_list = feat_list.flat()
@@ -58,19 +56,34 @@ export class CharacterAdvancement extends FormApplication {
                             type: doc.data.type,
                             data: doc.data.data
                         }
+                        console.log(item)
                         temp_feat_list.push(item)
                         temp_feat_list = temp_feat_list.flat()
                     }
                 }
             }
+            console.log(temp_feat_list)
             /* same as above, but for folders*/
             for (let key of game.settings.get('ard20', 'feat').folders) {
                 if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
-                    temp_feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
+                    let feat_list = []
+                    feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
+                    feat_list = feat_list.flat()
+                    for (let feat of feat_list){
+                        let item = {
+                            id: feat.data._id,
+                            name:feat.data.name,
+                            type:feat.data.type,
+                            data:feat.data.data
+                        }
+                        console.log(item)
+                        temp_feat_list.push(item)
+                    }
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
-            temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
+            console.log(temp_feat_list)
+            temp_feat_list = temp_feat_list.filter(item => (item.type==='feature'||item.type==='spell'))
             this.data.feats.learned = foundry.utils.deepClone(this.object.data.items)
             this.data.feats.learned = this.data.feats.learned.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
             console.log(this.data.feats.learned)
@@ -81,7 +94,7 @@ export class CharacterAdvancement extends FormApplication {
                 name_array.push(i.data.name)
             }
             //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
-            temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name))))
+            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name))))
             this.data.feats.awail = foundry.utils.deepClone(temp_feat_list)
             /*
             let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
