@@ -73,7 +73,7 @@
                     {{#each feats.awail as |feat key|}}
                         <div class="ability flexrow grid grid-7col">
                             <label for='feats.awail.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
-                            <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if(eq feat.data.level.current 0)}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
+                            <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if (eq feat.data.level.current 0)}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
                             <span>{{feat.data.level.xp}}</span>
                             <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if (eq feat.data.level.current feat.data.level.max)}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
