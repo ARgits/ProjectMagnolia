@@ -37,11 +37,13 @@ export class CharacterAdvancement extends FormApplication {
                 feats: {}
             }
             this.data.feats = {
-                learned: [],
-                awail: []
+                learned: [],//items that character already has
+                awail: [] //items that character can purchase
             }
             let feat_list = []
             let temp_feat_list = []
+            /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
+
             for (let key of game.settings.get('ard20', 'feat').packs) {
 
                 if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
@@ -55,6 +57,7 @@ export class CharacterAdvancement extends FormApplication {
                     }
                 }
             }
+            /* same as above, but for folders*/
             for (let key of game.settings.get('ard20', 'feat').folders) {
                 if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
                     temp_feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
@@ -62,15 +65,17 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
-            this.data.feats.learned = this.object.data.items.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
+            this.data.feats.learned = duplicate(this.object.data.items)
+            this.data.feats.learned = this.data.feats.learned.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
+            console.log(this.data.feats.learned)
             let id_array = []
             let name_array = []
             for (let i of this.data.feats.learned) {
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
                 name_array.push(i.data.name)
             }
+            //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
             this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
-            this.data.feats = foundry.utils.deepClone(this.data.feats)
             /*
             let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
             leveled_feats_array = leveled_feats_array.flat()
