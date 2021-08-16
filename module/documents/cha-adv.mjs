@@ -59,7 +59,7 @@ export class CharacterAdvancement extends FormApplication {
             for (let key of game.settings.get('ard20', 'feat').folders) {
                 if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
                     let folder_array = game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content
-                    folder_array.forEach(item => item=item.data)
+                    folder_array.forEach(function (item) {item = item.data})
                     console.log(folder_array)
                     temp_feat_list.push(folder_array)
                     temp_feat_list = temp_feat_list.flat()
@@ -210,14 +210,14 @@ export class CharacterAdvancement extends FormApplication {
                     case 'plus':
                         data.feats.awail[button.dataset.key].data.data.level.current += 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] += 1
-                        data.xp.get-= data.feats.awail[button.dataset.key].data.data.level.xp
-                        data.xp.used+=data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.get -= data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.used += data.feats.awail[button.dataset.key].data.data.level.xp
                         break
                     case 'minus':
                         data.feats.awail[button.dataset.key].data.data.level.current -= 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] -= 1
-                        data.xp.get+= data.feats.awail[button.dataset.key].data.data.level.xp
-                        data.xp.used-=data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.get += data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.used -= data.feats.awail[button.dataset.key].data.data.level.xp
                         break
                 }
         }
