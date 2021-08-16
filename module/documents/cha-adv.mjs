@@ -168,7 +168,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         for (let [key, object] of Object.entries(this.data.feats.awail)) {
             object.data.level.xp = object.data.xp[object.data.level.current] || 0
-
+            object.ItemData.data = object.data
         }
         const templateData = {
             abilities: this.data.abilities,
@@ -272,6 +272,22 @@ export class CharacterAdvancement extends FormApplication {
         obj['data.skills'] = updateData.skills
         obj['data.profs'] = updateData.profs
         console.log(obj)
+        const feats_data = {
+            new: [],
+            exist: []
+        }
+        const feats = this.data.feats.awail.filter(item => item.data.level.current > 0)
+        for (let [k, v] of Object.entries(feats)) {
+            for (let [n, m] of Object.entries(this.data.feats.learned)) {
+                if (v.id === m.id) {
+                    feats_data.exist.push(v.ItemData)
+                } else {
+                    feats_data.new.push(v.ItemData)
+                }
+            }
+        }
         await actor.update(obj)
+        await actor.updateEmbeddedDocuments('Item', feats_data.exist)
+        await actor.createEmbeddedDocuments('Item', feats_data.new)
     }
 }
