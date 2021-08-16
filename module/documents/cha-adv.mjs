@@ -277,6 +277,7 @@ export class CharacterAdvancement extends FormApplication {
             exist: []
         }
         const feats = this.data.feats.awail.filter(item => item.data.level.current > 0)
+        
         for (let [k, v] of Object.entries(feats)) {
             for (let [n, m] of Object.entries(this.data.feats.learned)) {
                 if (v.id === m.id) {

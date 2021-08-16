@@ -60,14 +60,14 @@ export class ARd20Item extends Item {
       data.type.label = labels.type
     }
     if (itemData.type === "feature") {
-      data.isLearned = this.isOwned? true:false
+      data.isLearned = this.isOwned ? true : false
       data.source.value = data.source.value || "mar"
       data.keys = []
       //define levels
       data.level = data.level || {}
       data.level.has = data.level.has !== undefined ? data.level.has : false
       data.level.max = data.level.has ? (data.level.max || 4) : 1
-      data.level.current = data.level.current || 0
+      data.level.current = itemData.flags.core?.sourceId ? game.items.get(itemData.flags.core?.sourceId).data.data.level.current : data.level.current || 0
       //define exp cost
       data.xp.length = data.level.has ? data.level.max : 1
       if (data.xp.length > 1) {
