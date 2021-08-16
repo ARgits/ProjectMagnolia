@@ -204,13 +204,13 @@ export class CharacterAdvancement extends FormApplication {
             case 'feat':
                 switch (button.dataset.action) {
                     case 'plus':
-                        data.feats.awail[button.dataset.key].data.data.isLearned = true
+                        data.feats.awail[button.dataset.key].data.data.level.current += 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] += 1
                         data.xp.get-= data.feats.awail[button.dataset.key].data.data.level.xp
                         data.xp.used+=data.feats.awail[button.dataset.key].data.data.level.xp
                         break
                     case 'minus':
-                        data.feats.awail[button.dataset.key].data.data.isLearned = false
+                        data.feats.awail[button.dataset.key].data.data.level.current -= 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] -= 1
                         data.xp.get+= data.feats.awail[button.dataset.key].data.data.level.xp
                         data.xp.used-=data.feats.awail[button.dataset.key].data.data.level.xp
