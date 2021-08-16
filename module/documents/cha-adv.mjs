@@ -50,21 +50,15 @@ export class CharacterAdvancement extends FormApplication {
                     for (let feat of feat_list) {
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
-                        let doc_data = doc.data
-                        temp_feat_list.push(doc_data)
+                        temp_feat_list.push(doc)
                         temp_feat_list = temp_feat_list.flat()
                     }
                 }
             }
             for (let key of game.settings.get('ard20', 'feat').folders) {
                 if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
-                    let folder_array = game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content
-                    folder_array.forEach(item => {
-                        doc = item.data
-                        temp_feat_list.push(doc)
-                        temp_feat_list = temp_feat_list.flat()
-                    })
-
+                    temp_feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
+                    temp_feat_list = temp_feat_list.flat()
                 }
             }
             temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
@@ -75,7 +69,7 @@ export class CharacterAdvancement extends FormApplication {
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
                 name_array.push(i.data.name)
             }
-            this.data.feats.awail = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item._id) || name_array.includes(item.name))))
+            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
             this.data.feats = foundry.utils.deepClone(this.data.feats)
             /*
             let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
@@ -212,14 +206,14 @@ export class CharacterAdvancement extends FormApplication {
                     case 'plus':
                         data.feats.awail[button.dataset.key].data.data.level.current += 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] += 1
-                        data.xp.get -= data.feats.awail[button.dataset.key].data.data.level.xp
-                        data.xp.used += data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.get-= data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.used+=data.feats.awail[button.dataset.key].data.data.level.xp
                         break
                     case 'minus':
                         data.feats.awail[button.dataset.key].data.data.level.current -= 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] -= 1
-                        data.xp.get += data.feats.awail[button.dataset.key].data.data.level.xp
-                        data.xp.used -= data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.get+= data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.xp.used-=data.feats.awail[button.dataset.key].data.data.level.xp
                         break
                 }
         }
