@@ -90,18 +90,20 @@ export class CharacterAdvancement extends FormApplication {
             let id_array = []
             let name_array = []
             for (let i of this.data.feats.learned) {
+                if(i.data.flags.core?.sourceId){
                 id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
-                name_array.push(i.data.name)
+                name_array.push(i.data.name)}
+                else{id_array.push(i.id);name_array.push(i.data.name)}
             }
             //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
-            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name))))
+            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name)))||(item.data.level.current<item.data.level.max))
             this.data.feats.awail = foundry.utils.deepClone(temp_feat_list)
-            /*
-            let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
-            leveled_feats_array = leveled_feats_array.flat()
-            this.data.feats.awail.push(leveled_feats_array)
-            this.data.feats.awail = this.data.feats.awail.flat()
-            */
+            for (let [k,v] of Object.entries(this.data.feats.awail)){
+                if (name_array.includes(v.name)){
+                    v.id = this.data.feats.learned.filter(item=>item.name===v.name)[0].id
+                    v.data = this.data.feats.learned.filter(item=>item.name===v.name)[0].data.data
+                }
+            }
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
