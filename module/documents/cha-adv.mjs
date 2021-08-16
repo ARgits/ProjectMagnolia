@@ -70,10 +70,12 @@ export class CharacterAdvancement extends FormApplication {
                 name_array.push(i.data.name)
             }
             this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
-            /*let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
+            /*
+            let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
             leveled_feats_array = leveled_feats_array.flat()
             this.data.feats.awail.push(leveled_feats_array)
-            this.data.feats.awail = this.data.feats.awail.flat()*/
+            this.data.feats.awail = this.data.feats.awail.flat()
+            */
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1

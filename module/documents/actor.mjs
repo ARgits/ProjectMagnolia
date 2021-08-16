@@ -76,15 +76,15 @@ export class ARd20Actor extends Actor {
         data.defences = data.defences ?? {}
         data.defences.reflex = data.defences.reflex ?? {}
         data.defences.reflex.bonus = data.defences.reflex.bonus ?? 0
-        data.defences.reflex.value = 8 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.reflex.bonus)
+        data.defences.reflex.value = 10 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.reflex.bonus)
         data.defences.reflex.label = "Reflex"
         data.defences.fortitude = data.defences.fortitude ?? {}
         data.defences.fortitude.bonus = data.defences.fortitude.bonus ?? 0
-        data.defences.fortitude.value = 8 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.fortitude.bonus)
+        data.defences.fortitude.value = 10 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.fortitude.bonus)
         data.defences.fortitude.label = "Fortitude"
         data.defences.will = data.defences.will ?? {}
         data.defences.will.bonus = data.defences.will.bonus ?? 0
-        data.defences.will.value = 8 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.will.bonus)
+        data.defences.will.value = 10 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.will.bonus)
         data.defences.will.label = "will"
 
         if (!data.defences.damage) {
