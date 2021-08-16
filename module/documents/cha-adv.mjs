@@ -52,7 +52,13 @@ export class CharacterAdvancement extends FormApplication {
                     for (let feat of feat_list) {
                         let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
-                        temp_feat_list.push(doc)
+                        let item = {
+                            id: feat._id,
+                            name: doc.data.name,
+                            type: doc.data.type,
+                            data: doc.data.data
+                        }
+                        temp_feat_list.push(item)
                         temp_feat_list = temp_feat_list.flat()
                     }
                 }
@@ -65,7 +71,7 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
-            this.data.feats.learned = duplicate(this.object.data.items)
+            this.data.feats.learned = foundry.utils.deepClone(this.object.data.items)
             this.data.feats.learned = this.data.feats.learned.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
             console.log(this.data.feats.learned)
             let id_array = []
@@ -75,7 +81,8 @@ export class CharacterAdvancement extends FormApplication {
                 name_array.push(i.data.name)
             }
             //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
-            this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
+            temp_feat_list = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name))))
+            this.data.feats.awail = foundry.utils.deepClone(temp_feat_list)
             /*
             let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
             leveled_feats_array = leveled_feats_array.flat()
@@ -141,7 +148,7 @@ export class CharacterAdvancement extends FormApplication {
             }
         }
         for (let [key, object] of Object.entries(this.data.feats.awail)) {
-            object.data.data.level.xp = object.data.data.xp[object.data.data.level.current - 1] || 0
+            object.data.level.xp = object.data.xp[object.data.level.current - 1] || 0
         }
         const templateData = {
             abilities: this.data.abilities,
@@ -209,16 +216,16 @@ export class CharacterAdvancement extends FormApplication {
             case 'feat':
                 switch (button.dataset.action) {
                     case 'plus':
-                        data.feats.awail[button.dataset.key].data.data.level.current += 1
-                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] += 1
-                        data.xp.get -= data.feats.awail[button.dataset.key].data.data.level.xp
-                        data.xp.used += data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.feats.awail[button.dataset.key].data.level.current += 1
+                        data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += 1
+                        data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp
+                        data.xp.used += data.feats.awail[button.dataset.key].data.level.xp
                         break
                     case 'minus':
-                        data.feats.awail[button.dataset.key].data.data.level.current -= 1
-                        data.count.feats[data.feats.awail[button.dataset.key].data.data.source.value] -= 1
-                        data.xp.get += data.feats.awail[button.dataset.key].data.data.level.xp
-                        data.xp.used -= data.feats.awail[button.dataset.key].data.data.level.xp
+                        data.feats.awail[button.dataset.key].data.level.current -= 1
+                        data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= 1
+                        data.xp.get += data.feats.awail[button.dataset.key].data.level.xp
+                        data.xp.used -= data.feats.awail[button.dataset.key].data.level.xp
                         break
                 }
         }
