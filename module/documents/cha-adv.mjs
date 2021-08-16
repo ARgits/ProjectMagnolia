@@ -54,7 +54,8 @@ export class CharacterAdvancement extends FormApplication {
                             id: feat._id,
                             name: doc.data.name,
                             type: doc.data.type,
-                            data: doc.data.data
+                            data: doc.data.data,
+                            ItemData: doc.data
                         }
                         console.log(item)
                         temp_feat_list.push(item)
@@ -69,12 +70,13 @@ export class CharacterAdvancement extends FormApplication {
                     let feat_list = []
                     feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
                     feat_list = feat_list.flat()
-                    for (let feat of feat_list){
+                    for (let feat of feat_list) {
                         let item = {
                             id: feat.data._id,
-                            name:feat.data.name,
-                            type:feat.data.type,
-                            data:feat.data.data
+                            name: feat.data.name,
+                            type: feat.data.type,
+                            data: feat.data.data,
+                            ItemData: feat.data
                         }
                         console.log(item)
                         temp_feat_list.push(item)
@@ -83,27 +85,29 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             console.log(temp_feat_list)
-            temp_feat_list = temp_feat_list.filter(item => (item.type==='feature'||item.type==='spell'))
+            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell'))
             this.data.feats.learned = foundry.utils.deepClone(this.object.data.items)
             this.data.feats.learned = this.data.feats.learned.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
             console.log(this.data.feats.learned)
             let id_array = []
             let name_array = []
             for (let i of this.data.feats.learned) {
-                if(i.data.flags.core?.sourceId){
-                id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
-                name_array.push(i.data.name)}
-                else{id_array.push(i.id);name_array.push(i.data.name)}
+                if (i.data.flags.core?.sourceId) {
+                    id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
+                    name_array.push(i.data.name)
+                }
+                else {id_array.push(i.id); name_array.push(i.data.name)}
             }
             //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
-            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name)))||(item.data.level.current<item.data.level.max))
-            this.data.feats.awail = foundry.utils.deepClone(temp_feat_list)
-            for (let [k,v] of Object.entries(this.data.feats.awail)){
-                if (name_array.includes(v.name)){
-                    v.id = this.data.feats.learned.filter(item=>item.name===v.name)[0].id
-                    v.data = this.data.feats.learned.filter(item=>item.name===v.name)[0].data.data
+            for (let [k, v] of Object.entries(temp_feat_list)) {
+                if (name_array.includes(v.name)) {
+                    v.id = this.data.feats.learned.filter(item => item.name === v.name)[0].id
+                    v.data = this.data.feats.learned.filter(item => item.name === v.name)[0].data.data
+                    v.ItemData = this.data.feats.learned.filter(item => item.name === v.name)[0].data
                 }
             }
+            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name))) || (item.data.level.current < item.data.level.max))
+            this.data.feats.awail = foundry.utils.deepClone(temp_feat_list)
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
                     this.data.count.skills[0] += 1
@@ -164,6 +168,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         for (let [key, object] of Object.entries(this.data.feats.awail)) {
             object.data.level.xp = object.data.xp[object.data.level.current] || 0
+
         }
         const templateData = {
             abilities: this.data.abilities,
@@ -177,7 +182,6 @@ export class CharacterAdvancement extends FormApplication {
         }
         console.log(templateData)
         return templateData
-
     }
     activateListeners (html) {
         super.activateListeners(html)
