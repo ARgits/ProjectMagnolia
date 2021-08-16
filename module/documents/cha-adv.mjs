@@ -161,7 +161,7 @@ export class CharacterAdvancement extends FormApplication {
             }
         }
         for (let [key, object] of Object.entries(this.data.feats.awail)) {
-            object.data.level.xp = object.data.xp[object.data.level.current - 1] || 0
+            object.data.level.xp = object.data.xp[object.data.level.current] || 0
         }
         const templateData = {
             abilities: this.data.abilities,
@@ -237,8 +237,8 @@ export class CharacterAdvancement extends FormApplication {
                     case 'minus':
                         data.feats.awail[button.dataset.key].data.level.current -= 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= 1
-                        data.xp.get += data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current-1]
-                        data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current-1]
+                        data.xp.get += data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current]
+                        data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current]
                         break
                 }
         }
