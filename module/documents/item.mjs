@@ -153,7 +153,6 @@ export class ARd20Item extends Item {
         rollMode: rollMode,
         flavor: label,
         emote: true,
-        content:'Атака '+attackRoll.total,
       })
 
       const damageRoll = new Roll(
