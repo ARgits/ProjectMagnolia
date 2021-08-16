@@ -237,8 +237,8 @@ export class CharacterAdvancement extends FormApplication {
                     case 'minus':
                         data.feats.awail[button.dataset.key].data.level.current -= 1
                         data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= 1
-                        data.xp.get += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.current]
-                        data.xp.used -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.current]
+                        data.xp.get += data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current]
+                        data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current]
                         break
                 }
         }
