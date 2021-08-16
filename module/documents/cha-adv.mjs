@@ -70,6 +70,7 @@ export class CharacterAdvancement extends FormApplication {
                 name_array.push(i.data.name)
             }
             this.data.feats.awail = temp_feat_list.filter(item => (item.data.type === 'feature' || item.data.type === 'spell') && (!(id_array.includes(item.data._id) || name_array.includes(item.data.name))))
+            this.data.feats = foundry.utils.deepClone(this.data.feats)
             /*
             let leveled_feats_array = this.data.feats.learned.filter(item => (item.data.data.level.max !== null && item.data.data.level.current !== item.data.data.level.max))
             leveled_feats_array = leveled_feats_array.flat()
