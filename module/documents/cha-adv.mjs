@@ -398,7 +398,10 @@ export class CharacterAdvancement extends FormApplication {
         }
         if (feats_data.new.length > 0) {
             await actor.createEmbeddedDocuments("Item", feats_data.new.map(item => (item.ItemData)))
-            await actor.updateEmbeddedDocuments('Item', feats_data.new.map(item => ({_id: item.id, 'data.level.current': item.data.level.current})))
+            const feats = Array.from(actor.data.items).slice(-feats_data.new.length)
+            for (let [k, v] of Object.entries(feats)) {
+                await actor.updateEmbeddedDocuments('Item', feats_data.new.map(item => ({_id: v.id, 'data.level.current': item.data.level.current})))
+            }
         }
     }
 }
