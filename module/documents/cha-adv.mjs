@@ -391,11 +391,14 @@ export class CharacterAdvancement extends FormApplication {
                 }
             } else {feats_data.new.push(v)}
         }
+        console.log('update', feats_data.new)
         await actor.update(obj)
-
-        await actor.updateEmbeddedDocuments('Item', feats_data.exist.map(item => ({_id: item.id, 'data.level.current': item.data.level.current})))
-
-        //await actor.updateEmbeddedDocuments("Item", feats_data.exist)
-        await actor.createEmbeddedDocuments("Item", feats_data.new.map(item => ({ItemData: item.ItemData})))
+        if (feats_data.exist.length > 0) {
+            await actor.updateEmbeddedDocuments('Item', feats_data.exist.map(item => ({_id: item.id, 'data.level.current': item.data.level.current})))
+        }
+        if (feats_data.new.length > 0) {
+            await actor.createEmbeddedDocuments("Item", feats_data.new.map(item => (item.ItemData)))
+            await actor.updateEmbeddedDocuments('Item', feats_data.new.map(item => ({_id: item.id, 'data.level.current': item.data.level.current})))
+        }
     }
 }
