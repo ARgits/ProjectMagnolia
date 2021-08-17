@@ -393,7 +393,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         await actor.update(obj)
         for (let [k, v] of Object.entries(feats_data.exist)) {
-            await actor.updateEmbeddedDocuments('Item', [{_id: v.id, data: v.ItemData}])
+            await actor.updateEmbeddedDocuments('Item', [{_id: v.id, 'data.level.current': v.ItemData.data.level.current}])
         }
         //await actor.updateEmbeddedDocuments("Item", feats_data.exist)
         await actor.createEmbeddedDocuments("Item", feats_data.new)
