@@ -3,12 +3,18 @@ export class CharacterAdvancement extends FormApplication {
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
-            title: 'Character Advancement',
-            template: 'systems/ard20/templates/actor/parts/cha-adv.html',
-            id: 'cha-adv',
+            title: "Character Advancement",
+            template: "systems/ard20/templates/actor/parts/cha-adv.html",
+            id: "cha-adv",
             width: 800,
-            height: 'auto',
-            tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'stats'}],
+            height: "auto",
+            tabs: [
+                {
+                    navSelector: ".sheet-tabs",
+                    contentSelector: ".sheet-body",
+                    initial: "stats",
+                },
+            ],
         })
     }
     async getData (options) {
@@ -22,40 +28,53 @@ export class CharacterAdvancement extends FormApplication {
                 skills: {
                     0: 0,
                     1: 0,
-                    2: 0
+                    2: 0,
                 },
                 feats: {
                     mar: 0,
                     mag: 0,
                     div: 0,
                     pri: 0,
-                    psy: 0
-                }
+                    psy: 0,
+                },
             }
             this.data.content = {
                 skills: {},
-                feats: {}
+                feats: {},
             }
             this.data.feats = {
-                learned: [],//items that character already has
-                awail: [] //items that character can purchase
+                learned: [], //items that character already has
+                awail: [], //items that character can purchase
             }
             let feat_list = []
             let temp_feat_list = []
             /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
-            for (let key of game.settings.get('ard20', 'feat').packs) {
-                if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
-                    feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.metadata.entity === 'Item')[0].index))
+            for (let key of game.settings.get("ard20", "feat").packs) {
+                if (
+                    game.packs.filter((pack) => pack.metadata.label === key).length !== 0
+                ) {
+                    feat_list.push(
+                        Array.from(
+                            game.packs.filter(
+                                (pack) =>
+                                    pack.metadata.label === key && pack.metadata.entity === "Item"
+                            )[0].index
+                        )
+                    )
                     feat_list = feat_list.flat()
                     for (let feat of feat_list) {
-                        let new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key
+                        let new_key =
+                            game.packs.filter((pack) => pack.metadata.label === key)[0]
+                                .metadata.package +
+                            "." +
+                            key
                         let doc = await game.packs.get(new_key).getDocument(feat._id)
                         let item = {
                             id: feat._id,
                             name: doc.data.name,
                             type: doc.data.type,
                             data: doc.data.data,
-                            ItemData: doc.data
+                            ItemData: doc.data,
                         }
                         console.log(item)
                         temp_feat_list.push(item)
@@ -65,10 +84,17 @@ export class CharacterAdvancement extends FormApplication {
             }
             console.log(temp_feat_list)
             /* same as above, but for folders*/
-            for (let key of game.settings.get('ard20', 'feat').folders) {
-                if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
+            for (let key of game.settings.get("ard20", "feat").folders) {
+                if (
+                    game.folders.filter((folder) => folder.data.name === key).length !== 0
+                ) {
                     let feat_list = []
-                    feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === 'Item')[0].content)
+                    feat_list.push(
+                        game.folders.filter(
+                            (folder) =>
+                                folder.data.name === key && folder.data.type === "Item"
+                        )[0].content
+                    )
                     feat_list = feat_list.flat()
                     for (let feat of feat_list) {
                         let item = {
@@ -76,7 +102,7 @@ export class CharacterAdvancement extends FormApplication {
                             name: feat.data.name,
                             type: feat.data.type,
                             data: feat.data.data,
-                            ItemData: feat.data
+                            ItemData: feat.data,
                         }
                         console.log(item)
                         temp_feat_list.push(item)
@@ -85,9 +111,13 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             console.log(temp_feat_list)
-            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell'))
+            temp_feat_list = temp_feat_list.filter(
+                (item) => item.type === "feature" || item.type === "spell"
+            )
             this.data.feats.learned = foundry.utils.deepClone(this.object.data.items)
-            this.data.feats.learned = this.data.feats.learned.filter(item => (item.data.type === 'feature' || item.data.type === 'spell'))
+            this.data.feats.learned = this.data.feats.learned.filter(
+                (item) => item.data.type === "feature" || item.data.type === "spell"
+            )
             console.log(this.data.feats.learned)
             let id_array = []
             let name_array = []
@@ -95,18 +125,31 @@ export class CharacterAdvancement extends FormApplication {
                 if (i.data.flags.core?.sourceId) {
                     id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1])
                     name_array.push(i.data.name)
+                } else {
+                    id_array.push(i.id)
+                    name_array.push(i.data.name)
                 }
-                else {id_array.push(i.id); name_array.push(i.data.name)}
             }
             //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
             for (let [k, v] of Object.entries(temp_feat_list)) {
                 if (name_array.includes(v.name)) {
-                    v.id = this.data.feats.learned.filter(item => item.name === v.name)[0].id
-                    v.data = this.data.feats.learned.filter(item => item.name === v.name)[0].data.data
-                    v.ItemData = this.data.feats.learned.filter(item => item.name === v.name)[0].data
+                    v.id = this.data.feats.learned.filter(
+                        (item) => item.name === v.name
+                    )[0].id
+                    v.data = this.data.feats.learned.filter(
+                        (item) => item.name === v.name
+                    )[0].data.data
+                    v.ItemData = this.data.feats.learned.filter(
+                        (item) => item.name === v.name
+                    )[0].data
                 }
             }
-            temp_feat_list = temp_feat_list.filter(item => (item.type === 'feature' || item.type === 'spell') && (!(id_array.includes(item.id) || name_array.includes(item.name))) || (item.data.level.current < item.data.level.max))
+            temp_feat_list = temp_feat_list.filter(
+                (item) =>
+                    ((item.type === "feature" || item.type === "spell") &&
+                        !(id_array.includes(item.id) || name_array.includes(item.name))) ||
+                    item.data.level.current < item.data.level.max
+            )
             this.data.feats.awail = foundry.utils.deepClone(temp_feat_list)
             for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
                 if (this.data.skills[k].prof === 0) {
@@ -118,27 +161,33 @@ export class CharacterAdvancement extends FormApplication {
                 }
             }
             for (let [k, v] of Object.entries(this.data.feats.learned)) {
-                if (v.data.data.source?.value === 'mar') {
+                if (v.data.data.source?.value === "mar") {
                     this.data.count.feats.mar += 1
-                } else if (v.data.data.source?.value === 'div') {
+                } else if (v.data.data.source?.value === "div") {
                     this.data.count.feats.div += 1
-                } else if (v.data.data.source?.value === 'mag') {
+                } else if (v.data.data.source?.value === "mag") {
                     this.data.count.feats.mag += 1
-                } else if (v.data.data.source?.value === 'pri') {
+                } else if (v.data.data.source?.value === "pri") {
                     this.data.count.feats.pri += 1
-                } else if (v.data.data.source?.value === 'psy') {
+                } else if (v.data.data.source?.value === "psy") {
                     this.data.count.feats.psy += 1
                 }
             }
             this.data.hover = {
                 value: "",
-                name: ""
+                name: "",
             }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2)
-            this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5]
-            if (this.data.abilities[k].value === this.object.data.data.abilities[k].value) {
+            this.data.abilities[k].mod = Math.floor(
+                (this.data.abilities[k].value - 10) / 2
+            )
+            this.data.abilities[k].xp =
+                CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5]
+            if (
+                this.data.abilities[k].value ===
+                this.object.data.data.abilities[k].value
+            ) {
                 this.data.abilities[k].isEq = true
             } else {
                 this.data.abilities[k].isEq = false
@@ -150,20 +199,32 @@ export class CharacterAdvancement extends FormApplication {
             }
         }
         for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
-            this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof
-            this.data.skills[k].xp = (this.data.skills[k].prof < 2) ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false
+            this.data.skills[k].hover =
+                game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ??
+                this.data.skills[k].prof
+            this.data.skills[k].xp =
+                this.data.skills[k].prof < 2
+                    ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][
+                    this.data.count.skills[this.data.skills[k].prof + 1]
+                    ]
+                    : false
             if (this.data.skills[k].prof === this.object.data.data.skills[k].prof) {
                 this.data.skills[k].isEq = true
             } else {
                 this.data.skills[k].isEq = false
             }
-            if ((this.data.xp.get >= this.data.skills[k].xp) && (this.data.skills[k].prof < 2)) {
+            if (
+                this.data.xp.get >= this.data.skills[k].xp &&
+                this.data.skills[k].prof < 2
+            ) {
                 this.data.skills[k].isXP = false
             } else {
                 this.data.skills[k].isXP = true
             }
             for (let [k, v] of Object.entries(this.data.profs.weapon)) {
-                v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value]
+                v.value_hover =
+                    game.i18n.localize(CONFIG.ARd20.prof[v.value]) ??
+                    CONFIG.ARd20.prof[v.value]
             }
         }
         for (let [key, object] of Object.entries(this.data.feats.awail)) {
@@ -178,73 +239,109 @@ export class CharacterAdvancement extends FormApplication {
             content: this.data.content,
             hover: this.data.hover,
             profs: this.data.profs,
-            feats: this.data.feats
+            feats: this.data.feats,
         }
         console.log(templateData)
         return templateData
     }
     activateListeners (html) {
         super.activateListeners(html)
-        html.find('.change').click(this._onChange.bind(this))
-        html.find('.skill').mouseover(this._onHover.bind(this))
+        html.find(".change").click(this._onChange.bind(this))
+        html.find(".skill").mouseover(this._onHover.bind(this))
     }
     _onChange (event) {
         const button = event.currentTarget
         const data = this.data
         switch (button.dataset.type) {
-            case 'ability':
+            case "ability":
                 switch (button.dataset.action) {
-                    case 'plus':
+                    case "plus":
                         data.abilities[button.dataset.key].value += 1
                         data.xp.get -= data.abilities[button.dataset.key].xp
                         data.xp.used += data.abilities[button.dataset.key].xp
                         break
-                    case 'minus':
+                    case "minus":
                         data.abilities[button.dataset.key].value -= 1
-                        data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
-                        data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5]
+                        data.xp.get +=
+                            CONFIG.ARd20.abil_xp[
+                            data.abilities[button.dataset.key].value - 5
+                            ] ??
+                            CONFIG.ARd20.abil_xp[
+                            data.abilities[button.dataset.key].value - 5
+                            ]
+                        data.xp.used -=
+                            CONFIG.ARd20.abil_xp[
+                            data.abilities[button.dataset.key].value - 5
+                            ] ??
+                            CONFIG.ARd20.abil_xp[
+                            data.abilities[button.dataset.key].value - 5
+                            ]
                         break
                 }
                 break
-            case 'skill':
+            case "skill":
                 switch (button.dataset.action) {
-                    case 'plus':
+                    case "plus":
                         data.skills[button.dataset.key].prof += 1
                         data.xp.get -= data.skills[button.dataset.key].xp
                         data.xp.used += data.skills[button.dataset.key].xp
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1
+                        this.data.count.skills[
+                            this.data.skills[button.dataset.key].prof
+                        ] += 1
                         break
-                    case 'minus':
+                    case "minus":
                         data.skills[button.dataset.key].prof -= 1
-                        this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1
-                        data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
-                        data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]]
+                        this.data.count.skills[
+                            this.data.skills[button.dataset.key].prof + 1
+                        ] -= 1
+                        data.xp.get +=
+                            CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][
+                            this.data.count.skills[
+                            this.data.skills[button.dataset.key].prof + 1
+                            ]
+                            ]
+                        data.xp.used -=
+                            CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][
+                            this.data.count.skills[
+                            this.data.skills[button.dataset.key].prof + 1
+                            ]
+                            ]
                         break
                 }
                 break
-            case 'prof':
+            case "prof":
                 switch (button.dataset.action) {
-                    case 'plus':
+                    case "plus":
                         data.profs.weapon[button.dataset.key].value += 1
                         break
-                    case 'minus':
+                    case "minus":
                         data.profs.weapon[button.dataset.key].value -= 1
                         break
                 }
                 break
-            case 'feat':
+            case "feat":
                 switch (button.dataset.action) {
-                    case 'plus':
+                    case "plus":
                         data.feats.awail[button.dataset.key].data.level.current += 1
-                        data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += 1
+                        data.count.feats[
+                            data.feats.awail[button.dataset.key].data.source.value
+                        ] += 1
                         data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp
                         data.xp.used += data.feats.awail[button.dataset.key].data.level.xp
                         break
-                    case 'minus':
+                    case "minus":
                         data.feats.awail[button.dataset.key].data.level.current -= 1
-                        data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= 1
-                        data.xp.get += data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current]
-                        data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.current]
+                        data.count.feats[
+                            data.feats.awail[button.dataset.key].data.source.value
+                        ] -= 1
+                        data.xp.get +=
+                            data.feats.awail[button.dataset.key].data.xp[
+                            data.feats.awail[button.dataset.key].data.level.current
+                            ]
+                        data.xp.used -=
+                            data.feats.awail[button.dataset.key].data.xp[
+                            data.feats.awail[button.dataset.key].data.level.current
+                            ]
                         break
                 }
         }
@@ -254,8 +351,12 @@ export class CharacterAdvancement extends FormApplication {
         const button = event.currentTarget
         const content = this.data.content
         switch (button.dataset.type) {
-            case 'skill':
-                this.data.hover.value = TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => (skill.data.name === button.dataset.label))[0].data.content)
+            case "skill":
+                this.data.hover.value = TextEditor.enrichHTML(
+                    content.skills.value?.content.filter(
+                        (skill) => skill.data.name === button.dataset.label
+                    )[0].data.content
+                )
                 this.data.hover.name = button.dataset.label
                 break
         }
@@ -267,28 +368,34 @@ export class CharacterAdvancement extends FormApplication {
         const actor = this.object
         this.render()
         const obj = {}
-        obj['data.abilities'] = updateData.abilities
-        obj['data.attributes.xp'] = updateData.xp
-        obj['data.skills'] = updateData.skills
-        obj['data.profs'] = updateData.profs
+        obj["data.abilities"] = updateData.abilities
+        obj["data.attributes.xp"] = updateData.xp
+        obj["data.skills"] = updateData.skills
+        obj["data.profs"] = updateData.profs
         console.log(obj)
         const feats_data = {
             new: [],
-            exist: []
+            exist: [],
         }
-        const feats = this.data.feats.awail.filter(item => item.data.level.current > 0)
-        
+        const feats = this.data.feats.awail.filter(
+            (item) => item.data.level.current > 0
+        )
         for (let [k, v] of Object.entries(feats)) {
-            for (let [n, m] of Object.entries(this.data.feats.learned)) {
-                if (v.id === m.id) {
-                    feats_data.exist.push(v.ItemData)
-                } else {
-                    feats_data.new.push(v.ItemData)
+            if (this.data.feats.learned.length > 0) {
+                for (let [n, m] of Object.entries(this.data.feats.learned)) {
+                    if (v.id === m.id) {
+                        feats_data.exist.push(v)
+                    } else {
+                        feats_data.new.push(v.ItemData)
+                    }
                 }
-            }
+            } else {feats_data.new.push(v.ItemData)}
         }
         await actor.update(obj)
-        await actor.updateEmbeddedDocuments('Item', feats_data.exist)
-        await actor.createEmbeddedDocuments('Item', feats_data.new)
+        for (let [k, v] of Object.entries(feats_data.exist)) {
+            await actor.updateEmbeddedDocuments('Item', [{_id: v._id, data: v.ItemData}])
+        }
+        await actor.updateEmbeddedDocuments("Item", feats_data.exist)
+        await actor.createEmbeddedDocuments("Item", feats_data.new)
     }
 }
