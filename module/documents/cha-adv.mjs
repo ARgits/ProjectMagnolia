@@ -76,7 +76,6 @@ export class CharacterAdvancement extends FormApplication {
                             data: doc.data.data,
                             ItemData: doc.data,
                         }
-                        console.log(item)
                         temp_feat_list.push(item)
                         temp_feat_list = temp_feat_list.flat()
                     }
@@ -225,7 +224,7 @@ export class CharacterAdvancement extends FormApplication {
             }
         }
         for (let [key, object] of Object.entries(this.data.feats.awail)) {
-            object.data.level.xp = object.data.xp[object.data.level.current] || 0
+            object.data.level.xp = object.data.xp[object.data.level.initial] || 0
             object.ItemData.data = object.data
         }
         const templateData = {
@@ -319,7 +318,7 @@ export class CharacterAdvancement extends FormApplication {
             case "feat":
                 switch (button.dataset.action) {
                     case "plus":
-                        data.feats.awail[button.dataset.key].data.level.current += 1
+                        data.feats.awail[button.dataset.key].data.level.initial += 1
                         data.count.feats[
                             data.feats.awail[button.dataset.key].data.source.value
                         ] += 1
@@ -327,17 +326,17 @@ export class CharacterAdvancement extends FormApplication {
                         data.xp.used += data.feats.awail[button.dataset.key].data.level.xp
                         break
                     case "minus":
-                        data.feats.awail[button.dataset.key].data.level.current -= 1
+                        data.feats.awail[button.dataset.key].data.level.initial -= 1
                         data.count.feats[
                             data.feats.awail[button.dataset.key].data.source.value
                         ] -= 1
                         data.xp.get +=
                             data.feats.awail[button.dataset.key].data.xp[
-                            data.feats.awail[button.dataset.key].data.level.current
+                            data.feats.awail[button.dataset.key].data.level.initial
                             ]
                         data.xp.used -=
                             data.feats.awail[button.dataset.key].data.xp[
-                            data.feats.awail[button.dataset.key].data.level.current
+                            data.feats.awail[button.dataset.key].data.level.initial
                             ]
                         break
                 }
@@ -391,13 +390,13 @@ export class CharacterAdvancement extends FormApplication {
         console.log('update', feats_data.new)
         await actor.update(obj)
         if (feats_data.exist.length > 0) {
-            await actor.updateEmbeddedDocuments('Item', feats_data.exist.map(item => ({_id: item.id, 'data.level.current': item.data.level.current})))
+            await actor.updateEmbeddedDocuments('Item', feats_data.exist.map(item => ({_id: item.id, 'data.level.initial': item.data.level.initial})))
         }
         if (feats_data.new.length > 0) {
             await actor.createEmbeddedDocuments("Item", feats_data.new.map(item => (item.ItemData)))
             const feats = Array.from(actor.data.items).slice(-feats_data.new.length)
             for (let [k, v] of Object.entries(feats)) {
-                await actor.updateEmbeddedDocuments('Item', feats_data.new.map(item => ({_id: v.id, 'data.level.current': item.data.level.current})))
+                await actor.updateEmbeddedDocuments('Item', feats_data.new.map(item => ({_id: v.id, 'data.level.initial': item.data.level.initial})))
             }
         }
     }

@@ -1,9 +1,6 @@
 {
   "Actor": {
-    "types": [
-      "character",
-      "npc"
-    ],
+    "types": ["character", "npc"],
     "templates": {
       "base": {
         "health": {
@@ -15,9 +12,7 @@
       }
     },
     "character": {
-      "templates": [
-        "base"
-      ],
+      "templates": ["base"],
       "attributes": {
         "xp": {
           "get": 0,
@@ -121,36 +116,25 @@
       }
     },
     "npc": {
-      "templates": [
-        "base"
-      ],
+      "templates": ["base"],
       "cr": 0
     }
   },
   "Item": {
-    "types": [
-      "item",
-      "feature",
-      "spell",
-      "weapon"
-    ],
+    "types": ["item", "feature", "spell", "weapon"],
     "templates": {
       "base": {
         "description": ""
       }
     },
     "item": {
-      "templates": [
-        "base"
-      ],
+      "templates": ["base"],
       "quantity": 1,
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
     "weapon": {
-      "templates": [
-        "base"
-      ],
+      "templates": ["base"],
       "quantity": 1,
       "weight": 0,
       "equiped": 0,
@@ -200,30 +184,19 @@
       }
     },
     "Armor": {
-      "templates": [
-        "base"
-      ],
+      "templates": ["base"],
       "type": "light"
     },
     "feature": {
-      "templates": [
-        "base"
-      ],
-      "source": [
-        "Martial",
-        "Magical",
-        "Divine",
-        "Primal",
-        "Psyhic"
-      ],
-      "xp": [
-        0
-      ]
+      "templates": ["base"],
+      "source": ["Martial", "Magical", "Divine", "Primal", "Psyhic"],
+      "xp": [0],
+      "level": {
+        "initial": 0
+      }
     },
     "spell": {
-      "templates": [
-        "base"
-      ],
+      "templates": ["base"],
       "spellLevel": 1,
       "school": ""
     }
