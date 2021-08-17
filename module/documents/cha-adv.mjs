@@ -386,17 +386,16 @@ export class CharacterAdvancement extends FormApplication {
                     if (v.id === m.id) {
                         feats_data.exist.push(v)//{_id:v.id,data:v.ItemData}
                     } else {
-                        feats_data.new.push(v.ItemData)
+                        feats_data.new.push(v)
                     }
                 }
-            } else {feats_data.new.push(v.ItemData)}
+            } else {feats_data.new.push(v)}
         }
         await actor.update(obj)
-        for (let [k, v] of Object.entries(feats_data.exist)) {
-                console.log(v.id, v.data)
-            await actor.updateEmbeddedDocuments('Item', [{_id: v.id, 'data.level.current': v.data.level.current}])
-        }
+
+        await actor.updateEmbeddedDocuments('Item', feats_data.exist.map(item => ({_id: item.id, 'data.level.current': item.data.level.current})))
+
         //await actor.updateEmbeddedDocuments("Item", feats_data.exist)
-        await actor.createEmbeddedDocuments("Item", feats_data.new)
+        await actor.createEmbeddedDocuments("Item", feats_data.new.map(item => ({ItemData: item.ItemData})))
     }
 }
