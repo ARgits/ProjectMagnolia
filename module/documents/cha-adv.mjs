@@ -384,7 +384,7 @@ export class CharacterAdvancement extends FormApplication {
             if (this.data.feats.learned.length > 0) {
                 for (let [n, m] of Object.entries(this.data.feats.learned)) {
                     if (v.id === m.id) {
-                        feats_data.exist.push(v)
+                        feats_data.exist.push(v)//{_id:v.id,data:v.ItemData}
                     } else {
                         feats_data.new.push(v.ItemData)
                     }
@@ -395,7 +395,7 @@ export class CharacterAdvancement extends FormApplication {
         for (let [k, v] of Object.entries(feats_data.exist)) {
             await actor.updateEmbeddedDocuments('Item', [{_id: v.id, data: v.ItemData}])
         }
-        await actor.updateEmbeddedDocuments("Item", feats_data.exist)
+        //await actor.updateEmbeddedDocuments("Item", feats_data.exist)
         await actor.createEmbeddedDocuments("Item", feats_data.new)
     }
 }
