@@ -64,6 +64,7 @@ export class ARd20Item extends Item {
       data.source.value = data.source.value || "mar"
       data.keys = []
       //define levels
+      data.level = data.level || {}
       data.level.has = data.level.has !== undefined ? data.level.has : false
       data.level.max = data.level.has ? (data.level.max || 4) : 1
       data.level.current = this.isOwned ? data.level.initial || 1 : 0
