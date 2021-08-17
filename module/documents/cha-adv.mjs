@@ -139,6 +139,7 @@ export class CharacterAdvancement extends FormApplication {
                         (item) => item.name === v.name
                     )[0].data
                 }
+                v.data.level.initial = v.data.level.current > 0 ? v.data.level.current : 0
             }
             temp_feat_list = temp_feat_list.filter(
                 (item) =>
@@ -374,7 +375,7 @@ export class CharacterAdvancement extends FormApplication {
             exist: [],
         }
         const feats = this.data.feats.awail.filter(
-            (item) => item.data.level.current > 0
+            (item) => item.data.level.initial > 0
         )
         for (let [k, v] of Object.entries(feats)) {
             if (this.data.feats.learned.length > 0) {
@@ -385,7 +386,7 @@ export class CharacterAdvancement extends FormApplication {
                         feats_data.new.push(v)
                     }
                 }
-            } else {feats_data.new.push(v)}
+            } else {feats_data.new.push(v.ItemData)}
         }
         console.log('update', feats_data.new)
         await actor.update(obj)
@@ -393,7 +394,7 @@ export class CharacterAdvancement extends FormApplication {
             await actor.updateEmbeddedDocuments('Item', feats_data.exist.map(item => ({_id: item.id, 'data.level.initial': item.data.level.initial})))
         }
         if (feats_data.new.length > 0) {
-            await actor.createEmbeddedDocuments("Item", feats_data.new.map(item => (item.ItemData)))
+            await actor.createEmbeddedDocuments("Item", feats_data.new)
             /* const feats = Array.from(actor.data.items).slice(-feats_data.new.length)
              for (let [k, v] of Object.entries(feats)) {
                  await actor.updateEmbeddedDocuments('Item', feats_data.new.map(item => ({_id: v.id, 'data.level.initial': item.data.level.initial})))
