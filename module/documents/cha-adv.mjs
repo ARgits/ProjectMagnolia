@@ -82,7 +82,6 @@ export class CharacterAdvancement extends FormApplication {
                     }
                 }
             }
-            console.log(temp_feat_list)
             /* same as above, but for folders*/
             for (let key of game.settings.get("ard20", "feat").folders) {
                 if (
@@ -97,6 +96,7 @@ export class CharacterAdvancement extends FormApplication {
                     )
                     feat_list = feat_list.flat()
                     for (let feat of feat_list) {
+                        console.log('item added from folder ', feat)
                         let item = {
                             id: feat.data._id,
                             name: feat.data.name,
@@ -110,7 +110,6 @@ export class CharacterAdvancement extends FormApplication {
                     temp_feat_list = temp_feat_list.flat()
                 }
             }
-            console.log(temp_feat_list)
             temp_feat_list = temp_feat_list.filter(
                 (item) => item.type === "feature" || item.type === "spell"
             )
@@ -118,7 +117,6 @@ export class CharacterAdvancement extends FormApplication {
             this.data.feats.learned = this.data.feats.learned.filter(
                 (item) => item.data.type === "feature" || item.data.type === "spell"
             )
-            console.log(this.data.feats.learned)
             let id_array = []
             let name_array = []
             for (let i of this.data.feats.learned) {
@@ -130,7 +128,6 @@ export class CharacterAdvancement extends FormApplication {
                     name_array.push(i.data.name)
                 }
             }
-            //additional filter for awailable items in case If you have item with the same name and/or type and/or item reaches maximum level (or have only 1 level).
             for (let [k, v] of Object.entries(temp_feat_list)) {
                 if (name_array.includes(v.name)) {
                     v.id = this.data.feats.learned.filter(
