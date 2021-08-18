@@ -17,15 +17,15 @@ export class ARd20Item extends Item {
     const itemData = this.data
     const actorData = this.actor ? this.actor.data : {}
     const labels = (this.labels = {})
-    this._prepareSpellData(itemData, actorData, labels) // подготовка спеллов
-    this._prepareWeaponData(itemData, actorData, labels) // подготовка оружия
-    this._prepareFeatureData(itemData, actorData, labels) // подготовка способностей
+    this._prepareSpellData(itemData, labels) // подготовка спеллов
+    this._prepareWeaponData(itemData, labels) // подготовка оружия
+    this._prepareFeatureData(itemData) // подготовка способностей
   }
   /*
   Prepare data for Spells
   Данные для спеллов
   */
-  _prepareSpellData (itemData, actorData, labels) {
+  _prepareSpellData (itemData, labels) {
     if (itemData.type !== "spell") return
     const data = itemData.data
     labels.school = CONFIG.ARd20.SpellSchool[data.school]
@@ -35,7 +35,7 @@ export class ARd20Item extends Item {
   Prepare data for weapons
   Данные для оружия
   */
-  _prepareWeaponData (itemData, actorData, labels) {
+  _prepareWeaponData (itemData, labels) {
     if (itemData.type !== "weapon") return
     const data = itemData.data
     this._SetProperties(data)
@@ -88,7 +88,7 @@ export class ARd20Item extends Item {
   /*
   Prepare data for features
   */
-  _prepareFeatureData (itemData, actorData, labels) {
+  _prepareFeatureData (itemData) {
     if (itemData.type !== "feature") return
     const data = itemData.data
     data.isLearned = this.isOwned ? true : false
