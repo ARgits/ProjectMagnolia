@@ -191,9 +191,7 @@
       "templates": ["base"],
       "source": ["Martial", "Magical", "Divine", "Primal", "Psyhic"],
       "xp": [0],
-      "level": {
-        "initial":0
-      }
+      "level": {}
     },
     "spell": {
       "templates": ["base"],

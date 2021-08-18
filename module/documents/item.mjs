@@ -66,7 +66,7 @@ export class ARd20Item extends Item {
       //define levels
       data.level.has = data.level.has !== undefined ? data.level.has : false
       data.level.max = data.level.has ? (data.level.max || 4) : 1
-      data.level.current = this.isOwned ? Math.max(isNaN(data.level.initial) ? -Infinity : data.level.initial, 1) : 0
+      data.level.current = this.isOwned ? Math.max((isNaN(data.level.initial) ? -Infinity : data.level.initial), 1) : 0
       //define exp cost
       data.xp.length = data.level.has ? data.level.max : 1
       if (data.xp.length > 1) {
