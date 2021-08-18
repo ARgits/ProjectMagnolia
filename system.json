@@ -4,7 +4,7 @@
   "description": "Попытки сделать свою систему",
   "version": "0.0.1.7.216",
   "minimumCoreVersion": "0.8.3",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "0.8.9",
   "author": "ARgits",
   "esmodules": ["module/ard20.mjs"],
   "styles": ["css/ard20.css"],
