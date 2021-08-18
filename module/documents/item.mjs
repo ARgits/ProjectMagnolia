@@ -17,12 +17,13 @@ export class ARd20Item extends Item {
     const itemData = this.data
     const actorData = this.actor ? this.actor.data : {}
     const labels = (this.labels = {})
-    this._prepareSpellData(itemData, actorData, labels)
-    this._prepareWeaponData(itemData, actorData, labels)
-    this._prepareFeatureData(itemData, actorData, labels)
+    this._prepareSpellData(itemData, actorData, labels) // подготовка спеллов
+    this._prepareWeaponData(itemData, actorData, labels) // подготовка оружия
+    this._prepareFeatureData(itemData, actorData, labels) // подготовка способностей
   }
   /*
   Prepare data for Spells
+  Данные для спеллов
   */
   _prepareSpellData (itemData, actorData, labels) {
     if (itemData.type !== "spell") return
@@ -32,10 +33,17 @@ export class ARd20Item extends Item {
   }
   /*
   Prepare data for weapons
+  Данные для оружия
   */
   _prepareWeaponData (itemData, actorData, labels) {
     if (itemData.type !== "weapon") return
     const data = itemData.data
+    this._SetProperties(data)
+    this._setDeflect(data)
+    this._setTypeAndSubtype(data, labels)
+    if (!this.isOwned) this.prepareFinalAttributes()
+  }
+  _SetProperties (data) {
     for (let [k, v] of Object.entries(data.property.untrained)) {
       v = CONFIG.ARd20.Prop[k] ?? k
     }
@@ -51,11 +59,15 @@ export class ARd20Item extends Item {
         data.property.master[k] = true
       }
     }
+  }
+  _setDeflect (data) {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k
       v = v.toLowerCase()
       data.deflect[v] = data.deflect[v] || data.damage.common[v]
     }
+  }
+  _setTypeAndSubtype (data, labels) {
     data.type.value = data.type.value || "amb"
     data.settings = game.settings.get('ard20', 'profs').weapon.filter((prof) => prof.type === data.type.value)
     if (this.isOwned && itemData.flags.core?.sourceId) {
@@ -72,7 +84,6 @@ export class ARd20Item extends Item {
       CONFIG.ARd20.prof[data.prof.value]
     data.prof.label = labels.prof
     data.type.label = labels.type
-    if (!this.isOwned) this.prepareFinalAttributes()
   }
   /*
   Prepare data for features
