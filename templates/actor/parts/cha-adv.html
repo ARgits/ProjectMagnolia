@@ -75,7 +75,7 @@
                             <label for='feats.awail.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
                             <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if (eq feat.data.level.initial 0)}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
-                            <span>{{feat.data.level.initial}}</span>
+                            <input readonly type="number" value="{{feat.data.level.initial}}" name='feat.data.level.initial'>
                             <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if (eq feat.data.level.initial feat.data.level.max)}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
                             {{#if feat.xp}}<span class='ability' name='feats.{{key}}.xp'>{{numberFormat feat.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
