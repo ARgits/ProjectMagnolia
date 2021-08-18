@@ -16,70 +16,92 @@ export class ARd20Item extends Item {
     super.prepareDerivedData()
     const itemData = this.data
     const actorData = this.actor ? this.actor.data : {}
-    const data = itemData.data
     const labels = (this.labels = {})
-    if (itemData.type === "spell") {
-      labels.school = CONFIG.ARd20.SpellSchool[data.school]
+    this._prepareSpellData(itemData, actorData, labels)
+    this._prepareWeaponData(itemData, actorData, labels)
+    this._prepareFeatureData(itemData, actorData, labels)
+  }
+  /*
+  Prepare data for Spells
+  */
+  _prepareSpellData (itemData, actorData, labels) {
+    if (itemData.type !== "spell") return
+    const data = itemData.data
+    labels.school = CONFIG.ARd20.SpellSchool[data.school]
+    if (!this.isOwned) this.prepareFinalAttributes()
+  }
+  /*
+  Prepare data for weapons
+  */
+  _prepareWeaponData (itemData, actorData, labels) {
+    if (itemData.type !== "weapon") return
+    const data = itemData.data
+    for (let [k, v] of Object.entries(data.property.untrained)) {
+      v = CONFIG.ARd20.Prop[k] ?? k
     }
-    if (itemData.type === "weapon") {
-      for (let [k, v] of Object.entries(data.property.untrained)) {
-        v = CONFIG.ARd20.Prop[k] ?? k
+    for (let [k, v] of Object.entries(data.property.basic)) {
+      v = CONFIG.ARd20.Prop[k] ?? k
+      if (data.property.untrained[k] === true && k != "awk") {
+        data.property.basic[k] = true
       }
-      for (let [k, v] of Object.entries(data.property.basic)) {
-        v = CONFIG.ARd20.Prop[k] ?? k
-        if (data.property.untrained[k] === true && k != "awk") {
-          data.property.basic[k] = true
-        }
-      }
-      for (let [k, v] of Object.entries(data.property.master)) {
-        v = CONFIG.ARd20.Prop[k] ?? k
-        if (data.property.basic[k] === true && k != "awk") {
-          data.property.master[k] = true
-        }
-      }
-      for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
-        v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k
-        v = v.toLowerCase()
-        data.deflect[v] = data.deflect[v] || data.damage.common[v]
-      }
-      data.type.value = data.type.value || "amb"
-      data.settings = game.settings.get('ard20', 'profs').weapon.filter((prof) => prof.type === data.type.value)
-      if (this.isOwned && itemData.flags.core?.sourceId) {
-        let id = this.isOwned ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1] : null
-        console.log(id)
-        data.proto = (this.isOwned && (data.proto === undefined)) ? game.items.get(id).data.data.proto : data.proto
-      }
-      data.proto = (data.settings.filter((prof) => prof.name === data.proto)[0] === undefined) ? data.settings[0].name : data.proto
-      labels.type =
-        game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
-        CONFIG.ARd20.WeaponType[data.type.value]
-      labels.prof =
-        game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
-        CONFIG.ARd20.prof[data.prof.value]
-      data.prof.label = labels.prof
-      data.type.label = labels.type
     }
-    if (itemData.type === "feature") {
-      data.isLearned = this.isOwned ? true : false
-      data.source.value = data.source.value || "mar"
-      data.keys = []
-      //define levels
-      data.level.has = data.level.has !== undefined ? data.level.has : false
-      data.level.max = data.level.has ? (data.level.max || 4) : 1
-      console.log(data.level.initial)
-      data.level.current = this.isOwned ? Math.max((isNaN(data.level.initial) ? -Infinity : data.level.initial), 1) : 0
-      //define exp cost
-      data.xp.length = data.level.has ? data.level.max : 1
-      if (data.xp.length > 1) {
-        let n = (10 - data.level.max) / data.level.max
-        let k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100 * Math.sign(n))
-        for (let i = 1; i < data.level.max; i++) {
-          data.xp[i] = Math.round(data.xp[i - 1] * k / 5) * 5
-        }
+    for (let [k, v] of Object.entries(data.property.master)) {
+      v = CONFIG.ARd20.Prop[k] ?? k
+      if (data.property.basic[k] === true && k != "awk") {
+        data.property.master[k] = true
+      }
+    }
+    for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
+      v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k
+      v = v.toLowerCase()
+      data.deflect[v] = data.deflect[v] || data.damage.common[v]
+    }
+    data.type.value = data.type.value || "amb"
+    data.settings = game.settings.get('ard20', 'profs').weapon.filter((prof) => prof.type === data.type.value)
+    if (this.isOwned && itemData.flags.core?.sourceId) {
+      let id = this.isOwned ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1] : null
+      console.log(id)
+      data.proto = (this.isOwned && (data.proto === undefined)) ? game.items.get(id).data.data.proto : data.proto
+    }
+    data.proto = (data.settings.filter((prof) => prof.name === data.proto)[0] === undefined) ? data.settings[0].name : data.proto
+    labels.type =
+      game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
+      CONFIG.ARd20.WeaponType[data.type.value]
+    labels.prof =
+      game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
+      CONFIG.ARd20.prof[data.prof.value]
+    data.prof.label = labels.prof
+    data.type.label = labels.type
+    if (!this.isOwned) this.prepareFinalAttributes()
+  }
+  /*
+  Prepare data for features
+  */
+  _prepareFeatureData (itemData, actorData, labels) {
+    if (itemData.type !== "feature") return
+    const data = itemData.data
+    data.isLearned = this.isOwned ? true : false
+    data.source.value = data.source.value || "mar"
+    data.keys = []
+    //define levels
+    data.level.has = data.level.has !== undefined ? data.level.has : false
+    data.level.max = data.level.has ? (data.level.max || 4) : 1
+    console.log(data.level.initial)
+    data.level.current = this.isOwned ? Math.max((isNaN(data.level.initial) ? -Infinity : data.level.initial), 1) : 0
+    //define exp cost
+    data.xp.length = data.level.has ? data.level.max : 1
+    if (data.xp.length > 1) {
+      let n = (10 - data.level.max) / data.level.max
+      let k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100 * Math.sign(n))
+      for (let i = 1; i < data.level.max; i++) {
+        data.xp[i] = Math.round(data.xp[i - 1] * k / 5) * 5
       }
     }
     if (!this.isOwned) this.prepareFinalAttributes()
   }
+  /*
+  Prepare Data that uses actor's data
+  */
   prepareFinalAttributes () {
     const data = this.data.data
     const abil = (data.abil = {})
@@ -99,10 +121,8 @@ export class ARd20Item extends Item {
       let prof_bonus = 0
       if (data.prof.value === 0) {
         prof_bonus = 0
-
       } else if (data.prof.value === 1) {
         prof_bonus = this.actor.data.data.attributes.prof_die
-
       } else if (data.prof.value === 2) {
         prof_bonus =
           this.actor.data.data.attributes.prof_die +
