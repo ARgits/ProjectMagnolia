@@ -272,14 +272,16 @@ export class CharacterAdvancement extends FormApplication {
       case "feat":
         switch (button.dataset.action) {
           case "plus":
+            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] +=
+              data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
             data.feats.awail[button.dataset.key].data.level.initial += 1;
-            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += 1;
             data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp;
             data.xp.used += data.feats.awail[button.dataset.key].data.level.xp;
             break;
           case "minus":
             data.feats.awail[button.dataset.key].data.level.initial -= 1;
-            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= 1;
+            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -=
+              data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
             data.xp.get +=
               data.feats.awail[button.dataset.key].data.xp[
                 data.feats.awail[button.dataset.key].data.level.initial
@@ -327,9 +329,8 @@ export class CharacterAdvancement extends FormApplication {
       (item) => item.data.level.initial > item.data.level.current
     );
     for (let [k, v] of Object.entries(feats)) {
-        v.data.level.current = v.data.level.initial;
+      v.data.level.current = v.data.level.initial;
       if (this.data.feats.learned.length > 0) {
-        
         for (let [n, m] of Object.entries(this.data.feats.learned)) {
           if (v._id === m.id) {
             feats_data.exist.push(v); //{_id:v.id,data:v.ItemData}
