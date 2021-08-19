@@ -110,7 +110,10 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
-          v = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
+          temp_feat_list[k] = this.data.feats.learned
+            .filter((item) => item.name === v.name)[0]
+            .data.toObject();
+          console.log("this item is already learned", temp_feat_list[k]);
         }
       }
       temp_feat_list = temp_feat_list.filter(
