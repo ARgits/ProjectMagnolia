@@ -155,9 +155,7 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.psy += 1;
         }
       }
-      this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
-        return a + b;
-      }, 0);
+
       this.data.hover = {
         value: "",
         name: "",
@@ -165,6 +163,10 @@ export class CharacterAdvancement extends FormApplication {
       console.log(this.data.feats.learned);
       console.log(this.data.feats.awail);
     }
+    this.data.count.feats.all = 0
+    this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
+      return a + b;
+    }, 0);
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2);
       this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
