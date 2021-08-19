@@ -123,6 +123,10 @@ export class ARd20Item extends Item {
       abil[k] = v
     }
     data.isEquiped = data.isEquiped || false
+    this._prepareWeaponAttr(data,abil)
+  }
+
+   _prepareWeaponAttr(data,abil){ 
     if (this.data.type === "weapon") {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter(pr => (pr.name === data.proto))[0].value : 0
       this.labels.prof =
