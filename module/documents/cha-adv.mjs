@@ -163,7 +163,7 @@ export class CharacterAdvancement extends FormApplication {
       console.log(this.data.feats.learned);
       console.log(this.data.feats.awail);
     }
-    this.data.count.feats.all = 0
+    this.data.count.feats.all = 0;
     this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
       return a + b;
     }, 0);

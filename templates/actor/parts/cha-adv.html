@@ -71,8 +71,9 @@
             <div class='grid grid-2col'>
                 <div class="ability flexcoll-group-center align-center">
                     {{#each feats.awail as |feat key|}}
-                        <div class="ability flexrow grid grid-5col" style="grid-template-columns:2fr repeat(4,minmax(0,1fr))">
-                            <label for='feats.awail.{{key}}.value' class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
+                        <div class="ability flexrow grid grid-6col" style="grid-template-columns:2fr repeat(5,minmax(0,1fr))">
+                            <label  class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
+                            <label  class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.source.label}}">{{localize feat.data.source.label}}</label>
                             <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
                             <div class='flexrow'>

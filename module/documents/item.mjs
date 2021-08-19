@@ -82,13 +82,6 @@ export class ARd20Item extends Item {
       data.settings.filter((prof) => prof.name === data.proto)[0] === undefined
         ? data.settings[0].name
         : data.proto;
-    labels.type =
-      game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
-      CONFIG.ARd20.WeaponType[data.type.value];
-    labels.prof =
-      game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
-    data.prof.label = labels.prof;
-    data.type.label = labels.type;
   }
   /*
   Prepare data for features
