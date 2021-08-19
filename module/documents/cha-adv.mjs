@@ -18,183 +18,167 @@ export class CharacterAdvancement extends FormApplication {
     });
   }
   getData(options) {
-    this.getBaseData();
-    this.getDerivedData();
-    const templateData = {
-      abilities: this.data.abilities,
-      xp: this.data.xp,
-      skills: this.data.skills,
-      count: this.data.count,
-      content: this.data.content,
-      hover: this.data.hover,
-      profs: this.data.profs,
-      feats: this.data.feats,
-    };
-    console.log(templateData);
-    return templateData;
-  }
-  async getBaseData() {
-    if (this.data) return;
-    this.data = {};
-    this.data.abilities = duplicate(this.object.data.data.abilities);
-    this.data.skills = duplicate(this.object.data.data.skills);
-    this.data.xp = duplicate(this.object.data.data.attributes.xp);
-    this.data.profs = duplicate(this.object.data.data.profs);
-    this.data.count = {
-      skills: {
-        0: 0,
-        1: 0,
-        2: 0,
-      },
-      feats: {
-        mar: 0,
-        mag: 0,
-        div: 0,
-        pri: 0,
-        psy: 0,
-      },
-    };
-    this.data.content = {
-      skills: {},
-      feats: {},
-    };
-    this.data.feats = {
-      learned: [], //items that character already has
-      awail: [], //items that character can purchase
-    };
-    let feat_list = [];
-    let temp_feat_list = [];
-    /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
-    for (let key of game.settings.get("ard20", "feat").packs) {
-      if (
-        game.packs.filter((pack) => pack.metadata.label === key).length !== 0
-      ) {
-        feat_list.push(
-          Array.from(
-            game.packs.filter(
-              (pack) =>
-                pack.metadata.label === key && pack.metadata.entity === "Item"
-            )[0].index
-          )
-        );
-        feat_list = feat_list.flat();
-        for (let feat of feat_list) {
-          let new_key =
-            game.packs.filter((pack) => pack.metadata.label === key)[0].metadata
-              .package +
-            "." +
-            key;
-          let doc = await game.packs.get(new_key).getDocument(feat._id);
-          let item = {
-            id: feat._id,
-            name: doc.data.name,
-            type: doc.data.type,
-            data: doc.data.data,
-            ItemData: doc.data,
-          };
-          temp_feat_list.push(item);
+    if (!this.data) {
+      this.data = {};
+      this.data.abilities = duplicate(this.object.data.data.abilities);
+      this.data.skills = duplicate(this.object.data.data.skills);
+      this.data.xp = duplicate(this.object.data.data.attributes.xp);
+      this.data.profs = duplicate(this.object.data.data.profs);
+      this.data.count = {
+        skills: {
+          0: 0,
+          1: 0,
+          2: 0,
+        },
+        feats: {
+          mar: 0,
+          mag: 0,
+          div: 0,
+          pri: 0,
+          psy: 0,
+        },
+      };
+      this.data.content = {
+        skills: {},
+        feats: {},
+      };
+      this.data.feats = {
+        learned: [], //items that character already has
+        awail: [], //items that character can purchase
+      };
+      let feat_list = [];
+      let temp_feat_list = [];
+      /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
+      for (let key of game.settings.get("ard20", "feat").packs) {
+        if (
+          game.packs.filter((pack) => pack.metadata.label === key).length !== 0
+        ) {
+          feat_list.push(
+            Array.from(
+              game.packs.filter(
+                (pack) =>
+                  pack.metadata.label === key && pack.metadata.entity === "Item"
+              )[0].index
+            )
+          );
+          feat_list = feat_list.flat();
+          for (let feat of feat_list) {
+            let new_key =
+              game.packs.filter((pack) => pack.metadata.label === key)[0]
+                .metadata.package +
+              "." +
+              key;
+            let doc = await game.packs.get(new_key).getDocument(feat._id);
+            let item = {
+              id: feat._id,
+              name: doc.data.name,
+              type: doc.data.type,
+              data: doc.data.data,
+              ItemData: doc.data,
+            };
+            temp_feat_list.push(item);
+            temp_feat_list = temp_feat_list.flat();
+          }
+        }
+      }
+      /* same as above, but for folders*/
+      for (let key of game.settings.get("ard20", "feat").folders) {
+        if (
+          game.folders.filter((folder) => folder.data.name === key).length !== 0
+        ) {
+          let feat_list = [];
+          feat_list.push(
+            game.folders.filter(
+              (folder) =>
+                folder.data.name === key && folder.data.type === "Item"
+            )[0].content
+          );
+          feat_list = feat_list.flat();
+          for (let feat of feat_list) {
+            console.log("item added from folder ", feat);
+            let item = {
+              id: feat.data._id,
+              name: feat.data.name,
+              type: feat.data.type,
+              data: feat.data.data,
+              ItemData: feat.data,
+            };
+            console.log(item);
+            temp_feat_list.push(item);
+          }
           temp_feat_list = temp_feat_list.flat();
         }
       }
-    }
-    /* same as above, but for folders*/
-    for (let key of game.settings.get("ard20", "feat").folders) {
-      if (
-        game.folders.filter((folder) => folder.data.name === key).length !== 0
-      ) {
-        let feat_list = [];
-        feat_list.push(
-          game.folders.filter(
-            (folder) => folder.data.name === key && folder.data.type === "Item"
-          )[0].content
-        );
-        feat_list = feat_list.flat();
-        for (let feat of feat_list) {
-          console.log("item added from folder ", feat);
-          let item = {
-            id: feat.data._id,
-            name: feat.data.name,
-            type: feat.data.type,
-            data: feat.data.data,
-            ItemData: feat.data,
-          };
-          console.log(item);
-          temp_feat_list.push(item);
+      temp_feat_list = temp_feat_list.filter(
+        (item) => item.type === "feature" || item.type === "spell"
+      );
+      this.data.feats.learned = foundry.utils.deepClone(this.object.data.items);
+      this.data.feats.learned = this.data.feats.learned.filter(
+        (item) => item.data.type === "feature" || item.data.type === "spell"
+      );
+      let id_array = [];
+      let name_array = [];
+      for (let i of this.data.feats.learned) {
+        if (i.data.flags.core?.sourceId) {
+          id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1]);
+          name_array.push(i.data.name);
+        } else {
+          id_array.push(i.id);
+          name_array.push(i.data.name);
         }
-        temp_feat_list = temp_feat_list.flat();
       }
-    }
-    temp_feat_list = temp_feat_list.filter(
-      (item) => item.type === "feature" || item.type === "spell"
-    );
-    this.data.feats.learned = foundry.utils.deepClone(this.object.data.items);
-    this.data.feats.learned = this.data.feats.learned.filter(
-      (item) => item.data.type === "feature" || item.data.type === "spell"
-    );
-    let id_array = [];
-    let name_array = [];
-    for (let i of this.data.feats.learned) {
-      if (i.data.flags.core?.sourceId) {
-        id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1]);
-        name_array.push(i.data.name);
-      } else {
-        id_array.push(i.id);
-        name_array.push(i.data.name);
+      for (let [k, v] of Object.entries(temp_feat_list)) {
+        if (name_array.includes(v.name)) {
+          v.id = this.data.feats.learned.filter(
+            (item) => item.name === v.name
+          )[0].id;
+          v.data = this.data.feats.learned.filter(
+            (item) => item.name === v.name
+          )[0].data.data;
+          v.ItemData = this.data.feats.learned.filter(
+            (item) => item.name === v.name
+          )[0].data;
+        }
+        v.data.level.initial =
+          v.data.level.current > 0 ? v.data.level.current : 0;
       }
-    }
-    for (let [k, v] of Object.entries(temp_feat_list)) {
-      if (name_array.includes(v.name)) {
-        v.id = this.data.feats.learned.filter(
-          (item) => item.name === v.name
-        )[0].id;
-        v.data = this.data.feats.learned.filter(
-          (item) => item.name === v.name
-        )[0].data.data;
-        v.ItemData = this.data.feats.learned.filter(
-          (item) => item.name === v.name
-        )[0].data;
+      temp_feat_list = temp_feat_list.filter(
+        (item) =>
+          ((item.type === "feature" || item.type === "spell") &&
+            !(id_array.includes(item.id) || name_array.includes(item.name))) ||
+          item.data.level.current < item.data.level.max
+      );
+      this.data.feats.awail = foundry.utils.deepClone(temp_feat_list);
+      for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
+        if (this.data.skills[k].prof === 0) {
+          this.data.count.skills[0] += 1;
+        } else if (this.data.skills[k].prof === 1) {
+          this.data.count.skills[1] += 1;
+        } else if (this.data.skills[k].prof === 2) {
+          this.data.count.skills[2] += 1;
+        }
       }
-      v.data.level.initial =
-        v.data.level.current > 0 ? v.data.level.current : 0;
-    }
-    temp_feat_list = temp_feat_list.filter(
-      (item) =>
-        ((item.type === "feature" || item.type === "spell") &&
-          !(id_array.includes(item.id) || name_array.includes(item.name))) ||
-        item.data.level.current < item.data.level.max
-    );
-    this.data.feats.awail = foundry.utils.deepClone(temp_feat_list);
-    for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
-      if (this.data.skills[k].prof === 0) {
-        this.data.count.skills[0] += 1;
-      } else if (this.data.skills[k].prof === 1) {
-        this.data.count.skills[1] += 1;
-      } else if (this.data.skills[k].prof === 2) {
-        this.data.count.skills[2] += 1;
+      for (let [k, v] of Object.entries(this.data.feats.learned)) {
+        if (v.data.data.source?.value === "mar") {
+          this.data.count.feats.mar += 1;
+        } else if (v.data.data.source?.value === "div") {
+          this.data.count.feats.div += 1;
+        } else if (v.data.data.source?.value === "mag") {
+          this.data.count.feats.mag += 1;
+        } else if (v.data.data.source?.value === "pri") {
+          this.data.count.feats.pri += 1;
+        } else if (v.data.data.source?.value === "psy") {
+          this.data.count.feats.psy += 1;
+        }
       }
+      this.data.hover = {
+        value: "",
+        name: "",
+      };
+      console.log(this.data.feats.learned);
+      console.log(this.data.feats.awail);
     }
-    for (let [k, v] of Object.entries(this.data.feats.learned)) {
-      if (v.data.data.source?.value === "mar") {
-        this.data.count.feats.mar += 1;
-      } else if (v.data.data.source?.value === "div") {
-        this.data.count.feats.div += 1;
-      } else if (v.data.data.source?.value === "mag") {
-        this.data.count.feats.mag += 1;
-      } else if (v.data.data.source?.value === "pri") {
-        this.data.count.feats.pri += 1;
-      } else if (v.data.data.source?.value === "psy") {
-        this.data.count.feats.psy += 1;
-      }
-    }
-    this.data.hover = {
-      value: "",
-      name: "",
-    };
-    console.log(this.data.feats.learned);
-    console.log(this.data.feats.awail);
-  }
-  getDerivedData() {
-    if (!this.data) return;
+
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       this.data.abilities[k].mod = Math.floor(
         (this.data.abilities[k].value - 10) / 2
@@ -239,6 +223,18 @@ export class CharacterAdvancement extends FormApplication {
       object.data.level.xp = object.data.xp[object.data.level.initial] || 0;
       object.ItemData.data = object.data;
     }
+    const templateData = {
+      abilities: this.data.abilities,
+      xp: this.data.xp,
+      skills: this.data.skills,
+      count: this.data.count,
+      content: this.data.content,
+      hover: this.data.hover,
+      profs: this.data.profs,
+      feats: this.data.feats,
+    };
+    console.log(templateData);
+    return templateData;
   }
   activateListeners(html) {
     super.activateListeners(html);
