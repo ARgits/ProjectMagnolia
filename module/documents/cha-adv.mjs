@@ -101,11 +101,6 @@ export class CharacterAdvancement extends FormApplication {
         name_array.push(i.data.name);
       }
 
-      temp_feat_list = temp_feat_list.filter(
-        (item) =>
-          ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) ||
-          item.data.level.current < item.data.level.max
-      );
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
           temp_feat_list[k] = this.data.feats.learned
@@ -132,7 +127,11 @@ export class CharacterAdvancement extends FormApplication {
           }
         }
       }
-
+      temp_feat_list = temp_feat_list.filter(
+        (item) =>
+          ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) ||
+          item.data.level.current < item.data.level.max
+      );
       this.data.feats.awail = foundry.utils.deepClone(temp_feat_list);
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
         if (this.data.skills[k].prof === 0) {
