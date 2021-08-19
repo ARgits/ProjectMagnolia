@@ -190,6 +190,12 @@ export class CharacterAdvancement extends FormApplication {
     }
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
       object.data.level.xp = object.data.xp[object.data.level.initial] ?? 0;
+      object.isEq = object.data.level.initial === object.data.level.current ? true : false;
+      object.isXP =
+        object.data.level.initial === object.data.level.max ||
+        object.data.level.xp > this.data.xp.get
+          ? true
+          : false;
     }
     const templateData = {
       abilities: this.data.abilities,
