@@ -17,7 +17,7 @@ export class CharacterAdvancement extends FormApplication {
       ],
     });
   }
-  getData(options) {
+  async getData(options) {
     if (!this.data) {
       this.data = {};
       this.data.abilities = duplicate(this.object.data.data.abilities);
@@ -178,7 +178,6 @@ export class CharacterAdvancement extends FormApplication {
       console.log(this.data.feats.learned);
       console.log(this.data.feats.awail);
     }
-
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       this.data.abilities[k].mod = Math.floor(
         (this.data.abilities[k].value - 10) / 2
