@@ -17,7 +17,7 @@ export class CharacterAdvancement extends FormApplication {
       ],
     });
   }
-  async getData(options) {
+  getData(options) {
     this.getBaseData();
     this.getDerivedData();
     const templateData = {
@@ -33,7 +33,7 @@ export class CharacterAdvancement extends FormApplication {
     console.log(templateData);
     return templateData;
   }
-  getBaseData() {
+  async getBaseData() {
     if (this.data) return;
     this.data = {};
     this.data.abilities = duplicate(this.object.data.data.abilities);
