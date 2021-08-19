@@ -327,10 +327,11 @@ export class CharacterAdvancement extends FormApplication {
       (item) => item.data.level.initial > item.data.level.current
     );
     for (let [k, v] of Object.entries(feats)) {
-      if (this.data.feats.learned.length > 0) {
         v.data.level.current = v.data.level.initial;
+      if (this.data.feats.learned.length > 0) {
+        
         for (let [n, m] of Object.entries(this.data.feats.learned)) {
-          if (v.id === m.id) {
+          if (v._id === m.id) {
             feats_data.exist.push(v); //{_id:v.id,data:v.ItemData}
           } else {
             feats_data.new.push(v);
