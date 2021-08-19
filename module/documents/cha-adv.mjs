@@ -96,21 +96,14 @@ export class CharacterAdvancement extends FormApplication {
       this.data.feats.learned = this.data.feats.learned.filter(
         (item) => item.data.type === "feature" || item.data.type === "spell"
       );
-      let id_array = [];
       let name_array = [];
       for (let i of this.data.feats.learned) {
-        if (i.data.flags.core?.sourceId) {
-          id_array.push(/Item.(.+)/.exec(i.data.flags.core.sourceId)[1]);
-          name_array.push(i.data.name);
-        } else {
-          id_array.push(i.id);
-          name_array.push(i.data.name);
-        }
+        name_array.push(i.data.name);
       }
+
       temp_feat_list = temp_feat_list.filter(
         (item) =>
-          ((item.type === "feature" || item.type === "spell") &&
-            !(id_array.includes(item.id) || name_array.includes(item.name))) ||
+          ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) ||
           item.data.level.current < item.data.level.max
       );
       for (let [k, v] of Object.entries(temp_feat_list)) {
@@ -127,11 +120,14 @@ export class CharacterAdvancement extends FormApplication {
             1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
           if (temp_feat_list[k].data.xp.length < temp_feat_list[k].data.level.max) {
             for (let i = 1; i < temp_feat_list[k].data.level.max; i++) {
-              temp_feat_list[k].data.xp.push(Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5);
+              temp_feat_list[k].data.xp.push(
+                Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5
+              );
             }
           } else {
             for (let i = 1; i < temp_feat_list[k].data.level.max; i++) {
-              temp_feat_list[k].data.xp[i] = Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5;
+              temp_feat_list[k].data.xp[i] =
+                Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5;
             }
           }
         }
