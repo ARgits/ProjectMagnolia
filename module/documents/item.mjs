@@ -38,9 +38,10 @@ export class ARd20Item extends Item {
   _prepareWeaponData(itemData, labels) {
     if (itemData.type !== "weapon") return;
     const data = itemData.data;
+    const flags = itemData.flags;
     this._SetProperties(data);
     this._setDeflect(data);
-    this._setTypeAndSubtype(data, labels);
+    this._setTypeAndSubtype(data, flags, labels);
     if (!this.isOwned) this.prepareFinalAttributes();
   }
   _SetProperties(data) {
@@ -67,13 +68,13 @@ export class ARd20Item extends Item {
       data.deflect[v] = data.deflect[v] || data.damage.common[v];
     }
   }
-  _setTypeAndSubtype(data, labels) {
+  _setTypeAndSubtype(data, flags, labels) {
     data.type.value = data.type.value || "amb";
     data.settings = game.settings
       .get("ard20", "profs")
       .weapon.filter((prof) => prof.type === data.type.value);
-    if (this.isOwned && itemData.flags.core?.sourceId) {
-      let id = this.isOwned ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1] : null;
+    if (this.isOwned && flags.core?.sourceId) {
+      let id = this.isOwned ? /Item.(.+)/.exec(flags.core.sourceId)[1] : null;
       console.log(id);
       data.proto =
         this.isOwned && data.proto === undefined ? game.items.get(id).data.data.proto : data.proto;
@@ -98,7 +99,7 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     data.isLearned = this.isOwned ? true : false;
     data.source.value = data.source.value || "mar";
-    data.source.label = game.i18n.localize(CONFIG.ARd20.source[data.source.value])
+    data.source.label = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
     data.keys = [];
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
