@@ -132,7 +132,7 @@ export class CharacterAdvancement extends FormApplication {
           ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) ||
           item.data.level.current < item.data.level.max
       );
-      this.data.feats.awail = foundry.utils.deepClone(temp_feat_list);
+      this.data.feats.awail = temp_feat_list;
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
         if (this.data.skills[k].prof === 0) {
           this.data.count.skills[0] += 1;
