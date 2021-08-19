@@ -347,7 +347,7 @@ export class CharacterAdvancement extends FormApplication {
       await actor.updateEmbeddedDocuments(
         "Item",
         feats_data.exist.map((item) => ({
-          _id: item.id,
+          _id: item._id,
           "data.level.initial": item.data.level.initial,
         }))
       );
