@@ -108,6 +108,12 @@ export class CharacterAdvancement extends FormApplication {
           name_array.push(i.data.name);
         }
       }
+      temp_feat_list = temp_feat_list.filter(
+        (item) =>
+          ((item.type === "feature" || item.type === "spell") &&
+            !(id_array.includes(item.id) || name_array.includes(item.name))) ||
+          item.data.level.current < item.data.level.max
+      );
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
           temp_feat_list[k] = this.data.feats.learned
@@ -115,13 +121,21 @@ export class CharacterAdvancement extends FormApplication {
             .data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
         }
+        if (temp_feat_list[k].level.max > 1) {
+            let n = (10 - temp_feat_list[k].level.max) / temp_feat_list[k].level.max;
+            let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
+            if (temp_feat_list[k].xp.length < temp_feat_list[k].level.max) {
+              for (let i = 1; i < temp_feat_list[k].level.max; i++) {
+                temp_feat_list[k].xp.push(Math.round((temp_feat_list[k].xp[i - 1] * m) / 5) * 5);
+              }
+            } else {
+              for (let i = 1; i < temp_feat_list[k].level.max; i++) {
+                temp_feat_list[k].xp[i] = Math.round((temp_feat_list[k].xp[i - 1] * m) / 5) * 5;
+              }
+            }
+          }
       }
-      temp_feat_list = temp_feat_list.filter(
-        (item) =>
-          ((item.type === "feature" || item.type === "spell") &&
-            !(id_array.includes(item.id) || name_array.includes(item.name))) ||
-          item.data.level.current < item.data.level.max
-      );
+
       this.data.feats.awail = foundry.utils.deepClone(temp_feat_list);
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
         if (this.data.skills[k].prof === 0) {
