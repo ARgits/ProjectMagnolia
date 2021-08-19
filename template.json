@@ -189,7 +189,7 @@
     },
     "feature": {
       "templates": ["base"],
-      "source": ["Martial", "Magical", "Divine", "Primal", "Psyhic"],
+      "source": {},
       "xp": [0],
       "level": {
         "initial": 0
