@@ -155,6 +155,9 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.psy += 1;
         }
       }
+      this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
+        return a + b;
+      }, 0);
       this.data.hover = {
         value: "",
         name: "",
@@ -189,7 +192,12 @@ export class CharacterAdvancement extends FormApplication {
       }
     }
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
-      object.data.level.xp = object.data.xp[object.data.level.initial] ?? 0;
+      let allCount = this.data.count.feats.all;
+      let featCount = this.data.count.feats[object.data.source.value];
+      object.data.level.xp =
+        Math.ceil(
+          (object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5
+        ) * 5 ?? 0;
       object.isEq = object.data.level.initial === object.data.level.current ? true : false;
       object.isXP =
         object.data.level.initial === object.data.level.max ||
