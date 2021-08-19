@@ -190,6 +190,8 @@ export class CharacterAdvancement extends FormApplication {
       value: "",
       name: "",
     };
+    console.log(this.data.feats.learned);
+    console.log(this.data.feats.awail);
   }
   getDerivedData() {
     if (!this.data) return;
