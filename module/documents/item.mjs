@@ -107,15 +107,18 @@ export class ARd20Item extends Item {
     }
     data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0;
     //define exp cost
-    if (data.level.max > 1 ) {
+    if (data.level.max > 1) {
       let n = (10 - data.level.max) / data.level.max;
       let k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
-      if(data.xp.length<data.level.max){
-      for (let i = 1; i < data.level.max; i++) {
-        data.xp.push(Math.round((data.xp[i - 1] * k) / 5) * 5);
-      }}
-      for (let i = 1; i < data.level.max; i++) {
-        data.xp[i] = Math.round((data.xp[i - 1] * k) / 5) * 5;
+      if (data.xp.length < data.level.max) {
+        for (let i = 1; i < data.level.max; i++) {
+          data.xp.push(Math.round((data.xp[i - 1] * k) / 5) * 5);
+        }
+      } else {
+        for (let i = 1; i < data.level.max; i++) {
+          data.xp[i] = Math.round((data.xp[i - 1] * k) / 5) * 5;
+        }
+      }
     }
     if (!this.isOwned) this.prepareFinalAttributes();
   }
