@@ -73,14 +73,10 @@ export class ARd20Item extends Item {
       .get("ard20", "profs")
       .weapon.filter((prof) => prof.type === data.type.value);
     if (this.isOwned && itemData.flags.core?.sourceId) {
-      let id = this.isOwned
-        ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1]
-        : null;
+      let id = this.isOwned ? /Item.(.+)/.exec(itemData.flags.core.sourceId)[1] : null;
       console.log(id);
       data.proto =
-        this.isOwned && data.proto === undefined
-          ? game.items.get(id).data.data.proto
-          : data.proto;
+        this.isOwned && data.proto === undefined ? game.items.get(id).data.data.proto : data.proto;
     }
     data.proto =
       data.settings.filter((prof) => prof.name === data.proto)[0] === undefined
@@ -90,8 +86,7 @@ export class ARd20Item extends Item {
       game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
       CONFIG.ARd20.WeaponType[data.type.value];
     labels.prof =
-      game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
-      CONFIG.ARd20.prof[data.prof.value];
+      game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
     data.prof.label = labels.prof;
     data.type.label = labels.type;
   }
@@ -110,17 +105,12 @@ export class ARd20Item extends Item {
     if (this.isOwned) {
       console.log(data.level.initial);
     }
-    data.level.current = this.isOwned
-      ? Math.max(isNaN(data.level.initial) ? -Infinity : data.level.initial, 1)
-      : 0;
+    data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0;
     //define exp cost
     data.xp.length = data.level.has ? data.level.max : 1;
     if (data.xp.length > 1) {
       let n = (10 - data.level.max) / data.level.max;
-      let k =
-        1.7 +
-        (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) *
-          Math.sign(n);
+      let k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
       for (let i = 1; i < data.level.max; i++) {
         data.xp[i] = Math.round((data.xp[i - 1] * k) / 5) * 5;
       }
@@ -134,9 +124,7 @@ export class ARd20Item extends Item {
     const data = this.data.data;
     const abil = (data.abil = {});
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-      v = this.isOwned
-        ? getProperty(this.actor.data, `data.abilities.${k}.mod`)
-        : null;
+      v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
       abil[k] = v;
     }
     data.isEquiped = data.isEquiped || false;
@@ -166,9 +154,7 @@ export class ARd20Item extends Item {
           this.actor.data.data.attributes.prof_bonus;
       }
       this.data.data.damage.common.current =
-        this.data.data.damage.common[this.labels.prof.toLowerCase()] +
-        "+" +
-        abil.str;
+        this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
       this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex;
     }
   }
@@ -211,10 +197,7 @@ export class ARd20Item extends Item {
         emote: true,
       });
 
-      const damageRoll = new Roll(
-        rollData.item.damage.common.current,
-        rollData
-      ).roll();
+      const damageRoll = new Roll(rollData.item.damage.common.current, rollData).roll();
       damageRoll._total = damageRoll._total >= 0 ? damageRoll._total : 0;
       damageRoll.toMessage({
         speaker: speaker,

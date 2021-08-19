@@ -50,22 +50,18 @@ export class CharacterAdvancement extends FormApplication {
       let temp_feat_list = [];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
       for (let key of game.settings.get("ard20", "feat").packs) {
-        if (
-          game.packs.filter((pack) => pack.metadata.label === key).length !== 0
-        ) {
+        if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
           feat_list.push(
             Array.from(
               game.packs.filter(
-                (pack) =>
-                  pack.metadata.label === key && pack.metadata.entity === "Item"
+                (pack) => pack.metadata.label === key && pack.metadata.entity === "Item"
               )[0].index
             )
           );
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
             let new_key =
-              game.packs.filter((pack) => pack.metadata.label === key)[0]
-                .metadata.package +
+              game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package +
               "." +
               key;
             let doc = await game.packs.get(new_key).getDocument(feat._id);
@@ -77,14 +73,11 @@ export class CharacterAdvancement extends FormApplication {
       }
       /* same as above, but for folders*/
       for (let key of game.settings.get("ard20", "feat").folders) {
-        if (
-          game.folders.filter((folder) => folder.data.name === key).length !== 0
-        ) {
+        if (game.folders.filter((folder) => folder.data.name === key).length !== 0) {
           let feat_list = [];
           feat_list.push(
             game.folders.filter(
-              (folder) =>
-                folder.data.name === key && folder.data.type === "Item"
+              (folder) => folder.data.name === key && folder.data.type === "Item"
             )[0].content
           );
           feat_list = feat_list.flat();
@@ -117,8 +110,7 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
-          v = this.data.feats.learned.filter((item) => item.name === v.name)[0]
-            .data;
+          v = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
         }
       }
       temp_feat_list = temp_feat_list.filter(
@@ -158,23 +150,15 @@ export class CharacterAdvancement extends FormApplication {
       console.log(this.data.feats.awail);
     }
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-      this.data.abilities[k].mod = Math.floor(
-        (this.data.abilities[k].value - 10) / 2
-      );
-      this.data.abilities[k].xp =
-        CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
+      this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2);
+      this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
       this.data.abilities[k].isEq =
-        this.data.abilities[k].value ===
-        this.object.data.data.abilities[k].value
-          ? true
-          : false;
-      this.data.abilities[k].isXP =
-        this.data.xp.get >= this.data.abilities[k].xp ? false : true;
+        this.data.abilities[k].value === this.object.data.data.abilities[k].value ? true : false;
+      this.data.abilities[k].isXP = this.data.xp.get >= this.data.abilities[k].xp ? false : true;
     }
     for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
       this.data.skills[k].hover =
-        game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ??
-        this.data.skills[k].prof;
+        game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof;
       this.data.skills[k].xp =
         this.data.skills[k].prof < 2
           ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][
@@ -182,19 +166,13 @@ export class CharacterAdvancement extends FormApplication {
             ]
           : false;
       this.data.skills[k].isEq =
-        this.data.skills[k].prof === this.object.data.data.skills[k].prof
-          ? true
-          : false;
+        this.data.skills[k].prof === this.object.data.data.skills[k].prof ? true : false;
       this.data.skills[k].isXP =
-        this.data.xp.get >= this.data.skills[k].xp &&
-        this.data.skills[k].prof < 2
-          ? false
-          : true;
+        this.data.xp.get >= this.data.skills[k].xp && this.data.skills[k].prof < 2 ? false : true;
 
       for (let [k, v] of Object.entries(this.data.profs.weapon)) {
         v.value_hover =
-          game.i18n.localize(CONFIG.ARd20.prof[v.value]) ??
-          CONFIG.ARd20.prof[v.value];
+          game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
       }
     }
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
@@ -232,19 +210,11 @@ export class CharacterAdvancement extends FormApplication {
           case "minus":
             data.abilities[button.dataset.key].value -= 1;
             data.xp.get +=
-              CONFIG.ARd20.abil_xp[
-                data.abilities[button.dataset.key].value - 5
-              ] ??
-              CONFIG.ARd20.abil_xp[
-                data.abilities[button.dataset.key].value - 5
-              ];
+              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ??
+              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5];
             data.xp.used -=
-              CONFIG.ARd20.abil_xp[
-                data.abilities[button.dataset.key].value - 5
-              ] ??
-              CONFIG.ARd20.abil_xp[
-                data.abilities[button.dataset.key].value - 5
-              ];
+              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ??
+              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5];
             break;
         }
         break;
@@ -254,26 +224,18 @@ export class CharacterAdvancement extends FormApplication {
             data.skills[button.dataset.key].prof += 1;
             data.xp.get -= data.skills[button.dataset.key].xp;
             data.xp.used += data.skills[button.dataset.key].xp;
-            this.data.count.skills[
-              this.data.skills[button.dataset.key].prof
-            ] += 1;
+            this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1;
             break;
           case "minus":
             data.skills[button.dataset.key].prof -= 1;
-            this.data.count.skills[
-              this.data.skills[button.dataset.key].prof + 1
-            ] -= 1;
+            this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1;
             data.xp.get +=
               CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][
-                this.data.count.skills[
-                  this.data.skills[button.dataset.key].prof + 1
-                ]
+                this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]
               ];
             data.xp.used -=
               CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][
-                this.data.count.skills[
-                  this.data.skills[button.dataset.key].prof + 1
-                ]
+                this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]
               ];
             break;
         }
@@ -292,17 +254,13 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
           case "plus":
             data.feats.awail[button.dataset.key].data.level.initial += 1;
-            data.count.feats[
-              data.feats.awail[button.dataset.key].data.source.value
-            ] += 1;
+            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += 1;
             data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp;
             data.xp.used += data.feats.awail[button.dataset.key].data.level.xp;
             break;
           case "minus":
             data.feats.awail[button.dataset.key].data.level.initial -= 1;
-            data.count.feats[
-              data.feats.awail[button.dataset.key].data.source.value
-            ] -= 1;
+            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= 1;
             data.xp.get +=
               data.feats.awail[button.dataset.key].data.xp[
                 data.feats.awail[button.dataset.key].data.level.initial
@@ -346,9 +304,7 @@ export class CharacterAdvancement extends FormApplication {
       new: [],
       exist: [],
     };
-    const feats = this.data.feats.awail.filter(
-      (item) => item.data.level.initial > 0
-    );
+    const feats = this.data.feats.awail.filter((item) => item.data.level.initial > 0);
     for (let [k, v] of Object.entries(feats)) {
       if (this.data.feats.learned.length > 0) {
         for (let [n, m] of Object.entries(this.data.feats.learned)) {
