@@ -119,9 +119,6 @@ export class CharacterAdvancement extends FormApplication {
         if (name_array.includes(v.name)) {
           v = this.data.feats.learned.filter((item) => item.name === v.name)[0].data;
         }
-        v.data.level.initial =
-          v.data.level.current > 0 ? v.data.level.current : 0;
-      }
       temp_feat_list = temp_feat_list.filter(
         (item) =>
           ((item.type === "feature" || item.type === "spell") &&
