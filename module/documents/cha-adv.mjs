@@ -117,7 +117,7 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
-          v = this.data.feats.learned.filter((item) => item.name === v.name)[0];
+          v = this.data.feats.learned.filter((item) => item.name === v.name)[0].data;
         }
         v.data.level.initial =
           v.data.level.current > 0 ? v.data.level.current : 0;
