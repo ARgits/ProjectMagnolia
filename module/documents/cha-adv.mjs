@@ -126,7 +126,7 @@ export class CharacterAdvancement extends FormApplication {
             }
           }
         }
-        temp_feat_list[k].data.source.label = game.i18n.localize(temp_feat_list[k].data.source.value)
+        temp_feat_lit[k].data.source.label = game.i18n.localize(CONFIG.ARd20.source[temp_feat_lit[k].data.source.value])
       }
       temp_feat_list = temp_feat_list.filter(
         (item) =>
