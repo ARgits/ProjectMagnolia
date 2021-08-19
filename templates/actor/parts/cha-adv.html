@@ -29,18 +29,18 @@
                     <div>Increase</div>
                     <div>XP cost</div>
                 </li>
-                    {{#each abilities as |ability key|}}
-                        <li class="ability flexrow align-center">
-                            <div><label for="abilities.{{key}}.value" class="resource-label  flexlarge " data-label="{{ability.label}}">{{ability.label}}</label></div>
-                            <div><button class="change far fa-arrow-alt-circle-down" data-type='ability' type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'></button></div>
-                            <div><input readonly type='number' class="ability align-center" value={{ability.value}} name='abilities.{{key}}.value' /></div>
-                            <div><span class="ability-mod align-center" name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span></div>
-                            <div><button class="change far fa-arrow-alt-circle-up" data-type='ability' type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}></button></div>
-                            <div><span class='ability' name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
-                        </li>
-                    {{/each}}
-                </div>
-            </ol>
+                {{#each abilities as |ability key|}}
+                    <li class="item flexrow align-center">
+                        <div><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></div>
+                        <div><button class="change far fa-arrow-alt-circle-down" data-type='ability' type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'></button></div>
+                        <div><input readonly type='number' class="ability align-center" value={{ability.value}} name='abilities.{{key}}.value' /></div>
+                        <div><span name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span></div>
+                        <div><button class="change far fa-arrow-alt-circle-up" data-type='ability' type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}></button></div>
+                        <div><span name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
+                    </li>
+                {{/each}}
+        </div>
+        </ol>
         </div>
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class="grid grid-2col">
