@@ -198,7 +198,7 @@ export class CharacterAdvancement extends FormApplication {
       }
     }
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
-      object.data.level.xp = object.data.xp[object.data.level.initial] || 0;
+      object.data.level.xp = object.data.xp[object.data.level.initial] ?? 0;
     }
     const templateData = {
       abilities: this.data.abilities,
