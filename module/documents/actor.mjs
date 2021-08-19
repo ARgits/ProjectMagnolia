@@ -59,19 +59,14 @@ export class ARd20Actor extends Actor {
       data.attributes.xp.used = data.attributes.xp.used ?? 0;
     }
     for (let i = 1; i < 21; i++) {
-      if (
-        data.attributes.xp.used >= levels[i - 1] &&
-        data.attributes.xp.used < levels[i]
-      ) {
+      if (data.attributes.xp.used >= levels[i - 1] && data.attributes.xp.used < levels[i]) {
         data.attributes.level = i;
         data.attributes.xp.level = levels[i];
         data.attributes.xp.level_min = levels[i - 1];
       }
     }
-    data.attributes.xp.bar_max =
-      data.attributes.xp.level - data.attributes.xp.level_min;
-    data.attributes.xp.bar_min =
-      data.attributes.xp.used - data.attributes.xp.level_min;
+    data.attributes.xp.bar_max = data.attributes.xp.level - data.attributes.xp.level_min;
+    data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min;
     //calculate proficiency bonus and die
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
     data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
@@ -123,12 +118,9 @@ export class ARd20Actor extends Actor {
         };
       }
       data.defences.damage.magic[key] = {
-        value: data.defences.damage.magic[key]?.value
-          ? data.defences.damage.magic[key].value
-          : 0,
+        value: data.defences.damage.magic[key]?.value ? data.defences.damage.magic[key].value : 0,
         label:
-          game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ??
-          CONFIG.ARd20.DamageSubTypes[key],
+          game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
       };
     }
     //calculate rolls for character's skills
@@ -141,8 +133,7 @@ export class ARd20Actor extends Actor {
         skill.roll = "1d20+" + data.attributes.prof_die;
       }
       if (skill.prof == 2) {
-        skill.roll =
-          "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus;
+        skill.roll = "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus;
       }
     }
     if (!data.isReady) {
@@ -156,24 +147,16 @@ export class ARd20Actor extends Actor {
       data.profs.weapon[prof].value = data.profs.weapon[prof].value
         ? data.profs.weapon[prof].value
         : 0;
-      data.profs.weapon[prof].type = game.settings.get("ard20", "profs").weapon[
-        prof
-      ].type;
-      data.profs.weapon[prof].name = game.settings.get("ard20", "profs").weapon[
-        prof
-      ].name;
+      data.profs.weapon[prof].type = game.settings.get("ard20", "profs").weapon[prof].type;
+      data.profs.weapon[prof].name = game.settings.get("ard20", "profs").weapon[prof].name;
       data.profs.weapon[prof].type_hover =
-        game.i18n.localize(
-          CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]
-        ) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
+        game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ??
+        CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
       data.profs.weapon[prof].type_value =
         game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ??
         CONFIG.ARd20.prof[data.profs.weapon[prof].value];
     }
-    if (
-      data.profs.weapon.length >
-      game.settings.get("ard20", "profs").weapon.length
-    ) {
+    if (data.profs.weapon.length > game.settings.get("ard20", "profs").weapon.length) {
       data.profs.splice(
         game.settings.get("ard20", "profs").weapon.length + 1,
         data.profs.length - game.settings.get("ard20", "profs").weapon.length

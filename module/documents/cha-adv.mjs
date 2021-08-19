@@ -1,4 +1,3 @@
-import { ARd20Actor } from "./actor.mjs";
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -121,19 +120,21 @@ export class CharacterAdvancement extends FormApplication {
             .data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
         }
-        if (temp_feat_list[k].level.max > 1) {
-            let n = (10 - temp_feat_list[k].level.max) / temp_feat_list[k].level.max;
-            let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
-            if (temp_feat_list[k].xp.length < temp_feat_list[k].level.max) {
-              for (let i = 1; i < temp_feat_list[k].level.max; i++) {
-                temp_feat_list[k].xp.push(Math.round((temp_feat_list[k].xp[i - 1] * m) / 5) * 5);
-              }
-            } else {
-              for (let i = 1; i < temp_feat_list[k].level.max; i++) {
-                temp_feat_list[k].xp[i] = Math.round((temp_feat_list[k].xp[i - 1] * m) / 5) * 5;
-              }
+        console.log(v);
+        if (temp_feat_list[k].data.level.max > 1) {
+          let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
+          let m =
+            1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
+          if (temp_feat_list[k].data.xp.length < temp_feat_list[k].data.level.max) {
+            for (let i = 1; i < temp_feat_list[k].data.level.max; i++) {
+              temp_feat_list[k].data.xp.push(Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5);
+            }
+          } else {
+            for (let i = 1; i < temp_feat_list[k].data.level.max; i++) {
+              temp_feat_list[k].data.xp[i] = Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5;
             }
           }
+        }
       }
 
       this.data.feats.awail = foundry.utils.deepClone(temp_feat_list);
