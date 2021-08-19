@@ -108,7 +108,7 @@ export class CharacterAdvancement extends FormApplication {
             .data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
         }
-        console.log(v);
+        console.log(temp_feat_list[k]);
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
           let m =
@@ -323,9 +323,12 @@ export class CharacterAdvancement extends FormApplication {
       new: [],
       exist: [],
     };
-    const feats = this.data.feats.awail.filter((item) => item.data.level.initial > 0);
+    const feats = this.data.feats.awail.filter(
+      (item) => item.data.level.initial > item.data.level.current
+    );
     for (let [k, v] of Object.entries(feats)) {
       if (this.data.feats.learned.length > 0) {
+        v.data.level.current = v.data.level.initial;
         for (let [n, m] of Object.entries(this.data.feats.learned)) {
           if (v.id === m.id) {
             feats_data.exist.push(v); //{_id:v.id,data:v.ItemData}

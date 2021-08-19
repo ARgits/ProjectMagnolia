@@ -76,7 +76,7 @@
                             <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
                             <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
                             <div class='flexrow'>
-                                <input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' />
+                                <input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' />/
                                 <input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max">
                             </div>
                             <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
