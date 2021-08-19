@@ -69,13 +69,7 @@ export class CharacterAdvancement extends FormApplication {
               "." +
               key;
             let doc = await game.packs.get(new_key).getDocument(feat._id);
-            let item = {
-              id: feat._id,
-              name: doc.data.name,
-              type: doc.data.type,
-              data: doc.data.data,
-              ItemData: doc.data,
-            };
+            let item = doc.toObject();
             temp_feat_list.push(item);
             temp_feat_list = temp_feat_list.flat();
           }
@@ -96,13 +90,7 @@ export class CharacterAdvancement extends FormApplication {
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
             console.log("item added from folder ", feat);
-            let item = {
-              id: feat.data._id,
-              name: feat.data.name,
-              type: feat.data.type,
-              data: feat.data.data,
-              ItemData: feat.data,
-            };
+            let item = feat.toObject();
             console.log(item);
             temp_feat_list.push(item);
           }
@@ -129,15 +117,7 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
-          v.id = this.data.feats.learned.filter(
-            (item) => item.name === v.name
-          )[0].id;
-          v.data = this.data.feats.learned.filter(
-            (item) => item.name === v.name
-          )[0].data.data;
-          v.ItemData = this.data.feats.learned.filter(
-            (item) => item.name === v.name
-          )[0].data;
+          v = this.data.feats.learned.filter((item) => item.name === v.name)[0];
         }
         v.data.level.initial =
           v.data.level.current > 0 ? v.data.level.current : 0;
@@ -220,7 +200,6 @@ export class CharacterAdvancement extends FormApplication {
     }
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
       object.data.level.xp = object.data.xp[object.data.level.initial] || 0;
-      object.ItemData.data = object.data;
     }
     const templateData = {
       abilities: this.data.abilities,
@@ -381,7 +360,7 @@ export class CharacterAdvancement extends FormApplication {
           }
         }
       } else {
-        feats_data.new.push(v.ItemData);
+        feats_data.new.push(v);
       }
     }
     console.log("update", feats_data.new);
