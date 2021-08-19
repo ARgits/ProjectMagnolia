@@ -82,6 +82,13 @@ export class ARd20Item extends Item {
       data.settings.filter((prof) => prof.name === data.proto)[0] === undefined
         ? data.settings[0].name
         : data.proto;
+    labels.type =
+      game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
+      CONFIG.ARd20.WeaponType[data.type.value];
+    labels.prof =
+      game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
+    data.prof.label = labels.prof;
+    data.type.label = labels.type;
   }
   /*
   Prepare data for features
@@ -91,6 +98,7 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     data.isLearned = this.isOwned ? true : false;
     data.source.value = data.source.value || "mar";
+    data.source.label = game.i18n.localize(CONFIG.ARd20.source[data.source.value])
     data.keys = [];
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
