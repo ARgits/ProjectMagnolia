@@ -115,6 +115,7 @@ export class ARd20Item extends Item {
       }
     }
     //define requirements
+    
   }
   /*
   Prepare Data that uses actor's data

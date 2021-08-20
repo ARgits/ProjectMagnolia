@@ -1,19 +1,9 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img
-      class="profile-img"
-      src="{{item.img}}"
-      data-edit="img"
-      title="{{item.name}}"
-    />
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <h1 class="charname">
-        <input
-          name="name"
-          type="text"
-          value="{{item.name}}"
-          placeholder="Name"
-        />
+        <input name="name" type="text" value="{{item.name}}" placeholder="Name" />
       </h1>
     </div>
   </header>
@@ -29,52 +19,45 @@
   <section class="sheet-body">
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">
-      {{editor content=data.description target="data.description"
-      rollData=rollData button=true owner=owner editable=editable}}
+      {{editor content=data.description target="data.description" rollData=rollData button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       <select name="data.source.value">
         {{#select data.source.value}} {{#each config.source as |name sch|}}
-        <option value="{{sch}}">{{localize name}}</option>
-        {{/each}} {{/select}}
+            <option value="{{sch}}">{{localize name}}</option>
+          {{/each}} {{/select}}
       </select>
       <div>
         has level
-        <input
-          type="checkbox"
-          name="data.level.has"
-          {{checked
-          data.level.has}}
-        />
+        <input type="checkbox" name="data.level.has" {{checked data.level.has}} />
         {{#if data.level.has}} level
-        <input
-          type="number"
-          name="data.level.current"
-          value="{{data.level.current}}"
-          min="0"
-          max="{{data.level.max}}"
-        />/<input
-          type="number"
-          name="data.level.max"
-          value="{{data.level.max}}"
-        />
+          <input type="number" name="data.level.current" value="{{data.level.current}}" min="0" max="{{data.level.max}}" />
+          /
+          <input type="number" name="data.level.max" value="{{data.level.max}}" />
         {{/if}}
       </div>
       <div>
-        Cost
-        <input
-          type="text"
-          name="data.xp.0"
-          value="{{data.xp.[0]}}"
-          data-dtype="Number"
-        />
+        base Cost
+        <input type="text" name="data.xp.0" value="{{data.xp.[0]}}" data-dtype="Number" />
+      </div>
+      <div>
+        requirements
+        {{#each data.req.conditions as |cond key|}}
+          <div class="grid grid-5col">
+            <label for="">{{key}}: </label>
+            {{#select}}
+            <option value="{{cond.type}}">ability</option>
+            <option value="{{cond.type}}">skill</option>
+            <option value="{{cond.type}}">feat</option>
+            {{/select}}
+          </div>
+        {{/each}}
+        
       </div>
     </div>
     {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/ard20/templates/actor/parts/actor-effects.html"}}
-    </div>
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}</div>
   </section>
 </form>
