@@ -19,7 +19,7 @@ export class ARd20Item extends Item {
     const labels = (this.labels = {});
     this._prepareSpellData(itemData, labels); // подготовка спеллов
     this._prepareWeaponData(itemData, labels); // подготовка оружия
-    this._prepareFeatureData(itemData); // подготовка способностей
+    this._prepareFeatureData(itemData, labels); // подготовка способностей
     if (!this.isOwned) this.prepareFinalAttributes(); // set properties that are depended on actor's properties
   }
   /*
@@ -84,12 +84,12 @@ export class ARd20Item extends Item {
   /*
   Prepare data for features
   */
-  _prepareFeatureData(itemData) {
+  _prepareFeatureData(itemData, labels) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
     // Handle Source of the feature
     data.source.value = data.source.value || "mar";
-    data.source.label = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
+    data.labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
 
     data.keys = [];
 
@@ -113,17 +113,24 @@ export class ARd20Item extends Item {
       }
     }
     //define requirements
-    
+    data.labels.req = {
+      abilities: {},
+    };
   }
   /*
   Prepare Data that uses actor's data
   */
   prepareFinalAttributes() {
     const data = this.data.data;
+    const labels = this.labels;
+    labels.abil = {};
+    labels.skills = {};
+    labels.feats = {};
     const abil = (data.abil = {});
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
       abil[k] = v;
+      labels.abil[k] = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
     }
     data.isEquiped = data.isEquiped || false;
     this._prepareWeaponAttr(data, abil);
