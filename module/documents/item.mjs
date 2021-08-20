@@ -91,7 +91,7 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     // Handle Source of the feature
     data.source.value = data.source.value || "mar";
-    data.labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
+    labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
 
     data.keys = [];
 
