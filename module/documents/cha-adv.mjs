@@ -1,4 +1,4 @@
-import { compileExpression } from "../../lib/some-lib/filtrex/filtrex";
+import { compileExpression } from "../../lib/some-lib/filtrex/filtrex.js";
 
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
