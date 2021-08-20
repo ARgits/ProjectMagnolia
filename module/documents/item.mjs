@@ -20,6 +20,7 @@ export class ARd20Item extends Item {
     this._prepareSpellData(itemData, labels); // подготовка спеллов
     this._prepareWeaponData(itemData, labels); // подготовка оружия
     this._prepareFeatureData(itemData); // подготовка способностей
+    if (!this.isOwned) this.prepareFinalAttributes(); // set properties that are depended on actor's properties
   }
   /*
   Prepare data for Spells
@@ -29,7 +30,6 @@ export class ARd20Item extends Item {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
     labels.school = CONFIG.ARd20.SpellSchool[data.school];
-    if (!this.isOwned) this.prepareFinalAttributes();
   }
   /*
   Prepare data for weapons
@@ -42,7 +42,6 @@ export class ARd20Item extends Item {
     this._SetProperties(data);
     this._setDeflect(data);
     this._setTypeAndSubtype(data, flags, labels);
-    if (!this.isOwned) this.prepareFinalAttributes();
   }
   _SetProperties(data) {
     for (let [k, v] of Object.entries(data.property.untrained)) {
@@ -65,29 +64,20 @@ export class ARd20Item extends Item {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
-      data.deflect[v] = data.deflect[v] || data.damage.common[v];
+      data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
     }
   }
   _setTypeAndSubtype(data, flags, labels) {
     data.type.value = data.type.value || "amb";
-    data.settings = game.settings
-      .get("ard20", "profs")
-      .weapon.filter((prof) => prof.type === data.type.value);
+    data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
     if (this.isOwned && flags.core?.sourceId) {
       let id = this.isOwned ? /Item.(.+)/.exec(flags.core.sourceId)[1] : null;
       console.log(id);
-      data.proto =
-        this.isOwned && data.proto === undefined ? game.items.get(id).data.data.proto : data.proto;
+      data.proto = this.isOwned && data.proto === undefined ? game.items.get(id).data.data.proto : data.proto;
     }
-    data.proto =
-      data.settings.filter((prof) => prof.name === data.proto)[0] === undefined
-        ? data.settings[0].name
-        : data.proto;
-    labels.type =
-      game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ??
-      CONFIG.ARd20.WeaponType[data.type.value];
-    labels.prof =
-      game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
+    data.proto = data.settings.filter((prof) => prof.name === data.proto)[0] === undefined ? data.settings[0].name : data.proto;
+    labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
+    labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
     data.prof.label = labels.prof;
     data.type.label = labels.type;
   }
@@ -97,17 +87,17 @@ export class ARd20Item extends Item {
   _prepareFeatureData(itemData) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
-    data.isLearned = this.isOwned ? true : false;
+    // Handle Source of the feature
     data.source.value = data.source.value || "mar";
     data.source.label = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
+
     data.keys = [];
+
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
     data.level.max = data.level.has ? data.level.max || 4 : 1;
-    if (this.isOwned) {
-      console.log(data.level.initial);
-    }
     data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0;
+
     //define exp cost
     if (data.level.max > 1) {
       let n = (10 - data.level.max) / data.level.max;
@@ -122,7 +112,20 @@ export class ARd20Item extends Item {
         }
       }
     }
-    if (!this.isOwned) this.prepareFinalAttributes();
+    //define requirements
+    data.req = {
+      abilities:{
+        str,
+        dex,
+        con,
+        int,
+        wis,
+        cha
+      },
+      skills:{},
+      feats:{}
+    }
+    
   }
   /*
   Prepare Data that uses actor's data
@@ -140,14 +143,8 @@ export class ARd20Item extends Item {
 
   _prepareWeaponAttr(data, abil) {
     if (this.data.type === "weapon") {
-      data.prof.value = this.isOwned
-        ? Object.values(this.actor?.data.data.profs.weapon).filter(
-            (pr) => pr.name === data.proto
-          )[0].value
-        : 0;
-      this.labels.prof =
-        game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ??
-        CONFIG.ARd20.prof[data.prof.value];
+      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.proto)[0].value : 0;
+      this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
       data.prof.label = this.labels.prof;
       let prof_bonus = 0;
       if (data.prof.value === 0) {
@@ -155,13 +152,9 @@ export class ARd20Item extends Item {
       } else if (data.prof.value === 1) {
         prof_bonus = this.actor.data.data.attributes.prof_die;
       } else if (data.prof.value === 2) {
-        prof_bonus =
-          this.actor.data.data.attributes.prof_die +
-          "+" +
-          this.actor.data.data.attributes.prof_bonus;
+        prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
       }
-      this.data.data.damage.common.current =
-        this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
+      this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
       this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex;
     }
   }
