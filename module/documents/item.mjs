@@ -113,18 +113,6 @@ export class ARd20Item extends Item {
       }
     }
     //define requirements
-    data.req = {
-      abilities:{
-        str,
-        dex,
-        con,
-        int,
-        wis,
-        cha
-      },
-      skills:{},
-      feats:{}
-    }
     
   }
   /*
