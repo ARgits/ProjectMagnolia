@@ -20,7 +20,9 @@ export class ARd20Item extends Item {
     this._prepareSpellData(itemData, labels); // подготовка спеллов
     this._prepareWeaponData(itemData, labels); // подготовка оружия
     this._prepareFeatureData(itemData, labels); // подготовка способностей
-    if (!this.isOwned) this.prepareFinalAttributes(); // set properties that are depended on actor's properties
+    if (!this.isOwned) {
+      this.prepareFinalAttributes();
+    } // set properties that are depended on actor's properties
   }
   /*
   Prepare data for Spells
