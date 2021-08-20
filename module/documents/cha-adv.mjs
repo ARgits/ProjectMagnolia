@@ -83,7 +83,6 @@ export class CharacterAdvancement extends FormApplication {
       for (let i of this.data.feats.learned) {
         name_array.push(i.data.name);
       }
-
       for (let [k, v] of Object.entries(temp_feat_list)) {
         if (name_array.includes(v.name)) {
           temp_feat_list[k] = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
