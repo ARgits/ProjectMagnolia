@@ -115,9 +115,6 @@ export class ARd20Item extends Item {
       }
     }
     //define requirements
-    data.labels.req = {
-      abilities: {},
-    };
   }
   /*
   Prepare Data that uses actor's data
