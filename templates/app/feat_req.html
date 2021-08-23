@@ -30,7 +30,7 @@
                     <li class="item flexrow align-center">
                         <div>{{skill.label}}</div>
                         <div>{{#select skill.prof}}
-                                {{#each config.prof as |name sch|}}
+                                {{#each ../config.prof as |name sch|}}
                                     <option value="{{sch}}">{{localize name}}</option>
                                 {{/each}}
                             {{/select}}
