@@ -166,15 +166,15 @@ export class CharacterAdvancement extends FormApplication {
       object.data.level.xp = Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 ?? 0;
       object.isEq = object.data.level.initial === object.data.level.current ? true : false;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ? true : false;
-      for (let [ability, key] of Object.entries(object.data.req.abilities)) {
+      for (let [key, ability] of Object.entries(object.data.req.abilities)) {
         ability.pass = ability.value >= this.data.abilities[key].value ? false : true;
         object.isXP = ability.pass ? object.isXP : false;
       }
-      for (let [skill, key] of Object.entries(object.data.req.skills)) {
+      for (let [key, skill] of Object.entries(object.data.req.skills)) {
         skill.pass = ability.prof >= this.data.skills[key].prof ? false : true;
         object.isXP = skill.pass ? object.isXP : false;
       }
-      for (let [feat, key] of Object.entries(object.data.req.feats)) {
+      for (let [key, feat] of Object.entries(object.data.req.feats)) {
         feat.pass =
           feat.minLevel >= this.data.feats.awail[key].data.level.initial || feat.minLevel >= this.data.feats.learned[key].data.level.initial
             ? false
