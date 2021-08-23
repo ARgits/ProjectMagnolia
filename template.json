@@ -218,23 +218,78 @@
           }
         },
         "skills": {
-          "arc": { "prof": 0 },
-          "ath": { "prof": 0 },
-          "ani": { "prof": 0 },
-          "dec": { "prof": 0 },
-          "his": { "prof": 0 },
-          "ins": { "prof": 0 },
-          "itm": { "prof": 0 },
-          "inv": { "prof": 0 },
-          "med": { "prof": 0 },
-          "nat": { "prof": 0 },
-          "prc": { "prof": 0 },
-          "prf": { "prof": 0 },
-          "per": { "prof": 0 },
-          "rel": { "prof": 0 },
-          "slt": { "prof": 0 },
-          "ste": { "prof": 0 },
-          "sur": { "prof": 0 }
+          "acr": {
+            "prof": 0,
+            "label": ""
+          },
+          "ath": {
+            "prof": 0,
+            "label": ""
+          },
+          "ani": {
+            "prof": 0,
+            "label": ""
+          },
+          "arc": {
+            "prof": 0,
+            "label": ""
+          },
+          "dec": {
+            "prof": 0,
+            "label": ""
+          },
+          "his": {
+            "prof": 0,
+            "label": ""
+          },
+          "ins": {
+            "prof": 0,
+            "label": ""
+          },
+          "itm": {
+            "prof": 0,
+            "label": ""
+          },
+          "inv": {
+            "prof": 0,
+            "label": ""
+          },
+          "med": {
+            "prof": 0,
+            "label": ""
+          },
+          "nat": {
+            "prof": 0,
+            "label": ""
+          },
+          "prc": {
+            "prof": 0,
+            "label": ""
+          },
+          "prf": {
+            "prof": 0,
+            "label": ""
+          },
+          "per": {
+            "prof": 0,
+            "label": ""
+          },
+          "rel": {
+            "prof": 0,
+            "label": ""
+          },
+          "slt": {
+            "prof": 0,
+            "label": ""
+          },
+          "ste": {
+            "prof": 0,
+            "label": ""
+          },
+          "sur": {
+            "prof": 0,
+            "label": ""
+          }
         },
         "feats": {}
       }
