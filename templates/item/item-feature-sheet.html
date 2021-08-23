@@ -43,17 +43,7 @@
         <input type="text" name="data.xp.0" value="{{data.xp.[0]}}" data-dtype="Number" />
       </div>
       <div>
-        requirements
-        {{#each data.req.conditions as |cond key|}}
-          <div class="grid grid-5col">
-            <label for="">{{key}}: </label>
-            {{#select}}
-            <option value="{{cond.type}}">ability</option>
-            <option value="{{cond.type}}">skill</option>
-            <option value="{{cond.type}}">feat</option>
-            {{/select}}
-          </div>
-        {{/each}}
+        <button type="button" class="config-button" data-action="feat-req">Requierements</button>
         
       </div>
     </div>
