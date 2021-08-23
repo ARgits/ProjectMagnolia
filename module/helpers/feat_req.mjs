@@ -30,7 +30,10 @@ export class FeatRequirements extends FormApplication {
           feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
-            pack_list.push(feat.name);
+              let doc = {
+                  name:duplicate(feat.name),
+              }
+            pack_list.push(doc);
           }
         }
       }
@@ -41,7 +44,10 @@ export class FeatRequirements extends FormApplication {
           feat_list.push(game.folders.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].content);
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
-            folder_list.push(feat.name);
+            let doc = {
+                name:duplicate(feat.name),
+            }
+            folder_list.push(doc);
           }
         }
       }
@@ -56,11 +62,22 @@ export class FeatRequirements extends FormApplication {
     const FormData = {
       abilities: this.data.abilities,
       skills: this.data.skills,
-      feats: this.data.skills,
+      feats: this.data.feats,
     };
     console.log(FormData);
     return FormData;
   }
   activateListeners(html) {}
-  async _updateObject(event, formData) {}
+  async _updateObject(event, formData) {
+    let updateData = expandObject(formData);
+    console.log(updateData);
+    const item = this.object
+    this.render();
+    const obj = {};
+    obj["data.req.abilities"] = updateData?.abilities;
+    obj["data.req.skills"] = updateData?.skills;
+    obj["data.req.feats"] = updateData?.feats;
+    console.log(obj);
+    await item.update(obj);
+  }
 }

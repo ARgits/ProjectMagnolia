@@ -12,15 +12,48 @@
                     <div>Name</div>
                     <div>Value</div>
                 </li>
-                {{log abilities}}
                 {{#each abilities as |ability key|}}
                     <li class="item flexrow align-center">
                         <div>{{ability.label}}</div>
-                        <input type="number" name="abilities.{{key}}" value="{{ability.value}}" />
+                        <input type="number" name="abilities.{{key}}.value" value="{{ability.value}}" />
                     </li>
                 {{/each}}
             </ol>
         </div>
+        <div class="tab" data-tab="skills" data-group="primary-tabs">
+            <ol class="items-list">
+                <li class="item flexrow items-header">
+                    <div>Name</div>
+                    <div>level</div>
+                </li>
+                {{#each skills as |skill key|}}
+                    <li class="item flexrow align-center">
+                        <div>{{skill.label}}</div>
+                        {{#select skill.prof}}
+                            {{#each config.prof as |name sch|}}
+                                <option value="{{sch}}">{{localize name}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </li>
+                {{/each}}
+            </ol>
+        </div>
+        {{!-- <div class="tab" data-tab="feats" data-group="primary-tabs">
+            <ol class="items-list">
+                <li class="item flexrow items-header">
+                    <div>Name</div>
+                    <div>Value</div>
+                </li>
+                {{#each feats as |feat key|}}
+                    <li class="item flexrow align-center">
+                        <div>{{feat.name}}</div>
+                        {{#if feat.hasLevel}}
+                            <input type="number" name="feats.{{key}}.level" value="{{feat.level}}" />
+                        {{else}}-{{/if}}
+                    </li>
+                {{/each}}
+            </ol>
+        </div> --}}
     </section>
     <hr>
     <footer>

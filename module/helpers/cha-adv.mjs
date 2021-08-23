@@ -101,7 +101,7 @@ export class CharacterAdvancement extends FormApplication {
               temp_feat_list[k].data.xp[i] = Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5;
             }
           }
-        }
+        } else temp_feat_list[k].data.level.xp = temp_feat_list[k].data.xp[0];
         temp_feat_list[k].data.source.label = game.i18n.localize(CONFIG.ARd20.source[temp_feat_list[k].data.source.value]);
       }
       temp_feat_list = temp_feat_list.filter(
