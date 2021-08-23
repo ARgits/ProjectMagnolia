@@ -55,6 +55,7 @@ export class FeatRequirements extends FormApplication {
       feats: this.data.skills,
     };
     console.log(FormData);
+    return FormData
   }
   activateListeners(html) {}
   async _updateObject(event, formData) {}
