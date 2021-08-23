@@ -29,12 +29,11 @@
                 {{#each skills as |skill key|}}
                     <li class="item flexrow align-center">
                         <div>{{skill.label}}</div>
-                        <div>{{#select skill.prof}}
-                                {{#each ../config.prof as |name sch|}}
-                                    <option value="{{sch}}">{{localize name}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </div>
+                        {{#select skill.prof}}
+                            {{#each ../config.prof as |name sch|}}
+                                <option value="{{sch}}">{{localize name}}</option>
+                            {{/each}}
+                        {{/select}}
                     </li>
                 {{/each}}
             </ol>
