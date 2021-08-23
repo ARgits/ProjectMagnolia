@@ -27,15 +27,17 @@
                     <div>level</div>
                 </li>
                 {{#each skills as |skill key|}}
-                    <li class="item flexrow align-center">
-                        <div>{{skill.label}}</div>
-                        <select name='skills.{{key}}.prof'>{{#select skill.prof}}
-                                {{#each ../config.prof as |name sch|}}
-                                    <option value="{{sch}}">{{localize name}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                    </li>
+                    {{#if skill}}
+                        <li class="item flexrow align-center">
+                            <div>{{skill.label}}</div>
+                            <select name='skills.{{key}}.prof'>{{#select skill.prof}}
+                                    {{#each ../config.prof as |name sch|}}
+                                        <option value="{{sch}}">{{localize name}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </li>
+                    {{/if}}
                 {{/each}}
             </ol>
         </div>
