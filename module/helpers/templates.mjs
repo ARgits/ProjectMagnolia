@@ -18,6 +18,6 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/ard20/templates/app/prof-settings.html",
     "systems/ard20/templates/app/feat-settings.html",
     // Requirements for features
-    "systems/ard20/templates/app/feat-req.html"
+    "systems/ard20/templates/app/feat_req.html"
   ])
 }
