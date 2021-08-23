@@ -131,8 +131,9 @@ export class ARd20Item extends Item {
     /* same as above, but for folders*/
     for (let key of game.settings.get("ard20", "feat").folders) {
       if (game.folders.filter((folder) => folder.data.name === key).length !== 0) {
+        console.log(folder_list);
         folder_list.push(game.folders.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].content);
-        console.log(folder_list)
+        console.log(folder_list);
         folder_list = folder_list.flat();
       }
     }
