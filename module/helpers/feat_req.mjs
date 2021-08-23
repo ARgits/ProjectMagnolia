@@ -34,7 +34,6 @@ export class FeatRequirements extends FormApplication {
           }
         }
       }
-      console.log("packs", pack_list);
       /* same as above, but for folders*/
       for (let key of game.settings.get("ard20", "feat").folders) {
         if (game.folders.filter((folder) => folder.data.name === key).length !== 0) {
@@ -46,8 +45,13 @@ export class FeatRequirements extends FormApplication {
           }
         }
       }
-      console.log("folders", folder_list);
       this.data.feats = pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0));
+      for (let [k, v] of Object.entries(this.data.abilities)) {
+        v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
+      }
+      for (let [k, v] of Object.entries(this.data.skills)) {
+        v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
+      }
     }
     const FormData = {
       abilities: this.data.abilities,
@@ -55,7 +59,7 @@ export class FeatRequirements extends FormApplication {
       feats: this.data.skills,
     };
     console.log(FormData);
-    return FormData
+    return FormData;
   }
   activateListeners(html) {}
   async _updateObject(event, formData) {}

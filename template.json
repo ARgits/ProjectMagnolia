@@ -198,31 +198,43 @@
       },
       "req": {
         "abilities": {
-          "str": 0,
-          "dex": 0,
-          "con": 0,
-          "int": 0,
-          "wis": 0,
-          "cha": 0
+          "str": {
+            "value": 0
+          },
+          "dex": {
+            "value": 0
+          },
+          "con": {
+            "value": 0
+          },
+          "int": {
+            "value": 0
+          },
+          "wis": {
+            "value": 0
+          },
+          "cha": {
+            "value": 0
+          }
         },
         "skills": {
-          "arc": 0,
-          "ath": 0,
-          "ani": 0,
-          "dec": 0,
-          "his": 0,
-          "ins": 0,
-          "itm": 0,
-          "inv": 0,
-          "med": 0,
-          "nat": 0,
-          "prc": 0,
-          "prf": 0,
-          "per": 0,
-          "rel": 0,
-          "slt": 0,
-          "ste": 0,
-          "sur": 0
+          "arc": { "prof": 0 },
+          "ath": { "prof": 0 },
+          "ani": { "prof": 0 },
+          "dec": { "prof": 0 },
+          "his": { "prof": 0 },
+          "ins": { "prof": 0 },
+          "itm": { "prof": 0 },
+          "inv": { "prof": 0 },
+          "med": { "prof": 0 },
+          "nat": { "prof": 0 },
+          "prc": { "prof": 0 },
+          "prf": { "prof": 0 },
+          "per": { "prof": 0 },
+          "rel": { "prof": 0 },
+          "slt": { "prof": 0 },
+          "ste": { "prof": 0 },
+          "sur": { "prof": 0 }
         },
         "feats": {}
       }

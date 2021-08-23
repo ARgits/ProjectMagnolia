@@ -14,10 +14,9 @@
                 </li>
                 {{log abilities}}
                 {{#each abilities as |ability key|}}
-                    {{log key}}
                     <li class="item flexrow">
-                        <div>{{config.ARd20.abilities.key}}</div>
-                        <input type="number" name="abilities.{{key}}" value="abilities.{{key}}" />
+                        <div>{{ability.label}}</div>
+                        <input type="number" name="abilities.{{key}}" value="{{ability.value}}" />
                     </li>
                 {{/each}}
             </ol>
