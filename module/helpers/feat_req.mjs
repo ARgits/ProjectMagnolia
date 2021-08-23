@@ -58,7 +58,7 @@ export class FeatRequirements extends FormApplication {
       for (let [k, v] of Object.entries(this.data.skills)) {
           if(v.label===undefined){
               console.log(v)
-              delete v
+              v=null
           }else {v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;}
         
       }
