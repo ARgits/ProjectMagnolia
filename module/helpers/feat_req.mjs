@@ -7,6 +7,13 @@ export class FeatRequirements extends FormApplication {
       id: "feat_req",
       width: 500,
       height: "auto",
+      tabs: [
+        {
+          navSelector: ".sheet-tabs",
+          contentSelector: ".sheet-body",
+          initial: "abilities",
+        },
+      ],
     });
   }
   async getData(options) {
