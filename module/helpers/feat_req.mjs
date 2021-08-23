@@ -3,7 +3,7 @@ export class FeatRequirements extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Feature Requirements",
-      template: "systems/ard20/templates/app/feat-req.html",
+      template: "systems/ard20/templates/app/feat_req.html",
       id: "feat_req",
       width: 500,
       height: "auto",
