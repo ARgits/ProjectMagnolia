@@ -19,8 +19,8 @@ export class FeatRequirements extends FormApplication {
   async getData(options) {
     if (!this.data) {
       this.data = {};
-      this.data.abilities = duplicate(this.object.data.data.req.abilities);
-      this.data.skills = duplicate(this.object.data.data.req.skills);
+      this.data.abilities = foundry.utils.deepClone(this.object.data.data.req.abilities);
+      this.data.skills = foundry.utils.deepClone(this.object.data.data.req.skills);
       let pack_list = [];
       let folder_list = [];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
