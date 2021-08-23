@@ -166,6 +166,17 @@ export class CharacterAdvancement extends FormApplication {
       object.data.level.xp = Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 ?? 0;
       object.isEq = object.data.level.initial === object.data.level.current ? true : false;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ? true : false;
+      for(let key of Object.entries(object.data.req)){
+        if (key==='abilities'){
+          console.log(key)
+        }
+        if (key==='skills'){
+          console.log(key)
+        }
+        if (key==='feats'){
+          console.log(key)
+        }
+      }
     }
     const templateData = {
       abilities: this.data.abilities,
