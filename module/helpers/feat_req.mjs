@@ -47,13 +47,14 @@ export class FeatRequirements extends FormApplication {
         }
       }
       console.log("folders", folder_list);
-      this.data.feats = pack_list.concat(folder_list.filter((item)=>pack_list.indexOf(item)<0))
+      this.data.feats = pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0));
     }
-    for (let [ability,key] of Object.entries(this.data.abilities)){
-        console.log(ability,key)
-    }
-    let FormData = this.data
-    console.log(FormData)
+    const FormData = {
+      abilities: this.data.abilities,
+      skills: this.data.skills,
+      feats: this.data.skills,
+    };
+    console.log(FormData);
   }
   activateListeners(html) {}
   async _updateObject(event, formData) {}
