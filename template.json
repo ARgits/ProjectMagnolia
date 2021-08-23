@@ -195,6 +195,36 @@
       "xp": [0],
       "level": {
         "initial": 0
+      },
+      "req": {
+        "abilities": {
+          "str": 0,
+          "dex": 0,
+          "con": 0,
+          "int": 0,
+          "wis": 0,
+          "cha": 0
+        },
+        "skills": {
+          "arc": 0,
+          "ath": 0,
+          "ani": 0,
+          "dec": 0,
+          "his": 0,
+          "ins": 0,
+          "itm": 0,
+          "inv": 0,
+          "med": 0,
+          "nat": 0,
+          "prc": 0,
+          "prf": 0,
+          "per": 0,
+          "rel": 0,
+          "slt": 0,
+          "ste": 0,
+          "sur": 0
+        },
+        "feats": {}
       }
     },
     "spell": {

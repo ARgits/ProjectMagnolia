@@ -115,7 +115,28 @@ export class ARd20Item extends Item {
       }
     }
     //define requirements
-    
+    this._prepareFeatList();
+  }
+  _prepareFeatList() {
+    let pack_list = [];
+    let folder_list = [];
+    /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
+    for (let key of game.settings.get("ard20", "feat").packs) {
+      if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
+        pack_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
+        pack_list = pack_list.flat();
+      }
+    }
+    console.log("packs", pack_list);
+    /* same as above, but for folders*/
+    for (let key of game.settings.get("ard20", "feat").folders) {
+      if (game.folders.filter((folder) => folder.data.name === key).length !== 0) {
+        folder_list.push(game.folders.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].content);
+        folder_list = folder_list.flat();
+      }
+    }
+    console.log("folders", folder_list);
+    temp_feat_list = temp_feat_list.filter((item) => item.type === "feature" || item.type === "spell");
   }
   /*
   Prepare Data that uses actor's data

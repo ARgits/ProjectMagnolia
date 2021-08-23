@@ -20,9 +20,7 @@ export class CharacterAdvancement extends FormApplication {
   }
   async getData(options) {
     if (!this.data) {
-      let expression = "(a or b) and (c or d)";
-      let exp = compileExpression(expression);
-      console.log(exp({ a: true, b: false, c: false, d: true }));
+
       this.data = {};
       this.data.abilities = duplicate(this.object.data.data.abilities);
       this.data.skills = duplicate(this.object.data.data.skills);
