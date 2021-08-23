@@ -165,7 +165,6 @@ export class ARd20ActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this));
-
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
