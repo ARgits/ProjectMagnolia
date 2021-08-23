@@ -88,7 +88,7 @@ export class CharacterAdvancement extends FormApplication {
           temp_feat_list[k] = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
         }
-        console.log(temp_feat_list[k]);
+        temp_feat_list[k].data.level.max = data.level.has ? data.level.max || 4 : 1;
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
           let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
