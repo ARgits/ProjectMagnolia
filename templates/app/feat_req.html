@@ -32,7 +32,7 @@
                             <div>{{skill.label}}</div>
                             <select name='skills.{{key}}.prof'>{{#select skill.prof}}
                                     {{#each ../config.prof as |name sch|}}
-                                        <option value="{{sch}}">{{localize name}}</option>
+                                        <option value="{{numberFormat sch decimals=0 sign=false}}">{{localize name}}</option>
                                     {{/each}}
                                 {{/select}}
                             </select>
