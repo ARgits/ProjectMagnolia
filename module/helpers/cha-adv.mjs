@@ -171,7 +171,7 @@ export class CharacterAdvancement extends FormApplication {
         object.isXP = ability.pass ? object.isXP : true;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
-        skill.pass = skill.prof >= this.data.skills[key].prof ? false : true;
+        skill.pass = skill.prof > this.data.skills[key].prof ? false : true;
         object.isXP = skill.pass ? object.isXP : true;
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
