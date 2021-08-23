@@ -30,9 +30,9 @@ export class FeatRequirements extends FormApplication {
           feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
-              let doc = {
-                  name:duplicate(feat.name),
-              }
+            let doc = {
+              name: duplicate(feat.name),
+            };
             pack_list.push(doc);
           }
         }
@@ -45,8 +45,8 @@ export class FeatRequirements extends FormApplication {
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
             let doc = {
-                name:duplicate(feat.name),
-            }
+              name: duplicate(feat.name),
+            };
             folder_list.push(doc);
           }
         }
@@ -56,18 +56,24 @@ export class FeatRequirements extends FormApplication {
         v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
       }
       for (let [k, v] of Object.entries(this.data.skills)) {
-          if(v.label===undefined){
-              console.log(v)
-              this.data.skills[k]=null
-          }else {v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;}
-        
+        if (v.label === undefined) {
+          console.log(v);
+          this.data.skills[k] = null;
+        } else {
+          v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
+        }
+      }
+      for (let [k, v] of Object.entries(this.data.feats)) {
+        if (v.name === this.object.name) {
+          this.data.feats.splice(k, 1);
+        }
       }
     }
     const FormData = {
       abilities: this.data.abilities,
       skills: this.data.skills,
       feats: this.data.feats,
-      config: CONFIG.ARd20
+      config: CONFIG.ARd20,
     };
     console.log(FormData);
     return FormData;
@@ -76,7 +82,7 @@ export class FeatRequirements extends FormApplication {
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
     console.log(updateData);
-    const item = this.object
+    const item = this.object;
     this.render();
     const obj = {};
     obj["data.req.abilities"] = updateData?.abilities;
