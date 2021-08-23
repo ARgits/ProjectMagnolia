@@ -136,7 +136,6 @@ export class ARd20Item extends Item {
       }
     }
     console.log("folders", folder_list);
-    temp_feat_list = temp_feat_list.filter((item) => item.type === "feature" || item.type === "spell");
   }
   /*
   Prepare Data that uses actor's data
