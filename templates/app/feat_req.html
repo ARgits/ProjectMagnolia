@@ -12,7 +12,7 @@
                     <div>Name</div>
                     <div>Value</div>
                 </li>
-                {{#each abilities as |ability key|}}
+                {{#each data.abilities as |ability key|}}
                 <li class="item flexrow">
                     <div>{{localize config.ARd20.abilities.key}}</div>
                     <input type="number" name="abilities.{{key}}" value="{{ability}}"/>
