@@ -131,7 +131,6 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.psy += 1;
         }
       }
-
       this.data.hover = {
         value: "",
         name: "",
@@ -155,7 +154,6 @@ export class CharacterAdvancement extends FormApplication {
         this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
       this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof ? true : false;
       this.data.skills[k].isXP = this.data.xp.get >= this.data.skills[k].xp && this.data.skills[k].prof < 2 ? false : true;
-
       for (let [k, v] of Object.entries(this.data.profs.weapon)) {
         v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
       }
@@ -163,7 +161,7 @@ export class CharacterAdvancement extends FormApplication {
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
       let allCount = this.data.count.feats.all;
       let featCount = this.data.count.feats[object.data.source.value];
-      object.data.level.xp = Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 ?? 0;
+      object.data.level.xp = Math.ceil(((object.data.xp[object.data.level.initial] ?? 0) * (1 + 0.01 * (allCount - featCount))) / 5) * 5 ?? 0;
       object.isEq = object.data.level.initial === object.data.level.current ? true : false;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ? true : false;
       for (let [key, ability] of Object.entries(object.data.req.abilities)) {
@@ -171,7 +169,7 @@ export class CharacterAdvancement extends FormApplication {
         object.isXP = ability.pass ? object.isXP : false;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
-        skill.pass = ability.prof >= this.data.skills[key].prof ? false : true;
+        skill.pass = skill.prof >= this.data.skills[key].prof ? false : true;
         object.isXP = skill.pass ? object.isXP : false;
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
