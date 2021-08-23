@@ -45,14 +45,25 @@
             <ol class="items-list">
                 <li class="item flexrow items-header">
                     <div>Name</div>
-                    <div>Value</div>
+                    <div>Level</div>
+                    <div class="item-controls">
+                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
+                      </div>
                 </li>
-                {{#each feats as |feat key|}}
+                {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
-                        <div>{{feat.name}}</div>
+                        <select name='feats.{{key}}.name'>{{#select feat.name}}
+                            {{#each ../feats.awail as |name sch|}}
+                                <option value="{{sch}}">{{name}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
                         {{#if feat.hasLevel}}
-                            <input type="number" name="feats.{{key}}.level" value="{{feat.level}}" />
+                            <input type="number" name="feats.{{key}}.level" value="{{feat.minLevel}}" min="0" max="{{feat.maxLevel}}"/>
                         {{else}}-{{/if}}
+                        <div class="item-controls">
+                            <a class="item-control item-delete" data-key="{{key}}"title="Delete Item"><i class="fas fa-trash"></i></a>
+                          </div>
                     </li>
                 {{/each}}
             </ol>

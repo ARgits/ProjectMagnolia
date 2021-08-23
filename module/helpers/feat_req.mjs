@@ -32,6 +32,8 @@ export class FeatRequirements extends FormApplication {
           for (let feat of feat_list) {
             let doc = {
               name: duplicate(feat.name),
+              hasLevel: duplicate(feat.data.data.level.has),
+              maxLevel: duplicate(feat.data.data.level.max),
             };
             pack_list.push(doc);
           }
@@ -51,7 +53,10 @@ export class FeatRequirements extends FormApplication {
           }
         }
       }
-      this.data.feats = pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0));
+      this.data.feats = {
+        awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
+        current: foundry.utils.deepClone(this.object.data.data.req.feats),
+      };
       for (let [k, v] of Object.entries(this.data.abilities)) {
         v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
       }
@@ -78,7 +83,26 @@ export class FeatRequirements extends FormApplication {
     console.log(FormData);
     return FormData;
   }
-  activateListeners(html) {}
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find(".item-create").click(this._onAdd.bind(this));
+    html.find(".item-delete").click(this._Delete.bind(this));
+  }
+  async _onAdd(event) {
+    event.preventDefault();
+    const feats = this.data.feats;
+    feats.current.push(feats.awail[0]);
+    feats.awail.splice(event.currentTarget.dataset.key, 1);
+    this.render();
+  }
+  async _Delete(event) {
+    event.preventDefault();
+    const feats = this.data.feats;
+    feats.awail.push(feats.current[event.currentTarget.dataset.key]);
+    feats.current.splice(event.currentTarget.dataset.key, 1);
+    this.render();
+  }
+
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
     console.log(updateData);
