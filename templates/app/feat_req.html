@@ -52,15 +52,17 @@
                 </li>
                 {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
-                        <select name='feats.{{key}}.name'>{{#select feat.name}}
+                        <select name='feats.current.{{key}}.name'>{{#select feat.name}}
                                 {{#each ../feats.awail as |name sch|}}
                                     <option value="{{sch}}">{{name}}</option>
                                 {{/each}}
                             {{/select}}
                         </select>
                         {{#if feat.hasLevel}}
-                            <input type="number" name="feats.{{key}}.level" value="{{feat.minLevel}}" min="0" max="{{feat.maxLevel}}" />
-                        {{else}}-{{/if}}
+                            <input type="number" name="feats.current.{{key}}.level" value="{{feat.minLevel}}" min="0" max="{{feat.maxLevel}}" />
+                        {{else}}
+                            <div>-</div>
+                        {{/if}}
                         <div class="item-controls">
                             <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
                         </div>
