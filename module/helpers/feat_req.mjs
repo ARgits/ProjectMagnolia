@@ -70,7 +70,7 @@ export class FeatRequirements extends FormApplication {
       }
       for (let [k, v] of Object.entries(this.data.feats)) {
         if (v.name === this.object.name) {
-          this.data.feats.splice(k, 1);
+          this.data.feats.awail.splice(k, 1);
         }
       }
     }
