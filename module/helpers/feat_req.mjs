@@ -63,6 +63,7 @@ export class FeatRequirements extends FormApplication {
       abilities: this.data.abilities,
       skills: this.data.skills,
       feats: this.data.feats,
+      config: CONFIG.ARd20
     };
     console.log(FormData);
     return FormData;
