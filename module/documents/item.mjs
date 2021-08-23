@@ -134,10 +134,11 @@ export class ARd20Item extends Item {
         let temp_list = [];
         temp_list.push(game.folders.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].content);
         console.log(temp_list);
-        temp_list = temp_list.flat();
+        folder_list = temp_list;
+        folder_list = folder_list.flat();
       }
     }
-    folder_list = temp_list;
+
     console.log("folders", folder_list);
   }
   /*
