@@ -1,5 +1,5 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
-import { CharacterAdvancement } from "../documents/cha-adv.mjs";
+import { CharacterAdvancement } from "../helpers/cha-adv.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
