@@ -51,7 +51,7 @@
                     </div>
                 </li>
                 {{log feats.current.length}}
-                {{#if (lt feats.current.length 0)}}
+                {{#if (lt feats.current.length 1)}}
                 <input hidden name="feats.current" value={{feats.current}} />
                 {{/if}}
                 {{#each feats.current as |feat key|}}
