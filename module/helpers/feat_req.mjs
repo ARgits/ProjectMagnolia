@@ -69,13 +69,17 @@ export class FeatRequirements extends FormApplication {
         }
       }
       let name_array = [];
+      let index_array = []
       for (let i of this.data.feats.current) {
         name_array.push(i.name);
       }
       for (let [k, v] of Object.entries(this.data.feats.awail)) {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
-        } 
+        } else if(name_array.includes(v.name)){
+          console.log(v.name,'эта фича уже есть')
+          v.level = this.data.feats.current[this.data.feats.current.indexOf(this.data.feats.current.filter(feat=>feat.name===v.name)[0])].level
+        }
       }
     }
     const FormData = {
