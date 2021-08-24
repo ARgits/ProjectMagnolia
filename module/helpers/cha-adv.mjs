@@ -89,6 +89,7 @@ export class CharacterAdvancement extends FormApplication {
           console.log("this item is already learned", temp_feat_list[k]);
         }
         temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
+        temp_feat_list[k].data.level.current = this.isOwned ? Math.max(temp_feat_list[k].data.level.initial, 1) : 0
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
           let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
@@ -178,7 +179,7 @@ export class CharacterAdvancement extends FormApplication {
         if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
           feat.pass = feat.level > this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ? false : true;
         } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level > this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.level.initial ? false : true;
+          feat.pass = feat.level > this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial ? false : true;
         }
         object.isXP = feat.pass ? object.isXP : true;
       }
