@@ -55,7 +55,7 @@ export class FeatRequirements extends FormApplication {
       }
       this.data.feats = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-        current: foundry.utils.deepClone(this.object.data.data.req.feats),
+        current: Array.from(foundry.utils.deepClone(this.object.data.data.req.feats)),
       };
       for (let [k, v] of Object.entries(this.data.abilities)) {
         v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
@@ -72,7 +72,7 @@ export class FeatRequirements extends FormApplication {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
         }
-        if (v.name === this.data.feats.current[k].name) {
+        if (v.name === this.data.feats.current[k]?.name) {
           this.data.feats.awail.splice(k, 1);
         }
       }
@@ -96,8 +96,7 @@ export class FeatRequirements extends FormApplication {
     const feats = this.data.feats;
     if (feats.awail.length !== 0) {
       feats.current.push(feats.awail[0]);
-    } else ui.notification.info("There is no more feats awailable");
-    feats.awail.splice(event.currentTarget.dataset.key, 1);
+    } else ui.notifications.warn("There is no more feats awailable", { permanent: true });
     this.render();
   }
   async _Delete(event) {
