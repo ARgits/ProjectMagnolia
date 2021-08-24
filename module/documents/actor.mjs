@@ -71,60 +71,31 @@ export class ARd20Actor extends Actor {
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
     data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
     //calculate character's defences, including damage resistances
-    data.defences = data.defences ?? {
-      damage:data.defences.damage??{},
-      conditions:data.defences.conditions??{},
-      stats:data.defences.stats??{}
-    };
     data.defences.stats.reflex = data.defences.stats.reflex ?? {};
     data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
     data.defences.stats.reflex.value =
-      10 +
-      data.attributes.prof_bonus +
-      data.abilities.dex.mod +
-      data.abilities.int.mod +
-      parseInt(data.defences.stats.reflex.bonus);
+      10 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.stats.reflex.bonus);
     data.defences.stats.reflex.label = "Reflex";
     data.defences.stats.fortitude = data.defences.stats.fortitude ?? {};
     data.defences.stats.fortitude.bonus = data.defences.stats.fortitude.bonus ?? 0;
     data.defences.stats.fortitude.value =
-      10 +
-      data.attributes.prof_bonus +
-      data.abilities.str.mod +
-      data.abilities.con.mod +
-      parseInt(data.defences.stats.fortitude.bonus);
+      10 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.stats.fortitude.bonus);
     data.defences.stats.fortitude.label = "Fortitude";
     data.defences.stats.will = data.defences.stats.will ?? {};
     data.defences.stats.will.bonus = data.defences.stats.will.bonus ?? 0;
     data.defences.stats.will.value =
-      10 +
-      data.attributes.prof_bonus +
-      data.abilities.wis.mod +
-      data.abilities.cha.mod +
-      parseInt(data.defences.stats.will.bonus);
+      10 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.stats.will.bonus);
     data.defences.stats.will.label = "Will";
-
-    if (!data.defences.damage) {
-      data.defences.damage = {
-        physic: {},
-        magic: {},
-      };
-    }
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
         data.defences.damage.physic[key] = {
-          value: data.defences.damage.physic[key]?.value
-            ? data.defences.damage.physic[key].value
-            : 0,
-          label:
-            game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ??
-            CONFIG.ARd20.DamageSubTypes[key],
+          value: data.defences.damage.physic[key]?.value ? data.defences.damage.physic[key].value : 0,
+          label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
         };
       }
       data.defences.damage.magic[key] = {
         value: data.defences.damage.magic[key]?.value ? data.defences.damage.magic[key].value : 0,
-        label:
-          game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
+        label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
       };
     }
     //calculate rolls for character's skills
@@ -148,23 +119,16 @@ export class ARd20Actor extends Actor {
       data.profs = { weapon: game.settings.get("ard20", "profs").weapon };
     }
     for (let prof of Object.keys(game.settings.get("ard20", "profs").weapon)) {
-      data.profs.weapon[prof].value = data.profs.weapon[prof].value
-        ? data.profs.weapon[prof].value
-        : 0;
+      data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0;
       data.profs.weapon[prof].type = game.settings.get("ard20", "profs").weapon[prof].type;
       data.profs.weapon[prof].name = game.settings.get("ard20", "profs").weapon[prof].name;
       data.profs.weapon[prof].type_hover =
-        game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ??
-        CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
+        game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
       data.profs.weapon[prof].type_value =
-        game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ??
-        CONFIG.ARd20.prof[data.profs.weapon[prof].value];
+        game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.profs.weapon[prof].value];
     }
     if (data.profs.weapon.length > game.settings.get("ard20", "profs").weapon.length) {
-      data.profs.splice(
-        game.settings.get("ard20", "profs").weapon.length + 1,
-        data.profs.length - game.settings.get("ard20", "profs").weapon.length
-      );
+      data.profs.splice(game.settings.get("ard20", "profs").weapon.length + 1, data.profs.length - game.settings.get("ard20", "profs").weapon.length);
     }
   }
 

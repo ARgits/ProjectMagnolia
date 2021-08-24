@@ -113,6 +113,19 @@
           "prof": 0,
           "label": ""
         }
+      },
+      "defences":{
+        "stats":{
+          "reflex":{
+          },
+          "fortitude":{},
+          "will":{}
+        },
+        "damage":{
+          "physic":{},
+          "magic":{}
+        },
+        "conditions":{}
       }
     },
     "npc": {
