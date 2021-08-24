@@ -106,7 +106,7 @@ export class CharacterAdvancement extends FormApplication {
       }
       temp_feat_list = temp_feat_list.filter(
         (item) =>
-          ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) || item.data.level.current < item.data.level.max
+          ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) || item.data.level.current !== item.data.level.max
       );
       this.data.feats.awail = temp_feat_list;
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -175,10 +175,11 @@ export class CharacterAdvancement extends FormApplication {
         object.isXP = skill.pass ? object.isXP : true;
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
-        feat.pass =
-          feat.level > this.data.feats.awail[key]?.data.level.initial || feat.level > this.data.feats.learned[key]?.data.level.initial
-            ? false
-            : true;
+        if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
+          feat.pass = feat.level > this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ? false : true;
+        } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
+          feat.pass = feat.level > this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.level.initial ? false : true;
+        }
         object.isXP = feat.pass ? object.isXP : true;
       }
     }
