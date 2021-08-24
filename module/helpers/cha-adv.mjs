@@ -89,7 +89,7 @@ export class CharacterAdvancement extends FormApplication {
           console.log("this item is already learned", temp_feat_list[k]);
         }
         temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
-        temp_feat_list[k].data.level.current = temp_feat_list[k].data.level.initial
+        temp_feat_list[k].data.level.current = temp_feat_list[k].data.level.initial;
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
           let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
@@ -168,19 +168,22 @@ export class CharacterAdvancement extends FormApplication {
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0 ? true : false;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ? true : false;
       for (let [key, ability] of Object.entries(object.data.req.abilities)) {
-        ability.pass = ability.value > this.data.abilities[key].value ? false : true;
+        ability.pass = ability.value <= this.data.abilities[key].value ? true : false;
+        object.pass = ability.pass ? object.pass || true : false;
         object.isXP = ability.pass ? object.isXP : true;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
-        skill.pass = skill.prof > this.data.skills[key].prof ? false : true;
+        skill.pass = skill.prof <= this.data.skills[key].prof ? true : false;
+        object.pass = skill.pass ? object.pass || true : false;
         object.isXP = skill.pass ? object.isXP : true;
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
         if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level > this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ? false : true;
+          feat.pass = feat.level <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ? true : false;
         } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level > this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial ? false : true;
+          feat.pass = feat.level <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial ? true : false;
         }
+        object.pass = feat.pass ? object.pass || true : false;
         object.isXP = feat.pass ? object.isXP : true;
       }
     }
@@ -317,18 +320,29 @@ export class CharacterAdvancement extends FormApplication {
       }
     }
     console.log("update", feats_data.new);
-    await actor.update(obj);
-    if (feats_data.exist.length > 0) {
-      await actor.updateEmbeddedDocuments(
-        "Item",
-        feats_data.exist.map((item) => ({
-          _id: item._id,
-          "data.level.initial": item.data.level.initial,
-        }))
-      );
+    let pass = [];
+    for (let [k, v] of Object.entries(feats_data.exist)) {
+      pass.push(v.pass);
     }
-    if (feats_data.new.length > 0) {
-      await actor.createEmbeddedDocuments("Item", feats_data.new);
+    for (let [k, v] of Object.entries(feats_data.new)) {
+      pass.push(v.pass);
+    }
+    if (pass.includes(false)) {
+      ui.notifications.error(`Some changes do not comply with the requirements`);
+    } else {
+      await actor.update(obj);
+      if (feats_data.exist.length > 0) {
+        await actor.updateEmbeddedDocuments(
+          "Item",
+          feats_data.exist.map((item) => ({
+            _id: item._id,
+            "data.level.initial": item.data.level.initial,
+          }))
+        );
+      }
+      if (feats_data.new.length > 0) {
+        await actor.createEmbeddedDocuments("Item", feats_data.new);
+      }
     }
   }
 }
