@@ -68,7 +68,7 @@ export class FeatRequirements extends FormApplication {
           v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
         }
       }
-      for (let [k, v] of Object.entries(this.data.feats)) {
+      for (let [k, v] of Object.entries(this.data.feats.awail)) {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
         }
