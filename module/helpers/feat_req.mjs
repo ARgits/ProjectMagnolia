@@ -91,7 +91,9 @@ export class FeatRequirements extends FormApplication {
   async _onAdd(event) {
     event.preventDefault();
     const feats = this.data.feats;
-    feats.current.push(feats.awail[0]);
+    if (feats.awail.length !== 0) {
+      feats.current.push(feats.awail[0]);
+    } else ui.notification.info("There is no more feats awailable");
     feats.awail.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
