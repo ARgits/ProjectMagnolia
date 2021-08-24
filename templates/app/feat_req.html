@@ -62,7 +62,8 @@
                                 {{/each}}
                             {{/select}}
                         </select>
-                        {{#if feat.hasLevel}}
+                        <input hidden name="feats.current.{{key}}.maxLevel"
+                        {{#if (lt feat.maxLevel 2)}}
                             <input type="number" name="feats.current.{{key}}.level" value="{{feat.minLevel}}" min="0" max="{{feat.maxLevel}}" />
                         {{else}}
                             <div>-</div>
