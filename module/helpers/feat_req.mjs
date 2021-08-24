@@ -32,7 +32,6 @@ export class FeatRequirements extends FormApplication {
           for (let feat of feat_list) {
             let doc = {
               name: duplicate(feat.name),
-              hasLevel: duplicate(feat.data.data.level.has),
               maxLevel: duplicate(feat.data.data.level.max),
             };
             pack_list.push(doc);
@@ -48,7 +47,6 @@ export class FeatRequirements extends FormApplication {
           for (let feat of feat_list) {
             let doc = {
               name: duplicate(feat.name),
-              hasLevel: duplicate(feat.data.data.level.has),
               maxLevel: duplicate(feat.data.data.level.max),
             };
             folder_list.push(doc);
@@ -77,9 +75,7 @@ export class FeatRequirements extends FormApplication {
       for (let [k, v] of Object.entries(this.data.feats.awail)) {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
-        } else if (name_array.includes(v.name)) {
-          this.data.feats.awail.splice(k, 1);
-        }
+        } 
       }
     }
     const FormData = {
