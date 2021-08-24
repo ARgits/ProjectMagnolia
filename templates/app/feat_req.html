@@ -52,7 +52,7 @@
                 </li>
                 {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
-                        <select name='feats.current.{{key}}.name'>{{#select feat.name}}
+                        <select name='feats.current.{{key}}'>{{#select feat.name}}
                                 {{#each ../feats.awail as |feat sch|}}
                                     <option value="{{feat}}">{{feat.name}}</option>
                                 {{/each}}
