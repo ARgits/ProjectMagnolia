@@ -57,7 +57,7 @@ export class FeatRequirements extends FormApplication {
       }
       this.data.feats = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-        current: Array.from(foundry.utils.deepClone(this.object.data.data.req.feats)),
+        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.feats)),
       };
       for (let [k, v] of Object.entries(this.data.abilities)) {
         v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
@@ -70,11 +70,15 @@ export class FeatRequirements extends FormApplication {
           v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
         }
       }
+      let name_array = []
+      for (let i of this.data.feats.current) {
+        name_array.push(i.data.name);
+      }
       for (let [k, v] of Object.entries(this.data.feats.awail)) {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
         }
-        if (v.name === this.data.feats.current[k]?.name) {
+        if (name_array.includes(v.name)) {
           this.data.feats.awail.splice(k, 1);
         }
       }
