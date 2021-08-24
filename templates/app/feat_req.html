@@ -52,6 +52,7 @@
                 </li>
                 {{#if (lt feats.current.length 0)}}
                 <input hidden name="feats.current" value={{feats.current}} />
+                {{/if}}
                 {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
                         <select name='feats.current.{{key}}.name'>{{#select feat.name}}
