@@ -291,7 +291,10 @@
             "label": ""
           }
         },
-        "feats": []
+        "feats": {
+          "awail": [],
+          "current": []
+        }
       }
     },
     "spell": {
