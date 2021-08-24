@@ -52,7 +52,7 @@
                 </li>
                 {{log feats.current.length}}
                 {{#if (lt feats.current.length 1)}}
-                <input hidden name="feats.current" value={{feats.current}} />
+                <input hidden name="feats.current"/>
                 {{/if}}
                 {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
