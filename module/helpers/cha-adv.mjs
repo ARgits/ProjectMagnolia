@@ -330,17 +330,8 @@ export class CharacterAdvancement extends FormApplication {
     }
     if (pass.includes(false)) {
       ui.notifications.error(`Some changes do not comply with the requirements`);
-      /*for (let [k, v] of Object.entries(feats_data.exist)) {
-        this.data.feats.learned.filter((item) => item.name === v.name && item.pass)[0].data.level.current -= 1;
-      }
-      for (let [k, v] of Object.entries(feats_data.new)) {
-        this.data.feats.awail.filter((item) => item.name === v.name && item.pass)[0].data.level.current -= 1;
-      }*/
     } else {
       await actor.update(obj);
-      /*for (let [k, v] of Object.entries(feats)) {
-        v.data.level.current = v.data.level.initial;
-      }*/
       if (feats_data.exist.length > 0) {
         await actor.updateEmbeddedDocuments(
           "Item",

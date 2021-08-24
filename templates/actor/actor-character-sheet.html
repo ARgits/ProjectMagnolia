@@ -74,9 +74,9 @@
                         {{/each}}
                     </div>
                     <div>
-                        {{#each data.defences as |defence key|}}
+                        {{#each data.defences.stats as |defence key|}}
                             <div class="ability flexrow">
-                                <label for="data.defences.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
+                                <label for="data.defences.stats.{{key}}.value" class="resource-label flexlarge align-left" data-label="{{defence.label}}">{{defence.label}}</label>
                                 <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0
                 sign=false}}
                             </div>

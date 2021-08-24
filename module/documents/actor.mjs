@@ -71,34 +71,38 @@ export class ARd20Actor extends Actor {
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
     data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
     //calculate character's defences, including damage resistances
-    data.defences = data.defences ?? {};
-    data.defences.reflex = data.defences.reflex ?? {};
-    data.defences.reflex.bonus = data.defences.reflex.bonus ?? 0;
-    data.defences.reflex.value =
+    data.defences = data.defences ?? {
+      damage:data.defences.damage??{},
+      conditions:data.defences.conditions??{},
+      stats:data.defences.stats??{}
+    };
+    data.defences.stats.reflex = data.defences.stats.reflex ?? {};
+    data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
+    data.defences.stats.reflex.value =
       10 +
       data.attributes.prof_bonus +
       data.abilities.dex.mod +
       data.abilities.int.mod +
-      parseInt(data.defences.reflex.bonus);
-    data.defences.reflex.label = "Reflex";
-    data.defences.fortitude = data.defences.fortitude ?? {};
-    data.defences.fortitude.bonus = data.defences.fortitude.bonus ?? 0;
-    data.defences.fortitude.value =
+      parseInt(data.defences.stats.reflex.bonus);
+    data.defences.stats.reflex.label = "Reflex";
+    data.defences.stats.fortitude = data.defences.stats.fortitude ?? {};
+    data.defences.stats.fortitude.bonus = data.defences.stats.fortitude.bonus ?? 0;
+    data.defences.stats.fortitude.value =
       10 +
       data.attributes.prof_bonus +
       data.abilities.str.mod +
       data.abilities.con.mod +
-      parseInt(data.defences.fortitude.bonus);
-    data.defences.fortitude.label = "Fortitude";
-    data.defences.will = data.defences.will ?? {};
-    data.defences.will.bonus = data.defences.will.bonus ?? 0;
-    data.defences.will.value =
+      parseInt(data.defences.stats.fortitude.bonus);
+    data.defences.stats.fortitude.label = "Fortitude";
+    data.defences.stats.will = data.defences.stats.will ?? {};
+    data.defences.stats.will.bonus = data.defences.stats.will.bonus ?? 0;
+    data.defences.stats.will.value =
       10 +
       data.attributes.prof_bonus +
       data.abilities.wis.mod +
       data.abilities.cha.mod +
-      parseInt(data.defences.will.bonus);
-    data.defences.will.label = "will";
+      parseInt(data.defences.stats.will.bonus);
+    data.defences.stats.will.label = "Will";
 
     if (!data.defences.damage) {
       data.defences.damage = {
