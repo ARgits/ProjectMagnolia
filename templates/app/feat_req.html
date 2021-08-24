@@ -53,10 +53,10 @@
                 {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
                         <select name='feats.current.{{key}}.name'>{{#select feat.name}}
-                                {{#each ../feats.awail as |name sch|}}
-                                {{log name}}
+                                {{#each ../feats.awail as |feat sch|}}
+                                {{log feat}}
                                 {{log sch}}
-                                    <option value="{{sch}}">{{name}}</option>
+                                    <option value="{{sch}}">{{feat.name}}</option>
                                 {{/each}}
                             {{/select}}
                         </select>
