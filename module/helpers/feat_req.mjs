@@ -72,7 +72,7 @@ export class FeatRequirements extends FormApplication {
       }
       let name_array = []
       for (let i of this.data.feats.current) {
-        name_array.push(i.data.name);
+        name_array.push(i.name);
       }
       for (let [k, v] of Object.entries(this.data.feats.awail)) {
         if (v.name === this.object.name) {
