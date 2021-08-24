@@ -72,6 +72,9 @@ export class FeatRequirements extends FormApplication {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
         }
+        if (v.name === this.data.feats.current[k].name) {
+          this.data.feats.awail.splice(k, 1);
+        }
       }
     }
     const FormData = {
@@ -113,7 +116,7 @@ export class FeatRequirements extends FormApplication {
     const obj = {};
     obj["data.req.abilities"] = updateData?.abilities;
     obj["data.req.skills"] = updateData?.skills;
-    obj["data.req.feats"] = updateData?.feats;
+    obj["data.req.feats"] = updateData?.feats.current;
     console.log(obj);
     await item.update(obj);
   }
