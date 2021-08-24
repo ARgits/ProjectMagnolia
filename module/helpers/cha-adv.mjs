@@ -14,6 +14,7 @@ export class CharacterAdvancement extends FormApplication {
           initial: "stats",
         },
       ],
+      closeOnSubmit: false,
     });
   }
   async getData(options) {
@@ -329,7 +330,6 @@ export class CharacterAdvancement extends FormApplication {
     }
     if (pass.includes(false)) {
       ui.notifications.error(`Some changes do not comply with the requirements`);
-      event.preventClose();
     } else {
       await actor.update(obj);
       if (feats_data.exist.length > 0) {
@@ -344,6 +344,7 @@ export class CharacterAdvancement extends FormApplication {
       if (feats_data.new.length > 0) {
         await actor.createEmbeddedDocuments("Item", feats_data.new);
       }
+      this.close();
     }
   }
 }
