@@ -48,6 +48,8 @@ export class FeatRequirements extends FormApplication {
           for (let feat of feat_list) {
             let doc = {
               name: duplicate(feat.name),
+              hasLevel: duplicate(feat.data.data.level.has),
+              maxLevel: duplicate(feat.data.data.level.max),
             };
             folder_list.push(doc);
           }
