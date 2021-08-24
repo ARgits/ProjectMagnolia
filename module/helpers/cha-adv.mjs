@@ -329,6 +329,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     if (pass.includes(false)) {
       ui.notifications.error(`Some changes do not comply with the requirements`);
+      event.preventClose();
     } else {
       await actor.update(obj);
       if (feats_data.exist.length > 0) {
