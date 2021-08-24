@@ -94,7 +94,7 @@ export class FeatRequirements extends FormApplication {
   async _onAdd(event) {
     event.preventDefault();
     const feats = this.data.feats;
-    if (feats.awail.length !== 0) {
+    if (feats.awail.length !== feats.current.length) {
       feats.current.push(feats.awail[0]);
     } else ui.notifications.warn("There is no more feats awailable", { permanent: true });
     this.render();
@@ -102,7 +102,6 @@ export class FeatRequirements extends FormApplication {
   async _Delete(event) {
     event.preventDefault();
     const feats = this.data.feats;
-    feats.awail.push(feats.current[event.currentTarget.dataset.key]);
     feats.current.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
