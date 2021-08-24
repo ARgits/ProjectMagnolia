@@ -160,6 +160,7 @@ export class CharacterAdvancement extends FormApplication {
       }
     }
     for (let [key, object] of Object.entries(this.data.feats.awail)) {
+      let pass = [];
       let allCount = this.data.count.feats.all;
       let featCount = this.data.count.feats[object.data.source.value];
       object.data.level.xp = object.data.xp[object.data.level.initial]
@@ -169,12 +170,12 @@ export class CharacterAdvancement extends FormApplication {
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ? true : false;
       for (let [key, ability] of Object.entries(object.data.req.abilities)) {
         ability.pass = ability.value <= this.data.abilities[key].value ? true : false;
-        object.pass = ability.pass ? object.pass ?? true : false;
+        pass.push(ability.pass);
         object.isXP = ability.pass ? object.isXP : true;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
         skill.pass = skill.prof <= this.data.skills[key].prof ? true : false;
-        object.pass = skill.pass ? object.pass ?? true : false;
+        pass.push(skill.pass);
         object.isXP = skill.pass ? object.isXP : true;
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
@@ -183,9 +184,10 @@ export class CharacterAdvancement extends FormApplication {
         } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
           feat.pass = feat.level <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial ? true : false;
         }
-        object.pass = feat.pass ? object.pass ?? true : false;
+        pass.push(feat.pass);
         object.isXP = feat.pass ? object.isXP : true;
       }
+      object.pass = !pass.includes(false) ? true : false;
     }
 
     const templateData = {
