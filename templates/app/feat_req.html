@@ -50,6 +50,8 @@
                         <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
                     </div>
                 </li>
+                {{#if (lt feats.current.length 0)}}
+                <input hidden name="feats.current" value={{feats.current}} />
                 {{#each feats.current as |feat key|}}
                     <li class="item flexrow align-center">
                         <select name='feats.current.{{key}}.name'>{{#select feat.name}}
