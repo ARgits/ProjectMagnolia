@@ -194,7 +194,8 @@
       },
       "xp": [0],
       "level": {
-        "initial": 0
+        "initial": 0,
+        "current": 0
       },
       "req": {
         "abilities": {
@@ -291,8 +292,7 @@
             "label": ""
           }
         },
-        "feats": {
-        }
+        "feats": {}
       }
     },
     "spell": {

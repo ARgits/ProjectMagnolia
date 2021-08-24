@@ -90,7 +90,6 @@ export class CharacterAdvancement extends FormApplication {
           console.log("this item is already learned", temp_feat_list[k]);
         }
         temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
-        temp_feat_list[k].data.level.current = temp_feat_list[k].data.level.initial;
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
           let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
