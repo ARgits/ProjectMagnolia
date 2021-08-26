@@ -138,6 +138,7 @@ export class ARd20ActorSheet extends ActorSheet {
     super.activateListeners(html);
 
     // Render the item sheet for viewing/editing prior to the editable check.
+    html.find(".item-toggle").click(this._onToggleItem.bind(this))
     html.find(".item-edit").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
@@ -186,6 +187,15 @@ export class ARd20ActorSheet extends ActorSheet {
     }
     app?.render(true);
   }
+  _onToggleItem(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    //const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
+    const attr = "data.equipped"
+    return item.update({[attr]: !getProperty(item.data, attr)});
+  }
+
 
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset

@@ -130,7 +130,7 @@ export class ARd20Item extends Item {
       abil[k] = v;
       labels.abil[k] = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
     }
-    data.isEquiped = data.isEquiped || false;
+    data.equipped = data.equipped || false;
     this._prepareWeaponAttr(data, abil);
   }
 
