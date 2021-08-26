@@ -519,3 +519,23 @@ footer button[type='submit'] {
   border-left: thick solid black;
   padding-left: 3px;
 }
+.inventory .item-controls,
+.spellbook .item-controls {
+  flex: 0 0 68px;
+}
+.inventory .item-controls .item-toggle,
+.spellbook .item-controls .item-toggle {
+  color: #F5F5DC;
+}
+.inventory .item-controls .item-toggle.active,
+.spellbook .item-controls .item-toggle.active {
+  color: #808000;
+}
+.inventory .item-controls .item-toggle.fixed,
+.spellbook .item-controls .item-toggle.fixed {
+  color: #DC143C;
+}
+.inventory .item-controls .item-toggle.fixed:hover,
+.spellbook .item-controls .item-toggle.fixed:hover {
+  text-shadow: none;
+}
