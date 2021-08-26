@@ -146,15 +146,15 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2);
       this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
-      this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value ? true : false;
-      this.data.abilities[k].isXP = this.data.xp.get >= this.data.abilities[k].xp ? false : true;
+      this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value 
+      this.data.abilities[k].isXP = this.data.xp.get < this.data.abilities[k].xp 
     }
     for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
       this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof;
       this.data.skills[k].xp =
         this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
-      this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof ? true : false;
-      this.data.skills[k].isXP = this.data.xp.get >= this.data.skills[k].xp && this.data.skills[k].prof < 2 ? false : true;
+      this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof 
+      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp && this.data.skills[k].prof >1 
       for (let [k, v] of Object.entries(this.data.profs.weapon)) {
         v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
       }
@@ -166,15 +166,15 @@ export class CharacterAdvancement extends FormApplication {
       object.data.level.xp = object.data.xp[object.data.level.initial]
         ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5
         : 0;
-      object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0 ? true : false;
-      object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ? true : false;
+      object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0 ;
+      object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ;
       for (let [key, ability] of Object.entries(object.data.req.abilities)) {
-        ability.pass = ability.value <= this.data.abilities[key].value ? true : false;
+        ability.pass = ability.value <= this.data.abilities[key].value ;
         pass.push(ability.pass);
         object.isXP = ability.pass ? object.isXP : true;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
-        skill.pass = skill.prof <= this.data.skills[key].prof ? true : false;
+        skill.pass = skill.prof <= this.data.skills[key].prof ;
         pass.push(skill.pass);
         object.isXP = skill.pass ? object.isXP : true;
       }
@@ -187,7 +187,7 @@ export class CharacterAdvancement extends FormApplication {
         pass.push(feat.pass);
         object.isXP = feat.pass ? object.isXP : true;
       }
-      object.pass = !pass.includes(false) ? true : false;
+      object.pass = !pass.includes(false) ;
     }
 
     const templateData = {

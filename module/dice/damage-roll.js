@@ -20,7 +20,7 @@
      * The HTML template path used to configure evaluation of this Roll
      * @type {string}
      */
-    static EVALUATION_TEMPLATE = "systems/dnd5e/templates/chat/roll-dialog.html";
+    static EVALUATION_TEMPLATE = "systems/ard20/templates/chat/roll-dialog.html";
   
     /* -------------------------------------------- */
   
@@ -79,7 +79,7 @@
       // Add powerful critical bonus
       if ( this.options.powerfulCritical && (flatBonus > 0) ) {
         this.terms.push(new OperatorTerm({operator: "+"}));
-        this.terms.push(new NumericTerm({number: flatBonus}, {flavor: game.i18n.localize("DND5E.PowerfulCritical")}));
+        this.terms.push(new NumericTerm({number: flatBonus}, {flavor: game.i18n.localize("ARd20.PowerfulCritical")}));
       }
   
       // Re-compile the underlying formula
@@ -92,7 +92,7 @@
     toMessage(messageData={}, options={}) {
       messageData.flavor = messageData.flavor || this.options.flavor;
       if ( this.isCritical ) {
-        const label = game.i18n.localize("DND5E.CriticalHit");
+        const label = game.i18n.localize("ARd20.CriticalHit");
         messageData.flavor = messageData.flavor ? `${messageData.flavor} (${label})` : label;
       }
       options.rollMode = options.rollMode ?? this.options.rollMode;
@@ -131,11 +131,11 @@
           buttons: {
             critical: {
               condition: allowCritical,
-              label: game.i18n.localize("DND5E.CriticalHit"),
+              label: game.i18n.localize("ARd20.CriticalHit"),
               callback: html => resolve(this._onDialogSubmit(html, true))
             },
             normal: {
-              label: game.i18n.localize(allowCritical ? "DND5E.Normal" : "DND5E.Roll"),
+              label: game.i18n.localize(allowCritical ? "ARd20.Normal" : "ARd20.Roll"),
               callback: html => resolve(this._onDialogSubmit(html, false))
             }
           },

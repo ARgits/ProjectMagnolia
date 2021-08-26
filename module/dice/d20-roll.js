@@ -36,7 +36,7 @@
      * The HTML template path used to configure evaluation of this Roll
      * @type {string}
      */
-    static EVALUATION_TEMPLATE = "systems/dnd5e/templates/chat/roll-dialog.html";
+    static EVALUATION_TEMPLATE = "systems/ard20/templates/chat/roll-dialog.html";
   
     /* -------------------------------------------- */
   
@@ -104,16 +104,16 @@
       // Evaluate the roll now so we have the results available to determine whether reliable talent came into play
       if ( !this._evaluated ) await this.evaluate({async: true});
   
-      // Add appropriate advantage mode message flavor and dnd5e roll flags
+      // Add appropriate advantage mode message flavor and ard20 roll flags
       messageData.flavor = messageData.flavor || this.options.flavor;
-      if ( this.hasAdvantage ) messageData.flavor += ` (${game.i18n.localize("DND5E.Advantage")})`;
-      else if ( this.hasDisadvantage ) messageData.flavor += ` (${game.i18n.localize("DND5E.Disadvantage")})`;
+      if ( this.hasAdvantage ) messageData.flavor += ` (${game.i18n.localize("ARd20.Advantage")})`;
+      else if ( this.hasDisadvantage ) messageData.flavor += ` (${game.i18n.localize("ARd20.Disadvantage")})`;
   
       // Add reliable talent to the d20-term flavor text if it applied
       if ( this.options.reliableTalent ) {
         const d20 = this.dice[0];
         const isRT = d20.results.every(r => !r.active || (r.result < 10));
-        const label = `(${game.i18n.localize("DND5E.FlagsReliableTalent")})`;
+        const label = `(${game.i18n.localize("ARd20.FlagsReliableTalent")})`;
         if ( isRT ) d20.options.flavor = d20.options.flavor ? `${d20.options.flavor} (${label})` : label;
       }
   
@@ -147,7 +147,7 @@
         rollModes: CONFIG.Dice.rollModes,
         chooseModifier,
         defaultAbility,
-        abilities: CONFIG.DND5E.abilities
+        abilities: CONFIG.ard20.abilities
       });
   
       let defaultButton = "normal";
@@ -163,15 +163,15 @@
           content,
           buttons: {
             advantage: {
-              label: game.i18n.localize("DND5E.Advantage"),
+              label: game.i18n.localize("ARd20.Advantage"),
               callback: html => resolve(this._onDialogSubmit(html, D20Roll.ADV_MODE.ADVANTAGE))
             },
             normal: {
-              label: game.i18n.localize("DND5E.Normal"),
+              label: game.i18n.localize("ARd20.Normal"),
               callback: html => resolve(this._onDialogSubmit(html, D20Roll.ADV_MODE.NORMAL))
             },
             disadvantage: {
-              label: game.i18n.localize("DND5E.Disadvantage"),
+              label: game.i18n.localize("ARd20.Disadvantage"),
               callback: html => resolve(this._onDialogSubmit(html, D20Roll.ADV_MODE.DISADVANTAGE))
             }
           },
@@ -203,7 +203,7 @@
       if ( form.ability?.value ) {
         const abl = this.data.abilities[form.ability.value];
         this.terms.findSplice(t => t.term === "@mod", new NumericTerm({number: abl.mod}));
-        this.options.flavor += ` (${CONFIG.DND5E.abilities[form.ability.value]})`;
+        this.options.flavor += ` (${CONFIG.ard20.abilities[form.ability.value]})`;
       }
   
       // Apply advantage or disadvantage

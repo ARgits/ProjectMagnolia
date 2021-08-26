@@ -169,12 +169,10 @@ export class ARd20Item extends Item {
 
   async roll() {
     const item = this.data;
-
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const rollMode = game.settings.get("core", "rollMode");
     const label = `[${item.type}] ${item.name}`;
-
     // Otherwise, create a roll and send a chat message from it.
     if (item.type === "weapon") {
       const rollData = this.getRollData();
@@ -188,7 +186,6 @@ export class ARd20Item extends Item {
         flavor: label,
         emote: true,
       });
-
       const damageRoll = new Roll(rollData.item.damage.common.current, rollData).roll();
       damageRoll._total = damageRoll._total >= 0 ? damageRoll._total : 0;
       damageRoll.toMessage({
@@ -196,7 +193,6 @@ export class ARd20Item extends Item {
         rollMode: rollMode,
         flavor: label,
       });
-
       console.log(ts);
       if (ts >= 1) {
         for (let target of targets) {
@@ -221,7 +217,6 @@ export class ARd20Item extends Item {
     } else {
       // Retrieve roll data.
       const rollData = this.getRollData();
-
       // Invoke the roll and submit it to chat.
       const roll = new Roll(rollData.item.formula, rollData).roll();
       roll.toMessage({
