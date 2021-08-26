@@ -120,9 +120,9 @@ export class ARd20ActorSheet extends ActorSheet {
           spells[i.data.spellLevel].push(i);
         }
       } else if (i.type === "weapon") {
-        const isActive = getProperty(item.data, "equipped");
-        item.toggleClass = isActive ? "active" : "";
-        item.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
+        const isActive = getProperty(i.data, "equipped");
+        i.toggleClass = isActive ? "active" : "";
+        i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
         weapons.push(i);
       }
     }
