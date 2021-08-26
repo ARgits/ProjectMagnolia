@@ -90,7 +90,7 @@ export class ARd20Actor extends Actor {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
         data.defences.damage.physic[key] = {
           type: data.defences.damage.physic[key]?.type ? data.defences.damage.physic[key].type : "res",
-          value:
+          sens_value:
             data.defences.damage.physic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.physic[key].value : 0,
           label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
         };
