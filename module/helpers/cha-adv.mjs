@@ -3,7 +3,7 @@ export class CharacterAdvancement extends FormApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Character Advancement",
-      template: "systems/ard20/templates/actor/actor-adv.html",
+      template: "systems/ard20/templates/actor/parts/actor-adv.html",
       id: "actor-adv",
       width: 800,
       height: "auto",
