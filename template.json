@@ -150,7 +150,6 @@
       "templates": ["base"],
       "quantity": 1,
       "weight": 0,
-      "equiped": 0,
       "type": {
         "value": "",
         "label": ""
