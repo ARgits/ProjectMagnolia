@@ -30,9 +30,11 @@ export class FeatRequirements extends FormApplication {
           feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
-            let doc = {
+            let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
+            let doc = await game.packs.get(new_key).getDocument(feat._id);
+            let item = {
               name: duplicate(feat.name),
-              maxLevel: duplicate(feat.data.data.level.max),
+              maxLevel: duplicate(doc.data.data.level.max),
             };
             pack_list.push(doc);
           }

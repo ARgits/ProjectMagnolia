@@ -15,14 +15,11 @@ export class ARd20Item extends Item {
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
-    const actorData = this.actor ? this.actor.data : {};
     const labels = (this.labels = {});
-    this._prepareSpellData(itemData, labels); // подготовка спеллов
-    this._prepareWeaponData(itemData, labels); // подготовка оружия
-    this._prepareFeatureData(itemData, labels); // подготовка способностей
-    if (!this.isOwned) {
-      this.prepareFinalAttributes();
-    } // set properties that are depended on actor's properties
+    this._prepareSpellData(itemData, labels);
+    this._prepareWeaponData(itemData, labels);
+    this._prepareFeatureData(itemData, labels);
+    if (!this.isOwned) this.prepareFinalAttributes();
   }
   /*
   Prepare data for Spells
@@ -32,6 +29,9 @@ export class ARd20Item extends Item {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
     labels.school = CONFIG.ARd20.SpellSchool[data.school];
+    data.sourceOptions = {
+      learn
+    }
   }
   /*
   Prepare data for weapons

@@ -310,7 +310,12 @@
     "spell": {
       "templates": ["base"],
       "spellLevel": 1,
-      "school": ""
+      "school": "",
+      "sourceOptions":{
+        "learn":true,
+        "born":true,
+        "contract":true
+      }
     }
   }
 }
