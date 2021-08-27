@@ -36,7 +36,7 @@ export class FeatRequirements extends FormApplication {
               name: duplicate(feat.name),
               maxLevel: duplicate(doc.data.data.level.max),
             };
-            pack_list.push(doc);
+            pack_list.push(item);
           }
         }
       }
@@ -71,7 +71,6 @@ export class FeatRequirements extends FormApplication {
         }
       }
       let name_array = [];
-      let index_array = []
       for (let i of this.data.feats.current) {
         name_array.push(i.name);
       }

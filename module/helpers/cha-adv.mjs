@@ -46,20 +46,25 @@ export class CharacterAdvancement extends FormApplication {
         learned: [], //items that character already has
         awail: [], //items that character can purchase
       };
-      let feat_list = [];
       let temp_feat_list = [];
+      let pack_list = [];
+      let folder_list = [];
+      let pack_name = []
+      let folder_name = []
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
       for (let key of game.settings.get("ard20", "feat").packs) {
         if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
+          let feat_list = [];
           feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
             let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
             let doc = await game.packs.get(new_key).getDocument(feat._id);
             let item = doc.toObject();
-            temp_feat_list.push(item);
-            temp_feat_list = temp_feat_list.flat();
+            pack_list.push(item)
+            pack_name.push(item.name);
           }
+          pack_list = pack_list.flat();
         }
       }
       /* same as above, but for folders*/
@@ -72,14 +77,19 @@ export class CharacterAdvancement extends FormApplication {
             console.log("item added from folder ", feat);
             let item = feat.toObject();
             console.log(item);
-            temp_feat_list.push(item);
+            folder_list.push(item);
+            folder_name.push(item.name)
           }
-          temp_feat_list = temp_feat_list.flat();
+          folder_list = folder_list.flat();
         }
       }
-      temp_feat_list = temp_feat_list.filter((item) => item.type === "feature" || item.type === "spell");
-      this.data.feats.learned = foundry.utils.deepClone(this.object.data.items);
-      this.data.feats.learned = this.data.feats.learned.filter((item) => item.data.type === "feature" || item.data.type === "spell");
+      pack_list = pack_list.filter((item) => item.type === "feature" || item.type === "spell");
+      folder_list = pack_list.filter((item) => item.type === "feature" || item.type === "spell");
+      temp_feat_list = pack_list.concat(folder_list.filter((item) => !pack_name.includes(item.name)))
+      /*temp_feat_list = folder_list.concat(pack_list.filter((item) => !folder_name.includes(item.name)))*/
+      this.data.feats.learned = foundry.utils
+        .deepClone(this.object.data.items)
+        .filter((item) => item.data.type === "feature" || item.data.type === "spell");
       let name_array = [];
       for (let i of this.data.feats.learned) {
         name_array.push(i.data.name);
@@ -89,7 +99,8 @@ export class CharacterAdvancement extends FormApplication {
           temp_feat_list[k] = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
         }
-        temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
+        temp_feat_list[k].data = foundry.utils.deepClone(this.data.feats.learned.filter((item) => item.name === v.name)[0].data.data)
+        /*temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
           let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
@@ -103,7 +114,7 @@ export class CharacterAdvancement extends FormApplication {
             }
           }
         } else temp_feat_list[k].data.level.xp = temp_feat_list[k].data.xp[0];
-        temp_feat_list[k].data.source.label = game.i18n.localize(CONFIG.ARd20.source[temp_feat_list[k].data.source.value]);
+        temp_feat_list[k].data.source.label = game.i18n.localize(CONFIG.ARd20.source[temp_feat_list[k].data.source.value]);*/
       }
       temp_feat_list = temp_feat_list.filter(
         (item) =>
@@ -146,15 +157,15 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       this.data.abilities[k].mod = Math.floor((this.data.abilities[k].value - 10) / 2);
       this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
-      this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value 
-      this.data.abilities[k].isXP = this.data.xp.get < this.data.abilities[k].xp 
+      this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value;
+      this.data.abilities[k].isXP = this.data.xp.get < this.data.abilities[k].xp;
     }
     for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
       this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof;
       this.data.skills[k].xp =
         this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
-      this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof 
-      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp && this.data.skills[k].prof >1 
+      this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof;
+      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp && this.data.skills[k].prof > 1;
       for (let [k, v] of Object.entries(this.data.profs.weapon)) {
         v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
       }
@@ -166,15 +177,15 @@ export class CharacterAdvancement extends FormApplication {
       object.data.level.xp = object.data.xp[object.data.level.initial]
         ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5
         : 0;
-      object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0 ;
-      object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get ;
+      object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
+      object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
       for (let [key, ability] of Object.entries(object.data.req.abilities)) {
-        ability.pass = ability.value <= this.data.abilities[key].value ;
+        ability.pass = ability.value <= this.data.abilities[key].value;
         pass.push(ability.pass);
         object.isXP = ability.pass ? object.isXP : true;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
-        skill.pass = skill.prof <= this.data.skills[key].prof ;
+        skill.pass = skill.prof <= this.data.skills[key].prof;
         pass.push(skill.pass);
         object.isXP = skill.pass ? object.isXP : true;
       }
@@ -187,7 +198,7 @@ export class CharacterAdvancement extends FormApplication {
         pass.push(feat.pass);
         object.isXP = feat.pass ? object.isXP : true;
       }
-      object.pass = !pass.includes(false) ;
+      object.pass = !pass.includes(false);
     }
 
     const templateData = {
