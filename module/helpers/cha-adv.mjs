@@ -191,9 +191,9 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
         if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ? true : false;
+          feat.pass = feat.level <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ;
         } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial ? true : false;
+          feat.pass = feat.level <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial;
         }
         pass.push(feat.pass);
         object.isXP = feat.pass ? object.isXP : true;
