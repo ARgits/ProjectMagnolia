@@ -61,6 +61,7 @@ export class CharacterAdvancement extends FormApplication {
             let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
             let doc = await game.packs.get(new_key).getDocument(feat._id);
             let item = doc.toObject();
+            item.data = foundry.utils.deepClone(doc.data.data)
             pack_list.push(item)
             pack_name.push(item.name);
           }
@@ -76,6 +77,7 @@ export class CharacterAdvancement extends FormApplication {
           for (let feat of feat_list) {
             console.log("item added from folder ", feat);
             let item = feat.toObject();
+            item.data = foundry.utils.deepClone(doc.data.data)
             console.log(item);
             folder_list.push(item);
             folder_name.push(item.name)
@@ -98,8 +100,9 @@ export class CharacterAdvancement extends FormApplication {
         if (name_array.includes(v.name)) {
           temp_feat_list[k] = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
+          temp_feat_list[k].data = foundry.utils.deepClone(this.data.feats.learned.filter((item) => item.name === v.name)[0].data.data)
         }
-        temp_feat_list[k].data = foundry.utils.deepClone(this.data.feats.learned.filter((item) => item.name === v.name)[0].data.data)
+        
         /*temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
         if (temp_feat_list[k].data.level.max > 1) {
           let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;

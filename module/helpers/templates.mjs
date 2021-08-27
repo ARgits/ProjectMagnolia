@@ -21,6 +21,6 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/ard20/templates/app/feat_req.html",
     //chat
     "systems/ard20/templates/chat/item-card.html",
-    "systems/ard20/templates/chat/roll-dialog"
+    "systems/ard20/templates/chat/roll-dialog.html"
   ])
 }
