@@ -165,9 +165,9 @@ export class CharacterAdvancement extends FormApplication {
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
       for (let [key, ability] of Object.entries(object.data.req.abilities)) {
-        ability.pass = ability.level[object.data.level.initial] <= this.data.abilities[key].value;
-        pass.push(ability.pass);
-        object.isXP = ability.pass ? object.isXP : true;
+        ability.pass.forEach((pass) => (pass = ability.level[ability.pass.indexOf(pass)] <= this.data.abilities[key].value));
+        pass.push(ability.pass[object.data.level.initial]);
+        object.isXP = ability.pass[object.data.level.initial] ? object.isXP : true;
       }
       for (let [key, skill] of Object.entries(object.data.req.skills)) {
         skill.pass = skill.prof <= this.data.skills[key].prof;
