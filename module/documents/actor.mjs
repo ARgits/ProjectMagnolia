@@ -12,7 +12,6 @@ export class ARd20Actor extends Actor {
     super.prepareData();
     this.items.forEach((item) => item.prepareFinalAttributes());
   }
-
   /** @override */
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded

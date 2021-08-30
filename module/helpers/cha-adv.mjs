@@ -49,8 +49,8 @@ export class CharacterAdvancement extends FormApplication {
       let temp_feat_list = [];
       let pack_list = [];
       let folder_list = [];
-      let pack_name = []
-      let folder_name = []
+      let pack_name = [];
+      let folder_name = [];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
       for (let key of game.settings.get("ard20", "feat").packs) {
         if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
@@ -61,8 +61,8 @@ export class CharacterAdvancement extends FormApplication {
             let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
             let doc = await game.packs.get(new_key).getDocument(feat._id);
             let item = doc.toObject();
-            item.data = foundry.utils.deepClone(doc.data.data)
-            pack_list.push(item)
+            item.data = foundry.utils.deepClone(doc.data.data);
+            pack_list.push(item);
             pack_name.push(item.name);
           }
           pack_list = pack_list.flat();
@@ -77,18 +77,16 @@ export class CharacterAdvancement extends FormApplication {
           for (let feat of feat_list) {
             console.log("item added from folder ", feat);
             let item = feat.toObject();
-            item.data = foundry.utils.deepClone(doc.data.data)
-            console.log(item);
+            item.data = foundry.utils.deepClone(feat.data.data);
             folder_list.push(item);
-            folder_name.push(item.name)
+            folder_name.push(item.name);
           }
           folder_list = folder_list.flat();
         }
       }
       pack_list = pack_list.filter((item) => item.type === "feature" || item.type === "spell");
-      folder_list = pack_list.filter((item) => item.type === "feature" || item.type === "spell");
-      temp_feat_list = pack_list.concat(folder_list.filter((item) => !pack_name.includes(item.name)))
-      /*temp_feat_list = folder_list.concat(pack_list.filter((item) => !folder_name.includes(item.name)))*/
+      folder_list = folder_list.filter((item) => item.type === "feature" || item.type === "spell");
+      temp_feat_list = pack_list.concat(folder_list.filter((item) => !pack_name.includes(item.name)));
       this.data.feats.learned = foundry.utils
         .deepClone(this.object.data.items)
         .filter((item) => item.data.type === "feature" || item.data.type === "spell");
@@ -100,24 +98,8 @@ export class CharacterAdvancement extends FormApplication {
         if (name_array.includes(v.name)) {
           temp_feat_list[k] = this.data.feats.learned.filter((item) => item.name === v.name)[0].data.toObject();
           console.log("this item is already learned", temp_feat_list[k]);
-          temp_feat_list[k].data = foundry.utils.deepClone(this.data.feats.learned.filter((item) => item.name === v.name)[0].data.data)
+          temp_feat_list[k].data = foundry.utils.deepClone(this.data.feats.learned.filter((item) => item.name === v.name)[0].data.data);
         }
-        
-        /*temp_feat_list[k].data.level.max = temp_feat_list[k].data.level.has ? temp_feat_list[k].data.level.max || 4 : 1;
-        if (temp_feat_list[k].data.level.max > 1) {
-          let n = (10 - temp_feat_list[k].data.level.max) / temp_feat_list[k].data.level.max;
-          let m = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
-          if (temp_feat_list[k].data.xp.length < temp_feat_list[k].data.level.max) {
-            for (let i = 1; i < temp_feat_list[k].data.level.max; i++) {
-              temp_feat_list[k].data.xp.push(Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5);
-            }
-          } else {
-            for (let i = 1; i < temp_feat_list[k].data.level.max; i++) {
-              temp_feat_list[k].data.xp[i] = Math.round((temp_feat_list[k].data.xp[i - 1] * m) / 5) * 5;
-            }
-          }
-        } else temp_feat_list[k].data.level.xp = temp_feat_list[k].data.xp[0];
-        temp_feat_list[k].data.source.label = game.i18n.localize(CONFIG.ARd20.source[temp_feat_list[k].data.source.value]);*/
       }
       temp_feat_list = temp_feat_list.filter(
         (item) =>
@@ -194,7 +176,7 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
         if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial ;
+          feat.pass = feat.level <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial;
         } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
           feat.pass = feat.level <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial;
         }
@@ -203,7 +185,6 @@ export class CharacterAdvancement extends FormApplication {
       }
       object.pass = !pass.includes(false);
     }
-
     const templateData = {
       abilities: this.data.abilities,
       xp: this.data.xp,
