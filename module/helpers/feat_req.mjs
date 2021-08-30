@@ -131,11 +131,11 @@ export class FeatRequirements extends FormApplication {
     const obj = {};
     for (let [key, ability] of Object.entries(updateData.abilities)) {
       ability.level = this._getLvlReq(ability.input, item.data.data.level.max);
-      ability.level.forEach((abil) => (ability.level[abil] = parseInt(abil)));
+      ability.level.forEach((abil) => (ability.level[ability.level.indexOf(abil)] = parseInt(abil)));
     }
     for (let [key, feat] of Object.entries(updateData.feats.current)) {
       feat.level = this._getLvlReq(feat.input, item.data.data.level.max);
-      feat.level.forEach((item) => (feat.level[item] = parseInt(item)));
+      feat.level.forEach((item) => (feat.level[ability.level.indexOf(item)] = parseInt(item)));
     }
     obj["data.req.abilities"] = updateData?.abilities;
     obj["data.req.skills"] = updateData?.skills;
