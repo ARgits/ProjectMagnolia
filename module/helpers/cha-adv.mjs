@@ -176,13 +176,18 @@ export class CharacterAdvancement extends FormApplication {
       }
       for (let [key, feat] of Object.entries(object.data.req.feats)) {
         if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.level[object.data.level.initial] <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial;
+          feat.pass.forEach(
+            (item, index) =>
+              (feat.pass[index] = feat.level[index] <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial)
+          );
         } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass =
-            feat.level[object.data.level.initial] <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial;
+          feat.pass = feat.pass.forEach(
+            (item, index) =>
+              (feat.pass[index] = feat.level[index] <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial)
+          );
         }
-        pass.push(feat.pass);
-        object.isXP = feat.pass ? object.isXP : true;
+        pass.push(feat.pass[Math.max(object.data.level.initial - 1, 0)]);
+        object.isXP = feat.pass[object.data.level.initial] ? object.isXP : true;
       }
       object.pass = !pass.includes(false);
     }
