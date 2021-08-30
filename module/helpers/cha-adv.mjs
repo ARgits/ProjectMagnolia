@@ -155,7 +155,7 @@ export class CharacterAdvancement extends FormApplication {
         v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
       }
     }
-    for (let [key, object] of Object.entries(this.data.feats.awail)) {
+    for (let [k, object] of Object.entries(this.data.feats.awail)) {
       let pass = [];
       let allCount = this.data.count.feats.all;
       let featCount = this.data.count.feats[object.data.source.value];

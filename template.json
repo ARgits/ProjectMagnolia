@@ -212,22 +212,22 @@
       "req": {
         "abilities": {
           "str": {
-            "value": 0
+            "input": 0
           },
           "dex": {
-            "value": 0
+            "input": 0
           },
           "con": {
-            "value": 0
+            "input": 0
           },
           "int": {
-            "value": 0
+            "input": 0
           },
           "wis": {
-            "value": 0
+            "input": 0
           },
           "cha": {
-            "value": 0
+            "input": 0
           }
         },
         "skills": {

@@ -15,7 +15,7 @@
                 {{#each abilities as |ability key|}}
                     <li class="item flexrow align-center">
                         <div>{{ability.label}}</div>
-                        <input type="number" name="abilities.{{key}}.value" value="{{ability.value}}" />
+                        <input type="number" name="abilities.{{key}}.input" value="{{ability.input}}" />
                     </li>
                 {{/each}}
             </ol>
@@ -64,7 +64,7 @@
                         </select>
                         <input hidden name="feats.current.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}"/>
                         {{#if (gt feat.maxLevel 1)}}
-                            <input type="text" name="feats.current.{{key}}.level" value="{{feat.level}}"/>
+                            <input type="text" name="feats.current.{{key}}.input" value="{{feat.input}}"/>
                         {{else}}
                             <div>-</div>
                         {{/if}}

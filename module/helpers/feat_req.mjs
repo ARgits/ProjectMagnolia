@@ -77,9 +77,9 @@ export class FeatRequirements extends FormApplication {
       for (let [k, v] of Object.entries(this.data.feats.awail)) {
         if (v.name === this.object.name) {
           this.data.feats.awail.splice(k, 1);
-        } else if(name_array.includes(v.name)){
-          console.log(v.name,'эта фича уже есть')
-          v.level = this.data.feats.current[this.data.feats.current.indexOf(this.data.feats.current.filter(feat=>feat.name===v.name)[0])].level
+        } else if (name_array.includes(v.name)) {
+          console.log(v.name, "эта фича уже есть");
+          v.level = this.data.feats.current[this.data.feats.current.indexOf(this.data.feats.current.filter((feat) => feat.name === v.name)[0])].level;
         }
       }
     }
@@ -111,6 +111,17 @@ export class FeatRequirements extends FormApplication {
     feats.current.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
+  _getLvlReq(input, maxLevel) {
+    let level = input.match(/\d*/g);
+    level = level.filter((item) => item !== "");
+    for (let i = level.length; maxLevel > level.length; i++) {
+      level.push(level[i - 1]);
+    }
+    for (let i = level.length; maxLevel < level.length; i--) {
+      level.splice(level.length - 1, 1);
+    }
+    return level;
+  }
 
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
@@ -118,6 +129,12 @@ export class FeatRequirements extends FormApplication {
     const item = this.object;
     this.render();
     const obj = {};
+    for (let [key, ability] of Object.entries(updateData.abilities)) {
+      ability.level = _getLvlReq(ability.input, item.data.data.level.max);
+    }
+    for (let [key, feat] of Object.entries(updateData.feats.current)) {
+      feat.level = this._getLvlReq(feat.input, item.data.data.level.max);
+    }
     obj["data.req.abilities"] = updateData?.abilities;
     obj["data.req.skills"] = updateData?.skills;
     obj["data.req.feats"] = updateData?.feats.current;
