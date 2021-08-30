@@ -120,7 +120,7 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.mar += 1;
         } else if (v.data.data.source?.value === "div") {
           this.data.count.feats.div += 1;
-        } else if (v.data.data.source?.value === "mag") {
+        } else if (v.data.data.source?.value === "mag"||v.type==="spell") {
           this.data.count.feats.mag += 1;
         } else if (v.data.data.source?.value === "pri") {
           this.data.count.feats.pri += 1;
@@ -158,7 +158,7 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, object] of Object.entries(this.data.feats.awail)) {
       let pass = [];
       let allCount = this.data.count.feats.all;
-      let featCount = this.data.count.feats[object.data.source.value];
+      let featCount = this.data.count.feats[object.data.source?.value||"mag"];
       object.data.level.xp = object.data.xp[object.data.level.initial]
         ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5
         : 0;
@@ -253,9 +253,11 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
           case "plus":
             data.profs.weapon[button.dataset.key].value += 1;
+            data.count.feats.mar+=1
             break;
           case "minus":
             data.profs.weapon[button.dataset.key].value -= 1;
+            data.count.feats.mar-=1
             break;
         }
         break;
