@@ -116,9 +116,11 @@ export class ARd20Item extends Item {
     }
     for(let [key,ability] of Object.entries(data.req.abilities)){
       ability.pass = Array.from("0".repeat(data.level.max))
+      ability.level = ability.level ?? Array.from("".repeat(data.level.max))
     }
     for(let [key,feat] of Object.entries(data.req.feats)){
       feat.pass = Array.from(Array(data.level.max))
+      feat.level = feat.level ?? Array.from("".repeat(data.level.max))
   }}
   /*
   Prepare Data that uses actor's data
