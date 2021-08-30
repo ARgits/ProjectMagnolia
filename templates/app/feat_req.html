@@ -15,7 +15,7 @@
                 {{#each abilities as |ability key|}}
                     <li class="item flexrow align-center">
                         <div>{{ability.label}}</div>
-                        <input type="number" name="abilities.{{key}}.input" value="{{ability.input}}" />
+                        <input type="text" name="abilities.{{key}}.input" value="{{ability.input}}" />
                     </li>
                 {{/each}}
             </ol>
