@@ -8,7 +8,7 @@
   "author": "ARgits",
   "esmodules": ["module/ard20.mjs"],
   "styles": ["css/ard20.css"],
-  "scripts": ["lib/math.js"],
+  "scripts": ["lib/math.js","lib/logic_fn.js"],
   "packs": [],
   "languages": [
     {
