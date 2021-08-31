@@ -150,7 +150,7 @@ export class CharacterAdvancement extends FormApplication {
       this.data.skills[k].xp =
         this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
       this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof;
-      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp && this.data.skills[k].prof > 1;
+      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp || this.data.skills[k].prof > 1;
       for (let [k, v] of Object.entries(this.data.profs.weapon)) {
         v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
       }

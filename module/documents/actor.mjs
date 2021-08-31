@@ -66,10 +66,14 @@ export class ARd20Actor extends Actor {
     }
     data.attributes.xp.bar_max = data.attributes.xp.level - data.attributes.xp.level_min;
     data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min;
-    //calculate proficiency bonus and die
+    /*
+    /calculate proficiency bonus and die
+    */
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
     data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
-    //calculate character's defences, including damage resistances
+    /*
+    /calculate character's defences, including damage resistances
+    */
     data.defences.stats.reflex = data.defences.stats.reflex ?? {};
     data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
     data.defences.stats.reflex.value =
