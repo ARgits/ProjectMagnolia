@@ -2,13 +2,13 @@
   "name": "ard20",
   "title": "Project Magnolia",
   "description": "Попытки сделать свою систему",
-  "version": "0.0.1.8.40",
+  "version": "0.0.1.8.41",
   "minimumCoreVersion": "0.8.3",
   "compatibleCoreVersion": "0.8.9",
   "author": "ARgits",
   "esmodules": ["module/ard20.mjs"],
   "styles": ["css/ard20.css"],
-  "scripts": ["lib/math.js", "lib/logic_fn.js"],
+  "scripts": ["lib/math.js"],
   "packs": [],
   "languages": [
     {
