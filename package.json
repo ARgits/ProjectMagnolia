@@ -15,6 +15,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "filtrex": "^2.2.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-sass": "^4.1.0",
