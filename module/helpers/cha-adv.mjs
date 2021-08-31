@@ -159,7 +159,7 @@ export class CharacterAdvancement extends FormApplication {
       let pass = [];
       let allCount = this.data.count.feats.all;
       let featCount = this.data.count.feats[object.data.source?.value||"mag"];
-      object.data.level.xp = object.data.xp[object.data.level.initial]
+      object.data.level.xp = object.data.xp?.[object.data.level.initial]
         ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5
         : 0;
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
