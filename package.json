@@ -19,6 +19,7 @@
     "gulp-autoprefixer": "^7.0.1",
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.4.4"
   }
 }
