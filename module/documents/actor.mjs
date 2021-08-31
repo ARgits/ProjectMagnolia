@@ -1,3 +1,4 @@
+import {logic_fn} from 'logic_fn'
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
