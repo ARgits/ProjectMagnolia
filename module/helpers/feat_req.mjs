@@ -92,17 +92,18 @@ export class FeatRequirements extends FormApplication {
       name_array.push(i.name);
     }
     for (let [k, v] of Object.entries(this.req)) {
-      v.type = v.type || "ability";
+      console.log(k, v);
+      this.req[k].type = v.type || "ability";
       let subtype_list = this.data.filter((item) => item.type === v.type);
-      v.name = subtype_list.filter((item) => item.name === v.name) ? v.name : subtype_list.filter((item) => item.name === v.name)[0];
+      this.req[k].name = subtype_list.filter((item) => item.name === v.name) ? v.name : subtype_list[0];
       console.log(subtype_list);
-      v.subtype_list = [];
-      subtype_list.forEach((item) => v.subtype_list.push(item.name));
-      if (!v.subtype_list.includes(v.name)) {
-        v.subtype_list.push(v.name);
+      this.req[k].subtype_list = [];
+      subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
+      if (!this.req[k].subtype_list.includes(v.name)) {
+        this.req[k].subtype_list.push(v.name);
       }
+      console.log(this.form.querySelector(`select[data-type='type'] option[value='${this.req[k].type}']`));
     }
-
     const FormData = {
       data: this.data,
       type: this.type_list,
@@ -110,7 +111,7 @@ export class FeatRequirements extends FormApplication {
       req: this.req,
     };
     console.log(FormData);
-    console.log(this.form)
+    console.log(this.form);
     return FormData;
   }
   activateListeners(html) {
@@ -121,7 +122,11 @@ export class FeatRequirements extends FormApplication {
   async _onAdd(event) {
     event.preventDefault();
     const req = this.req;
-    req.push({});
+    req.push({
+      type: "ability",
+      name: "Strength",
+      level: 0,
+    });
     this.render();
   }
   async _Delete(event) {
@@ -130,9 +135,14 @@ export class FeatRequirements extends FormApplication {
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
-  _onChangeInput(event){
-    super._onChangeInput(event)
-    console.log(foundry.utils.expandObject(this._getSubmitData()))
+  _onChangeInput(event) {
+    super._onChangeInput(event);
+    const k = event.currentTarget.dataset.key;
+    console.log(foundry.utils.expandObject(this._getSubmitData()));
+    const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
+    this.req[k].type = req.type;
+    this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value = this.req[k].type;
+    console.log(this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value);
   }
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
@@ -145,7 +155,6 @@ export class FeatRequirements extends FormApplication {
     }
     return level;
   }
-
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
     console.log(updateData);
