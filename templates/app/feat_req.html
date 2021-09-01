@@ -26,7 +26,7 @@
                             {{/each}}
                         {{/select}}
                     </select>
-                    {{#if eq req.key.subtype 'feat'}}
+                    {{#if (eq req.key.subtype 'feat')}}
                         <input hidden name="req.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}" />
                         {{#if (gt feat.maxLevel 1)}}
                             <input type="text" name="req{{key}}.input" value="{{feat.input}}" />
