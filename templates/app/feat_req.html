@@ -13,6 +13,7 @@
                         {{#select}}
                             {{#each ../data as |type k}}
                                 <option value="{{type}}">{{k.label}}</option>
+                            {{/each}}
                         {{/select}}
                     </select>
                     <select name="req.{{key}}.subtype">
@@ -22,7 +23,19 @@
                             {{/each}}
                         {{/select}}
                     </select>
-                    <input type="text" name="req.{{key}}.input" value="{{req.input}}" />
+                    {{#if eq req.key.subtype 'feat'}}
+                        <input hidden name="req.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}" />
+                        {{#if (gt feat.maxLevel 1)}}
+                            <input type="text" name="req{{key}}.input" value="{{feat.input}}" />
+                        {{else}}
+                            <div>-</div>
+                        {{/if}}
+                    {{else}}
+                        <input type="text" name="req.{{key}}.input" value="{{req.input}}" />
+                    {{/if}}
+                    <div class="item-controls">
+                        <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
                 </li>
             {{/each}}
         </ol>
