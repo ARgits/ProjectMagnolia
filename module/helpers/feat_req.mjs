@@ -14,7 +14,7 @@ export class FeatRequirements extends FormApplication {
       this.data = {};
       this.data.ability = {};
       this.data.skill = {};
-      this.data.req = foundry.utils.deepClone(this.object.data.data.req);
+      this.req = foundry.utils.deepClone(this.object.data.data.req);
       let pack_list = [];
       let folder_list = [];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
@@ -79,11 +79,9 @@ export class FeatRequirements extends FormApplication {
       }
     }
     const FormData = {
-      ability: this.data.ability,
-      skill: this.data.skill,
-      feat: this.data.feat,
+      data: this.data,
       config: CONFIG.ARd20,
-      req: this.data.req,
+      req: this.req,
     };
     console.log(FormData);
     return FormData;
@@ -95,7 +93,7 @@ export class FeatRequirements extends FormApplication {
   }
   async _onAdd(event) {
     event.preventDefault();
-    const req = this.data.req;
+    const req = this.req;
     req.push({
       type: 'ability',
       subtype: 'str',
@@ -105,7 +103,7 @@ export class FeatRequirements extends FormApplication {
   }
   async _Delete(event) {
     event.preventDefault();
-    const req = this.data.req;
+    const req = this.req;
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
@@ -131,7 +129,7 @@ export class FeatRequirements extends FormApplication {
       req.level = this._getLvlReq(req, item.data.data.level.max);
       req.level.forEach((r, index) => (req.level[index] = parseInt(r)));
     }
-    obj["data.reqs"] = updateData?.req;
+    obj["reqs"] = updateData?.req;
     console.log(obj);
     await item.update(obj);
   }
