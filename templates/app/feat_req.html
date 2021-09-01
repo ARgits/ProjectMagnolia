@@ -12,17 +12,17 @@
             {{#each req as |r key|}}
                 <li class="item flexrow align-center">
                     <div>{{key}}</div>
-                    <select name="req.{{key}}.type">
-                        {{#select r.type}}
+                    <select name="req.{{key}}.type" data-key="{{key}}" data-type="type">
+                        {{#select req.key.type}}
                             {{#each ../type as |t k|}}
-                                <option value="{{k}}">{{t}}</option>
+                                <option value="{{t}}" selected>{{t}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
-                    <select name="req.{{key}}.name">
-                        {{#select r.name}}
+                    <select name="req.{{key}}.name" data-key="{{key}}" data-type="name">
+                        {{#select req.key.name}}
                             {{#each r.subtype_list as |sub k|}}
-                                <option value="{{k}}">{{sub}}</option>
+                                <option value="{{sub}}">{{sub}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
