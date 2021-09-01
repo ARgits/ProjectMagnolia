@@ -97,8 +97,8 @@ export class FeatRequirements extends FormApplication {
     event.preventDefault();
     const req = this.data.req;
     req.push({
-      type: ability,
-      subtype: str,
+      type: 'ability',
+      subtype: 'str',
       level: 0,
     });
     this.render();
