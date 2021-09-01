@@ -13,14 +13,14 @@
                 <li class="item flexrow align-center">
                     <div>{{key}}</div>
                     <select name="req.{{key}}.type">
-                        {{#select req.key.type}}
+                        {{#select r.type}}
                             {{#each ../data as |type k|}}
                                 <option value="{{type}}">{{type}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
                     <select name="req.{{key}}.subtype">
-                        {{#select req.key.subtype}}
+                        {{#select r.subtype}}
                             {{#each ../data.[req.key.type] as |sub k|}}
                                 <option value="{{sub}}">{{sub}}</option>
                             {{/each}}
