@@ -7,6 +7,7 @@ export class FeatRequirements extends FormApplication {
       id: "feat_req",
       width: 500,
       height: "auto",
+      allowCustom: true,
     });
   }
   async getData(options) {
