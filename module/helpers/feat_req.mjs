@@ -129,8 +129,8 @@ export class FeatRequirements extends FormApplication {
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
-  _getLvlReq(input, maxLevel) {
-    let level = re.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
+  _getLvlReq(req, maxLevel) {
+    let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
     level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
       level.push(level[i - 1]);
