@@ -21,7 +21,7 @@
                     </select>
                     <select name="req.{{key}}.subtype">
                         {{#select r.subtype}}
-                            {{#each ../data.[req.key.type] as |sub k|}}
+                            {{#each ../data.[req.key.type.name] as |sub k|}}
                                 <option value="{{sub}}">{{sub.label}}</option>
                             {{/each}}
                         {{/select}}
