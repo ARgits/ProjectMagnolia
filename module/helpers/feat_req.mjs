@@ -1,5 +1,3 @@
-import { string } from "mathjs";
-
 export class FeatRequirements extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -112,7 +110,7 @@ export class FeatRequirements extends FormApplication {
     this.render();
   }
   _getLvlReq(input, maxLevel) {
-    let level = input.match(/\d*/g);
+    let level = re.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
     level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
       level.push(level[i - 1]);
@@ -130,8 +128,8 @@ export class FeatRequirements extends FormApplication {
     this.render();
     const obj = {};
     for (let [key, req] of Object.entries(updateData.req)) {
-      req.level = this._getLvlReq(ability.input, item.data.data.level.max);
-      req.level.forEach((r, index) => (ability.level[index] = parseInt(r)));
+      req.level = this._getLvlReq(req, item.data.data.level.max);
+      req.level.forEach((r, index) => (req.level[index] = parseInt(r)));
     }
     obj["data.reqs"] = updateData?.req;
     console.log(obj);

@@ -111,13 +111,9 @@ export class ARd20Item extends Item {
         }
       }
     }
-    for (let [key, ability] of Object.entries(data.req.abilities)) {
+    for (let [key, ability] of Object.entries(data.req)) {
       ability.pass = Array.from("0".repeat(data.level.max));
       ability.level = ability.level ?? Array.from("0".repeat(data.level.max));
-    }
-    for (let [key, feat] of Object.entries(data.req.feats)) {
-      feat.pass = Array.from("0".repeat(data.level.max));
-      feat.level = feat.level ?? Array.from("0".repeat(data.level.max));
     }
   }
   /*
