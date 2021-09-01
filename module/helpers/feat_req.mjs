@@ -11,6 +11,7 @@ export class FeatRequirements extends FormApplication {
   }
   async getData(options) {
     if (!this.data) {
+      console.log('ПЕРВЫЙ ЗАПУСК')
       this.data = [];
       this.req = foundry.utils.deepClone(this.object.data.data.req);
       let pack_list = [];
@@ -87,6 +88,7 @@ export class FeatRequirements extends FormApplication {
         }
       }
     }
+    console.log('ДАТА СОЗДАНА')
     let name_array = [];
     for (let i of this.data) {
       name_array.push(i.name);
