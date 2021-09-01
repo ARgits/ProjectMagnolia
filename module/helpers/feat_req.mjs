@@ -53,7 +53,7 @@ export class FeatRequirements extends FormApplication {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
         current: Object.values(foundry.utils.deepClone(this.object.data.data.req.filter((item) => item.type === "feat"))),
       };
-      for (let [k, v] of Object.entries(CONFIG.ARd20.abilities) {
+      for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
         this.data.ability[k] = {
           label: game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k,
           value: k,
