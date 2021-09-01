@@ -97,7 +97,8 @@ export class FeatRequirements extends FormApplication {
     }
     for (let [k, v] of Object.entries(this.data)) {
       let subtype_list = this.data.filter((item) => item.type === v.type);
-      v.subtype_list = subtype_list.forEach(item=>subtype_list[item]=item.name)
+      v.subtype_list = []
+      subtype_list.forEach(item=>v.subtype_list.push(item.name))
       if (!v.subtype_list.includes(v.name)) {
         v.subtype_list.push(v.name);
       }
