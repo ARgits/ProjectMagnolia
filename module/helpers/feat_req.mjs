@@ -48,7 +48,7 @@ export class FeatRequirements extends FormApplication {
           }
         }
       }
-      this.feats = {
+      this.feat = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
         current: Object.values(foundry.utils.deepClone(this.object.data.data.req.filter((item) => item.type === "feat"))),
       };
@@ -91,12 +91,13 @@ export class FeatRequirements extends FormApplication {
         }
       }
     }
-    name_array = [];
+    let name_array = [];
     for (let i of this.data) {
       name_array.push(i.name);
     }
-    for (let [k, v] of this.data) {
-      v.subtype_list = name_array.filter((item) => item.type === v.type);
+    for (let [k, v] of Object.entries(this.data)) {
+      let subtype_list = this.data.filter((item) => item.type === v.type);
+      v.subtype_list = subtype_list.forEach(item=>subtype_list[item]=item.name)
       if (!v.subtype_list.includes(v.name)) {
         v.subtype_list.push(v.name);
       }
