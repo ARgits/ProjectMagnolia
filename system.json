@@ -24,6 +24,6 @@
   "secondaryTokenAttribute": "power",
   "url": "https://gitlab.com/ARgits/boilerplate",
   "manifest": "https://gitlab.com/ARgits/ard20/-/raw/master/system.json",
-  "download": "https://gitlab.com/ARgits/ard20/-/archive/master/ard20-master.zip",
+  "download": "https://gitlab.com/ARgits/ard20/-/archive/feat-req/ard20-feat-req.zip",
   "license": "LICENSE.txt"
 }
