@@ -14,15 +14,15 @@
                     <div>{{key}}</div>
                     <select name="req.{{key}}.type">
                         {{#select r.type}}
-                            {{#each ../data as |type k|}}
-                                <option value="{{type}}">{{type.name}}</option>
+                            {{#each ../type as |t k|}}
+                                <option value="{{t}}">{{k}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
-                    <select name="req.{{key}}.subtype">
-                        {{#select r.subtype}}
-                            {{#each ../data.[req.key.type.name] as |sub k|}}
-                                <option value="{{sub}}">{{sub.label}}</option>
+                    <select name="req.{{key}}.name">
+                        {{#select r.name}}
+                            {{#each r.subtype_list as |sub k|}}
+                                <option value="{{sub}}">{{sub.name}}</option>
                             {{/each}}
                         {{/select}}
                     </select>

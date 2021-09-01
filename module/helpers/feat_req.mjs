@@ -11,12 +11,11 @@ export class FeatRequirements extends FormApplication {
   }
   async getData(options) {
     if (!this.data) {
-      this.data = {};
-      this.data.ability = {};
-      this.data.skill = {};
+      this.data = [];
       this.req = foundry.utils.deepClone(this.object.data.data.req);
       let pack_list = [];
       let folder_list = [];
+      let type_list = ["ability", "skill", "feat"];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
       for (let key of game.settings.get("ard20", "feat").packs) {
         if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
@@ -49,40 +48,62 @@ export class FeatRequirements extends FormApplication {
           }
         }
       }
-      this.data.feat = {
+      this.feats = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
         current: Object.values(foundry.utils.deepClone(this.object.data.data.req.filter((item) => item.type === "feat"))),
-        name:'feat'
       };
       for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-        this.data.ability[k] = {
-          name: game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k,
-          value: k,
-        };
+        this.data.push({
+          k: {
+            name: game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k,
+            value: k,
+            type: "ability",
+          },
+        });
       }
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
-        this.data.skill[k] = {
-          name: game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k,
-          value: k,
-        };
+        this.data.push({
+          k: {
+            name: game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k,
+            value: k,
+            type: "skill",
+          },
+        });
       }
-      this.data.ability.name = 'ability'
-      this.data.skill.name= 'skill'
       let name_array = [];
-      for (let i of this.data.feat.current) {
+      for (let i of this.feat.current) {
         name_array.push(i.name);
       }
-      for (let [k, v] of Object.entries(this.data.feat.awail)) {
+      for (let [k, v] of Object.entries(this.feat.awail)) {
         if (v.name === this.object.name) {
-          this.data.feat.awail.splice(k, 1);
+          this.feat.awail.splice(k, 1);
         } else if (name_array.includes(v.name)) {
           console.log(v.name, "эта фича уже есть");
-          v.level = this.data.feat.current[this.data.feat.current.indexOf(this.data.feat.current.filter((item) => item.name === v.name)[0])].level;
+          v.level = this.feat.current[this.feat.current.indexOf(this.feat.current.filter((item) => item.name === v.name)[0])].level;
+          this.feat.awail.splice(k, 1);
+        }
+        if (this.feat.awail[k]) {
+          this.data.push({
+            name: v.name,
+            type: "feat",
+            level: v.level,
+          });
         }
       }
     }
+    name_array = [];
+    for (let i of this.data) {
+      name_array.push(i.name);
+    }
+    for (let [k, v] of this.data) {
+      v.subtype_list = name_array.filter((item) => item.type === v.type);
+      if (!v.subtype_list.includes(v.name)) {
+        v.subtype_list.push(v.name);
+      }
+    }
+
     const FormData = {
-      data: this.data,
+      type: type_list,
       config: CONFIG.ARd20,
       req: this.req,
     };
@@ -98,8 +119,8 @@ export class FeatRequirements extends FormApplication {
     event.preventDefault();
     const req = this.req;
     req.push({
-      type: 'ability',
-      subtype: 'str',
+      type: "ability",
+      name: "str",
       level: 0,
     });
     this.render();
