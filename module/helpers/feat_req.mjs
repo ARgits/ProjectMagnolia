@@ -110,6 +110,7 @@ export class FeatRequirements extends FormApplication {
       req: this.req,
     };
     console.log(FormData);
+    console.log(this.form)
     return FormData;
   }
   activateListeners(html) {
@@ -128,6 +129,10 @@ export class FeatRequirements extends FormApplication {
     const req = this.req;
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
+  }
+  _onChangeInput(event){
+    super._onChangeInput(event)
+    console.log(foundry.utils.expandObject(this._getSubmitData()))
   }
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
