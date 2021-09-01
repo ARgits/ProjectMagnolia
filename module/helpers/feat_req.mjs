@@ -15,7 +15,7 @@ export class FeatRequirements extends FormApplication {
       this.req = foundry.utils.deepClone(this.object.data.data.req);
       let pack_list = [];
       let folder_list = [];
-      let type_list = ["ability", "skill", "feat"];
+      this.type_list = ["ability", "skill", "feat"];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
       for (let key of game.settings.get("ard20", "feat").packs) {
         if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
@@ -105,7 +105,7 @@ export class FeatRequirements extends FormApplication {
     }
 
     const FormData = {
-      type: type_list,
+      type: this.type_list,
       config: CONFIG.ARd20,
       req: this.req,
     };
