@@ -15,14 +15,14 @@
                     <select name="req.{{key}}.type">
                         {{#select r.type}}
                             {{#each ../data as |type k|}}
-                                <option value="{{type}}">{{type}}</option>
+                                <option value="{{type}}">{{type.name}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
                     <select name="req.{{key}}.subtype">
                         {{#select r.subtype}}
                             {{#each ../data.[req.key.type] as |sub k|}}
-                                <option value="{{sub}}">{{sub}}</option>
+                                <option value="{{sub}}">{{sub.label}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
