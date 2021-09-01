@@ -1,3 +1,5 @@
+import { string } from "mathjs";
+
 export class FeatRequirements extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -7,20 +9,14 @@ export class FeatRequirements extends FormApplication {
       id: "feat_req",
       width: 500,
       height: "auto",
-      tabs: [
-        {
-          navSelector: ".sheet-tabs",
-          contentSelector: ".sheet-body",
-          initial: "abilities",
-        },
-      ],
     });
   }
   async getData(options) {
     if (!this.data) {
       this.data = {};
-      this.data.abilities = foundry.utils.deepClone(this.object.data.data.req.abilities);
-      this.data.skills = foundry.utils.deepClone(this.object.data.data.req.skills);
+      this.data.ability = {};
+      this.data.skill = {};
+      this.data.req = foundry.utils.deepClone(this.object.data.data.req);
       let pack_list = [];
       let folder_list = [];
       /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
@@ -55,39 +51,41 @@ export class FeatRequirements extends FormApplication {
           }
         }
       }
-      this.data.feats = {
+      this.data.feat = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.feats)),
+        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.filter((item) => item.type === "feat"))),
       };
-      for (let [k, v] of Object.entries(this.data.abilities)) {
-        v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
+      for (let [k, v] of Object.entries(this.object.data.data.abilities)) {
+        this.data.ability[k] = {
+          label: game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k,
+          value: k,
+        };
       }
-      for (let [k, v] of Object.entries(this.data.skills)) {
-        if (v.label === undefined) {
-          console.log(v);
-          this.data.skills[k] = null;
-        } else {
-          v.label = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
-        }
+      for (let [k, v] of Object.entries(this.object.data.data.skills)) {
+        this.data.skill[k] = {
+          label: game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k,
+          value: k,
+        };
       }
       let name_array = [];
-      for (let i of this.data.feats.current) {
+      for (let i of this.data.feat.current) {
         name_array.push(i.name);
       }
-      for (let [k, v] of Object.entries(this.data.feats.awail)) {
+      for (let [k, v] of Object.entries(this.data.feat.awail)) {
         if (v.name === this.object.name) {
-          this.data.feats.awail.splice(k, 1);
+          this.data.feat.awail.splice(k, 1);
         } else if (name_array.includes(v.name)) {
           console.log(v.name, "эта фича уже есть");
-          v.level = this.data.feats.current[this.data.feats.current.indexOf(this.data.feats.current.filter((feat) => feat.name === v.name)[0])].level;
+          v.level = this.data.feat.current[this.data.feat.current.indexOf(this.data.feat.current.filter((item) => item.name === v.name)[0])].level;
         }
       }
     }
     const FormData = {
-      abilities: this.data.abilities,
-      skills: this.data.skills,
-      feats: this.data.feats,
+      ability: this.data.ability,
+      skill: this.data.skill,
+      feat: this.data.feat,
       config: CONFIG.ARd20,
+      req: this.data.req,
     };
     console.log(FormData);
     return FormData;
@@ -99,16 +97,18 @@ export class FeatRequirements extends FormApplication {
   }
   async _onAdd(event) {
     event.preventDefault();
-    const feats = this.data.feats;
-    if (feats.awail.length !== feats.current.length) {
-      feats.current.push(feats.awail[0]);
-    } else ui.notifications.warn("There is no more feats awailable", { permanent: true });
+    const req = this.data.req;
+    req.push({
+      type: ability,
+      value: str,
+      level: 0,
+    });
     this.render();
   }
   async _Delete(event) {
     event.preventDefault();
-    const feats = this.data.feats;
-    feats.current.splice(event.currentTarget.dataset.key, 1);
+    const req = this.data.req;
+    req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
   _getLvlReq(input, maxLevel) {
@@ -129,17 +129,11 @@ export class FeatRequirements extends FormApplication {
     const item = this.object;
     this.render();
     const obj = {};
-    for (let [key, ability] of Object.entries(updateData.abilities)) {
-      ability.level = this._getLvlReq(ability.input, item.data.data.level.max);
-      ability.level.forEach((abil,index) => (ability.level[index] = parseInt(abil)));
+    for (let [key, req] of Object.entries(updateData.req)) {
+      req.level = this._getLvlReq(ability.input, item.data.data.level.max);
+      req.level.forEach((r, index) => (ability.level[index] = parseInt(r)));
     }
-    for (let [key, feat] of Object.entries(updateData.feats.current)) {
-      feat.level = this._getLvlReq(feat.input, item.data.data.level.max);
-      feat.level.forEach((item,index) => (feat.level[index] = parseInt(item)));
-    }
-    obj["data.req.abilities"] = updateData?.abilities;
-    obj["data.req.skills"] = updateData?.skills;
-    obj["data.req.feats"] = updateData?.feats.current;
+    obj["data.reqs"] = updateData?.req;
     console.log(obj);
     await item.update(obj);
   }

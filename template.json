@@ -114,18 +114,17 @@
           "label": ""
         }
       },
-      "defences":{
-        "stats":{
-          "reflex":{
-          },
-          "fortitude":{},
-          "will":{}
+      "defences": {
+        "stats": {
+          "reflex": {},
+          "fortitude": {},
+          "will": {}
         },
-        "damage":{
-          "physic":{},
-          "magic":{}
+        "damage": {
+          "physic": {},
+          "magic": {}
         },
-        "conditions":{}
+        "conditions": {}
       }
     },
     "npc": {
@@ -209,112 +208,16 @@
         "initial": 0,
         "current": 0
       },
-      "req": {
-        "abilities": {
-          "str": {
-            "input": 0
-          },
-          "dex": {
-            "input": 0
-          },
-          "con": {
-            "input": 0
-          },
-          "int": {
-            "input": 0
-          },
-          "wis": {
-            "input": 0
-          },
-          "cha": {
-            "input": 0
-          }
-        },
-        "skills": {
-          "acr": {
-            "prof": 0,
-            "label": ""
-          },
-          "ath": {
-            "prof": 0,
-            "label": ""
-          },
-          "ani": {
-            "prof": 0,
-            "label": ""
-          },
-          "arc": {
-            "prof": 0,
-            "label": ""
-          },
-          "dec": {
-            "prof": 0,
-            "label": ""
-          },
-          "his": {
-            "prof": 0,
-            "label": ""
-          },
-          "ins": {
-            "prof": 0,
-            "label": ""
-          },
-          "itm": {
-            "prof": 0,
-            "label": ""
-          },
-          "inv": {
-            "prof": 0,
-            "label": ""
-          },
-          "med": {
-            "prof": 0,
-            "label": ""
-          },
-          "nat": {
-            "prof": 0,
-            "label": ""
-          },
-          "prc": {
-            "prof": 0,
-            "label": ""
-          },
-          "prf": {
-            "prof": 0,
-            "label": ""
-          },
-          "per": {
-            "prof": 0,
-            "label": ""
-          },
-          "rel": {
-            "prof": 0,
-            "label": ""
-          },
-          "slt": {
-            "prof": 0,
-            "label": ""
-          },
-          "ste": {
-            "prof": 0,
-            "label": ""
-          },
-          "sur": {
-            "prof": 0,
-            "label": ""
-          }
-        },
-        "feats": {}
-      }
+      "req": []
     },
     "spell": {
       "templates": ["base"],
       "spellLevel": 1,
       "school": "",
-      "sourceOptions":{
-        "learn":true,
-        "born":true,
-        "contract":true
+      "sourceOptions": {
+        "learn": true,
+        "born": true,
+        "contract": true
       }
     }
   }

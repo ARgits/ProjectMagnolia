@@ -1,80 +1,32 @@
 <form>
-    <nav class="sheet-tabs tabs" data-group="primary-tabs">
-        <a class="item" data-tab="abilities">Abilities</a>
-        <a class="item" data-tab='skills'>Skills</a>
-        <a class='item' data-tab='feats'>Features</a>
-    </nav>
-    <hr>
     <section class="sheet-body">
-        <div class="tab" data-tab="abilities" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>Name</div>
-                    <div>Value</div>
+        <ol class="items-list">
+            <li class="item flexrow items-header">
+                <div>#</div>
+                <div>Type</div>
+                <div>Value</div>
+            </li>
+            {{#each req as |r key|}}
+                <li class="item flexrow align-center">
+                    <div>{{key}}</div>
+                    <select name="req.{{key}}.type">
+                        {{#select}}
+                            {{#each ../data as |type k}}
+                                <option value="{{type}}">{{k.label}}</option>
+                        {{/select}}
+                    </select>
+                    <select name="req.{{key}}.subtype">
+                        {{#select}}
+                            {{#each ../data.[req.key.type] as |sub k|}}
+                                <option value="{{sub}}">{{k.label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <input type="text" name="req.{{key}}.input" value="{{req.input}}" />
                 </li>
-                {{#each abilities as |ability key|}}
-                    <li class="item flexrow align-center">
-                        <div>{{ability.label}}</div>
-                        <input type="text" name="abilities.{{key}}.input" value="{{ability.input}}" />
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
-        <div class="tab" data-tab="skills" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>Name</div>
-                    <div>level</div>
-                </li>
-                {{#each skills as |skill key|}}
-                    {{#if skill}}
-                        <li class="item flexrow align-center">
-                            <div>{{skill.label}}</div>
-                            <select name='skills.{{key}}.prof'>{{#select skill.prof}}
-                                    {{#each ../config.prof as |name sch|}}
-                                        <option value="{{numberFormat sch decimals=0 sign=false}}">{{localize name}}</option>
-                                    {{/each}}
-                                {{/select}}
-                            </select>
-                        </li>
-                    {{/if}}
-                {{/each}}
-            </ol>
-        </div>
-        <div class="tab" data-tab="feats" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>Name</div>
-                    <div>Level</div>
-                    <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
-                    </div>
-                </li>
-                {{log feats.current.length}}
-                {{#if (lt feats.current.length 1)}}
-                <input hidden name="feats.current"/>
-                {{/if}}
-                {{#each feats.current as |feat key|}}
-                    <li class="item flexrow align-center">
-                        <select name='feats.current.{{key}}.name'>{{#select feat.name}}
-                                {{#each ../feats.awail as |feat sch|}}
-                                    <option value="{{feat.name}}">{{feat.name}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                        <input hidden name="feats.current.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}"/>
-                        {{#if (gt feat.maxLevel 1)}}
-                            <input type="text" name="feats.current.{{key}}.input" value="{{feat.input}}"/>
-                        {{else}}
-                            <div>-</div>
-                        {{/if}}
-                        <div class="item-controls">
-                            <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
+            {{/each}}
+        </ol>
+
     </section>
     <hr>
     <footer>
