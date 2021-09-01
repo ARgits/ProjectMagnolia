@@ -92,9 +92,9 @@ export class FeatRequirements extends FormApplication {
       name_array.push(i.name);
     }
     for (let [k, v] of Object.entries(this.req)) {
-      v.type = v.type||'ability'
+      v.type = v.type || "ability";
       let subtype_list = this.data.filter((item) => item.type === v.type);
-      v.name = subtype_list.filter(item=>item.name===v.name)?v.name:subtype_list.filter(item=>item.name===v.name)[0]
+      v.name = subtype_list.filter((item) => item.name === v.name) ? v.name : subtype_list.filter((item) => item.name === v.name)[0];
       console.log(subtype_list);
       v.subtype_list = [];
       subtype_list.forEach((item) => v.subtype_list.push(item.name));
@@ -120,7 +120,7 @@ export class FeatRequirements extends FormApplication {
   async _onAdd(event) {
     event.preventDefault();
     const req = this.req;
-    req.push({    });
+    req.push({});
     this.render();
   }
   async _Delete(event) {
