@@ -54,20 +54,16 @@ export class FeatRequirements extends FormApplication {
       };
       for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
         this.data.push({
-          k: {
-            name: game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k,
-            value: k,
-            type: "ability",
-          },
+          name: game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k,
+          value: k,
+          type: "ability",
         });
       }
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
         this.data.push({
-          k: {
-            name: game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k,
-            value: k,
-            type: "skill",
-          },
+          name: game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k,
+          value: k,
+          type: "skill",
         });
       }
       let name_array = [];
@@ -86,7 +82,7 @@ export class FeatRequirements extends FormApplication {
           this.data.push({
             name: v.name,
             type: "feat",
-            level: v.level,
+            level: v.level ?? 0,
           });
         }
       }
@@ -95,16 +91,20 @@ export class FeatRequirements extends FormApplication {
     for (let i of this.data) {
       name_array.push(i.name);
     }
-    for (let [k, v] of Object.entries(this.data)) {
+    for (let [k, v] of Object.entries(this.req)) {
+      v.type = v.type||'ability'
       let subtype_list = this.data.filter((item) => item.type === v.type);
-      v.subtype_list = []
-      subtype_list.forEach(item=>v.subtype_list.push(item.name))
+      v.name = subtype_list.filter(item=>item.name===v.name)?v.name:subtype_list.filter(item=>item.name===v.name)[0]
+      console.log(subtype_list);
+      v.subtype_list = [];
+      subtype_list.forEach((item) => v.subtype_list.push(item.name));
       if (!v.subtype_list.includes(v.name)) {
         v.subtype_list.push(v.name);
       }
     }
 
     const FormData = {
+      data: this.data,
       type: this.type_list,
       config: CONFIG.ARd20,
       req: this.req,
@@ -120,11 +120,7 @@ export class FeatRequirements extends FormApplication {
   async _onAdd(event) {
     event.preventDefault();
     const req = this.req;
-    req.push({
-      type: "ability",
-      name: "str",
-      level: 0,
-    });
+    req.push({    });
     this.render();
   }
   async _Delete(event) {
