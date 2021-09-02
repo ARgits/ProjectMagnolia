@@ -96,10 +96,12 @@ export class FeatRequirements extends FormApplication {
     }
     for (let [k, v] of Object.entries(this.req)) {
       console.log(k, v);
-      this.req[k].type = this.formApp?.[k]?.type || "ability";
+      this.req[k].type = this.formApp?.[k]?.type ? this.formApp?.[k]?.type : this.req[k].type || "ability";
       let subtype_list = this.data.filter((item) => item.type === this.req[k].type);
       console.log(subtype_list);
-      this.req[k].name = subtype_list.filter((item) => item.name === this.formApp?.[k]?.name) ? this.formApp[k].name : subtype_list[0];
+      this.req[k].name = subtype_list.filter((item) => item.name === this.formApp?.[k]?.name)
+        ? this.formApp?.[k]?.name || this.req[k].name
+        : subtype_list[0];
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
       this.req[k].input = this.formApp?.[k]?.input ?? "";
