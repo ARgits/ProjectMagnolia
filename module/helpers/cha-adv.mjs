@@ -191,7 +191,7 @@ export class CharacterAdvancement extends FormApplication {
         //object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
       }
       object.pass = [];
-      for (let i = 0; i < object.data.level.initial; i++) {
+      for (let i = 0; i < object.data.level.max; i++) {
         let exp = object.data.req.logic[i];
         console.log(exp);
         let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
@@ -204,7 +204,7 @@ export class CharacterAdvancement extends FormApplication {
         let filter = filtrex.compileExpression(exp);
         object.pass[i] = Boolean(filter(f));
       }
-      object.isXP = object.pass[Math.max(object.data.level.initial - 1, 0)] ? object.isXP : true;
+      object.isXP = object.pass[object.data.level.initial] ? object.isXP : true;
       //object.pass = !pass.includes(false);
     }
     const templateData = {
@@ -347,7 +347,8 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, v] of Object.entries(feats_data.new)) {
       pass.push(v.pass);
     }
-    pass.flat();
+    pass = pass.flat();
+    console.log(pass);
     if (pass.includes(false)) {
       ui.notifications.error(`Some changes do not comply with the requirements`);
     } else {

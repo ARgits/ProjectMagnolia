@@ -208,10 +208,10 @@ export class FeatRequirements extends FormApplication {
           break;
       }
     }
-    for (let i = updateData?.req.logic.length; maxLevel > updateData?.req.logic.length; i++) {
+    for (let i = updateData?.req.logic.length; item.data.data.level.max > updateData?.req.logic.length; i++) {
       updateData?.req.logic.push(level[i - 1]);
     }
-    for (let i = updateData?.req.logic.length; maxLevel < updateData?.req.logic.length; i--) {
+    for (let i = updateData?.req.logic.length; item.data.data.level.max < updateData?.req.logic.length; i--) {
       updateData?.req.logic.splice(updateData?.req.logic.length - 1, 1);
     }
     obj["data.req.values"] = Object.values(updateData?.req.values);
