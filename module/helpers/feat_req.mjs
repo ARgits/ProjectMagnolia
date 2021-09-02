@@ -103,18 +103,18 @@ export class FeatRequirements extends FormApplication {
     }
     for (let [k, value] of Object.entries(this.req.values)) {
       console.log(k, value);
-      this.req.values[k].type = this.formApp.values?.[k]?.type ? this.formApp.values?.[k]?.type : this.req.values[k].type || "ability";
+      this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "ability";
       let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
       console.log(subtype_list);
-      this.req.values[k].name = subtype_list.filter((item) => item.name === this.formApp.values?.[k]?.name)
-        ? this.formApp.values?.[k]?.name || this.req.values[k].name
+      this.req.values[k].name = subtype_list.filter((item) => item.name === this.formApp?.values?.[k]?.name)
+        ? this.formApp?.values?.[k]?.name || this.req.values[k].name
         : subtype_list[0];
       this.req.values[k].subtype_list = [];
       subtype_list.forEach((item) => this.req.values[k].subtype_list.push(item.name));
-      this.req.values[k].input = this.formApp.values?.[k]?.input ? this.formApp.values?.[k]?.input : this.req.values[k].input || "";
+      this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
     }
     for (let [k, value] of Object.entries(this.req.logic)) {
-      this.req.logic[k] = this.formApp.logic[k];
+      this.req.logic[k] = this.formApp?.logic?.[k] ?this.formApp.logic[k]:this.req.logic[k]
     }
     this.formApp = this.req;
     const FormData = {
@@ -126,7 +126,6 @@ export class FeatRequirements extends FormApplication {
     };
     console.log(FormData);
     console.log(this.form);
-    this.render();
     return FormData;
   }
   activateListeners(html) {
@@ -142,17 +141,19 @@ export class FeatRequirements extends FormApplication {
       name: "Strength",
       input: "",
     });
+    this.render();
   }
   async _Delete(event) {
     event.preventDefault();
     const req = this.req;
     req.values.splice(event.currentTarget.dataset.key, 1);
+    this.render();
   }
   _onChangeInput(event) {
     super._onChangeInput(event);
     const k = event.currentTarget.dataset.key;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
-    const req = foundry.utils.expandObject(this._getSubmitData()).req.values[k];
+    const req = foundry.utils.expandObject(this._getSubmitData()).req;
     switch (event.currentTarget.dataset.type) {
       case "value":
         this.formApp.values[k].type = req.values[k].type;
@@ -208,6 +209,7 @@ export class FeatRequirements extends FormApplication {
       }
     }
     obj["data.req.values"] = Object.values(updateData?.req.values);
+    obj["data.req.logic"] = Object.values(updateData?.req.logic)
     console.log(obj);
     await item.update(obj);
   }

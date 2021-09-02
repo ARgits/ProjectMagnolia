@@ -192,11 +192,14 @@ export class CharacterAdvancement extends FormApplication {
         //object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
       }
       let exp = object.data.req.logic[object.data.level.initial];
-      let lev_array = exp.match(/\d*/g);
+      console.log(exp)
+      let lev_array = exp.match(/\d*/g).filter(item=>item!=="");
+      let f = {}
       lev_array.forEach((item, index) => {
         exp = exp.replace(item, `c${index}`);
         f["c" + index] = pass[index];
       });
+      console.log(f)
       let filter = filtrex.compileExpression(exp);
       object.pass = Boolean(filter(f));
       object.isXP = object.pass ? object.isXP : true;
