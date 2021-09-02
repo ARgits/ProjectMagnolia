@@ -94,8 +94,8 @@ export class FeatRequirements extends FormApplication {
     for (let i of this.data) {
       name_array.push(i.name);
     }
-    for (let [k, v] of Object.entries(this.req)) {
-      console.log(k, v);
+    for (let [k, value] of Object.entries(this.req)) {
+      console.log(k, value);
       this.req[k].type = this.formApp?.[k]?.type ? this.formApp?.[k]?.type : this.req[k].type || "ability";
       let subtype_list = this.data.filter((item) => item.type === this.req[k].type);
       console.log(subtype_list);
@@ -104,7 +104,18 @@ export class FeatRequirements extends FormApplication {
         : subtype_list[0];
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
-      this.req[k].input = this.formApp?.[k]?.input ?? "";
+      this.req[k].input = this.formApp?.[k]?.input ? this.formApp?.[k]?.input: this.req[k].input || "";
+      switch(this.req[k].type){
+        case "ability":
+          for (let [key,v] of Object.entries(CONFIG.ARd20.abilities)){
+            this.req[k].value = v
+          }
+          break
+          case "skill":
+            for (let [key,v] of Object.entries(CONFIG.ARd20.skills)){
+              this.req[k].value = v
+            }
+      }
     }
     this.formApp = this.req;
     const FormData = {

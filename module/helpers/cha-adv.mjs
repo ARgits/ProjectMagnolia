@@ -167,10 +167,10 @@ export class CharacterAdvancement extends FormApplication {
       for (let [key, r] of Object.entries(object.data.req)) {
         switch (r.type) {
           case "ability":
-            r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.abilities[key].value));
+            r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.abilities[r.value].value));
             break;
           case "skill":
-            r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.skills[key].value));
+            r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.skills[r.value].value));
             break;
           case "feat":
             if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
