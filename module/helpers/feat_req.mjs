@@ -7,7 +7,8 @@ export class FeatRequirements extends FormApplication {
       id: "feat_req",
       width: 500,
       height: "auto",
-      allowCustom: true,
+      submitOnChange:true,
+      closeOnSubmit:false
     });
   }
   async getData(options) {
@@ -105,7 +106,6 @@ export class FeatRequirements extends FormApplication {
       if (!this.req[k].subtype_list.includes(v.name)) {
         this.req[k].subtype_list.push(v.name);
       }
-      console.log(this.form.querySelector(`select[data-type='type'] option[value='${this.req[k].type}']`));
     }
     const FormData = {
       data: this.data,
@@ -138,7 +138,7 @@ export class FeatRequirements extends FormApplication {
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
-  _onChangeInput(event) {
+ /* _onChangeInput(event) {
     super._onChangeInput(event);
     const k = event.currentTarget.dataset.key;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
@@ -146,7 +146,7 @@ export class FeatRequirements extends FormApplication {
     this.req[k].type = req.type;
     this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value = this.req[k].type;
     console.log(this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value);
-  }
+  }*/
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
     level = level.filter((item) => item !== "");
