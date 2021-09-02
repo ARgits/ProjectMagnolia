@@ -13,23 +13,23 @@
                 <li class="item flexrow align-center">
                     <div>{{key}}</div>
                     <select name="req.{{key}}.type" data-key="{{key}}" data-type="type">
-                        {{#select req.key.type}}
+                        {{#select r.type}}
                             {{#each ../type as |t k|}}
-                                <option value="{{k}}">{{t}}</option>
+                                <option value="{{t}}">{{t}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
                     <select name="req.{{key}}.name" data-key="{{key}}" data-type="name">
-                        {{#select req.key.name}}
+                        {{#select r.name}}
                             {{#each r.subtype_list as |sub k|}}
-                                <option value="{{k}}">{{sub}}</option>
+                                <option value="{{sub}}">{{sub}}</option>
                             {{/each}}
                         {{/select}}
                     </select>
                     {{#if (eq req.key.subtype 'feat')}}
                         <input hidden name="req.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}" />
                         {{#if (gt feat.maxLevel 1)}}
-                            <input type="text" name="req{{key}}.input" value="{{feat.input}}" />
+                            <input type="text" name="req.{{key}}.input" value="{{feat.input}}" />
                         {{else}}
                             <div>-</div>
                         {{/if}}

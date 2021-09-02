@@ -11,7 +11,8 @@ export class FeatRequirements extends FormApplication {
   }
   async getData(options) {
     if (!this.data) {
-      console.log('ПЕРВЫЙ ЗАПУСК')
+      console.log("ПЕРВЫЙ ЗАПУСК");
+      this.formApp = null;
       this.data = [];
       this.req = foundry.utils.deepClone(this.object.data.data.req);
       let pack_list = [];
@@ -88,28 +89,27 @@ export class FeatRequirements extends FormApplication {
         }
       }
     }
-    console.log('ДАТА СОЗДАНА')
+    console.log("ДАТА СОЗДАНА");
     let name_array = [];
     for (let i of this.data) {
       name_array.push(i.name);
     }
     for (let [k, v] of Object.entries(this.req)) {
       console.log(k, v);
-      this.req[k].type = v.type || "ability";
-      let subtype_list = this.data.filter((item) => item.type === v.type);
-      this.req[k].name = subtype_list.filter((item) => item.name === v.name) ? v.name : subtype_list[0];
+      this.req[k].type = this.formApp?.[k]?.type || "ability";
+      let subtype_list = this.data.filter((item) => item.type === this.req[k].type);
       console.log(subtype_list);
+      this.req[k].name = subtype_list.filter((item) => item.name === this.req[k].name) ? this.req[k].name : subtype_list[0];
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
-      if (!this.req[k].subtype_list.includes(this.req[k].name)) {
-        this.req[k].subtype_list.push(this.req[k].name);
-      }
     }
+    this.formApp = this.req;
     const FormData = {
       data: this.data,
       type: this.type_list,
       config: CONFIG.ARd20,
       req: this.req,
+      formApp: this.formApp,
     };
     console.log(FormData);
     console.log(this.form);
@@ -136,18 +136,17 @@ export class FeatRequirements extends FormApplication {
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
- _onChangeInput(event) {
+  _onChangeInput(event) {
     super._onChangeInput(event);
     const k = event.currentTarget.dataset.key;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
     const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
-    this.req[k].type = req.type;
-    this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value = this.req[k].type;
-    console.log(this.form);
+    this.formApp[k].type = req.type;
+    this.getData();
   }
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
-    if(!level) return
+    if (!level) return;
     level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
       level.push(level[i - 1]);
