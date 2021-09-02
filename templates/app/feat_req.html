@@ -18,14 +18,14 @@
                 {{#each req.values as |r key|}}
                     <li class="item flexrow align-center">
                         <div>{{key}}</div>
-                        <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="type">
+                        <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
                             {{#select r.type}}
                                 {{#each ../type as |t k|}}
                                     <option value="{{t}}">{{t}}</option>
                                 {{/each}}
                             {{/select}}
                         </select>
-                        <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="name">
+                        <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="value">
                             {{#select r.name}}
                                 {{#each r.subtype_list as |sub k|}}
                                     <option value="{{sub}}">{{sub}}</option>
@@ -33,14 +33,14 @@
                             {{/select}}
                         </select>
                         {{#if (eq req.key.subtype 'feat')}}
-                            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' value="{{feat.maxLevel}}" />
+                            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{feat.maxLevel}}" />
                             {{#if (gt feat.maxLevel 1)}}
-                                <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' value="{{feat.input}}" />
+                                <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{feat.input}}" />
                             {{else}}'
-                                <input type="text" readonly name="req.values.{{key}}.input" data-key='{{key}}' value="-" />
+                                <input type="text" readonly name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="-" />
                             {{/if}}
                         {{else}}
-                            <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' value="{{r.input}}" />
+                            <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{r.input}}" />
                         {{/if}}
                         <div class="item-controls">
                             <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -58,7 +58,7 @@
                 {{#each req.logic as |log key|}}
                     <li class="item flexrow align-center">
                         <div>{{key}}</div>
-                        <input type="text" name="req.logic.{{key}}.input" data-key="{{key}}" value="{{log.input}}" />
+                        <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{log}}" />
                     </li>
                 {{/each}}
             </ol>
