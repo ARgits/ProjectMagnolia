@@ -158,7 +158,7 @@ export class FeatRequirements extends FormApplication {
       level = [];
       for (let [key, item] of Object.entries(list)) {
         if (item === "basic") level.push(list[key].replace(/basic/g, 1));
-        if (item === "master") level.push(list[key].replace(/master/g, 1));
+        if (item === "master") level.push(list[key].replace(/master/g, 2));
       }
     }
     level = level.filter((item) => item !== "");
@@ -178,7 +178,7 @@ export class FeatRequirements extends FormApplication {
     const obj = {};
     for (let [key, req] of Object.entries(updateData.req)) {
       req.level = this._getLvlReq(req, item.data.data.level.max);
-      req.level?.forEach((r, index) => (req.level[index] = parseInt(r)));
+      req.level?.forEach((r, index) => (req.level[index] = parseInt(r)??0));
       switch (req.type) {
         case "ability":
           for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
