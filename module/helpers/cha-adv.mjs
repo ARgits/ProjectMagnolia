@@ -1,4 +1,4 @@
-import { filtrex} from "../../lib/filtrex.js";
+import { filtrex } from "../../lib/filtrex.js";
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -192,14 +192,14 @@ export class CharacterAdvancement extends FormApplication {
         //object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
       }
       let exp = object.data.req.logic[object.data.level.initial];
-      console.log(exp)
-      let lev_array = exp.match(/\d*/g).filter(item=>item!=="");
-      let f = {}
+      console.log(exp);
+      let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
+      let f = {};
       lev_array.forEach((item, index) => {
-        exp = exp.replace(item, `c${index}`);
-        f["c" + index] = pass[index];
+        exp = exp.replace(item, `c${item}`);
+        f["c" + item] = pass[item];
       });
-      console.log(f)
+      console.log(f);
       let filter = filtrex.compileExpression(exp);
       object.pass = Boolean(filter(f));
       object.isXP = object.pass ? object.isXP : true;

@@ -114,7 +114,7 @@ export class FeatRequirements extends FormApplication {
       this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
     }
     for (let [k, value] of Object.entries(this.req.logic)) {
-      this.req.logic[k] = this.formApp?.logic?.[k] ?this.formApp.logic[k]:this.req.logic[k]
+      this.req.logic[k] = this.formApp?.logic?.[k] ? this.formApp.logic[k] : this.req.logic[k];
     }
     this.formApp = this.req;
     const FormData = {
@@ -208,8 +208,14 @@ export class FeatRequirements extends FormApplication {
           break;
       }
     }
+    for (let i = updateData?.req.logic.length; maxLevel > updateData?.req.logic.length; i++) {
+      updateData?.req.logic.push(level[i - 1]);
+    }
+    for (let i = updateData?.req.logic.length; maxLevel < updateData?.req.logic.length; i--) {
+      updateData?.req.logic.splice(updateData?.req.logic.length - 1, 1);
+    }
     obj["data.req.values"] = Object.values(updateData?.req.values);
-    obj["data.req.logic"] = Object.values(updateData?.req.logic)
+    obj["data.req.logic"] = Object.values(updateData?.req.logic);
     console.log(obj);
     await item.update(obj);
   }
