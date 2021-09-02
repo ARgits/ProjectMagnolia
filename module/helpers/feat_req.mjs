@@ -149,6 +149,7 @@ export class FeatRequirements extends FormApplication {
   }*/
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
+    if(!level) return
     level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
       level.push(level[i - 1]);
@@ -166,10 +167,9 @@ export class FeatRequirements extends FormApplication {
     const obj = {};
     for (let [key, req] of Object.entries(updateData.req)) {
       req.level = this._getLvlReq(req, item.data.data.level.max);
-      req.level.forEach((r, index) => (req.level[index] = parseInt(r)));
+      req.level?.forEach((r, index) => (req.level[index] = parseInt(r)));
     }
     obj["reqs"] = updateData?.req;
     console.log(obj);
-    await item.update(obj);
   }
 }
