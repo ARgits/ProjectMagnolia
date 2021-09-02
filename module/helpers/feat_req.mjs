@@ -183,6 +183,7 @@ export class FeatRequirements extends FormApplication {
           break;
         case "skill":
           for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
+            if(req.name===game.i18n.localize(CONFIG.ARd20.skills[key]))
             req.value = key;
           }
           break;
