@@ -101,8 +101,8 @@ export class FeatRequirements extends FormApplication {
       console.log(subtype_list);
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
-      if (!this.req[k].subtype_list.includes(v.name)) {
-        this.req[k].subtype_list.push(v.name);
+      if (!this.req[k].subtype_list.includes(this.req[k].name)) {
+        this.req[k].subtype_list.push(this.req[k].name);
       }
     }
     const FormData = {
