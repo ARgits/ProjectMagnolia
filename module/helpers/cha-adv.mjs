@@ -187,22 +187,24 @@ export class CharacterAdvancement extends FormApplication {
             }
             break;
         }
-        pass.push(r.pass[Math.max(object.data.level.initial - 1, 0)]);
-
+        pass.push(r.pass);
         //object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
       }
-      let exp = object.data.req.logic[object.data.level.initial];
-      console.log(exp);
-      let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
-      let f = {};
-      lev_array.forEach((item, index) => {
-        exp = exp.replace(item, `c${item}`);
-        f["c" + item] = pass[item];
-      });
-      console.log(f);
-      let filter = filtrex.compileExpression(exp);
-      object.pass = Boolean(filter(f));
-      object.isXP = object.pass ? object.isXP : true;
+      object.pass = [];
+      for (let i = 0; i < object.data.level.initial; i++) {
+        let exp = object.data.req.logic[i];
+        console.log(exp);
+        let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
+        let f = {};
+        lev_array.forEach((item, index) => {
+          exp = exp.replace(item, `c${item}`);
+          f["c" + item] = pass[item][i];
+        });
+        console.log(f);
+        let filter = filtrex.compileExpression(exp);
+        object.pass[i] = Boolean(filter(f));
+      }
+      object.isXP = object.pass[Math.max(object.data.level.initial - 1, 0)] ? object.isXP : true;
       //object.pass = !pass.includes(false);
     }
     const templateData = {
@@ -345,6 +347,7 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, v] of Object.entries(feats_data.new)) {
       pass.push(v.pass);
     }
+    pass.flat();
     if (pass.includes(false)) {
       ui.notifications.error(`Some changes do not comply with the requirements`);
     } else {
