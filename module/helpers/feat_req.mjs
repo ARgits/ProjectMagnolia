@@ -170,7 +170,7 @@ export class FeatRequirements extends FormApplication {
       req.level = this._getLvlReq(req, item.data.data.level.max);
       req.level?.forEach((r, index) => (req.level[index] = parseInt(r)));
     }
-    obj["req"] = updateData?.req;
+    obj["data.req"] = updateData?.req;
     console.log(obj);
     await item.update(obj)
   }
