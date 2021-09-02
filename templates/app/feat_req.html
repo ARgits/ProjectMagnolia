@@ -27,14 +27,14 @@
                         {{/select}}
                     </select>
                     {{#if (eq req.key.subtype 'feat')}}
-                        <input hidden name="req.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}" />
+                        <input hidden name="req.{{key}}.maxLevel" type="number" data-key='{{key}}' value="{{feat.maxLevel}}" />
                         {{#if (gt feat.maxLevel 1)}}
-                            <input type="text" name="req.{{key}}.input" value="{{feat.input}}" />
-                        {{else}}
-                            <div>-</div>
+                            <input type="text" name="req.{{key}}.input" data-key='{{key}}'value="{{feat.input}}"/>
+                        {{else}}'
+                        <input type="text" readonly name="req.{{key}}.input" data-key='{{key}}'value="-" />
                         {{/if}}
                     {{else}}
-                        <input type="text" name="req.{{key}}.input" value="{{r.input}}" />
+                        <input type="text" name="req.{{key}}.input" data-key='{{key}}' value="{{r.input}}" />
                     {{/if}}
                     <div class="item-controls">
                         <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
