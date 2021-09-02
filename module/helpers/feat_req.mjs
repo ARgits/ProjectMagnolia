@@ -199,9 +199,7 @@ export class FeatRequirements extends FormApplication {
           break;
       }
     }
-    for (let [key, level] of Object.entries(updateData.req.logic)) {
-    }
-    obj["data.req"] = Object.values(updateData?.req);
+    obj["data.req.values"] = Object.values(updateData?.req.values);
     console.log(obj);
     await item.update(obj);
   }
