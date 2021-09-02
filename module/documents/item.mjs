@@ -115,7 +115,7 @@ export class ARd20Item extends Item {
       ability.pass = Array.from("0".repeat(data.level.max));
       ability.level = ability.level ?? Array.from("0".repeat(data.level.max));
     }
-    data.req.logic = data.req.logic ?? Array.from("0".repeat(data.level.max));
+    data.req.logic = data.req.logic ? data.req.logic : Array.from("0".repeat(data.level.max));
   }
   /*
   Prepare Data that uses actor's data

@@ -59,7 +59,7 @@ export class FeatRequirements extends FormApplication {
       }
       this.feat = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.filter((item) => item.type === "feat"))),
+        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.values.filter((item) => item.type === "feat"))),
       };
       for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
         this.data.push({
