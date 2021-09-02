@@ -173,16 +173,16 @@ export class CharacterAdvancement extends FormApplication {
             r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.skills[r.value].prof));
             break;
           case "feat":
-            if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
+            if (this.data.feats.awail.filter((item) => item.name === r.name)?.[0] !== undefined) {
               r.pass.forEach(
                 (item, index) =>
-                  (r.pass[index] = feat.level[index] <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial)
+                  (r.pass[index] = r.level[index] <= this.data.feats.awail.filter((item) => item.name === r.name)[0].data.level.initial)
               );
-            } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
+            } else if (this.data.feats.learned.filter((item) => item.name === r.name)?.[0] !== undefined) {
               r.pass = r.pass.forEach(
                 (item, index) =>
                   (r.pass[index] =
-                    feat.level[index] <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial)
+                    r.level[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial)
               );
             }
             break;
