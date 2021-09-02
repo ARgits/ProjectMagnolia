@@ -143,6 +143,7 @@ export class FeatRequirements extends FormApplication {
     const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
     this.formApp[k].type = req.type;
     this.getData();
+    this.render()
   }
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
