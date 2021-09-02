@@ -105,18 +105,6 @@ export class FeatRequirements extends FormApplication {
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
       this.req[k].input = this.formApp?.[k]?.input ? this.formApp?.[k]?.input : this.req[k].input || "";
-      switch (this.req[k].type) {
-        case "ability":
-          for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            this.req[k].value = v;
-          }
-          break;
-        case "skill":
-          for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
-            this.req[k].value = v;
-          }
-          break;
-      }
     }
     this.formApp = this.req;
     const FormData = {
@@ -187,6 +175,18 @@ export class FeatRequirements extends FormApplication {
     for (let [key, req] of Object.entries(updateData.req)) {
       req.level = this._getLvlReq(req, item.data.data.level.max);
       req.level?.forEach((r, index) => (req.level[index] = parseInt(r)));
+      switch (req.type) {
+        case "ability":
+          for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
+            req.value = key;
+          }
+          break;
+        case "skill":
+          for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
+            req.value = key;
+          }
+          break;
+      }
     }
     obj["data.req"] = Object.values(updateData?.req);
     console.log(obj);
