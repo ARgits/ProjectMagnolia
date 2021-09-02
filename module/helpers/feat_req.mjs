@@ -154,8 +154,12 @@ export class FeatRequirements extends FormApplication {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
     if (!level) return;
     if (req.type === "skill") {
-      level.forEach((item, index) => level[index].replace(/basic/g, 1));
-      level.forEach((item, index) => level[index].replace(/master/g, 2));
+      let list = level;
+      level = [];
+      for (let [key, item] of Object.entries(list)) {
+        if (item === "basic") level.push(list[key].replace(/basic/g, 1));
+        if (item === "master") level.push(list[key].replace(/master/g, 1));
+      }
     }
     level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
@@ -178,13 +182,12 @@ export class FeatRequirements extends FormApplication {
       switch (req.type) {
         case "ability":
           for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            req.value = key;
+            if (req.name === game.i18n.localize(CONFIG.ARd20.abilities[key])) req.value = key;
           }
           break;
         case "skill":
           for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
-            if(req.name===game.i18n.localize(CONFIG.ARd20.skills[key]))
-            req.value = key;
+            if (req.name === game.i18n.localize(CONFIG.ARd20.skills[key])) req.value = key;
           }
           break;
       }
