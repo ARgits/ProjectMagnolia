@@ -101,20 +101,21 @@ export class FeatRequirements extends FormApplication {
     for (let i of this.data) {
       name_array.push(i.name);
     }
-    for (let [k, value] of Object.entries(this.req)) {
+    for (let [k, value] of Object.entries(this.req.values)) {
       console.log(k, value);
-      this.req[k].type = this.formApp?.[k]?.type ? this.formApp?.[k]?.type : this.req[k].type || "ability";
-      let subtype_list = this.data.filter((item) => item.type === this.req[k].type);
+      this.req.values[k].type = this.formApp?.[k]?.type ? this.formApp?.[k]?.type : this.req.values[k].type || "ability";
+      let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
       console.log(subtype_list);
-      this.req[k].name = subtype_list.filter((item) => item.name === this.formApp?.[k]?.name)
-        ? this.formApp?.[k]?.name || this.req[k].name
+      this.req.values[k].name = subtype_list.filter((item) => item.name === this.formApp?.[k]?.name)
+        ? this.formApp?.[k]?.name || this.req.values[k].name
         : subtype_list[0];
-      this.req[k].subtype_list = [];
-      subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
-      this.req[k].input = this.formApp?.[k]?.input ? this.formApp?.[k]?.input : this.req[k].input || "";
+      this.req.values[k].subtype_list = [];
+      subtype_list.forEach((item) => this.req.values[k].subtype_list.push(item.name));
+      this.req.values[k].input = this.formApp?.[k]?.input ? this.formApp?.[k]?.input : this.req.values[k].input || "";
     }
     this.formApp = this.req;
     const FormData = {
+      
       data: this.data,
       type: this.type_list,
       config: CONFIG.ARd20,
@@ -150,7 +151,7 @@ export class FeatRequirements extends FormApplication {
     super._onChangeInput(event);
     const k = event.currentTarget.dataset.key;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
-    const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
+    const req = foundry.utils.expandObject(this._getSubmitData()).req.values[k];
     this.formApp[k].type = req.type;
     this.formApp[k].name = req.name;
     this.formApp[k].input = req.input;
@@ -183,7 +184,7 @@ export class FeatRequirements extends FormApplication {
     const item = this.object;
     this.render();
     const obj = {};
-    for (let [key, req] of Object.entries(updateData.req)) {
+    for (let [key, req] of Object.entries(updateData.req.values)) {
       req.level = this._getLvlReq(req, item.data.data.level.max);
       req.level?.forEach((r, index) => (req.level[index] = parseInt(r)??0));
       switch (req.type) {
@@ -198,6 +199,9 @@ export class FeatRequirements extends FormApplication {
           }
           break;
       }
+    }
+    for(let[key,level] of Object.entries(updateData.req.logic)){
+      
     }
     obj["data.req"] = Object.values(updateData?.req);
     console.log(obj);

@@ -1,54 +1,68 @@
 <form>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
-        <a class="item" data-tab="abilities">Abilities</a>
-        <a class="item" data-tab='skills'>Skills</a>
-        <a class='item' data-tab='feats'>Features</a>
+        <a class="item" data-tab="core">Core</a>
+        <a class="item" data-tab='custom logic'>Custom logic</a>
     </nav>
     <hr>
     <section class="sheet-body">
-        <ol class="items-list">
-            <li class="item flexrow items-header">
-                <div>#</div>
-                <div>Type</div>
-                <div>Value</div>
-                <div class="item-controls">
-                    <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
-                </div>
-            </li>
-            {{#each req as |r key|}}
-                <li class="item flexrow align-center">
-                    <div>{{key}}</div>
-                    <select name="req.{{key}}.type" data-key="{{key}}" data-type="type">
-                        {{#select r.type}}
-                            {{#each ../type as |t k|}}
-                                <option value="{{t}}">{{t}}</option>
-                            {{/each}}
-                        {{/select}}
-                    </select>
-                    <select name="req.{{key}}.name" data-key="{{key}}" data-type="name">
-                        {{#select r.name}}
-                            {{#each r.subtype_list as |sub k|}}
-                                <option value="{{sub}}">{{sub}}</option>
-                            {{/each}}
-                        {{/select}}
-                    </select>
-                    {{#if (eq req.key.subtype 'feat')}}
-                        <input hidden name="req.{{key}}.maxLevel" type="number" data-key='{{key}}' value="{{feat.maxLevel}}" />
-                        {{#if (gt feat.maxLevel 1)}}
-                            <input type="text" name="req.{{key}}.input" data-key='{{key}}'value="{{feat.input}}"/>
-                        {{else}}'
-                        <input type="text" readonly name="req.{{key}}.input" data-key='{{key}}'value="-" />
-                        {{/if}}
-                    {{else}}
-                        <input type="text" name="req.{{key}}.input" data-key='{{key}}' value="{{r.input}}" />
-                    {{/if}}
+        <div class="tab" data-tab="core" data-group="primary-tabs">
+            <ol class="items-list">
+                <li class="item flexrow items-header">
+                    <div>#</div>
+                    <div>Type</div>
+                    <div>Value</div>
                     <div class="item-controls">
-                        <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
                     </div>
                 </li>
-            {{/each}}
-        </ol>
-
+                {{#each req.values as |r key|}}
+                    <li class="item flexrow align-center">
+                        <div>{{key}}</div>
+                        <select name="req.{{key}}.type" data-key="{{key}}" data-type="type">
+                            {{#select r.type}}
+                                {{#each ../type as |t k|}}
+                                    <option value="{{t}}">{{t}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                        <select name="req.{{key}}.name" data-key="{{key}}" data-type="name">
+                            {{#select r.name}}
+                                {{#each r.subtype_list as |sub k|}}
+                                    <option value="{{sub}}">{{sub}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                        {{#if (eq req.key.subtype 'feat')}}
+                            <input hidden name="req.{{key}}.maxLevel" type="number" data-key='{{key}}' value="{{feat.maxLevel}}" />
+                            {{#if (gt feat.maxLevel 1)}}
+                                <input type="text" name="req.{{key}}.input" data-key='{{key}}' value="{{feat.input}}" />
+                            {{else}}'
+                                <input type="text" readonly name="req.{{key}}.input" data-key='{{key}}' value="-" />
+                            {{/if}}
+                        {{else}}
+                            <input type="text" name="req.{{key}}.input" data-key='{{key}}' value="{{r.input}}" />
+                        {{/if}}
+                        <div class="item-controls">
+                            <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </li>
+                {{/each}}
+            </ol>
+        </div>
+        <div class="tab" data-tab="core" data-group="primary-tabs">
+            <ol class="item-list">
+                <li class="item flexrow items-header">
+                    <div>Level</div>
+                    <div>Logic</div>
+                </li>
+                {{#each req.logic as |log key|}}
+                    <li class="item flexrow align-center">
+                        <div>{{key}}</div>
+                        <input type="text" name="req.logic.{{key}}.input" data-key="{{key}}" value="{{log.input}}"/>
+                    </li>
+                {{/each}}
+            </ol>
+        </div>
     </section>
     <hr>
     <footer>

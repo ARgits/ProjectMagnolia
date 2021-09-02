@@ -1,3 +1,4 @@
+import { compileExpression } from "../../lib/filtrex.js";
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -164,7 +165,7 @@ export class CharacterAdvancement extends FormApplication {
         : 0;
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
-      for (let [key, r] of Object.entries(object.data.req)) {
+      for (let [key, r] of Object.entries(object.data.req.values)) {
         switch (r.type) {
           case "ability":
             r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.abilities[r.value].value));
@@ -181,16 +182,25 @@ export class CharacterAdvancement extends FormApplication {
             } else if (this.data.feats.learned.filter((item) => item.name === r.name)?.[0] !== undefined) {
               r.pass = r.pass.forEach(
                 (item, index) =>
-                  (r.pass[index] =
-                    r.level[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial)
+                  (r.pass[index] = r.level[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial)
               );
             }
             break;
         }
         pass.push(r.pass[Math.max(object.data.level.initial - 1, 0)]);
-        object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
+
+        //object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
       }
-      object.pass = !pass.includes(false);
+      let exp = object.data.req.logic[object.data.level.initial];
+      let lev_array = exp.match(/\d*/g);
+      lev_array.forEach((item, index) => {
+        exp = exp.replace(item, `c${index}`);
+        f["c" + index] = pass[index];
+      });
+      let filter = compileExpression(exp)
+      object.pass = Boolean(filter(f));
+      object.isXP = object.pass ? object.isXP : true
+      //object.pass = !pass.includes(false);
     }
     const templateData = {
       abilities: this.data.abilities,
