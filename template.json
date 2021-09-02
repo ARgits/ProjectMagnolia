@@ -208,10 +208,7 @@
         "initial": 0,
         "current": 0
       },
-      "req": {
-        "values": [],
-        "logic": []
-      }
+      "req": {}
     },
     "spell": {
       "templates": ["base"],
