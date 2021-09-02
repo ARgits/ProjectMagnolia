@@ -192,7 +192,8 @@ export class CharacterAdvancement extends FormApplication {
       }
       object.pass = [];
       for (let i = 0; i <= object.data.level.initial; i++) {
-        if ((i = object.data.level.max)) break;
+        if (i === object.data.level.max) break;
+        if (i !== 0) i -= 1;
         let exp = object.data.req.logic[i];
         console.log(exp);
         let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
@@ -204,6 +205,7 @@ export class CharacterAdvancement extends FormApplication {
         console.log(f);
         let filter = filtrex.compileExpression(exp);
         object.pass[i] = Boolean(filter(f));
+        if (i !== 0) i += 1;
       }
       object.isXP = object.pass[object.data.level.initial] ? object.isXP : true;
       //object.pass = !pass.includes(false);
