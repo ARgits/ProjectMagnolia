@@ -115,7 +115,6 @@ export class FeatRequirements extends FormApplication {
     }
     this.formApp = this.req;
     const FormData = {
-      
       data: this.data,
       type: this.type_list,
       config: CONFIG.ARd20,
@@ -186,7 +185,7 @@ export class FeatRequirements extends FormApplication {
     const obj = {};
     for (let [key, req] of Object.entries(updateData.req.values)) {
       req.level = this._getLvlReq(req, item.data.data.level.max);
-      req.level?.forEach((r, index) => (req.level[index] = parseInt(r)??0));
+      req.level?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
       switch (req.type) {
         case "ability":
           for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -200,8 +199,7 @@ export class FeatRequirements extends FormApplication {
           break;
       }
     }
-    for(let[key,level] of Object.entries(updateData.req.logic)){
-      
+    for (let [key, level] of Object.entries(updateData.req.logic)) {
     }
     obj["data.req"] = Object.values(updateData?.req);
     console.log(obj);

@@ -49,7 +49,7 @@
                 {{/each}}
             </ol>
         </div>
-        <div class="tab" data-tab="core" data-group="primary-tabs">
+        <div class="tab" data-tab="custom logic" data-group="primary-tabs">
             <ol class="item-list">
                 <li class="item flexrow items-header">
                     <div>Level</div>
@@ -58,7 +58,7 @@
                 {{#each req.logic as |log key|}}
                     <li class="item flexrow align-center">
                         <div>{{key}}</div>
-                        <input type="text" name="req.logic.{{key}}.input" data-key="{{key}}" value="{{log.input}}"/>
+                        <input type="text" name="req.logic.{{key}}.input" data-key="{{key}}" value="{{log.input}}" />
                     </li>
                 {{/each}}
             </ol>

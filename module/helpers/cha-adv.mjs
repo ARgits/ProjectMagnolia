@@ -1,4 +1,4 @@
-import { compileExpression } from "../../lib/filtrex.js";
+import { filtrex} from "../../lib/filtrex.js";
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -197,9 +197,9 @@ export class CharacterAdvancement extends FormApplication {
         exp = exp.replace(item, `c${index}`);
         f["c" + index] = pass[index];
       });
-      let filter = compileExpression(exp)
+      let filter = filtrex.compileExpression(exp);
       object.pass = Boolean(filter(f));
-      object.isXP = object.pass ? object.isXP : true
+      object.isXP = object.pass ? object.isXP : true;
       //object.pass = !pass.includes(false);
     }
     const templateData = {
