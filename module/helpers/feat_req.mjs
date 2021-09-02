@@ -104,17 +104,18 @@ export class FeatRequirements extends FormApplication {
         : subtype_list[0];
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
-      this.req[k].input = this.formApp?.[k]?.input ? this.formApp?.[k]?.input: this.req[k].input || "";
-      switch(this.req[k].type){
+      this.req[k].input = this.formApp?.[k]?.input ? this.formApp?.[k]?.input : this.req[k].input || "";
+      switch (this.req[k].type) {
         case "ability":
-          for (let [key,v] of Object.entries(CONFIG.ARd20.abilities)){
-            this.req[k].value = v
+          for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
+            this.req[k].value = v;
           }
-          break
-          case "skill":
-            for (let [key,v] of Object.entries(CONFIG.ARd20.skills)){
-              this.req[k].value = v
-            }
+          break;
+        case "skill":
+          for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
+            this.req[k].value = v;
+          }
+          break;
       }
     }
     this.formApp = this.req;
