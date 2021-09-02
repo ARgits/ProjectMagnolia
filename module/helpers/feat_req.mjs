@@ -77,14 +77,14 @@ export class FeatRequirements extends FormApplication {
           this.feat.awail.splice(k, 1);
         } else if (name_array.includes(v.name)) {
           console.log(v.name, "эта фича уже есть");
-          v.level = this.feat.current[this.feat.current.indexOf(this.feat.current.filter((item) => item.name === v.name)[0])].level;
+          v.input = this.feat.current[this.feat.current.indexOf(this.feat.current.filter((item) => item.name === v.name)[0])].input;
           this.feat.awail.splice(k, 1);
         }
         if (this.feat.awail[k]) {
           this.data.push({
             name: v.name,
             type: "feat",
-            level: v.level ?? 0,
+            input: v.level ?? 0,
           });
         }
       }
@@ -99,9 +99,10 @@ export class FeatRequirements extends FormApplication {
       this.req[k].type = this.formApp?.[k]?.type || "ability";
       let subtype_list = this.data.filter((item) => item.type === this.req[k].type);
       console.log(subtype_list);
-      this.req[k].name = subtype_list.filter((item) => item.name === this.req[k].name) ? this.req[k].name : subtype_list[0];
+      this.req[k].name = subtype_list.filter((item) => item.name === this.formApp?.[k]?.name) ? this.formApp[k].name : subtype_list[0];
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
+      this.req[k].input = this.formApp?.[k]?.input ?? ""
     }
     this.formApp = this.req;
     const FormData = {
@@ -126,7 +127,7 @@ export class FeatRequirements extends FormApplication {
     req.push({
       type: "ability",
       name: "Strength",
-      level: 0,
+      input: "",
     });
     this.render();
   }
@@ -142,6 +143,8 @@ export class FeatRequirements extends FormApplication {
     console.log(foundry.utils.expandObject(this._getSubmitData()));
     const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
     this.formApp[k].type = req.type;
+    this.formApp[k].name = req.name
+    this.formApp[k].input = req.input
     this.getData();
     this.render()
   }
