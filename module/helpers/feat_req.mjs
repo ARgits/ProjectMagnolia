@@ -7,8 +7,6 @@ export class FeatRequirements extends FormApplication {
       id: "feat_req",
       width: 500,
       height: "auto",
-      submitOnChange:true,
-      closeOnSubmit:false
     });
   }
   async getData(options) {
@@ -138,15 +136,15 @@ export class FeatRequirements extends FormApplication {
     req.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
- /* _onChangeInput(event) {
+ _onChangeInput(event) {
     super._onChangeInput(event);
     const k = event.currentTarget.dataset.key;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
     const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
     this.req[k].type = req.type;
     this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value = this.req[k].type;
-    console.log(this.form.querySelector(`select[data-type='type'][data-key='${k}']`).value);
-  }*/
+    console.log(this.form);
+  }
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
     if(!level) return

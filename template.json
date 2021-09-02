@@ -208,7 +208,7 @@
         "initial": 0,
         "current": 0
       },
-      "req": {}
+      "req": []
     },
     "spell": {
       "templates": ["base"],
