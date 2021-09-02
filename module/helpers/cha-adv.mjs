@@ -120,7 +120,7 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.mar += 1;
         } else if (v.data.data.source?.value === "div") {
           this.data.count.feats.div += 1;
-        } else if (v.data.data.source?.value === "mag"||v.type==="spell") {
+        } else if (v.data.data.source?.value === "mag" || v.type === "spell") {
           this.data.count.feats.mag += 1;
         } else if (v.data.data.source?.value === "pri") {
           this.data.count.feats.pri += 1;
@@ -158,36 +158,37 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, object] of Object.entries(this.data.feats.awail)) {
       let pass = [];
       let allCount = this.data.count.feats.all;
-      let featCount = this.data.count.feats[object.data.source?.value||"mag"];
+      let featCount = this.data.count.feats[object.data.source?.value || "mag"];
       object.data.level.xp = object.data.xp?.[object.data.level.initial]
         ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5
         : 0;
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
-      for (let [key, ability] of Object.entries(object.data.req.abilities)) {
-        ability.pass.forEach((item, index) => (ability.pass[index] = ability.level[index] <= this.data.abilities[key].value));
-        pass.push(ability.pass[Math.max(object.data.level.initial - 1, 0)]);
-        object.isXP = ability.pass[object.data.level.initial] ? object.isXP : true;
-      }
-      for (let [key, skill] of Object.entries(object.data.req.skills)) {
-        skill.pass = skill.prof <= this.data.skills[key].prof;
-        pass.push(skill.pass);
-        object.isXP = skill.pass ? object.isXP : true;
-      }
-      for (let [key, feat] of Object.entries(object.data.req.feats)) {
-        if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass.forEach(
-            (item, index) =>
-              (feat.pass[index] = feat.level[index] <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial)
-          );
-        } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
-          feat.pass = feat.pass.forEach(
-            (item, index) =>
-              (feat.pass[index] = feat.level[index] <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial)
-          );
+      for (let [key, r] of Object.entries(object.data.req)) {
+        switch (r.type) {
+          case "ability":
+            r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.abilities[key].value));
+            break;
+          case "skill":
+            r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.skills[key].value));
+            break;
+          case "feat":
+            if (this.data.feats.awail.filter((item) => item.name === feat.name)?.[0] !== undefined) {
+              feat.pass.forEach(
+                (item, index) =>
+                  (feat.pass[index] = feat.level[index] <= this.data.feats.awail.filter((item) => item.name === feat.name)[0].data.level.initial)
+              );
+            } else if (this.data.feats.learned.filter((item) => item.name === feat.name)?.[0] !== undefined) {
+              feat.pass = feat.pass.forEach(
+                (item, index) =>
+                  (feat.pass[index] =
+                    feat.level[index] <= this.data.feats.learned.filter((item) => item.name === feat.name)[0].data.data.level.initial)
+              );
+            }
+            break;
         }
-        pass.push(feat.pass[Math.max(object.data.level.initial - 1, 0)]);
-        object.isXP = feat.pass[object.data.level.initial] ? object.isXP : true;
+        pass.push(r.pass[Math.max(object.data.level.initial - 1, 0)]);
+        object.isXP = ability.pass[object.data.level.initial] ? object.isXP : true;
       }
       object.pass = !pass.includes(false);
     }
@@ -253,11 +254,11 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
           case "plus":
             data.profs.weapon[button.dataset.key].value += 1;
-            data.count.feats.mar+=1
+            data.count.feats.mar += 1;
             break;
           case "minus":
             data.profs.weapon[button.dataset.key].value -= 1;
-            data.count.feats.mar-=1
+            data.count.feats.mar -= 1;
             break;
         }
         break;

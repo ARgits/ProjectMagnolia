@@ -102,7 +102,7 @@ export class FeatRequirements extends FormApplication {
       this.req[k].name = subtype_list.filter((item) => item.name === this.formApp?.[k]?.name) ? this.formApp[k].name : subtype_list[0];
       this.req[k].subtype_list = [];
       subtype_list.forEach((item) => this.req[k].subtype_list.push(item.name));
-      this.req[k].input = this.formApp?.[k]?.input ?? ""
+      this.req[k].input = this.formApp?.[k]?.input ?? "";
     }
     this.formApp = this.req;
     const FormData = {
@@ -143,14 +143,18 @@ export class FeatRequirements extends FormApplication {
     console.log(foundry.utils.expandObject(this._getSubmitData()));
     const req = foundry.utils.expandObject(this._getSubmitData()).req[k];
     this.formApp[k].type = req.type;
-    this.formApp[k].name = req.name
-    this.formApp[k].input = req.input
+    this.formApp[k].name = req.name;
+    this.formApp[k].input = req.input;
     this.getData();
-    this.render()
+    this.render();
   }
   _getLvlReq(req, maxLevel) {
     let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
     if (!level) return;
+    if (req.type === "skill") {
+      level.forEach((item, index) => level[index].replace(/basic/g, 1));
+      level.forEach((item, index) => level[index].replace(/master/g, 2));
+    }
     level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
       level.push(level[i - 1]);
@@ -172,6 +176,6 @@ export class FeatRequirements extends FormApplication {
     }
     obj["data.req"] = updateData?.req;
     console.log(obj);
-    await item.update(obj)
+    await item.update(obj);
   }
 }
