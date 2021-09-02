@@ -188,7 +188,7 @@ export class CharacterAdvancement extends FormApplication {
             break;
         }
         pass.push(r.pass[Math.max(object.data.level.initial - 1, 0)]);
-        object.isXP = ability.pass[object.data.level.initial] ? object.isXP : true;
+        object.isXP = r.pass[object.data.level.initial] ? object.isXP : true;
       }
       object.pass = !pass.includes(false);
     }
