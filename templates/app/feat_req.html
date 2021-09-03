@@ -57,7 +57,7 @@
                 </li>
                 {{#each req.logic as |log key|}}
                     <li class="item flexrow align-center">
-                        <div>{{key+1}}</div>
+                        <div>{{{numberFormat key+1 decimals=0 sign=false}}}</div>
                         <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{log}}" />
                     </li>
                 {{/each}}
