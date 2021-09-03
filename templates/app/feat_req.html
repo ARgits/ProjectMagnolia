@@ -33,9 +33,9 @@
                             {{/select}}
                         </select>
                         {{#if (eq req.values.key.subtype 'feat')}}
-                            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{feat.maxLevel}}" />
+                            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
                             {{#if (gt req.values.key.maxLevel 1)}}
-                                <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{feat.input}}" />
+                                <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{r.input}}" />
                             {{else}}'
                                 <input type="text" readonly name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="-" />
                             {{/if}}
