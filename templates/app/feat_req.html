@@ -55,10 +55,10 @@
                     <div>Level</div>
                     <div>Logic</div>
                 </li>
-                {{#each req.logic as |log key|}}
+                {{#each req.logic as |l key|}}
                     <li class="item flexrow align-center">
-                        <div>{{{numberFormat key+1 decimals=0 sign=false}}}</div>
-                        <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{log}}" />
+                        <div>{{add key 1}}</div>
+                        <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{l}}" />
                     </li>
                 {{/each}}
             </ol>
