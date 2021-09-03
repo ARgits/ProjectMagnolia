@@ -79,20 +79,25 @@ export class FeatRequirements extends FormApplication {
       for (let i of this.feat.current) {
         name_array.push(i.name);
       }
+      console.log(this.feat.awail);
       for (let [k, v] of Object.entries(this.feat.awail)) {
         if (v.name === this.object.name) {
+          console.log(v.name, "имя совпадает", k);
           this.feat.awail.splice(k, 1);
         } else if (name_array.includes(v.name)) {
-          console.log(v.name, "эта фича уже есть");
+          console.log(v.name, "эта фича уже есть", k);
           v.input = this.feat.current[this.feat.current.indexOf(this.feat.current.filter((item) => item.name === v.name)[0])].input;
           this.feat.awail.splice(k, 1);
         }
-        if (this.feat.awail[k]) {
+        console.log(this.feat.awail);
+        if (this.feat.awail.filter((item) => item.name === v.name).length !== 0) {
+          console.log(this.feat.awail.filter((item) => item.name === v.name));
+          console.log(v.name);
           this.data.push({
             name: v.name,
             type: "feat",
             input: v.level ?? 0,
-            maxLevel: v.maxLevel
+            maxLevel: v.maxLevel,
           });
         }
       }
@@ -107,12 +112,15 @@ export class FeatRequirements extends FormApplication {
       this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "ability";
       let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
       console.log(subtype_list);
-      this.req.values[k].name = subtype_list.filter((item) => item.name === this.formApp?.values?.[k]?.name)
-        ? this.formApp?.values?.[k]?.name || this.req.values[k].name
-        : subtype_list[0];
+      this.req.values[k].name =
+        subtype_list.filter((item) => item.name === this.formApp?.values?.[k]?.name).length > 0
+          ? this.formApp?.values?.[k]?.name || this.req.values[k].name
+          : subtype_list[0].name;
       this.req.values[k].subtype_list = [];
       subtype_list.forEach((item) => this.req.values[k].subtype_list.push(item.name));
       this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
+      if (this.req.values[k].type === "feat")
+        this.req.values[k].maxLevel = this.data.filter((item) => item.name === this.req.values[k].name)[0].maxLevel;
     }
     for (let [k, value] of Object.entries(this.req.logic)) {
       this.req.logic[k] = this.formApp?.logic?.[k] ? this.formApp.logic[k] : this.req.logic[k];
