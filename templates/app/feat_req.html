@@ -17,7 +17,7 @@
                 </li>
                 {{#each req.values as |r key|}}
                     <li class="item flexrow align-center">
-                        <div>{{key}}</div>
+                        <div>{{add key 1}}</div>
                         <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
                             {{#select r.type}}
                                 {{#each ../type as |t k|}}
@@ -34,7 +34,7 @@
                         </select>
                         {{#if (eq req.key.subtype 'feat')}}
                             <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{feat.maxLevel}}" />
-                            {{#if (gt feat.maxLevel 1)}}
+                            {{#if (gt req.values.key.maxLevel 1)}}
                                 <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{feat.input}}" />
                             {{else}}'
                                 <input type="text" readonly name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="-" />
