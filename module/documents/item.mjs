@@ -111,11 +111,52 @@ export class ARd20Item extends Item {
         }
       }
     }
-    for (let [key, ability] of Object.entries(data.req.values)) {
-      ability.pass = Array.from("0".repeat(data.level.max));
-      ability.level = ability.level ?? Array.from("0".repeat(data.level.max));
+    for (let [key, value] of Object.entries(data.req.values)) {
+      value.pass = Array.from("0".repeat(data.level.max));
     }
-    data.req.logic = data.req.logic ? data.req.logic : Array.from("0".repeat(data.level.max));
+    for (let [key, req] of Object.entries(data.req.values)) {
+      req.level = this._getLvlReq(req, data.level.max);
+      req.level?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
+      switch (req.type) {
+        case "ability":
+          for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.abilities[key])) req.value = key;
+          }
+          break;
+        case "skill":
+          for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.skills[key])) req.value = key;
+          }
+          break;
+      }
+    }
+    for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
+      if ((i = 0)) data.req.logic.push("");
+      else data.req.logic.push(level[i - 1]);
+    }
+    for (let i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
+      data.req.logic.splice(data.req.logic.length - 1, 1);
+    }
+  }
+  _getLvlReq(req, maxLevel) {
+    let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
+    if (!level) return;
+    if (req.type === "skill") {
+      let list = level;
+      level = [];
+      for (let [key, item] of Object.entries(list)) {
+        if (item === "basic") level.push(list[key].replace(/basic/g, 1));
+        if (item === "master") level.push(list[key].replace(/master/g, 2));
+      }
+    }
+    level = level.filter((item) => item !== "");
+    for (let i = level.length; maxLevel > level.length; i++) {
+      level.push(level[i - 1]);
+    }
+    for (let i = level.length; maxLevel < level.length; i--) {
+      level.splice(level.length - 1, 1);
+    }
+    return level;
   }
   /*
   Prepare Data that uses actor's data

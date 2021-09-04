@@ -209,7 +209,8 @@
         "current": 0
       },
       "req": {
-        "values": []
+        "values": [],
+        "logic":[]
       }
     },
     "spell": {

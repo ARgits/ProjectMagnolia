@@ -25,23 +25,24 @@ export class FeatRequirements extends FormApplication {
       let pack_list = [];
       let folder_list = [];
       this.type_list = ["ability", "skill", "feat"];
-      /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
-      for (let key of game.settings.get("ard20", "feat").packs) {
-        if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
-          let feat_list = [];
-          feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
-          feat_list = feat_list.flat();
-          for (let feat of feat_list) {
-            let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
-            let doc = await game.packs.get(new_key).getDocument(feat._id);
-            let item = {
-              name: duplicate(feat.name),
-              maxLevel: duplicate(doc.data.data.level.max),
-            };
-            pack_list.push(item);
+      if (this.req.logic)
+        /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
+        for (let key of game.settings.get("ard20", "feat").packs) {
+          if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
+            let feat_list = [];
+            feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
+            feat_list = feat_list.flat();
+            for (let feat of feat_list) {
+              let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
+              let doc = await game.packs.get(new_key).getDocument(feat._id);
+              let item = {
+                name: duplicate(feat.name),
+                maxLevel: duplicate(doc.data.data.level.max),
+              };
+              pack_list.push(item);
+            }
           }
         }
-      }
       /* same as above, but for folders*/
       for (let key of game.settings.get("ard20", "feat").folders) {
         if (game.folders.filter((folder) => folder.data.name === key).length !== 0) {
@@ -175,54 +176,13 @@ export class FeatRequirements extends FormApplication {
     this.getData();
     this.render();
   }
-  _getLvlReq(req, maxLevel) {
-    let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
-    if (!level) return;
-    if (req.type === "skill") {
-      let list = level;
-      level = [];
-      for (let [key, item] of Object.entries(list)) {
-        if (item === "basic") level.push(list[key].replace(/basic/g, 1));
-        if (item === "master") level.push(list[key].replace(/master/g, 2));
-      }
-    }
-    level = level.filter((item) => item !== "");
-    for (let i = level.length; maxLevel > level.length; i++) {
-      level.push(level[i - 1]);
-    }
-    for (let i = level.length; maxLevel < level.length; i--) {
-      level.splice(level.length - 1, 1);
-    }
-    return level;
-  }
+
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
     console.log(updateData);
     const item = this.object;
     this.render();
     const obj = {};
-    for (let [key, req] of Object.entries(updateData.req.values)) {
-      req.level = this._getLvlReq(req, item.data.data.level.max);
-      req.level?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
-      switch (req.type) {
-        case "ability":
-          for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.abilities[key])) req.value = key;
-          }
-          break;
-        case "skill":
-          for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.skills[key])) req.value = key;
-          }
-          break;
-      }
-    }
-    for (let i = updateData?.req.logic.length; item.data.data.level.max > updateData?.req.logic.length; i++) {
-      updateData?.req.logic.push(level[i - 1]);
-    }
-    for (let i = updateData?.req.logic.length; item.data.data.level.max < updateData?.req.logic.length; i--) {
-      updateData?.req.logic.splice(updateData?.req.logic.length - 1, 1);
-    }
     obj["data.req.values"] = Object.values(updateData?.req.values);
     obj["data.req.logic"] = Object.values(updateData?.req.logic);
     console.log(obj);
