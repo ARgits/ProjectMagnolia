@@ -130,7 +130,7 @@ export class ARd20Item extends Item {
     }
     for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
       if ((i = 0)) data.req.logic.push("");
-      else data.req.logic.push(level[i - 1]);
+      else data.req.logic.push(data.req.logic[i - 1]);
     }
     for (let i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
       data.req.logic.splice(data.req.logic.length - 1, 1);
