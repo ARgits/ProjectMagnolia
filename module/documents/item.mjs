@@ -111,10 +111,8 @@ export class ARd20Item extends Item {
         }
       }
     }
-    for (let [key, value] of Object.entries(data.req.values)) {
-      value.pass = Array.from("0".repeat(data.level.max));
-    }
     for (let [key, req] of Object.entries(data.req.values)) {
+      req.pass = Array.from("0".repeat(data.level.max))
       req.level = this._getLvlReq(req, data.level.max);
       req.level?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
       switch (req.type) {
