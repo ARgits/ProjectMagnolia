@@ -1,5 +1,3 @@
-import { re } from "mathjs";
-
 export class FeatRequirements extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

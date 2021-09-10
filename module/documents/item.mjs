@@ -86,6 +86,7 @@ export class ARd20Item extends Item {
   _prepareFeatureData(itemData, labels) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
+    console.log(data);
     // Handle Source of the feature
     data.source.value = data.source.value || "mar";
     labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
