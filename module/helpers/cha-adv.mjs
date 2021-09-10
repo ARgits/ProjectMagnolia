@@ -192,20 +192,20 @@ export class CharacterAdvancement extends FormApplication {
       }
       object.pass = [];
       for (let i = 0; i <= object.data.level.initial; i++) {
-        if (i === object.data.level.max) break;
+        if (i === object.data.level.max || pass.length === 0) break;
         let exp = object.data.req.logic[i];
         console.log(exp);
         let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
         let f = {};
         lev_array.forEach((item, index) => {
           exp = exp.replace(item, `c${item}`);
-          f["c" + item] = pass[item][i];
+          f["c" + item] = pass[item - 1][i];
         });
         console.log(f);
         let filter = filtrex.compileExpression(exp);
         object.pass[i] = Boolean(filter(f));
       }
-      object.isXP = object.pass[object.data.level.initial] ? object.isXP : true;
+      object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
       //object.pass = !pass.includes(false);
     }
     const templateData = {
@@ -303,13 +303,18 @@ export class CharacterAdvancement extends FormApplication {
     const content = this.data.content;
     switch (button.dataset.type) {
       case "skill":
-        this.data.hover.value = TextEditor.enrichHTML(
-          content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content
-        );
-        this.data.hover.name = button.dataset.label;
+        if (
+          this.data.hover.value !==
+          TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content)
+        ) {
+          this.data.hover.value = TextEditor.enrichHTML(
+            content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content
+          );
+          this.data.hover.name = button.dataset.label;
+          this.render();
+        }
         break;
     }
-    this.render();
   }
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
@@ -343,10 +348,10 @@ export class CharacterAdvancement extends FormApplication {
     console.log("update", feats_data.new);
     let pass = [];
     for (let [k, v] of Object.entries(feats_data.exist)) {
-      pass.push(v.pass);
+      pass.push(v.pass.slice(0, v.pass.length - 1));
     }
     for (let [k, v] of Object.entries(feats_data.new)) {
-      pass.push(v.pass);
+      pass.push(v.pass.slice(0, v.pass.length - 1));
     }
     pass = pass.flat();
     console.log(pass);

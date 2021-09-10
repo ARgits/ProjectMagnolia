@@ -112,7 +112,7 @@ export class ARd20Item extends Item {
       }
     }
     for (let [key, req] of Object.entries(data.req.values)) {
-      req.pass = Array.from("0".repeat(data.level.max))
+      req.pass = Array.from("0".repeat(data.level.max));
       req.level = this._getLvlReq(req, data.level.max);
       req.level?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
       switch (req.type) {
@@ -129,16 +129,25 @@ export class ARd20Item extends Item {
       }
     }
     for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
-      if ((i = 0)) data.req.logic.push("");
-      else data.req.logic.push(data.req.logic[i - 1]);
+      console.log(data.req.logic.length);
+      if (i === 0) {
+        console.log("меньше");
+        data.req.logic.push("1");
+      } else {
+        console.log("больше");
+        data.req.logic.push(data.req.logic[i - 1]);
+      }
     }
     for (let i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
       data.req.logic.splice(data.req.logic.length - 1, 1);
     }
   }
   _getLvlReq(req, maxLevel) {
-    let level = req.type !== "skill" ? req.input.match(/\d*/g) : req.input.match(/(basic)|(master)/g);
-    if (!level) return;
+    let level =
+      req.type !== "skill"
+        ? req.input.match(/\d*/g).filter((item) => item !== "")
+        : req.input.match(/(basic)|(master)/g).filter((item) => item !== "");
+    if (!level) return Array.from("0".repeat(data.level.max));
     if (req.type === "skill") {
       let list = level;
       level = [];
@@ -147,7 +156,6 @@ export class ARd20Item extends Item {
         if (item === "master") level.push(list[key].replace(/master/g, 2));
       }
     }
-    level = level.filter((item) => item !== "");
     for (let i = level.length; maxLevel > level.length; i++) {
       level.push(level[i - 1]);
     }

@@ -1,4 +1,3 @@
-
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -157,8 +156,6 @@ export class ARd20Actor extends Actor {
     const data = super.getRollData();
 
     // Prepare character roll data.
-    this._getCharacterRollData(data);
-    this._getNpcRollData(data);
 
     return data;
   }
@@ -166,24 +163,8 @@ export class ARd20Actor extends Actor {
   /**
    * Prepare character roll data.
    */
-  _getCharacterRollData(data) {
-    if (this.data.type !== "character") return;
-
-    // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
-    }
-  }
 
   /**
    * Prepare NPC roll data.
    */
-  _getNpcRollData(data) {
-    if (this.data.type !== "npc") return;
-
-    // Process additional NPC data here.
-  }
 }

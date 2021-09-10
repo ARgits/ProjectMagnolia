@@ -1,3 +1,5 @@
+import { re } from "mathjs";
+
 export class FeatRequirements extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -18,7 +20,7 @@ export class FeatRequirements extends FormApplication {
   }
   async getData(options) {
     if (!this.data) {
-      console.log("ПЕРВЫЙ ЗАПУСК");
+      console.log("First launch");
       this.formApp = null;
       this.data = [];
       this.req = foundry.utils.deepClone(this.object.data.data.req);
@@ -49,7 +51,7 @@ export class FeatRequirements extends FormApplication {
           let feat_list = [];
           feat_list.push(game.folders.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].content);
           feat_list = feat_list.flat();
-          for (let feat of feat_list) {
+          for (let feat of feat_list.filter((item) => item.type === "feat")) {
             let doc = {
               name: duplicate(feat.name),
               maxLevel: duplicate(feat.data.data.level.max),
@@ -83,10 +85,10 @@ export class FeatRequirements extends FormApplication {
       console.log(this.feat.awail);
       for (let [k, v] of Object.entries(this.feat.awail)) {
         if (v.name === this.object.name) {
-          console.log(v.name, "имя совпадает", k);
+          console.log(v.name, " matches name of the feat");
           this.feat.awail.splice(k, 1);
         } else if (name_array.includes(v.name)) {
-          console.log(v.name, "эта фича уже есть", k);
+          console.log(v.name, "this feat is already included", k);
           v.input = this.feat.current[this.feat.current.indexOf(this.feat.current.filter((item) => item.name === v.name)[0])].input;
           this.feat.awail.splice(k, 1);
         }
@@ -103,20 +105,18 @@ export class FeatRequirements extends FormApplication {
         }
       }
     }
-    console.log("ДАТА СОЗДАНА");
+    console.log("data created");
     let name_array = [];
     for (let i of this.data) {
       name_array.push(i.name);
     }
     for (let [k, value] of Object.entries(this.req.values)) {
-      console.log(k, value);
       this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "ability";
       let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
-      console.log(subtype_list);
       this.req.values[k].name =
         subtype_list.filter((item) => item.name === this.formApp?.values?.[k]?.name).length > 0
           ? this.formApp?.values?.[k]?.name || this.req.values[k].name
-          : subtype_list[0].name;
+          : this.req.values[k].name || subtype_list[0].name;
       this.req.values[k].subtype_list = [];
       subtype_list.forEach((item) => this.req.values[k].subtype_list.push(item.name));
       this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
@@ -134,8 +134,8 @@ export class FeatRequirements extends FormApplication {
       req: this.req,
       formApp: this.formApp,
     };
-    console.log(FormData);
-    console.log(this.form);
+    console.log("FormData", FormData);
+    console.log("Form html", this.form);
     return FormData;
   }
   activateListeners(html) {
@@ -168,10 +168,21 @@ export class FeatRequirements extends FormApplication {
       case "value":
         this.formApp.values[k].type = req.values[k].type;
         this.formApp.values[k].name = req.values[k].name;
+        if (req.values[k].type !== "skill") {
+          if (req.values[k].input.match(/[^\d\w, \/\\]|\b[^\W\s\d]+\b/g)) ui.notifications.error(`you type something wrong in your ${k} string`);
+          break;
+        } else {
+          let r = req.values[k].input.split(/basic|master|[1-2]|,|\s|\\|\//).filter(Boolean);
+          if (r.length) {
+            ui.notifications.error(`you type something wrong in your ${k} string`);
+            break;
+          }
+        }
         this.formApp.values[k].input = req.values[k].input;
         break;
       case "logic":
         this.formApp.logic[k] = req.logic[k];
+        break;
     }
     this.getData();
     this.render();
