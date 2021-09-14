@@ -5,15 +5,8 @@ export class FeatRequirements extends FormApplication {
       title: "Feature Requirements",
       template: "systems/ard20/templates/app/feat_req.html",
       id: "feat_req",
-      width: 500,
+      width: 800,
       height: "auto",
-      tabs: [
-        {
-          navSelector: ".sheet-tabs",
-          contentSelector: ".sheet-body",
-          initial: "core",
-        },
-      ],
     });
   }
   async getData(options) {

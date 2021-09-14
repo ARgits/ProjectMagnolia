@@ -1,7 +1,7 @@
 <form>
     <hr>
-    <section class="sheet-body grid grid-2col">
-        <ol class="items-list">
+    <section class="sheet-body grid grid-3col">
+        <ol class="items-list grid-span-2">
             <li class="item flexrow items-header">
                 <div>#</div>
                 <div>Type</div>
@@ -27,14 +27,29 @@
                             {{/each}}
                         {{/select}}
                     </select>
-                    {{#if (eq r.type "feat")}}
-                        <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
-                    {{/if}}
-
                     <div class="item-controls">
                         <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
                     </div>
                 </li>
+                <li>
+                    {{#if (eq r.type "feat")}}
+                        <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
+                    {{/if}}
+                    {{#each r.input as |inp k|}}
+                        {{#if (eq r.type "skill")}}
+                            <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-order="{{k}}">
+                                {{#select r.input.k}}
+                                    {{#each ../rank as |ran i|}}
+                                        <option value="i">{{localize ran}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        {{else}}
+                            <input name='req.values.{{key}}.input.{{k}}' type='number' data-key="{{key}}" data-order="{{k}}">
+                        {{/if}}
+                    {{/each}}
+                </li>
+                <hr>
             {{/each}}
         </ol>
         <ol class="item-list">
