@@ -31,11 +31,12 @@
                         <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
                     </div>
                 </li>
-                <li>
+                <li class="item flexrow align-center">
                     {{#if (eq r.type "feat")}}
                         <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
                     {{/if}}
                     {{#each r.input as |inp k|}}
+                    <div>{{add k 1}}:</div>
                         {{#if (eq r.type "skill")}}
                             <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-order="{{k}}">
                                 {{#select r.input.k}}
