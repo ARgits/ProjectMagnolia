@@ -122,20 +122,21 @@ export class FeatRequirements extends FormApplication {
       this.req.values[k].subtype_list = [];
       subtype_list.forEach((item) => this.req.values[k].subtype_list.push(item.name));
       this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
-      if (this.req.values[k].type === "feat")
+      if (this.req.values[k].type === "feat") {
         this.req.values[k].maxLevel = this.data.filter((item) => item.name === this.req.values[k].name)[0].maxLevel;
-    }
-    this.req.values[k].input = this.req.values[k].input || [];
+      }
+      this.req.values[k].input = this.req.values[k].input || [];
 
-    for (let i = 0; i < this.object.data.data.level.max; i++) {
-      this.req.values[k].input[i] = this.formApp?.values?.[k]?.input[i]
-        ? this.formApp?.values?.[k]?.input[i]
-        : this.req.values[k].type !== "skill"
-        ? this.req.values[k].input[i] || 1
-        : this.req.values[k].input[i] || game.i18n.localize(CONFIG.ARd20.prof[1]);
+      for (let i = 0; i < this.object.data.data.level.max; i++) {
+        this.req.values[k].input[i] = this.formApp?.values?.[k]?.input[i]
+          ? this.formApp?.values?.[k]?.input[i]
+          : this.req.values[k].type !== "skill"
+          ? this.req.values[k].input[i] || 1
+          : this.req.values[k].input[i] || game.i18n.localize(CONFIG.ARd20.prof[1]);
 
-      if (this.req.values[k].input[key + 1] < this.req.values[k].input[key]) {
-        this.req.values[k].input[key + 1] = this.req.values[k].input[key];
+        if (this.req.values[k].input[i + 1] < this.req.values[k].input[i]) {
+          this.req.values[k].input[i + 1] = this.req.values[k].input[i];
+        }
       }
     }
     for (let [k, value] of Object.entries(this.req.logic)) {
