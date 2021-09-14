@@ -1,68 +1,54 @@
 <form>
-    <nav class="sheet-tabs tabs" data-group="primary-tabs">
-        <a class="item" data-tab="core">Core</a>
-        <a class="item" data-tab='custom logic'>Custom logic</a>
-    </nav>
     <hr>
     <section class="sheet-body">
-        <div class="tab" data-tab="core" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>#</div>
-                    <div>Type</div>
-                    <div>Value</div>
+        <ol class="items-list">
+            <li class="item flexrow items-header">
+                <div>#</div>
+                <div>Type</div>
+                <div>Value</div>
+                <div class="item-controls">
+                    <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
+                </div>
+            </li>
+            {{#each req.values as |r key|}}
+                <li class="item flexrow align-center">
+                    <div>{{add key 1}}</div>
+                    <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
+                        {{#select r.type}}
+                            {{#each ../type as |t k|}}
+                                <option value="{{t}}">{{t}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="value">
+                        {{#select r.name}}
+                            {{#each r.subtype_list as |sub k|}}
+                                <option value="{{sub}}">{{sub}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    {{#if (eq r.type "feat")}}
+                        <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
+                    {{/if}}
+
                     <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
+                        <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
                     </div>
                 </li>
-                {{#each req.values as |r key|}}
-                    <li class="item flexrow align-center">
-                        <div>{{add key 1}}</div>
-                        <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
-                            {{#select r.type}}
-                                {{#each ../type as |t k|}}
-                                    <option value="{{t}}">{{t}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                        <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="value">
-                            {{#select r.name}}
-                                {{#each r.subtype_list as |sub k|}}
-                                    <option value="{{sub}}">{{sub}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                        {{#if (eq r.type "feat")}}
-                            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
-                            {{#if (gt r.maxLevel 1)}}
-                                <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{r.input}}" />
-                            {{else}}'
-                                <input type="text" readonly name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="-" />
-                            {{/if}}
-                        {{else}}
-                            <input type="text" name="req.values.{{key}}.input" data-key='{{key}}' data-type="value" value="{{r.input}}" />
-                        {{/if}}
-                        <div class="item-controls">
-                            <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
-        <div class="tab" data-tab="custom logic" data-group="primary-tabs">
-            <ol class="item-list">
-                <li class="item flexrow items-header">
-                    <div>Level</div>
-                    <div>Logic</div>
+            {{/each}}
+        </ol>
+        <ol class="item-list">
+            <li class="item flexrow items-header">
+                <div>Level</div>
+                <div>Logic</div>
+            </li>
+            {{#each req.logic as |l key|}}
+                <li class="item flexrow align-center">
+                    <div>{{add key 1}}</div>
+                    <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{l}}" />
                 </li>
-                {{#each req.logic as |l key|}}
-                    <li class="item flexrow align-center">
-                        <div>{{add key 1}}</div>
-                        <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{l}}" />
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
+            {{/each}}
+        </ol>
     </section>
     <hr>
     <footer>

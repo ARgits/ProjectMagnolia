@@ -21,19 +21,17 @@ export class ARd20Item extends Item {
     this._prepareFeatureData(itemData, labels);
     if (!this.isOwned) this.prepareFinalAttributes();
   }
-  /*
-  Prepare data for Spells
-  Данные для спеллов
-  */
+  /**
+   *Prepare data for Spells
+   */
   _prepareSpellData(itemData, labels) {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
     labels.school = CONFIG.ARd20.SpellSchool[data.school];
   }
-  /*
-  Prepare data for weapons
-  Данные для оружия
-  */
+  /**
+  *Prepare data for weapons
+    */
   _prepareWeaponData(itemData, labels) {
     if (itemData.type !== "weapon") return;
     const data = itemData.data;
@@ -59,7 +57,9 @@ export class ARd20Item extends Item {
       }
     }
   }
-  _setDeflect(data) {
+/**
+ *Set deflect die equal to damage die, if not
+ *   */  _setDeflect(data) {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();

@@ -108,8 +108,12 @@ export class FeatRequirements extends FormApplication {
     for (let i of this.data) {
       name_array.push(i.name);
     }
+    /**
+     * Creating
+     */
     for (let [k, value] of Object.entries(this.req.values)) {
       this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "ability";
+
       let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
       this.req.values[k].name =
         subtype_list.filter((item) => item.name === this.formApp?.values?.[k]?.name).length > 0
@@ -120,6 +124,19 @@ export class FeatRequirements extends FormApplication {
       this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
       if (this.req.values[k].type === "feat")
         this.req.values[k].maxLevel = this.data.filter((item) => item.name === this.req.values[k].name)[0].maxLevel;
+    }
+    this.req.values[k].input = this.req.values[k].input || [];
+
+    for (let i = 0; i < this.object.data.data.level.max; i++) {
+      this.req.values[k].input[i] = this.formApp?.values?.[k]?.input[i]
+        ? this.formApp?.values?.[k]?.input[i]
+        : this.req.values[k].type !== "skill"
+        ? this.req.values[k].input[i] || 1
+        : this.req.values[k].input[i] || game.i18n.localize(CONFIG.ARd20.prof[1]);
+
+      if (this.req.values[k].input[key + 1] < this.req.values[k].input[key]) {
+        this.req.values[k].input[key + 1] = this.req.values[k].input[key];
+      }
     }
     for (let [k, value] of Object.entries(this.req.logic)) {
       this.req.logic[k] = this.formApp?.logic?.[k] ? this.formApp.logic[k] : this.req.logic[k];
@@ -144,11 +161,7 @@ export class FeatRequirements extends FormApplication {
   async _onAdd(event) {
     event.preventDefault();
     const req = this.req;
-    req.values.push({
-      type: "ability",
-      name: "Strength",
-      input: "",
-    });
+    req.values.push({});
     this.render();
   }
   async _Delete(event) {
@@ -160,23 +173,14 @@ export class FeatRequirements extends FormApplication {
   _onChangeInput(event) {
     super._onChangeInput(event);
     const k = event.currentTarget.dataset.key;
+    const i = event.currentTarget.dataset.order;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
     const req = foundry.utils.expandObject(this._getSubmitData()).req;
     switch (event.currentTarget.dataset.type) {
       case "value":
         this.formApp.values[k].type = req.values[k].type;
         this.formApp.values[k].name = req.values[k].name;
-        if (req.values[k].type !== "skill") {
-          if (req.values[k].input.match(/[^\d\w, \/\\]|\b[^\W\s\d]+\b/g)) ui.notifications.error(`you type something wrong in your ${k} string`);
-          break;
-        } else {
-          let r = req.values[k].input.split(/basic|master|[1-2]|,|\s|\\|\//).filter(Boolean);
-          if (r.length) {
-            ui.notifications.error(`you type something wrong in your ${k} string`);
-            break;
-          }
-        }
-        this.formApp.values[k].input = req.values[k].input;
+        this.formApp.values[k].input[i] = req.values[k].input[i];
         break;
       case "logic":
         this.formApp.logic[k] = req.logic[k];
