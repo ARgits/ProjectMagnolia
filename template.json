@@ -133,7 +133,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell", "weapon"],
+    "types": ["item", "feature", "spell", "weapon", "race"],
     "templates": {
       "base": {
         "description": ""
@@ -210,7 +210,7 @@
       },
       "req": {
         "values": [],
-        "logic":[]
+        "logic": []
       }
     },
     "spell": {
@@ -222,6 +222,20 @@
         "born": true,
         "contract": true
       }
+    },
+    "race": {
+      "templates": ["base"],
+      "baseSpeed": 15,
+      "attribute": {
+        "str": 0,
+        "dex": 0,
+        "con": 0,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "skill": {},
+      "hp": {}
     }
   }
 }

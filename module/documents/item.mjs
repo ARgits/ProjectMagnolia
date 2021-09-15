@@ -19,6 +19,7 @@ export class ARd20Item extends Item {
     this._prepareSpellData(itemData, labels);
     this._prepareWeaponData(itemData, labels);
     this._prepareFeatureData(itemData, labels);
+    this._prepareRaceData(itemData, labels);
     if (!this.isOwned) this.prepareFinalAttributes();
   }
   /**
@@ -30,8 +31,8 @@ export class ARd20Item extends Item {
     labels.school = CONFIG.ARd20.SpellSchool[data.school];
   }
   /**
-  *Prepare data for weapons
-    */
+   *Prepare data for weapons
+   */
   _prepareWeaponData(itemData, labels) {
     if (itemData.type !== "weapon") return;
     const data = itemData.data;
@@ -57,9 +58,9 @@ export class ARd20Item extends Item {
       }
     }
   }
-/**
- *Set deflect die equal to damage die, if not
- *   */  _setDeflect(data) {
+  /**
+   *Set deflect die equal to damage die, if not
+   *   */ _setDeflect(data) {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
@@ -164,6 +165,13 @@ export class ARd20Item extends Item {
       level.splice(level.length - 1, 1);
     }
     return level;
+  }
+  /*
+   *Prepare Data for 'Race' type of items
+   */
+  _prepareRaceData(itemData, labels) {
+    if (itemData.type !== "race") return;
+    const data = itemData.data;
   }
   /*
   Prepare Data that uses actor's data
