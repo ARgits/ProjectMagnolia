@@ -72,8 +72,8 @@ Handlebars.registerHelper("toLowerCase", function (str) {
   return str.toLowerCase();
 });
 
-Handlebars.registerHelper("add", function (value, number) {
-  return value + number;
+Handlebars.registerHelper("add", function (value1, value2) {
+  return Number(value1) + Number(value2);
 });
 
 /* -------------------------------------------- */
