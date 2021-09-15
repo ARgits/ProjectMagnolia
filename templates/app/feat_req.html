@@ -40,7 +40,7 @@
                         {{#if (eq r.type "skill")}}
                             <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-type="value" data-order="{{k}}">
                                 {{#select inp}}
-                                    {{#each @root.config.prof as |ran i|}}
+                                    {{#each @root.prof as |ran i|}}
                                         <option value="{{i}}">{{localize ran}}</option>
                                     {{/each}}
                                 {{/select}}
