@@ -15,7 +15,7 @@
                     <div>{{add key 1}}</div>
                     <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
                         {{#select r.type}}
-                            {{#each ../type as |t k|}}
+                            {{#each @root.type as |t k|}}
                                 <option value="{{t}}">{{t}}</option>
                             {{/each}}
                         {{/select}}
@@ -39,10 +39,10 @@
                         <div>{{add k 1}}:</div>
                         {{#if (eq r.type "skill")}}
                             <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-order="{{k}}">
-                                {{log ../config "config"}}
+                                {{log @root.config "config"}}
                                 {{#select r.input.k}}
-                                    {{#each ../../config.prof as |ran i|}}
-                                        <option value="i">{{localize ran}}</option>
+                                    {{#each @root.config.prof as |ran i|}}
+                                        <option value="{{i}}">{{localize ran}}</option>
                                     {{/each}}
                                 {{/select}}
                             </select>
