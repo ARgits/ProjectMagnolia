@@ -555,3 +555,9 @@ input .wrong {
   border-color: #dc143c;
   outline-color: #dc143c;
 }
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {  
+   -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
