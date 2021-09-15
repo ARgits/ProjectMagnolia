@@ -1,3 +1,4 @@
+
 <form>
     <hr>
     <section class="sheet-body grid grid-3col">
@@ -39,10 +40,9 @@
                         <div>{{add k 1}}:</div>
                         {{#if (eq r.type "skill")}}
                             <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-order="{{k}}">
+                                {{log ../config.prof "config"}}
                                 {{#select r.input.k}}
                                     {{#each ../config.prof as |ran i|}}
-                                        {{log ran}}
-                                        {{log i}}
                                         <option value="i">{{localize ran}}</option>
                                     {{/each}}
                                 {{/select}}
