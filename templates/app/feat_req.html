@@ -46,7 +46,7 @@
                                 {{/select}}
                             </select>
                         {{else}}
-                            <input name='req.values.{{key}}.input.{{k}}' type='number' data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
+                            <input name='req.values.{{key}}.input.{{k}}' min="0" max="30" type='number' data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
                         {{/if}}
                     {{/each}}
                 </li>

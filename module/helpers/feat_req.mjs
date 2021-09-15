@@ -121,11 +121,11 @@ export class FeatRequirements extends FormApplication {
       this.req.values[k].input = this.req.values[k].input || [];
 
       for (let i = 0; i < this.object.data.data.level.max; i++) {
-        console.log(this.req.values[k].input[i],this.formApp?.values?.[k]?.input[i] )
-        this.req.values[k].input[i] = this.formApp?.values?.[k]?.input[i]
-          ? this.formApp?.values?.[k]?.input[i]
-          : this.req.values[k].type !== "skill"
-          ? Number(this.req.values[k].input[i]) || 1
+        console.log(this.req.values[k].input[i], this.formApp?.values?.[k]?.input[i]);
+        this.req.values[k].input[i] = this.req.values[k].type !== "skill"
+          ? Number(this.req.values[k].input[i]) || 10
+          : this.req.values[k].input[i] > 2
+          ? 1
           : this.req.values[k].input[i] || 1;
 
         if (this.req.values[k].input[i + 1] < this.req.values[k].input[i]) {
@@ -137,14 +137,19 @@ export class FeatRequirements extends FormApplication {
       this.req.logic[k] = this.formApp?.logic?.[k] ? this.formApp.logic[k] : this.req.logic[k];
     }
     this.formApp = this.req;
-    this.prof = Object.values(CONFIG.ARd20.prof).slice(1).reduce((result,item,index,array)=>{result[index+1]=item;return result},{})
+    this.prof = Object.values(CONFIG.ARd20.prof)
+      .slice(1)
+      .reduce((result, item, index, array) => {
+        result[index + 1] = item;
+        return result;
+      }, {});
     const FormData = {
       data: this.data,
       type: this.type_list,
       config: CONFIG.ARd20,
       req: this.req,
       formApp: this.formApp,
-      prof:this.prof,
+      prof: this.prof,
     };
     console.log("FormData", FormData);
     console.log("Form html", this.form);
