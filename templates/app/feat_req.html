@@ -36,7 +36,8 @@
                         <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
                     {{/if}}
                     {{#each r.input as |inp k|}}
-                        <div>{{add (numberFormat k) 1}}:</div>
+                    {{log k}}
+                        <div>{{add k 1}}:</div>
                         {{#if (eq r.type "skill")}}
                             <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-type="value" data-order="{{k}}">
                                 {{#select inp}}
