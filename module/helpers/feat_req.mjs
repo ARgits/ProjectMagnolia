@@ -124,7 +124,7 @@ export class FeatRequirements extends FormApplication {
         this.req.values[k].input[i] = this.formApp?.values?.[k]?.input[i]
           ? this.formApp?.values?.[k]?.input[i]
           : this.req.values[k].type !== "skill"
-          ? this.req.values[k].input[i] || 1
+          ? this.req.values[k].input[i] || 10
           : this.req.values[k].input[i] || game.i18n.localize(CONFIG.ARd20.prof[1]);
 
         if (this.req.values[k].input[i + 1] < this.req.values[k].input[i]) {

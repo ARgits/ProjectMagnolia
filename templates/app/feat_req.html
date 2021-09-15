@@ -38,7 +38,7 @@
                     {{#each r.input as |inp k|}}
                         <div>{{add k 1}}:</div>
                         {{#if (eq r.type "skill")}}
-                            <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-order="{{k}}">
+                            <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-type="value" data-order="{{k}}">
                                 {{#select inp}}
                                     {{#each @root.config.prof as |ran i|}}
                                         <option value="{{i}}">{{localize ran}}</option>
@@ -46,7 +46,7 @@
                                 {{/select}}
                             </select>
                         {{else}}
-                            <input name='req.values.{{key}}.input.{{k}}' type='number' data-key="{{key}}" data-order="{{k}}">
+                            <input name='req.values.{{key}}.input.{{k}}' type='number' data-type="value" data-key="{{key}}" data-order="{{k}}">
                         {{/if}}
                     {{/each}}
                 </li>
