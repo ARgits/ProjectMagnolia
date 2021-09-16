@@ -193,13 +193,11 @@ export class FeatRequirements extends FormApplication {
   }
 
   async _updateObject(event, formData) {
-    let updateData = expandObject(formData);
-    console.log(updateData);
     const item = this.object;
     this.render();
     const obj = {};
-    obj["data.req.values"] = Object.values(updateData?.req.values);
-    obj["data.req.logic"] = Object.values(updateData?.req.logic);
+    obj["data.req.values"] = this.req.values
+    obj["data.req.logic"] = this.req.logic;
     console.log(obj);
     await item.update(obj);
   }

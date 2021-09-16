@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class ARd20Item extends Item {
+ export class ARd20Item extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -115,7 +115,8 @@ export class ARd20Item extends Item {
     }
     for (let [key, req] of Object.entries(data.req.values)) {
       req.pass = Array.from("0".repeat(data.level.max));
-      req.input?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
+      console.log(req.input)
+      req.input?.forEach((r, index) => (req.input[index] = parseInt(r) ?? 0));
       switch (req.type) {
         case "ability":
           for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
