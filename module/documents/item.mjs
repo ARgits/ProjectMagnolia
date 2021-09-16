@@ -146,6 +146,7 @@ export class ARd20Item extends Item {
   _prepareRaceData(itemData, labels) {
     if (itemData.type !== "race") return;
     const data = itemData.data;
+    data.HPdice = CONFIG.ARd20.HPdice.slice(0,7)
   }
   /*
   Prepare Data that uses actor's data
