@@ -60,7 +60,8 @@
   }
   /**
    *Set deflect die equal to damage die, if not
-   *   */ _setDeflect(data) {
+   */
+   _setDeflect(data) {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
@@ -147,7 +148,7 @@
   _prepareRaceData(itemData, labels) {
     if (itemData.type !== "race") return;
     const data = itemData.data;
-    data.HPdice = CONFIG.ARd20.HPdice.slice(0,7)
+    data.HPdie = CONFIG.ARd20.HPdice.slice(0,7)
   }
   /*
   Prepare Data that uses actor's data

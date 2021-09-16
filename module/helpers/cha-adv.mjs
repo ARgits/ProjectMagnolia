@@ -20,32 +20,34 @@ export class CharacterAdvancement extends FormApplication {
   }
   async getData(options) {
     if (!this.data) {
-      this.data = {};
-      this.data.abilities = duplicate(this.object.data.data.abilities);
-      this.data.skills = duplicate(this.object.data.data.skills);
-      this.data.xp = duplicate(this.object.data.data.attributes.xp);
-      this.data.profs = duplicate(this.object.data.data.profs);
-      this.data.count = {
-        skills: {
-          0: 0,
-          1: 0,
-          2: 0,
+      this.data = {
+        abilities: duplicate(this.object.data.data.abilities),
+        skills: duplicate(this.object.data.data.skills),
+        xp: duplicate(this.object.data.data.attributes.xp),
+        profs: duplicate(this.object.data.data.profs),
+        health:duplicate(this.object.data.data.health),
+        count: {
+          skills: {
+            0: 0,
+            1: 0,
+            2: 0,
+          },
+          feats: {
+            mar: 0,
+            mag: 0,
+            div: 0,
+            pri: 0,
+            psy: 0,
+          },
+        },
+        content: {
+          skills: {},
+          feats: {},
         },
         feats: {
-          mar: 0,
-          mag: 0,
-          div: 0,
-          pri: 0,
-          psy: 0,
+          learned: [], //items that character already has
+          awail: [], //items that character can purchase
         },
-      };
-      this.data.content = {
-        skills: {},
-        feats: {},
-      };
-      this.data.feats = {
-        learned: [], //items that character already has
-        awail: [], //items that character can purchase
       };
       let temp_feat_list = [];
       let pack_list = [];

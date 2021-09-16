@@ -12,6 +12,7 @@
     <hr>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
         <a class="item" data-tab="stats">Stats</a>
+        <a class="item" data-tab="race">Race</a>
         <a class="item" data-tab='skills'>Skills</a>
         <a class='item' data-tab="profs">proficiencies</a>
         <a class='item' data-tab='feats'>Features</a>
@@ -39,8 +40,13 @@
                         <div><span name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
                     </li>
                 {{/each}}
-        </div>
         </ol>
+        </div>
+        <div class='tab' data-tab="race" data-group="primary-tabs">
+            {{#each race as |race key|}}
+            <li class="item flexrow align-center">
+                <div><label</div>
+            </li>
         </div>
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class="grid grid-2col">
@@ -80,7 +86,7 @@
             <div class='grid grid-2col'>
                 <div class="ability flexcoll-group-center align-center">
                     {{#each feats.awail as |feat key|}}
-                        <div class="ability flexrow grid grid-5col" style="grid-template-columns:2fr, 1fr, 1fr, 1fr, 2fr">
+                        <div class="ability flexrow grid grid-6col" style="grid-template-columns:2fr 2fr repeat(4,1fr)">
                             <label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
                             <label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.source.label}}">{{feat.data.source.label}}</label>
                             <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
