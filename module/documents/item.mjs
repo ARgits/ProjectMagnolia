@@ -115,8 +115,7 @@ export class ARd20Item extends Item {
     }
     for (let [key, req] of Object.entries(data.req.values)) {
       req.pass = Array.from("0".repeat(data.level.max));
-      //req.level = this._getLvlReq(req, data.level.max);
-      req.level?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
+      req.input?.forEach((r, index) => (req.level[index] = parseInt(r) ?? 0));
       switch (req.type) {
         case "ability":
           for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -144,32 +143,6 @@ export class ARd20Item extends Item {
       data.req.logic.splice(data.req.logic.length - 1, 1);
     }
   }
-  //*_getLvlReq(req, maxLevel) {
-  // let level =
-  //   req.type !== "skill"
-  //     ? req.input.match(/\d*/g).filter((item) => item !== "")
-  //     : req.input.match(/(basic)|(master)/g).filter((item) => item !== "");
-  // if (!level) return Array.from("0".repeat(data.level.max));
-  //if (req.type === "skill") {
-  // let list = level;
-  // level = [];
-  // for (let [key, item] of Object.entries(list)) {
-  //   if (item === "basic") level.push(list[key].replace(/basic/g, 1));
-  //   if (item === "master") level.push(list[key].replace(/master/g, 2));
-  // }
-  //  }
-  // for (let i = level.length; maxLevel > level.length; i++) {
-  //   level.push(level[i - 1]);
-  // }
-  // for (let i = level.length; maxLevel < level.length; i--) {
-  //   level.splice(level.length - 1, 1);
-  // }
-  // return level;
-  // }
-
-  /*
-   *Prepare Data for 'Race' type of items
-   */
   _prepareRaceData(itemData, labels) {
     if (itemData.type !== "race") return;
     const data = itemData.data;

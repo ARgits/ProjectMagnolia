@@ -168,21 +168,21 @@ export class CharacterAdvancement extends FormApplication {
       for (let [key, r] of Object.entries(object.data.req.values)) {
         switch (r.type) {
           case "ability":
-            r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.abilities[r.value].value));
+            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.abilities[r.value].value));
             break;
           case "skill":
-            r.pass.forEach((item, index) => (r.pass[index] = r.level[index] <= this.data.skills[r.value].prof));
+            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.skills[r.value].prof));
             break;
           case "feat":
             if (this.data.feats.awail.filter((item) => item.name === r.name)?.[0] !== undefined) {
               r.pass.forEach(
                 (item, index) =>
-                  (r.pass[index] = r.level[index] <= this.data.feats.awail.filter((item) => item.name === r.name)[0].data.level.initial)
+                  (r.pass[index] = r.input[index] <= this.data.feats.awail.filter((item) => item.name === r.name)[0].data.level.initial)
               );
             } else if (this.data.feats.learned.filter((item) => item.name === r.name)?.[0] !== undefined) {
               r.pass = r.pass.forEach(
                 (item, index) =>
-                  (r.pass[index] = r.level[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial)
+                  (r.pass[index] = r.input[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial)
               );
             }
             break;

@@ -225,7 +225,7 @@
     },
     "race": {
       "templates": ["base"],
-      "baseSpeed": 15,
+      "speed": 20,
       "attribute": {
         "str": 0,
         "dex": 0,
