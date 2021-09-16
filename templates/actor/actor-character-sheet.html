@@ -5,7 +5,7 @@
         <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
-            <div class="resources grid flexcol flex-group-center grid-7col">
+            <div class="resources grid flexcol flex-group-center grid-8col">
                 <div class="resource grid-span-2">
                     <label for="data.health.value" class="resource-label">Health</label>
                     <div class="resource-content flexrow flex-center">
@@ -13,6 +13,10 @@
                         <span>/</span>
                         <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
                     </div>
+                </div>
+                <div class="resource flexcol">
+                    <label for="data.speed" class="resource-label">speed</label>
+                    <span data-label="data.speed">{{numberFormat data.speed decimals=0 sign=false}}</span>
                 </div>
                 <div class="resource flexcol grid-span-2">
                     <label for="data.attributes.xp.used" class="resource-label">xp</label>
