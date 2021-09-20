@@ -235,8 +235,8 @@ export class CharacterAdvancement extends FormApplication {
      */
     for (let [key, race] of Object.entries(this.data.races)) {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
-      let firstDie = race.HPdie.slice(race.HPdie.indexOf(race.FhpDie))
-      race.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
+      let firstDie = race.data.HPdie.slice(race.data.HPdie.indexOf(race.data.FhpDie))
+      race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
     }
     /*
      * Final Template Data
