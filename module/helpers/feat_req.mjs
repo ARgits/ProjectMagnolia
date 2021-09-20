@@ -19,7 +19,7 @@ export class FeatRequirements extends FormApplication {
       let folder_list = [];
       this.type_list = ["ability", "skill", "feat"];
       if (this.req.logic)
-        /*get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
+        /*Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
         for (let key of game.settings.get("ard20", "feat").packs) {
           if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
             let feat_list = [];
@@ -36,7 +36,7 @@ export class FeatRequirements extends FormApplication {
             }
           }
         }
-      /* same as above, but for folders*/
+      /* Same as above, but for folders*/
       for (let key of game.settings.get("ard20", "feat").folders) {
         if (game.folders.filter((folder) => folder.data.name === key).length !== 0) {
           let feat_list = [];
@@ -102,7 +102,7 @@ export class FeatRequirements extends FormApplication {
       name_array.push(i.name);
     }
     /**
-     * Creating
+     * Data created
      */
     for (let [k, value] of Object.entries(this.req.values)) {
       this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "ability";
