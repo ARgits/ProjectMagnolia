@@ -46,8 +46,10 @@
             {{#each races as |race key|}}
             <li class="item flexrow align-center">
                 <div>{{race.name}}</div>
+                <div>{{race.startHP}}</div>
             </li>
             {{/each}}
+            <aside class="verticalLine">race description</aside>
         </div>
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class="grid grid-2col">

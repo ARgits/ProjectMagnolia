@@ -117,9 +117,6 @@ export class ARd20Actor extends Actor {
         skill.roll = "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus;
       }
     }
-    if (!data.isReady) {
-      data.isReady = false;
-    }
     //calculate character's armor,weapon and tool proficinecies
     if (!data.profs) {
       data.profs = { weapon: game.settings.get("ard20", "profs").weapon };

@@ -4,21 +4,20 @@
     "templates": {
       "base": {
         "health": {
-          "value": 10,
-          "min": 0,
-          "max": 10
+          "starting": 0
         },
         "biography": ""
       }
     },
     "character": {
       "templates": ["base"],
+      "isReady": false,
       "attributes": {
         "xp": {
           "get": 0,
           "used": 0
         },
-        "level": 1
+        "level": 0
       },
       "abilities": {
         "str": {
