@@ -231,10 +231,13 @@ export class CharacterAdvancement extends FormApplication {
       object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
     }
     /*
-    * Calculate starting HP based on character's CON and race
-    */
-    
-
+     * Calculate starting HP based on character's CON and race
+     */
+    for (let [key, race] of Object.entries(this.data.races)) {
+      let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
+      let firstDie = race.HPdie.slice(race.HPdie.indexOf(race.FhpDie))
+      race.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
+    }
     /*
      * Final Template Data
      */
@@ -248,7 +251,7 @@ export class CharacterAdvancement extends FormApplication {
       profs: this.data.profs,
       feats: this.data.feats,
       races: this.data.races,
-      health:this.data.health
+      health: this.data.health,
     };
     console.log(templateData);
     return templateData;

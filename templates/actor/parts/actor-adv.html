@@ -40,16 +40,20 @@
                         <div><span name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
                     </li>
                 {{/each}}
-        </ol>
+            </ol>
         </div>
         <div class='tab' data-tab="race" data-group="primary-tabs">
-            {{#each races as |race key|}}
-            <li class="item flexrow align-center">
-                <div>{{race.name}}</div>
-                <div>{{race.startHP}}</div>
-            </li>
-            {{/each}}
-            <aside class="verticalLine">race description</aside>
+            <div class="grid grid-2col">
+                <div class="flexcoll ability flex-group-center">
+                    {{#each races as |race key|}}
+                        <li class="item flexrow align-center">
+                            <div>{{race.name}}</div>
+                            <div>{{race.startHP}}</div>
+                        </li>
+                    {{/each}}
+                </div>
+                <aside class="verticalLine">race description</aside>
+            </div>
         </div>
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class="grid grid-2col">
