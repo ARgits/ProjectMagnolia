@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
- export class ARd20Item extends Item {
+export class ARd20Item extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -61,7 +61,7 @@
   /**
    *Set deflect die equal to damage die, if not
    */
-   _setDeflect(data) {
+  _setDeflect(data) {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
@@ -116,8 +116,7 @@
     }
     for (let [key, req] of Object.entries(data.req.values)) {
       req.pass = Array.from("0".repeat(data.level.max));
-      console.log(req.input)
-      req.input?.forEach((r, index) => (req.input[index] = parseInt(r) ?? 0));
+      console.log(req.input);
       switch (req.type) {
         case "ability":
           for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
@@ -148,7 +147,7 @@
   _prepareRaceData(itemData, labels) {
     if (itemData.type !== "race") return;
     const data = itemData.data;
-    data.HPdie = CONFIG.ARd20.HPdice.slice(0,7)
+    data.HPdie = CONFIG.ARd20.HPdice.slice(0, 7);
   }
   /*
   Prepare Data that uses actor's data

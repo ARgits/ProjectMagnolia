@@ -8,6 +8,11 @@
             <label class='resource-label flexlarge align-left' for='xp.used'>XP you spent</label>
             <input type='number' class='ability' value={{xp.used}} name='xp.used' readonly />
         </div>
+        <aside>
+            <div>{{allow.ability}}</div>
+            <div>{{allow.race}}</div>
+            <div>{{allow.final}}</div>
+        </aside>
     </header>
     <hr>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
@@ -22,7 +27,7 @@
     <section class="sheet-body">
         <div class="tab" data-tab="stats" data-group="primary-tabs">
             <ol class='items-list'>
-                <li class="items-header flexrow items-header">
+                <li class="items-header flexrow">
                     <div>Name</div>
                     <div>Decrease</div>
                     <div>Value</div>
@@ -45,12 +50,20 @@
         <div class='tab' data-tab="race" data-group="primary-tabs">
             <div class="grid grid-2col">
                 <div class="flexcoll ability flex-group-center">
-                    {{#each races as |race key|}}
-                        <li class="item flexrow align-center">
-                            <div>{{race.name}}</div>
-                            <div>{{race.data.startHP}}</div>
+                    <ol class="items-list">
+                        <li class="items-header flexrow">
+                            <div>Choose</div>
+                            <div>Race</div>
+                            <div>Staring HP</div>
                         </li>
-                    {{/each}}
+                        {{#each races.list as |race key|}}
+                            <li class="item flexrow align-center">
+                                <div><input name="races.chosen" type="radio" value="race.id" /></div>
+                                <div>{{race.name}}</div>
+                                <div>{{race.data.startHP}}</div>
+                            </li>
+                        {{/each}}
+                    </ol>
                 </div>
                 <aside class="verticalLine">race description</aside>
             </div>

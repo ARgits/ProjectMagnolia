@@ -26,7 +26,10 @@ export class CharacterAdvancement extends FormApplication {
         xp: duplicate(this.object.data.data.attributes.xp),
         profs: duplicate(this.object.data.data.profs),
         health: duplicate(this.object.data.data.health),
-        races: {},
+        races: {
+          chosen: null,
+          list: [],
+        },
         count: {
           // counter for skills, features and other things for proper xp calculations
           skills: {
@@ -53,12 +56,18 @@ export class CharacterAdvancement extends FormApplication {
           learned: [], //items that character already has
           awail: [], //items that character can purchase
         },
+        allow: {
+          ability: false,
+          race: false,
+          final: false,
+        },
       };
       let temp_feat_list = [];
       let pack_list = [];
       let folder_list = [];
       let pack_name = [];
       let folder_name = [];
+      this.data.xp.get = this.object.data.isReady || this.data.xp.used !== 0 ? this.data.xp.get : 10000;
       /*
        * Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums
        */
@@ -101,7 +110,7 @@ export class CharacterAdvancement extends FormApplication {
        */
       let race_pack_list = pack_list.filter((item) => item.type === "race");
       let race_folder_list = folder_list.filter((item) => item.type === "race");
-      this.data.races = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
+      this.data.races.list = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
       /*
        * Create final list of features
        */
@@ -235,8 +244,26 @@ export class CharacterAdvancement extends FormApplication {
      */
     for (let [key, race] of Object.entries(this.data.races)) {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
-      let firstDie = race.data.HPdie.slice(race.data.HPdie.indexOf(race.data.FhpDie))
+      let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
+      console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
+    }
+    /*
+     * Check if all right at character creation
+     */
+    if (this.object.data.isReady) {
+      let abil_sum = null;
+      for (let [abil, key] of Object.entries(this.data.abilities)) {
+        abil_sum += abil.value;
+      }
+      this.data.allow.ability = abil_sum >= 60 && abil_sum <= 80 ? true : false;
+      this.data.allow.race = this.data.races.chosen ? true : false;
+      for (let [item, key] of Object.entries(this.data.allow)) {
+        if (key === "final") {
+          continue;
+        }
+        this.data.allow.final = item ? this.data.allow.final : false;
+      }
     }
     /*
      * Final Template Data
@@ -252,6 +279,7 @@ export class CharacterAdvancement extends FormApplication {
       feats: this.data.feats,
       races: this.data.races,
       health: this.data.health,
+      allow: this.data.allow,
     };
     console.log(templateData);
     return templateData;
