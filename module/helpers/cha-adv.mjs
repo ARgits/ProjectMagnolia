@@ -28,12 +28,15 @@ export class CharacterAdvancement extends FormApplication {
         health: duplicate(this.object.data.data.health),
         races: {},
         count: {
+          // count skills, features and other things for proper xp calculations
           skills: {
+            //count skills with 'untrained', 'basic', and 'mastery' rank
             0: 0,
             1: 0,
             2: 0,
           },
           feats: {
+            //count features by their source
             mar: 0,
             mag: 0,
             div: 0,
@@ -42,6 +45,7 @@ export class CharacterAdvancement extends FormApplication {
           },
         },
         content: {
+          // descriptions
           skills: {},
           feats: {},
         },
@@ -88,11 +92,17 @@ export class CharacterAdvancement extends FormApplication {
           folder_list = folder_list.flat();
         }
       }
-      let feat_pack_list = pack_list.filter((item) => item.type === "feature");
-      let feat_folder_list = folder_list.filter((item) => item.type === "feature");
+      /*
+       *Create a list of races
+       */
       let race_pack_list = pack_list.filter((item) => item.type === "race");
       let race_folder_list = folder_list.filter((item) => item.type === "race");
       this.data.races = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
+      /*
+       * Create final list of features
+       */
+      let feat_pack_list = pack_list.filter((item) => item.type === "feature");
+      let feat_folder_list = folder_list.filter((item) => item.type === "feature");
       temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
       this.data.feats.learned = foundry.utils.deepClone(this.object.data.items).filter((item) => item.data.type === "feature");
       let name_array = [];
@@ -106,9 +116,7 @@ export class CharacterAdvancement extends FormApplication {
           temp_feat_list[k].data = foundry.utils.deepClone(this.data.feats.learned.filter((item) => item.name === v.name)[0].data.data);
         }
       }
-      temp_feat_list = temp_feat_list.filter(
-        (item) => (item.type === "feature" && !name_array.includes(item.name)) || item.data.level.current !== item.data.level.max
-      );
+      temp_feat_list = temp_feat_list.filter((item) => (item.type === "feature" && !name_array.includes(item.name)) || item.data.level.current !== item.data.level.max);
       this.data.feats.awail = temp_feat_list;
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
         if (this.data.skills[k].prof === 0) {
@@ -151,8 +159,7 @@ export class CharacterAdvancement extends FormApplication {
     }
     for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
       this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof;
-      this.data.skills[k].xp =
-        this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
+      this.data.skills[k].xp = this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
       this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof;
       this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp || this.data.skills[k].prof > 1;
       for (let [k, v] of Object.entries(this.data.profs.weapon)) {
@@ -163,9 +170,7 @@ export class CharacterAdvancement extends FormApplication {
       let pass = [];
       let allCount = this.data.count.feats.all;
       let featCount = this.data.count.feats[object.data.source?.value || "mag"];
-      object.data.level.xp = object.data.xp?.[object.data.level.initial]
-        ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5
-        : 0;
+      object.data.level.xp = object.data.xp?.[object.data.level.initial] ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
       for (let [key, r] of Object.entries(object.data.req.values)) {
@@ -178,15 +183,9 @@ export class CharacterAdvancement extends FormApplication {
             break;
           case "feat":
             if (this.data.feats.awail.filter((item) => item.name === r.name)?.[0] !== undefined) {
-              r.pass.forEach(
-                (item, index) =>
-                  (r.pass[index] = r.input[index] <= this.data.feats.awail.filter((item) => item.name === r.name)[0].data.level.initial)
-              );
+              r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.feats.awail.filter((item) => item.name === r.name)[0].data.level.initial));
             } else if (this.data.feats.learned.filter((item) => item.name === r.name)?.[0] !== undefined) {
-              r.pass = r.pass.forEach(
-                (item, index) =>
-                  (r.pass[index] = r.input[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial)
-              );
+              r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial));
             }
             break;
         }
@@ -209,7 +208,6 @@ export class CharacterAdvancement extends FormApplication {
         object.pass[i] = Boolean(filter(f));
       }
       object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
-      //object.pass = !pass.includes(false);
     }
     const templateData = {
       abilities: this.data.abilities,
@@ -220,6 +218,7 @@ export class CharacterAdvancement extends FormApplication {
       hover: this.data.hover,
       profs: this.data.profs,
       feats: this.data.feats,
+      races: this.data.races,
     };
     console.log(templateData);
     return templateData;
@@ -242,12 +241,8 @@ export class CharacterAdvancement extends FormApplication {
             break;
           case "minus":
             data.abilities[button.dataset.key].value -= 1;
-            data.xp.get +=
-              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ??
-              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5];
-            data.xp.used -=
-              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ??
-              CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5];
+            data.xp.get += CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5];
+            data.xp.used -= CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5] ?? CONFIG.ARd20.abil_xp[data.abilities[button.dataset.key].value - 5];
             break;
         }
         break;
@@ -262,10 +257,8 @@ export class CharacterAdvancement extends FormApplication {
           case "minus":
             data.skills[button.dataset.key].prof -= 1;
             this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1;
-            data.xp.get +=
-              CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]];
-            data.xp.used -=
-              CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]];
+            data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]];
+            data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]];
             break;
         }
         break;
@@ -284,16 +277,14 @@ export class CharacterAdvancement extends FormApplication {
       case "feat":
         switch (button.dataset.action) {
           case "plus":
-            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] +=
-              data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
+            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
             data.feats.awail[button.dataset.key].data.level.initial += 1;
             data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp;
             data.xp.used += data.feats.awail[button.dataset.key].data.level.xp;
             break;
           case "minus":
             data.feats.awail[button.dataset.key].data.level.initial -= 1;
-            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -=
-              data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
+            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
             data.xp.get += data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.initial];
             break;
@@ -306,13 +297,8 @@ export class CharacterAdvancement extends FormApplication {
     const content = this.data.content;
     switch (button.dataset.type) {
       case "skill":
-        if (
-          this.data.hover.value !==
-          TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content)
-        ) {
-          this.data.hover.value = TextEditor.enrichHTML(
-            content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content
-          );
+        if (this.data.hover.value !== TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content)) {
+          this.data.hover.value = TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content);
           this.data.hover.name = button.dataset.label;
           this.render();
         }
