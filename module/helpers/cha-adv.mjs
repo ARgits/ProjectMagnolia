@@ -25,7 +25,8 @@ export class CharacterAdvancement extends FormApplication {
         skills: duplicate(this.object.data.data.skills),
         xp: duplicate(this.object.data.data.attributes.xp),
         profs: duplicate(this.object.data.data.profs),
-        health:duplicate(this.object.data.data.health),
+        health: duplicate(this.object.data.data.health),
+        races: {},
         count: {
           skills: {
             0: 0,
@@ -87,12 +88,13 @@ export class CharacterAdvancement extends FormApplication {
           folder_list = folder_list.flat();
         }
       }
-      pack_list = pack_list.filter((item) => item.type === "feature" || item.type === "spell");
-      folder_list = folder_list.filter((item) => item.type === "feature" || item.type === "spell");
-      temp_feat_list = pack_list.concat(folder_list.filter((item) => !pack_name.includes(item.name)));
-      this.data.feats.learned = foundry.utils
-        .deepClone(this.object.data.items)
-        .filter((item) => item.data.type === "feature" || item.data.type === "spell");
+      let feat_pack_list = pack_list.filter((item) => item.type === "feature");
+      let feat_folder_list = folder_list.filter((item) => item.type === "feature");
+      let race_pack_list = pack_list.filter((item) => item.type === "race");
+      let race_folder_list = folder_list.filter((item) => item.type === "race");
+      this.data.races = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
+      temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
+      this.data.feats.learned = foundry.utils.deepClone(this.object.data.items).filter((item) => item.data.type === "feature");
       let name_array = [];
       for (let i of this.data.feats.learned) {
         name_array.push(i.data.name);
@@ -105,8 +107,7 @@ export class CharacterAdvancement extends FormApplication {
         }
       }
       temp_feat_list = temp_feat_list.filter(
-        (item) =>
-          ((item.type === "feature" || item.type === "spell") && !name_array.includes(item.name)) || item.data.level.current !== item.data.level.max
+        (item) => (item.type === "feature" && !name_array.includes(item.name)) || item.data.level.current !== item.data.level.max
       );
       this.data.feats.awail = temp_feat_list;
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -338,7 +339,7 @@ export class CharacterAdvancement extends FormApplication {
       if (this.data.feats.learned.length > 0) {
         for (let [n, m] of Object.entries(this.data.feats.learned)) {
           if (v._id === m.id) {
-            feats_data.exist.push(v); //{_id:v.id,data:v.ItemData}
+            feats_data.exist.push(v);
           } else {
             feats_data.new.push(v);
           }
