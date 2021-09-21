@@ -26,10 +26,7 @@ export class CharacterAdvancement extends FormApplication {
         xp: duplicate(this.object.data.data.attributes.xp),
         profs: duplicate(this.object.data.data.profs),
         health: duplicate(this.object.data.data.health),
-        races: {
-          chosen: null,
-          list: [],
-        },
+        races: {},
         count: {
           // counter for skills, features and other things for proper xp calculations
           skills: {
@@ -110,7 +107,7 @@ export class CharacterAdvancement extends FormApplication {
        */
       let race_pack_list = pack_list.filter((item) => item.type === "race");
       let race_folder_list = folder_list.filter((item) => item.type === "race");
-      this.data.races.list = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
+      this.data.races = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
       /*
        * Create final list of features
        */
@@ -240,7 +237,7 @@ export class CharacterAdvancement extends FormApplication {
     /*
      * Calculate starting HP based on character's CON and race
      */
-    for (let [key, race] of Object.entries(this.data.races.list)) {
+    for (let [key, race] of Object.entries(this.data.races)) {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
@@ -355,13 +352,13 @@ export class CharacterAdvancement extends FormApplication {
             break;
         }
         break;
-     /* case "race":
+      /* case "race":
         let chosen = foundry.utils.expandObject(this._getSubmitData()).races.chosen;
         console.log(chosen);
         data.races.chosen = chosen;
         this.form.querySelector(`input[id=${chosen}]`);
         console.log(this.form.querySelector(`input[id=${chosen}]`));
-        for (let [key, race] of Object.entries(data.races.list)) {
+        for (let [key, race] of Object.entries(data.races)) {
           console.log(this.form.querySelector(`input[id=${race._id}]`).checked, race.name);
         }
         break;*/
