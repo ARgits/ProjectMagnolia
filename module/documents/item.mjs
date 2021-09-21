@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
- export class ARd20Item extends Item {
+export class ARd20Item extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -161,7 +161,8 @@
     const abil = (data.abil = {});
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
-      abil[k] = { value: v, signPlus: true };
+      let n = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.value`) : 0;
+      abil[k] = { mod: v, value: n, signPlus: true };
     }
     this._prepareWeaponAttr(data, abil);
   }
@@ -183,7 +184,7 @@
       this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex.value;
     }
   }
- 
+
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private

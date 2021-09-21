@@ -70,11 +70,11 @@ export class ARd20ItemSheet extends ItemSheet {
     
   }
   _ChangeSign(event) {
-    if (this.data.type !== "race") return;
+    if (this.item.data.type !== "race") return;
     console.log('КНОПКА')
     const button = event.currentTarget;
     const key = button.dataset.key;
-    this.data.abil[key].signPlus = !this.data.abil[key].signPlus;
+    this.item.data.data.abil[key].signPlus = !this.item.data.data.abil[key].signPlus;
   }
   _FeatReq(event) {
     {
