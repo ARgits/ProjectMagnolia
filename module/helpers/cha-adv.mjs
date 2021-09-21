@@ -245,10 +245,8 @@ export class CharacterAdvancement extends FormApplication {
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
-    }
-    for(let [key,race] of Object.entries(this.data.races.list)){
-        console.log(this.form?.querySelector(`input[id=${race._id}]`).checked, race.name)}
-        this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false
+      if(this.form)
+      this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false}
     /*
      * Check if all right at character creation
      */
