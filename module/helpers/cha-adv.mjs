@@ -247,7 +247,8 @@ export class CharacterAdvancement extends FormApplication {
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
     }
     for(let [key,race] of Object.entries(this.data.races.list)){
-        console.log(this.form.querySelector(`input[id=${race._id}]`).checked, race.name)}
+        console.log(this.form?.querySelector(`input[id=${race._id}]`).checked, race.name)}
+        this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false
     /*
      * Check if all right at character creation
      */
@@ -283,6 +284,7 @@ export class CharacterAdvancement extends FormApplication {
       health: this.data.health,
       allow: this.data.allow,
     };
+    console.log(this.form)
     console.log(templateData);
     return templateData;
   }
@@ -355,12 +357,13 @@ export class CharacterAdvancement extends FormApplication {
         }
         break;
       case "race":
-        let race = foundry.utils.expandObject(this._getSubmitData()).races.chosen
-        console.log(race);
-        data.races.chosen = race;
+        let chosen = foundry.utils.expandObject(this._getSubmitData()).races.chosen
+        console.log(chosen);
+        data.races.chosen = chosen;
+        this.form.querySelector(`input[id=${chosen}]`)
+        console.log(this.form.querySelector(`input[id=${chosen}]`))
         for(let [key,race] of Object.entries(data.races.list)){
         console.log(this.form.querySelector(`input[id=${race._id}]`).checked, race.name)}
-        console.log(this.data.races)
         break;
     }
     this.render();
