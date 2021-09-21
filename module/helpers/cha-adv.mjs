@@ -289,7 +289,6 @@ export class CharacterAdvancement extends FormApplication {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
     html.find(".skill").mouseover(this._onHover.bind(this));
-    html.find("input[name='races.chosen']").click(this._onChange.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
@@ -375,6 +374,7 @@ export class CharacterAdvancement extends FormApplication {
       this.data.races.list[key].chosen=key===k?true:false
       this.data.races.chosen = this.data.races.list[key].chosen?race._id:this.data.races.chosen
     }
+    this.render()
 
   }
   _onHover(event) {

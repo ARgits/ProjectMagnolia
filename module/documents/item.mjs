@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class ARd20Item extends Item {
+ export class ARd20Item extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -189,6 +189,7 @@ export class ARd20Item extends Item {
   }
   _ChangeSign(event) {
     if (this.data.type !== "race") return;
+    console.log('КНОПКА')
     const button = event.currentTarget;
     const key = button.dataset.key;
     this.data.abil[key].signPlus = !this.data.abil[key].signPlus;
