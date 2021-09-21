@@ -58,7 +58,7 @@
                         </li>
                         {{#each races.list as |race key|}}
                             <li class="item flexrow align-center">
-                                <div><input name="races.chosen" type="radio" value="race.id" /></div>
+                                <div><input name="races.chosen" type="radio" value="{{race.id}}" /></div>
                                 <div>{{race.name}}</div>
                                 <div>{{race.data.startHP}}</div>
                             </li>
