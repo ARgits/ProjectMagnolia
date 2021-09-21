@@ -34,7 +34,8 @@
       </select>
       attribute bonuses
       {{#each data.abil as |ability key|}}
-      <div class="grid grid-6col"
+      {{log ability key}}
+      <div class="grid grid-6col">
         <label class="grid-span-3">{{key}}</label>
         <button type="button" data-key="{{key}}" class="{{#if ability.signPlus}}fas fa-plus{{else}}fas fa-minus{{/if}}"></button>
         <input hidden value="{{ability.signPlus}}" />
