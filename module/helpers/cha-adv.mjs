@@ -371,9 +371,11 @@ export class CharacterAdvancement extends FormApplication {
     console.log("ИЗМЕНИЛОСЬ");
     const button = event.currentTarget.id
     const k = event.currentTarget.dataset.key
-    for(let [key, race] of Object.entries(this.data.races)){
-      this.data.races[key].chosen=key===k?true:false
+    for(let [key, race] of Object.entries(this.data.races.list)){
+      this.data.races.list[key].chosen=key===k?true:false
+      this.data.races.chosen = this.data.races.list[key].chosen?race._id:this.data.races.chosen
     }
+
   }
   _onHover(event) {
     const button = event.currentTarget;

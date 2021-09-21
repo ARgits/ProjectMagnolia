@@ -161,8 +161,7 @@ export class ARd20Item extends Item {
     const abil = (data.abil = {});
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
-      abil[k] = v;
-      labels.abil[k] = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
+      abil[k] = { value: v, signPlus: true };
     }
     this._prepareWeaponAttr(data, abil);
   }
@@ -180,9 +179,19 @@ export class ARd20Item extends Item {
       } else if (data.prof.value === 2) {
         prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
       }
-      this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
-      this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex;
+      this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str.value;
+      this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex.value;
     }
+  }
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find("button").click(this._ChangeSign.bind(this));
+  }
+  _ChangeSign(event) {
+    if (this.data.type !== "race") return;
+    const button = event.currentTarget;
+    const key = button.dataset.key;
+    this.data.abil[key].signPlus = !this.data.abil[key].signPlus;
   }
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
