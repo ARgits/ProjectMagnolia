@@ -355,7 +355,7 @@ export class CharacterAdvancement extends FormApplication {
             break;
         }
         break;
-      case "race":
+     /* case "race":
         let chosen = foundry.utils.expandObject(this._getSubmitData()).races.chosen;
         console.log(chosen);
         data.races.chosen = chosen;
@@ -364,7 +364,7 @@ export class CharacterAdvancement extends FormApplication {
         for (let [key, race] of Object.entries(data.races.list)) {
           console.log(this.form.querySelector(`input[id=${race._id}]`).checked, race.name);
         }
-        break;
+        break;*/
     }
     this.render();
   }
