@@ -251,19 +251,22 @@ export class CharacterAdvancement extends FormApplication {
     /*
      * Check if all right at character creation
      */
-    if (this.object.data.isReady) {
+    if (!this.object.data.isReady) {
       let abil_sum = null;
-      for (let [abil, key] of Object.entries(this.data.abilities)) {
+      for (let [key, abil] of Object.entries(this.data.abilities)) {
         abil_sum += abil.value;
       }
       this.data.allow.ability = abil_sum >= 60 && abil_sum <= 80 ? true : false;
-      this.data.allow.race = this.data.races.chosen ? true : false;
-      for (let [item, key] of Object.entries(this.data.allow)) {
+      this.data.allow.race = Boolean(this.data.races.chosen) ? true : false;
+      let allow_list = []
+      for (let [key, item] of Object.entries(this.data.allow)) {
+          console.log(key,item)
         if (key === "final") {
           continue;
         }
-        this.data.allow.final = item ? this.data.allow.final : false;
+        allow_list.push(item)
       }
+      this.data.allow.final = !allow_list.includes(false)?true:false
     }
     /*
      * Final Template Data
@@ -357,6 +360,7 @@ export class CharacterAdvancement extends FormApplication {
         console.log(race);
         data.races.chosen = race;
         this.form.querySelector([`input[type='radio'][id=${race}]`]).checked = true 
+        console.log(this.form)
         break;
     }
     this.render();
