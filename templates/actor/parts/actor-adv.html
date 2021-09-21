@@ -1,18 +1,20 @@
 <form>
     <header>
-        <div>
-            <label class='resource-label flexlarge align-left' for='xp.get'>XP you earn</label>
-            <input type='number' class='ability' value={{xp.get}} name='xp.get' readonly />
+        <div class="grid grid-2col">
+            <div>
+                <label class='resource-label flexlarge align-left' for='xp.get'>XP you earn</label>
+                <input type='number' class='ability' value={{xp.get}} name='xp.get' readonly />
+            </div>
+            <div>
+                <label class='resource-label flexlarge align-left' for='xp.used'>XP you spent</label>
+                <input type='number' class='ability' value={{xp.used}} name='xp.used' readonly />
+            </div>
+            <aside>
+                <div>Attributes {{#if allow.ability}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
+                <div>Race {{#if allow.race}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
+                <div>Final {{#if allow.final}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
+            </aside>
         </div>
-        <div>
-            <label class='resource-label flexlarge align-left' for='xp.used'>XP you spent</label>
-            <input type='number' class='ability' value={{xp.used}} name='xp.used' readonly />
-        </div>
-        <aside>
-            <div>{{allow.ability}}</div>
-            <div>{{allow.race}}</div>
-            <div>{{allow.final}}</div>
-        </aside>
     </header>
     <hr>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
@@ -58,7 +60,7 @@
                         </li>
                         {{#each races.list as |race key|}}
                             <li class="item flexrow align-center">
-                                <div><input name="races.chosen" type="radio" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked races.chosen}}/></div>
+                                <div><input name="races.chosen" type="radio" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked races.chosen}} /></div>
                                 <div>{{race.name}}</div>
                                 <div>{{race.data.startHP}}</div>
                             </li>
