@@ -288,6 +288,7 @@ export class CharacterAdvancement extends FormApplication {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
     html.find(".skill").mouseover(this._onHover.bind(this));
+    html.find("input[name='races.chosen']").click(this._onChange.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
@@ -350,6 +351,11 @@ export class CharacterAdvancement extends FormApplication {
             data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.initial];
             break;
         }
+        break;
+      case "race":
+        console.log(this._getSubmitData());
+        data.races.chosen = this.form["races.chosen"].value;
+        break;
     }
     this.render();
   }
