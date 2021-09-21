@@ -245,8 +245,9 @@ export class CharacterAdvancement extends FormApplication {
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
-      if(this.form)
-      this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false}
+      //     if(this.form)
+      //     this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false
+    }
     /*
      * Check if all right at character creation
      */
@@ -257,14 +258,14 @@ export class CharacterAdvancement extends FormApplication {
       }
       this.data.allow.ability = abil_sum >= 60 && abil_sum <= 80 ? true : false;
       this.data.allow.race = Boolean(this.data.races.chosen) ? true : false;
-      let allow_list = []
+      let allow_list = [];
       for (let [key, item] of Object.entries(this.data.allow)) {
         if (key === "final") {
           continue;
         }
-        allow_list.push(item)
+        allow_list.push(item);
       }
-      this.data.allow.final = !allow_list.includes(false)?true:false
+      this.data.allow.final = !allow_list.includes(false) ? true : false;
     }
     /*
      * Final Template Data
@@ -282,7 +283,7 @@ export class CharacterAdvancement extends FormApplication {
       health: this.data.health,
       allow: this.data.allow,
     };
-    console.log(this.form)
+    console.log(this.form);
     console.log(templateData);
     return templateData;
   }
@@ -355,13 +356,14 @@ export class CharacterAdvancement extends FormApplication {
         }
         break;
       case "race":
-        let chosen = foundry.utils.expandObject(this._getSubmitData()).races.chosen
+        let chosen = foundry.utils.expandObject(this._getSubmitData()).races.chosen;
         console.log(chosen);
         data.races.chosen = chosen;
-        this.form.querySelector(`input[id=${chosen}]`)
-        console.log(this.form.querySelector(`input[id=${chosen}]`))
-        for(let [key,race] of Object.entries(data.races.list)){
-        console.log(this.form.querySelector(`input[id=${race._id}]`).checked, race.name)}
+        this.form.querySelector(`input[id=${chosen}]`);
+        console.log(this.form.querySelector(`input[id=${chosen}]`));
+        for (let [key, race] of Object.entries(data.races.list)) {
+          console.log(this.form.querySelector(`input[id=${race._id}]`).checked, race.name);
+        }
         break;
     }
     this.render();
