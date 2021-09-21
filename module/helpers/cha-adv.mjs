@@ -242,7 +242,7 @@ export class CharacterAdvancement extends FormApplication {
     /*
      * Calculate starting HP based on character's CON and race
      */
-    for (let [key, race] of Object.entries(this.data.races)) {
+    for (let [key, race] of Object.entries(this.data.races.list)) {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
