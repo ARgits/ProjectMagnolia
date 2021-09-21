@@ -58,7 +58,7 @@
                             <div>Race</div>
                             <div>Staring HP</div>
                         </li>
-                        {{#each races.list as |race key|}}
+                        {{#each races as |race key|}}
                             <li class="item flexrow align-center">
                                 <div><input name="race.{{key}}.chosen" type="radio" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
                                 <div>{{race.name}}</div>
