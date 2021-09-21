@@ -183,17 +183,7 @@
       this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex.value;
     }
   }
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find("button").click(this._ChangeSign.bind(this));
-  }
-  _ChangeSign(event) {
-    if (this.data.type !== "race") return;
-    console.log('КНОПКА')
-    const button = event.currentTarget;
-    const key = button.dataset.key;
-    this.data.abil[key].signPlus = !this.data.abil[key].signPlus;
-  }
+ 
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
