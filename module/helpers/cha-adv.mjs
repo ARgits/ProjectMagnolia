@@ -26,7 +26,7 @@ export class CharacterAdvancement extends FormApplication {
         xp: duplicate(this.object.data.data.attributes.xp),
         profs: duplicate(this.object.data.data.profs),
         health: duplicate(this.object.data.data.health),
-        races: {},
+        races: { list: [], chosen: null },
         count: {
           // counter for skills, features and other things for proper xp calculations
           skills: {
@@ -107,7 +107,7 @@ export class CharacterAdvancement extends FormApplication {
        */
       let race_pack_list = pack_list.filter((item) => item.type === "race");
       let race_folder_list = folder_list.filter((item) => item.type === "race");
-      this.data.races = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
+      this.data.races.list = race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
       /*
        * Create final list of features
        */
@@ -237,11 +237,12 @@ export class CharacterAdvancement extends FormApplication {
     /*
      * Calculate starting HP based on character's CON and race
      */
-    for (let [key, race] of Object.entries(this.data.races)) {
+    for (let [key, race] of Object.entries(this.data.races.list)) {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
+      race.chosen = this.data.races.chosen === race._id ? true : false;
       //     if(this.form)
       //     this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false
     }
@@ -364,6 +365,10 @@ export class CharacterAdvancement extends FormApplication {
         break;*/
     }
     this.render();
+  }
+  _onChangeInput(event) {
+    super._onChangeInput(event);
+    console.log("ИЗМЕНИЛОСЬ");
   }
   _onHover(event) {
     const button = event.currentTarget;
