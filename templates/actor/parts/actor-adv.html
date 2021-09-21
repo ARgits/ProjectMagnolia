@@ -58,7 +58,7 @@
                         </li>
                         {{#each races.list as |race key|}}
                             <li class="item flexrow align-center">
-                                <div><input name="races.chosen" type="radio" data-type="race" {{#if (eq races.chosen race._id)}}checked{{/if}}value="{{race._id}}" id="{{race._id}}"/></div>
+                                <div><input name="races.chosen" type="radio" data-type="race" value="{{race._id}}" id="{{race._id}}"/></div>
                                 <div>{{race.name}}</div>
                                 <div>{{race.data.startHP}}</div>
                             </li>
