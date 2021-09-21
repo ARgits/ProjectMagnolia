@@ -353,8 +353,10 @@ export class CharacterAdvancement extends FormApplication {
         }
         break;
       case "race":
-        console.log(this._getSubmitData());
-        data.races.chosen = this.form["races.chosen"].value;
+        let race = this._getSubmitData()["races.chosen"]
+        console.log(race);
+        data.races.chosen = race;
+        this.form.querySelector([`input[type='radio'][id=${race}]`]).checked = true 
         break;
     }
     this.render();
