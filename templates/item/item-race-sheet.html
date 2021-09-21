@@ -34,7 +34,7 @@
       </select>
       attribute bonuses
       {{#each data.abil as |ability key|}}
-        <label>{{localize abil}}</label>
+        <label>{{abil}}</label>
         <button type="button" data-key="{{key}}" class="{{#if ability.signPlus}}fas fa-plus{{else}}fas fa-minus{{/if}}"></button>
         <input hidden value="{{ability.signPlus}}" />
         <input type="number" value="{{ability.value}}" />
