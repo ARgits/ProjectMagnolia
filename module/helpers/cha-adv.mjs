@@ -21,6 +21,7 @@ export class CharacterAdvancement extends FormApplication {
   async getData(options) {
     if (!this.data) {
       this.data = {
+        isReady: duplicate(this.object.data.data.isReady),
         abilities: duplicate(this.object.data.data.abilities),
         skills: duplicate(this.object.data.data.skills),
         xp: duplicate(this.object.data.data.attributes.xp),
@@ -175,9 +176,9 @@ export class CharacterAdvancement extends FormApplication {
       this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
       this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value;
       this.data.abilities[k].isXP = this.data.xp.get < this.data.abilities[k].xp;
-      let race_abil = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].value;
+      let race_abil = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].value ?? 0;
       let race_sign = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].sign ? 1 : -1;
-      this.data.abilities[k].final = race_abil * race_sign?this.data.abilities[k].value + race_abil * race_sign:this.data.abilities[k].value;
+      this.data.abilities[k].final = this.data.isReady ? this.data.abilities[k].value : this.data.abilities[k].value + race_abil * race_sign;
       this.data.abilities[k].mod = Math.floor((this.data.abilities[k].final - 10) / 2);
     }
     /*
@@ -267,7 +268,7 @@ export class CharacterAdvancement extends FormApplication {
         }
         allow_list.push(item);
       }
-      this.data.allow.final = !allow_list.includes(false) ? true : false;
+      this.data.allow.final = !allow_list.includes(false) || this.data.isReady ? true : false;
     }
     /*
      * Final Template Data
@@ -284,6 +285,7 @@ export class CharacterAdvancement extends FormApplication {
       races: this.data.races,
       health: this.data.health,
       allow: this.data.allow,
+      isReady: this.data.isReady,
     };
     console.log(this.form);
     console.log(templateData);
@@ -399,10 +401,13 @@ export class CharacterAdvancement extends FormApplication {
     const actor = this.object;
     this.render();
     const obj = {};
-    obj["data.abilities"] = updateData.abilities;
+    for (let [key, abil] of this.data.abilities) {
+      obj[`data.abilities.${key}.value`] = updateData.abilities[key].final;
+    }
     obj["data.attributes.xp"] = updateData.xp;
     obj["data.skills"] = updateData.skills;
     obj["data.profs"] = updateData.profs;
+    obj["data.isReady"] = this.data.allow.final;
     console.log(obj);
     const feats_data = {
       new: [],
@@ -432,8 +437,10 @@ export class CharacterAdvancement extends FormApplication {
     }
     pass = pass.flat();
     console.log(pass);
-    if (pass.includes(false)) {
-      ui.notifications.error(`Some changes do not comply with the requirements`);
+    if (!this.data.isReady && !this.data.allow.final) {
+      ui.notifications.error(`Something not ready for your character to be created. Check the list`);
+    } else if (pass.includes(false)) {
+      ui.notifications.error(`Some changes in your features do not comply with the requirements`);
     } else {
       await actor.update(obj);
       if (feats_data.exist.length > 0) {

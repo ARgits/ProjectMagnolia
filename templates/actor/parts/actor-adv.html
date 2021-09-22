@@ -1,6 +1,6 @@
 <form>
     <header>
-        <div class="grid grid-2col">
+        <div {{#unless isReady}} class="grid grid-2col" {{/unless}}>
             <div>
                 <div>
                     <label class='resource-label flexlarge align-left' for='xp.get'>XP you earn</label>
@@ -11,17 +11,21 @@
                     <input type='number' class='ability' value={{xp.used}} name='xp.used' readonly />
                 </div>
             </div>
-            <aside>
-                <div>Attributes {{#if allow.ability}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
-                <div>Race {{#if allow.race}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
-                <div>Final {{#if allow.final}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
-            </aside>
+            {{#unless isReady}}
+                <aside>
+                    <div>Attributes {{#if allow.ability}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
+                    <div>Race {{#if allow.race}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
+                    <div>Final {{#if allow.final}}<i class="fas fa-check"></i>{{else}}<i class="fas fa-times"></i>{{/if}}</div>
+                </aside>
+            {{/unless}}
         </div>
     </header>
     <hr>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
         <a class="item" data-tab="stats">Stats</a>
-        <a class="item" data-tab="race">Race</a>
+        {{#unless isReady}}
+            <a class="item" data-tab="race">Race</a>
+        {{/unless}}
         <a class="item" data-tab='skills'>Skills</a>
         <a class='item' data-tab="profs">proficiencies</a>
         <a class='item' data-tab='feats'>Features</a>
