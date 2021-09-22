@@ -76,25 +76,21 @@ export class ARd20Actor extends Actor {
     */
     data.defences.stats.reflex = data.defences.stats.reflex ?? {};
     data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
-    data.defences.stats.reflex.value =
-      10 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.stats.reflex.bonus);
+    data.defences.stats.reflex.value = 10 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.stats.reflex.bonus);
     data.defences.stats.reflex.label = "Reflex";
     data.defences.stats.fortitude = data.defences.stats.fortitude ?? {};
     data.defences.stats.fortitude.bonus = data.defences.stats.fortitude.bonus ?? 0;
-    data.defences.stats.fortitude.value =
-      10 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.stats.fortitude.bonus);
+    data.defences.stats.fortitude.value = 10 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.stats.fortitude.bonus);
     data.defences.stats.fortitude.label = "Fortitude";
     data.defences.stats.will = data.defences.stats.will ?? {};
     data.defences.stats.will.bonus = data.defences.stats.will.bonus ?? 0;
-    data.defences.stats.will.value =
-      10 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.stats.will.bonus);
+    data.defences.stats.will.value = 10 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.stats.will.bonus);
     data.defences.stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
         data.defences.damage.physic[key] = {
           type: data.defences.damage.physic[key]?.type ? data.defences.damage.physic[key].type : "res",
-          sens_value:
-            data.defences.damage.physic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.physic[key].value : 0,
+          sens_value: data.defences.damage.physic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.physic[key].value : 0,
           label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
         };
       }
@@ -125,15 +121,13 @@ export class ARd20Actor extends Actor {
       data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0;
       data.profs.weapon[prof].type = game.settings.get("ard20", "profs").weapon[prof].type;
       data.profs.weapon[prof].name = game.settings.get("ard20", "profs").weapon[prof].name;
-      data.profs.weapon[prof].type_hover =
-        game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
-      data.profs.weapon[prof].type_value =
-        game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.profs.weapon[prof].value];
+      data.profs.weapon[prof].type_hover = game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
+      data.profs.weapon[prof].type_value = game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.profs.weapon[prof].value];
     }
     if (data.profs.weapon.length > game.settings.get("ard20", "profs").weapon.length) {
       data.profs.splice(game.settings.get("ard20", "profs").weapon.length + 1, data.profs.length - game.settings.get("ard20", "profs").weapon.length);
     }
-    data.speed = this.itemTypes.race[0]?.data.data.speed + 5 * data.abilities.dex.mod;
+    data.speed.value = this.itemTypes.race[0]?.data.data.speed + 5 * data.abilities.dex.mod + data.speed.bonus;
   }
 
   /**

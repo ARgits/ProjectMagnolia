@@ -182,6 +182,10 @@ export class CharacterAdvancement extends FormApplication {
       this.data.abilities[k].mod = Math.floor((this.data.abilities[k].final - 10) / 2);
     }
     /*
+    * Calculate Character's hp
+    */
+   this.data.health.max = this.data.races.list.filter(race=>race.chosen===true)?.[0].data.startHP
+    /*
      * Calculate skills' xp cost
      */
     for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
@@ -248,8 +252,6 @@ export class CharacterAdvancement extends FormApplication {
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
       race.chosen = this.data.races.chosen === race._id ? true : false;
-      //     if(this.form)
-      //     this.form?.querySelector(`input[id=${race._id}]`).checked = race._id === this.data.races.chosen ? true : false
     }
     /*
      * Check if all right at character creation

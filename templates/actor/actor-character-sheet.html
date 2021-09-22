@@ -2,7 +2,7 @@
     {{#unless data.isReady}}
         Your Character is not fully created, please start or continue creation
         <button type="button" class="config-button" data-action="adv">Create Character</button>
-    
+
     {{else}}
         {{!-- Sheet Header --}}
         <header class="sheet-header">
@@ -13,7 +13,7 @@
                     <div class="resource grid-span-2">
                         <label for="data.health.value" class="resource-label">Health</label>
                         <div class="resource-content flexrow flex-center">
-                            <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number" />
+                            <input type="text" name="data.health.value" value="{{data.health.value}}" min="-{{data.health.max}}" max="{{data.health.max}}" data-dtype="Number" />
                             <span>/</span>
                             <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
                         </div>
