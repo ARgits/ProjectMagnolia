@@ -38,8 +38,8 @@
       <div class="grid grid-6col">
         <label class="grid-span-3">{{key}}</label>
         <button type="button" data-key="{{key}}" class="{{#if ability.signPlus}}fas fa-plus{{else}}fas fa-minus{{/if}}"></button>
-        <input hidden value="data.abil.{{key}}.signPlus" />
-        <input class="grid-span-2" value="data.abil.{{key}}.value" />
+        <input hidden name="data.abil.{{key}}.signPlus" value="{{ability.signPlus}}" />
+        <input class="grid-span-2" name="data.abil.{{key}}.value" type="number" value="{{ability.value}}" />
     </div>
       {{/each}}
 
