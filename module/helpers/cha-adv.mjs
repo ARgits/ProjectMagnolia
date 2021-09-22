@@ -444,7 +444,8 @@ export class CharacterAdvancement extends FormApplication {
     } else {
       await actor.update(obj);
       if (actor.itemTypes.race.length === 0) {
-        await actor.createEmbeddedDocuments("Item", this.data.races.filter((race) => race.chosen === true)[0]);
+        let race_list = this.data.races.filter((race) => race.chosen === true)
+        await actor.createEmbeddedDocuments("Item", race_list);
       }
       if (feats_data.exist.length > 0) {
         await actor.updateEmbeddedDocuments(
