@@ -178,7 +178,7 @@ export class CharacterAdvancement extends FormApplication {
       let race_abil = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].value;
       let race_sign = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].sign ? 1 : -1;
       this.data.abilities[k].final = race_abil * race_sign?this.data.abilities[k].value + race_abil * race_sign:this.data.abilities[k].value;
-      console.log(this.data.abilities[k].final, race_abil, race_sign, 'FINAAAAAAAAAAAl')
+      this.data.abilities[k].mod = Math.floor((this.data.abilities[k].final - 10) / 2);
     }
     /*
      * Calculate skills' xp cost
