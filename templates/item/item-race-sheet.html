@@ -33,13 +33,13 @@
         {{/select}}
       </select>
       attribute bonuses
-      {{#each data.abil as |ability key|}}
+      {{#each data.bonuses.abil as |ability key|}}
       {{log ability key}}
       <div class="grid grid-6col">
         <label class="grid-span-3">{{key}}</label>
-        <button type="button" data-key="{{key}}" class="{{#if ability.signPlus}}fas fa-plus{{else}}fas fa-minus{{/if}}"></button>
-        <input hidden name="data.abil.{{key}}.signPlus" value="{{ability.signPlus}}" />
-        <input class="grid-span-2" name="data.abil.{{key}}.value" type="number" value="{{ability.value}}" />
+        <button type="button" data-key="{{key}}" class="{{#if ability.sign}}fas fa-plus{{else}}fas fa-minus{{/if}}"></button>
+        <input hidden name="data.bonuses.abil.{{key}}.signPlus" value="{{ability.sign}}" />
+        <input class="grid-span-2" name="data.bonuses.abil.{{key}}.value" type="number" value="{{ability.value}}" />
     </div>
       {{/each}}
 

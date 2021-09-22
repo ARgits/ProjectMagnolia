@@ -161,8 +161,7 @@ export class ARd20Item extends Item {
     const abil = (data.abil = {});
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
-      let n = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.value`) : 0;
-      abil[k] = { mod: v, value: n, signPlus: true };
+      abil[k] = v
     }
     this._prepareWeaponAttr(data, abil);
   }
