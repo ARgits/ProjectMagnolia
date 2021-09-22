@@ -504,7 +504,7 @@ input:read-only {
   background-image: url(../../css/parchment.jpg);
   box-shadow: none;
   border: #d5d3c7;
-  width: 50%;
+  width: 75%;
 }
 
 .change[data-action="plus"],
@@ -561,9 +561,9 @@ input[type="number"]::-webkit-outer-spin-button {
     -moz-appearance: textfield;
     appearance: textfield;
 }
-.fa-check{
+.check.fa-check{
   color: green;
 }
-.fa-times{
+.check.fa-times{
   color:red
 }

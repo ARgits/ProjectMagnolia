@@ -443,6 +443,9 @@ export class CharacterAdvancement extends FormApplication {
       ui.notifications.error(`Some changes in your features do not comply with the requirements`);
     } else {
       await actor.update(obj);
+      if (actor.itemTypes.race.length === 0) {
+        await actor.createEmbeddedDocuments("Item", this.data.races.filter((race) => race.chosen === true)[0]);
+      }
       if (feats_data.exist.length > 0) {
         await actor.updateEmbeddedDocuments(
           "Item",
