@@ -567,6 +567,6 @@ input[type="number"]::-webkit-outer-spin-button {
 .check.fa-times {
   color: red;
 }
-li div.description {
+li.items-header div.description {
   flex: var(--count);
 }
