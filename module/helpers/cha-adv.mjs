@@ -184,7 +184,7 @@ export class CharacterAdvancement extends FormApplication {
     /*
     * Calculate Character's hp
     */
-   this.data.health.max = this.data.races.list.filter(race=>race.chosen===true)?.[0].data.startHP
+   this.data.health.max = this.data.races.list.filter(race=>race.chosen===true)?.[0]?.data.startHP
     /*
      * Calculate skills' xp cost
      */
@@ -406,7 +406,9 @@ export class CharacterAdvancement extends FormApplication {
     for (let [key, abil] of Object.entries(this.data.abilities)) {
       obj[`data.abilities.${key}.value`] = updateData.abilities[key].final;
     }
-    obj["data.attributes.xp"] = updateData.xp;
+    obj["data.health.max"] = this.data.health.max
+    if(this.data.isReady){
+    obj["data.attributes.xp"] = updateData.xp};
     obj["data.skills"] = updateData.skills;
     obj["data.profs"] = updateData.profs;
     obj["data.isReady"] = this.data.allow.final;
@@ -446,7 +448,7 @@ export class CharacterAdvancement extends FormApplication {
     } else {
       await actor.update(obj);
       if (actor.itemTypes.race.length === 0) {
-        let race_list = this.data.races.filter((race) => race.chosen === true)
+        let race_list = this.data.races.list.filter((race) => race.chosen === true)
         await actor.createEmbeddedDocuments("Item", race_list);
       }
       if (feats_data.exist.length > 0) {
