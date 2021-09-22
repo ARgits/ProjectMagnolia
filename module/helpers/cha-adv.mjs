@@ -175,9 +175,10 @@ export class CharacterAdvancement extends FormApplication {
       this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
       this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value;
       this.data.abilities[k].isXP = this.data.xp.get < this.data.abilities[k].xp;
-      race_abil = this.data.races.list.filter((race) => race.chosen === this.data.races.chosen)?.[0].bonus.abil[k].value;
-      race_sign = this.data.races.list.filter((race) => race.chosen === this.data.races.chosen)?.[0].bonus.abil[k].sign ? 1 : -1;
-      this.data.abilities[k].final = this.data.abilities[k] + race_abil * race_sign;
+      let race_abil = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].value;
+      let race_sign = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].sign ? 1 : -1;
+      this.data.abilities[k].final = race_abil * race_sign?this.data.abilities[k].value + race_abil * race_sign:this.data.abilities[k].value;
+      console.log(this.data.abilities[k].final, race_abil, race_sign, 'FINAAAAAAAAAAAl')
     }
     /*
      * Calculate skills' xp cost
