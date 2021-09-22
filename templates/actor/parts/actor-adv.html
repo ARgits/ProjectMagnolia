@@ -101,7 +101,7 @@
                             <li class="item flexrow align-center">
                                 <div class="item-prop"><label for='skills.{{key}}.prof' class="resource-label skill flexlarge align-left" data-type='skill' data-label="{{skill.label}}">{{skill.label}}</label></div>
                                 <div class="item-prop"><button class='change far fa-arrow-alt-circle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button></div>
-                                <div class="item-prop"><input hidden name='skills.{{key}}.prof' value={{skill.prof}} type="number" /></div>
+                                <input hidden name='skills.{{key}}.prof' value={{skill.prof}} type="number" />
                                 <div class="item-prop"><label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label></div>
                                 <div class="item-prop"><button class='change far fa-arrow-alt-circle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button></div>
                                 <div class="item-prop">{{#if skill.xp}}<span class='ability' name='skills.{{key}}.xp'>{{numberFormat skill.xp decimals=0 sign=false}}</span>{{/if}}</div>
