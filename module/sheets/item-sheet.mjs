@@ -74,7 +74,7 @@ export class ARd20ItemSheet extends ItemSheet {
     console.log('КНОПКА')
     const button = event.currentTarget;
     const key = button.dataset.key;
-    this.item.data.data.abil[key].signPlus = !this.item.data.data.abil[key].signPlus;
+    this.item.data.data.bonus.abil[key].signPlus = !this.item.data.data.bonus.abil[key].signPlus;
   }
   _FeatReq(event) {
     {

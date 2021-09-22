@@ -225,7 +225,7 @@
     "race": {
       "templates": ["base"],
       "speed": 20,
-      "bonuses": {
+      "bonus": {
         "abil": {
           "str": {
             "value": 0,
