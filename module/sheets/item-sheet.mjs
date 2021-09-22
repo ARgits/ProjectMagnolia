@@ -66,7 +66,7 @@ export class ARd20ItemSheet extends ItemSheet {
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.item));
     // Roll handlers, click handlers, etc. would go here.
     html.find(".config-button").click(this._FeatReq.bind(this));
-    html.find("button").click(this._ChangeSign.bind(this))
+    html.find("i.rollable").click(this._ChangeSign.bind(this))
     
   }
   _ChangeSign(event) {

@@ -37,7 +37,11 @@
       {{log ability key}}
       <div class="grid grid-6col">
         <label class="grid-span-3">{{key}}</label>
-        <button type="button" data-key="{{key}}" class="fas {{#if ability.sign}} fa-plus {{else}} fa-minus {{/if}}"></button>
+        {{#if ability.sign}}
+        <i class="fas fa-plus rollable"></i>
+        {{else}}
+        <i class="fas fa-minus rollable"></i>
+        {{/if}}
         <input class="grid-span-2" name="data.bonus.abil.{{key}}.value" type="number" value="{{ability.value}}" />
     </div>
       {{/each}}
