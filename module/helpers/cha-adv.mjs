@@ -175,6 +175,9 @@ export class CharacterAdvancement extends FormApplication {
       this.data.abilities[k].xp = CONFIG.ARd20.abil_xp[this.data.abilities[k].value - 5];
       this.data.abilities[k].isEq = this.data.abilities[k].value === this.object.data.data.abilities[k].value;
       this.data.abilities[k].isXP = this.data.xp.get < this.data.abilities[k].xp;
+      race_abil = this.data.races.list.filter((race) => race.chosen === this.data.races.chosen)?.[0].bonus.abil[k].value;
+      race_sign = this.data.races.list.filter((race) => race.chosen === this.data.races.chosen)?.[0].bonus.abil[k].sign ? 1 : -1;
+      this.data.abilities[k].final = this.data.abilities[k] + race_abil * race_sign;
     }
     /*
      * Calculate skills' xp cost
@@ -368,14 +371,13 @@ export class CharacterAdvancement extends FormApplication {
   _onChangeInput(event) {
     super._onChangeInput(event);
     console.log("ИЗМЕНИЛОСЬ");
-    const button = event.currentTarget.id
-    const k = event.currentTarget.dataset.key
-    for(let [key, race] of Object.entries(this.data.races.list)){
-      this.data.races.list[key].chosen=key===k?true:false
-      this.data.races.chosen = this.data.races.list[key].chosen?race._id:this.data.races.chosen
+    const button = event.currentTarget.id;
+    const k = event.currentTarget.dataset.key;
+    for (let [key, race] of Object.entries(this.data.races.list)) {
+      this.data.races.list[key].chosen = key === k ? true : false;
+      this.data.races.chosen = this.data.races.list[key].chosen ? race._id : this.data.races.chosen;
     }
-    this.render()
-
+    this.render();
   }
   _onHover(event) {
     const button = event.currentTarget;

@@ -228,22 +228,28 @@
       "bonus": {
         "abil": {
           "str": {
-            "value": 0
+            "value": 0,
+            "sign": true
           },
           "dex": {
-            "value": 0
+            "value": 0,
+            "sign": true
           },
           "con": {
-            "value": 0
+            "value": 0,
+            "sign": true
           },
           "int": {
-            "value": 0
+            "value": 0,
+            "sign": true
           },
           "wis": {
-            "value": 0
+            "value": 0,
+            "sign": true
           },
           "cha": {
-            "value": 0
+            "value": 0,
+            "sign": true
           }
         },
         "skill": {}

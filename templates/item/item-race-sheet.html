@@ -34,16 +34,16 @@
       </select>
       attribute bonuses
       {{#each data.bonus.abil as |ability key|}}
-      {{log ability key}}
-      <div class="grid grid-6col flexrow">
-        <label class="grid-span-3">{{key}}</label>
-        {{#if ability.sign}}
-        <i class="fas fa-plus rollable" data-key="{{key}}"></i>
-        {{else}}
-        <i class="fas fa-minus rollable" data-key="{{key}}"></i>
-        {{/if}}
-        <input class="grid-span-2" name="data.bonus.abil.{{key}}.value" type="number" value="{{ability.value}}" />
-    </div>
+        {{log ability key}}
+        <div class="grid grid-6col flexrow">
+          <label class="grid-span-3">{{key}}</label>
+          {{#if ability.sign}}
+            <i class="fas fa-plus rollable" data-key="{{key}}"></i>
+          {{else}}
+            <i class="fas fa-minus rollable" data-key="{{key}}"></i>
+          {{/if}}
+          <input class="grid-span-2" name="data.bonus.abil.{{key}}.value" type="number" value="{{ability.value}}" />
+        </div>
       {{/each}}
 
     </div>
