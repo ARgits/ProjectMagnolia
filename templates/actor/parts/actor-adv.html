@@ -62,26 +62,28 @@
         </ol>
         </div>
         <div class='tab' data-tab="race" data-group="primary-tabs">
-            <ol class="items-list flexcol flex-group-center">
-                <li class="items-header flexrow">
-                    <div>Choose</div>
-                    <div>Race</div>
-                    <div>Staring HP</div>
-                    <div class="description" style="--count:3">Race description</div>
-                </li>
-                <div class="grid grid-2col">
-                    <div>
-                        {{#each races.list as |race key|}}
-                            <li class="item flexrow align-center">
-                                <div class="item-prop"><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
-                                <div class="item-prop">{{race.name}}</div>
-                                <div class="item-prop">{{race.data.startHP}}</div>
-                            </li>
-                        {{/each}}
+            <div class="flexcol flex-group-center">
+                <ol class="items-list ">
+                    <li class="items-header flexrow">
+                        <div>Choose</div>
+                        <div>Race</div>
+                        <div>Staring HP</div>
+                        <div class="description" style="--count:3">Race description</div>
+                    </li>
+                    <div class="grid grid-2col">
+                        <div>
+                            {{#each races.list as |race key|}}
+                                <li class="item flexrow align-center">
+                                    <div class="item-prop"><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
+                                    <div class="item-prop">{{race.name}}</div>
+                                    <div class="item-prop">{{race.data.startHP}}</div>
+                                </li>
+                            {{/each}}
+                        </div>
+                        <aside class="item-prop">race description</aside>
                     </div>
-                    <aside class="item-prop">race description</aside>
-                </div>
-            </ol>
+                </ol>
+            </div>
         </div>
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class="grid grid-2col">
