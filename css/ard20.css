@@ -555,15 +555,18 @@ input .wrong {
   border-color: #dc143c;
   outline-color: #dc143c;
 }
-input[type="number"]::-webkit-inner-spin-button, 
-input[type="number"]::-webkit-outer-spin-button {  
-   -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
-.check.fa-check{
+.check.fa-check {
   color: green;
 }
-.check.fa-times{
-  color:red
+.check.fa-times {
+  color: red;
+}
+li div.description {
+  flex: var(--count);
 }
