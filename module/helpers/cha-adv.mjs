@@ -401,7 +401,7 @@ export class CharacterAdvancement extends FormApplication {
     const actor = this.object;
     this.render();
     const obj = {};
-    for (let [key, abil] of this.data.abilities) {
+    for (let [key, abil] of Object.entries(this.data.abilities)) {
       obj[`data.abilities.${key}.value`] = updateData.abilities[key].final;
     }
     obj["data.attributes.xp"] = updateData.xp;
