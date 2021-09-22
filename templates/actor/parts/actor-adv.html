@@ -70,20 +70,16 @@
                         <div>Staring HP</div>
                         <div>Race description</div>
                     </li>
-                    <li class="grid grid-2col">
-                        <div>
-                            {{#each races.list as |race key|}}
-                    <li class="item flexrow align-center">
-                        <div class="item-prop"><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
-                        <div class="item-prop">{{race.name}}</div>
-                        <div class="item-prop">{{race.data.startHP}}</div>
-                    </li>
+                    {{#each races.list as |race key|}}
+                        <li class="item flexrow align-center">
+                            <div class="item-prop"><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
+                            <div class="item-prop">{{race.name}}</div>
+                            <div class="item-prop">{{race.data.startHP}}</div>
+                        </li>
                     {{/each}}
+                    <aside class="verticalLine">race description</aside>
+                </ol>
             </div>
-            <aside class="verticalLine">race description</aside>
-            </li>
-            </ol>
-        </div>
         </div>
         <div class='tab' data-tab='skills' data-group='primary-tabs'>
             <div class="grid grid-2col">
