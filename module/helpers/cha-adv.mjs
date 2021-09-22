@@ -65,7 +65,7 @@ export class CharacterAdvancement extends FormApplication {
       let folder_list = [];
       let pack_name = [];
       let folder_name = [];
-      this.data.xp.get = this.object.data.isReady || this.data.xp.used !== 0 ? this.data.xp.get : 10000;
+      this.data.xp.get = this.data.isReady || this.data.xp.used !== 0 ? this.data.xp.get : 10000;
       /*
        * Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums
        */
