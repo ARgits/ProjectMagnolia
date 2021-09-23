@@ -182,9 +182,9 @@ export class CharacterAdvancement extends FormApplication {
       this.data.abilities[k].mod = Math.floor((this.data.abilities[k].final - 10) / 2);
     }
     /*
-    * Calculate Character's hp
-    */
-   this.data.health.max = this.data.races.list.filter(race=>race.chosen===true)?.[0]?.data.startHP
+     * Calculate Character's hp
+     */
+    this.data.health.max = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.startHP;
     /*
      * Calculate skills' xp cost
      */
@@ -247,10 +247,11 @@ export class CharacterAdvancement extends FormApplication {
      * Calculate starting HP based on character's CON and race
      */
     for (let [key, race] of Object.entries(this.data.races.list)) {
-      let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value - 7, 0) / 4);
+      let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value + race.data.bonus.abil.con.value - 7, 0) / 4);
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
-      race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + this.data.abilities.con.mod;
+      let race_mod = Math.floor((this.data.abilities.con.value+race.data.bonus.abil.con.value-10)/2)
+      race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + race_mod;
       race.chosen = this.data.races.chosen === race._id ? true : false;
     }
     /*
@@ -406,9 +407,10 @@ export class CharacterAdvancement extends FormApplication {
     for (let [key, abil] of Object.entries(this.data.abilities)) {
       obj[`data.abilities.${key}.value`] = updateData.abilities[key].final;
     }
-    obj["data.health.max"] = this.data.health.max
-    if(this.data.isReady){
-    obj["data.attributes.xp"] = updateData.xp};
+    obj["data.health.max"] = this.data.health.max;
+    if (this.data.isReady) {
+      obj["data.attributes.xp"] = updateData.xp;
+    }
     obj["data.skills"] = updateData.skills;
     obj["data.profs"] = updateData.profs;
     obj["data.isReady"] = this.data.allow.final;
@@ -448,7 +450,7 @@ export class CharacterAdvancement extends FormApplication {
     } else {
       await actor.update(obj);
       if (actor.itemTypes.race.length === 0) {
-        let race_list = this.data.races.list.filter((race) => race.chosen === true)
+        let race_list = this.data.races.list.filter((race) => race.chosen === true);
         await actor.createEmbeddedDocuments("Item", race_list);
       }
       if (feats_data.exist.length > 0) {

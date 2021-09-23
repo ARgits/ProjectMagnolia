@@ -109,7 +109,7 @@
                     </div>
                     <aside class='item-prop'>{{{hover.value}}}</aside>
                 </div>
-                
+
             </ol>
         </div>
         <div class='tab' data-tab='profs' data-group='primary-tabs'>
@@ -130,26 +130,44 @@
             </div>
         </div>
         <div class='tab' data-tab='feats' data-group='primary-tabs'>
-            <div class='grid grid-2col'>
-                <div class="ability flexcoll-group-center align-center">
-                    {{#each feats.awail as |feat key|}}
-                        <div class="ability flexrow grid grid-6col" style="grid-template-columns:2fr 2fr repeat(4,1fr)">
-                            <label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label>
-                            <label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.source.label}}">{{feat.data.source.label}}</label>
-                            <button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
-                            <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
-                            <div class='flexrow'>
-                                <input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' />/
-                                <input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max">
-                            </div>
-                            <button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
-                            {{#if (lt feat.data.level.initial feat.data.level.max)}}<span class='ability' name='feats.{{key}}.data.level.xp'>{{numberFormat feat.data.level.xp decimals=0 sign=false}}</span>{{/if}}
+            <ol class="flexcol items-list">
+                <li class="items-header flexrow">
+                    <div>Name</div>
+                    <div>Source</div>
+                    <div>Decrease level</div>
+                    <div>
+                        <div>Level</div>
+                        <div class="grid grid-2col">
+                            <div>Current</div>
+                            <div>Maximum</div>
                         </div>
-                    {{/each}}
+                    </div>
+                    <div>Increase level</div>
+                    <div>XP cost</div>
+                    <div class="description" style="--count:6"></div>
+                </li>
+                <div class='grid grid-2col'>
+                    <div>
+                        {{#each feats.awail as |feat key|}}
+                            <li class="item flexrow align-center">
+                                <div class="item-prop"><label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label></div>
+                                <div class="item-prop"><label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.source.label}}">{{feat.data.source.label}}</label></div>
+                                <div class="item-prop"><button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button></div>
+                                <div class="item-prop"><input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" /></div>
+                                <div class="item-prop">
+                                    <div>
+                                        <div class="item-prop"><input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' /></div>
+                                        <div class="item-prop"><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max"></div>
+                                    </div>
+                                </div>
+                                <div class="item-prop"><button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button></div>
+                                <div class="item-prop">{{#if (lt feat.data.level.initial feat.data.level.max)}}<span class='ability' name='feats.{{key}}.data.level.xp'>{{numberFormat feat.data.level.xp decimals=0 sign=false}}</span>{{/if}}</div>
+                            </li>
+                        {{/each}}
+                    </div>
+                    <aside>blank for feature description</aside>
                 </div>
-                <aside class='verticalLine'>blank for feature description</aside>
-            </div>
-        </div>
+            </ol>
         </div>
     </section>
     <hr>
