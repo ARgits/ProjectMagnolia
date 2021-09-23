@@ -68,7 +68,7 @@
                         <div>Choose</div>
                         <div>Race</div>
                         <div>Staring HP</div>
-                        <div class="description" style="--count:3">Race description</div>
+                        <div class="stretch" style="--count:3">Race description</div>
                     </li>
                     <div class="grid grid-2col">
                         <div>
@@ -93,7 +93,7 @@
                     <div>Rank</div>
                     <div>Increase rank</div>
                     <div>XP cost</div>
-                    <div class="description" style="--count:5">Description</div>
+                    <div class="stretch" style="--count:5">Description</div>
                 </li>
                 <div class="grid grid-2col">
                     <div>
@@ -135,16 +135,11 @@
                     <div>Name</div>
                     <div>Source</div>
                     <div>Decrease level</div>
-                    <div class="grid2">
-                        <div>Level</div>
-                        <div class="grid grid-2col">
-                            <div>Current</div>
-                            <div>Maximum</div>
-                        </div>
-                    </div>
+                    <div>Current Level</div>
+                    <div>Maximum Level</div>
                     <div>Increase level</div>
                     <div>XP cost</div>
-                    <div class="description" style="--count:6">Description</div>
+                    <div class="stretch" style="--count:7">Description</div>
                 </li>
                 <div class='grid grid-2col'>
                     <div>
@@ -154,10 +149,8 @@
                                 <div class="item-prop"><label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.source.label}}">{{feat.data.source.label}}</label></div>
                                 <div class="item-prop"><button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button></div>
                                 <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
-                                <div class="grid grid-2col">
-                                        <div class="item-prop"><input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' /></div>
-                                        <div class="item-prop"><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max"></div>
-                                </div>
+                                <div class="item-prop"><input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' /></div>
+                                <div class="item-prop"><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max"></div>
                                 <div class="item-prop"><button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button></div>
                                 <div class="item-prop">{{#if (lt feat.data.level.initial feat.data.level.max)}}<span class='ability' name='feats.{{key}}.data.level.xp'>{{numberFormat feat.data.level.xp decimals=0 sign=false}}</span>{{/if}}</div>
                             </li>

@@ -567,12 +567,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .check.fa-times {
   color: red;
 }
-li.items-header div.description {
+.stretch {
   flex: var(--count);
 }
-.grid-2col .item-prop{
-  gap:0px
-}
-.items-header div.grid2{
-  flex:2
+.items-list .grid {
+  gap: 0px;
 }
