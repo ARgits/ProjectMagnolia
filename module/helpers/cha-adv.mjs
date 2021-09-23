@@ -6,7 +6,7 @@ export class CharacterAdvancement extends FormApplication {
       title: "Character Advancement",
       template: "systems/ard20/templates/actor/parts/actor-adv.html",
       id: "actor-adv",
-      width: 800,
+      width: 1000,
       height: "auto",
       tabs: [
         {
