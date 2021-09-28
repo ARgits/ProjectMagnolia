@@ -46,7 +46,7 @@
                                 {{/select}}
                             </select>
                         {{else}}
-                            <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if eq(r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
+                            <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
                         {{/if}}
                     {{/each}}
                 </li>
