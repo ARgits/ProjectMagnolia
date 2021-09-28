@@ -31,7 +31,7 @@ export class ARd20Actor extends Actor {
     const actorData = this.data;
     const data = actorData.data;
     const flags = actorData.flags.ard20 || {};
-    const isGM = (actorData.isGM = game.user.role === 4);
+    const isGM = (data.isGM = game.user.role === 4);
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
