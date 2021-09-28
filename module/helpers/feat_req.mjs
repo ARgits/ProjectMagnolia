@@ -28,11 +28,12 @@ export class FeatRequirements extends FormApplication {
             for (let feat of feat_list) {
               let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
               let doc = await game.packs.get(new_key).getDocument(feat._id);
+              if(doc.data.type==='feature'){
               let item = {
                 name: duplicate(feat.name),
                 maxLevel: duplicate(doc.data.data.level.max),
               };
-              pack_list.push(item);
+              pack_list.push(item);}
             }
           }
         }
@@ -42,7 +43,7 @@ export class FeatRequirements extends FormApplication {
           let feat_list = [];
           feat_list.push(game.folders.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].content);
           feat_list = feat_list.flat();
-          for (let feat of feat_list.filter((item) => item.type === "feat")) {
+          for (let feat of feat_list.filter((item) => item.type === "feature")) {
             let doc = {
               name: duplicate(feat.name),
               maxLevel: duplicate(feat.data.data.level.max),
@@ -53,7 +54,7 @@ export class FeatRequirements extends FormApplication {
       }
       this.feat = {
         awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.values.filter((item) => item.type === "feat"))),
+        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.values.filter((item) => item.type === "feature"))),
       };
       for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
         this.data.push({
