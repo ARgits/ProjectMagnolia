@@ -90,7 +90,6 @@ export class FeatRequirements extends FormApplication {
           this.data.push({
             name: v.name,
             type: "feat",
-            input: v.level ?? 0,
             maxLevel: v.maxLevel,
           });
         }

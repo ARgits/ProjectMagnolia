@@ -36,7 +36,6 @@
                         <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
                     {{/if}}
                     {{#each r.input as |inp k|}}
-                    {{log k}}
                         <div>{{add k 1}}:</div>
                         {{#if (eq r.type "skill")}}
                             <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-type="value" data-order="{{k}}">
@@ -47,14 +46,14 @@
                                 {{/select}}
                             </select>
                         {{else}}
-                            <input name='req.values.{{key}}.input.{{k}}' min="0" max="30" type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
+                            <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if eq(r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
                         {{/if}}
                     {{/each}}
                 </li>
                 <hr>
             {{/each}}
         </ol>
-        <ol class="item-list">
+        <ol class="items-list">
             <li class="item flexrow items-header">
                 <div>Level</div>
                 <div>Logic</div>

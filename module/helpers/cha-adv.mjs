@@ -210,7 +210,7 @@ export class CharacterAdvancement extends FormApplication {
       for (let [key, r] of Object.entries(object.data.req.values)) {
         switch (r.type) {
           case "ability": //check if character's ability is equal is higher than value entered in feature requirements
-            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.abilities[r.value].value));
+            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.abilities[r.value].final));
             break;
           case "skill": //check if character's skill rank is equal is higher than value entered in feature requirements
             r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.skills[r.value].prof));
