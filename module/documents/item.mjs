@@ -74,16 +74,16 @@ export class ARd20Item extends Item {
     if (this.isOwned && flags.core?.sourceId) {
       let id = this.isOwned ? /Item.(.+)/.exec(flags.core.sourceId)[1] : null;
       console.log(id);
-      data.proto = this.isOwned && data.proto === undefined ? game.items.get(id).data.data.proto : data.proto;
+      data.sub_type = this.isOwned && data.sub_type === undefined ? game.items.get(id).data.data.sub_type : data.sub_type;
     }
-    data.proto = data.settings.filter((prof) => prof.name === data.proto)[0] === undefined ? data.settings[0].name : data.proto;
+    data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type)[0] === undefined ? data.settings[0].name : data.sub_type;
     labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
     labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
     data.prof.label = labels.prof;
     data.type.label = labels.type;
   }
-  /*
-  Prepare data for features
+  /**
+  *Prepare data for features
   */
   _prepareFeatureData(itemData, labels) {
     if (itemData.type !== "feature") return;
@@ -143,12 +143,15 @@ export class ARd20Item extends Item {
       data.req.logic.splice(data.req.logic.length - 1, 1);
     }
   }
+  /**
+   * Prepare data for 'race' type of item
+   */
   _prepareRaceData(itemData, labels) {
     if (itemData.type !== "race") return;
     const data = itemData.data;
     data.HPdie = CONFIG.ARd20.HPdice.slice(0, 7);
   }
-  /*
+  /**
   Prepare Data that uses actor's data
   */
   prepareFinalAttributes() {
@@ -167,7 +170,7 @@ export class ARd20Item extends Item {
 
   _prepareWeaponAttr(data, abil) {
     if (this.data.type === "weapon") {
-      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.proto)[0].value : 0;
+      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0].value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
       data.prof.label = this.labels.prof;
       let prof_bonus = 0;
@@ -178,8 +181,8 @@ export class ARd20Item extends Item {
       } else if (data.prof.value === 2) {
         prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
       }
-      this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str.value;
-      this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex.value;
+      this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
+      this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex;
     }
   }
 
