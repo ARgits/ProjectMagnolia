@@ -145,10 +145,11 @@
         <div>
           Type
           <select name="data.type.value">
-            {{#select data.type.value}} {{#each config.WeaponType as |name
-            sch|}}
+            {{#select data.type.value}}
+              {{#each config.WeaponType as |name sch|}}
                 <option value="{{sch}}">{{localize name}}</option>
-              {{/each}} {{/select}}
+              {{/each}}
+            {{/select}}
           </select>
         </div>
         <div>
