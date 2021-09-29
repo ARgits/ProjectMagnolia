@@ -128,7 +128,7 @@ export class ARd20Actor extends Actor {
     if (data.profs.weapon.length > game.settings.get("ard20", "profs").weapon.length) {
       data.profs.splice(game.settings.get("ard20", "profs").weapon.length + 1, data.profs.length - game.settings.get("ard20", "profs").weapon.length);
     }
-    data.speed.value = this.itemTypes.race[0]?.data.data.speed + 5 * data.abilities.dex.mod + data.speed.bonus;
+    data.speed.value = this.itemTypes.race[0]?.data.data.speed + data.abilities.dex.mod + data.speed.bonus;
   }
 
   /**

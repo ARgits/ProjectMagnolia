@@ -24,7 +24,7 @@
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{!-- As you add new fields, add them in here! --}}
-      speed<input name="data.speed" type="number" placeholder="speed" value="{{data.speed}}" />
+      speed<input name="data.speed" type="number" min="6" value="{{data.speed}}" />
       start dice <select name="data.FhpDie">
         {{#select data.FhpDie}}
           {{#each data.HPdie as |hp key|}}
