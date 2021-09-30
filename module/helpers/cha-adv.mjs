@@ -203,8 +203,11 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, object] of Object.entries(this.data.feats.awail)) {
       let pass = [];
       let allCount = this.data.count.feats.all;
-      let featCount = this.data.count.feats[object.data.source?.value || "mag"];
-      object.data.level.xp = object.data.xp?.[object.data.level.initial] ? Math.ceil((object.data.xp[object.data.level.initial] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
+      let featCount = this.data.count.feats[object.data.source?.value];
+      object.data.level.xp = object.data.level.xp || {};
+      for (let i = object.data.level.initial; i < object.data.level.max; i++) {
+        object.data.level.xp[i] = object.data.xp?.[i] ? Math.ceil((object.data.xp[i] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
+      }
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
       for (let [key, r] of Object.entries(object.data.req.values)) {
@@ -250,7 +253,7 @@ export class CharacterAdvancement extends FormApplication {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value + race.data.bonus.abil.con.value - 7, 0) / 4);
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
       console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
-      let race_mod = Math.floor((this.data.abilities.con.value+race.data.bonus.abil.con.value-10)/2)
+      let race_mod = Math.floor((this.data.abilities.con.value + race.data.bonus.abil.con.value - 10) / 2);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + race_mod;
       race.chosen = this.data.races.chosen === race._id ? true : false;
     }
@@ -349,15 +352,16 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
           case "plus":
             data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
+            
+            data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.used += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.feats.awail[button.dataset.key].data.level.initial += 1;
-            data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp;
-            data.xp.used += data.feats.awail[button.dataset.key].data.level.xp;
             break;
           case "minus":
             data.feats.awail[button.dataset.key].data.level.initial -= 1;
             data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
-            data.xp.get += data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.initial];
-            data.xp.used -= data.feats.awail[button.dataset.key].data.xp[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.get += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.used -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             break;
         }
         break;
