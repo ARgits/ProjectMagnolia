@@ -208,6 +208,7 @@ export class CharacterAdvancement extends FormApplication {
       for (let i = object.data.level.initial; i < object.data.level.max; i++) {
         object.data.level.xp[i] = object.data.xp?.[i] ? Math.ceil((object.data.xp[i] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
       }
+      object.data.current_xp = object.data.level.xp[object.data.level.initial]
       object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp > this.data.xp.get;
       for (let [key, r] of Object.entries(object.data.req.values)) {

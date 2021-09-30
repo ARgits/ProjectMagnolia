@@ -151,7 +151,7 @@
                             <div class="item-prop"><input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' /></div>
                             <div class="item-prop"><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max" /></div>
                             <div class="item-prop"><button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button></div>
-                            <div class="item-prop">{{#if (lt feat.data.level.initial feat.data.level.max)}}<span class='ability' name='feats.{{key}}.data.level.xp.{{feat.data.level.initial}}'>{{#with feat.data.level.initial as |init|}}{{numberFormat feat.data.xp.init decimals=0 sign=false}}{{/with}}</span>{{/if}}</div>
+                            <div class="item-prop">{{#if (lt feat.data.level.initial feat.data.level.max)}}<span class='ability' name='feats.{{key}}.data.level.xp.{{feat.data.level.initial}}'>{{numberFormat feat.data.current_xp decimals=0 sign=false}}{{/with}}</span>{{/if}}</div>
                             </li>
                         {{/each}}
                     </div>
