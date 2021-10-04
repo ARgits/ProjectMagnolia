@@ -1,5 +1,5 @@
 export {default as D20Roll} from "./d20-roll"
-export {default as DamageRoll} from ".damage-roll.js";
+export {default as DamageRoll} from "./damage-roll.js";
 
 /**
  * A standardized helper function for simplifying the constant parts of a multipart roll formula
