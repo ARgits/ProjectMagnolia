@@ -1,5 +1,6 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 import { CharacterAdvancement } from "../helpers/cha-adv.mjs";
+import { ARd20Actor } from "../documents/actor.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -166,6 +167,8 @@ export class ARd20ActorSheet extends ActorSheet {
 
     // Active Effect management
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.actor));
+    html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
+    html.find(".skill-name").click(this._onRollSkillCheck.bind(this));
 
     // Rollable abilities.
     html.find(".rollable").click(this._onRoll.bind(this));
@@ -198,6 +201,11 @@ export class ARd20ActorSheet extends ActorSheet {
     //const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
     const attr = "data.equipped";
     return item.update({ [attr]: !getProperty(item.data, attr) });
+  }
+  _onRollAbilityTest(event) {
+    event.preventDefault();
+    let ability = event.currentTarget.parentElement.dataset.ability;
+    return this.actor.rollAbility(ability, { event: event });
   }
 
   /**

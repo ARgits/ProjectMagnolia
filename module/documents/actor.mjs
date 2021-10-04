@@ -151,6 +151,19 @@ export class ARd20Actor extends Actor {
 
     return data;
   }
+  rollAbility(abilityId, options={}) {
+    const label = CONFIG.ARd20.abilities[abilityId];
+    new Dialog({
+      title: game.i18n.format("ARd20.AbilityPromptTitle", {ability: label}),
+      content: `<p>${game.i18n.format("ARd20.AbilityPromptText", {ability: label})}</p>`,
+      buttons: {
+        test: {
+          label: game.i18n.localize("ARd20.ActionAbil"),
+          callback: () => this.rollAbilityTest(abilityId, options)
+        }
+      }
+    }).render(true);
+  }
 
   /**
    * Prepare character roll data.
