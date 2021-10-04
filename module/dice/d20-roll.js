@@ -147,7 +147,7 @@
         rollModes: CONFIG.Dice.rollModes,
         chooseModifier,
         defaultAbility,
-        abilities: CONFIG.ard20.abilities
+        abilities: CONFIG.ARd20.abilities
       });
   
       let defaultButton = "normal";
@@ -203,7 +203,7 @@
       if ( form.ability?.value ) {
         const abl = this.data.abilities[form.ability.value];
         this.terms.findSplice(t => t.term === "@mod", new NumericTerm({number: abl.mod}));
-        this.options.flavor += ` (${CONFIG.ard20.abilities[form.ability.value]})`;
+        this.options.flavor += ` (${CONFIG.ARd20.abilities[form.ability.value]})`;
       }
   
       // Apply advantage or disadvantage

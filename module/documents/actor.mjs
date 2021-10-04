@@ -174,13 +174,6 @@ export class ARd20Actor extends Actor {
     const parts = ["@mod"];
     const data = {mod: abl.mod};
 
-    // Add global actor bonus
-    const bonuses = getProperty(this.data.data, "bonuses.abilities") || {};
-    if ( bonuses.check ) {
-      parts.push("@checkBonus");
-      data.checkBonus = bonuses.check;
-    }
-
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
       parts.push(...options.parts);
