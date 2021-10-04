@@ -1,4 +1,4 @@
-export {default as D20Roll} from "./d20-roll"
+export {default as D20Roll} from "./d20-roll.js"
 export {default as DamageRoll} from "./damage-roll.js";
 
 /**
