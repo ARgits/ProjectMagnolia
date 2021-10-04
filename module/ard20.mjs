@@ -9,6 +9,7 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { ARd20 } from "./helpers/config.mjs";
 import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.mjs";
+import * as dice from "./dice/dice.js"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -21,10 +22,14 @@ Hooks.once("init", async function () {
     ARd20Actor,
     ARd20Item,
     rollItemMacro,
+    config:ARd20,
+    dice:dice
   };
 
   // Add custom constants for configuration.
   CONFIG.ARd20 = ARd20;
+  CONFIG.Dice.DamageRoll = dice.DamageRoll
+  CONFIG.Dice.D20Roll = dice.D20Roll
   game.socket.on("system.ard20", (data) => {
     if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
   });
