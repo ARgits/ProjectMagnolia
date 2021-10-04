@@ -152,6 +152,7 @@ export class ARd20Actor extends Actor {
     return data;
   }
   rollAbility(abilityId, options={}) {
+    console.log(abilityId, "Характеристика")
     const label = CONFIG.ARd20.abilities[abilityId];
     new Dialog({
       title: game.i18n.format("ARd20.AbilityPromptTitle", {ability: label}),
