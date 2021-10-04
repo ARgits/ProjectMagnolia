@@ -164,6 +164,39 @@ export class ARd20Actor extends Actor {
       }
     }).render(true);
   }
+  rollAbilityTest(abilityId, options={}) {
+    const label = CONFIG.ARd20.abilities[abilityId];
+    const abl = this.data.data.abilities[abilityId];
+
+    // Construct parts
+    const parts = ["@mod"];
+    const data = {mod: abl.mod};
+
+    // Add global actor bonus
+    const bonuses = getProperty(this.data.data, "bonuses.abilities") || {};
+    if ( bonuses.check ) {
+      parts.push("@checkBonus");
+      data.checkBonus = bonuses.check;
+    }
+
+    // Add provided extra roll parts now because they will get clobbered by mergeObject below
+    if (options.parts?.length > 0) {
+      parts.push(...options.parts);
+    }
+
+    // Roll and return
+    const rollData = foundry.utils.mergeObject(options, {
+      parts: parts,
+      data: data,
+      title: game.i18n.format("ARd20.AbilityPromptTitle", {ability: label}),
+      messageData: {
+        speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
+        "flags.ard20.roll": {type: "ability", abilityId }
+      }
+    });
+    return d20Roll(rollData);
+  }
+
 
   /**
    * Prepare character roll data.
