@@ -144,8 +144,8 @@
                     <div>
                         {{#each feats.awail as |feat key|}}
                             <li class="item flexrow">
-                            <div class="item-name"><label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label></div>
-                            <div class="item-prop"><label class="resource-label feat flexlarge align-center" data-type='feat' data-label="{{feat.data.source.label}}">{{feat.data.source.label}}</label></div>
+                            <div class="item-name"><label data-type='feat' data-label="{{feat.data.name}}">{{feat.name}}</label></div>
+                            <div class="item-prop"><label data-type='feat' data-label="{{feat.data.source.label}}">{{feat.data.source.label}}</label></div>
                             <div class="item-prop"><button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button></div>
                             <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
                             <div class="item-prop"><input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' /></div>
