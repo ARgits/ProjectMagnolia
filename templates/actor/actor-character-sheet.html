@@ -92,7 +92,7 @@
                         <div class="grid-span-2">
                             {{#each data.skills as |skill key|}}
                                 <div class="flexrow" data-skill="{{key}}">
-                                    <div>
+                                    <div data-skill="{{key}}">
                                         <label for="data.skills.{{key}}.prof" class="flex0 resource-label skill-name flexlarge align-left">{{skill.hover}} {{skill.label}}</label>
                                     </div>
                                 </div>
