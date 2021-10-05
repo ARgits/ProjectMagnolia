@@ -105,13 +105,13 @@ export class ARd20Actor extends Actor {
     for (let [key, skill] of Object.entries(data.skills)) {
       skill.prof = skill.prof < 2 ? skill.prof : 2;
       if (skill.prof == 0) {
-        skill.roll = "1d20";
+        skill.roll = "0";
       }
       if (skill.prof == 1) {
-        skill.roll = "1d20+" + data.attributes.prof_die;
+        skill.roll = data.attributes.prof_die;
       }
       if (skill.prof == 2) {
-        skill.roll = "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus;
+        skill.roll = data.attributes.prof_die + "+" + data.attributes.prof_bonus;
       }
     }
     //calculate character's armor,weapon and tool proficinecies
@@ -218,7 +218,7 @@ export class ARd20Actor extends Actor {
 
     // Compose roll parts and data
     const parts = ["@prof","@mod"];
-    const data = { prof: /*skl.mod +*/ skl.prof, abilities: this.getRollData().abilities };
+    const data = { prof: /*skl.mod +*/ skl.roll, abilities: this.getRollData().abilities };
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
