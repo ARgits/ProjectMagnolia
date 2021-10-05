@@ -142,8 +142,9 @@ export async function d20Roll({
   if (chooseModifier && !isFF) {
     data["prof_die"] = "@prof_die";
     data["prof_bonus"] = "@prof_bonus";
+    data["mod"] = "@mod";
   }
-  data["mod"] = "@mod";
+  
 
   // Construct the D20Roll instance
   const roll = new CONFIG.Dice.D20Roll(formula, data, {
