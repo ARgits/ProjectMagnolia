@@ -5,7 +5,8 @@
         <input type="text" name="formula" value="{{formula}}" disabled/>
     </div>
     {{#if chooseModifier}}
-    <input hidden name='skill' value="{{prof}}"/>
+    <input hidden name="prof.type" value="{{prof.type}}"
+    <input hidden name='prof.value' value="{{prof.value}}"/>
     <div class="form-group">
         <label>{{ localize "ARd20.AbilityModifier" }}</label>
         <select name="ability">

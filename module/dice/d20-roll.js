@@ -178,6 +178,7 @@
      */
     _onDialogSubmit(html, advantageMode) {
       const form = html[0].querySelector("form");
+      console.log(form)
   
       // Customize the modifier
       if ( form.ability?.value ) {
@@ -185,6 +186,12 @@
         console.log(abl)
         this.terms.findSplice(t => t.term === "@mod", new NumericTerm({number: abl.mod}));
         this.options.flavor += ` (${CONFIG.ARd20.abilities[form.ability.value]})`;
+      }
+      if(form.prof?.value){
+        const pr = this.data[form.prof.type][form.prof.value]
+        console.log(pr)
+        this.terms.findSplice(t=>t.term==="@prof_die", new Die({number:1,faces:pr.die}))
+        this.terms.findSplice(t=>t.term==="@prof_bonus", new NumericTerm({number:pr.bonus}))
       }
   
       // Apply advantage or disadvantage
