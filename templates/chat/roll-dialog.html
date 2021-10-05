@@ -11,7 +11,7 @@
     <div class="form-group">
         <label>{{ localize "ARd20.AbilityModifier" }}</label>
         <select name="ability">
-            {{selectOptions abilities selected=defaultAbility}}
+            {{selectOptions abilities selected=defaultAbility localize=true}}
         </select>
         {{log ability}}
     </div>
