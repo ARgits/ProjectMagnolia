@@ -110,10 +110,10 @@ export class ARd20Actor extends Actor {
       }
       if (skill.prof == 1) {
         skill.prof_bonus = 0;
-        skill.prof_die = data.attributes.prof_bonus * 2;
+        skill.prof_die = `${data.attributes.prof_bonus * 2}`;
       }
       if (skill.prof == 2) {
-        skill.prof_die = data.attributes.prof_bonus * 2;
+        skill.prof_die = `${data.attributes.prof_bonus * 2}`;
         skill.prof_bonus = data.attributes.prof_bonus;
       }
     }
@@ -221,7 +221,7 @@ export class ARd20Actor extends Actor {
 
     // Compose roll parts and data
     const parts = ["@prof_die", "@prof_bonus", "@mod"];
-    const data = { skills: this.getRollData().skills, prof_die: skl.prof_die, prof_bonus: skl.prof_bonus, abilities: this.getRollData().abilities };
+    const data = {prof_die: skl.prof_die, prof_bonus: skl.prof_bonus};
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
