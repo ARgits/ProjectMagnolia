@@ -68,15 +68,11 @@
       const d20 = this.terms[0];
       d20.modifiers = [];
   
-      // Halfling Lucky
-      if ( this.options.halflingLucky ) d20.modifiers.push("r1=1");
-  
-      // Reliable Talent
-      if ( this.options.reliableTalent ) d20.modifiers.push("min10");
+
   
       // Handle Advantage or Disadvantage
       if ( this.hasAdvantage ) {
-        d20.number = this.options.elvenAccuracy ? 3 : 2;
+        d20.number = 2;
         d20.modifiers.push("kh");
         d20.options.advantage = true;
       }
@@ -108,15 +104,7 @@
       messageData.flavor = messageData.flavor || this.options.flavor;
       if ( this.hasAdvantage ) messageData.flavor += ` (${game.i18n.localize("ARd20.Advantage")})`;
       else if ( this.hasDisadvantage ) messageData.flavor += ` (${game.i18n.localize("ARd20.Disadvantage")})`;
-  
-      // Add reliable talent to the d20-term flavor text if it applied
-      if ( this.options.reliableTalent ) {
-        const d20 = this.dice[0];
-        const isRT = d20.results.every(r => !r.active || (r.result < 10));
-        const label = `(${game.i18n.localize("ARd20.FlagsReliableTalent")})`;
-        if ( isRT ) d20.options.flavor = d20.options.flavor ? `${d20.options.flavor} (${label})` : label;
-      }
-  
+   
       // Record the preferred rollMode
       options.rollMode = options.rollMode ?? this.options.rollMode;
       return super.toMessage(messageData, options);
@@ -191,8 +179,6 @@
      */
     _onDialogSubmit(html, advantageMode) {
       const form = html[0].querySelector("form");
-  
- 
   
       // Customize the modifier
       if ( form.ability?.value ) {

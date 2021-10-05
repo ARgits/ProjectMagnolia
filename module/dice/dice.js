@@ -112,7 +112,7 @@ function _isUnsupportedTerm(term) {
  */
 export async function d20Roll({
   parts=[], data={}, // Roll creation
-  advantage, disadvantage, fumble=1, critical=20, targetValue, elvenAccuracy, halflingLucky, reliableTalent, // Roll customization
+  advantage, disadvantage, fumble=1, critical=20, targetValue, // Roll customization
   chooseModifier=false, fastForward=false, event, template, title, dialogOptions, // Dialog configuration
   chatMessage=true, messageData={}, rollMode, speaker, flavor // Chat Message customization
   }={}) {
@@ -130,10 +130,7 @@ export async function d20Roll({
     defaultRollMode,
     critical,
     fumble,
-    targetValue,
-    elvenAccuracy,
-    halflingLucky,
-    reliableTalent
+    targetValue
   });
 
   // Prompt a Dialog to further configure the D20Roll
@@ -210,7 +207,7 @@ function _determineAdvantageMode({event, advantage=false, disadvantage=false, fa
  */
 export async function damageRoll({
   parts=[], data, // Roll creation
-  critical=false, criticalBonusDice, criticalMultiplier, multiplyNumeric, powerfulCritical, // Damage customization
+  critical=false, criticalBonusDice, criticalMultiplier, multiplyNumeric, // Damage customization
   fastForward=false, event, allowCritical=true, template, title, dialogOptions, // Dialog configuration
   chatMessage=true, messageData={}, rollMode, speaker, flavor, // Chat Message customization
   }={}) {
@@ -227,7 +224,6 @@ export async function damageRoll({
     criticalBonusDice,
     criticalMultiplier,
     multiplyNumeric,
-    powerfulCritical
   });
 
   // Prompt a Dialog to further configure the DamageRoll
