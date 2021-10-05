@@ -130,7 +130,7 @@ export default class D20Roll extends Roll {
       chooseModifier,
       defaultAbility,
       abilities: CONFIG.ARd20.abilities,
-      
+
     });
     let defaultButton = "normal";
     switch (defaultAction) {
@@ -196,10 +196,10 @@ export default class D20Roll extends Roll {
       this.options.flavor += ` (${CONFIG.ARd20.abilities[form.ability.value]})`;
     }
     if (form.prof_die?.value) {
-      const pr = this.data.prof[form.prof.type];
+      const pr = this.data[form.prof_type.value][form.prof.value];
       console.log(pr);
-      this.terms.findSplice((t) => t.term === "@prof_die", new Die({ number: 1, faces: pr.die }));
-      this.terms.findSplice((t) => t.term === "@prof_bonus", new NumericTerm({ number: pr.bonus }));
+      this.terms.findSplice((t) => t.term === "@prof_die", new Die({ number: 1, faces: pr.prof_die }));
+      this.terms.findSplice((t) => t.term === "@prof_bonus", new NumericTerm({ number: pr.prof_bonus }));
     }
 
     // Apply advantage or disadvantage

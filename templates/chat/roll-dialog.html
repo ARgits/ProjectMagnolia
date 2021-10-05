@@ -1,12 +1,12 @@
 <form>
+    {{log "roll-dialog form " this}}
     <div class="form-group">
         <label>{{ localize "ARd20.Formula" }}</label>
         <input type="text" name="formula" value="{{formula}}" disabled/>
     </div>
     {{#if chooseModifier}}
-    <input hiddne name="prof_type" value="{{prof_type}}">
-    <input hidden name="prof_die" value="{{prof_die}}"/>
-    <input hidden name='prof_bonus' value="{{prof_bonus}}"/>
+    <input hidden name="prof_type" value="{{prof_type}}"/>
+    <input hidden name="prof_value" value="{{prof_value}}"/>
     <div class="form-group">
         <label>{{ localize "ARd20.AbilityModifier" }}</label>
         <select name="ability">
@@ -24,5 +24,5 @@
             {{selectOptions rollModes selected=defaultRollMode localize=true}}
         </select>
     </div>
-    {{log "roll-dialog form " this}}
+    
 </form>
