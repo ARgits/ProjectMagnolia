@@ -163,7 +163,7 @@ export class ARd20Actor extends Actor {
    */
   rollAbility(abilityId, options = {}) {
     console.log(abilityId, "Характеристика");
-    const label = CONFIG.ARd20.abilities[abilityId];
+    const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
     new Dialog({
       title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
       content: `<p>${game.i18n.format("ARd20.AbilityPromptText", { ability: label })}</p>`,
@@ -184,7 +184,7 @@ export class ARd20Actor extends Actor {
    */
 
   rollAbilityTest(abilityId, options = {}) {
-    const label = CONFIG.ARd20.abilities[abilityId];
+    const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
     const abl = this.data.data.abilities[abilityId];
 
     // Construct parts
@@ -232,7 +232,7 @@ export class ARd20Actor extends Actor {
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: CONFIG.ARd20.skills[skillId] }),
+      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize(CONFIG.ARd20.skills[skillId]) }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
         "flags.ard20.roll": { type: "skill", skillId },
