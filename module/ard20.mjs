@@ -9,8 +9,8 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { ARd20 } from "./helpers/config.mjs";
 import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.mjs";
-import * as dice from "./dice/dice.js"
-import * as chat from "./helpers/chat.js"
+import * as dice from "./dice/dice.js";
+import * as chat from "./helpers/chat.js";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -20,19 +20,21 @@ Hooks.once("init", async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.ard20 = {
-    ARd20Actor,
-    ARd20Item,
+    documents: {
+      ARd20Actor,
+      ARd20Item,
+    },
     rollItemMacro,
-    config:ARd20,
-    dice:dice
+    config: ARd20,
+    dice: dice,
   };
 
   // Add custom constants for configuration.
   CONFIG.ARd20 = ARd20;
-  CONFIG.Dice.DamageRoll = dice.DamageRoll
-  CONFIG.Dice.D20Roll = dice.D20Roll
-  CONFIG.Dice.rolls.push(dice.D20Roll)
-  CONFIG.Dice.rolls.push(dice.DamageRoll)
+  CONFIG.Dice.DamageRoll = dice.DamageRoll;
+  CONFIG.Dice.D20Roll = dice.D20Roll;
+  CONFIG.Dice.rolls.push(dice.D20Roll);
+  CONFIG.Dice.rolls.push(dice.DamageRoll);
   game.socket.on("system.ard20", (data) => {
     if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
   });
@@ -143,7 +145,6 @@ function rollItemMacro(itemName) {
   return item.roll();
 }
 Hooks.on("renderChatMessage", (app, html, data) => {
-
   // Display action buttons
   chat.displayChatActionButtons(app, html, data);
 
@@ -155,10 +156,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
-Hooks.on('getActorDirectoryEntryContext', ARd20Actor.addDirectoryContextOptions);
+Hooks.on("getActorDirectoryEntryContext", ARd20Actor.addDirectoryContextOptions);
 
 // FIXME: This helper is needed for the vehicle sheet. It should probably be refactored.
-Handlebars.registerHelper('getProperty', function (data, property) {
+Handlebars.registerHelper("getProperty", function (data, property) {
   return getProperty(data, property);
 });
-

@@ -230,8 +230,6 @@ export class ARd20Actor extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("ARd20.SkillPromptTitle", {skill: CONFIG.ARd20.skills[skillId]}),
-      halflingLucky: this.getFlag("ard20", "halflingLucky"),
-      reliableTalent: reliableTalent,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
         "flags.ard20.roll": {type: "skill", skillId }
@@ -240,13 +238,4 @@ export class ARd20Actor extends Actor {
     return d20Roll(rollData);
   }
 
-
-
-  /**
-   * Prepare character roll data.
-   */
-
-  /**
-   * Prepare NPC roll data.
-   */
 }
