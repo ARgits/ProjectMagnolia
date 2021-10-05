@@ -83,8 +83,8 @@ export class ARd20Item extends Item {
     data.type.label = labels.type;
   }
   /**
-  *Prepare data for features
-  */
+   *Prepare data for features
+   */
   _prepareFeatureData(itemData, labels) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
@@ -92,7 +92,7 @@ export class ARd20Item extends Item {
     // Handle Source of the feature
     data.source.value = data.source.value || "mar";
     labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
-    data.source.label = labels.source
+    data.source.label = labels.source;
 
     data.keys = [];
 
@@ -164,7 +164,7 @@ export class ARd20Item extends Item {
     const abil = (data.abil = {});
     for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
-      abil[k] = v
+      abil[k] = v;
     }
     this._prepareWeaponAttr(data, abil);
   }
@@ -289,5 +289,137 @@ export class ARd20Item extends Item {
         }
       } else console.log("miss");
     }
+  }
+
+  /* -------------------------------------------- */
+  /*  Chat Message Helpers                        */
+  /* -------------------------------------------- */
+
+  static chatListeners(html) {
+    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
+    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle execution of a chat card action via a click event on one of the card buttons
+   * @param {Event} event       The originating click event
+   * @returns {Promise}         A promise which resolves once the handler workflow is complete
+   * @private
+   */
+  static async _onChatCardAction(event) {
+    event.preventDefault();
+
+    // Extract card data
+    const button = event.currentTarget;
+    button.disabled = true;
+    const card = button.closest(".chat-card");
+    const messageId = card.closest(".message").dataset.messageId;
+    const message = game.messages.get(messageId);
+    const action = button.dataset.action;
+
+    // Validate permission to proceed with the roll
+    const isTargetted = action === "save";
+    if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
+
+    // Recover the actor for the chat card
+    const actor = await this._getChatCardActor(card);
+    if (!actor) return;
+
+    // Get the Item from stored flag data or by the item ID on the Actor
+    const storedData = message.getFlag("dnd5e", "itemData");
+    const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
+    if (!item) {
+      return ui.notifications.error(game.i18n.format("DND5E.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+    }
+    const spellLevel = parseInt(card.dataset.spellLevel) || null;
+
+    // Handle different actions
+    switch (action) {
+      case "attack":
+        await item.rollAttack({ event });
+        break;
+      case "damage":
+      case "versatile":
+        await item.rollDamage({
+          critical: event.altKey,
+          event: event,
+          spellLevel: spellLevel,
+          versatile: action === "versatile",
+        });
+        break;
+      case "formula":
+        await item.rollFormula({ event, spellLevel });
+        break;
+      case "save":
+        const targets = this._getChatCardTargets(card);
+        for (let token of targets) {
+          const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token });
+          await token.actor.rollAbilitySave(button.dataset.ability, { event, speaker });
+        }
+        break;
+      case "toolCheck":
+        await item.rollToolCheck({ event });
+        break;
+      case "placeTemplate":
+        const template = game.dnd5e.canvas.AbilityTemplate.fromItem(item);
+        if (template) template.drawPreview();
+        break;
+    }
+
+    // Re-enable the button
+    button.disabled = false;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle toggling the visibility of chat card content when the name is clicked
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  static _onChatCardToggleContent(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const card = header.closest(".chat-card");
+    const content = card.querySelector(".card-content");
+    content.style.display = content.style.display === "none" ? "block" : "none";
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Get the Actor which is the author of a chat card
+   * @param {HTMLElement} card    The chat card being used
+   * @return {Actor|null}         The Actor entity or null
+   * @private
+   */
+  static async _getChatCardActor(card) {
+    // Case 1 - a synthetic actor from a Token
+    if (card.dataset.tokenId) {
+      const token = await fromUuid(card.dataset.tokenId);
+      if (!token) return null;
+      return token.actor;
+    }
+
+    // Case 2 - use Actor ID directory
+    const actorId = card.dataset.actorId;
+    return game.actors.get(actorId) || null;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Get the Actor which is the author of a chat card
+   * @param {HTMLElement} card    The chat card being used
+   * @return {Actor[]}            An Array of Actor entities, if any
+   * @private
+   */
+  static _getChatCardTargets(card) {
+    let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
+    if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
+    if (!targets.length) ui.notifications.warn(game.i18n.localize("DND5E.ActionWarningNoToken"));
+    return targets;
   }
 }
