@@ -205,7 +205,7 @@ export class ARd20ActorSheet extends ActorSheet {
   _onRollAbilityTest(event) {
     event.preventDefault();
     let ability = event.currentTarget.parentElement.dataset.ability;
-    return this.actor.rollAbility(ability, { event: event });
+    return this.actor.rollAbilityTest(ability, { event: event });
   }
   _onRollSkillCheck(event){
     event.preventDefault()

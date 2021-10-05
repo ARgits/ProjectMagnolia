@@ -130,6 +130,7 @@ export default class D20Roll extends Roll {
       chooseModifier,
       defaultAbility,
       abilities: CONFIG.ARd20.abilities,
+      
     });
     let defaultButton = "normal";
     switch (defaultAction) {
@@ -179,6 +180,7 @@ export default class D20Roll extends Roll {
    */
   _onDialogSubmit(html, advantageMode) {
     const form = html[0].querySelector("form");
+    console.log(this)
     console.log(form,'ФОРМА');
     if (form.bonus.value) {
       const bonus = new Roll(form.bonus.value, this.data);
@@ -193,8 +195,8 @@ export default class D20Roll extends Roll {
       this.terms.findSplice((t) => t.term === "@mod", new NumericTerm({ number: abl.mod }));
       this.options.flavor += ` (${CONFIG.ARd20.abilities[form.ability.value]})`;
     }
-    if (form.prof?.value) {
-      const pr = this.data[form.prof.type][form.prof.value];
+    if (form.prof_die?.value) {
+      const pr = this.data.prof[form.prof.type];
       console.log(pr);
       this.terms.findSplice((t) => t.term === "@prof_die", new Die({ number: 1, faces: pr.die }));
       this.terms.findSplice((t) => t.term === "@prof_bonus", new NumericTerm({ number: pr.bonus }));
