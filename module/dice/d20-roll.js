@@ -194,7 +194,7 @@ export default class D20Roll extends Roll {
       const abl = this.data.abilities[form.ability.value];
       console.log(abl);
       this.terms.findSplice((t) => t.term === "@mod", new NumericTerm({ number: abl.mod }));
-      this.options.flavor += ` (${CONFIG.ARd20.abilities[form.ability.value]})`;
+      this.options.flavor += ` (${game.i18n.localize(CONFIG.ARd20.abilities[form.ability.value])})`;
     }
     if (form.prof_type?.value) {
       const pr = this.data[form.prof_type.value][form.prof_value.value];
