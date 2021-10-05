@@ -182,6 +182,7 @@
       // Customize the modifier
       if ( form.ability?.value ) {
         const abl = this.data.abilities[form.ability.value];
+        console.log(abl)
         this.terms.findSplice(t => t.term === "@mod", new NumericTerm({number: abl.mod}));
         this.options.flavor += ` (${CONFIG.ARd20.abilities[form.ability.value]})`;
       }
