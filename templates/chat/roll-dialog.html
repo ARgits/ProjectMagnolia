@@ -5,14 +5,15 @@
         <input type="text" name="formula" value="{{formula}}" disabled/>
     </div>
     {{#if chooseModifier}}
-    <input hidden name="prof_type" value="{{prof_type}}"/>
-    <input hidden name="prof_value" value="{{prof_value}}"/>
+    <input hidden name="prof_type" value="{{this.prof_type}}"/>
+    <input hidden name="prof_value" value="{{this.prof_value}}"/>
     {{log prof_type prof_value}}
     <div class="form-group">
         <label>{{ localize "ARd20.AbilityModifier" }}</label>
         <select name="ability">
             {{selectOptions abilities selected=defaultAbility}}
         </select>
+        {{log ability}}
     </div>
     {{/if}}
     <div class="form-group">

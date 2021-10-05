@@ -144,7 +144,6 @@ export async function d20Roll({
     data["prof_bonus"] = "@prof_bonus";
     data["mod"] = "@mod";
   }
-  
 
   // Construct the D20Roll instance
   const roll = new CONFIG.Dice.D20Roll(formula, data, {
