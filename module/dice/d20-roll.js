@@ -179,7 +179,7 @@ export default class D20Roll extends Roll {
    */
   _onDialogSubmit(html, advantageMode) {
     const form = html[0].querySelector("form");
-    console.log(form);
+    console.log(form,'ФОРМА');
     if (form.bonus.value) {
       const bonus = new Roll(form.bonus.value, this.data);
       if (!(bonus.terms[0] instanceof OperatorTerm)) this.terms.push(new OperatorTerm({ operator: "+" }));
