@@ -207,6 +207,11 @@ export class ARd20ActorSheet extends ActorSheet {
     let ability = event.currentTarget.parentElement.dataset.ability;
     return this.actor.rollAbility(ability, { event: event });
   }
+  _onRollSkillCheck(event){
+    event.preventDefault()
+    let skill = event.currentTarget.parentElement.dataset.skill
+    return this.actor.rollSkill(skill,{event:event})
+  }
 
   /**
    * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset

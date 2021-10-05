@@ -68,12 +68,12 @@ export class ARd20Actor extends Actor {
     data.attributes.xp.bar_max = data.attributes.xp.level - data.attributes.xp.level_min;
     data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min;
     /*
-    /calculate proficiency bonus and die
+    calculate proficiency bonus and die
     */
     data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
     data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
     /*
-    /calculate character's defences, including damage resistances
+    calculate character's defences, including damage resistances
     */
     data.defences.stats.reflex = data.defences.stats.reflex ?? {};
     data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
@@ -152,6 +152,12 @@ export class ARd20Actor extends Actor {
 
     return data;
   }
+    /**
+   * Roll a generic ability test or saving throw.
+   * Prompt the user for input on which variety of roll they want to do.
+   * @param {String}abilityId     The ability id (e.g. "str")
+   * @param {Object} options      Options which configure how ability tests or saving throws are rolled
+   */
   rollAbility(abilityId, options={}) {
     console.log(abilityId, "Характеристика")
     const label = CONFIG.ARd20.abilities[abilityId];
@@ -166,6 +172,14 @@ export class ARd20Actor extends Actor {
       }
     }).render(true);
   }
+    /**
+   * Roll an Ability Test
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * @param {String} abilityId    The ability ID (e.g. "str")
+   * @param {Object} options      Options which configure how ability tests are rolled
+   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   */
+
   rollAbilityTest(abilityId, options={}) {
     const label = CONFIG.ARd20.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
@@ -191,6 +205,41 @@ export class ARd20Actor extends Actor {
     });
     return d20Roll(rollData);
   }
+    /**
+   * Roll a Skill Check
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * @param {string} skillId      The skill id (e.g. "ins")
+   * @param {Object} options      Options which configure how the skill check is rolled
+   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   */
+
+  rollSkill(skillId, options={}) {
+    const skl = this.data.data.skills[skillId];
+
+    // Compose roll parts and data
+    const parts = ["@mod"];
+    const data = {mod: /*skl.mod +*/ skl.prof};
+
+    // Add provided extra roll parts now because they will get clobbered by mergeObject below
+    if (options.parts?.length > 0) {
+      parts.push(...options.parts);
+    }
+
+    // Roll and return
+    const rollData = foundry.utils.mergeObject(options, {
+      parts: parts,
+      data: data,
+      title: game.i18n.format("ARd20.SkillPromptTitle", {skill: CONFIG.ARd20.skills[skillId]}),
+      halflingLucky: this.getFlag("ard20", "halflingLucky"),
+      reliableTalent: reliableTalent,
+      messageData: {
+        speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
+        "flags.ard20.roll": {type: "skill", skillId }
+      }
+    });
+    return d20Roll(rollData);
+  }
+
 
 
   /**
