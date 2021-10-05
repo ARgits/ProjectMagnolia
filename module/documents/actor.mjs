@@ -1,4 +1,4 @@
-import {d20Roll} from "../dice/dice.js"
+import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -152,27 +152,27 @@ export class ARd20Actor extends Actor {
 
     return data;
   }
-    /**
+  /**
    * Roll a generic ability test or saving throw.
    * Prompt the user for input on which variety of roll they want to do.
    * @param {String}abilityId     The ability id (e.g. "str")
    * @param {Object} options      Options which configure how ability tests or saving throws are rolled
    */
-  rollAbility(abilityId, options={}) {
-    console.log(abilityId, "Характеристика")
+  rollAbility(abilityId, options = {}) {
+    console.log(abilityId, "Характеристика");
     const label = CONFIG.ARd20.abilities[abilityId];
     new Dialog({
-      title: game.i18n.format("ARd20.AbilityPromptTitle", {ability: label}),
-      content: `<p>${game.i18n.format("ARd20.AbilityPromptText", {ability: label})}</p>`,
+      title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
+      content: `<p>${game.i18n.format("ARd20.AbilityPromptText", { ability: label })}</p>`,
       buttons: {
         test: {
           label: game.i18n.localize("ARd20.ActionAbil"),
-          callback: () => this.rollAbilityTest(abilityId, options)
-        }
-      }
+          callback: () => this.rollAbilityTest(abilityId, options),
+        },
+      },
     }).render(true);
   }
-    /**
+  /**
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    * @param {String} abilityId    The ability ID (e.g. "str")
@@ -180,13 +180,13 @@ export class ARd20Actor extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
 
-  rollAbilityTest(abilityId, options={}) {
+  rollAbilityTest(abilityId, options = {}) {
     const label = CONFIG.ARd20.abilities[abilityId];
     const abl = this.data.data.abilities[abilityId];
 
     // Construct parts
     const parts = ["@mod"];
-    const data = {mod: abl.mod};
+    const data = { mod: abl.mod };
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
@@ -197,15 +197,15 @@ export class ARd20Actor extends Actor {
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.AbilityPromptTitle", {ability: label}),
+      title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
       messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.ard20.roll": {type: "ability", abilityId }
-      }
+        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
+        "flags.ard20.roll": { type: "ability", abilityId },
+      },
     });
     return d20Roll(rollData);
   }
-    /**
+  /**
    * Roll a Skill Check
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    * @param {string} skillId      The skill id (e.g. "ins")
@@ -213,12 +213,12 @@ export class ARd20Actor extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
 
-  rollSkill(skillId, options={}) {
+  rollSkill(skillId, options = {}) {
     const skl = this.data.data.skills[skillId];
 
     // Compose roll parts and data
     const parts = ["@mod"];
-    const data = {mod: /*skl.mod +*/ skl.prof};
+    const data = { mod: /*skl.mod +*/ skl.prof };
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
@@ -229,13 +229,13 @@ export class ARd20Actor extends Actor {
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.SkillPromptTitle", {skill: CONFIG.ARd20.skills[skillId]}),
+      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: CONFIG.ARd20.skills[skillId] }),
       messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
-        "flags.ard20.roll": {type: "skill", skillId }
-      }
+        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
+        "flags.ard20.roll": { type: "skill", skillId },
+      },
+      chooseModifier: true,
     });
     return d20Roll(rollData);
   }
-
 }

@@ -137,7 +137,6 @@
         defaultAbility,
         abilities: CONFIG.ARd20.abilities
       });
-  
       let defaultButton = "normal";
       switch (defaultAction) {
         case D20Roll.ADV_MODE.ADVANTAGE: defaultButton = "advantage"; break;
