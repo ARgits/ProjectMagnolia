@@ -220,8 +220,16 @@ export class ARd20Actor extends Actor {
     const skl = this.data.data.skills[skillId];
 
     // Compose roll parts and data
-    const parts = ["@prof_die", "@prof_bonus", "@mod"];
-    const data = {prof_die: skl.prof_die, prof_bonus: skl.prof_bonus, abilities:this.getRollData().abilities};
+    const parts = ["@mod"];
+    const data = { abilities: this.getRollData().abilities };
+    if (skl.prof_bonus) {
+      parts.unshift("@prof_bonus");
+      data.prof_bonus = skl.prof_bonus;
+    }
+    if (skl.prof_die) {
+      parts.unshift("@prof_die");
+      data.prof_die = skl.prof_die;
+    }
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
