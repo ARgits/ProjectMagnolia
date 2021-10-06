@@ -249,4 +249,5 @@ export class ARd20Actor extends Actor {
     });
     return d20Roll(rollData);
   }
+
 }
