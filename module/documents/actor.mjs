@@ -110,10 +110,10 @@ export class ARd20Actor extends Actor {
       }
       if (skill.prof == 1) {
         skill.prof_bonus = 0;
-        skill.prof_die = `${data.attributes.prof_bonus * 2}`;
+        skill.prof_die = `1d${data.attributes.prof_bonus * 2}`;
       }
       if (skill.prof == 2) {
-        skill.prof_die = `${data.attributes.prof_bonus * 2}`;
+        skill.prof_die = `1d${data.attributes.prof_bonus * 2}`;
         skill.prof_bonus = data.attributes.prof_bonus;
       }
     }
