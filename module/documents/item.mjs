@@ -296,8 +296,8 @@ export class ARd20Item extends Item {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
-    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+    html.on('click', '.card-buttons button', this._onChatCardAction.bind(this));
+    html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -316,55 +316,52 @@ export class ARd20Item extends Item {
     button.disabled = true;
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
-    const message = game.messages.get(messageId);
+    const message =  game.messages.get(messageId);
     const action = button.dataset.action;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
-    if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
+    if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
 
     // Recover the actor for the chat card
     const actor = await this._getChatCardActor(card);
-    if (!actor) return;
+    if ( !actor ) return;
 
     // Get the Item from stored flag data or by the item ID on the Actor
-    const storedData = message.getFlag("dnd5e", "itemData");
-    const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
-    if (!item) {
-      return ui.notifications.error(game.i18n.format("DND5E.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+    const storedData = message.getFlag("ard20", "itemData");
+    const item = storedData ? new this(storedData, {parent: actor}) : actor.items.get(card.dataset.itemId);
+    if ( !item ) {
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {item: card.dataset.itemId, name: actor.name}))
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
 
     // Handle different actions
-    switch (action) {
+    switch ( action ) {
       case "attack":
-        await item.rollAttack({ event });
-        break;
+        await item.rollAttack({event}); break;
       case "damage":
       case "versatile":
         await item.rollDamage({
           critical: event.altKey,
           event: event,
           spellLevel: spellLevel,
-          versatile: action === "versatile",
+          versatile: action === "versatile"
         });
         break;
       case "formula":
-        await item.rollFormula({ event, spellLevel });
-        break;
+        await item.rollFormula({event, spellLevel}); break;
       case "save":
         const targets = this._getChatCardTargets(card);
-        for (let token of targets) {
-          const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token });
+        for ( let token of targets ) {
+          const speaker = ChatMessage.getSpeaker({scene: canvas.scene, token: token});
           await token.actor.rollAbilitySave(button.dataset.ability, { event, speaker });
         }
         break;
       case "toolCheck":
-        await item.rollToolCheck({ event });
-        break;
+        await item.rollToolCheck({event}); break;
       case "placeTemplate":
-        const template = game.dnd5e.canvas.AbilityTemplate.fromItem(item);
-        if (template) template.drawPreview();
+        const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
+        if ( template ) template.drawPreview();
         break;
     }
 
@@ -396,10 +393,11 @@ export class ARd20Item extends Item {
    * @private
    */
   static async _getChatCardActor(card) {
+
     // Case 1 - a synthetic actor from a Token
-    if (card.dataset.tokenId) {
+    if ( card.dataset.tokenId ) {
       const token = await fromUuid(card.dataset.tokenId);
-      if (!token) return null;
+      if ( !token ) return null;
       return token.actor;
     }
 
@@ -417,9 +415,8 @@ export class ARd20Item extends Item {
    * @private
    */
   static _getChatCardTargets(card) {
-    let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
-    if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
-    if (!targets.length) ui.notifications.warn(game.i18n.localize("DND5E.ActionWarningNoToken"));
+    let targets = canvas.tokens.controlled.filter(t => !!t.actor);
+    if ( !targets.length && game.user.character ) targets = targets.concat(game.user.character.getActiveTokens());
+    if ( !targets.length ) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
     return targets;
-  }
-}
+  }}

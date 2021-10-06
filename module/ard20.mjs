@@ -157,8 +157,3 @@ Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
 Hooks.on("getActorDirectoryEntryContext", ARd20Actor.addDirectoryContextOptions);
-
-// FIXME: This helper is needed for the vehicle sheet. It should probably be refactored.
-Handlebars.registerHelper("getProperty", function (data, property) {
-  return getProperty(data, property);
-});
