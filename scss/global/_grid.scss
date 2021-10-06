@@ -20,3 +20,8 @@
     grid-column-start: $i;
   }
 }
+@for $i from 2 through 20 {
+  .grid-span-#{$i} {
+    grid-column-end: span $i;
+  }
+}
