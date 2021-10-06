@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 /* Global styles */
-
 .window-app {
   font-family: "Roboto", sans-serif;
 }
 
-.rollable:hover,
-.rollable:focus {
+.rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
@@ -225,6 +223,14 @@
   text-align: center;
 }
 
+/* Styles limited to ard20 sheets */
+.ard20 {
+  /* ----------------------------------------- */
+  /*  Items Lists                              */
+  /* ----------------------------------------- */
+  /* Example style for ard20 (can be removed if not needed) */
+}
+
 .ard20 .item-form {
   font-family: "Roboto", sans-serif;
 }
@@ -276,32 +282,16 @@
   margin: 0;
 }
 
-.ard20 .sheet-tabs,
-.ard20 .sheet-body .data-tabs {
+.ard20 .sheet-tabs {
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
 }
 
 .ard20 .sheet-body,
-.ard20 .sheet-body .data-section,
 .ard20 .sheet-body .tab,
-.ard20 .sheet-body .data-section .tab,
 .ard20 .sheet-body .tab .editor {
   height: 100%;
-}
-
-.ard20 .sheet-body .tab[data-tab="info"] .editor {
-  height: auto;
-  max-height: 100%;
-}
-
-div#cha-adv.app.window-app.ard20 section.sheet-body .tab,
-div#cha-adv.app.window-app.ard20 section.sheet-body {
-  height: auto;
-}
-div#cha-adv.app.window-app.ard20 section.sheet-body .tab div {
-  height: fit-content;
 }
 
 .ard20 .tox .tox-editor-container {
@@ -371,11 +361,9 @@ div#cha-adv.app.window-app.ard20 section.sheet-body .tab div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 5px;
 }
 
-.ard20 .items-list .item-name h3,
-.ard20 .items-list .item-name h4 {
+.ard20 .items-list .item-name h3, .ard20 .items-list .item-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
@@ -431,21 +419,6 @@ div#cha-adv.app.window-app.ard20 section.sheet-body .tab div {
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
-.item-controls {
-  flex: 0 0 68px;
-}
-.item-controls .item-toggle {
-  color: #b5b3a4;
-}
-.item-controls .item-toggle.active {
-  color: #4b4a44;
-}
-.item-controls .item-toggle.fixed {
-  color: #dc143c;
-}
-.item-controls .item-toggle.fixed:hover {
-  text-shadow: none;
-}
 
 .ard20 .items-list .items-header {
   height: 28px;
@@ -488,179 +461,3 @@ div#cha-adv.app.window-app.ard20 section.sheet-body .tab div {
 .ard20 .effects .item .effect-controls {
   border: none;
 }
-
-nav.data-tabs {
-  border-top: 1px solid #b5b3a4;
-  border-bottom: 1px solid #b5b3a4;
-}
-
-.config-button {
-  margin: 0 0 3px 0;
-  flex: 1;
-  font-size: 12px;
-}
-
-input:read-only {
-  background: url(../css/parchment.jpg) repeat;
-  background-image: url(../css/parchment.jpg);
-  box-shadow: none;
-  border: #d5d3c7;
-  width: 75%;
-}
-
-.change[data-action="plus"],
-.change[data-action="minus"] {
-  color: green;
-  font-size: 20px;
-  border-radius: 25%;
-  padding: 0px;
-  margin: 0%;
-  width: fit-content;
-  height: fit-content;
-}
-
-.change:disabled {
-  color: red;
-  cursor: not-allowed;
-}
-
-footer button[type="submit"] {
-  position: sticky;
-  position: -webkit-sticky;
-}
-.verticalLine {
-  border-left: thick solid black;
-  padding-left: 3px;
-}
-.inventory .item-controls,
-.spellbook .item-controls {
-  flex: 0 0 68px;
-}
-.inventory .item-controls .item-toggle,
-.spellbook .item-controls .item-toggle {
-  color: #f5f5dc;
-}
-.inventory .item-controls .item-toggle.active,
-.spellbook .item-controls .item-toggle.active {
-  color: #808000;
-}
-.inventory .item-controls .item-toggle.fixed,
-.spellbook .item-controls .item-toggle.fixed {
-  color: #dc143c;
-}
-.inventory .item-controls .item-toggle.fixed:hover,
-.spellbook .item-controls .item-toggle.fixed:hover {
-  text-shadow: none;
-}
-input .wrong {
-  border-color: #dc143c;
-  outline-color: #dc143c;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-.check.fa-check {
-  color: green;
-}
-.check.fa-times {
-  color: red;
-}
-.stretch {
-  -webkit-box-flex: var(--count);
-  -ms-flex: var(--count);
-  flex: var(--count);
-}
-.items-list .grid {
-  gap: 0px;
-}
-/* ----------------------------------------- */
-/*  Chat Cards
-/* ----------------------------------------- */
-.ard20.chat-card {
-  font-style: normal;
-  font-size: 12px;
-}
-.ard20.chat-card .card-header {
-  padding: 3px 0;
-  border-top: 2px groove #FFF;
-  border-bottom: 2px groove #FFF;
-}
-.ard20.chat-card .card-header img {
-  flex: 0 0 36px;
-  margin-right: 5px;
-}
-.ard20.chat-card .card-header h3 {
-  flex: 1;
-  margin: 0;
-  line-height: 36px;
-  font-size: 20px;
-  font-weight: 700;
-  color: 808000;
-}
-.ard20.chat-card .card-header h3:hover {
-  color: #111;
-  text-shadow: 0 0 10px red;
-}
-.ard20.chat-card .card-content {
-  margin: 5px 0;
-}
-.ard20.chat-card .card-content h3 {
-  font-size: 12px;
-  margin: 0;
-  font-weight: bold;
-}
-.ard20.chat-card .card-content > * {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-.ard20.chat-card .card-buttons {
-  margin: 5px 0;
-}
-.ard20.chat-card .card-buttons span {
-  display: block;
-  line-height: 28px;
-  text-align: center;
-  border: 1px solid light;
-}
-.ard20.chat-card .card-buttons button {
-  font-size: 12px;
-  height: 24px;
-  line-height: 20px;
-  margin: 2px 0;
-}
-.ard20.chat-card .card-footer {
-  padding: 3px 0 0;
-  border-top: 2px groove #FFF;
-}
-.ard20.chat-card .card-footer span {
-  border-right: 2px groove #FFF;
-  padding: 0 3px 0 0;
-  font-size: 10px;
-}
-.ard20.chat-card .card-footer span:last-child {
-  border-right: none;
-  padding-right: 0;
-}
-.dice-roll .dice-total.success {
-  color: inherit;
-  background: #c7d0c0;
-  border: 1px solid #006c00;
-}
-.dice-roll .dice-total.failure {
-  color: inherit;
-  background: #ffdddd;
-  border: 1px solid #6e0000;
-}
-.dice-roll .dice-total.critical {
-  color: green;
-}
-.dice-roll .dice-total.fumble {
-  color: red;
-}
-
-
