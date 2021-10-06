@@ -10,3 +10,16 @@
     cursor: pointer;
   }
 }
+input:read-only {
+  background: url(../../css/parchment.jpg) repeat;
+  background-image: url(../../css/parchment.jpg);
+  box-shadow: none;
+  border: #d5d3c7;
+  width: auto;
+}
+button.change {
+  color: green;
+  &:disabled {
+    color: red;
+  }
+}
