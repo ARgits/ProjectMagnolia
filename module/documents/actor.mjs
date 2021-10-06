@@ -47,57 +47,61 @@ export class ARd20Actor extends Actor {
 
     // Make modifications to data here. For example:
     const data = actorData.data;
+    const abilities = data.abilities;
+    const attributes = data.attributes;
+    const def_stats = data.defences.stats;
+    const def_dam = data.defences.damage;
 
     // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(data.abilities)) {
+    for (let [key, ability] of Object.entries(abilities)) {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
     //calculate level and expierence
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-    if (data.attributes.xp.used) {
-      data.attributes.xp.used = data.attributes.xp.used ?? 0;
+    if (attributes.xp.used) {
+      attributes.xp.used = attributes.xp.used ?? 0;
     }
     for (let i = 1; i < 21; i++) {
-      if (data.attributes.xp.used >= levels[i - 1] && data.attributes.xp.used < levels[i]) {
-        data.attributes.level = i;
-        data.attributes.xp.level = levels[i];
-        data.attributes.xp.level_min = levels[i - 1];
+      if (attributes.xp.used >= levels[i - 1] && attributes.xp.used < levels[i]) {
+        attributes.level = i;
+        attributes.xp.level = levels[i];
+        attributes.xp.level_min = levels[i - 1];
       }
     }
-    data.attributes.xp.bar_max = data.attributes.xp.level - data.attributes.xp.level_min;
-    data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min;
+    attributes.xp.bar_max = attributes.xp.level - attributes.xp.level_min;
+    attributes.xp.bar_min = attributes.xp.used - attributes.xp.level_min;
     /*
     calculate proficiency bonus and die
     */
-    data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
-    data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
+    attributes.prof_bonus = Math.floor((7 + attributes.level) / 4);
+    attributes.prof_die = "1d" + attributes.prof_bonus * 2;
     /*
     calculate character's defences, including damage resistances
     */
-    data.defences.stats.reflex = data.defences.stats.reflex ?? {};
-    data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
-    data.defences.stats.reflex.value = 10 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.stats.reflex.bonus);
-    data.defences.stats.reflex.label = "Reflex";
-    data.defences.stats.fortitude = data.defences.stats.fortitude ?? {};
-    data.defences.stats.fortitude.bonus = data.defences.stats.fortitude.bonus ?? 0;
-    data.defences.stats.fortitude.value = 10 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.stats.fortitude.bonus);
-    data.defences.stats.fortitude.label = "Fortitude";
-    data.defences.stats.will = data.defences.stats.will ?? {};
-    data.defences.stats.will.bonus = data.defences.stats.will.bonus ?? 0;
-    data.defences.stats.will.value = 10 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.stats.will.bonus);
-    data.defences.stats.will.label = "Will";
+    def_stats.reflex = def_stats.reflex ?? {};
+    def_stats.reflex.bonus = def_stats.reflex.bonus ?? 0;
+    def_stats.reflex.value = 10 + attributes.prof_bonus + abilities.dex.mod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
+    def_stats.reflex.label = "Reflex";
+    def_stats.fortitude = def_stats.fortitude ?? {};
+    def_stats.fortitude.bonus = def_stats.fortitude.bonus ?? 0;
+    def_stats.fortitude.value = 10 + attributes.prof_bonus + abilities.str.mod + abilities.con.mod + parseInt(def_stats.fortitude.bonus);
+    def_stats.fortitude.label = "Fortitude";
+    def_stats.will = def_stats.will ?? {};
+    def_stats.will.bonus = def_stats.will.bonus ?? 0;
+    def_stats.will.value = 10 + attributes.prof_bonus + abilities.wis.mod + abilities.cha.mod + parseInt(def_stats.will.bonus);
+    def_stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
-        data.defences.damage.physic[key] = {
-          type: data.defences.damage.physic[key]?.type ? data.defences.damage.physic[key].type : "res",
-          sens_value: data.defences.damage.physic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.physic[key].value : 0,
+        def_dam.physic[key] = {
+          type: def_dam.physic[key]?.type ? def_dam.physic[key].type : "res",
+          sens_value: def_dam.physic[key]?.value || def_dam.physic[key]?.type === "imm" ? def_dam.physic[key].value : 0,
           label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
         };
       }
-      data.defences.damage.magic[key] = {
-        type: data.defences.damage.physic[key]?.type ? data.defences.damage.physic[key].type : "res",
-        value: data.defences.damage.magic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.magic[key].value : 0,
+      def_dam.magic[key] = {
+        type: def_dam.physic[key]?.type ? def_dam.physic[key].type : "res",
+        value: def_dam.magic[key]?.value || def_dam.physic[key]?.type === "imm" ? def_dam.magic[key].value : 0,
         label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
       };
     }
@@ -110,11 +114,11 @@ export class ARd20Actor extends Actor {
       }
       if (skill.prof == 1) {
         skill.prof_bonus = 0;
-        skill.prof_die = `1d${data.attributes.prof_bonus * 2}`;
+        skill.prof_die = `1d${attributes.prof_bonus * 2}`;
       }
       if (skill.prof == 2) {
-        skill.prof_die = `1d${data.attributes.prof_bonus * 2}`;
-        skill.prof_bonus = data.attributes.prof_bonus;
+        skill.prof_die = `1d${attributes.prof_bonus * 2}`;
+        skill.prof_bonus = attributes.prof_bonus;
       }
     }
     //calculate character's armor,weapon and tool proficinecies
@@ -131,7 +135,7 @@ export class ARd20Actor extends Actor {
     if (data.profs.weapon.length > game.settings.get("ard20", "profs").weapon.length) {
       data.profs.splice(game.settings.get("ard20", "profs").weapon.length + 1, data.profs.length - game.settings.get("ard20", "profs").weapon.length);
     }
-    data.speed.value = this.itemTypes.race[0]?.data.data.speed + data.abilities.dex.mod + data.speed.bonus;
+    data.speed.value = this.itemTypes.race[0]?.data.data.speed + abilities.dex.mod + data.speed.bonus;
   }
 
   /**
@@ -185,7 +189,7 @@ export class ARd20Actor extends Actor {
 
   rollAbilityTest(abilityId, options = {}) {
     const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
-    const abl = this.data.data.abilities[abilityId];
+    const abl = this.data.abilities[abilityId];
 
     // Construct parts
     const parts = ["@mod"];
@@ -249,5 +253,4 @@ export class ARd20Actor extends Actor {
     });
     return d20Roll(rollData);
   }
-
 }
