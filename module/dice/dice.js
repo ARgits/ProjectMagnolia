@@ -140,8 +140,6 @@ export async function d20Roll({
   const { advantageMode, isFF } = _determineAdvantageMode({ advantage, disadvantage, fastForward, event });
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
   if (chooseModifier && !isFF) {
-    data["prof_die"] = "@prof_die";
-    data["prof_bonus"] = "@prof_bonus";
     data["mod"] = "@mod";
   }
 
