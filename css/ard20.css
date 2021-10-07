@@ -528,6 +528,22 @@ button.change:disabled {
   margin: 0 6px;
 }
 
+.ard20 .items-list .item-controls .item-toggle {
+  color: #b5b3a4;
+}
+
+.ard20 .items-list .item-controls .item-toggle .active {
+  color: #4b4a44;
+}
+
+.ard20 .items-list .item-controls .item-toggle .fixed {
+  color: #44191A;
+}
+
+.ard20 .items-list .item-controls .item-toggle .fixed:hover {
+  text-shadow: none;
+}
+
 .ard20 .items-list .item {
   -webkit-box-align: center;
   -ms-flex-align: center;
