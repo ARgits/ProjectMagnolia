@@ -68,10 +68,10 @@
     };
     .item-toggle{
       color:#b5b3a4;
-      .active{
+      &.active{
         color: #4b4a44;
       };
-      .fixed{
+      &.fixed{
         color: #44191A;
         &:hover{
           text-shadow: none;

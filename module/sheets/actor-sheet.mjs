@@ -123,6 +123,7 @@ export class ARd20ActorSheet extends ActorSheet {
         }
       } else if (i.type === "weapon") {
         const isActive = getProperty(i.data, "equipped");
+        
         i.toggleClass = isActive ? "active" : "";
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
         weapons.push(i);

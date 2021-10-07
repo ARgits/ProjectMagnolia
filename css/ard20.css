@@ -532,15 +532,15 @@ button.change:disabled {
   color: #b5b3a4;
 }
 
-.ard20 .items-list .item-controls .item-toggle .active {
+.ard20 .items-list .item-controls .item-toggle.active {
   color: #4b4a44;
 }
 
-.ard20 .items-list .item-controls .item-toggle .fixed {
+.ard20 .items-list .item-controls .item-toggle.fixed {
   color: #44191A;
 }
 
-.ard20 .items-list .item-controls .item-toggle .fixed:hover {
+.ard20 .items-list .item-controls .item-toggle.fixed:hover {
   text-shadow: none;
 }
 
