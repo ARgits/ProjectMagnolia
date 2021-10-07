@@ -160,33 +160,12 @@ export class ARd20Actor extends Actor {
     return data;
   }
   /**
-   * Roll a generic ability test or saving throw.
-   * Prompt the user for input on which variety of roll they want to do.
-   * @param {String}abilityId     The ability id (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests or saving throws are rolled
-   */
-  rollAbility(abilityId, options = {}) {
-    console.log(abilityId, "Характеристика");
-    const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
-    new Dialog({
-      title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
-      content: `<p>${game.i18n.format("ARd20.AbilityPromptText", { ability: label })}</p>`,
-      buttons: {
-        test: {
-          label: game.i18n.localize("ARd20.ActionAbil"),
-          callback: () => this.rollAbilityTest(abilityId, options),
-        },
-      },
-    }).render(true);
-  }
-  /**
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    * @param {String} abilityId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-
   rollAbilityTest(abilityId, options = {}) {
     const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
     const abl = this.data.abilities[abilityId];
@@ -219,7 +198,6 @@ export class ARd20Actor extends Actor {
    * @param {Object} options      Options which configure how the skill check is rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-
   rollSkill(skillId, options = {}) {
     const skl = this.data.data.skills[skillId];
 
@@ -239,7 +217,6 @@ export class ARd20Actor extends Actor {
     if (options.parts?.length > 0) {
       parts.push(...options.parts);
     }
-
     // Roll and return
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,

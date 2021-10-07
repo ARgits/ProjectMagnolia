@@ -65,6 +65,18 @@
       font-size: 12px;
       text-align: center;
       margin: 0 6px;
+    };
+    .item-toggle{
+      color:#b5b3a4;
+      .active{
+        color: #4b4a44;
+      };
+      .fixed{
+        color: #44191A;
+        &:hover{
+          text-shadow: none;
+        }
+      }
     }
   }
 

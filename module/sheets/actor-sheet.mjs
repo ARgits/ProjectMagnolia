@@ -1,6 +1,7 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 import { CharacterAdvancement } from "../helpers/cha-adv.mjs";
 import { ARd20Actor } from "../documents/actor.mjs";
+import {DamageRoll} from "../dice/damage-roll.js"
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -169,7 +170,6 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.actor));
     html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this));
-
     // Rollable abilities.
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this));
@@ -256,6 +256,11 @@ export class ARd20ActorSheet extends ActorSheet {
         const itemId = element.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
+      }
+      else if (dataset.rollType==='weapon'){
+        const itemId = element.closest(".item").dataset.itemId
+        const item = this.actor.items.get(itemId)
+        if (item) return item.DamageRoll()
       }
     }
   }
