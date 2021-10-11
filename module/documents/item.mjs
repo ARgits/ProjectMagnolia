@@ -1,3 +1,5 @@
+import {damageRoll} from "../dice/dice"
+
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -204,44 +206,21 @@ export class ARd20Item extends Item {
    * @private
    */
 
-  async roll() {
-    const item = this.data;
+  async roll({ configureDialog = true, rollMode, createMessage = true } = {}) {
+    let item = this.data;
+    const iData = this.data.data; //Item data
+    const actor = this.actor;
+    const aData = actor.data.data; //Actor data
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const rollMode = game.settings.get("core", "rollMode");
-    const label = `[${item.type}] ${item.name}`;
     // Otherwise, create a roll and send a chat message from it.
+    const targets = game.user.targets
+    const ts = targets.size
     if (item.type === "weapon") {
       const rollData = this.getRollData();
       const targets = game.user.targets;
       const ts = targets.size;
-      const attackRoll = new Roll(rollData.item.attack, rollData).roll();
-      attackRoll._total = attackRoll._total >= 0 ? attackRoll._total : 0;
-      attackRoll.toMessage({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-        emote: true,
-      });
-      const damageRoll = new Roll(rollData.item.damage.common.current, rollData).roll();
-      damageRoll._total = damageRoll._total >= 0 ? damageRoll._total : 0;
-      damageRoll.toMessage({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-      });
-      console.log(ts);
-      if (ts >= 1) {
-        for (let target of targets) {
-          target.data.attack = attackRoll.total;
-          target.data.damage = damageRoll.total;
-        }
-        this.AttackCheck();
-      } else if (ts === 0) {
-        console.log("нет целей");
-      }
-      const attack = [attackRoll, damageRoll];
-      return attack;
+      return damageRoll(rollData)
     }
     // If there's no roll data, send a chat message.
     else if (!this.data.data.formula) {
@@ -251,21 +230,11 @@ export class ARd20Item extends Item {
         flavor: label,
         content: item.data.description ?? "",
       });
-    } else {
-      // Retrieve roll data.
-      const rollData = this.getRollData();
-      // Invoke the roll and submit it to chat.
-      const roll = new Roll(rollData.item.formula, rollData).roll();
-      roll.toMessage({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-      });
       return roll;
     }
+    
   }
-  async AttackCheck() {
-    const targets = game.user.targets;
+  async AttackCheck(attack,damage,targets) {
     for (let target of targets) {
       let actor = target.actor;
       const reflex = actor.data.data.defences.reflex.value;
@@ -296,8 +265,8 @@ export class ARd20Item extends Item {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    html.on('click', '.card-buttons button', this._onChatCardAction.bind(this));
-    html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
+    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
+    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -316,52 +285,55 @@ export class ARd20Item extends Item {
     button.disabled = true;
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
-    const message =  game.messages.get(messageId);
+    const message = game.messages.get(messageId);
     const action = button.dataset.action;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
-    if ( !( isTargetted || game.user.isGM || message.isAuthor ) ) return;
+    if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
 
     // Recover the actor for the chat card
     const actor = await this._getChatCardActor(card);
-    if ( !actor ) return;
+    if (!actor) return;
 
     // Get the Item from stored flag data or by the item ID on the Actor
     const storedData = message.getFlag("ard20", "itemData");
-    const item = storedData ? new this(storedData, {parent: actor}) : actor.items.get(card.dataset.itemId);
-    if ( !item ) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {item: card.dataset.itemId, name: actor.name}))
+    const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
+    if (!item) {
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
 
     // Handle different actions
-    switch ( action ) {
+    switch (action) {
       case "attack":
-        await item.rollAttack({event}); break;
+        await item.rollAttack({ event });
+        break;
       case "damage":
       case "versatile":
         await item.rollDamage({
           critical: event.altKey,
           event: event,
           spellLevel: spellLevel,
-          versatile: action === "versatile"
+          versatile: action === "versatile",
         });
         break;
       case "formula":
-        await item.rollFormula({event, spellLevel}); break;
+        await item.rollFormula({ event, spellLevel });
+        break;
       case "save":
         const targets = this._getChatCardTargets(card);
-        for ( let token of targets ) {
-          const speaker = ChatMessage.getSpeaker({scene: canvas.scene, token: token});
+        for (let token of targets) {
+          const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token });
           await token.actor.rollAbilitySave(button.dataset.ability, { event, speaker });
         }
         break;
       case "toolCheck":
-        await item.rollToolCheck({event}); break;
+        await item.rollToolCheck({ event });
+        break;
       case "placeTemplate":
         const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
-        if ( template ) template.drawPreview();
+        if (template) template.drawPreview();
         break;
     }
 
@@ -393,11 +365,10 @@ export class ARd20Item extends Item {
    * @private
    */
   static async _getChatCardActor(card) {
-
     // Case 1 - a synthetic actor from a Token
-    if ( card.dataset.tokenId ) {
+    if (card.dataset.tokenId) {
       const token = await fromUuid(card.dataset.tokenId);
-      if ( !token ) return null;
+      if (!token) return null;
       return token.actor;
     }
 
@@ -415,8 +386,9 @@ export class ARd20Item extends Item {
    * @private
    */
   static _getChatCardTargets(card) {
-    let targets = canvas.tokens.controlled.filter(t => !!t.actor);
-    if ( !targets.length && game.user.character ) targets = targets.concat(game.user.character.getActiveTokens());
-    if ( !targets.length ) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
+    let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
+    if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
+    if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
     return targets;
-  }}
+  }
+}

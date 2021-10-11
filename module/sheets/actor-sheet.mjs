@@ -172,6 +172,8 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this));
     //open "character advancement" window
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this));
+    //item's roll
+    html.find(".item-roll").click(this._onItemRoll.bind(this))
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
@@ -218,6 +220,12 @@ export class ARd20ActorSheet extends ActorSheet {
     event.preventDefault();
     let skill = event.currentTarget.parentElement.dataset.skill;
     return this.actor.rollSkill(skill, { event: event });
+  }
+  _onItemRoll(event){
+    event.preventDefault()
+    const id = event.currentTarget.parentElement.dataset["item-id"]
+    const item = this.actor.items.get(id)
+    if (item) return item.roll()
   }
 
   /**

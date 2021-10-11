@@ -13,7 +13,7 @@
     <li class="item flexrow" data-item-id="{{item._id}}">
       <div class="item-name">
         <div class="item-image">
-          <a class="rollable" data-roll-type="weapon"><img src="{{item.img}}" title="{{item.name}}" width="24"
+          <a class="item-roll" data-roll-type="weapon"><img src="{{item.img}}" title="{{item.name}}" width="24"
               height="24" /></a>
         </div>
         <h4>{{item.name}}</h4>
@@ -21,7 +21,7 @@
       {{log item}}
       <div class="item-prop">{{item.data.type.label}}</div>
       <div class="item-prop">{{item.data.prof.label}}</div>
-      <div class="item-prop rollable" data-roll="{{item.data.damage.common.current}}">
+      <div class="item-prop" >
         {{item.data.damage.common.current}}
       </div>
       
