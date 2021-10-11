@@ -14,8 +14,12 @@ export class ARd20ActorSheet extends ActorSheet {
       template: "systems/ard20/templates/actor/actor-sheet.html",
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }],      
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }],
+      dragDrop:[{permissions:{drop:this._canDragDrop.bind(this)}}],
     });
+  }
+  _canDragDrop(selector){
+    return game.user.isGM
   }
 
   /** @override */
