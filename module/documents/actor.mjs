@@ -79,16 +79,13 @@ export class ARd20Actor extends Actor {
     /*
     calculate character's defences, including damage resistances
     */
-    def_stats.reflex = def_stats.reflex ?? {};
-    def_stats.reflex.bonus = def_stats.reflex.bonus ?? 0;
+   for(let [key, def] of Object.entries(def_stats)){
+     def.bonus = def.bonus ?? 0
+   }
     def_stats.reflex.value = 10 + attributes.prof_bonus + abilities.dex.mod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
     def_stats.reflex.label = "Reflex";
-    def_stats.fortitude = def_stats.fortitude ?? {};
-    def_stats.fortitude.bonus = def_stats.fortitude.bonus ?? 0;
     def_stats.fortitude.value = 10 + attributes.prof_bonus + abilities.str.mod + abilities.con.mod + parseInt(def_stats.fortitude.bonus);
     def_stats.fortitude.label = "Fortitude";
-    def_stats.will = def_stats.will ?? {};
-    def_stats.will.bonus = def_stats.will.bonus ?? 0;
     def_stats.will.value = 10 + attributes.prof_bonus + abilities.wis.mod + abilities.cha.mod + parseInt(def_stats.will.bonus);
     def_stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
@@ -204,6 +201,8 @@ export class ARd20Actor extends Actor {
     // Compose roll parts and data
     const parts = ["@mod"];
     const data = { abilities: this.getRollData().abilities };
+
+    //if character'skill have prof_bonus and/or prof_die, they will be added to roll dialog
     if (skl.prof_bonus) {
       parts.unshift("@prof_bonus");
       data.prof_bonus = skl.prof_bonus;

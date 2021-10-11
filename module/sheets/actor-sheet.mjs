@@ -15,7 +15,14 @@ export class ARd20ActorSheet extends ActorSheet {
       width: 600,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }],
+      dragDrop: [{ permissions: { dragStart: this._canDragStart.bind(this), drop: _canDragDrop.bind(this) } }],
     });
+  }
+  _canDragStart() {
+    return game.user.isGM;
+  }
+  _canDragDrop() {
+    return game.user.isGM;
   }
 
   /** @override */
@@ -123,7 +130,7 @@ export class ARd20ActorSheet extends ActorSheet {
         }
       } else if (i.type === "weapon") {
         const isActive = getProperty(i.data, "equipped");
-        
+
         i.toggleClass = isActive ? "active" : "";
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
         weapons.push(i);
@@ -207,10 +214,10 @@ export class ARd20ActorSheet extends ActorSheet {
     let ability = event.currentTarget.parentElement.dataset.ability;
     return this.actor.rollAbilityTest(ability, { event: event });
   }
-  _onRollSkillCheck(event){
-    event.preventDefault()
-    let skill = event.currentTarget.parentElement.dataset.skill
-    return this.actor.rollSkill(skill,{event:event})
+  _onRollSkillCheck(event) {
+    event.preventDefault();
+    let skill = event.currentTarget.parentElement.dataset.skill;
+    return this.actor.rollSkill(skill, { event: event });
   }
 
   /**
