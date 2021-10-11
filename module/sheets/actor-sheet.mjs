@@ -271,4 +271,13 @@ export class ARd20ActorSheet extends ActorSheet {
       }*/
     }
   }
+  async _onDropItemCreate(itemData) {
+    if(!game.user.isGM){
+      ui.notifications.error('you do not have permissions to add items manually')
+      return
+    }
+    ui.notifications.info('All good')
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    return this.actor.createEmbeddedDocuments("Item", itemData);
+  }
 }
