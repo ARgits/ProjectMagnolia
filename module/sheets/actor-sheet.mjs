@@ -14,14 +14,9 @@ export class ARd20ActorSheet extends ActorSheet {
       template: "systems/ard20/templates/actor/actor-sheet.html",
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }],
-      dragDrop:[{permissions:{drop:this._canDragDrop.bind(this)}}],
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
     });
   }
-  _canDragDrop(selector){
-    return game.user.isGM
-  }
-
   /** @override */
   get template() {
     return `systems/ard20/templates/actor/actor-${this.actor.data.type}-sheet.html`;
@@ -172,10 +167,10 @@ export class ARd20ActorSheet extends ActorSheet {
 
     // Active Effect management
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.actor));
+    //roll abilities and skills
     html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this));
-    // Rollable abilities.
-    html.find(".rollable").click(this._onRoll.bind(this));
+    //open "character advancement" window
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this));
     // Drag events for macros.
     if (this.actor.isOwner) {
@@ -187,6 +182,9 @@ export class ARd20ActorSheet extends ActorSheet {
       });
     }
   }
+  /**
+   * Open @class CharacterAdvancement 
+   */
   _OnAdvanceMenu(event) {
     event.preventDefault();
     const button = event.currentTarget;
@@ -198,6 +196,10 @@ export class ARd20ActorSheet extends ActorSheet {
     }
     app?.render(true);
   }
+  /**
+   * Change @param data.equipped
+   * by toggling it on sheet
+   */
   _onToggleItem(event) {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
@@ -206,6 +208,7 @@ export class ARd20ActorSheet extends ActorSheet {
     const attr = "data.equipped";
     return item.update({ [attr]: !getProperty(item.data, attr) });
   }
+
   _onRollAbilityTest(event) {
     event.preventDefault();
     let ability = event.currentTarget.parentElement.dataset.ability;
