@@ -271,13 +271,42 @@ export class ARd20ActorSheet extends ActorSheet {
       }*/
     }
   }
-  async _onDropItemCreate(itemData) {
+  async _onDrop(event) {
     if(!game.user.isGM){
-      ui.notifications.error('you do not have permissions to add items manually')
+      ui.notifications.error("you don't have permissions to add documents to this actor manually")
       return
     }
-    ui.notifications.info('All good')
-    itemData = itemData instanceof Array ? itemData : [itemData];
-    return this.actor.createEmbeddedDocuments("Item", itemData);
+
+    // Try to extract the data
+    let data;
+    try {
+      data = JSON.parse(event.dataTransfer.getData('text/plain'));
+    } catch (err) {
+      return false;
+    }
+    const actor = this.actor;
+
+    /**
+     * A hook event that fires when some useful data is dropped onto an ActorSheet.
+     * @function dropActorSheetData
+     * @memberof hookEvents
+     * @param {Actor} actor      The Actor
+     * @param {ActorSheet} sheet The ActorSheet application
+     * @param {object} data      The data that has been dropped onto the sheet
+     */
+    const allowed = Hooks.call("dropActorSheetData", actor, this, data);
+    if ( allowed === false ) return;
+
+    // Handle different data types
+    switch ( data.type ) {
+      case "ActiveEffect":
+        return this._onDropActiveEffect(event, data);
+      case "Actor":
+        return this._onDropActor(event, data);
+      case "Item":
+        return this._onDropItem(event, data);
+      case "Folder":
+        return this._onDropFolder(event, data);
+    }
   }
 }
