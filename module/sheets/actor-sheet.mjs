@@ -271,6 +271,9 @@ export class ARd20ActorSheet extends ActorSheet {
       }*/
     }
   }
+  /**
+   * _onDrop method with 
+   */
   async _onDrop(event) {
     if(!game.user.isGM){
       ui.notifications.error("you don't have permissions to add documents to this actor manually")
