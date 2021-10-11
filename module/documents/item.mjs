@@ -73,10 +73,10 @@ export class ARd20Item extends Item {
   _setTypeAndSubtype(data, flags, labels) {
     data.type.value = data.type.value || "amb";
     data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
-    if (this.isOwned && flags.core?.sourceId) {
-      let id = this.isOwned ? /Item.(.+)/.exec(flags.core.sourceId)[1] : null;
+    if (flags.core?.sourceId) {
+      let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
       console.log(id);
-      data.sub_type = this.isOwned && data.sub_type === undefined ? game.items.get(id).data.data.sub_type : data.sub_type;
+      data.sub_type = data.sub_type === undefined ? game.items.get(id).data.data.sub_type : data.sub_type;
     }
     data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type)[0] === undefined ? data.settings[0].name : data.sub_type;
     labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
@@ -207,19 +207,36 @@ export class ARd20Item extends Item {
    */
 
   async roll({ configureDialog = true, rollMode, createMessage = true } = {}) {
-    let item = this.data;
+    let item = this;
+    const id = item.id
     const iData = this.data.data; //Item data
     const actor = this.actor;
     const aData = actor.data.data; //Actor data
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const iName = this.name
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets
     const ts = targets.size
     if (item.type === "weapon") {
-      const rollData = this.getRollData();
+      console.log('Кидается оружие')
+      const parts = ["@damageDie","@mod"]
+      const data = {damageDie:iData.damage.common[item.labels.prof.toLowerCase()],mod:aData.abilities.str.mod}
       const targets = game.user.targets;
       const ts = targets.size;
+      const options={}
+       if (options.parts?.length > 0) {
+      parts.push(...options.parts);
+    }
+      const rollData= foundry.utils.mergeObject(options,{
+        parts:parts,
+        data:data,
+        title:`${iName} damage roll`,
+        messageData:{
+          speaker:options.speaker||ChatMessage.getSpeaker({actor:actor}),
+          "flags.ard20.roll":{type:'weapon damage',id}
+        }
+      })
       return damageRoll(rollData)
     }
     // If there's no roll data, send a chat message.
