@@ -1,4 +1,4 @@
-import {damageRoll} from "../dice/dice"
+import {damageRoll} from "../dice/dice.js"
 
 /**
  * Extend the basic Item with some very simple modifications.
