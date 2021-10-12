@@ -206,13 +206,14 @@ export class ARd20Item extends Item {
    * @private
    */
 
-  async roll({ configureDialog = true, rollMode, hasDamage, createMessage = true } = {}) {
+  async roll({ configureDialog = true, rollMode, hasDamage,hasAttack, createMessage = true } = {}) {
     let item = this;
     const id = item.id;
     const iData = this.data.data; //Item data
     const actor = this.actor;
     const aData = actor.data.data; //Actor data
     hasDamage = iData.hasDamage || hasDamage;
+    hasAttack = idata.hasAttack || hasAttack
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const iName = this.name;
