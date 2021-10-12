@@ -139,7 +139,9 @@
     "types": ["item", "feature", "spell", "weapon", "race"],
     "templates": {
       "base": {
-        "description": ""
+        "description": "",
+        "hasAttack":false,
+        "hasDamage":false
       }
     },
     "item": {

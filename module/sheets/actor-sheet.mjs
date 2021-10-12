@@ -224,9 +224,10 @@ export class ARd20ActorSheet extends ActorSheet {
   _onItemRoll(event){
     event.preventDefault()
     console.log('БРОСОК')
-    const id = $(event.currentTarget).parents(".item").data("item-id")
+    const id = event.currentTarget.closest(".item").dataset.itemId
     const item = this.actor.items.get(id)
-    if (item) return item.roll()
+    const hasDamage = item.type==='weapon'?true:false
+    if (item) return item.roll(hasDamage)
   }
 
   /**
