@@ -485,12 +485,6 @@ export class ARd20Item extends Item {
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
 
     const { parts, rollData } = this.getAttackToHit();
-    const data = {};
-    switch (this.data.type) {
-      case "weapon":
-        data.mod = this.actor.data.data.abilities.dex.mod;
-        break;
-    }
     const targets = game.user.targets;
     const ts = targets.size;
     if (options.parts?.length > 0) {
@@ -531,6 +525,7 @@ export class ARd20Item extends Item {
     const itemData = this.data.data;
     //if (!this.hasAttack || !itemData) return;
     const rollData = this.getRollData();
+    console.log('ROLL DATA', rollData)
 
     // Define Roll bonuses
     const parts = [];
@@ -546,6 +541,11 @@ export class ARd20Item extends Item {
 
     // Ability score modifier
     parts.push("@mod");
+    switch (this.data.type) {
+      case "weapon":
+        rollData.mod = this.actor.data.data.abilities.dex.mod;
+        break;
+    }
 
     /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
     if ( !["weapon", "consumable"].includes(this.data.type)) {
