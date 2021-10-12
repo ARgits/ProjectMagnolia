@@ -71,13 +71,13 @@ export class ARd20Item extends Item {
     }
   }
   _setTypeAndSubtype(data, flags, labels) {
-    console.log(this.name, this.id)
+    console.log(this.name, this.id);
     data.type.value = data.type.value || "amb";
     data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
       console.log(id);
-      data.sub_type = data.sub_type === undefined ? game.items.get(id).data.data.sub_type : data.sub_type;
+      data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;
     }
     data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type)[0] === undefined ? data.settings[0].name : data.sub_type;
     labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
@@ -207,14 +207,15 @@ export class ARd20Item extends Item {
    * @private
    */
 
-  async roll({ configureDialog = true, rollMode, hasDamage,hasAttack, createMessage = true } = {}) {
+  async roll({ configureDialog = true, rollMode, hasDamage, hasAttack, createMessage = true } = {}) {
     let item = this;
     const id = item.id;
     const iData = this.data.data; //Item data
     const actor = this.actor;
-    const aData = actor.data.data; //Actor data
+    const aData = actor.data.data;
+    console.log(aData); //Actor data
     hasDamage = iData.hasDamage || hasDamage;
-    hasAttack = idata.hasAttack || hasAttack
+    hasAttack = iData.hasAttack || hasAttack;
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const iName = this.name;
@@ -223,29 +224,32 @@ export class ARd20Item extends Item {
     const ts = targets.size;
     if (hasAttack) {
       console.log("Кидается Атака");
-      const parts = ["@mod"];
-      const data = { mod };
-      switch (item.data.type) {
-        case "weapon":
-          data.mod = aData.abilitites.dex.mod;
-          break;
-      }
-      const targets = game.user.targets;
-      const ts = targets.size;
-      const options = {};
-      if (options.parts?.length > 0) {
-        parts.push(...options.parts);
-      }
-      const rollData = foundry.utils.mergeObject(options, {
-        parts: parts,
-        data: data,
-        title: `${iName} damage roll`,
-        messageData: {
-          speaker: options.speaker || ChatMessage.getSpeaker({ actor: actor }),
-          "flags.ard20.roll": { type: "weapon damage", id },
-        },
-      });
-      return d20Roll(rollData);
+      let Attack = () => {
+        const parts = ["@mod"];
+        const data = {};
+        switch (item.data.type) {
+          case "weapon":
+            data.mod = aData.abilities.dex.mod;
+            break;
+        }
+        const targets = game.user.targets;
+        const ts = targets.size;
+        const options = {};
+        if (options.parts?.length > 0) {
+          parts.push(...options.parts);
+        }
+        const rollData = foundry.utils.mergeObject(options, {
+          parts: parts,
+          data: data,
+          title: `${iName} attack roll`,
+          messageData: {
+            speaker: options.speaker || ChatMessage.getSpeaker({ actor: actor }),
+            "flags.ard20.roll": { type: "attack", id },
+          },
+        });
+        return d20Roll(rollData);
+      };
+      console.log(Attack());
     }
     // If there's no roll data, send a chat message.
     else if (!this.data.data.formula) {

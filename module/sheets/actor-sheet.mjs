@@ -146,7 +146,7 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-toggle").click(this._onToggleItem.bind(this));
     html.find(".item-edit").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemid"));
       item.sheet.render(true);
     });
 
@@ -160,7 +160,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Delete Inventory Item
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemid"));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
@@ -204,8 +204,8 @@ export class ARd20ActorSheet extends ActorSheet {
    */
   _onToggleItem(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.actor.items.get(itemId);
+    const itemid = event.currentTarget.closest(".item").dataset.itemid;
+    const item = this.actor.items.get(itemid);
     //const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
     const attr = "data.equipped";
     return item.update({ [attr]: !getProperty(item.data, attr) });
@@ -224,10 +224,10 @@ export class ARd20ActorSheet extends ActorSheet {
   _onItemRoll(event){
     event.preventDefault()
     console.log('БРОСОК')
-    const id = event.currentTarget.closest(".item").dataset.itemId
+    const id = event.currentTarget.closest(".item").dataset.itemid
     const item = this.actor.items.get(id)
-    const [hasAttack,hasDamage] = item.type==='weapon'?true:false
-    if (item) return item.roll(hasAttack,hasDamage)
+    const [hasAttack,hasDamage] = Array(2).fill(item.type==='weapon'?true:false)
+    if (item) return item.roll({hasAttack,hasDamage})
   }
 
   /**
@@ -270,13 +270,13 @@ export class ARd20ActorSheet extends ActorSheet {
     // Handle item rolls.
     if (dataset.rollType) {
       if (dataset.rollType == "item") {
-        const itemId = element.closest(".item").dataset.itemId;
-        const item = this.actor.items.get(itemId);
+        const itemid = element.closest(".item").dataset.itemid;
+        const item = this.actor.items.get(itemid);
         if (item) return item.roll();
       }
       /*else if (dataset.rollType==='weapon'){
-        const itemId = element.closest(".item").dataset.itemId
-        const item = this.actor.items.get(itemId)
+        const itemid = element.closest(".item").dataset.itemid
+        const item = this.actor.items.get(itemid)
         if (item) return item.DamageRoll()
       }*/
     }
