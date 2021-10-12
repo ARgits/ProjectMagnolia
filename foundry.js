@@ -10394,7 +10394,7 @@ class Actors extends WorldCollection {
    * @static
    *
    * @example <caption>Register a new ActorSheet subclass for use with certain Actor types.</caption>
-   * Actors.registerSheet("dnd5e", ActorSheet5eCharacter, { types: ["character"], makeDefault: true });
+   * Actors.registerSheet("ard20", ActorSheet5eCharacter, { types: ["character"], makeDefault: true });
    */
   static registerSheet(...args) {
     EntitySheetConfig.registerSheet(Actor, ...args);

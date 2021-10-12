@@ -222,45 +222,7 @@ export class ARd20Item extends Item {
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets;
     const ts = targets.size;
-    if (hasAttack) {
-      console.log("Кидается Атака");
-      let Attack = () => {
-        const parts = ["@mod"];
-        const data = {};
-        switch (item.data.type) {
-          case "weapon":
-            data.mod = aData.abilities.dex.mod;
-            break;
-        }
-        const targets = game.user.targets;
-        const ts = targets.size;
-        const options = {};
-        if (options.parts?.length > 0) {
-          parts.push(...options.parts);
-        }
-        const rollData = foundry.utils.mergeObject(options, {
-          parts: parts,
-          data: data,
-          title: `${iName} attack roll`,
-          messageData: {
-            speaker: options.speaker || ChatMessage.getSpeaker({ actor: actor }),
-            "flags.ard20.roll": { type: "attack", id },
-          },
-        });
-        return d20Roll(rollData);
-      };
-      console.log(Attack());
-    }
-    // If there's no roll data, send a chat message.
-    else if (!this.data.data.formula) {
-      ChatMessage.create({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-        content: item.data.description ?? "",
-      });
-      return roll;
-    }
+    return item.displayCard({ rollMode, createMessage });
   }
   async AttackCheck(attack, damage, targets) {
     for (let target of targets) {
@@ -439,7 +401,7 @@ export class ARd20Item extends Item {
       isTool: this.data.type === "tool",
       hasAbilityCheck: this.hasAbilityCheck,
     };
-    const html = await renderTemplate("systems/dnd5e/templates/chat/item-card.html", templateData);
+    const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
 
     // Create the ChatMessage data object
     const chatData = {
@@ -453,7 +415,7 @@ export class ARd20Item extends Item {
 
     // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
     if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
-      chatData.flags["dnd5e.itemData"] = this.data;
+      chatData.flags["ard20.itemData"] = this.data;
     }
 
     // Apply the roll mode to adjust message visibility
@@ -461,5 +423,168 @@ export class ARd20Item extends Item {
 
     // Create the Chat Message or return its data
     return createMessage ? ChatMessage.create(chatData) : chatData;
+  }
+
+  /**
+   * Prepare an object of chat data used to display a card for the Item in the chat log.
+   * @param {object} htmlOptions    Options used by the TextEditor.enrichHTML function.
+   * @returns {object}              An object of chat data to render.
+   */
+  getChatData(htmlOptions = {}) {
+    const data = foundry.utils.deepClone(this.data.data);
+    const labels = this.labels;
+
+    // Rich text description
+    data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
+
+    // Item type specific properties
+    const props = [];
+
+    // Equipment properties
+    if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
+      if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
+        props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
+      }
+      props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"), game.i18n.localize(data.proficient ? "ARd20.Proficient" : "ARd20.NotProficient"));
+    }
+
+    // Ability activation properties
+    if (data.hasOwnProperty("activation")) {
+      props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
+    }
+
+    // Filter properties and return
+    data.properties = props.filter((p) => !!p);
+    return data;
+  }
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare chat card data for weapon type items.
+   * @param {object} data     Copy of item data being use to display the chat message.
+   * @param {object} labels   Specially prepared item labels.
+   * @param {string[]} props  Existing list of properties to be displayed. *Will be mutated.*
+   * @private
+   */
+
+  /* -------------------------------------------- */
+
+  /**
+   * Place an attack roll using an item (weapon, feat, spell, or equipment)
+   * Rely upon the d20Roll logic for the core implementation
+   *
+   * @param {object} options        Roll options which are configured and provided to the d20Roll function
+   * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
+   */
+  async rollAttack(options = {}) {
+    const itemData = this.data.data;
+    const flags = this.actor.data.flags.ard20 || {};
+    if (!this.hasAttack) {
+      throw new Error("you may not place an Attack Roll with this Item.");
+    }
+    let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
+
+    const { parts, rollData } = ["@mod"];
+    const data = {};
+    switch (item.data.type) {
+      case "weapon":
+        data.mod = aData.abilities.dex.mod;
+        break;
+    }
+    const targets = game.user.targets;
+    const ts = targets.size;
+    const options = {};
+    if (options.parts?.length > 0) {
+      parts.push(...options.parts);
+    }
+    let rollConfig = {
+      parts: parts,
+      actor: this.actor,
+      data: rollData,
+      title: title,
+      flavor: title,
+      dialogOptions: {
+        width: 400,
+        top: options.event ? options.event.clientY - 80 : null,
+        left: window.innerWidth - 710,
+      },
+      messageData: {
+        "flags.ard20.roll": { type: "attack", itemId: this.id },
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      },
+    };
+    rollConfig = mergeObject(rollConfig, options);
+    const roll = await d20Roll(rollConfig);
+    if (roll === false) return null;
+    return roll;
+  }
+  /**
+   * Update a label to the Item detailing its total to hit bonus.
+   * Sources:
+   * - item entity's innate attack bonus
+   * - item's actor's proficiency bonus if applicable
+   * - item's actor's global bonuses to the given item type
+   * - item's ammunition if applicable
+   *
+   * @returns {{rollData: object, parts: string[]}|null}  Data used in the item's Attack roll.
+   */
+  getAttackToHit() {
+    const itemData = this.data.data;
+    if (!this.hasAttack || !itemData) return;
+    const rollData = this.getRollData();
+
+    // Define Roll bonuses
+    const parts = [];
+
+    // Include the item's innate attack bonus as the initial value and label
+    if (itemData.attackBonus) {
+      parts.push(itemData.attackBonus);
+      this.labels.toHit = itemData.attackBonus;
+    }
+
+    // Take no further action for un-owned items
+    if (!this.isOwned) return { rollData, parts };
+
+    // Ability score modifier
+    parts.push("@mod");
+
+    /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
+    if ( !["weapon", "consumable"].includes(this.data.type)) {
+      parts.push("@prof");
+      if ( this.data.data.prof?.hasProficiency ) {
+        rollData.prof = this.data.data.prof.term;
+      }
+    }
+    */
+
+    /* Actor-level global bonus to attack rolls
+    const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
+    if (actorBonus.attack) parts.push(actorBonus.attack);
+    */
+
+    /* One-time bonus provided by consumed ammunition
+    if (itemData.consume?.type === "ammo" && this.actor.items) {
+      const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
+
+      if (ammoItemData) {
+        const ammoItemQuantity = ammoItemData.data.quantity;
+        const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
+        const ammoItemAttackBonus = ammoItemData.data.attackBonus;
+        const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
+        if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
+          parts.push("@ammo");
+          rollData.ammo = ammoItemAttackBonus;
+        }
+      }
+    }
+    */
+
+    // Condense the resulting attack bonus formula into a simplified label
+    const roll = new Roll(parts.join("+"), rollData);
+    const formula = simplifyRollFormula(roll.formula);
+    this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula;
+
+    // Update labels and return the prepared roll data
+    return { rollData, parts };
   }
 }
