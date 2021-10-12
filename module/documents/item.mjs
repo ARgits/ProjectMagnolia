@@ -1,4 +1,4 @@
-import {damageRoll} from "../dice/dice.js"
+import { damageRoll } from "../dice/dice.js";
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -206,39 +206,39 @@ export class ARd20Item extends Item {
    * @private
    */
 
-  async roll(hasDamage,{ configureDialog = true, rollMode, createMessage = true } = {}) {
+  async roll({ configureDialog = true, rollMode, hasDamage, createMessage = true } = {}) {
     let item = this;
-    const id = item.id
+    const id = item.id;
     const iData = this.data.data; //Item data
     const actor = this.actor;
     const aData = actor.data.data; //Actor data
-    const hasDamage = iData.hasdamage
+    hasDamage = iData.hasDamage || hasDamage;
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const iName = this.name
+    const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
-    const targets = game.user.targets
-    const ts = targets.size
-    if (item.type === "weapon") {
-      console.log('Кидается оружие')
-      const parts = ["@damageDie","@mod"]
-      const data = {damageDie:iData.damage.common[item.labels.prof.toLowerCase()],mod:aData.abilities.str.mod}
+    const targets = game.user.targets;
+    const ts = targets.size;
+    if (hasDamage) {
+      console.log("Кидается урон");
+      const parts = ["@damageDie", "@mod"];
+      const data = { damageDie: iData.damage.common[item.labels.prof.toLowerCase()], mod: aData.abilities.str.mod };
       const targets = game.user.targets;
       const ts = targets.size;
-      const options={}
-       if (options.parts?.length > 0) {
-      parts.push(...options.parts);
-    }
-      const rollData= foundry.utils.mergeObject(options,{
-        parts:parts,
-        data:data,
-        title:`${iName} damage roll`,
-        messageData:{
-          speaker:options.speaker||ChatMessage.getSpeaker({actor:actor}),
-          "flags.ard20.roll":{type:'weapon damage',id}
-        }
-      })
-      return damageRoll(rollData)
+      const options = {};
+      if (options.parts?.length > 0) {
+        parts.push(...options.parts);
+      }
+      const rollData = foundry.utils.mergeObject(options, {
+        parts: parts,
+        data: data,
+        title: `${iName} damage roll`,
+        messageData: {
+          speaker: options.speaker || ChatMessage.getSpeaker({ actor: actor }),
+          "flags.ard20.roll": { type: "weapon damage", id },
+        },
+      });
+      return damageRoll(rollData);
     }
     // If there's no roll data, send a chat message.
     else if (!this.data.data.formula) {
@@ -250,9 +250,8 @@ export class ARd20Item extends Item {
       });
       return roll;
     }
-    
   }
-  async AttackCheck(attack,damage,targets) {
+  async AttackCheck(attack, damage, targets) {
     for (let target of targets) {
       let actor = target.actor;
       const reflex = actor.data.data.defences.reflex.value;
