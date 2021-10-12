@@ -419,4 +419,47 @@ export class ARd20Item extends Item {
     if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
     return targets;
   }
+
+  async displayCard({ rollMode, createMessage = true } = {}) {
+    // Render the chat card template
+    const token = this.actor.token;
+    const templateData = {
+      actor: this.actor.data,
+      tokenId: token?.uuid || null,
+      item: this.data,
+      data: this.getChatData(),
+      labels: this.labels,
+      hasAttack: this.hasAttack,
+      isHealing: this.isHealing,
+      hasDamage: this.hasDamage,
+      isVersatile: this.isVersatile,
+      isSpell: this.data.type === "spell",
+      hasSave: this.hasSave,
+      hasAreaTarget: this.hasAreaTarget,
+      isTool: this.data.type === "tool",
+      hasAbilityCheck: this.hasAbilityCheck,
+    };
+    const html = await renderTemplate("systems/dnd5e/templates/chat/item-card.html", templateData);
+
+    // Create the ChatMessage data object
+    const chatData = {
+      user: game.user.data._id,
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      content: html,
+      flavor: this.data.data.chatFlavor || this.name,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
+      flags: { "core.canPopout": true },
+    };
+
+    // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
+    if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
+      chatData.flags["dnd5e.itemData"] = this.data;
+    }
+
+    // Apply the roll mode to adjust message visibility
+    ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode"));
+
+    // Create the Chat Message or return its data
+    return createMessage ? ChatMessage.create(chatData) : chatData;
+  }
 }
