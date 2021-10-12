@@ -1,4 +1,4 @@
-import { damageRoll } from "../dice/dice.js";
+import { d20Roll, damageRoll } from "../dice/dice.js";
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -219,10 +219,15 @@ export class ARd20Item extends Item {
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets;
     const ts = targets.size;
-    if (hasDamage) {
-      console.log("Кидается урон");
-      const parts = ["@damageDie", "@mod"];
-      const data = { damageDie: iData.damage.common[item.labels.prof.toLowerCase()], mod: aData.abilities.str.mod };
+    if (hasAttack) {
+      console.log("Кидается Атака");
+      const parts = ["@mod"];
+      const data = { mod };
+      switch (item.data.type) {
+        case "weapon":
+          data.mod = aData.abilitites.dex.mod;
+          break;
+      }
       const targets = game.user.targets;
       const ts = targets.size;
       const options = {};
@@ -238,7 +243,7 @@ export class ARd20Item extends Item {
           "flags.ard20.roll": { type: "weapon damage", id },
         },
       });
-      return damageRoll(rollData);
+      return d20Roll(rollData);
     }
     // If there's no roll data, send a chat message.
     else if (!this.data.data.formula) {
