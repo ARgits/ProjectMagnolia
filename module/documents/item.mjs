@@ -1,4 +1,4 @@
-import { d20Roll, damageRoll } from "../dice/dice.js";
+import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -222,7 +222,7 @@ export class ARd20Item extends Item {
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets;
     const ts = targets.size;
-    return item.displayCard({ rollMode, createMessage });
+    return item.displayCard({ rollMode, createMessage,hasAttack,hasDamage });
   }
   async AttackCheck(attack, damage, targets) {
     for (let target of targets) {
@@ -297,7 +297,7 @@ export class ARd20Item extends Item {
     // Handle different actions
     switch (action) {
       case "attack":
-        await item.rollAttack({ event });
+        await item.rollAttack({ event});
         break;
       case "damage":
       case "versatile":
@@ -382,7 +382,7 @@ export class ARd20Item extends Item {
     return targets;
   }
 
-  async displayCard({ rollMode, createMessage = true } = {}) {
+  async displayCard({ rollMode, createMessage = true,hasAttack,hasDamage } = {}) {
     // Render the chat card template
     const token = this.actor.token;
     const templateData = {
@@ -391,10 +391,10 @@ export class ARd20Item extends Item {
       item: this.data,
       data: this.getChatData(),
       labels: this.labels,
-      hasAttack: this.hasAttack,
-      isHealing: this.isHealing,
-      hasDamage: this.hasDamage,
-      isVersatile: this.isVersatile,
+      hasAttack,
+      isHealing: this.data.isHealing,
+      hasDamage,
+      isVersatile: this.data.isVersatile,
       isSpell: this.data.type === "spell",
       hasSave: this.hasSave,
       hasAreaTarget: this.hasAreaTarget,
@@ -435,17 +435,17 @@ export class ARd20Item extends Item {
     const labels = this.labels;
 
     // Rich text description
-    data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
+    //data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
 
     // Item type specific properties
     const props = [];
 
     // Equipment properties
     if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
-      if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
+      /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
         props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
-      }
-      props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"), game.i18n.localize(data.proficient ? "ARd20.Proficient" : "ARd20.NotProficient"));
+      }*/
+      props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
     }
 
     // Ability activation properties
@@ -479,16 +479,16 @@ export class ARd20Item extends Item {
   async rollAttack(options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
-    if (!this.hasAttack) {
+    /*if (!this.hasAttack) {
       throw new Error("you may not place an Attack Roll with this Item.");
-    }
+    }*/
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
 
-    const { parts, rollData } = ["@mod"];
+    const { parts, rollData } = this.getAttackToHit();
     const data = {};
-    switch (item.data.type) {
+    switch (this.data.type) {
       case "weapon":
-        data.mod = aData.abilities.dex.mod;
+        data.mod = this.actor.data.data.abilities.dex.mod;
         break;
     }
     const targets = game.user.targets;
@@ -529,7 +529,7 @@ export class ARd20Item extends Item {
    */
   getAttackToHit() {
     const itemData = this.data.data;
-    if (!this.hasAttack || !itemData) return;
+    //if (!this.hasAttack || !itemData) return;
     const rollData = this.getRollData();
 
     // Define Roll bonuses
