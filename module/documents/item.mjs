@@ -71,6 +71,7 @@ export class ARd20Item extends Item {
     }
   }
   _setTypeAndSubtype(data, flags, labels) {
+    console.log(this.name, this.id)
     data.type.value = data.type.value || "amb";
     data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
