@@ -185,8 +185,14 @@ export class ARd20Item extends Item {
       } else if (data.prof.value === 2) {
         prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
       }
-      this.data.data.damage.common.current = this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str;
-      this.data.data.attack = "1d20+" + prof_bonus + "+" + abil.dex;
+      this.data.data.damage.current = {
+        formula: this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str,
+        parts: [this.data.data.damage.common[this.labels.prof.toLowerCase()], abil.str],
+      };
+      this.data.data.attack = {
+        formula: "1d20+" + prof_bonus + "+" + abil.dex,
+        parts: [abil.dex, prof_bonus],
+      };
     }
   }
 
@@ -194,11 +200,14 @@ export class ARd20Item extends Item {
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-  getRollData() {
+  getRollData(hasAttack, hasDamage) {
     // If present, return the actor's roll data.
     if (!this.actor) return null;
     const rollData = this.actor.getRollData();
     rollData.item = foundry.utils.deepClone(this.data.data);
+    rollData.damageDie = hasDamage ? this.data.data.damage.current.parts[0] : null;
+    rollData.mod = hasAttack ? this.data.data.attack.parts[0] : hasDamage ? this.data.data.damage.current.parts[1] : null;
+    rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
     return rollData;
   }
   /**
@@ -296,9 +305,6 @@ export class ARd20Item extends Item {
 
     // Handle different actions
     switch (action) {
-      case "attack":
-        await item.rollAttack({ event });
-        break;
       case "damage":
       case "versatile":
         await item.rollDamage({
@@ -385,9 +391,9 @@ export class ARd20Item extends Item {
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage } = {}) {
     // Render the chat card template
     const token = this.actor.token;
-    let atk = hasAttack ? await this.rollAttack(): null
-    atk = await atk.render()
-    console.log(atk)
+    let atk = hasAttack ? await this.rollAttack() : null;
+    atk = await atk.render();
+    let dmg = hasDamage ? await this.rollDamage() : null;
 
     const templateData = {
       actor: this.actor.data,
@@ -397,7 +403,8 @@ export class ARd20Item extends Item {
       labels: this.labels,
       hasAttack,
       hasDamage,
-      atk
+      atk,
+      dmg,
     };
     const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
 
@@ -499,10 +506,10 @@ export class ARd20Item extends Item {
         //top: options.event ? options.event.clientY - 80 : null,
         //left: window.innerWidth - 710,
       },
-      chatMessage:true,
-      options:{
-        create:false
-      }
+      chatMessage: true,
+      options: {
+        create: false,
+      },
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -512,6 +519,22 @@ export class ARd20Item extends Item {
     const roll = await d20Roll(rollConfig);
     if (roll === false) return null;
     return roll;
+  }
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
+    const iData = this.data.data;
+    const aData = this.acor.data.data;
+    const parts = ["@damageDie", "@mod"];
+    const rollData = this.getRollData();
+    const rollConfig = {
+      actor:this.actor,
+      critical:critical ?? event?.altkey ?? false,
+      data:rollData,
+      event:event,
+      parts:parts
+    }
+    return damageRoll(mergeObject(rollconfig,options))
+
+    
   }
   /**
    * Update a label to the Item detailing its total to hit bonus.
@@ -526,11 +549,11 @@ export class ARd20Item extends Item {
   getAttackToHit() {
     const itemData = this.data.data;
     //if (!this.hasAttack || !itemData) return;
-    const rollData = this.getRollData();
+    const rollData = this.getRollData((hasAttack = true), (hasDamage = false));
     console.log("ROLL DATA", rollData);
 
     // Define Roll bonuses
-    const parts = [];
+    const parts = itemData.attack;
 
     // Include the item's innate attack bonus as the initial value and label
     if (itemData.attackBonus) {

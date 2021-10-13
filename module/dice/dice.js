@@ -239,7 +239,7 @@ export async function damageRoll({
   template,
   title,
   dialogOptions, // Dialog configuration
-  chatMessage = true,
+  chatMessage = false,
   messageData = {},
   rollMode,
   speaker,
