@@ -222,7 +222,7 @@ export class ARd20Item extends Item {
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets;
     const ts = targets.size;
-    return item.displayCard({ rollMode, createMessage,hasAttack,hasDamage });
+    return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage });
   }
   async AttackCheck(attack, damage, targets) {
     for (let target of targets) {
@@ -297,7 +297,7 @@ export class ARd20Item extends Item {
     // Handle different actions
     switch (action) {
       case "attack":
-        await item.rollAttack({ event});
+        await item.rollAttack({ event });
         break;
       case "damage":
       case "versatile":
@@ -382,9 +382,15 @@ export class ARd20Item extends Item {
     return targets;
   }
 
-  async displayCard({ rollMode, createMessage = true,hasAttack,hasDamage } = {}) {
+  async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage } = {}) {
     // Render the chat card template
     const token = this.actor.token;
+    let atkRoll = null
+    if (hasAttack) {
+      let atk = await item.rollAttack();
+      atkRoll = atk.total
+    }
+
     const templateData = {
       actor: this.actor.data,
       tokenId: token?.uuid || null,
@@ -392,14 +398,8 @@ export class ARd20Item extends Item {
       data: this.getChatData(),
       labels: this.labels,
       hasAttack,
-      isHealing: this.data.isHealing,
       hasDamage,
-      isVersatile: this.data.isVersatile,
-      isSpell: this.data.type === "spell",
-      hasSave: this.hasSave,
-      hasAreaTarget: this.hasAreaTarget,
-      isTool: this.data.type === "tool",
-      hasAbilityCheck: this.hasAbilityCheck,
+      atkRoll
     };
     const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
 
@@ -498,13 +498,14 @@ export class ARd20Item extends Item {
       flavor: title,
       dialogOptions: {
         width: 400,
-        top: options.event ? options.event.clientY - 80 : null,
-        left: window.innerWidth - 710,
+        //top: options.event ? options.event.clientY - 80 : null,
+        //left: window.innerWidth - 710,
       },
-      messageData: {
+      ChatMessage:false
+      /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      },
+      },*/
     };
     rollConfig = mergeObject(rollConfig, options);
     const roll = await d20Roll(rollConfig);
@@ -525,7 +526,7 @@ export class ARd20Item extends Item {
     const itemData = this.data.data;
     //if (!this.hasAttack || !itemData) return;
     const rollData = this.getRollData();
-    console.log('ROLL DATA', rollData)
+    console.log("ROLL DATA", rollData);
 
     // Define Roll bonuses
     const parts = [];
