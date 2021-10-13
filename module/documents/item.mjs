@@ -385,11 +385,7 @@ export class ARd20Item extends Item {
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage } = {}) {
     // Render the chat card template
     const token = this.actor.token;
-    let atkRoll = null
-    if (hasAttack) {
-      let atk = await item.rollAttack();
-      atkRoll = atk.total
-    }
+    const atk = hasAttack ? await this.rollAttack(): null
 
     const templateData = {
       actor: this.actor.data,
@@ -399,7 +395,7 @@ export class ARd20Item extends Item {
       labels: this.labels,
       hasAttack,
       hasDamage,
-      atkRoll
+      atk
     };
     const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
 
@@ -501,7 +497,10 @@ export class ARd20Item extends Item {
         //top: options.event ? options.event.clientY - 80 : null,
         //left: window.innerWidth - 710,
       },
-      ChatMessage:false
+      chatMessage:true,
+      messageData:{
+        create:false
+      }
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),

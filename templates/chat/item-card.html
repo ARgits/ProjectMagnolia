@@ -11,9 +11,10 @@
         {{#if data.materials.value}}
         <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
-        {{#if hasAttack}}
-        {{localize "ARd20.Attack"}}: {{atkRoll}}
-        {{/if}}
+        <div>{{#if hasAttack}}
+        <div style="text-align:center"> {{localize "ARd20.Attack"}}</div>
+        <div class="dice-roll">{{atk}}</div>
+        {{/if}}</div>
     </div>
 
     <div class="card-buttons">
