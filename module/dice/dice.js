@@ -175,9 +175,8 @@ export async function d20Roll({
     console.warn(`You are passing the speaker argument to the d20Roll function directly which should instead be passed as an internal key of messageData`);
     messageData.speaker = speaker;
   }
-
-  messData = roll && chatMessage ? await roll.toMessage(messageData, options) : null;
-  return {roll, messData};
+  if (roll && chatMessage) await roll.toMessage(messageData,options);
+  return roll;
 }
 
 /* -------------------------------------------- */
