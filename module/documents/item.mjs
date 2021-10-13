@@ -386,6 +386,7 @@ export class ARd20Item extends Item {
     // Render the chat card template
     const token = this.actor.token;
     const atk = hasAttack ? await this.rollAttack(): null
+    console.log(atk.messData)
 
     const templateData = {
       actor: this.actor.data,
@@ -498,7 +499,7 @@ export class ARd20Item extends Item {
         //left: window.innerWidth - 710,
       },
       chatMessage:true,
-      messageData:{
+      options:{
         create:false
       }
       /*messageData: {

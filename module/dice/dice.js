@@ -95,9 +95,6 @@ function _isUnsupportedTerm(term) {
  * @param {number} [critical]         The value of d20 result which represents a critical success
  * @param {number} [fumble]           The value of d20 result which represents a critical failure
  * @param {number} [targetValue]      Assign a target value against which the result of this roll should be compared
- * @param {boolean} [elvenAccuracy]   Allow Elven Accuracy to modify this roll?
- * @param {boolean} [halflingLucky]   Allow Halfling Luck to modify this roll?
- * @param {boolean} [reliableTalent]  Allow Reliable Talent to modify this roll?
 
  * @param {boolean} [chooseModifier=false] Choose the ability modifier that should be used when the roll is made
  * @param {boolean} [fastForward=false] Allow fast-forward advantage selection
@@ -133,6 +130,7 @@ export async function d20Roll({
   messageData = {},
   rollMode,
   speaker,
+  options,
   flavor, // Chat Message customization
 } = {}) {
   // Handle input arguments
@@ -177,8 +175,9 @@ export async function d20Roll({
     console.warn(`You are passing the speaker argument to the d20Roll function directly which should instead be passed as an internal key of messageData`);
     messageData.speaker = speaker;
   }
-  if (roll && chatMessage) await roll.toMessage(messageData);
-  return roll;
+
+  messData = roll && chatMessage ? await roll.toMessage(messageData, options) : null;
+  return {roll, messData};
 }
 
 /* -------------------------------------------- */
