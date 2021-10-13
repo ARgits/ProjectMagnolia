@@ -23,43 +23,9 @@
             </div>
         {{/if}}
     </div>
-</div>
-
-<div class="card-buttons">
-
-    {{#if hasDamage}}
-        <button data-action="damage">
-            {{#if isHealing}}{{ localize "ARd20.Healing" }}
-            {{else}}{{localize "ARd20.Damage" }}{{/if}}
-        </button>
-    {{/if}}
-
-    {{#if isVersatile}}
-        <button data-action="versatile">{{ localize "ARd20.Versatile" }}</button>
-    {{/if}}
-
-    {{#if hasSave}}
-        <button data-action="save" data-ability="{{data.save.ability}}">
-            {{ localize "ARd20.SavingThrow" }} {{labels.save}}
-        </button>
-    {{/if}}
-
-    {{#if data.formula}}
-        <button data-action="formula">{{ localize "ARd20.OtherFormula"}}</button>
-    {{/if}}
-
-    {{#if hasAreaTarget}}
-        <button data-action="placeTemplate">{{ localize "ARd20.PlaceTemplate" }}</button>
-    {{/if}}
-
-    {{#if isTool}}
-        <button data-action="toolCheck" data-ability="{{data.ability.value}}">{{ localize "ARd20.Use" }} {{item.name}}</button>
-    {{/if}}
-</div>
-
-<footer class="card-footer">
-    {{#each data.properties}}
-        <span>{{this}}</span>
-    {{/each}}
-</footer>
+    <footer class="card-footer">
+        {{#each data.properties}}
+            <span>{{this}}</span>
+        {{/each}}
+    </footer>
 </div>

@@ -391,9 +391,10 @@ export class ARd20Item extends Item {
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage } = {}) {
     // Render the chat card template
     const token = this.actor.token;
-    let atk = hasAttack ? await this.rollAttack() : null;
-    atk = await atk.render();
-    let dmg = hasDamage ? await this.rollDamage() : null;
+    let atkRoll = hasAttack ? await this.rollAttack() : null;
+    atk = await atkRoll.render();
+    let dmgRoll = hasDamage ? await this.rollDamage() : null;
+    dmg = await dmgRoll.render()
 
     const templateData = {
       actor: this.actor.data,
@@ -522,9 +523,11 @@ export class ARd20Item extends Item {
   }
   rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
     const iData = this.data.data;
-    const aData = this.acor.data.data;
+    const aData = this.actor.data.data;
     const parts = ["@damageDie", "@mod"];
-    const rollData = this.getRollData();
+    const hasAttack = false
+    const hasDamage = true
+    const rollData = this.getRollData(hasAttack,hasDamage);
     const rollConfig = {
       actor:this.actor,
       critical:critical ?? event?.altkey ?? false,
@@ -532,7 +535,7 @@ export class ARd20Item extends Item {
       event:event,
       parts:parts
     }
-    return damageRoll(mergeObject(rollconfig,options))
+    return damageRoll(mergeObject(rollConfig,options))
 
     
   }
@@ -548,12 +551,14 @@ export class ARd20Item extends Item {
    */
   getAttackToHit() {
     const itemData = this.data.data;
+    const hasAttack=true
+    const hasDamage=false
     //if (!this.hasAttack || !itemData) return;
-    const rollData = this.getRollData((hasAttack = true), (hasDamage = false));
+    const rollData = this.getRollData(hasAttack, hasDamage);
     console.log("ROLL DATA", rollData);
 
     // Define Roll bonuses
-    const parts = itemData.attack;
+    const parts = [];
 
     // Include the item's innate attack bonus as the initial value and label
     if (itemData.attackBonus) {
@@ -565,12 +570,8 @@ export class ARd20Item extends Item {
     if (!this.isOwned) return { rollData, parts };
 
     // Ability score modifier
-    parts.push("@mod");
-    switch (this.data.type) {
-      case "weapon":
-        rollData.mod = this.actor.data.data.abilities.dex.mod;
-        break;
-    }
+    parts.push("@prof","@mod");
+    
 
     /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
     if ( !["weapon", "consumable"].includes(this.data.type)) {
