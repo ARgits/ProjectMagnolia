@@ -385,7 +385,8 @@ export class ARd20Item extends Item {
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage } = {}) {
     // Render the chat card template
     const token = this.actor.token;
-    const atk = hasAttack ? await this.rollAttack(): null
+    let atk = hasAttack ? await this.rollAttack(): null
+    atk = await atk.render()
     console.log(atk)
 
     const templateData = {

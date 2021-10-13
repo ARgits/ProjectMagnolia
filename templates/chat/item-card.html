@@ -10,49 +10,56 @@
         {{#if data.materials.value}}
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
-        <div>
-            {{#if hasAttack}}
-                <div style="text-align:center"> {{localize "ARd20.Attack"}}</div>
-                <div class="dice-roll">{{{atk}}}</div>
-            {{/if}}
-        </div>
-    </div>
-
-    <div class="card-buttons">
-
-        {{#if hasDamage}}
-            <button data-action="damage">
-                {{#if isHealing}}{{ localize "ARd20.Healing" }}
-                {{else}}{{localize "ARd20.Damage" }}{{/if}}
-            </button>
-        {{/if}}
-
-        {{#if isVersatile}}
-            <button data-action="versatile">{{ localize "ARd20.Versatile" }}</button>
-        {{/if}}
-
-        {{#if hasSave}}
-            <button data-action="save" data-ability="{{data.save.ability}}">
-                {{ localize "ARd20.SavingThrow" }} {{labels.save}}
-            </button>
-        {{/if}}
-
-        {{#if data.formula}}
-            <button data-action="formula">{{ localize "ARd20.OtherFormula"}}</button>
-        {{/if}}
-
-        {{#if hasAreaTarget}}
-            <button data-action="placeTemplate">{{ localize "ARd20.PlaceTemplate" }}</button>
-        {{/if}}
-
-        {{#if isTool}}
-            <button data-action="toolCheck" data-ability="{{data.ability.value}}">{{ localize "ARd20.Use" }} {{item.name}}</button>
+        {{#if hasAttack}}
+            <div class="flexrow flex2">
+                <div>
+                    <div style="text-align:center"> {{localize "ARd20.Attack"}}</div>
+                    <div>{{{atk}}}</div>
+                </div>
+                <div>
+                    <div style="text-align: center">{{localize"ARd20.damage"}}</div>
+                    <div>{{{dmg}}}</div>
+                </div>
+            </div>
         {{/if}}
     </div>
+</div>
 
-    <footer class="card-footer">
-        {{#each data.properties}}
-            <span>{{this}}</span>
-        {{/each}}
-    </footer>
+<div class="card-buttons">
+
+    {{#if hasDamage}}
+        <button data-action="damage">
+            {{#if isHealing}}{{ localize "ARd20.Healing" }}
+            {{else}}{{localize "ARd20.Damage" }}{{/if}}
+        </button>
+    {{/if}}
+
+    {{#if isVersatile}}
+        <button data-action="versatile">{{ localize "ARd20.Versatile" }}</button>
+    {{/if}}
+
+    {{#if hasSave}}
+        <button data-action="save" data-ability="{{data.save.ability}}">
+            {{ localize "ARd20.SavingThrow" }} {{labels.save}}
+        </button>
+    {{/if}}
+
+    {{#if data.formula}}
+        <button data-action="formula">{{ localize "ARd20.OtherFormula"}}</button>
+    {{/if}}
+
+    {{#if hasAreaTarget}}
+        <button data-action="placeTemplate">{{ localize "ARd20.PlaceTemplate" }}</button>
+    {{/if}}
+
+    {{#if isTool}}
+        <button data-action="toolCheck" data-ability="{{data.ability.value}}">{{ localize "ARd20.Use" }} {{item.name}}</button>
+    {{/if}}
+</div>
+
+<footer class="card-footer">
+    {{#each data.properties}}
+        <span>{{this}}</span>
+    {{/each}}
+</footer>
 </div>
