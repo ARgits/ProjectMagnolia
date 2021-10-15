@@ -50,7 +50,7 @@
         term.number = term.options.baseNumber;
         if ( this.isCritical ) {           
             critBonus += (term.number * term.faces);
-            let [oper,num] = [new OperatorTerm({operator: "+"}),new NumericTerm({number: critBonus}) ]
+            let [oper,num] = [new OperatorTerm({operator: "+"}), new NumericTerm({number: critBonus, options:{flavor:"Crit"}}) ]
             this.terms.splice(1, 0, oper);
             this.terms.splice(2, 0, num);        
             let cb = (this.options.criticalBonusDice && (i === 0)) ? this.options.criticalBonusDice : 0;
@@ -68,6 +68,7 @@
         }
       }
     }
+    console.log(this.terms)
     this._formula = this.constructor.getFormula(this.terms);
   }
 

@@ -393,8 +393,8 @@ export class ARd20Item extends Item {
     const token = this.actor.token;
     let atkRoll = hasAttack ? await this.rollAttack() : null;
     let atk = await atkRoll.render();
-    let dmgRoll = hasDamage ? await this.rollDamage() : null;
-    let dmg = await dmgRoll.render()
+    //let dmgRoll = hasDamage ? await this.rollDamage() : null;
+    //let dmg = await dmgRoll.render()
 
     const templateData = {
       actor: this.actor.data,
@@ -524,7 +524,8 @@ export class ARd20Item extends Item {
   rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
-    const parts = ["@damageDie", "@mod"];
+    console.log(event)
+    const parts = iData.damage.current.parts.map(d=>d[0]);
     const hasAttack = false
     const hasDamage = true
     const rollData = this.getRollData(hasAttack,hasDamage);
@@ -535,6 +536,7 @@ export class ARd20Item extends Item {
       event:event,
       parts:parts
     }
+    
     return damageRoll(mergeObject(rollConfig,options))
 
     

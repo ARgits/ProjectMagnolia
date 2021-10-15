@@ -12,13 +12,13 @@
         {{/if}}
         {{#if hasAttack}}
             <div class="flexrow flex2">
-                <div>
+                <div class="attack-roll">
                     <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
                     <div>{{{atk}}}</div>
                 </div>
-                <div>
+                <div class="damage-roll">
                     <div style="text-align:center">Damage:</div>
-                    <div>{{{dmg}}}</div>
+                    <button data="damage">{{localize "ARd20.Damage"}}</button>
                 </div>
             </div>
         {{/if}}
