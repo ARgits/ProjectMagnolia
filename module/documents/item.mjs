@@ -405,7 +405,6 @@ export class ARd20Item extends Item {
       hasAttack,
       hasDamage,
       atk,
-      dmg,
     };
     const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
 
