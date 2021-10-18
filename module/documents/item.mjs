@@ -307,12 +307,19 @@ export class ARd20Item extends Item {
     switch (action) {
       case "damage":
       case "versatile":
-        await item.rollDamage({
+        let dam = await item.rollDamage({
           critical: event.altKey,
           event: event,
           spellLevel: spellLevel,
           versatile: action === "versatile",
         });
+        //const dom = new DOMParser().parseFromString(message.data.content,"text/html")
+        const html = $(message.data.content)
+        dam = await dam.render()
+        //dom.querySelector('button').replaceWith(dam)
+        html.find('button').replaceWith(dam)
+        //console.log(dom)
+        await message.update({"content":html[0].innerHTML})
         break;
       case "formula":
         await item.rollFormula({ event, spellLevel });
@@ -524,7 +531,7 @@ export class ARd20Item extends Item {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     console.log(event)
-    const parts = iData.damage.current.parts.map(d=>d[0]);
+    const parts = iData.damage.current.parts
     const hasAttack = false
     const hasDamage = true
     const rollData = this.getRollData(hasAttack,hasDamage);
