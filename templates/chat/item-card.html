@@ -11,9 +11,7 @@
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
         {{#if hasAttack}}
-        {{#each targets as |target|}}
-        {{log target}}
-        {{/each}}
+        {{#each targets as |target|}}        
             <div class="flexrow flex2" data-targetID="{{target.uuid}}">
                 <div class="attack-roll">
                     <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
@@ -24,6 +22,7 @@
                     <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                 </div>
             </div>
+            {{/each}}
         {{/if}}
     </div>
     <footer class="card-footer">
