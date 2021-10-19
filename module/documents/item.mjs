@@ -286,6 +286,7 @@ export class ARd20Item extends Item {
     const messageId = card.closest(".message").dataset.messageId;
     const message = game.messages.get(messageId);
     const action = button.dataset.action;
+    const targetUuid = button.closest("div.flexrow").dataset.targetid
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
@@ -317,7 +318,7 @@ export class ARd20Item extends Item {
         const html = $(message.data.content);
         dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
-        html.find("button").replaceWith(dam);
+        html.find(`[data-targetid="${targetUuid}"]`).find('button').replaceWith(dam)
         //console.log(dom)
         await message.update({ content: html[0].innerHTML });
         break;
