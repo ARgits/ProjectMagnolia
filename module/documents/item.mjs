@@ -399,6 +399,9 @@ export class ARd20Item extends Item {
     // Render the chat card template
     const token = this.actor.token;
     let atkRoll = hasAttack ? await this.rollAttack() : null;
+    console.log(atkRoll)
+    let targetValue= atkRoll.options.targetValue
+    
     let atk = await atkRoll.render();
     //let dmgRoll = hasDamage ? await this.rollDamage() : null;
     //let dmg = await dmgRoll.render()
@@ -412,8 +415,16 @@ export class ARd20Item extends Item {
       hasAttack,
       hasDamage,
       atk,
+      targetValue
     };
     const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
+    if (targetValue.size!==0){
+      let msg = $(html)
+      console.log(msg.find('.card-content .flexrow.flex2').children()[0])
+      targetValue.forEach(target=>{
+
+      })     
+    }
 
     // Create the ChatMessage data object
     const chatData = {
