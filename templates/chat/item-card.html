@@ -11,7 +11,7 @@
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
         {{#if hasAttack}}
-        {{#each targets as target}}
+        {{#each targets as |target|}}
         {{log target}}
         {{/each}}
             <div class="flexrow flex2" data-targetID="{{target.uuid}}">
