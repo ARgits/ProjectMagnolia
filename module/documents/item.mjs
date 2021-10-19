@@ -517,6 +517,7 @@ export class ARd20Item extends Item {
       options: {
         create: false,
       },
+      targetValue:targets,
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
