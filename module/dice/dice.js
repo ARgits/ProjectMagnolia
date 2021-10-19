@@ -131,7 +131,8 @@ export async function d20Roll({
   rollMode,
   speaker,
   options,
-  flavor, // Chat Message customization
+  flavor,
+  type, // Chat Message customization
 } = {}) {
   // Handle input arguments
   const formula = ["1d20"].concat(parts).join(" + ");
@@ -161,6 +162,7 @@ export async function d20Roll({
         defaultAction: advantageMode,
         defaultAbility: data?.item?.ability,
         template,
+        type,
       },
       dialogOptions
     );
