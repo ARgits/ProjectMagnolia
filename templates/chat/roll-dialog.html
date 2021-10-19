@@ -2,23 +2,23 @@
     {{log "roll-dialog form " this}}
     <div class="form-group">
         <label>{{ localize "ARd20.Formula" }}</label>
-        <input type="text" name="formula" value="{{formula}}" disabled/>
+        <input type="text" name="formula" value="{{formula}}" disabled />
     </div>
     {{#if chooseModifier}}
-    <input hidden name="prof_type" value="{{this.prof_type}}"/>
-    <input hidden name="prof_value" value="{{this.prof_value}}"/>
-    {{log prof_type prof_value}}
-    <div class="form-group">
-        <label>{{ localize "ARd20.AbilityModifier" }}</label>
-        <select name="ability">
-            {{selectOptions abilities selected=defaultAbility localize=true}}
-        </select>
-        {{log ability}}
-    </div>
+        <input hidden name="prof_type" value="{{this.prof_type}}" />
+        <input hidden name="prof_value" value="{{this.prof_value}}" />
+        {{log prof_type prof_value}}
+        <div class="form-group">
+            <label>{{ localize "ARd20.AbilityModifier" }}</label>
+            <select name="ability">
+                {{selectOptions abilities selected=defaultAbility localize=true}}
+            </select>
+            {{log ability}}
+        </div>
     {{/if}}
     <div class="form-group">
         <label>{{ localize "ARd20.RollSituationalBonus" }}</label>
-        <input type="text" name="bonus" value="" placeholder="{{ localize 'ARd20.RollExample' }}"/>
+        <input type="text" name="bonus" value="" placeholder="{{ localize 'ARd20.RollExample' }}" />
     </div>
     <div class="form-group">
         <label>{{ localize "ARd20.RollMode" }}</label>
@@ -26,5 +26,10 @@
             {{selectOptions rollModes selected=defaultRollMode localize=true}}
         </select>
     </div>
-    
+    {{#if (eq type 'attack')}}
+        <div class="form-group">
+            <label>is Multiattack?</label>
+            <input type="checkbox" name="mAtk" value="{{this.mAtk}}" />
+        </div>
+    {{/if}}
 </form>

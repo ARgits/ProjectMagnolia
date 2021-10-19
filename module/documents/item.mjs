@@ -71,12 +71,10 @@ export class ARd20Item extends Item {
     }
   }
   _setTypeAndSubtype(data, flags, labels) {
-    console.log(this.name, this.id);
     data.type.value = data.type.value || "amb";
     data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
-      console.log(id);
       data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;
     }
     data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type)[0] === undefined ? data.settings[0].name : data.sub_type;
@@ -320,7 +318,7 @@ export class ARd20Item extends Item {
         //dom.querySelector('button').replaceWith(dam)
         html.find(`[data-targetid="${targetUuid}"]`).find('button').replaceWith(dam)
         //console.log(dom)
-        await message.update({ content: html[0].innerHTML });
+        await message.update({ content: html[0].outerHTML });
         break;
       case "formula":
         await item.rollFormula({ event, spellLevel });
@@ -524,6 +522,7 @@ export class ARd20Item extends Item {
         create: false,
       },
       targetValue: targets,
+      type:'attack',
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
