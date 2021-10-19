@@ -185,11 +185,11 @@ export class ARd20Item extends Item {
       } else if (data.prof.value === 2) {
         prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
       }
-      this.data.data.damage.current = {
-        formula: this.data.data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str,
-        parts: [this.data.data.damage.common[this.labels.prof.toLowerCase()], abil.str],
+      data.damage.current = {
+        formula: data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str,
+        parts: [data.damage.common[this.labels.prof.toLowerCase()], abil.str],
       };
-      this.data.data.attack = {
+     data.attack = {
         formula: "1d20+" + prof_bonus + "+" + abil.dex,
         parts: [abil.dex, prof_bonus],
       };
