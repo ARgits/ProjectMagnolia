@@ -1,0 +1,33 @@
+
+<div class="ard20 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}} {{#if isSpell}}data-spell-level="{{item.data.level}}" {{/if}}>
+    <header class="card-header flexrow">
+        <img src="{{item.img}}" title="{{item.name}}" width="36" height="36" />
+        <h3 class="item-name">{{item.name}}</h3>
+    </header>
+
+    <div class="card-content">
+        {{{data.description.value}}}
+        {{#if data.materials.value}}
+            <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
+        {{/if}}
+        {{#if hasAttack}}
+        {{#each targets as |target|}}        
+            <div class="flexrow flex2" data-targetID="{{target.uuid}}">
+                <div class="attack-roll">
+                    <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
+                    <div>{{{@root.atk}}}</div>
+                </div>
+                <div class="damage-roll card-buttons">
+                    <div style="text-align:center">Damage:</div>
+                    <button data-action="damage">{{localize "ARd20.Damage"}}</button>
+                </div>
+            </div>
+            {{/each}}
+        {{/if}}
+    </div>
+    <footer class="card-footer">
+        {{#each data.properties}}
+            <span>{{this}}</span>
+        {{/each}}
+    </footer>
+</div>

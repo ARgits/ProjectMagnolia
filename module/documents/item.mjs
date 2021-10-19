@@ -189,7 +189,7 @@ export class ARd20Item extends Item {
         formula: data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str,
         parts: [data.damage.common[this.labels.prof.toLowerCase()], abil.str],
       };
-     data.attack = {
+      data.attack = {
         formula: "1d20+" + prof_bonus + "+" + abil.dex,
         parts: [abil.dex, prof_bonus],
       };
@@ -314,12 +314,12 @@ export class ARd20Item extends Item {
           versatile: action === "versatile",
         });
         //const dom = new DOMParser().parseFromString(message.data.content,"text/html")
-        const html = $(message.data.content)
-        dam = await dam.render()
+        const html = $(message.data.content);
+        dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
-        html.find('button').replaceWith(dam)
+        html.find("button").replaceWith(dam);
         //console.log(dom)
-        await message.update({"content":html[0].innerHTML})
+        await message.update({ content: html[0].innerHTML });
         break;
       case "formula":
         await item.rollFormula({ event, spellLevel });
@@ -399,10 +399,11 @@ export class ARd20Item extends Item {
     // Render the chat card template
     const token = this.actor.token;
     let atkRoll = hasAttack ? await this.rollAttack() : null;
-    console.log(atkRoll)
-    let targets= atkRoll.options.targetValue
-    
+    console.log(atkRoll);
+    let targets = atkRoll.options.targetValue;
+
     let atk = await atkRoll.render();
+    let templateState = targets.size !== 0 ? "oneAttack" : "noTarget";
     //let dmgRoll = hasDamage ? await this.rollDamage() : null;
     //let dmg = await dmgRoll.render()
 
@@ -415,16 +416,9 @@ export class ARd20Item extends Item {
       hasAttack,
       hasDamage,
       atk,
-      targets
+      targets,
     };
-    const html = await renderTemplate("systems/ard20/templates/chat/item-card.html", templateData);
-    if (targets.size!==0){
-      let msg = $(html)
-      console.log(msg.find('.card-content .flexrow.flex2').children()[0])
-      targets.forEach(target=>{
-
-      })     
-    }
+    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
 
     // Create the ChatMessage data object
     const chatData = {
@@ -528,7 +522,7 @@ export class ARd20Item extends Item {
       options: {
         create: false,
       },
-      targetValue:targets,
+      targetValue: targets,
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -542,22 +536,20 @@ export class ARd20Item extends Item {
   rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
-    console.log(event)
-    const parts = iData.damage.current.parts
-    const hasAttack = false
-    const hasDamage = true
-    const rollData = this.getRollData(hasAttack,hasDamage);
+    console.log(event);
+    const parts = iData.damage.current.parts;
+    const hasAttack = false;
+    const hasDamage = true;
+    const rollData = this.getRollData(hasAttack, hasDamage);
     const rollConfig = {
-      actor:this.actor,
-      critical:critical ?? event?.altkey ?? false,
-      data:rollData,
-      event:event,
-      parts:parts
-    }
-    
-    return damageRoll(mergeObject(rollConfig,options))
+      actor: this.actor,
+      critical: critical ?? event?.altkey ?? false,
+      data: rollData,
+      event: event,
+      parts: parts,
+    };
 
-    
+    return damageRoll(mergeObject(rollConfig, options));
   }
   /**
    * Update a label to the Item detailing its total to hit bonus.
@@ -571,8 +563,8 @@ export class ARd20Item extends Item {
    */
   getAttackToHit() {
     const itemData = this.data.data;
-    const hasAttack=true
-    const hasDamage=false
+    const hasAttack = true;
+    const hasDamage = false;
     //if (!this.hasAttack || !itemData) return;
     const rollData = this.getRollData(hasAttack, hasDamage);
     console.log("ROLL DATA", rollData);
@@ -590,8 +582,7 @@ export class ARd20Item extends Item {
     if (!this.isOwned) return { rollData, parts };
 
     // Ability score modifier
-    parts.push("@prof","@mod");
-    
+    parts.push("@prof", "@mod");
 
     /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
     if ( !["weapon", "consumable"].includes(this.data.type)) {
