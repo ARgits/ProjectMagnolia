@@ -228,8 +228,8 @@ export class ARd20Item extends Item {
     const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets;
-    const ts = targets.size;
-    return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage });
+    const mAtk = this.data.data.mAtk || false
+    return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mAtk });
   }
   async AttackCheck(attack, damage, targets) {
     for (let target of targets) {
@@ -284,7 +284,7 @@ export class ARd20Item extends Item {
     const messageId = card.closest(".message").dataset.messageId;
     const message = game.messages.get(messageId);
     const action = button.dataset.action;
-    const targetUuid = button.closest("div.flexrow").dataset.targetid
+    const targetUuid = button.closest("div.flexrow").dataset.targetid;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
@@ -316,7 +316,7 @@ export class ARd20Item extends Item {
         const html = $(message.data.content);
         dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
-        html.find(`[data-targetid="${targetUuid}"]`).find('button').replaceWith(dam)
+        html.find(`[data-targetid="${targetUuid}"]`).find("button").replaceWith(dam);
         //console.log(dom)
         await message.update({ content: html[0].outerHTML });
         break;
@@ -394,18 +394,27 @@ export class ARd20Item extends Item {
     return targets;
   }
 
-  async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage } = {}) {
+  async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets } = {}) {
     // Render the chat card template
+    let atk = null;
     const token = this.actor.token;
-    let atkRoll = hasAttack ? await this.rollAttack() : null;
-    console.log(atkRoll);
-    let targets = atkRoll.options.targetValue;
-
-    let atk = await atkRoll.render();
-    let templateState = targets.size !== 0 ? "oneAttack" : "noTarget";
+    if (targets.size !== 0 && mAtk) {
+      atk = {};
+      targets.forEach((target) => {
+        let id = target.uuid;
+        atk[id] = hasAttack ? await this.rollAttack() : null;
+        console.log
+        atk[id] = hasAttack ? await atk[id].render() : null;
+      });
+    } else {
+      atk = hasAttack ? await this.rollAttack() : null;
+      mAtk = atk.options.mAtk
+      console.log(mAtk)
+      atk = hasAttack ? await atk.render() : null;
+    }
+    let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
     //let dmgRoll = hasDamage ? await this.rollDamage() : null;
     //let dmg = await dmgRoll.render()
-
     const templateData = {
       actor: this.actor.data,
       tokenId: token?.uuid || null,
@@ -522,7 +531,7 @@ export class ARd20Item extends Item {
         create: false,
       },
       targetValue: targets,
-      type:'attack',
+      type: "attack",
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
