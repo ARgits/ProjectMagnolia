@@ -16,7 +16,7 @@
             <div class="flexrow flex2" data-targetID="{{target.uuid}}">
                 <div class="attack-roll">
                     <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
-                    <div>{{{@root.atk.[target.uuid]}}}</div>
+                    <div>{{{lookup @root.atk target.uuid}}}</div>
                 </div>
                 <div class="damage-roll card-buttons">
                     <div style="text-align:center">Damage:</div>
