@@ -132,7 +132,8 @@ export async function d20Roll({
   speaker,
   options,
   flavor,
-  type, // Chat Message customization
+  type,
+  mAtk, // Chat Message customization
 } = {}) {
   // Handle input arguments
   const formula = ["1d20"].concat(parts).join(" + ");
@@ -150,6 +151,7 @@ export async function d20Roll({
     critical,
     fumble,
     targetValue,
+    mAtk,
   });
 
   // Prompt a Dialog to further configure the D20Roll
@@ -163,6 +165,7 @@ export async function d20Roll({
         defaultAbility: data?.item?.ability,
         template,
         type,
+        mAtk,
       },
       dialogOptions
     );

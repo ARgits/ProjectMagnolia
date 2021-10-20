@@ -408,6 +408,7 @@ export class ARd20Item extends Item {
       };
     } else {
       atk = hasAttack ? await this.rollAttack() : null;
+      console.log(atk)
       mAtk = atk.options.mAtk
       console.log(mAtk)
       atk = hasAttack ? await atk.render() : null;
@@ -532,6 +533,7 @@ export class ARd20Item extends Item {
       },
       targetValue: targets,
       type: "attack",
+      mAtk:this.data.data.mAtk || false
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
