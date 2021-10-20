@@ -228,7 +228,7 @@ export class ARd20Item extends Item {
     const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
     const targets = game.user.targets;
-    const mAtk = this.data.data.mAtk || false
+    const mAtk = this.data.data.mAtk || false;
     return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mAtk });
   }
   async AttackCheck(attack, damage, targets) {
@@ -398,19 +398,24 @@ export class ARd20Item extends Item {
     // Render the chat card template
     let atk = null;
     const token = this.actor.token;
-    if (targets.size !== 0 && mAtk) {
-      atk = {};
-     for (let target of targets){
-        let id = target.uuid;
-        atk[id] = hasAttack ? await this.rollAttack() : null;
-        console.log(atk[id])
-        atk[id] = hasAttack ? await atk[id].render() : null;
-      };
+    if (targets.size !== 0) {
+      let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
+      mAtk = atkRoll.options.mAtk;
+      if (mAtk) {
+        atk = {};
+        for (let target of targets) {
+          let id = target.uuid;
+
+          atk[id] = hasAttack ? atkRoll.reroll() : null;
+          console.log(atk[id]);
+          atk[id] = hasAttack ? await atk[id].render() : null;
+        }
+      } else atk = await atkRoll.render();
     } else {
-      atk = hasAttack ? await this.rollAttack() : null;
-      console.log(atk)
-      mAtk = atk.options.mAtk
-      console.log(mAtk)
+      atk = hasAttack ? await this.rollAttack(mAtk) : null;
+      console.log(atk);
+      mAtk = atk.options.mAtk;
+      console.log(mAtk);
       atk = hasAttack ? await atk.render() : null;
     }
     let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
@@ -502,7 +507,7 @@ export class ARd20Item extends Item {
    * @param {object} options        Roll options which are configured and provided to the d20Roll function
    * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
    */
-  async rollAttack(options = {}) {
+  async rollAttack(mAtk, options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
     /*if (!this.hasAttack) {
@@ -532,7 +537,7 @@ export class ARd20Item extends Item {
       },
       targetValue: targets,
       type: "attack",
-      mAtk:this.data.data.mAtk || false
+      mAtk: mAtk,
       /*messageData: {
         "flags.ard20.roll": { type: "attack", itemId: this.id },
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),

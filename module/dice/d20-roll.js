@@ -206,7 +206,7 @@
     // Apply advantage or disadvantage
     this.options.advantageMode = advantageMode;
     this.options.rollMode = form.rollMode.value;
-    this.options.mAtk = form.mAtk.value;
+    this.options.mAtk = form.mAtk.checked;
     this.configureModifiers();
     return this;
   }
