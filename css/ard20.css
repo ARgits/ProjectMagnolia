@@ -788,6 +788,25 @@ button.change:disabled {
   user-select: text;
 }
 
+.ard20 .ard20.chat-card .card-content .chat-portrait {
+  width: 36;
+  height: 36;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+}
+
+.ard20 .ard20.chat-card .card-content .attack-target {
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 .ard20 .ard20.chat-card .card-buttons {
   margin: 5px 0;
 }

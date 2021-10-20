@@ -40,6 +40,16 @@
         -ms-user-select: text;
         user-select: text;
       }
+      .chat-portrait{
+        width: 36;
+        height: 36;
+        flex-basis: auto;
+        flex-grow: 0;
+      }
+      .attack-target{
+        justify-content: space-evenly;
+        align-items: center;
+      }
     }
   
     .card-buttons {

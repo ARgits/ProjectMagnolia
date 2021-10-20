@@ -13,8 +13,8 @@
         {{#if hasAttack}}
         {{#each targets as |target|}}        
             <div class="flexrow flex2" data-targetID="{{target.uuid}}">
-                <div>
-                    <img src="{{target.actor.img}}" title="{{target.actor.name}}" width="18" height="18"/>
+                <div class="chat-portrait">
+                    <img src="{{target.actor.img}}" title="{{target.actor.name}}"/>
                 </div>
                 <div>
                     {{target.actor.name}}
