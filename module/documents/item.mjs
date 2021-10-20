@@ -512,7 +512,6 @@ export class ARd20Item extends Item {
 
     const { parts, rollData } = this.getAttackToHit();
     const targets = game.user.targets;
-    const ts = targets.size;
     if (options.parts?.length > 0) {
       parts.push(...options.parts);
     }

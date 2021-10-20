@@ -133,7 +133,7 @@ export async function d20Roll({
   options,
   flavor,
   type,
-  mAtk, // Chat Message customization
+  mAtk, 
 } = {}) {
   // Handle input arguments
   const formula = ["1d20"].concat(parts).join(" + ");

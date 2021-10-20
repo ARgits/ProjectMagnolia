@@ -130,9 +130,8 @@ export default class D20Roll extends Roll {
       chooseModifier,
       defaultAbility,
       abilities: CONFIG.ARd20.abilities,
-      prof_type: this.data.prof_type,
-      prof_value: this.data.prof_value,
-      type
+      type,
+      mAtk,
     });
     let defaultButton = "normal";
     switch (defaultAction) {
