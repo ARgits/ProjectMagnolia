@@ -11,7 +11,7 @@
  * @param {boolean} [options.halflingLucky=false]      Allow Halfling Luck to modify this roll?
  * @param {boolean} [options.reliableTalent=false]     Allow Reliable Talent to modify this roll?
  */
-export default class D20Roll extends Roll {
+ export default class D20Roll extends Roll {
   constructor(formula, data, options) {
     super(formula, data, options);
     if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
@@ -121,7 +121,7 @@ export default class D20Roll extends Roll {
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({ title, defaultRollMode, type, defaultAction = D20Roll.ADV_MODE.NORMAL, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
+  async configureDialog({ title, defaultRollMode, type, defaultAction = D20Roll.ADV_MODE.NORMAL, mAtk, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
     // Render the Dialog inner HTML
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
