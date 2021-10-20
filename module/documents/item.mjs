@@ -400,12 +400,12 @@ export class ARd20Item extends Item {
     const token = this.actor.token;
     if (targets.size !== 0 && mAtk) {
       atk = {};
-      targets.forEach((target) => {
+     for (let target of targets){
         let id = target.uuid;
         atk[id] = hasAttack ? await this.rollAttack() : null;
-        console.log
+        console.log(atk[id])
         atk[id] = hasAttack ? await atk[id].render() : null;
-      });
+      };
     } else {
       atk = hasAttack ? await this.rollAttack() : null;
       mAtk = atk.options.mAtk
