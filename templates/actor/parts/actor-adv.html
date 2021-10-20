@@ -119,7 +119,7 @@
                             <label for='profs.weapon.{{key}}.value' class="resource-label prof flexlarge align-center" data-type='prof' data-label="{{prof.name}}">{{prof.name}}</label>
                             <label for='profs.weapon.{{key}}.value' class="resource-label prof flexlarge align-center" data-type='prof' data-label="{{prof.type}}">{{prof.type_hover}}</label>
                             <button class='change far fa-arrow-alt-circle-down' data-type="prof" type="button" {{#if prof.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
-                            <input hidden name='profs.weapon.{{key}}.value' value={{prof.value}} type="number" />
+                            <input hidden name='profs.weapon.{{key}}.value' value='{{prof.value}}' type="number" />
                             <label for='profs.weapon.{{key}}.value' class="resource-label flexlarge align-center" data-label="{{prof.hover}}">{{prof.value_hover}}</label>
                             <button class='change far fa-arrow-alt-circle-up' data-type="prof" type="button" {{#if prof.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
                             {{#if prof.xp}}<span class='ability' name='profs.weapon.{{key}}.xp'>{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
