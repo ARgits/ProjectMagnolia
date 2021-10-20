@@ -789,8 +789,8 @@ button.change:disabled {
 }
 
 .ard20 .ard20.chat-card .card-content .chat-portrait {
-  width: 36;
-  height: 36;
+  width: 36px;
+  height: 36px;
   -ms-flex-preferred-size: auto;
   flex-basis: auto;
   -webkit-box-flex: 0;
