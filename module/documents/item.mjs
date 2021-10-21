@@ -397,26 +397,26 @@ export class ARd20Item extends Item {
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets, mAtk } = {}) {
     // Render the chat card template
     let atk = null;
+    let atkHTML = null;
     const token = this.actor.token;
     if (targets.size !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atkRoll.options.mAtk;
       if (mAtk) {
         atk = {};
+        atkHTML = {};
         for (let target of targets) {
           let id = target.uuid;
 
-          atk[id] = hasAttack ? atkRoll.reroll() : null;
-          console.log(atk[id]);
-          atk[id] = hasAttack ? await atk[id].render() : null;
+          atk[id] = hasAttack ? (Object.keys(atk).length === 0 ? atkRoll : atkRoll.reroll()) : null;
+          atkHTML[id] = hasAttack ? await atk[id].render() : null;
+          atk[id] = atk[id].total
         }
-      } else atk = await atkRoll.render();
+      } else atkHTML = await atkRoll.render();
     } else {
       atk = hasAttack ? await this.rollAttack(mAtk) : null;
-      console.log(atk);
       mAtk = atk.options.mAtk;
-      console.log(mAtk);
-      atk = hasAttack ? await atk.render() : null;
+      atkHTML = hasAttack ? await atk.render() : null;
     }
     let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
     //let dmgRoll = hasDamage ? await this.rollDamage() : null;
@@ -430,7 +430,9 @@ export class ARd20Item extends Item {
       hasAttack,
       hasDamage,
       atk,
+      atkHTML,
       targets,
+      owner: this.actor.isOwner || game.user.isGM,
     };
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
 
