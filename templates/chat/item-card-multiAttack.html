@@ -19,14 +19,12 @@
                             <div class="chat-portrait">
                                 <img src="{{target.actor.img}}" title="{{target.actor.name}}" />
                             </div>
-                            <div>
-                                {{target.actor.name}}
-                            </div>
+                            <div style="text-align: center;">{{target.actor.name}}</div>
                         </div>
                     </div>
                     <div class="attack-roll">
                         <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
-                        <div>{{{@root.atk.[target.uuid]}}}</div>
+                        <div>{{{lookup @root.atk target.uuid}}}</div>
                     </div>
                     <div class="damage-roll card-buttons">
                         <div style="text-align:center">Damage:</div>
