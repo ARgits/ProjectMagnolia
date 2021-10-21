@@ -12,27 +12,25 @@
         {{#if hasAttack}}
             {{log atk}}
             {{#each targets as |target|}}
-                <div class="flexrow flex2 attack-target" data-targetID="{{target.uuid}}">
-                    <div>
-                        <div>Target:</div>
-                        <div class="flexrow">
-                            <div class="chat-portrait">
-                                <img src="{{target.actor.img}}" title="{{target.name}}" />
-                            </div>
-                            <div>
-                                <span>{{target.name}}</span>
-                            </div>
+                <ol class="flexcol items-list" data-targetID="{{target.uuid}}">
+                    <li class="flexrow items-header">
+                        <div class="flex2">Target:</div>
+                        <div>{{localize "ARd20.Attack"}}:</div>
+                        <div>{{localize "ARd20.Damage"}}</div>
+                    </li>
+                    <li class="flexrow">
+                        <div class="chat-portrait item item-prop">
+                            <img src="{{target.actor.img}}" title="{{target.name}}" />
                         </div>
-                    </div>
-                    <div class="attack-roll">
-                        <div> {{localize "ARd20.Attack"}}:</div>
-                        <div>{{{lookup @root.atk target.uuid}}}</div>
-                    </div>
-                    <div class="damage-roll card-buttons">
-                        <div>Damage:</div>
-                        <button data-action="damage">{{localize "ARd20.Damage"}}</button>
-                    </div>
-                </div>
+                        <div class="item item-prop">{{target.name}}</div>
+                        <div class="attack-roll item item-prop">
+                            {{{lookup @root.atk target.uuid}}}
+                        </div>
+                        <div class="damage-roll card-buttons item item-prop">
+                            <button data-action="damage">{{localize "ARd20.Damage"}}</button>
+                        </div>
+                    </li>
+                </ol>
             {{/each}}
         {{/if}}
     </div>
