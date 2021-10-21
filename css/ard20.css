@@ -808,7 +808,7 @@ button.change:disabled {
   height: 36px;
 }
 
-.ard20.chat-card .attack-target .attack-roll:hover {
+.ard20.chat-card .attack-target .attack-roll:hover #total {
   color: #111;
   text-shadow: 0 0 10px red;
 }

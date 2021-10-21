@@ -25,7 +25,9 @@
                     </div>
                     <div class="item item-prop">{{target.name}}</div>
                     <div class="attack-roll item item-prop">
-                        {{lookup @root.atk target.uuid}}
+                        <div id="value">
+                            {{lookup @root.atk target.uuid}}
+                        </div>
                         <div class="hover-roll">
                             {{{lookup @root.atkHTML target.uuid}}}
                         </div>
