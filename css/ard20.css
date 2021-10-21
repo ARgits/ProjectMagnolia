@@ -813,12 +813,12 @@ button.change:disabled {
   text-shadow: 0 0 10px red;
 }
 
-.ard20.chat-card .attack-target .hover-roll {
-  visibility: hidden;
+.ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
+  visibility: visible;
 }
 
-.ard20.chat-card .attack-target .hover-roll:hover {
-  visibility: visible;
+.ard20.chat-card .attack-target .hover-roll {
+  visibility: hidden;
 }
 
 .ard20.chat-card .card-buttons {

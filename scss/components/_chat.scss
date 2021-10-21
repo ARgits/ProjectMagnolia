@@ -56,13 +56,13 @@
       &:hover {
         color: #111;
         text-shadow: 0 0 10px red;
+        .hover-roll{
+          visibility: visible;
+        }
       }
     }
     .hover-roll {
       visibility: hidden;
-      &:hover {
-        visibility: visible;
-      }
     }
   }
 
