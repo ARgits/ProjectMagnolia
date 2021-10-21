@@ -59,12 +59,18 @@
           text-shadow: 0 0 10px red;
         }
         .hover-roll {
-          visibility: visible;
+          display: none;
         }
       }
     }
     .hover-roll {
-      visibility: hidden;
+      display: block;
+      .dice-total{
+        display: none;
+      };
+      .dice-tooltip{
+        display: block;
+      }
     }
   }
 
