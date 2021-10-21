@@ -17,23 +17,25 @@
                     <div>{{localize "ARd20.Attack"}}:</div>
                     <div>{{localize "ARd20.Damage"}}</div>
                 </li>
-                {{#each targets as |target|}}
-                    <li class="flexrow">
-                        <div class="chat-portrait item item-prop">
-                            <img src="{{target.actor.img}}" title="{{target.name}}" />
+                <li>
+                    {{#each targets as |target|}}
+                <li class="flexrow">
+                    <div class="chat-portrait item item-prop">
+                        <img src="{{target.actor.img}}" title="{{target.name}}" />
+                    </div>
+                    <div class="item item-prop">{{target.name}}</div>
+                    <div class="attack-roll item item-prop">
+                        {{lookup @root.atk target.uuid}}
+                        <div class="hover-roll">
+                            {{{lookup @root.atkHTML target.uuid}}}
                         </div>
-                        <div class="item item-prop">{{target.name}}</div>
-                        <div class="attack-roll item item-prop">
-                            {{lookup @root.atk target.uuid}}
-                            <div class="hover-roll">
-                                {{{lookup @root.atkHTML target.uuid}}}
-                            </div>
-                        </div>
-                        <div class="damage-roll card-buttons item item-prop">
-                            <button data-action="damage">{{localize "ARd20.Damage"}}</button>
-                        </div>
-                    </li>
+                    </div>
+                    <div class="damage-roll card-buttons item item-prop">
+                        <button data-action="damage">{{localize "ARd20.Damage"}}</button>
+                    </div>
+                </li>
                 {{/each}}
+                </li>
             </ol>
         {{/if}}
     </div>

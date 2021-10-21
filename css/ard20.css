@@ -811,16 +811,16 @@ button.change:disabled {
   height: 36px;
 }
 
-.ard20.chat-card .attack-target .chat-portrait .attack-roll:hover {
+.ard20.chat-card .attack-target .attack-roll:hover {
   color: #111;
   text-shadow: 0 0 10px red;
 }
 
-.ard20.chat-card .attack-target .chat-portrait .hover-roll {
+.ard20.chat-card .attack-target .hover-roll {
   display: none;
 }
 
-.ard20.chat-card .attack-target .chat-portrait .hover-roll:hover {
+.ard20.chat-card .attack-target .hover-roll:hover {
   display: block;
 }
 

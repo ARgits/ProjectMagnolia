@@ -52,17 +52,17 @@
         width: 36px;
         height: 36px;
       }
-      .attack-roll {
-        &:hover {
-          color: #111;
-          text-shadow: 0 0 10px red;
-        }
+    }
+    .attack-roll {
+      &:hover {
+        color: #111;
+        text-shadow: 0 0 10px red;
       }
-      .hover-roll {
-        display: none;
-        &:hover {
-          display: block;
-        }
+    }
+    .hover-roll {
+      display: none;
+      &:hover {
+        display: block;
       }
     }
   }
