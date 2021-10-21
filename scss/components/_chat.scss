@@ -59,17 +59,17 @@
           text-shadow: 0 0 10px red;
         }
         .hover-roll {
-          display: none;
+          display: block;
+          .dice-tooltip {
+            display: block;
+          }
         }
       }
     }
     .hover-roll {
-      display: block;
-      .dice-total{
+      display: none;
+      .dice-total {
         display: none;
-      };
-      .dice-tooltip{
-        display: block;
       }
     }
   }

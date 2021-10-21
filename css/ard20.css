@@ -814,19 +814,19 @@ button.change:disabled {
 }
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
-  display: none;
+  display: block;
+}
+
+.ard20.chat-card .attack-target .attack-roll:hover .hover-roll .dice-tooltip {
+  display: block;
 }
 
 .ard20.chat-card .attack-target .hover-roll {
-  display: block;
+  display: none;
 }
 
 .ard20.chat-card .attack-target .hover-roll .dice-total {
   display: none;
-}
-
-.ard20.chat-card .attack-target .hover-roll .dice-tooltip {
-  display: block;
 }
 
 .ard20.chat-card .card-buttons {
