@@ -40,6 +40,11 @@
       -ms-user-select: text;
       user-select: text;
     }
+  }
+  .attack-target {
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
     .chat-portrait {
       flex-basis: auto;
       flex-grow: 0;
@@ -47,11 +52,18 @@
         width: 36px;
         height: 36px;
       }
-    }
-    .attack-target {
-      justify-content: space-evenly;
-      align-items: center;
-      text-align: center;
+      .attack-roll {
+        &:hover {
+          color: #111;
+          text-shadow: 0 0 10px red;
+        }
+      }
+      .hover-roll {
+        display: none;
+        &:hover {
+          display: block;
+        }
+      }
     }
   }
 

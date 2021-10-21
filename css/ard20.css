@@ -788,20 +788,7 @@ button.change:disabled {
   user-select: text;
 }
 
-.ard20.chat-card .card-content .chat-portrait {
-  -ms-flex-preferred-size: auto;
-  flex-basis: auto;
-  -webkit-box-flex: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-}
-
-.ard20.chat-card .card-content .chat-portrait img {
-  width: 36px;
-  height: 36px;
-}
-
-.ard20.chat-card .card-content .attack-target {
+.ard20.chat-card .attack-target {
   -webkit-box-pack: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
@@ -809,6 +796,32 @@ button.change:disabled {
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
+}
+
+.ard20.chat-card .attack-target .chat-portrait {
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+}
+
+.ard20.chat-card .attack-target .chat-portrait img {
+  width: 36px;
+  height: 36px;
+}
+
+.ard20.chat-card .attack-target .chat-portrait .attack-roll:hover {
+  color: #111;
+  text-shadow: 0 0 10px red;
+}
+
+.ard20.chat-card .attack-target .chat-portrait .hover-roll {
+  display: none;
+}
+
+.ard20.chat-card .attack-target .chat-portrait .hover-roll:hover {
+  display: block;
 }
 
 .ard20.chat-card .card-buttons {
