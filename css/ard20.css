@@ -792,9 +792,6 @@ button.change:disabled {
   -webkit-box-pack: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   text-align: center;
 }
 
@@ -817,11 +814,11 @@ button.change:disabled {
 }
 
 .ard20.chat-card .attack-target .hover-roll {
-  display: none;
+  visibility: hidden;
 }
 
 .ard20.chat-card .attack-target .hover-roll:hover {
-  display: block;
+  visibility: visible;
 }
 
 .ard20.chat-card .card-buttons {
