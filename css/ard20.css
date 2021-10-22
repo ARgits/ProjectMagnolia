@@ -834,6 +834,10 @@ button.change:disabled {
           animation-timing-function: ease-in;*/
 }
 
+.ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll .dice-tooltip {
+  display: block;
+}
+
 .ard20.chat-card .attack-target .hover-roll {
   max-height: 0;
   -webkit-transition: max-height 0.15s ease-out;

@@ -71,6 +71,9 @@
           +.hover-roll {
             max-height: 500px;
             transition: max-height 0.25s ease-in;
+            .dice-tooltip{
+              display: block;
+            }
             /*display: block;
           animation: fade_in_show 0.5s;
           animation-timing-function: ease-in;*/
