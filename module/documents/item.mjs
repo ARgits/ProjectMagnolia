@@ -397,22 +397,26 @@ export class ARd20Item extends Item {
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets, mAtk } = {}) {
     // Render the chat card template
     let atk = null;
+    let dc = null;
     let atkHTML = null;
+    let result = null;
+    const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.size !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atkRoll.options.mAtk;
-      if (mAtk) {
-        atk = {};
-        atkHTML = {};
-        for (let target of targets) {
-          let id = target.uuid;
-
-          atk[id] = hasAttack ? (Object.keys(atk).length === 0 ? atkRoll : atkRoll.reroll()) : null;
-          atkHTML[id] = hasAttack ? await atk[id].render() : null;
-          atk[id] = atk[id].total
-        }
-      } else atkHTML = await atkRoll.render();
+      atk = mAtk ? {} : atk;
+      atkHTML = mAtk ? {} : atkHTML;
+      dc = mAtk ? {} : dc;
+      result = mAtk ? {} : result;
+      for (let target of targets) {
+        let id = target.uuid;
+        dc[id] = target.actor.data.data.defences.stats[def].value;
+        atk[id] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
+        atkHTML[id] = hasAttack ? await atk[id].render() : null;
+        atk[id] = atk[id].total;
+        result[id] = atk[id] > dc[id];
+      }
     } else {
       atk = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atk.options.mAtk;
@@ -433,6 +437,8 @@ export class ARd20Item extends Item {
       atkHTML,
       targets,
       owner: this.actor.isOwner || game.user.isGM,
+      dc,
+      result,
     };
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
 

@@ -26,7 +26,7 @@
                     <div class="item item-prop">{{target.name}}</div>
                     <div class="attack-roll item item-prop">
                         <div id="value">
-                            {{lookup @root.atk target.uuid}}
+                            {{lookup @root.atk target.uuid}} vs {{lookup @root.dc target.uuid}}: {{lookup @root.result target.uuid}}
                         </div>
                         <div class="hover-roll">
                             {{{lookup @root.atkHTML target.uuid}}}
