@@ -850,10 +850,6 @@ button.change:disabled {
   display: none;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-tooltip {
-  display: block;
-}
-
 .ard20.chat-card .attack-target .hover-roll,
 .ard20.chat-card .attack-target .dice-tooltip {
   max-height: 0;
@@ -861,6 +857,7 @@ button.change:disabled {
   -o-transition: max-height 0.15s ease-out;
   transition: max-height 0.15s ease-out;
   overflow: hidden;
+  display: inherit;
 }
 
 .ard20.chat-card .attack-target .hover-roll .dice-total,

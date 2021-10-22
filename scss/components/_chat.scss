@@ -55,6 +55,7 @@
   .attack-target {
     justify-content: space-evenly;
     text-align: center;
+    
     .chat-portrait {
       flex-basis: auto;
       flex-grow: 0;
@@ -73,6 +74,7 @@
           + .hover-roll .dice-tooltip {
             max-height: 500px;
             transition: max-height 0.25s ease-in;
+
             .dice-total {
               display: none;
             }
@@ -82,12 +84,10 @@
         + .hover-roll:hover .dice-tooltip {
           max-height: 500px;
           transition: max-height 0.25s ease-in;
+
           .dice-total {
             display: none;
           }
-        }
-        + .hover-roll:hover .dice-tooltip {
-          display: block;
         }
       }
     }
@@ -96,6 +96,7 @@
       max-height: 0;
       transition: max-height 0.15s ease-out;
       overflow: hidden;
+      display: inherit;
 
       .dice-total {
         display: none;
