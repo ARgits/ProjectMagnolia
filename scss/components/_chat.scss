@@ -69,10 +69,8 @@
         }
         .hover-roll {
           display: block;
-          animation: fade_in_show 0.5s;
-          .dice-tooltip {
-            display: block;
-          }
+          animation: fade_in_show 1s;
+          animation-timing-function: ease-in;
         }
       }
     }

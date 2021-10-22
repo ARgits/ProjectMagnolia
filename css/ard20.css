@@ -833,12 +833,10 @@ button.change:disabled {
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
   display: block;
-  -webkit-animation: fade_in_show 0.5s;
-  animation: fade_in_show 0.5s;
-}
-
-.ard20.chat-card .attack-target .attack-roll:hover .hover-roll .dice-tooltip {
-  display: block;
+  -webkit-animation: fade_in_show 1s;
+  animation: fade_in_show 1s;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
 }
 
 .ard20.chat-card .attack-target .hover-roll {
