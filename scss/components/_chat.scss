@@ -68,7 +68,7 @@
         &:hover {
           color: #111;
           text-shadow: 0 0 10px red;
-          +.hover-roll *{
+          +.hover-roll {
             max-height: 500px;
             transition: max-height 0.25s ease-in;
             .dice-total {
