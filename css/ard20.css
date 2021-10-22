@@ -739,6 +739,32 @@ button.change:disabled {
   border: none;
 }
 
+@-webkit-keyframes fade_in_show {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes fade_in_show {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -815,6 +841,8 @@ button.change:disabled {
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
   display: block;
+  -webkit-animation: fade_in_show 0.5s;
+  animation: fade_in_show 0.5s;
 }
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll .dice-tooltip {
@@ -823,9 +851,6 @@ button.change:disabled {
 
 .ard20.chat-card .attack-target .hover-roll {
   display: none;
-  -webkit-transition: display 2s;
-  -o-transition: display 2s;
-  transition: display 2s;
 }
 
 .ard20.chat-card .attack-target .hover-roll .dice-total {

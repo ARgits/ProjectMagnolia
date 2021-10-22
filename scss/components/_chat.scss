@@ -1,4 +1,15 @@
 @import "../utils/colors";
+@keyframes fade_in_show {
+  0% {
+       opacity: 0;
+       transform: scale(0)
+  }
+
+  100% {
+       opacity: 1;
+       transform: scale(1)
+  }
+}
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -60,6 +71,7 @@
         }
         .hover-roll {
           display: block;
+          animation: fade_in_show 0.5s;
           .dice-tooltip {
             display: block;
           }
@@ -68,7 +80,6 @@
     }
     .hover-roll {
       display: none;
-      transition: display 2s;
       .dice-total {
         display: none;
       }
