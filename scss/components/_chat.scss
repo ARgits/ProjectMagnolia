@@ -1,4 +1,4 @@
-@keyframes hover {
+@keyframes example {
   from {display: none}
   to {display: block}
 }
@@ -63,7 +63,7 @@
           text-shadow: 0 0 10px red;
         }
         .hover-roll {
-          animation-name: hover;
+          animation-name: example;
           animation-duration: 2s;
           .dice-tooltip {
             display: block;

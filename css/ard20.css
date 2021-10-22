@@ -739,6 +739,24 @@ button.change:disabled {
   border: none;
 }
 
+@-webkit-keyframes example {
+  from {
+    display: none;
+  }
+  to {
+    display: block;
+  }
+}
+
+@keyframes example {
+  from {
+    display: none;
+  }
+  to {
+    display: block;
+  }
+}
+
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -814,7 +832,10 @@ button.change:disabled {
 }
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
-  display: block;
+  -webkit-animation-name: example;
+  animation-name: example;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
 }
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll .dice-tooltip {
