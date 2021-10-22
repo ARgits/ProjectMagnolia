@@ -68,7 +68,10 @@
         &:hover {
           color: #111;
           text-shadow: 0 0 10px red;
-          +.hover-roll ,+.hover-roll .dice-tooltip{
+          + .hover-roll,
+          + .hover-roll:hover,
+          + .hover-roll .dice-tooltip,
+          + .hover-roll .dice-tooltip:hover {
             max-height: 500px;
             transition: max-height 0.25s ease-in;
             .dice-total {
@@ -81,10 +84,12 @@
         }
       }
     }
-    .hover-roll, .dice-tooltip {
+    .hover-roll,
+    .dice-tooltip {
       max-height: 0;
       transition: max-height 0.15s ease-out;
       overflow: hidden;
+
       .dice-total {
         display: none;
       }
