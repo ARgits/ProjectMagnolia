@@ -415,7 +415,7 @@ export class ARd20Item extends Item {
         atk[id] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
         atkHTML[id] = hasAttack ? await atk[id].render() : null;
         atk[id] = atk[id].total;
-        result[id] = atk[id] > dc[id];
+        result[id] = atk[id] > dc[id]? "hit": "miss"
       }
     } else {
       atk = hasAttack ? await this.rollAttack(mAtk) : null;
