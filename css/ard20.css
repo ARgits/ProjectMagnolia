@@ -830,9 +830,6 @@ button.change:disabled {
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
   transition: max-height 0.25s ease-in;
-  /*display: block;
-          animation: fade_in_show 0.5s;
-          animation-timing-function: ease-in;*/
 }
 
 .ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll .dice-total,
@@ -851,6 +848,10 @@ button.change:disabled {
 .ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-total,
 .ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-tooltip .dice-total {
   display: none;
+}
+
+.ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-tooltip {
+  display: block;
 }
 
 .ard20.chat-card .attack-target .hover-roll,
