@@ -739,28 +739,17 @@ button.change:disabled {
   border: none;
 }
 
-@-webkit-keyframes fade_in_show {
+/*@keyframes fade_in_show {
   0% {
     opacity: 0;
     max-height: 0%;
   }
+
   100% {
     max-height: 100%;
     opacity: 1;
   }
-}
-
-@keyframes fade_in_show {
-  0% {
-    opacity: 0;
-    max-height: 0%;
-  }
-  100% {
-    max-height: 100%;
-    opacity: 1;
-  }
-}
-
+}*/
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -836,15 +825,21 @@ button.change:disabled {
 }
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
-  display: block;
-  -webkit-animation: fade_in_show 0.5s;
-  animation: fade_in_show 0.5s;
-  -webkit-animation-timing-function: ease-in;
-  animation-timing-function: ease-in;
+  max-height: 500px;
+  -webkit-transition: max-height 0.25s ease-in;
+  -o-transition: max-height 0.25s ease-in;
+  transition: max-height 0.25s ease-in;
+  /*display: block;
+          animation: fade_in_show 0.5s;
+          animation-timing-function: ease-in;*/
 }
 
 .ard20.chat-card .attack-target .hover-roll {
-  display: none;
+  max-height: 0;
+  -webkit-transition: max-height 0.15s ease-out;
+  -o-transition: max-height 0.15s ease-out;
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
 }
 
 .ard20.chat-card .attack-target .hover-roll .dice-total {

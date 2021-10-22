@@ -1,5 +1,5 @@
 @import "../utils/colors";
-@keyframes fade_in_show {
+/*@keyframes fade_in_show {
   0% {
     opacity: 0;
     max-height: 0%;
@@ -9,7 +9,7 @@
     max-height: 100%;
     opacity: 1;
   }
-}
+}*/
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -70,14 +70,18 @@
           text-shadow: 0 0 10px red;
         }
         .hover-roll {
-          display: block;
+          max-height: 500px;
+          transition: max-height 0.25s ease-in;
+          /*display: block;
           animation: fade_in_show 0.5s;
-          animation-timing-function: ease-in;
+          animation-timing-function: ease-in;*/
         }
       }
     }
     .hover-roll {
-      display: none;
+      max-height: 0;
+      transition: max-height 0.15s ease-out;
+      overflow: hidden;
       .dice-total {
         display: none;
       }
