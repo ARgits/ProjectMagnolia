@@ -742,8 +742,10 @@ button.change:disabled {
 @-webkit-keyframes fade_in_show {
   0% {
     opacity: 0;
+    height: 0%;
   }
   100% {
+    height: 100%;
     opacity: 1;
   }
 }
@@ -751,8 +753,10 @@ button.change:disabled {
 @keyframes fade_in_show {
   0% {
     opacity: 0;
+    height: 0%;
   }
   100% {
+    height: 100%;
     opacity: 1;
   }
 }
@@ -833,8 +837,8 @@ button.change:disabled {
 
 .ard20.chat-card .attack-target .attack-roll:hover .hover-roll {
   display: block;
-  -webkit-animation: fade_in_show 1s;
-  animation: fade_in_show 1s;
+  -webkit-animation: fade_in_show 0.5s;
+  animation: fade_in_show 0.5s;
   -webkit-animation-timing-function: ease-in;
   animation-timing-function: ease-in;
 }
