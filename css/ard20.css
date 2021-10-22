@@ -819,12 +819,12 @@ button.change:disabled {
   height: 36px;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value {
+.ard20.chat-card .attack-target .attack-roll #value:hover {
   color: #111;
   text-shadow: 0 0 10px red;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value:hover .hover-roll {
+.ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll {
   max-height: 500px;
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
