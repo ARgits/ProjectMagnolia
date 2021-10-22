@@ -81,7 +81,7 @@
           }
         }
         + .hover-roll:hover,
-        + .hover-roll .dice-tooltip:hover {
+        + .hover-roll:hover .dice-tooltip {
           max-height: 500px;
           transition: max-height 0.25s ease-in;
           .dice-total {
