@@ -1,3 +1,7 @@
+@keyframes hover {
+  from {display: none}
+  to {display: block}
+}
 @import "../utils/colors";
 .ard20.chat-card {
   font-style: normal;
@@ -59,7 +63,8 @@
           text-shadow: 0 0 10px red;
         }
         .hover-roll {
-          display: block;
+          animation-name: hover;
+          animation-duration: 2s;
           .dice-tooltip {
             display: block;
           }
