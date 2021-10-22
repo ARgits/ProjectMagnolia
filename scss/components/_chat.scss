@@ -81,7 +81,7 @@
         }
       }
     }
-    .hover-roll {
+    .hover-roll, .dice-tooltip {
       max-height: 0;
       transition: max-height 0.15s ease-out;
       overflow: hidden;

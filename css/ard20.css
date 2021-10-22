@@ -838,7 +838,7 @@ button.change:disabled {
   display: none;
 }
 
-.ard20.chat-card .attack-target .hover-roll {
+.ard20.chat-card .attack-target .hover-roll, .ard20.chat-card .attack-target .dice-tooltip {
   max-height: 0;
   -webkit-transition: max-height 0.15s ease-out;
   -o-transition: max-height 0.15s ease-out;
@@ -846,7 +846,7 @@ button.change:disabled {
   overflow: hidden;
 }
 
-.ard20.chat-card .attack-target .hover-roll .dice-total {
+.ard20.chat-card .attack-target .hover-roll .dice-total, .ard20.chat-card .attack-target .dice-tooltip .dice-total {
   display: none;
 }
 
