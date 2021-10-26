@@ -11,25 +11,25 @@
         {{/if}}
         {{#if hasAttack}}
             <ol class="flexcol items-list attack-target"">
-                {{#if mAtk}}
+                {{#if (gt targets.length 0)}}
                     <li class=" flexrow items-header">
                         <div class="flex2">Target:</div>
                         <div>{{localize "ARd20.Attack"}}:</div>
                         <div>{{localize "ARd20.Damage"}}</div>
                     </li>
                 {{/if}}
-                {{#unless mAtk}}
+                {{#if (eq targets.length 0)}}
                     <li class="flexrow">
                         <div class="attack-roll">
                             <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
-                            <div>{{{@root.atkHTML.[0]}}}</div>
+                            <div>{{{atkHTML.[0]}}}</div>
                         </div>
                         <div class="damage-roll card-buttons">
                             <div style="text-align:center">Damage:</div>
                             <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                         </div>
                     </li>
-                {{/unless}}
+                {{/if}}
                 {{#each targets as |target key|}}
                     <li class="flexrow" data-targetID="{{target.uuid}}">
                         <div class="chat-portrait item item-prop">

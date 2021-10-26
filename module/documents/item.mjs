@@ -398,19 +398,15 @@ export class ARd20Item extends Item {
 
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets, mAtk } = {}) {
     // Render the chat card template
-    let atk = null;
-    let dc = null;
-    let atkHTML = null;
-    let result = null;
+    let atk = {};
+    let dc = {};
+    let atkHTML = {};
+    let result = {};
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
-    if (targets.size !== 0) {
+    if (targets.length !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atkRoll.options.mAtk;
-      atk = {}
-      atkHTML = {}
-      dc ={}
-      result = {} 
       for(let [key, target] of Object.entries(targets)) {
         console.log(key,target)
         dc[key] = target.actor.data.data.defences.stats[def].value;
@@ -420,9 +416,10 @@ export class ARd20Item extends Item {
         result[key] = atk[key] > dc[key] ? "hit" : "miss";
       }
     } else {
-      atk = hasAttack ? await this.rollAttack(mAtk) : null;
-      mAtk = atk.options.mAtk;
-      atkHTML = hasAttack ? await atk.render() : null;
+      atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
+      mAtk = atk[0].options.mAtk;
+      atkHTML[0] = hasAttack ? await atk[0].render() : null;
+      console.log('awdawdawdawdawdawdawdaw',atkHTML[0])
     }
     let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
     //let dmgRoll = hasDamage ? await this.rollDamage() : null;
