@@ -438,7 +438,8 @@ export class ARd20Item extends Item {
       dc,
       result,
     };
-    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
+    //const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
+    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData)
 
     // Create the ChatMessage data object
     const chatData = {
