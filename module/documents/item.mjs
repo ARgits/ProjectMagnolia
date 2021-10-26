@@ -276,13 +276,12 @@ export class ARd20Item extends Item {
 
     // Extract card data
     const button = event.currentTarget;
-    console.log(button.closest("flexrow"))
-    button.disabled = true;
+    console.log(button.closest(".flexrow"))
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
     const message = game.messages.get(messageId);
     const action = button.dataset.action;
-    const targetUuid = button.closest("flexrow").dataset.targetid;
+    const targetUuid = button.closest(".flexrow").dataset.targetid;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
