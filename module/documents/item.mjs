@@ -313,7 +313,12 @@ export class ARd20Item extends Item {
         const html = $(message.data.content);
         dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
-        html.find(`[data-targetid="${targetUuid}"]`).find("button").replaceWith(dam);
+        if(targetUuid){
+          html.find(`[data-targetid="${targetUuid}"]`).find("button").replaceWith(dam)
+        }
+        else{       
+          html.find('.damage-roll').find('button').replaceWith(dam)
+        };
         //console.log(dom)
         await message.update({ content: html[0].outerHTML });
         break;
