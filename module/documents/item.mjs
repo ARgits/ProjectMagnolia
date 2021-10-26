@@ -224,7 +224,7 @@ export class ARd20Item extends Item {
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
-    const targets = game.user.targets;
+    const targets = Array.from(game.user.targets);
     const mAtk = this.data.data.mAtk || false;
     return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mAtk });
   }
@@ -411,14 +411,13 @@ export class ARd20Item extends Item {
       atkHTML = {}
       dc ={}
       result = {} 
-      for (let target of targets) {
-        let id = target.uuid;
-        console.log(target)
-        dc[id] = target.actor.data.data.defences.stats[def].value;
-        atk[id] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
-        atkHTML[id] = hasAttack ? await atk[id].render() : null;
-        atk[id] = atk[id].total;
-        result[id] = atk[id] > dc[id] ? "hit" : "miss";
+      for(let [key, target] of Object.entries(targets)) {
+        console.log(key,target)
+        dc[key] = target.actor.data.data.defences.stats[def].value;
+        atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
+        atkHTML[key] = hasAttack ? await atk[id].render() : null;
+        atk[key] = atk[id].total;
+        result[key] = atk[id] > dc[id] ? "hit" : "miss";
       }
     } else {
       atk = hasAttack ? await this.rollAttack(mAtk) : null;

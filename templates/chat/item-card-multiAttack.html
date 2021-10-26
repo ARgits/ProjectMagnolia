@@ -22,7 +22,7 @@
                     <li class="flexrow">
                         <div class="attack-roll">
                             <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
-                            <div>{{{@root.atkHTML}}}</div>
+                            <div>{{{@root.atkHTML.[0]}}}</div>
                         </div>
                         <div class="damage-roll card-buttons">
                             <div style="text-align:center">Damage:</div>
@@ -30,7 +30,7 @@
                         </div>
                     </li>
                 {{/unless}}
-                {{#each targets as |target|}}
+                {{#each targets as |target key|}}
                     <li class="flexrow" data-targetID="{{target.uuid}}">
                         <div class="chat-portrait item item-prop">
                             <img src="{{target.data.img}}" title="{{target.name}}" />
@@ -38,17 +38,17 @@
                         <div class="item item-prop">{{target.name}}</div>
                         <div class="attack-roll item item-prop">
                             <div id="value">
-                                {{lookup @root.atk target.uuid}} vs {{lookup @root.dc target.uuid}}: {{lookup @root.result target.uuid}}
+                                {{@root.atk.[key]}} vs {{@root.dc.[key]}}: {{ @root.result.[key]}}
                             </div>
                             <div class="hover-roll">
-                                {{{lookup @root.atkHTML target.uuid}}}
+                                {{{@root.atkHTML.[key]}}}
                             </div>
                         </div>
                         <div class="damage-roll card-buttons item item-prop">
                             {{#if mAtk}}
                             <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                             {{else}}
-                            {{{lookup @root.dmgHTML target.uuid}}}
+                            {{{@root.dmgHTML.[key]}}}
                             {{/if}}
                         </div>
                     </li>
