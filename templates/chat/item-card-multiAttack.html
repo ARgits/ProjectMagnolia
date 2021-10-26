@@ -38,17 +38,17 @@
                         <div class="item item-prop">{{target.name}}</div>
                         <div class="attack-roll item item-prop">
                             <div id="value">
-                                {{@root.atk.[key]}} vs {{@root.dc.[key]}}: {{ @root.result.[key]}}
+                                {{lookup @root.atk key}} vs {{lookup @root.dc key}}: {{lookup @root.result key}}
                             </div>
                             <div class="hover-roll">
-                                {{{@root.atkHTML.[key]}}}
+                                {{{lookup @root.atkHTML key}}}
                             </div>
                         </div>
                         <div class="damage-roll card-buttons item item-prop">
                             {{#if mAtk}}
                             <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                             {{else}}
-                            {{{@root.dmgHTML.[key]}}}
+                            {{{lookup @root.dmgHTML key}}}
                             {{/if}}
                         </div>
                     </li>
