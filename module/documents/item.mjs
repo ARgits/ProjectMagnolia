@@ -89,7 +89,6 @@ export class ARd20Item extends Item {
   _prepareFeatureData(itemData, labels) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
-    console.log(data);
     // Handle Source of the feature
     data.source.value = data.source.value || "mar";
     labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
@@ -134,10 +133,8 @@ export class ARd20Item extends Item {
     for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
       console.log(data.req.logic.length);
       if (i === 0) {
-        console.log("меньше");
         data.req.logic.push("1");
       } else {
-        console.log("больше");
         data.req.logic.push(data.req.logic[i - 1]);
       }
     }
@@ -279,12 +276,13 @@ export class ARd20Item extends Item {
 
     // Extract card data
     const button = event.currentTarget;
+    console.log(button.closest("flexrow"))
     button.disabled = true;
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
     const message = game.messages.get(messageId);
     const action = button.dataset.action;
-    const targetUuid = button.closest("div.flexrow").dataset.targetid;
+    const targetUuid = button.closest("flexrow").dataset.targetid;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
@@ -405,12 +403,13 @@ export class ARd20Item extends Item {
     if (targets.size !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atkRoll.options.mAtk;
-      atk = mAtk ? {} : atk;
-      atkHTML = mAtk ? {} : atkHTML;
-      dc = mAtk ? {} : dc;
-      result = mAtk ? {} : result;
+      atk = {}
+      atkHTML = {}
+      dc ={}
+      result = {} 
       for (let target of targets) {
         let id = target.uuid;
+        console.log(target)
         dc[id] = target.actor.data.data.defences.stats[def].value;
         atk[id] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
         atkHTML[id] = hasAttack ? await atk[id].render() : null;

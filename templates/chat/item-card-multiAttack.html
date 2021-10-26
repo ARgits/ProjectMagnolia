@@ -11,7 +11,7 @@
         {{/if}}
         {{#if hasAttack}}
             {{log atk}}
-            <ol class="flexcol items-list attack-target" data-targetID="{{target.uuid}}">
+            <ol class="flexcol items-list attack-target"">
                 <li class="flexrow items-header">
                     <div class="flex2">Target:</div>
                     <div>{{localize "ARd20.Attack"}}:</div>
@@ -19,7 +19,7 @@
                 </li>
                 <li>
                     {{#each targets as |target|}}
-                <li class="flexrow">
+                <li class="flexrow data-targetID="{{target.uuid}}">
                     <div class="chat-portrait item item-prop">
                         <img src="{{target.data.img}}" title="{{target.name}}" />
                     </div>
