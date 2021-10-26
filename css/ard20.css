@@ -865,10 +865,6 @@ button.change:disabled {
   display: none;
 }
 
-.ard20.chat-card .card-buttons {
-  margin: 5px 0;
-}
-
 .ard20.chat-card .card-buttons span {
   display: block;
   line-height: 28px;
