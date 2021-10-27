@@ -62,7 +62,6 @@ $hover: 0;
             text-shadow: 0 0 10px red;
             $hover: 1 !global;
           }
-          $hover: 0 !global;
         }
         ~ .hover-roll .dice-tooltip {
           @if $hover==1 {
