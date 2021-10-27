@@ -824,29 +824,29 @@ button.change:disabled {
   text-shadow: 0 0 10px red;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll,
-.ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll .dice-tooltip {
+.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll,
+.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll .dice-tooltip {
   max-height: 500px;
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
   transition: max-height 0.25s ease-in;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll .dice-total,
-.ard20.chat-card .attack-target .attack-roll #value:hover + .hover-roll .dice-tooltip .dice-total {
+.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll .dice-total,
+.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll .dice-tooltip .dice-total {
   display: none;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover,
-.ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-tooltip {
+.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover,
+.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover .dice-tooltip {
   max-height: 500px;
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
   transition: max-height 0.25s ease-in;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-total,
-.ard20.chat-card .attack-target .attack-roll #value + .hover-roll:hover .dice-tooltip .dice-total {
+.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover .dice-total,
+.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover .dice-tooltip .dice-total {
   display: none;
 }
 
@@ -893,6 +893,30 @@ button.change:disabled {
 .ard20.chat-card .card-footer span:last-child {
   border-right: none;
   padding-right: 0;
+}
+
+.roll-controls {
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+}
+
+.roll-controls .fa-exclamation-circle {
+  color: orange;
+}
+
+.roll-controls .fa-exclamation-circle:hover {
+  text-shadow: 0 0 10px red;
+}
+
+.roll-controls .fa-check-circle {
+  color: green;
+}
+
+.roll-controls .fa-check-circle:hover {
+  text-shadow: 0 0 10px red;
 }
 
 .dice-roll .dice-total.success {

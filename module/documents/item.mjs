@@ -211,13 +211,12 @@ export class ARd20Item extends Item {
    * @private
    */
 
-  async roll({ configureDialog = true, rollMode, hasDamage, hasAttack, createMessage = true } = {}) {
+  async roll({ configureDialog = true, rollMode, hasDamage = false, hasAttack = false, createMessage = true } = {}) {
     let item = this;
     const id = item.id;
     const iData = this.data.data; //Item data
     const actor = this.actor;
     const aData = actor.data.data;
-    console.log(aData); //Actor data
     hasDamage = iData.hasDamage || hasDamage;
     hasAttack = iData.hasAttack || hasAttack;
     // Initialize chat data.
@@ -395,7 +394,6 @@ export class ARd20Item extends Item {
     if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
     return targets;
   }
-
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets, mAtk } = {}) {
     // Render the chat card template
     let atk = {};
@@ -419,7 +417,6 @@ export class ARd20Item extends Item {
       atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atk[0].options.mAtk;
       atkHTML[0] = hasAttack ? await atk[0].render() : null;
-      console.log('awdawdawdawdawdawdawdaw',atkHTML[0])
     }
     let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
     //let dmgRoll = hasDamage ? await this.rollDamage() : null;

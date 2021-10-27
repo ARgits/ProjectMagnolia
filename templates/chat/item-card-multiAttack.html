@@ -30,6 +30,10 @@
                         </div>
                     </li>
                 {{/if}}
+                {{#unless mAtk}}
+                <div class="grid grid-2col">
+                    <div>
+                {{/unless}}
                 {{#each targets as |target key|}}
                     <li class="flexrow" data-targetID="{{target.uuid}}">
                         <div class="chat-portrait item item-prop">
@@ -37,9 +41,16 @@
                         </div>
                         <div class="item item-prop">{{target.name}}</div>
                         <div class="attack-roll item item-prop">
-                            <div id="value">
-                                {{lookup @root.atk key}} vs {{lookup @root.dc key}}: {{lookup @root.result key}}
+                            <div class="flexrow">
+                                <div id="value">
+                                    {{lookup @root.atk key}} vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
+                                </div>
+                                <div class="roll-controls">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
                             </div>
+                            
                             <div class="hover-roll">
                                 {{{lookup @root.atkHTML key}}}
                             </div>
