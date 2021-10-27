@@ -65,22 +65,21 @@ $hover: 0;
           $hover: 0 !global;
         }
         ~ .hover-roll .dice-tooltip {
-          @if ($hover) {
+          @if $hover==1 {
             max-height: 500px;
             transition: max-height 0.25s ease-in;
-
             .dice-total {
               display: none;
             }
           }
         }
-        ~ .hover-roll:hover,
-        ~ .hover-roll:hover .dice-tooltip {
-          max-height: 500px;
-          transition: max-height 0.25s ease-in;
-          .dice-total {
-            display: none;
-          }
+      }
+      .hover-roll:hover,
+      .hover-roll:hover .dice-tooltip {
+        max-height: 500px;
+        transition: max-height 0.25s ease-in;
+        .dice-total {
+          display: none;
         }
       }
     }
@@ -90,13 +89,11 @@ $hover: 0;
       transition: max-height 0.15s ease-out;
       overflow: hidden;
       display: inherit;
-
       .dice-total {
         display: none;
       }
     }
   }
-
   .card-buttons {
     span {
       display: block;

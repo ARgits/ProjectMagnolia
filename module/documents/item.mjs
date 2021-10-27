@@ -260,6 +260,7 @@ export class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+    //html.on("hover", ".attack-roll .flexrow #value", this.showRollDetail.bind(this))
   }
 
   /* -------------------------------------------- */
@@ -275,7 +276,6 @@ export class ARd20Item extends Item {
 
     // Extract card data
     const button = event.currentTarget;
-    console.log(button.closest(".flexrow"))
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
     const message = game.messages.get(messageId);
@@ -394,6 +394,11 @@ export class ARd20Item extends Item {
     if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
     return targets;
   }
+  /*showRollDetail(event){
+    event.preventDefault();
+    const elem = event.currentTarget;
+    const 
+  }*/
   async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets, mAtk } = {}) {
     // Render the chat card template
     let atk = {};
