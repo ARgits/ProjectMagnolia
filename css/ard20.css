@@ -739,17 +739,6 @@ button.change:disabled {
   border: none;
 }
 
-/*@keyframes fade_in_show {
-  0% {
-    opacity: 0;
-    max-height: 0%;
-  }
-
-  100% {
-    max-height: 100%;
-    opacity: 1;
-  }
-}*/
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -819,34 +808,32 @@ button.change:disabled {
   height: 36px;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value:hover {
+.ard20.chat-card .attack-target .attack-roll .flexrow #value:hover {
   color: #111;
   text-shadow: 0 0 10px red;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll,
-.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll .dice-tooltip {
+.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll .dice-tooltip {
   max-height: 500px;
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
   transition: max-height 0.25s ease-in;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll .dice-total,
-.ard20.chat-card .attack-target .attack-roll #value:hover ~ .hover-roll .dice-tooltip .dice-total {
+.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll .dice-tooltip .dice-total {
   display: none;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover,
-.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover .dice-tooltip {
+.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll:hover,
+.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll:hover .dice-tooltip {
   max-height: 500px;
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
   transition: max-height 0.25s ease-in;
 }
 
-.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover .dice-total,
-.ard20.chat-card .attack-target .attack-roll #value ~ .hover-roll:hover .dice-tooltip .dice-total {
+.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll:hover .dice-total,
+.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll:hover .dice-tooltip .dice-total {
   display: none;
 }
 

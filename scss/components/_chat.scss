@@ -1,15 +1,5 @@
 @import "../utils/colors";
-/*@keyframes fade_in_show {
-  0% {
-    opacity: 0;
-    max-height: 0%;
-  }
-
-  100% {
-    max-height: 100%;
-    opacity: 1;
-  }
-}*/
+$hover: 0;
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -65,13 +55,17 @@
       }
     }
     .attack-roll {
-      #value {
-        &:hover {
-          color: #111;
-          text-shadow: 0 0 10px red;
-
-          ~ .hover-roll,
-          ~ .hover-roll .dice-tooltip {
+      .flexrow {
+        #value {
+          &:hover {
+            color: #111;
+            text-shadow: 0 0 10px red;
+            $hover: 1 !global;
+          }
+          $hover: 0 !global;
+        }
+        ~ .hover-roll .dice-tooltip {
+          @if ($hover) {
             max-height: 500px;
             transition: max-height 0.25s ease-in;
 
@@ -84,7 +78,6 @@
         ~ .hover-roll:hover .dice-tooltip {
           max-height: 500px;
           transition: max-height 0.25s ease-in;
-
           .dice-total {
             display: none;
           }
