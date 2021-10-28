@@ -892,19 +892,19 @@ button.change:disabled {
   flex-basis: 0;
 }
 
-.roll-controls .fa-exclamation-circle {
+.roll-controls i.warning {
   color: orange;
 }
 
-.roll-controls .fa-exclamation-circle:hover {
+.roll-controls i.warning:hover {
   text-shadow: 0 0 10px red;
 }
 
-.roll-controls .fa-check-circle {
+.roll-controls i.accept {
   color: green;
 }
 
-.roll-controls .fa-check-circle:hover {
+.roll-controls i.accept:hover {
   text-shadow: 0 0 10px red;
 }
 

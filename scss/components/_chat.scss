@@ -125,13 +125,13 @@
 .roll-controls {
   flex-grow: 0;
   flex-basis: 0;
-  .fa-exclamation-circle {
+  i.warning {
     color: orange;
     &:hover {
       text-shadow: 0 0 10px red;
     }
   }
-  .fa-check-circle {
+  i.accept {
     color: green;
     &:hover {
       text-shadow: 0 0 10px red;

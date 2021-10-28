@@ -260,19 +260,18 @@ export class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
-    html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", (event)=> {
-      if (event.type=="mouseenter"){
-        event.preventDefault()
-        console.log('БУМ')
-        const element = event.currentTarget.closest("li.flexrow")
-        $(element).find(".attack-roll").find(".hover-roll").addClass("shown")  
+    html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
+    html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", (event) => {
+      if (event.type == "mouseenter") {
+        event.preventDefault();
+        const element = event.currentTarget.closest("li.flexrow");
+        $(element).find(".attack-roll").find(".hover-roll").addClass("shown");
+      } else {
+        event.preventDefault();
+        const element = event.currentTarget.closest("li.flexrow");
+        $(element).find(".attack-roll").find(".hover-roll").removeClass("shown");
       }
-      else {
-        event.preventDefault()
-        const element = event.currentTarget.closest("li.flexrow")
-        $(element).find(".attack-roll").find(".hover-roll").removeClass("shown") 
-      }
-    })
+    });
   }
 
   /* -------------------------------------------- */
@@ -285,7 +284,6 @@ export class ARd20Item extends Item {
    */
   static async _onChatCardAction(event) {
     event.preventDefault();
-
 
     // Extract card data
     const button = event.currentTarget;
@@ -371,6 +369,31 @@ export class ARd20Item extends Item {
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
 
+  async _rollDamage(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const card = element.closest(".chat-card");
+    const message = game.messages.get(card.closest(".message").dataset.messageId);
+    const targetUuid = element.closest("li.flexrow").dataset.targetid;
+    // Recover the actor for the chat card
+    const actor = await this._getChatCardActor(card);
+    if (!actor) return;
+
+    // Get the Item from stored flag data or by the item ID on the Actor
+    const storedData = message.getFlag("ard20", "itemData");
+    const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
+    if (!item) {
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+    }
+    let dam = await item.rollDamage({
+      event: event,
+    });
+    const html = $(message.data.content);
+    damHTML = await dam.render();
+    html.find(`[data-targetid="${targetUuid}"]`).find("damage-roll").append(damHTML);
+    await message.update({ content: html[0].outerHTML });
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -417,7 +440,7 @@ export class ARd20Item extends Item {
     let dc = {};
     let atkHTML = {};
     let result = {};
-    let hit = {}
+    let hit = {};
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
@@ -429,7 +452,7 @@ export class ARd20Item extends Item {
         atkHTML[key] = hasAttack ? await atk[key].render() : null;
         atk[key] = atk[key].total;
         result[key] = atk[key] > dc[key] ? "hit" : "miss";
-        hit[key]=result[key]==="hit"?true:false
+        hit[key] = result[key] === "hit" ? true : false;
       }
     } else {
       atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
@@ -453,7 +476,7 @@ export class ARd20Item extends Item {
       owner: this.actor.isOwner || game.user.isGM,
       dc,
       result,
-      hit
+      hit,
     };
     //const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
