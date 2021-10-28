@@ -428,10 +428,33 @@ button.change:disabled {
   flex: 0;
 }
 
+.ard20 .sheet-tabs.tabs {
+  text-align: center;
+}
+
 .ard20 .sheet-body,
 .ard20 .sheet-body .tab,
 .ard20 .sheet-body .tab .editor {
   height: 100%;
+}
+
+.ard20 .sheet-body .tab ol {
+  margin: 0;
+  padding: 0;
+}
+
+.ard20 .sheet-body .tab ol li .header {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.ard20 .sheet-body .tab ol li .header > *:hover {
+  text-shadow: 0 0 10px red;
+}
+
+.ard20 .sheet-body .tab ol li .change {
+  -webkit-box-flex: 0.25;
+  -ms-flex: 0.25;
+  flex: 0.25;
 }
 
 .ard20 .tox .tox-editor-container {
