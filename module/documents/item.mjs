@@ -261,7 +261,13 @@ export class ARd20Item extends Item {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
-    html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", (event) => {
+    html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", function (event) {
+      event.preventDefault();
+      const element = this.closest("li.flexrow");
+      element.querySelector(".attack-roll .hover-roll")?.classList.toggle("shown", event.type == "mouseenter");
+    });
+  }
+  /*html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", (event) => {
       if (event.type == "mouseenter") {
         event.preventDefault();
         const element = event.currentTarget.closest("li.flexrow");
@@ -390,9 +396,9 @@ export class ARd20Item extends Item {
     });
     const html = $(message.data.content);
     let damHTML = await dam.render();
-    console.log(html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll")[0])
-    html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll").append(damHTML)
-    html.find(`[data-targetid="${targetUuid}"]`).find(".accept").prop('hidden', true)
+    console.log(html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll")[0]);
+    html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+    html.find(`[data-targetid="${targetUuid}"]`).find(".accept").prop("hidden", true);
     console.log(html[0]);
     await message.update({ content: html[0].outerHTML });
   }
