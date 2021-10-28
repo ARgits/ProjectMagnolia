@@ -260,14 +260,32 @@ export class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
-    html.find(".attack-roll #value").hover(
-      (e) => html.find(".attack-roll hover-roll").addClass("shown"),
-      (e) => html.find(".attack-roll hover-roll").removeClass("shown")
-    );
+    /*html.find(".attack-roll").find("#value").hover(
+    this._hoverOn.bind(this),
+    this._hoverOff.bind(this)
+      (e) => {console.log(e); html.find("li[data-targetid='']").find(".attack-roll").find(".hover-roll").addClass("shown")},
+      (e) => {console.log(e); html.find(".attack-roll").find(".hover-roll").removeClass("shown")}
+    );*/
     //html.on("hover", ".attack-roll .flexrow #value", this.showRollDetail.bind(this))
+    html.on("mouseenter mouseleave", ".attack-roll #value", (e)=> {
+      if (e.type=="mouseenter"){
+        console.log(e)
+      }
+    })
   }
 
   /* -------------------------------------------- */
+
+ /* _hoverOn(event){
+    event.preventDefault()
+    const element = event.currentTarget.closest("li.flexrow")
+    element.find(".attack-roll").find(".hover-roll").addClass("shown")    
+  }
+  _hoverOff(event){
+    event.preventDefault()
+    const element = event.currentTarget.closest("li.flexrow")
+    element.find(".attack-roll").find(".hover-roll").removeClass("shown") 
+  }
 
   /**
    * Handle execution of a chat card action via a click event on one of the card buttons
@@ -277,6 +295,7 @@ export class ARd20Item extends Item {
    */
   static async _onChatCardAction(event) {
     event.preventDefault();
+
 
     // Extract card data
     const button = event.currentTarget;
