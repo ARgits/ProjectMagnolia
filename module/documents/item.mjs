@@ -260,32 +260,22 @@ export class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
-    /*html.find(".attack-roll").find("#value").hover(
-    this._hoverOn.bind(this),
-    this._hoverOff.bind(this)
-      (e) => {console.log(e); html.find("li[data-targetid='']").find(".attack-roll").find(".hover-roll").addClass("shown")},
-      (e) => {console.log(e); html.find(".attack-roll").find(".hover-roll").removeClass("shown")}
-    );*/
-    //html.on("hover", ".attack-roll .flexrow #value", this.showRollDetail.bind(this))
-    html.on("mouseenter mouseleave", ".attack-roll #value", (e)=> {
-      if (e.type=="mouseenter"){
-        console.log(e)
+    html.on("click", ".attack-roll fa-check-circle", this.rollDamage)
+    html.on("mouseenter mouseleave", ".attack-roll #value", (event)=> {
+      if (event.type=="mouseenter"){
+        event.preventDefault()
+        const element = event.currentTarget.closest("li.flexrow")
+        $(element).find(".attack-roll").find(".hover-roll").addClass("shown")  
+      }
+      else {
+        event.preventDefault()
+        const element = event.currentTarget.closest("li.flexrow")
+        $(element).find(".attack-roll").find(".hover-roll").removeClass("shown") 
       }
     })
   }
 
   /* -------------------------------------------- */
-
- /* _hoverOn(event){
-    event.preventDefault()
-    const element = event.currentTarget.closest("li.flexrow")
-    element.find(".attack-roll").find(".hover-roll").addClass("shown")    
-  }
-  _hoverOff(event){
-    event.preventDefault()
-    const element = event.currentTarget.closest("li.flexrow")
-    element.find(".attack-roll").find(".hover-roll").removeClass("shown") 
-  }
 
   /**
    * Handle execution of a chat card action via a click event on one of the card buttons
@@ -427,6 +417,7 @@ export class ARd20Item extends Item {
     let dc = {};
     let atkHTML = {};
     let result = {};
+    let hit = {}
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
@@ -439,6 +430,7 @@ export class ARd20Item extends Item {
         atkHTML[key] = hasAttack ? await atk[key].render() : null;
         atk[key] = atk[key].total;
         result[key] = atk[key] > dc[key] ? "hit" : "miss";
+        hit[key]=result[key]==="hit"?true:false
       }
     } else {
       atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
@@ -462,6 +454,7 @@ export class ARd20Item extends Item {
       owner: this.actor.isOwner || game.user.isGM,
       dc,
       result,
+      hit
     };
     //const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
