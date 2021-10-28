@@ -260,6 +260,10 @@ export class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+    html.find(".attack-roll #value").hover(
+      (e) => html.find(".attack-roll hover-roll").addClass("shown"),
+      (e) => html.find(".attack-roll hover-roll").removeClass("shown")
+    );
     //html.on("hover", ".attack-roll .flexrow #value", this.showRollDetail.bind(this))
   }
 
@@ -312,12 +316,11 @@ export class ARd20Item extends Item {
         const html = $(message.data.content);
         dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
-        if(targetUuid){
-          html.find(`[data-targetid="${targetUuid}"]`).find("button").replaceWith(dam)
+        if (targetUuid) {
+          html.find(`[data-targetid="${targetUuid}"]`).find("button").replaceWith(dam);
+        } else {
+          html.find(".damage-roll").find("button").replaceWith(dam);
         }
-        else{       
-          html.find('.damage-roll').find('button').replaceWith(dam)
-        };
         //console.log(dom)
         await message.update({ content: html[0].outerHTML });
         break;
@@ -410,8 +413,8 @@ export class ARd20Item extends Item {
     if (targets.length !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atkRoll.options.mAtk;
-      for(let [key, target] of Object.entries(targets)) {
-        console.log(key,target)
+      for (let [key, target] of Object.entries(targets)) {
+        console.log(key, target);
         dc[key] = target.actor.data.data.defences.stats[def].value;
         atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
         atkHTML[key] = hasAttack ? await atk[key].render() : null;
@@ -442,7 +445,7 @@ export class ARd20Item extends Item {
       result,
     };
     //const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
-    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData)
+    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
 
     // Create the ChatMessage data object
     const chatData = {

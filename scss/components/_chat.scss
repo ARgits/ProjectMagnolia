@@ -1,5 +1,4 @@
 @import "../utils/colors";
-$hover: 0;
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
@@ -60,17 +59,15 @@ $hover: 0;
           &:hover {
             color: #111;
             text-shadow: 0 0 10px red;
-            $hover: 1 !global;
           }
         }
-        ~ .hover-roll .dice-tooltip {
-          @if $hover==1 {
-            max-height: 500px;
-            transition: max-height 0.25s ease-in;
-            .dice-total {
-              display: none;
-            }
-          }
+      }
+      .hover-roll.shown,
+      .hover-roll.shown .dice-tooltip {
+        max-height: 500px;
+        transition: max-height 0.25s ease-in;
+        .dice-total {
+          display: none;
         }
       }
       .hover-roll:hover,

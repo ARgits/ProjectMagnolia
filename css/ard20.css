@@ -813,14 +813,16 @@ button.change:disabled {
   text-shadow: 0 0 10px red;
 }
 
-.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll .dice-tooltip {
+.ard20.chat-card .attack-target .attack-roll .hover-roll.shown,
+.ard20.chat-card .attack-target .attack-roll .hover-roll.shown .dice-tooltip {
   max-height: 500px;
   -webkit-transition: max-height 0.25s ease-in;
   -o-transition: max-height 0.25s ease-in;
   transition: max-height 0.25s ease-in;
 }
 
-.ard20.chat-card .attack-target .attack-roll .flexrow ~ .hover-roll .dice-tooltip .dice-total {
+.ard20.chat-card .attack-target .attack-roll .hover-roll.shown .dice-total,
+.ard20.chat-card .attack-target .attack-roll .hover-roll.shown .dice-tooltip .dice-total {
   display: none;
 }
 
