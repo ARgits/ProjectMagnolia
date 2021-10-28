@@ -260,10 +260,10 @@ export class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
-    html.on("click", ".attack-roll fa-check-circle", this.rollDamage)
-    html.on("mouseenter mouseleave", ".attack-roll #value", (event)=> {
+    html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", (event)=> {
       if (event.type=="mouseenter"){
         event.preventDefault()
+        console.log('БУМ')
         const element = event.currentTarget.closest("li.flexrow")
         $(element).find(".attack-roll").find(".hover-roll").addClass("shown")  
       }
@@ -424,7 +424,6 @@ export class ARd20Item extends Item {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
       mAtk = atkRoll.options.mAtk;
       for (let [key, target] of Object.entries(targets)) {
-        console.log(key, target);
         dc[key] = target.actor.data.data.defences.stats[def].value;
         atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
         atkHTML[key] = hasAttack ? await atk[key].render() : null;
