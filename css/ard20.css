@@ -457,10 +457,6 @@ button.change:disabled {
   background: rgba(0, 0, 0, 0.05);
 }
 
-.ard20 .sheet-body .tab ol li.header > *:hover {
-  text-shadow: 0 0 10px red;
-}
-
 .ard20 .sheet-body .tab ol li .change {
   -webkit-box-flex: 0.25;
   -ms-flex: 0.25;

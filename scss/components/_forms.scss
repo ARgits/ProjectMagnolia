@@ -55,9 +55,6 @@
     text-align: center;
     &.header {
       background: rgba(0, 0, 0, 0.05);
-      > *:hover {
-        text-shadow: 0 0 10px red;
-      }
     };
      .change{
        flex:0.25

@@ -38,28 +38,22 @@
                 <li class="flexrow header">
                     <div>Name</div>
                     <div class="change">Decrease</div>
-                    <div >Value</div>
+                    <div>Value</div>
                     <div class="change">Modifier</div>
                     <div>Increase</div>
                     <div>XP cost</div>
                 </li>
                 {{#each abilities as |ability key|}}
                     <li class="flexrow">
-                        <div class=""><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></div>
-                        <div class=""><button class="change far fa-arrow-alt-circle-down" data-type="ability" type="button" {{#if ability.isEq}} disabled {{/if}} data-action="minus" data-key="{{key}}"></button></div>
-                        {{#unless @root.isReady}}
-                            <div class="grid grid-2col">
-                        {{/unless}}
-                        <div class=""><input readonly type="number" class="" value={{ability.value}} name="abilities.{{key}}.value" /></div>
-                        {{#unless @root.isReady}}
-                            <div><input readonly type="number" class="" value={{ability.final}} name="abilities.{{key}}.final" /></div>
-        </div>{{/unless}}
-        <div class=""><span name="abilities.{{key}}.mod">{{numberFormat ability.mod decimals=0 sign=true}}</span></div>
-        <div class=""><button class="change far fa-arrow-alt-circle-up" data-type="ability" type="button" data-action="plus" data-key="{{key}}" {{#if ability.isXP}} disabled{{/if}}></button></div>
-        <div class=""><span name="abilities.{{key}}.xp">{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
-        </li>
-        {{/each}}
-        </ol>
+                        <label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label>
+                        <button class="change far fa-arrow-alt-circle-down" data-type="ability" type="button" {{#if ability.isEq}} disabled {{/if}} data-action="minus" data-key="{{key}}"></button>
+                        <input readonly type="number" class="" value={{ability.value}} name="abilities.{{key}}.value" />
+                        <span name="abilities.{{key}}.mod">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+                        <button class="change far fa-arrow-alt-circle-up" data-type="ability" type="button" data-action="plus" data-key="{{key}}" {{#if ability.isXP}} disabled{{/if}}></button>
+                        <span name="abilities.{{key}}.xp">{{numberFormat ability.xp decimals=0 sign=false}}</span>
+                    </li>
+                {{/each}}
+            </ol>
         </div>
         <div class="tab" data-tab="race" data-group="primary-tabs">
             <div class="flexcol">
