@@ -369,7 +369,7 @@ export class ARd20Item extends Item {
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
 
-  async _rollDamage(event) {
+  static async _rollDamage(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const card = element.closest(".chat-card");
