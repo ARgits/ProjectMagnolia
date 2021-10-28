@@ -50,6 +50,9 @@
   margin: 0;
   padding: 0;
   li {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     &.header {
       background: rgba(0, 0, 0, 0.05);
       > *:hover {
