@@ -3,12 +3,12 @@
         <div {{#unless isReady}} class="grid grid-2col" {{/unless}}>
             <div>
                 <div>
-                    <label class='resource-label flexlarge align-left' for='xp.get'>XP you earn</label>
-                    <input type='number' class='ability' value="{{xp.get}}" name='xp.get' readonly />
+                    <label class="" for="xp.get">XP you earn</label>
+                    <input type="number" class="" value="{{xp.get}}" name="xp.get" readonly />
                 </div>
                 <div>
-                    <label class='resource-label flexlarge align-left' for='xp.used'>XP you spent</label>
-                    <input type='number' class='ability' value="{{xp.used}}" name='xp.used' readonly />
+                    <label class="" for="xp.used">XP you spent</label>
+                    <input type="number" class="" value="{{xp.used}}" name="xp.used" readonly />
                 </div>
             </div>
             {{#unless isReady}}
@@ -22,20 +22,20 @@
     </header>
     <hr>
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
-        <a class="item" data-tab="stats">Stats</a>
+        <a class="" data-tab="stats">Stats</a>
         {{#unless isReady}}
-            <a class="item" data-tab="race">Race</a>
+            <a class="" data-tab="race">Race</a>
         {{/unless}}
-        <a class="item" data-tab='skills'>Skills</a>
-        <a class='item' data-tab="profs">proficiencies</a>
-        <a class='item' data-tab='feats'>Features</a>
+        <a class="" data-tab="skills">Skills</a>
+        <a class="" data-tab="profs">proficiencies</a>
+        <a class="" data-tab="feats">Features</a>
     </nav>
     <hr>
 
     <section class="sheet-body">
         <div class="tab" data-tab="stats" data-group="primary-tabs">
-            <ol class='items-list'>
-                <li class="items-header flexrow">
+            <ol class="flexcol">
+                <li class="flexrow">
                     <div>Name</div>
                     <div>Decrease</div>
                     <div>Value</div>
@@ -44,27 +44,27 @@
                     <div>XP cost</div>
                 </li>
                 {{#each abilities as |ability key|}}
-                    <li class="item flexrow align-center">
-                        <div class="item-prop"><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></div>
-                        <div class="item-prop"><button class="change far fa-arrow-alt-circle-down" data-type='ability' type='button' {{#if ability.isEq}} disabled {{/if}} data-action='minus' data-key='{{key}}'></button></div>
+                    <li class="flexrow">
+                        <div class=""><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></div>
+                        <div class=""><button class="change far fa-arrow-alt-circle-down" data-type="ability" type="button" {{#if ability.isEq}} disabled {{/if}} data-action="minus" data-key="{{key}}"></button></div>
                         {{#unless @root.isReady}}
-                            <div class="item-prop grid grid-2col">
+                            <div class="grid grid-2col">
                         {{/unless}}
-                        <div class="item-prop"><input readonly type='number' class="ability align-center" value={{ability.value}} name='abilities.{{key}}.value' /></div>
+                        <div class=""><input readonly type="number" class="" value={{ability.value}} name="abilities.{{key}}.value" /></div>
                         {{#unless @root.isReady}}
-                            <div><input readonly type='number' class="ability align-center" value={{ability.final}} name='abilities.{{key}}.final' /></div>
+                            <div><input readonly type="number" class="" value={{ability.final}} name="abilities.{{key}}.final" /></div>
         </div>{{/unless}}
-        <div class="item-prop"><span name='abilities.{{key}}.mod'>{{numberFormat ability.mod decimals=0 sign=true}}</span></div>
-        <div class="item-prop"><button class="change far fa-arrow-alt-circle-up" data-type='ability' type='button' data-action='plus' data-key='{{key}}' {{#if ability.isXP}} disabled{{/if}}></button></div>
-        <div class="item-prop"><span name='abilities.{{key}}.xp'>{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
+        <div class=""><span name="abilities.{{key}}.mod">{{numberFormat ability.mod decimals=0 sign=true}}</span></div>
+        <div class=""><button class="change far fa-arrow-alt-circle-up" data-type="ability" type="button" data-action="plus" data-key="{{key}}" {{#if ability.isXP}} disabled{{/if}}></button></div>
+        <div class=""><span name="abilities.{{key}}.xp">{{numberFormat ability.xp decimals=0 sign=false}}</span></div>
         </li>
         {{/each}}
         </ol>
         </div>
-        <div class='tab' data-tab="race" data-group="primary-tabs">
+        <div class="tab" data-tab="race" data-group="primary-tabs">
             <div class="flexcol">
-                <ol class="items-list ">
-                    <li class="items-header flexrow">
+                <ol class="">
+                    <li class="flexrow">
                         <div>Choose</div>
                         <div>Race</div>
                         <div>Staring HP</div>
@@ -73,21 +73,21 @@
                         <div class="grid grid-2col">
                             <div>
                                 {{#each races.list as |race key|}}
-                                    <li class="item flexrow align-center">
-                                        <div class="item-prop"><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
-                                        <div class="item-prop">{{race.name}}</div>
-                                        <div class="item-prop">{{race.data.startHP}}</div>
+                                    <li class="flexrow ">
+                                        <div class=""><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></div>
+                                        <div class="">{{race.name}}</div>
+                                        <div class="">{{race.data.startHP}}</div>
                                     </li>
                                 {{/each}}
                             </div>
-                            <aside class="item-prop">race description</aside>
+                            <aside class="">race description</aside>
                         </div>
                 </ol>
             </div>
         </div>
-        <div class='tab' data-tab='skills' data-group='primary-tabs'>
-            <ol class="flexcol items-list">
-                <li class="items-header flexrow">
+        <div class="tab" data-tab="skills" data-group="primary-tabs">
+            <ol class="flexcol ">
+                <li class="flexrow">
                     <div>Name</div>
                     <div>Decrease rank</div>
                     <div>Rank</div>
@@ -98,60 +98,60 @@
                     <div class="grid grid-2col">
                         <div>
                             {{#each skills as |skill key|}}
-                                <li class="item flexrow align-center">
-                                    <div class="item-prop"><label for='skills.{{key}}.prof' class="resource-label skill flexlarge align-left" data-type='skill' data-label="{{skill.label}}">{{skill.label}}</label></div>
-                                    <div class="item-prop"><button class='change far fa-arrow-alt-circle-down' data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button></div>
-                                    <input hidden name='skills.{{key}}.prof' value={{skill.prof}} type="number" />
-                                    <div class="item-prop"><label for='skills.{{key}}.prof' class="resource-label flexlarge align-left" data-label="{{skill.hover}}">{{skill.hover}}</label></div>
-                                    <div class="item-prop"><button class='change far fa-arrow-alt-circle-up' data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button></div>
-                                    <div class="item-prop">{{#if skill.xp}}<span class='ability' name='skills.{{key}}.xp'>{{numberFormat skill.xp decimals=0 sign=false}}</span>{{/if}}</div>
+                                <li class="flexrow">
+                                    <div class=""><label for="skills.{{key}}.prof" class="skill" data-type="skill" data-label="{{skill.label}}">{{skill.label}}</label></div>
+                                    <div class=""><button class="change far fa-arrow-alt-circle-down" data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button></div>
+                                    <input hidden name="skills.{{key}}.prof" value={{skill.prof}} type="number" />
+                                    <div class=""><label for="skills.{{key}}.prof" class="" data-label="{{skill.hover}}">{{skill.hover}}</label></div>
+                                    <div class=""><button class="change far fa-arrow-alt-circle-up" data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></div>
+                                    <div class="">{{#if skill.xp}}<span class="" name="skills.{{key}}.xp">{{numberFormat skill.xp decimals=0 sign=false}}</span>{{/if}}</div>
                             {{/each}}
                         </div>
-                        <aside class='item-prop'>{{{hover.value}}}</aside>
+                        <aside class="">{{{hover.value}}}</aside>
                     </div>
             </ol>
         </div>
-        <div class='tab' data-tab='profs' data-group='primary-tabs'>
+        <div class="tab" data-tab="profs" data-group="primary-tabs">
             <div>
-                <div class="ability flexcoll-group-center align-center">
+                <div class="">
                     {{#each profs.weapon as |prof key|}}
-                        <div class="ability flexrow grid grid-7col">
-                            <label for='profs.weapon.{{key}}.value' class="resource-label prof flexlarge align-center" data-type='prof' data-label="{{prof.name}}">{{prof.name}}</label>
-                            <label for='profs.weapon.{{key}}.value' class="resource-label prof flexlarge align-center" data-type='prof' data-label="{{prof.type}}">{{prof.type_hover}}</label>
-                            <button class='change far fa-arrow-alt-circle-down' data-type="prof" type="button" {{#if prof.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button>
-                            <input hidden name='profs.weapon.{{key}}.value' value='{{prof.value}}' type="number" />
-                            <label for='profs.weapon.{{key}}.value' class="resource-label flexlarge align-center" data-label="{{prof.hover}}">{{prof.value_hover}}</label>
-                            <button class='change far fa-arrow-alt-circle-up' data-type="prof" type="button" {{#if prof.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button>
-                            {{#if prof.xp}}<span class='ability' name='profs.weapon.{{key}}.xp'>{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
+                        <div class="flexrow grid grid-7col">
+                            <label for="profs.weapon.{{key}}.value" class="prof" data-type="prof" data-label="{{prof.name}}">{{prof.name}}</label>
+                            <label for="profs.weapon.{{key}}.value" class="prof" data-type="prof" data-label="{{prof.type}}">{{prof.type_hover}}</label>
+                            <button class="change far fa-arrow-alt-circle-down" data-type="prof" type="button" {{#if prof.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button>
+                            <input hidden name="profs.weapon.{{key}}.value" value="{{prof.value}}" type="number" />
+                            <label for="profs.weapon.{{key}}.value" class="" data-label="{{prof.hover}}">{{prof.value_hover}}</label>
+                            <button class="change far fa-arrow-alt-circle-up" data-type="prof" type="button" {{#if prof.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button>
+                            {{#if prof.xp}}<span class="ability" name="profs.weapon.{{key}}.xp">{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
                     {{/each}}
                 </div>
             </div>
         </div>
-        <div class='tab' data-tab='feats' data-group='primary-tabs'>
-            <ol class="items-list">
-                <li class=" item items-header flexrow">
-                    <div class='item-name'>Name</div>
-                    <div class="item-prop">Source</div>
-                    <div class="item-prop">Decrease level</div>
-                    <div class="item-prop">Current Level</div>
-                    <div class="item-prop">Maximum Level</div>
-                    <div class="item-prop">Increase level</div>
-                    <div class="item-prop">XP cost</div>
+        <div class="tab" data-tab="feats" data-group="primary-tabs">
+            <ol class="flexcol">
+                <li class="flexrow">
+                    <div class="">Name</div>
+                    <div class="">Source</div>
+                    <div class="">Decrease level</div>
+                    <div class="">Current Level</div>
+                    <div class="">Maximum Level</div>
+                    <div class="">Increase level</div>
+                    <div class="">XP cost</div>
                     <div class="item-description-8">Description</div>
                 </li>
-                 <div class='grid grid-2col'>
+                 <div class="grid grid-2col">
                     <div>
                         {{#each feats.awail as |feat key|}}
                             <li class="item flexrow">
-                            <div class="item-name">{{feat.name}}</div>
-                            <div class="item-prop">{{feat.data.source.label}}</div>
-                            <div class="item-prop"><button class='change fas fa-minus-square' data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action='minus' data-key="{{key}}"></button></div>
-                            <input hidden name='feats.awail.{{key}}.id' value='{{feat.id}}' type="text" />
-                            <div class="item-prop"><input readonly type="number" value="{{feat.data.level.initial}}" name='feats.awail.{{key}}.data.level.initial' /></div>
-                            <div class="item-prop"><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max" /></div>
-                            <div class="item-prop"><button class='change fas fa-plus-square' data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action='plus' data-key="{{key}}"></button></div>
-                            <div class="item-prop">{{#if (lt feat.data.level.initial feat.data.level.max)}}<span class='ability' name='feats.{{key}}.data.level.xp.{{feat.data.level.initial}}'>{{numberFormat feat.data.current_xp decimals=0 sign=false}}</span>{{/if}}</div>
+                            <div class="">{{feat.name}}</div>
+                            <div class="">{{feat.data.source.label}}</div>
+                            <div class=""><button class="change fas fa-minus-square" data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button></div>
+                            <input hidden name="feats.awail.{{key}}.id" value="{{feat.id}}" type="text" />
+                            <div class=""><input readonly type="number" value="{{feat.data.level.initial}}" name="feats.awail.{{key}}.data.level.initial" /></div>
+                            <div class=""><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max" /></div>
+                            <div class=""><button class="change fas fa-plus-square" data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></div>
+                            <div class="">{{#if (lt feat.data.level.initial feat.data.level.max)}}<span class="" name="feats.{{key}}.data.level.xp.{{feat.data.level.initial}}">{{numberFormat feat.data.current_xp decimals=0 sign=false}}</span>{{/if}}</div>
                             </li>
                         {{/each}}
                     </div>
