@@ -389,8 +389,11 @@ export class ARd20Item extends Item {
       event: event,
     });
     const html = $(message.data.content);
-    damHTML = await dam.render();
-    html.find(`[data-targetid="${targetUuid}"]`).find("damage-roll").append(damHTML);
+    let damHTML = await dam.render();
+    console.log(html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll")[0])
+    html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll").append(damHTML)
+    html.find(`[data-targetid="${targetUuid}"]`).find(".accept").prop('hidden', true)
+    console.log(html[0]);
     await message.update({ content: html[0].outerHTML });
   }
 

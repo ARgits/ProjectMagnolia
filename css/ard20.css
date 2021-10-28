@@ -892,19 +892,19 @@ button.change:disabled {
   flex-basis: 0;
 }
 
-.roll-controls i.warning {
+.roll-controls .warning {
   color: orange;
 }
 
-.roll-controls i.warning:hover {
+.roll-controls .warning:hover {
   text-shadow: 0 0 10px red;
 }
 
-.roll-controls i.accept {
+.roll-controls .accept {
   color: green;
 }
 
-.roll-controls i.accept:hover {
+.roll-controls .accept:hover {
   text-shadow: 0 0 10px red;
 }
 

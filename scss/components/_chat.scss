@@ -125,13 +125,13 @@
 .roll-controls {
   flex-grow: 0;
   flex-basis: 0;
-  i.warning {
+  .warning {
     color: orange;
     &:hover {
       text-shadow: 0 0 10px red;
     }
   }
-  i.accept {
+  .accept {
     color: green;
     &:hover {
       text-shadow: 0 0 10px red;

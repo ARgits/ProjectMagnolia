@@ -41,8 +41,8 @@
                             {{lookup @root.atk key}} vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
                         </div>
                         <div class="roll-controls">
-                            <i class="warning fas fa-exclamation-circle"></i>
-                            {{#if (lookup @root.hit key)}}<i class="accept fas fa-check-circle"></i>{{/if}}
+                            <span class="warning fas fa-exclamation-circle"></>
+                            {{#if (lookup @root.hit key)}}<span class="accept fas fa-check-circle"></>{{/if}}
                         </div>
                     </div>
                     <div class="hover-roll">
