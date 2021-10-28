@@ -443,11 +443,11 @@ button.change:disabled {
   padding: 0;
 }
 
-.ard20 .sheet-body .tab ol li .header {
+.ard20 .sheet-body .tab ol li.header {
   background: rgba(0, 0, 0, 0.05);
 }
 
-.ard20 .sheet-body .tab ol li .header > *:hover {
+.ard20 .sheet-body .tab ol li.header > *:hover {
   text-shadow: 0 0 10px red;
 }
 
