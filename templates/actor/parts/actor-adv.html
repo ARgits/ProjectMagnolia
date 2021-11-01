@@ -35,14 +35,16 @@
     <section class="sheet-body">
         <div class="tab" data-tab="stats" data-group="primary-tabs">
             <table>
-                <tr>
-                    <td>Name</td>
-                    <td>Decrease</td>
-                    <td>Value</td>
-                    <td>Modifier</td>
-                    <td>Increase</td>
-                    <td>XP cost</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Decrease</td>
+                        <td>Value</td>
+                        <td>Modifier</td>
+                        <td>Increase</td>
+                        <td>XP cost</td>
+                    </tr>
+                </thead>
                 {{#each abilities as |ability key|}}
                     <tr>
                         <td><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></td>
