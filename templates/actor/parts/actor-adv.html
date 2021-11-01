@@ -35,16 +35,15 @@
     <section class="sheet-body">
         <div class="tab" data-tab="stats" data-group="primary-tabs">
             <table class="center">
-                <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>Decrease</td>
-                        <td>Value</td>
-                        <td>Modifier</td>
-                        <td>Increase</td>
-                        <td>XP cost</td>
+                        <th>Name</th>
+                        <th>Decrease</th>
+                        <th>Value</th>
+                        <th>Modifier</th>
+                        <th>Increase</th>
+                        <th>XP cost</th>
+                        <th>Description</th>
                     </tr>
-                </thead>
                 {{#each abilities as |ability key|}}
                     <tr>
                         <td><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></td>
@@ -55,6 +54,7 @@
                         <td><span name="abilities.{{key}}.xp">{{numberFormat ability.xp decimals=0 sign=false}}</span></td>
                     </tr>
                 {{/each}}
+                
             </table>
         </div>
         <div class="tab" data-tab="race" data-group="primary-tabs">
