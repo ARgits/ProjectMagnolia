@@ -12,14 +12,12 @@
 }
 
 input:read-only {
-  background: url(../css/parchment.jpg) repeat;
-  background-image: url(../css/parchment.jpg);
+  background: inherit;
   box-shadow: none;
   border: #d5d3c7;
-  width: 75%;
 }
 @for $i from 1 through 10 {
-  input.max-dig-#{$i}{
+  input.max-dig-#{$i} {
     width: calc(5px + #{$i} * 10px);
   }
 }
@@ -32,6 +30,7 @@ button.change {
   margin: 0%;
   width: fit-content;
   height: fit-content;
+  cursor: url(/css/Pointer_gauntlethq_on_32x32.png);
   &:disabled {
     color: red;
     cursor: not-allowed;

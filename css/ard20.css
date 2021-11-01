@@ -11,20 +11,16 @@
 }
 
 input:-moz-read-only {
-  background: url(../css/parchment.jpg) repeat;
-  background-image: url(../css/parchment.jpg);
+  background: inherit;
   box-shadow: none;
   border: #d5d3c7;
-  width: 75%;
 }
 
 input:read-only {
-  background: url(../css/parchment.jpg) repeat;
-  background-image: url(../css/parchment.jpg);
+  background: inherit;
   -webkit-box-shadow: none;
   box-shadow: none;
   border: #d5d3c7;
-  width: 75%;
 }
 
 input.max-dig-1 {
@@ -79,6 +75,7 @@ button.change {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  cursor: url(/css/Pointer_gauntlethq_on_32x32.png);
 }
 
 button.change:disabled {
