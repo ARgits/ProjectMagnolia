@@ -98,7 +98,7 @@
                         <td><button class="change far fa-arrow-alt-circle-up" data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></td>
                         <td>{{#if skill.xp}}<span name="skills.{{key}}.xp">{{numberFormat skill.xp decimals=0 sign=false}}</span>{{/if}}</td>
                         {{#if (eq key "acr")}}
-                            <td rowspan="0">{{@root.hover.value}}</td>
+                            <td rowspan="0">{{@root.hover.skill}}</td>
                         {{/if}}
                     </tr>
                 {{/each}}
@@ -144,7 +144,7 @@
                         <td><button class="change fas fa-plus-square" data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></td>
                         <td>{{#if (lt feat.data.level.initial feat.data.level.max)}}<span name="feats.{{key}}.data.level.xp.{{feat.data.level.initial}}">{{numberFormat feat.data.current_xp decimals=0 sign=false}}</span>{{/if}}</td>
                         {{#if (eq key 0)}}
-                            <td rowspan="0">feat description</td>
+                            <td rowspan="0">{{@root.hover.feat}}</td>
                         {{/if}}
                     </tr>
                 {{/each}}
