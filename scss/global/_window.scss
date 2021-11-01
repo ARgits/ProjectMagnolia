@@ -20,7 +20,7 @@ input:read-only {
 }
 @for $i from 1 through 10 {
   input.max-dig-#{$i}{
-    width: calc(5px+#{$i}*10px);
+    width: calc(5px + #{$i} * 10px);
   }
 }
 
