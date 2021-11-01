@@ -166,7 +166,7 @@ export class CharacterAdvancement extends FormApplication {
 
       console.log(this.data.feats.learned, "learned features");
       console.log(this.data.feats.awail, "awailable features");
-      this.data.hover.feat = this.data.feats.awail[0].data.description;
+      this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description)
     }
     this.data.count.feats.all = 0;
     this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
@@ -390,20 +390,10 @@ export class CharacterAdvancement extends FormApplication {
     const type = table.dataset.tab;
     if (type !== "feats") return;
     const key = element.closest("tr").dataset.key;
-    const hover_desc = this.data.feats.awail[key].data.description;
-    this.data.hover.feat = hover_desc === this.data.hover.feat ? this.data.hover.feat : hover_desc;
-    return;
-
-    const content = this.data.content;
-    switch (button.dataset.type) {
-      case "skill":
-        if (this.data.hover.value !== TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content)) {
-          this.data.hover.value = TextEditor.enrichHTML(content.skills.value?.content.filter((skill) => skill.data.name === button.dataset.label)[0].data.content);
-          this.data.hover.name = button.dataset.label;
-          this.render();
-        }
-        break;
-    }
+    const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description)
+    if (hover_desc===this.data.hover.feat) return
+    this.data.hover.feat = hover_desc;
+    this.render()
   }
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
