@@ -4,11 +4,11 @@
             <div>
                 <div>
                     <label class="" for="xp.get">XP you earn</label>
-                    <input type="number" class="" value="{{xp.get}}" name="xp.get" readonly />
+                    <input type="number" class="max-dig-8" value="{{xp.get}}" name="xp.get" readonly />
                 </div>
                 <div>
                     <label class="" for="xp.used">XP you spent</label>
-                    <input type="number" class="" value="{{xp.used}}" name="xp.used" readonly />
+                    <input type="number" class="max-dig-8" value="{{xp.used}}" name="xp.used" readonly />
                 </div>
             </div>
             {{#unless isReady}}
@@ -34,7 +34,7 @@
 
     <section class="sheet-body">
         <div class="tab" data-tab="stats" data-group="primary-tabs">
-            <table>
+            <table class="center">
                 <thead>
                     <tr>
                         <td>Name</td>
@@ -49,7 +49,7 @@
                     <tr>
                         <td><label for="abilities.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label></td>
                         <td><button class="change far fa-arrow-alt-circle-down" data-type="ability" type="button" {{#if ability.isEq}} disabled {{/if}} data-action="minus" data-key="{{key}}"></button></td>
-                        <td><input readonly type="number" class="" value={{ability.value}} name="abilities.{{key}}.value" /></td>
+                        <td><input readonly type="number" class="max-dig-2" value={{ability.value}} name="abilities.{{key}}.value" /></td>
                         <td><span name="abilities.{{key}}.mod">{{numberFormat ability.mod decimals=0 sign=true}}</span></td>
                         <td><button class="change far fa-arrow-alt-circle-up" data-type="ability" type="button" data-action="plus" data-key="{{key}}" {{#if ability.isXP}} disabled{{/if}}></button></td>
                         <td><span name="abilities.{{key}}.xp">{{numberFormat ability.xp decimals=0 sign=false}}</span></td>

@@ -18,6 +18,11 @@ input:read-only {
   border: #d5d3c7;
   width: 75%;
 }
+@for $i from 1 through 10 {
+  input.max-dig-#{$i}{
+    width: calc(5px+#{$i}*10px);
+  }
+}
 
 button.change {
   color: green;
