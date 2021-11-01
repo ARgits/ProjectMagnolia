@@ -48,7 +48,8 @@
     text-align: left;
     align-items: center;
     display: flex;
-    h3, h4 {
+    h3,
+    h4 {
       margin: 0;
       white-space: nowrap;
       overflow-x: hidden;
@@ -64,6 +65,18 @@
       font-size: 12px;
       text-align: center;
       margin: 0 6px;
+    };
+    .item-toggle{
+      color:#b5b3a4;
+      &.active{
+        color: #4b4a44;
+      };
+      &.fixed{
+        color: #44191A;
+        &:hover{
+          text-shadow: none;
+        }
+      }
     }
   }
 
@@ -72,7 +85,9 @@
     align-items: center;
     padding: 0 2px; // to align with the header border
     border-bottom: 1px solid $c-faint;
-    &:last-child { border-bottom: none; }
+    &:last-child {
+      border-bottom: none;
+    }
     .item-name {
       color: $c-dark;
       .item-image {
@@ -105,11 +120,11 @@
       font-size: 12px;
       text-align: center;
     }
-    .item-name {
-      padding-left: 5px;
-      text-align: left;
-      // font-size: 16px;
-    }
+  }
+  .item-name {
+    padding-left: 5px;
+    text-align: left;
+    // font-size: 16px;
   }
 }
 
@@ -117,4 +132,9 @@
 .item-formula {
   flex: 0 0 200px;
   padding: 0 8px;
+}
+@for $i from 1 through 20 {
+  .item-description-#{$i} {
+    flex: $i;
+  }
 }

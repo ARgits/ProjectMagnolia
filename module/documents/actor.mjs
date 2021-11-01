@@ -1,4 +1,4 @@
-import { logic_fn } from "../../lib/logic_fn.js";
+import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -47,61 +47,58 @@ export class ARd20Actor extends Actor {
 
     // Make modifications to data here. For example:
     const data = actorData.data;
+    const abilities = data.abilities;
+    const attributes = data.attributes;
+    const def_stats = data.defences.stats;
+    const def_dam = data.defences.damage;
 
     // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(data.abilities)) {
+    for (let [key, ability] of Object.entries(abilities)) {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
     //calculate level and expierence
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-    if (data.attributes.xp.used) {
-      data.attributes.xp.used = data.attributes.xp.used ?? 0;
+    if (attributes.xp.used) {
+      attributes.xp.used = attributes.xp.used ?? 0;
     }
     for (let i = 1; i < 21; i++) {
-      if (data.attributes.xp.used >= levels[i - 1] && data.attributes.xp.used < levels[i]) {
-        data.attributes.level = i;
-        data.attributes.xp.level = levels[i];
-        data.attributes.xp.level_min = levels[i - 1];
+      if (attributes.xp.used >= levels[i - 1] && attributes.xp.used < levels[i]) {
+        attributes.level = i;
+        attributes.xp.level = levels[i];
+        attributes.xp.level_min = levels[i - 1];
       }
     }
-    data.attributes.xp.bar_max = data.attributes.xp.level - data.attributes.xp.level_min;
-    data.attributes.xp.bar_min = data.attributes.xp.used - data.attributes.xp.level_min;
+    attributes.xp.bar_max = attributes.xp.level - attributes.xp.level_min;
+    attributes.xp.bar_min = attributes.xp.used - attributes.xp.level_min;
     /*
-    /calculate proficiency bonus and die
+    calculate proficiency bonus and die
     */
-    data.attributes.prof_bonus = Math.floor((7 + data.attributes.level) / 4);
-    data.attributes.prof_die = "1d" + data.attributes.prof_bonus * 2;
+    attributes.prof_bonus = Math.floor((7 + attributes.level) / 4);
+    attributes.prof_die = "1d" + attributes.prof_bonus * 2;
     /*
-    /calculate character's defences, including damage resistances
+    calculate character's defences, including damage resistances
     */
-    data.defences.stats.reflex = data.defences.stats.reflex ?? {};
-    data.defences.stats.reflex.bonus = data.defences.stats.reflex.bonus ?? 0;
-    data.defences.stats.reflex.value =
-      10 + data.attributes.prof_bonus + data.abilities.dex.mod + data.abilities.int.mod + parseInt(data.defences.stats.reflex.bonus);
-    data.defences.stats.reflex.label = "Reflex";
-    data.defences.stats.fortitude = data.defences.stats.fortitude ?? {};
-    data.defences.stats.fortitude.bonus = data.defences.stats.fortitude.bonus ?? 0;
-    data.defences.stats.fortitude.value =
-      10 + data.attributes.prof_bonus + data.abilities.str.mod + data.abilities.con.mod + parseInt(data.defences.stats.fortitude.bonus);
-    data.defences.stats.fortitude.label = "Fortitude";
-    data.defences.stats.will = data.defences.stats.will ?? {};
-    data.defences.stats.will.bonus = data.defences.stats.will.bonus ?? 0;
-    data.defences.stats.will.value =
-      10 + data.attributes.prof_bonus + data.abilities.wis.mod + data.abilities.cha.mod + parseInt(data.defences.stats.will.bonus);
-    data.defences.stats.will.label = "Will";
+   for(let [key, def] of Object.entries(def_stats)){
+     def.bonus = def.bonus ?? 0
+   }
+    def_stats.reflex.value = 10 + attributes.prof_bonus + abilities.dex.mod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
+    def_stats.reflex.label = "Reflex";
+    def_stats.fortitude.value = 10 + attributes.prof_bonus + abilities.str.mod + abilities.con.mod + parseInt(def_stats.fortitude.bonus);
+    def_stats.fortitude.label = "Fortitude";
+    def_stats.will.value = 10 + attributes.prof_bonus + abilities.wis.mod + abilities.cha.mod + parseInt(def_stats.will.bonus);
+    def_stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
-        data.defences.damage.physic[key] = {
-          type: data.defences.damage.physic[key]?.type ? data.defences.damage.physic[key].type : "res",
-          sens_value:
-            data.defences.damage.physic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.physic[key].value : 0,
+        def_dam.physic[key] = {
+          type: def_dam.physic[key]?.type ? def_dam.physic[key].type : "res",
+          sens_value: def_dam.physic[key]?.value || def_dam.physic[key]?.type === "imm" ? def_dam.physic[key].value : 0,
           label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
         };
       }
-      data.defences.damage.magic[key] = {
-        type: data.defences.damage.physic[key]?.type ? data.defences.damage.physic[key].type : "res",
-        value: data.defences.damage.magic[key]?.value || data.defences.damage.physic[key]?.type === "imm" ? data.defences.damage.magic[key].value : 0,
+      def_dam.magic[key] = {
+        type: def_dam.physic[key]?.type ? def_dam.physic[key].type : "res",
+        value: def_dam.magic[key]?.value || def_dam.physic[key]?.type === "imm" ? def_dam.magic[key].value : 0,
         label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
       };
     }
@@ -109,17 +106,17 @@ export class ARd20Actor extends Actor {
     for (let [key, skill] of Object.entries(data.skills)) {
       skill.prof = skill.prof < 2 ? skill.prof : 2;
       if (skill.prof == 0) {
-        skill.roll = "1d20";
+        skill.prof_die = 0;
+        skill.prof_bonus = 0;
       }
       if (skill.prof == 1) {
-        skill.roll = "1d20+" + data.attributes.prof_die;
+        skill.prof_bonus = 0;
+        skill.prof_die = `1d${attributes.prof_bonus * 2}`;
       }
       if (skill.prof == 2) {
-        skill.roll = "1d20+" + data.attributes.prof_die + "+" + data.attributes.prof_bonus;
+        skill.prof_die = `1d${attributes.prof_bonus * 2}`;
+        skill.prof_bonus = attributes.prof_bonus;
       }
-    }
-    if (!data.isReady) {
-      data.isReady = false;
     }
     //calculate character's armor,weapon and tool proficinecies
     if (!data.profs) {
@@ -129,14 +126,13 @@ export class ARd20Actor extends Actor {
       data.profs.weapon[prof].value = data.profs.weapon[prof].value ? data.profs.weapon[prof].value : 0;
       data.profs.weapon[prof].type = game.settings.get("ard20", "profs").weapon[prof].type;
       data.profs.weapon[prof].name = game.settings.get("ard20", "profs").weapon[prof].name;
-      data.profs.weapon[prof].type_hover =
-        game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
-      data.profs.weapon[prof].type_value =
-        game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.profs.weapon[prof].value];
+      data.profs.weapon[prof].type_hover = game.i18n.localize(CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.profs.weapon[prof].type];
+      data.profs.weapon[prof].type_value = game.i18n.localize(CONFIG.ARd20.prof[data.profs.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.profs.weapon[prof].value];
     }
     if (data.profs.weapon.length > game.settings.get("ard20", "profs").weapon.length) {
       data.profs.splice(game.settings.get("ard20", "profs").weapon.length + 1, data.profs.length - game.settings.get("ard20", "profs").weapon.length);
     }
+    data.speed.value = this.itemTypes.race[0]?.data.data.speed + abilities.dex.mod + data.speed.bonus;
   }
 
   /**
@@ -157,33 +153,80 @@ export class ARd20Actor extends Actor {
     const data = super.getRollData();
 
     // Prepare character roll data.
-    this._getCharacterRollData(data);
-    this._getNpcRollData(data);
 
     return data;
   }
-
   /**
-   * Prepare character roll data.
+   * Roll an Ability Test
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * @param {String} abilityId    The ability ID (e.g. "str")
+   * @param {Object} options      Options which configure how ability tests are rolled
+   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  _getCharacterRollData(data) {
-    if (this.data.type !== "character") return;
+  rollAbilityTest(abilityId, options = {}) {
+    const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
+    const abl = this.data.abilities[abilityId];
 
-    // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
+    // Construct parts
+    const parts = ["@mod"];
+    const data = { mod: abl.mod };
+
+    // Add provided extra roll parts now because they will get clobbered by mergeObject below
+    if (options.parts?.length > 0) {
+      parts.push(...options.parts);
     }
+
+    // Roll and return
+    const rollData = foundry.utils.mergeObject(options, {
+      parts: parts,
+      data: data,
+      title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
+      messageData: {
+        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
+        "flags.ard20.roll": { type: "ability", abilityId },
+      },
+    });
+    return d20Roll(rollData);
   }
-
   /**
-   * Prepare NPC roll data.
+   * Roll a Skill Check
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * @param {string} skillId      The skill id (e.g. "ins")
+   * @param {Object} options      Options which configure how the skill check is rolled
+   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  _getNpcRollData(data) {
-    if (this.data.type !== "npc") return;
+  rollSkill(skillId, options = {}) {
+    const skl = this.data.data.skills[skillId];
 
-    // Process additional NPC data here.
+    // Compose roll parts and data
+    const parts = ["@mod"];
+    const data = { abilities: this.getRollData().abilities };
+
+    //if character'skill have prof_bonus and/or prof_die, they will be added to roll dialog
+    if (skl.prof_bonus) {
+      parts.unshift("@prof_bonus");
+      data.prof_bonus = skl.prof_bonus;
+    }
+    if (skl.prof_die) {
+      parts.unshift("@prof_die");
+      data.prof_die = skl.prof_die;
+    }
+
+    // Add provided extra roll parts now because they will get clobbered by mergeObject below
+    if (options.parts?.length > 0) {
+      parts.push(...options.parts);
+    }
+    // Roll and return
+    const rollData = foundry.utils.mergeObject(options, {
+      parts: parts,
+      data: data,
+      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize(CONFIG.ARd20.skills[skillId]) }),
+      messageData: {
+        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
+        "flags.ard20.roll": { type: "skill", skillId },
+      },
+      chooseModifier: true,
+    });
+    return d20Roll(rollData);
   }
 }

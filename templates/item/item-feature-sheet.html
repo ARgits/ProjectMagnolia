@@ -11,8 +11,10 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
+    {{#if isGM}}
     <a class="item" data-tab="attributes">Attributes</a>
     <a class="item" data-tab="effects">Effects</a>
+    {{/if}}
   </nav>
 
   {{!-- Sheet Body --}}
@@ -23,11 +25,14 @@
     </div>
 
     {{!-- Attributes Tab --}}
+    {{#if isGM}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       <select name="data.source.value">
-        {{#select data.source.value}} {{#each config.source as |name sch|}}
+        {{#select data.source.value}}
+          {{#each config.source as |name sch|}}
             <option value="{{sch}}">{{localize name}}</option>
-          {{/each}} {{/select}}
+          {{/each}}
+        {{/select}}
       </select>
       <div>
         has level
@@ -48,5 +53,6 @@
     </div>
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}</div>
+  {{/if}}
   </section>
 </form>

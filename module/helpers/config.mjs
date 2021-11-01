@@ -1,144 +1,143 @@
-export const ARd20 = {}
+export const ARd20 = {};
 
 ARd20.abilities = {
-    "str": "ARd20.AbilityStr",
-    "dex": "ARd20.AbilityDex",
-    "con": "ARd20.AbilityCon",
-    "int": "ARd20.AbilityInt",
-    "wis": "ARd20.AbilityWis",
-    "cha": "ARd20.AbilityCha"
-}
+  str: "ARd20.AbilityStr",
+  dex: "ARd20.AbilityDex",
+  con: "ARd20.AbilityCon",
+  int: "ARd20.AbilityInt",
+  wis: "ARd20.AbilityWis",
+  cha: "ARd20.AbilityCha",
+};
 
 ARd20.abilityAbbreviations = {
-    "str": "ARd20.AbilityStrAbbr",
-    "dex": "ARd20.AbilityDexAbbr",
-    "con": "ARd20.AbilityConAbbr",
-    "int": "ARd20.AbilityIntAbbr",
-    "wis": "ARd20.AbilityWisAbbr",
-    "cha": "ARd20.AbilityChaAbbr"
-}
+  str: "ARd20.AbilityStrAbbr",
+  dex: "ARd20.AbilityDexAbbr",
+  con: "ARd20.AbilityConAbbr",
+  int: "ARd20.AbilityIntAbbr",
+  wis: "ARd20.AbilityWisAbbr",
+  cha: "ARd20.AbilityChaAbbr",
+};
 
 ARd20.CHARACTER_EXP_LEVELS = [
-    0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
-    120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
-]
+  0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
+];
 
 ARd20.SpellSchool = {
-    "abj": "ARd20.SchoolAbj",
-    "con": "ARd20.SchoolCon",
-    "div": "ARd20.SchoolDiv",
-    "enc": "ARd20.SchoolEnc",
-    "evo": "ARd20.SchoolEvo",
-    "ill": "ARd20.SchoolIll",
-    "nec": "ARd20.SchoolNec",
-    "trs": "ARd20.SchoolTrs"
-}
+  abj: "ARd20.SchoolAbj",
+  con: "ARd20.SchoolCon",
+  div: "ARd20.SchoolDiv",
+  enc: "ARd20.SchoolEnc",
+  evo: "ARd20.SchoolEvo",
+  ill: "ARd20.SchoolIll",
+  nec: "ARd20.SchoolNec",
+  trs: "ARd20.SchoolTrs",
+};
 ARd20.skills = {
-    "acr": "ARd20.SkillAcr",
-    "ani": "ARd20.SkillAni",
-    "arc": "ARd20.SkillArc",
-    "ath": "ARd20.SkillAth",
-    "dec": "ARd20.SkillDec",
-    "his": "ARd20.SkillHis",
-    "ins": "ARd20.SkillIns",
-    "itm": "ARd20.SkillItm",
-    "inv": "ARd20.SkillInv",
-    "med": "ARd20.SkillMed",
-    "nat": "ARd20.SkillNat",
-    "prc": "ARd20.SkillPrc",
-    "prf": "ARd20.SkillPrf",
-    "per": "ARd20.SkillPer",
-    "rel": "ARd20.SkillRel",
-    "slt": "ARd20.SkillSlt",
-    "ste": "ARd20.SkillSte",
-    "sur": "ARd20.SkillSur"
-}
+  acr: "ARd20.SkillAcr",
+  ani: "ARd20.SkillAni",
+  arc: "ARd20.SkillArc",
+  ath: "ARd20.SkillAth",
+  dec: "ARd20.SkillDec",
+  his: "ARd20.SkillHis",
+  ins: "ARd20.SkillIns",
+  itm: "ARd20.SkillItm",
+  inv: "ARd20.SkillInv",
+  med: "ARd20.SkillMed",
+  nat: "ARd20.SkillNat",
+  prc: "ARd20.SkillPrc",
+  prf: "ARd20.SkillPrf",
+  per: "ARd20.SkillPer",
+  rel: "ARd20.SkillRel",
+  slt: "ARd20.SkillSlt",
+  ste: "ARd20.SkillSte",
+  sur: "ARd20.SkillSur",
+};
 ARd20.prof = {
-    0: "ARd20.Untrained",
-    1: "ARd20.Basic",
-    2: "ARd20.Master"
-}
+  0: "ARd20.Untrained",
+  1: "ARd20.Basic",
+  2: "ARd20.Master",
+};
 ARd20.source = {
-    "mar": "ARd20.Martial",
-    "mag": "ARd20.Magical",
-    "div": "ARd20.Divine",
-    "pri": "ARd20.Primal",
-    "psy": "ARd20.Psyhic"
-}
+  mar: "ARd20.Martial",
+  mag: "ARd20.Magical",
+  div: "ARd20.Divine",
+  pri: "ARd20.Primal",
+  psy: "ARd20.Psyhic",
+};
 ARd20.Prop = {
-    "aff": "ARd20.Affixed",
-    "awk": "ARd20.Awkward",
-    "con": "ARd20.Conceal",
-    "bra": "ARd20.Brace",
-    "def": "ARd20.Deflect",
-    "dis": "ARd20.Disarm",
-    "dou": "ARd20.Double Ended",
-    "ent": "ARd20.Entangle",
-    "fin": "ARd20.Finesse",
-    "fir": "ARd20.Firearm",
-    "hea": "ARd20.Heavy",
-    "lau": "ARd20.Launch",
-    "lig": "ARd20.Light",
-    "lun": "ARd20.Lunge",
-    "mel": "ARd20.Melee",
-    "one": "ARd20.One-Handed",
-    "pen": "ARd20.Penetrate",
-    "ran": "ARd20.Ranged",
-    "rea": "ARd20.Reach",
-    "rel": "ARd20.Reload",
-    "sta": "Ard20.Stagger",
-    "thr": "ARd20.Thrown",
-    "tri": "ARd20.Trip",
-    "two": "ARd20.Two-Handed",
-    "ver": "ARd20.Versatile"
-}
+  aff: "ARd20.Affixed",
+  awk: "ARd20.Awkward",
+  con: "ARd20.Conceal",
+  bra: "ARd20.Brace",
+  def: "ARd20.Deflect",
+  dis: "ARd20.Disarm",
+  dou: "ARd20.Double Ended",
+  ent: "ARd20.Entangle",
+  fin: "ARd20.Finesse",
+  fir: "ARd20.Firearm",
+  hea: "ARd20.Heavy",
+  lau: "ARd20.Launch",
+  lig: "ARd20.Light",
+  lun: "ARd20.Lunge",
+  mel: "ARd20.Melee",
+  one: "ARd20.One-Handed",
+  pen: "ARd20.Penetrate",
+  ran: "ARd20.Ranged",
+  rea: "ARd20.Reach",
+  rel: "ARd20.Reload",
+  sta: "Ard20.Stagger",
+  thr: "ARd20.Thrown",
+  tri: "ARd20.Trip",
+  two: "ARd20.Two-Handed",
+  ver: "ARd20.Versatile",
+};
 ARd20.WeaponType = {
-    "amb": "ARd20.Ambush",
-    "axe": "ARd20.Axe",
-    "blu": "ARd20.Bludgeon",
-    "bow": "ARd20.Bow",
-    "sli": "ARd20.Sling",
-    "cbl": "ARd20.Combat Blade",
-    "cro": "ARd20.Crossbow",
-    "dbl": "ARd20.Dueling Blade",
-    "fir": "ARd20.Firearm",
-    "fla": "ARd20.Flail",
-    "whi": "ARd20.Whip",
-    "ham": "ARd20.Hammer",
-    "pic": "ARd20.Pick",
-    "pol": "ARd20.Polearm",
-    "spe": "ARd20.Spear",
-    "thr": "ARd20.Throwing"
-}
+  amb: "ARd20.Ambush",
+  axe: "ARd20.Axe",
+  blu: "ARd20.Bludgeon",
+  bow: "ARd20.Bow",
+  sli: "ARd20.Sling",
+  cbl: "ARd20.Combat Blade",
+  cro: "ARd20.Crossbow",
+  dbl: "ARd20.Dueling Blade",
+  fir: "ARd20.Firearm",
+  fla: "ARd20.Flail",
+  whi: "ARd20.Whip",
+  ham: "ARd20.Hammer",
+  pic: "ARd20.Pick",
+  pol: "ARd20.Polearm",
+  spe: "ARd20.Spear",
+  thr: "ARd20.Throwing",
+};
 ARd20.abil_xp = [
-    50, 50, 50, 50, 70, 90, 120, 150, 190, 290, 440, 660, 990, 1500,
-    2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000
-]
+  50, 50, 50, 50, 70, 90, 120, 150, 190, 290, 440, 660, 990, 1500, 2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000,
+];
 ARd20.skill_xp = {
-    0: [50, 80, 125, 185, 260, 350, 455, 575, 710, 860, 1025, 1205, 1400, 1610, 1835, 2075, 2330, 2600],
-    1: [115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470]
-}
+  0: [50, 80, 125, 185, 260, 350, 455, 575, 710, 860, 1025, 1205, 1400, 1610, 1835, 2075, 2330, 2600],
+  1: [115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470],
+};
 ARd20.DamageTypes = {
-    'mag': "ARd20.Magical",
-    "phys": "ARd20.Physical"
-}
+  mag: "ARd20.Magical",
+  phys: "ARd20.Physical",
+};
 ARd20.DamageSubTypes = {
-    "acid": "ARd20.Acid",
-    "blud": "ARd20.Bludgeoning",
-    "cold": "ARd20.Cold",
-    "fire": "ARd20.Fire",
-    "force": "ARd20.Force",
-    "light": "ARd20.Lightning",
-    "necr": "ARd20.Necrotic",
-    "pierc": "ARd20.Piercing",
-    "poison": "ARd20.Poison",
-    "slash": "ARd20.Slashing",
-    "sound": "ARd20.Sound",
-    "rad": "ARd20.Radiant",
-    "psyhic": "ARd20.psyhic"
-}
+  acid: "ARd20.Acid",
+  blud: "ARd20.Bludgeoning",
+  cold: "ARd20.Cold",
+  fire: "ARd20.Fire",
+  force: "ARd20.Force",
+  light: "ARd20.Lightning",
+  necr: "ARd20.Necrotic",
+  pierc: "ARd20.Piercing",
+  poison: "ARd20.Poison",
+  slash: "ARd20.Slashing",
+  sound: "ARd20.Sound",
+  rad: "ARd20.Radiant",
+  psyhic: "ARd20.psyhic",
+};
 ARd20.DRtypes = {
-    "res": "ARd20.Resistance",
-    "vul": "Ard20.Vulnerability",
-    "imm": "ARd20.Immunity"
-}
+  res: "ARd20.Resistance",
+  vul: "Ard20.Vulnerability",
+  imm: "ARd20.Immunity",
+};
+ARd20.HPdice = ["1d6", "1d8", "1d10", "1d12", "1d12+2", "1d12+4", "1d20", "1d20+2", "1d20+4", "1d20+6", "1d20+8", "1d20+10", "1d20+12"];

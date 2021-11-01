@@ -66,6 +66,18 @@ export class ARd20ItemSheet extends ItemSheet {
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.item));
     // Roll handlers, click handlers, etc. would go here.
     html.find(".config-button").click(this._FeatReq.bind(this));
+    html.find("i.rollable").click(this._ChangeSign.bind(this));
+  }
+  _ChangeSign(event) {
+    if (this.item.data.type !== "race") return;
+
+    const button = event.currentTarget;
+    const key = button.dataset.key;
+    const attr = `data.bonus.abil.${key}.sign`;
+    console.log(this.item.data.data.bonus.abil[key]?.sign);
+    console.log("КНОПКА");
+    this.item.update({ [attr]: !getProperty(this.item.data, attr) });
+    console.log(this.item.data.data.bonus.abil[key].sign);
   }
   _FeatReq(event) {
     {

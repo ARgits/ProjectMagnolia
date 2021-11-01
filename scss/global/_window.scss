@@ -10,3 +10,25 @@
     cursor: pointer;
   }
 }
+
+input:read-only {
+  background: url(../css/parchment.jpg) repeat;
+  background-image: url(../css/parchment.jpg);
+  box-shadow: none;
+  border: #d5d3c7;
+  width: 75%;
+}
+
+button.change {
+  color: green;
+  font-size: 20px;
+  border-radius: 25%;
+  padding: 0%;
+  margin: 0%;
+  width: fit-content;
+  height: fit-content;
+  &:disabled {
+    color: red;
+    cursor: not-allowed;
+  }
+}

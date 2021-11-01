@@ -36,12 +36,30 @@
 
 .sheet-tabs {
   flex: 0;
+  &.tabs {
+    text-align: center;
+  }
 }
 
 .sheet-body,
 .sheet-body .tab,
 .sheet-body .tab .editor {
   height: 100%;
+}
+.sheet-body .tab ol {
+  margin: 0;
+  padding: 0;
+  li {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    &.header {
+      background: rgba(0, 0, 0, 0.05);
+    };
+     .change{
+       flex:0.25
+     }
+  }
 }
 
 .tox {

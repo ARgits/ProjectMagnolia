@@ -1,14 +1,14 @@
 {
   "name": "ard20",
-  "title": "Project Magnolia",
+  "title": "Project Magnolia (test)",
   "description": "Попытки сделать свою систему",
-  "version": "0.0.1.8.46",
+  "version": "0.0.1.11.3",
   "minimumCoreVersion": "0.8.3",
   "compatibleCoreVersion": "0.8.9",
   "author": "ARgits",
   "esmodules": ["module/ard20.mjs"],
   "styles": ["css/ard20.css"],
-  "scripts": ["lib/math.js","lib/logic_fn.js","lib/filtrex.js"],
+  "scripts": ["lib/filtrex.js"],
   "packs": [],
   "languages": [
     {
@@ -22,8 +22,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
-  "url": "https://gitlab.com/ARgits/boilerplate",
-  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/master/system.json",
-  "download": "https://gitlab.com/ARgits/ard20/-/archive/master/ard20-master.zip",
+  "url": "https://gitlab.com/ARgits/ard20",
+  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/feat-req/system.json",
+  "download": "https://gitlab.com/ARgits/ard20/-/archive/feat-req/ard20-feat-req.zip",
   "license": "LICENSE.txt"
 }

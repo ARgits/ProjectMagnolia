@@ -1,80 +1,70 @@
 <form>
-    <nav class="sheet-tabs tabs" data-group="primary-tabs">
-        <a class="item" data-tab="abilities">Abilities</a>
-        <a class="item" data-tab='skills'>Skills</a>
-        <a class='item' data-tab='feats'>Features</a>
-    </nav>
     <hr>
-    <section class="sheet-body">
-        <div class="tab" data-tab="abilities" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>Name</div>
-                    <div>Value</div>
+    <section class="sheet-body grid grid-3col">
+        <ol class="items-list grid-span-2">
+            <li class="item flexrow items-header">
+                <div>#</div>
+                <div>Type</div>
+                <div>Value</div>
+                <div class="item-controls">
+                    <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
+                </div>
+            </li>
+            {{#each req.values as |r key|}}
+                <li class="item flexrow align-center">
+                    <div>{{add key 1}}</div>
+                    <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
+                        {{#select r.type}}
+                            {{#each @root.type as |t k|}}
+                                <option value="{{t}}">{{t}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="value">
+                        {{#select r.name}}
+                            {{#each r.subtype_list as |sub k|}}
+                                <option value="{{sub}}">{{sub}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <div class="item-controls">
+                        <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </div>
                 </li>
-                {{#each abilities as |ability key|}}
-                    <li class="item flexrow align-center">
-                        <div>{{ability.label}}</div>
-                        <input type="text" name="abilities.{{key}}.input" value="{{ability.input}}" />
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
-        <div class="tab" data-tab="skills" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>Name</div>
-                    <div>level</div>
-                </li>
-                {{#each skills as |skill key|}}
-                    {{#if skill}}
-                        <li class="item flexrow align-center">
-                            <div>{{skill.label}}</div>
-                            <select name='skills.{{key}}.prof'>{{#select skill.prof}}
-                                    {{#each ../config.prof as |name sch|}}
-                                        <option value="{{numberFormat sch decimals=0 sign=false}}">{{localize name}}</option>
+                <li class="item flexrow align-center">
+                    {{#if (eq r.type "feat")}}
+                        <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key='{{key}}' data-type="value" value="{{r.maxLevel}}" />
+                    {{/if}}
+                    {{#each r.input as |inp k|}}
+                        <div>{{add k 1}}:</div>
+                        {{#if (eq r.type "skill")}}
+                            <select name='req.values.{{key}}.input.{{k}}' data-key="{{key}}" data-type="value" data-order="{{k}}">
+                                {{#select inp}}
+                                    {{#each @root.prof as |ran i|}}
+                                        <option value="{{i}}">{{localize ran}}</option>
                                     {{/each}}
                                 {{/select}}
                             </select>
-                        </li>
-                    {{/if}}
-                {{/each}}
-            </ol>
-        </div>
-        <div class="tab" data-tab="feats" data-group="primary-tabs">
-            <ol class="items-list">
-                <li class="item flexrow items-header">
-                    <div>Name</div>
-                    <div>Level</div>
-                    <div class="item-controls">
-                        <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add Feature</a>
-                    </div>
-                </li>
-                {{log feats.current.length}}
-                {{#if (lt feats.current.length 1)}}
-                <input hidden name="feats.current"/>
-                {{/if}}
-                {{#each feats.current as |feat key|}}
-                    <li class="item flexrow align-center">
-                        <select name='feats.current.{{key}}.name'>{{#select feat.name}}
-                                {{#each ../feats.awail as |feat sch|}}
-                                    <option value="{{feat.name}}">{{feat.name}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                        <input hidden name="feats.current.{{key}}.maxLevel" type="number" value="{{feat.maxLevel}}"/>
-                        {{#if (gt feat.maxLevel 1)}}
-                            <input type="text" name="feats.current.{{key}}.input" value="{{feat.input}}"/>
                         {{else}}
-                            <div>-</div>
+                            <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}">
                         {{/if}}
-                        <div class="item-controls">
-                            <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
+                    {{/each}}
+                </li>
+                <hr>
+            {{/each}}
+        </ol>
+        <ol class="items-list">
+            <li class="item flexrow items-header">
+                <div>Level</div>
+                <div>Logic</div>
+            </li>
+            {{#each req.logic as |l key|}}
+                <li class="item flexrow align-center">
+                    <div>{{add key 1}}</div>
+                    <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{l}}" />
+                </li>
+            {{/each}}
+        </ol>
     </section>
     <hr>
     <footer>
