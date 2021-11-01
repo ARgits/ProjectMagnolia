@@ -30,9 +30,9 @@ button.change {
   margin: 0%;
   width: fit-content;
   height: fit-content;
-  cursor: url(/css/Pointer_gauntlethq_on_32x32.png);
+  cursor: url(./heroes3pointer.webp),pointer;
   &:disabled {
     color: red;
-    cursor: not-allowed;
+    cursor: url(./heroes3cancel.webp),not-allowed;
   }
 }

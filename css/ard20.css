@@ -75,12 +75,12 @@ button.change {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  cursor: url(/css/Pointer_gauntlethq_on_32x32.png);
+  cursor: url(./heroes3pointer.webp), pointer;
 }
 
 button.change:disabled {
   color: red;
-  cursor: not-allowed;
+  cursor: url(./heroes3cancel.webp), not-allowed;
 }
 
 .grid,
