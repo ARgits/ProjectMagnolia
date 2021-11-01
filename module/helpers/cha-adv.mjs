@@ -59,6 +59,12 @@ export class CharacterAdvancement extends FormApplication {
           race: false,
           final: false,
         },
+        hover:{
+          ability:null,
+          skill:null,
+          race:null,
+          feat:null,
+        }
       };
       let temp_feat_list = [];
       let pack_list = [];
@@ -157,12 +163,11 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.psy += 1;
         }
       }
-      this.data.hover = {
-        value: "",
-        name: "",
-      };
+
       console.log(this.data.feats.learned, "learned features");
       console.log(this.data.feats.awail, "awailable features");
+      this.data.hover.feat = this.data.feats.awail[0].data.description
+      
     }
     this.data.count.feats.all = 0;
     this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
@@ -301,7 +306,7 @@ export class CharacterAdvancement extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
-    html.find(".skill").mouseover(this._onHover.bind(this));
+    html.find("td").mouseover(this._onHover.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
@@ -381,7 +386,15 @@ export class CharacterAdvancement extends FormApplication {
     this.render();
   }
   _onHover(event) {
-    const button = event.currentTarget;
+    const element = event.currentTarget;
+    const table = element.closest("div.tab")
+    const type = table.dataset.tab
+    if(type!=="feats")return
+    const key = element.closest("tr").dataset.key
+    const hover_desc = this.data.feats.awail[key].data.description
+    this.data.hover.feat = hover_desc === this.data.hover.feat? this.data.hover.feat: hover_desc
+    return
+
     const content = this.data.content;
     switch (button.dataset.type) {
       case "skill":

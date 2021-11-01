@@ -68,7 +68,7 @@
                     <th style="width: 50%;">Race description</th>
                 </tr>
                 {{#each races.list as |race key|}}
-                    <tr>
+                    <tr data-key="{{key}}">
                         <td><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></td>
                         <td>{{race.name}}</td>
                         <td>{{race.data.startHP}}</td>
@@ -90,7 +90,7 @@
                     <th style="width: 50%;">Description</th>
                 </tr>
                 {{#each skills as |skill key|}}
-                    <tr>
+                    <tr data-key="{{key}}">
                         <td><label for="skills.{{key}}.prof" class="skill" data-type="skill" data-label="{{skill.label}}">{{skill.label}}</label></td>
                         <td><button class="change far fa-arrow-alt-circle-down" data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button></td>
                         <input hidden name="skills.{{key}}.prof" value={{skill.prof}} type="number" />
@@ -134,11 +134,11 @@
                     <th style="width: 50%;">Description</th>
                 </tr>
                 {{#each feats.awail as |feat key|}}
-                    <tr>
+                    <tr data-key="{{key}}">
                         <td>{{feat.name}}</td>
                         <td>{{feat.data.source.label}}</td>
                         <td><button class="change fas fa-minus-square" data-type="feat" type="button" {{#if feat.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button></td>
-                        <input hidden name="feats.awail.{{key}}.id" value="{{feat.id}}" type="text" />
+                        <input hidden name="feats.awail.{{key}}.id" value="{{feat._id}}" type="text" />
                         <td><input readonly type="number" value="{{feat.data.level.initial}}" name="feats.awail.{{key}}.data.level.initial" /></td>
                         <td><input readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max" /></td>
                         <td><button class="change fas fa-plus-square" data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></td>
