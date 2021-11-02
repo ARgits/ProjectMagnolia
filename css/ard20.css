@@ -348,6 +348,11 @@ button.change:disabled {
   grid-column-end: span 20;
 }
 
+table tr:hover:not(:first-of-type) {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+
 table tr:hover td:not(.description) {
   border-top: 1px solid red;
   border-bottom: 1px solid red;
@@ -365,6 +370,11 @@ table.center {
 table th.description {
   border-left: 1px solid black;
   width: 50%;
+}
+
+table tr:not(:first-of-type) {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
 }
 
 table td.description {

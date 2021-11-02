@@ -27,6 +27,10 @@
 }
 table {
   tr:hover {
+    &:not(:first-of-type) {
+      border-top-style: hidden;
+      border-bottom-style: hidden;
+    }
     td:not(.description) {
       border-top: 1px solid red;
       border-bottom: 1px solid red;
@@ -42,6 +46,10 @@ table {
   th.description {
     border-left: 1px solid black;
     width: 50%;
+  }
+  tr:not(:first-of-type) {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
   }
   td {
     &.description {
