@@ -387,6 +387,7 @@ export class CharacterAdvancement extends FormApplication {
   _onHover(event) {
     const element = event.currentTarget;
     const table = element.closest("div.tab");
+    const tr = element.closest("tr")
     const type = table.dataset.tab;
     if (type !== "feats") return;
     const key = tr.dataset.key;
