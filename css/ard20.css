@@ -348,7 +348,7 @@ button.change:disabled {
   grid-column-end: span 20;
 }
 
-table tr:not(:first):hover {
+table tr:not(:first-child):hover {
   border: 1px red;
 }
 
