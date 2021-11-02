@@ -37,7 +37,7 @@ table {
     width: 50%;
   }
   td {
-    border: 1px solid transparent;
+    border: 1px hidden;
     &.description {
       text-align: start;
       border-left: 1px solid black;

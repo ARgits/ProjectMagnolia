@@ -362,7 +362,7 @@ table th.description {
 }
 
 table td {
-  border: 1px solid transparent;
+  border: 1px hidden;
 }
 
 table td.description {
