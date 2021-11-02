@@ -305,7 +305,7 @@ export class CharacterAdvancement extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
-    html.find("td:not(.description)").mouseover(this._onHover.bind(this));
+    html.find("td:not(.description)").hover(this._onHover.bind(this), this._onHover.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
@@ -385,9 +385,12 @@ export class CharacterAdvancement extends FormApplication {
     this.render();
   }
   _onHover(event) {
+      event.preventDefault()
+      console.log(event.type)
     const element = event.currentTarget;
     const table = element.closest("div.tab");
     const tr = element.closest("tr")
+    console.log(tr)
     const type = table.dataset.tab;
     if (type !== "feats") return;
     const key = tr.dataset.key;
