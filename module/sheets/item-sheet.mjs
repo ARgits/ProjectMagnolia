@@ -50,7 +50,7 @@ export class ARd20ItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.data;
     context.flags = itemData.flags;
-    context.item.isGM = game.user.isGM;
+    context.isGM = game.user.isGM;
     context.effects = prepareActiveEffectCategories(this.item.effects);
     return context;
   }
