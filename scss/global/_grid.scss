@@ -29,15 +29,18 @@ table {
   &.center {
     text-align: center;
   }
-  tr[data-key] > td:hover {
+  tr[data-key]:has(:scope > td:hover) {
     border: 1px red;
   }
   th.description {
     border-left: 1px solid;
     width: 50%;
   }
-  td.description {
-    text-align: start;
-    border-left: 1px solid;
+  td {
+    border: 1px solid transparent;
+    &.description {
+      text-align: start;
+      border-left: 1px solid;
+    }
   }
 }

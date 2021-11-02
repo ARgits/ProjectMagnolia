@@ -352,13 +352,17 @@ table.center {
   text-align: center;
 }
 
-table tr[data-key] > td:hover {
+table tr[data-key]:has(:scope > td:hover) {
   border: 1px red;
 }
 
 table th.description {
   border-left: 1px solid;
   width: 50%;
+}
+
+table td {
+  border: 1px solid transparent;
 }
 
 table td.description {
