@@ -26,12 +26,14 @@
   }
 }
 table {
-  tr {
-    &:not(:first-child) {
-      border: 1px solid transparent;
-      &:hover {
-        border-color: red;
-      }
+  tr:hover > td:not(.description) {
+    border-top-color: red;
+    border-bottom-color: red;
+    &:first-child {
+      border-left-color: red;
+    }
+    &:last-child {
+      border-right-color: red;
     }
   }
   &.center {
@@ -42,9 +44,13 @@ table {
     width: 50%;
   }
   td {
+    border: 1px solid transparent;
+    /*&:last-child:not(.description){
+      border-left-style: hidden;
+    }*/
     &.description {
       text-align: start;
-      border-left: 1px solid black;
+      border-left: 2px solid black;
     }
   }
 }

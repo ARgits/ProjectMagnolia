@@ -348,12 +348,17 @@ button.change:disabled {
   grid-column-end: span 20;
 }
 
-table tr:not(:first-child) {
-  border: 1px solid transparent;
+table tr:hover > td:not(.description) {
+  border-top-color: red;
+  border-bottom-color: red;
 }
 
-table tr:not(:first-child):hover {
-  border-color: red;
+table tr:hover > td:not(.description):first-child {
+  border-left-color: red;
+}
+
+table tr:hover > td:not(.description):last-child {
+  border-right-color: red;
 }
 
 table.center {
@@ -365,9 +370,16 @@ table th.description {
   width: 50%;
 }
 
+table td {
+  border: 1px solid transparent;
+  /*&:last-child:not(.description){
+      border-left-style: hidden;
+    }*/
+}
+
 table td.description {
   text-align: start;
-  border-left: 1px solid black;
+  border-left: 2px solid black;
 }
 
 .flex-group-center,
