@@ -352,7 +352,7 @@ table.center {
   text-align: center;
 }
 
-table tr[data-key*=""] > td:hover {
+table tr[data-key] > td:hover {
   border: thick red;
 }
 
