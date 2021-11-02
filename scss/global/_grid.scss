@@ -26,14 +26,14 @@
   }
 }
 table {
-  tr:hover > td:not(.description) {
-    border-top-color: 1px solid red;
-    border-bottom-color: 1px solid red;
-    &:first-child {
-      border-left-color: 1px solid red;
-    }
-    &:last-child {
-      border-right-color: 1px solid red;
+  tr:hover {
+    td:not(.description) {
+      border-top: 1px solid red;
+      border-bottom: 1px solid red;
+      border-left: 1px solid red;
+      ~ td:not(.description) {
+        border-left: 1px hidden;
+      }
     }
   }
   &.center {
@@ -44,12 +44,9 @@ table {
     width: 50%;
   }
   td {
-    /*&:last-child:not(.description){
-      border-left-style: hidden;
-    }*/
     &.description {
       text-align: start;
-      border-left: 2px solid black;
+      border-left: 1px solid black;
     }
   }
 }

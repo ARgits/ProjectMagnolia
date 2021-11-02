@@ -388,10 +388,14 @@ export class CharacterAdvancement extends FormApplication {
     event.preventDefault();
     const element = event.currentTarget;
     const table = element.closest("div.tab");
-    const tr = element.closest("tr");
+    /*for (let [key,td]of Object.entries(element)){
+      if(Number(key)>=0){
+        $(td).css()
+      }
+    }*/
     const type = table.dataset.tab;
     if (type !== "feats") return;
-    const key = tr.dataset.key;
+    const key = element.dataset.key;
     const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description);
     if (hover_desc === this.data.hover.feat) return;
     this.data.hover.feat = hover_desc;
