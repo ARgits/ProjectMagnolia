@@ -349,11 +349,10 @@ button.change:disabled {
 }
 
 table tr:not(:first-child) {
-  border: 1px hidden;
+  border: 1px solid transparent;
 }
 
 table tr:not(:first-child):hover {
-  border-style: solid;
   border-color: red;
 }
 
