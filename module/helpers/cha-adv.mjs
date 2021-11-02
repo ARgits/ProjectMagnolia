@@ -389,7 +389,7 @@ export class CharacterAdvancement extends FormApplication {
     const table = element.closest("div.tab");
     const type = table.dataset.tab;
     if (type !== "feats") return;
-    const key = element.closest("tr").dataset.key;
+    const key = tr.dataset.key;
     const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description);
     if (hover_desc === this.data.hover.feat) return;
     this.data.hover.feat = hover_desc;

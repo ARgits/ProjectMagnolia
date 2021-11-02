@@ -348,6 +348,10 @@ button.change:disabled {
   grid-column-end: span 20;
 }
 
+table tr:not(:first):hover {
+  border: 1px red;
+}
+
 table.center {
   text-align: center;
 }
