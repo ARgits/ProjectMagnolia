@@ -35,8 +35,11 @@ table {
   }
   td {
     border: 1px solid transparent;
-    &:nth-last-child(2){
+    &:nth-last-child(2) {
       border-right: 1px solid black;
+      + :not(.description) {
+        border: 1px solid transparent;
+      }
     }
     &.description {
       text-align: start;
