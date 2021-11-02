@@ -25,6 +25,15 @@
     grid-column-end: span $i;
   }
 }
-table.center{
-  text-align: center;
+table {
+  &.center {
+    text-align: center;
+  }
+  th.description {
+    width: 50%;
+  }
+  th.description,
+  td.description {
+    border-left: 1px solid;
+  }
 }

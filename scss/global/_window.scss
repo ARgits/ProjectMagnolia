@@ -11,14 +11,16 @@
   }
 }
 
-input:read-only {
-  background: inherit;
-  box-shadow: none;
-  border: #d5d3c7;
-}
-@for $i from 1 through 10 {
-  input.max-dig-#{$i} {
-    width: calc(5px + #{$i} * 10px);
+input {
+  &:read-only {
+    background: inherit;
+    box-shadow: none;
+    border: #d5d3c7;
+  }
+  @for $i from 1 through 10 {
+    &.max-dig-#{$i} {
+      width: calc(5px + #{$i} * 10px);
+    }
   }
 }
 

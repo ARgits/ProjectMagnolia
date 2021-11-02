@@ -352,6 +352,15 @@ table.center {
   text-align: center;
 }
 
+table th.description {
+  width: 50%;
+}
+
+table th.description,
+table td.description {
+  border-left: 1px solid;
+}
+
 .flex-group-center,
 .flex-group-left,
 .flex-group-right {
