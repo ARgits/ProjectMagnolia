@@ -73,7 +73,7 @@
                         <td>{{race.name}}</td>
                         <td>{{race.data.startHP}}</td>
                         {{#if (eq key 0)}}
-                            <td rowspan="0">{{{@root.hover.race}}}</td>
+                            <td rowspan="0" class="description">{{{@root.hover.race}}}</td>
                         {{/if}}
                     </tr>
                 {{/each}}
@@ -98,7 +98,7 @@
                         <td><button class="change far fa-arrow-alt-circle-up" data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></td>
                         <td>{{#if skill.xp}}<span name="skills.{{key}}.xp">{{numberFormat skill.xp decimals=0 sign=false}}</span>{{/if}}</td>
                         {{#if (eq key "acr")}}
-                            <td rowspan="0">{{{@root.hover.skill}}}</td>
+                            <td rowspan="0" class="description">{{{@root.hover.skill}}}</td>
                         {{/if}}
                     </tr>
                 {{/each}}
