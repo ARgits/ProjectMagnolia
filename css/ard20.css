@@ -361,14 +361,6 @@ table td {
   border: 1px solid transparent;
 }
 
-table td:nth-last-child(2) {
-  border-right: 1px solid black;
-}
-
-table td:nth-last-child(2) + :not(.description) {
-  border: 1px solid transparent;
-}
-
 table td.description {
   text-align: start;
   border-left: 1px solid black;
