@@ -29,7 +29,7 @@ table {
   &.center {
     text-align: center;
   }
-  tr[data-key]:hover{
+  tr[data-key*=""]:hover{
     border: thick red;
   }
   th.description {
