@@ -349,16 +349,16 @@ button.change:disabled {
 }
 
 table tr:hover > td:not(.description) {
-  border-top-color: red;
-  border-bottom-color: red;
+  border-top-color: 1px solid red;
+  border-bottom-color: 1px solid red;
 }
 
 table tr:hover > td:not(.description):first-child {
-  border-left-color: red;
+  border-left-color: 1px solid red;
 }
 
 table tr:hover > td:not(.description):last-child {
-  border-right-color: red;
+  border-right-color: 1px solid red;
 }
 
 table.center {
@@ -371,7 +371,6 @@ table th.description {
 }
 
 table td {
-  border: 1px solid transparent;
   /*&:last-child:not(.description){
       border-left-style: hidden;
     }*/
