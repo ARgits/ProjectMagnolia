@@ -91,10 +91,10 @@
                 </tr>
                 {{#each skills as |skill key|}}
                     <tr data-key="{{key}}">
-                        <td><label for="skills.{{key}}.prof" class="skill" data-type="skill" data-label="{{skill.label}}">{{skill.label}}</label></td>
+                        <td>{{skill.name}</td>
                         <td><button class="change far fa-arrow-alt-circle-down" data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button></td>
-                        <input hidden name="skills.{{key}}.prof" value={{skill.prof}} type="number" />
-                        <td><label for="skills.{{key}}.prof" data-label="{{skill.hover}}">{{skill.hover}}</label></td>
+                        <input hidden name="skills.{{key}}.rank" value={{skill.rank}} type="number" />
+                        <td>{{skill.rank_name}}</td>
                         <td><button class="change far fa-arrow-alt-circle-up" data-type="skill" type="button" {{#if skill.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></td>
                         <td>{{#if skill.xp}}<span name="skills.{{key}}.xp">{{numberFormat skill.xp decimals=0 sign=false}}</span>{{/if}}</td>
                         {{#if (eq key "acr")}}

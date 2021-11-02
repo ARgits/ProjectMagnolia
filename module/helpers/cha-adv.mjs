@@ -139,11 +139,11 @@ export class CharacterAdvancement extends FormApplication {
        * Count skills by rank
        */
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
-        if (this.data.skills[k].prof === 0) {
+        if (this.data.skills[k].rank === 0) {
           this.data.count.skills[0] += 1;
-        } else if (this.data.skills[k].prof === 1) {
+        } else if (this.data.skills[k].rank === 1) {
           this.data.count.skills[1] += 1;
-        } else if (this.data.skills[k].prof === 2) {
+        } else if (this.data.skills[k].rank === 2) {
           this.data.count.skills[2] += 1;
         }
       }
@@ -166,7 +166,7 @@ export class CharacterAdvancement extends FormApplication {
 
       console.log(this.data.feats.learned, "learned features");
       console.log(this.data.feats.awail, "awailable features");
-      this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description)
+      this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description);
     }
     this.data.count.feats.all = 0;
     this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {
@@ -193,13 +193,13 @@ export class CharacterAdvancement extends FormApplication {
      * Calculate skills' xp cost
      */
     for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
-      this.data.skills[k].hover = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].prof]) ?? this.data.skills[k].prof;
-      this.data.skills[k].xp = this.data.skills[k].prof < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].prof][this.data.count.skills[this.data.skills[k].prof + 1]] : false;
-      this.data.skills[k].isEq = this.data.skills[k].prof === this.object.data.data.skills[k].prof;
-      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp || this.data.skills[k].prof > 1;
-      for (let [k, v] of Object.entries(this.data.profs.weapon)) {
-        v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
-      }
+      this.data.skills[k].rank_name = game.i18n.localize(CONFIG.ARd20.prof[this.data.skills[k].rank]) ?? this.data.skills[k].rank;
+      this.data.skills[k].xp = this.data.skills[k].rank < 2 ? CONFIG.ARd20.skill_xp[this.data.skills[k].rank][this.data.count.skills[this.data.skills[k].rank + 1]] : false;
+      this.data.skills[k].isEq = this.data.skills[k].rank === this.object.data.data.skills[k].rank;
+      this.data.skills[k].isXP = this.data.xp.get < this.data.skills[k].xp || this.data.skills[k].rank > 1;
+    }
+    for (let [k, v] of Object.entries(this.data.profs.weapon)) {
+      v.value_hover = game.i18n.localize(CONFIG.ARd20.prof[v.value]) ?? CONFIG.ARd20.prof[v.value];
     }
     /*
      * Calculate features cost and their availability
@@ -221,7 +221,7 @@ export class CharacterAdvancement extends FormApplication {
             r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.abilities[r.value].final));
             break;
           case "skill": //check if character's skill rank is equal is higher than value entered in feature requirements
-            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.skills[r.value].prof));
+            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.skills[r.value].rank));
             break;
           case "feat": //check if character has features (and their level is equal or higher) that listed in feature requirements
             if (this.data.feats.awail.filter((item) => item.name === r.name)?.[0] !== undefined) {
@@ -328,16 +328,16 @@ export class CharacterAdvancement extends FormApplication {
       case "skill":
         switch (button.dataset.action) {
           case "plus":
-            data.skills[button.dataset.key].prof += 1;
+            data.skills[button.dataset.key].rank += 1;
             data.xp.get -= data.skills[button.dataset.key].xp;
             data.xp.used += data.skills[button.dataset.key].xp;
-            this.data.count.skills[this.data.skills[button.dataset.key].prof] += 1;
+            this.data.count.skills[this.data.skills[button.dataset.key].rank] += 1;
             break;
           case "minus":
-            data.skills[button.dataset.key].prof -= 1;
-            this.data.count.skills[this.data.skills[button.dataset.key].prof + 1] -= 1;
-            data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]];
-            data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].prof][this.data.count.skills[this.data.skills[button.dataset.key].prof + 1]];
+            data.skills[button.dataset.key].rank -= 1;
+            this.data.count.skills[this.data.skills[button.dataset.key].rank + 1] -= 1;
+            data.xp.get += CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].rank][this.data.count.skills[this.data.skills[button.dataset.key].rank + 1]];
+            data.xp.used -= CONFIG.ARd20.skill_xp[data.skills[button.dataset.key].rank][this.data.count.skills[this.data.skills[button.dataset.key].rank + 1]];
             break;
         }
         break;
@@ -390,10 +390,10 @@ export class CharacterAdvancement extends FormApplication {
     const type = table.dataset.tab;
     if (type !== "feats") return;
     const key = element.closest("tr").dataset.key;
-    const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description)
-    if (hover_desc===this.data.hover.feat) return
+    const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description);
+    if (hover_desc === this.data.hover.feat) return;
     this.data.hover.feat = hover_desc;
-    this.render()
+    this.render();
   }
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
