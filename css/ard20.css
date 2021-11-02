@@ -348,8 +348,13 @@ button.change:disabled {
   grid-column-end: span 20;
 }
 
+table tr:not(:first-child) {
+  border: 1px hidden;
+}
+
 table tr:not(:first-child):hover {
-  border: 1px red;
+  border-style: solid;
+  border-color: red;
 }
 
 table.center {
