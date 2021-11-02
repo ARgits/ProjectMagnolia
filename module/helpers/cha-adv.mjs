@@ -305,7 +305,7 @@ export class CharacterAdvancement extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
-    html.find("td:not([rowspan])").mouseover(this._onHover.bind(this));
+    html.find("td:not(.description)").mouseover(this._onHover.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
