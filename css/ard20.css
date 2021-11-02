@@ -353,7 +353,7 @@ table.center {
 }
 
 table tr[data-key] > td:hover {
-  border: thick red;
+  border: 1px red;
 }
 
 table th.description {
