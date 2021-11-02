@@ -352,12 +352,17 @@ table.center {
   text-align: center;
 }
 
+table tr[data-key]:hover {
+  border: thick red;
+}
+
 table th.description {
+  border-left: 1px solid;
   width: 50%;
 }
 
-table th.description,
 table td.description {
+  text-align: start;
   border-left: 1px solid;
 }
 
