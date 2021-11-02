@@ -91,7 +91,7 @@
                 </tr>
                 {{#each skills as |skill key|}}
                     <tr data-key="{{key}}">
-                        <td>{{skill.name}</td>
+                        <td>{{skill.name}}</td>
                         <td><button class="change far fa-arrow-alt-circle-down" data-type="skill" type="button" {{#if skill.isEq}}disabled{{/if}} data-action="minus" data-key="{{key}}"></button></td>
                         <input hidden name="skills.{{key}}.rank" value={{skill.rank}} type="number" />
                         <td>{{skill.rank_name}}</td>
