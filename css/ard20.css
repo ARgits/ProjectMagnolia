@@ -63,11 +63,11 @@ input.max-dig-10 {
   width: calc(5px + 10 * 10px);
 }
 
-button :hover {
+button:hover {
   background-color: #3e8e41;
 }
 
-button :active {
+button:active {
   background-color: #3e8e41;
   -webkit-box-shadow: 0 5px #666;
   box-shadow: 0 5px #666;
@@ -76,7 +76,7 @@ button :active {
   transform: translateY(4px);
 }
 
-button .change {
+button.change {
   color: green;
   font-size: 20px;
   border-radius: 25%;
@@ -91,7 +91,7 @@ button .change {
   cursor: url(./heroes3pointer.webp), pointer;
 }
 
-button .change:disabled {
+button.change:disabled {
   color: red;
   cursor: url(./heroes3cancel.webp), not-allowed;
 }
