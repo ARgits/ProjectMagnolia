@@ -23,15 +23,15 @@ input:read-only {
 }
 
 button {
-  :hover {
+  &:hover {
     background-color: #3e8e41;
   }
-  :active {
+  &:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
-  .change {
+  &.change {
     color: green;
     font-size: 20px;
     border-radius: 25%;
