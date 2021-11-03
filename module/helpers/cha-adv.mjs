@@ -389,36 +389,17 @@ export class CharacterAdvancement extends FormApplication {
     const element = event.currentTarget;
     const table = element.closest("div.tab");
     const tr = element.closest("tr");
-    const trDOM = tr.querySelectorAll('td:not(.description)')
-    trDOM?.classlist.toggle('.chosen', event.type=='mouseenter')
-    trDOM?.lastChild.toggle('.last',event.type=='mouseenter')
-    tr.nextSibling.querySelectorAll('td:not(.description)').classlist.toggle('.under-chosen', event.type=='mouseenter')
-    tr.previousSibling.querySelectorAll('td:not(.description)').classlist.toggle('.over-chosen', event.type=='mouseenter')
-    /*$(tr).children(':not(.description)').css({"background-top-color": "red", "background-bottom-color": "red" })
-    $(tr).children(':not(.description)').first().css({"background-left-color":"red"})
-    $(tr).children(':not(.description)').last().css({"background-right-color":"red"})
-    $(tr).prev('[data-key]').children(':not(.description)').css({"background-bottom-color": "red"})
-    $(tr).next().children().css({"background-top-color": "red"})
-    /*for (let [key, td] of Object.entries(tds)) {
-      $(td).css({ "background-top-color": "red", "background-bottom-color": "red" });
-      if (key === "0") {
-          console.log('1')
-        $(td).css({ "background-left-color": "red" });
-        $(tds[1]).css({"background-top-color":"red"})
+    console.log(tr);
+    const trDOM = tr.querySelectorAll("td:not(.description)");
+    console.log(trDOM);
+    trDOM?.forEach((td) => {
+      td.classList.toggle("chosen", event.type == "mouseenter");
+      if (td.nextElementSibling === null || td.nextElementSibling.classList[0] === "description") {
+        td.classList.toggle("last", event.type == "mouseenter");
       }
-      if (hasDesc && Number(key) === tds.length - 2) {
-          console.log('2')
-        $(td).css({ "background-right-color": "red" });
-      }
-      if (!hasDesc && Number(key) === tds.length - 1) {
-          console.log('3')
-        $(td).css({ "background-right-color": "red" });
-      }
-      /* 
-       if(td.hasClass()) continue
-       td.css({'background-top-color':'red','background-bottom-color':'red'})
-       if(key==1) td.css({'background-left-color':'red'})
-    }*/
+    });
+    tr.nextElementSibling?.querySelectorAll("td:not(.description)").forEach((td) => td.classList.toggle("under-chosen", event.type == "mouseenter"));
+    tr.previousElementSibling?.querySelectorAll("td:not(.description)").forEach((td) => td.classList.toggle("over-chosen", event.type == "mouseenter"));
     const type = table.dataset.tab;
     if (type !== "feats") return;
     const key = tr.dataset.key;
