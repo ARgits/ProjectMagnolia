@@ -131,7 +131,6 @@ export class ARd20Item extends Item {
       }
     }
     for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
-      console.log(data.req.logic.length);
       if (i === 0) {
         data.req.logic.push("1");
       } else {

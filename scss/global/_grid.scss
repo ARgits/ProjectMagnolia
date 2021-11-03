@@ -26,16 +26,6 @@
   }
 }
 table {
-  tr:hover {
-    td:not(.description) {
-      border-top-color: 1px solid red;
-      border-bottom: 1px solid red;
-      border-left: 1px solid red;
-      ~ td:not(.description) {
-        border-left: 1px hidden;
-      }
-    }
-  }
   &.center {
     text-align: center;
   }
