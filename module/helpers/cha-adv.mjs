@@ -389,24 +389,31 @@ export class CharacterAdvancement extends FormApplication {
     const element = event.currentTarget;
     const table = element.closest("div.tab");
     const tr = element.closest("tr");
-    const tds = $(tr).children().toArray();
-    const hasDesc = $(tr).find(".description").length !== 0 ? true : false;
-    for (let [key, td] of Object.entries(tds)) {
+    $(tr).children(':not(.description)').css({"background-top-color": "red", "background-bottom-color": "red" })
+    $(tr).children(':not(.description)').first().css({"background-left-color":"red"})
+    $(tr).children(':not(.description)').last().css({"background-right-color":"red"})
+    $(tr).prev('[data-key]').children(':not(.description)').css({"background-bottom-color": "red"})
+    $(tr).next().children().css({"background-top-color": "red"})
+    /*for (let [key, td] of Object.entries(tds)) {
       $(td).css({ "background-top-color": "red", "background-bottom-color": "red" });
-      if (key === "1") {
+      if (key === "0") {
+          console.log('1')
         $(td).css({ "background-left-color": "red" });
+        $(tds[1]).css({"background-top-color":"red"})
       }
       if (hasDesc && Number(key) === tds.length - 2) {
+          console.log('2')
         $(td).css({ "background-right-color": "red" });
       }
       if (!hasDesc && Number(key) === tds.length - 1) {
+          console.log('3')
         $(td).css({ "background-right-color": "red" });
       }
       /* 
        if(td.hasClass()) continue
        td.css({'background-top-color':'red','background-bottom-color':'red'})
-       if(key==1) td.css({'background-left-color':'red'})*/
-    }
+       if(key==1) td.css({'background-left-color':'red'})
+    }*/
     const type = table.dataset.tab;
     if (type !== "feats") return;
     const key = tr.dataset.key;
