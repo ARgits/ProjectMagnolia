@@ -34,10 +34,25 @@ table {
     width: 50%;
   }
   tr td {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
+    border: 1px solid transparent;
   }
   td {
+    &.chosen {
+      border-bottom-color: red;
+      border-top-color: red;
+      &:first-child {
+        border-left-color: red;
+      }
+      &.last {
+        border-right-color: red;
+      }
+    }
+    &.over-chosen {
+      border-bottom-color: red;
+    }
+    &.under-chosen {
+      border-top-color: red;
+    }
     &.description {
       text-align: start;
       border-left: 1px solid black;

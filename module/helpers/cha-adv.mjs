@@ -389,7 +389,12 @@ export class CharacterAdvancement extends FormApplication {
     const element = event.currentTarget;
     const table = element.closest("div.tab");
     const tr = element.closest("tr");
-    $(tr).children(':not(.description)').css({"background-top-color": "red", "background-bottom-color": "red" })
+    const trDOM = tr.querySelectorAll('td:not(.description)')
+    trDOM?.classlist.toggle('.chosen', event.type=='mouseenter')
+    trDOM?.lastChild.toggle('.last',event.type=='mouseenter')
+    tr.nextSibling.querySelectorAll('td:not(.description)').classlist.toggle('.under-chosen', event.type=='mouseenter')
+    tr.previousSibling.querySelectorAll('td:not(.description)').classlist.toggle('.over-chosen', event.type=='mouseenter')
+    /*$(tr).children(':not(.description)').css({"background-top-color": "red", "background-bottom-color": "red" })
     $(tr).children(':not(.description)').first().css({"background-left-color":"red"})
     $(tr).children(':not(.description)').last().css({"background-right-color":"red"})
     $(tr).prev('[data-key]').children(':not(.description)').css({"background-bottom-color": "red"})

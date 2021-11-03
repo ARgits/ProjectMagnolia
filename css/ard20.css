@@ -358,8 +358,28 @@ table th.description {
 }
 
 table tr td {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
+  border: 1px solid transparent;
+}
+
+table td.chosen {
+  border-bottom-color: red;
+  border-top-color: red;
+}
+
+table td.chosen:first-child {
+  border-left-color: red;
+}
+
+table td.chosen.last {
+  border-right-color: red;
+}
+
+table td.over-chosen {
+  border-bottom-color: red;
+}
+
+table td.under-chosen {
+  border-top-color: red;
 }
 
 table td.description {
