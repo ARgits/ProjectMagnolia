@@ -16,11 +16,12 @@ input {
     background: inherit;
     box-shadow: none;
     border: #d5d3c7;
+    cursor: default;
   }
-  @for $i from 1 through 10 {
-    &.max-dig-#{$i} {
-      width: calc(5px + #{$i} * 10px);
-    }
+}
+@for $i from 1 through 10 {
+  &.max-dig-#{$i} {
+    width: calc(5px + #{$i} * 10px);
   }
 }
 

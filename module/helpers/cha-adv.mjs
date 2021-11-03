@@ -163,9 +163,6 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats.psy += 1;
         }
       }
-
-      console.log(this.data.feats.learned, "learned features");
-      console.log(this.data.feats.awail, "awailable features");
       this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description);
     }
     this.data.count.feats.all = 0;
@@ -217,10 +214,10 @@ export class CharacterAdvancement extends FormApplication {
       object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp[object.data.level.initial] > this.data.xp.get;
       for (let [key, r] of Object.entries(object.data.req.values)) {
         switch (r.type) {
-          case "ability": //check if character's ability is equal is higher than value entered in feature requirements
+          case "ability": //check if character's ability is equal or higher than value entered in feature requirements
             r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.abilities[r.value].final));
             break;
-          case "skill": //check if character's skill rank is equal is higher than value entered in feature requirements
+          case "skill": //check if character's skill rank is equal or higher than value entered in feature requirements
             r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.skills[r.value].rank));
             break;
           case "feat": //check if character has features (and their level is equal or higher) that listed in feature requirements
@@ -357,7 +354,6 @@ export class CharacterAdvancement extends FormApplication {
         switch (button.dataset.action) {
           case "plus":
             data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
-
             data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.xp.used += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.feats.awail[button.dataset.key].data.level.initial += 1;
@@ -389,9 +385,7 @@ export class CharacterAdvancement extends FormApplication {
     const element = event.currentTarget;
     const table = element.closest("div.tab");
     const tr = element.closest("tr");
-    console.log(tr);
     const trDOM = tr.querySelectorAll("td:not(.description)");
-    console.log(trDOM);
     trDOM?.forEach((td) => {
       td.classList.toggle("chosen", event.type == "mouseenter");
       if (td.nextElementSibling === null || td.nextElementSibling.classList[0] === "description") {

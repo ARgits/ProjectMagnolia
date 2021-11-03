@@ -36,38 +36,38 @@ table {
   tr {
     td {
       border: 1px solid transparent;
-      &.desciption{
-        border: hidden;
+      &.description {
+        border: none;
       }
     }
     &:nth-child(2) {
       td:nth-last-child(2) {
-        border-left-color: black;
+        border-right: 1px solid black;
       }
     }
     &:nth-child(n + 3) {
       td {
         &:nth-last-child(1) {
-          border-left-color: black;
+          border-right: 1px solid black;
         }
       }
     }
     td {
       &.chosen {
-        border-bottom-color: red;
-        border-top-color: red;
+        border-bottom: 1px solid red;
+        border-top: 1px solid red;
         &:first-child {
-          border-left-color: red;
+          border-left: 1px solid red;
         }
         &.last {
-          border-right-color: red;
+          border-right: 1px solid red;
         }
       }
       &.over-chosen {
-        border-bottom-color: red;
+        border-bottom: 1px solid red;
       }
       &.under-chosen {
-        border-top-color: red;
+        border-top: 1px solid red;
       }
     }
   }

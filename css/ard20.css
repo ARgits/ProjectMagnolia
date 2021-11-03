@@ -14,6 +14,7 @@ input:-moz-read-only {
   background: inherit;
   box-shadow: none;
   border: #d5d3c7;
+  cursor: default;
 }
 
 input:read-only {
@@ -21,45 +22,46 @@ input:read-only {
   -webkit-box-shadow: none;
   box-shadow: none;
   border: #d5d3c7;
+  cursor: default;
 }
 
-input.max-dig-1 {
+.max-dig-1 {
   width: calc(5px + 1 * 10px);
 }
 
-input.max-dig-2 {
+.max-dig-2 {
   width: calc(5px + 2 * 10px);
 }
 
-input.max-dig-3 {
+.max-dig-3 {
   width: calc(5px + 3 * 10px);
 }
 
-input.max-dig-4 {
+.max-dig-4 {
   width: calc(5px + 4 * 10px);
 }
 
-input.max-dig-5 {
+.max-dig-5 {
   width: calc(5px + 5 * 10px);
 }
 
-input.max-dig-6 {
+.max-dig-6 {
   width: calc(5px + 6 * 10px);
 }
 
-input.max-dig-7 {
+.max-dig-7 {
   width: calc(5px + 7 * 10px);
 }
 
-input.max-dig-8 {
+.max-dig-8 {
   width: calc(5px + 8 * 10px);
 }
 
-input.max-dig-9 {
+.max-dig-9 {
   width: calc(5px + 9 * 10px);
 }
 
-input.max-dig-10 {
+.max-dig-10 {
   width: calc(5px + 10 * 10px);
 }
 
@@ -361,37 +363,37 @@ table tr td {
   border: 1px solid transparent;
 }
 
-table tr td.desciption {
-  border: hidden;
+table tr td.description {
+  border: none;
 }
 
 table tr:nth-child(2) td:nth-last-child(2) {
-  border-left-color: black;
+  border-right: 1px solid black;
 }
 
 table tr:nth-child(n + 3) td:nth-last-child(1) {
-  border-left-color: black;
+  border-right: 1px solid black;
 }
 
 table tr td.chosen {
-  border-bottom-color: red;
-  border-top-color: red;
+  border-bottom: 1px solid red;
+  border-top: 1px solid red;
 }
 
 table tr td.chosen:first-child {
-  border-left-color: red;
+  border-left: 1px solid red;
 }
 
 table tr td.chosen.last {
-  border-right-color: red;
+  border-right: 1px solid red;
 }
 
 table tr td.over-chosen {
-  border-bottom-color: red;
+  border-bottom: 1px solid red;
 }
 
 table tr td.under-chosen {
-  border-top-color: red;
+  border-top: 1px solid red;
 }
 
 .flex-group-center,
