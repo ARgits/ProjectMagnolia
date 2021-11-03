@@ -1,6 +1,6 @@
 @mixin digits {
   @for $i from 1 through 10 {
-    .max-dig-#{$i} {
+    &.max-dig-#{$i} {
       width: calc(5px + #{$i} * 10px);
     }
   }
@@ -25,7 +25,9 @@ input {
     box-shadow: none;
     border: #d5d3c7;
     cursor: default;
-    @include digits();
+    &[type] {
+      @include digits();
+    }
   }
 }
 
