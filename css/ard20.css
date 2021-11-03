@@ -348,21 +348,6 @@ button.change:disabled {
   grid-column-end: span 20;
 }
 
-table tr:hover:not(:first-of-type) {
-  border-top-style: hidden;
-  border-bottom-style: hidden;
-}
-
-table tr:hover td:not(.description) {
-  border-top: 1px solid red;
-  border-bottom: 1px solid red;
-  border-left: 1px solid red;
-}
-
-table tr:hover td:not(.description) ~ td:not(.description) {
-  border-left: 1px hidden;
-}
-
 table.center {
   text-align: center;
 }
@@ -372,7 +357,7 @@ table th.description {
   width: 50%;
 }
 
-table tr:not(:first-of-type) {
+table tr td {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
 }
