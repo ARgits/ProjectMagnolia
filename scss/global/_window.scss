@@ -1,3 +1,11 @@
+@mixin digits {
+  @for $i from 1 through 10 {
+    .max-dig-#{$i} {
+      width: calc(5px + #{$i} * 10px);
+    }
+  }
+}
+@include digits();
 .window-app {
   font-family: $font-primary;
 }
@@ -17,11 +25,7 @@ input {
     box-shadow: none;
     border: #d5d3c7;
     cursor: default;
-  }
-}
-@for $i from 1 through 10 {
-  &.max-dig-#{$i} {
-    width: calc(5px + #{$i} * 10px);
+    @include digits();
   }
 }
 
