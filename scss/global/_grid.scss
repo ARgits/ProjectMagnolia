@@ -27,12 +27,8 @@
 }
 table {
   tr:hover {
-    &:not(:first-of-type) {
-      border-top-style: hidden;
-      border-bottom-style: hidden;
-    }
     td:not(.description) {
-      border-top: 1px solid red;
+      border-top-color: 1px solid red;
       border-bottom: 1px solid red;
       border-left: 1px solid red;
       ~ td:not(.description) {
@@ -47,7 +43,7 @@ table {
     border-left: 1px solid black;
     width: 50%;
   }
-  tr:not(:first-of-type) {
+  tr td {
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
   }

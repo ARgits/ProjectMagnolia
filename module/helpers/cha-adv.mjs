@@ -305,7 +305,7 @@ export class CharacterAdvancement extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
-    html.find("tr:not(:first-child)").hover(this._onHover.bind(this), this._onHover.bind(this));
+    html.find("td:not(.description)").hover(this._onHover.bind(this), this._onHover.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
@@ -388,14 +388,28 @@ export class CharacterAdvancement extends FormApplication {
     event.preventDefault();
     const element = event.currentTarget;
     const table = element.closest("div.tab");
-    /*for (let [key,td]of Object.entries(element)){
-      if(Number(key)>=0){
-        $(td).css()
+    const tr = element.closest("tr");
+    const tds = $(tr).children().toArray();
+    const hasDesc = $(tr).find(".description").length !== 0 ? true : false;
+    for (let [key, td] of Object.entries(tds)) {
+      $(td).css({ "background-top-color": "red", "background-bottom-color": "red" });
+      if (key === "1") {
+        $(td).css({ "background-left-color": "red" });
       }
-    }*/
+      if (hasDesc && Number(key) === tds.length - 2) {
+        $(td).css({ "background-right-color": "red" });
+      }
+      if (!hasDesc && Number(key) === tds.length - 1) {
+        $(td).css({ "background-right-color": "red" });
+      }
+      /* 
+       if(td.hasClass()) continue
+       td.css({'background-top-color':'red','background-bottom-color':'red'})
+       if(key==1) td.css({'background-left-color':'red'})*/
+    }
     const type = table.dataset.tab;
     if (type !== "feats") return;
-    const key = element.dataset.key;
+    const key = tr.dataset.key;
     const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description);
     if (hover_desc === this.data.hover.feat) return;
     this.data.hover.feat = hover_desc;
