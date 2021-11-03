@@ -435,8 +435,18 @@ table.center {
 }
 
 table th.description {
+  border-bottom: 1px solid black;
   border-left: 1px solid black;
   width: 50%;
+}
+
+table tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+table tr:nth-child(even) th,
+table tr:nth-child(even) td {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 table tr td {
@@ -455,24 +465,29 @@ table tr:nth-child(n + 3) td:nth-last-child(1) {
   border-right: 1px solid black;
 }
 
-table tr td.chosen {
+table tr td.chosen,
+table tr th.chosen {
   border-bottom: 1px solid red;
   border-top: 1px solid red;
 }
 
-table tr td.chosen:first-child {
+table tr td.chosen:first-child,
+table tr th.chosen:first-child {
   border-left: 1px solid red;
 }
 
-table tr td.chosen.last {
+table tr td.chosen.last,
+table tr th.chosen.last {
   border-right: 1px solid red;
 }
 
-table tr td.over-chosen {
+table tr td.over-chosen,
+table tr th.over-chosen {
   border-bottom: 1px solid red;
 }
 
-table tr td.under-chosen {
+table tr td.under-chosen,
+table tr th.under-chosen {
   border-top: 1px solid red;
 }
 

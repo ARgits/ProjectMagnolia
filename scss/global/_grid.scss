@@ -30,10 +30,18 @@ table {
     text-align: center;
   }
   th.description {
+    border-bottom: 1px solid black;
     border-left: 1px solid black;
     width: 50%;
   }
   tr {
+    &:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0);
+      th,
+      td {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
     td {
       border: 1px solid transparent;
       &.description {
@@ -52,7 +60,8 @@ table {
         }
       }
     }
-    td {
+    td,
+    th {
       &.chosen {
         border-bottom: 1px solid red;
         border-top: 1px solid red;
