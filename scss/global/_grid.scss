@@ -34,10 +34,20 @@ table {
     width: 50%;
   }
   tr {
-    &:nth-child(n + 2) {
+    td {
+      border: 1px solid transparent;
+      &.desciption{
+        border: hidden;
+      }
+    }
+    &:nth-child(2) {
+      td:nth-last-child(2) {
+        border-left-color: black;
+      }
+    }
+    &:nth-child(n + 3) {
       td {
-        border: 1px solid transparent;
-        &:not([class~="description"]):last-of-type() {
+        &:nth-last-child(1) {
           border-left-color: black;
         }
       }

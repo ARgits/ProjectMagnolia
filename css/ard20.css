@@ -357,11 +357,19 @@ table th.description {
   width: 50%;
 }
 
-table tr:nth-child(n + 2) td {
+table tr td {
   border: 1px solid transparent;
 }
 
-table tr:nth-child(n + 2) td:not([class~="description"]):last-of-type() {
+table tr td.desciption {
+  border: hidden;
+}
+
+table tr:nth-child(2) td:nth-last-child(2) {
+  border-left-color: black;
+}
+
+table tr:nth-child(n + 3) td:nth-last-child(1) {
   border-left-color: black;
 }
 
