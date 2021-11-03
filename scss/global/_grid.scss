@@ -33,29 +33,32 @@ table {
     border-left: 1px solid black;
     width: 50%;
   }
-  tr:nth-child(n + 2) {
-    td{
-      border: 1px solid transparent;
-      &:not([class='description']):nth-last-of-type() {
-      border-left-color: black;
-    }}
-  }
-  td {
-    &.chosen {
-      border-bottom-color: red;
-      border-top-color: red;
-      &:first-child {
-        border-left-color: red;
-      }
-      &.last {
-        border-right-color: red;
+  tr {
+    &:nth-child(n + 2) {
+      td {
+        border: 1px solid transparent;
+        &:not([class~="description"]):last-of-type() {
+          border-left-color: black;
+        }
       }
     }
-    &.over-chosen {
-      border-bottom-color: red;
-    }
-    &.under-chosen {
-      border-top-color: red;
+    td {
+      &.chosen {
+        border-bottom-color: red;
+        border-top-color: red;
+        &:first-child {
+          border-left-color: red;
+        }
+        &.last {
+          border-right-color: red;
+        }
+      }
+      &.over-chosen {
+        border-bottom-color: red;
+      }
+      &.under-chosen {
+        border-top-color: red;
+      }
     }
   }
 }

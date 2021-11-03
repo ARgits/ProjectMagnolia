@@ -361,28 +361,28 @@ table tr:nth-child(n + 2) td {
   border: 1px solid transparent;
 }
 
-table tr:nth-child(n + 2) td:not([class='description']):nth-last-of-type() {
+table tr:nth-child(n + 2) td:not([class~="description"]):last-of-type() {
   border-left-color: black;
 }
 
-table td.chosen {
+table tr td.chosen {
   border-bottom-color: red;
   border-top-color: red;
 }
 
-table td.chosen:first-child {
+table tr td.chosen:first-child {
   border-left-color: red;
 }
 
-table td.chosen.last {
+table tr td.chosen.last {
   border-right-color: red;
 }
 
-table td.over-chosen {
+table tr td.over-chosen {
   border-bottom-color: red;
 }
 
-table td.under-chosen {
+table tr td.under-chosen {
   border-top-color: red;
 }
 
