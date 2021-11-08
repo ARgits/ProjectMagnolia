@@ -146,7 +146,7 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-toggle").click(this._onToggleItem.bind(this));
     html.find(".item-edit").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemid"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
@@ -160,7 +160,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Delete Inventory Item
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemid"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
