@@ -41,6 +41,8 @@ export class ARd20Item extends Item {
     if (itemData.type !== "weapon") return;
     const data = itemData.data;
     const flags = itemData.flags;
+    data.hasAttack = data.hasAttack || true;
+    data.hasDamage = data.hasDamage || true;
     this._SetProperties(data);
     this._setDeflect(data);
     this._setTypeAndSubtype(data, flags, labels);
@@ -164,12 +166,11 @@ export class ARd20Item extends Item {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
       abil[k] = v;
     }
-    let prof_bonus;
+    let prof_bonus = 0;
     if (this.data.type === "weapon") {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0].value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
       data.prof.label = this.labels.prof;
-      let prof_bonus = 0;
       if (data.prof.value === 0) {
         prof_bonus = 0;
       } else if (data.prof.value === 1) {
@@ -184,7 +185,7 @@ export class ARd20Item extends Item {
   _prepareAttack(itemData, prof_bonus, abil) {
     const data = itemData.data;
     if (!data.hasAttack) return;
-    let mod = itemData.type === "weapon" ? abil.dex : 0;
+    let mod = itemData.type === "weapon" && abil!==undefined ? abil.dex : 0;
     data.attack = {
       formula: "1d20+" + prof_bonus + "+" + mod,
       parts: [mod, prof_bonus],
@@ -193,7 +194,7 @@ export class ARd20Item extends Item {
   _prepareDamage(itemData, abil) {
     const data = itemData.data;
     if (!data.hasDamage) return;
-    let mod = itemData.type === "weapon" ? abil.str : 0;
+    let mod = itemData.type === "weapon" && abil!==undefined ? abil.str : 0;
     data.damage.current = {
       formula: data.damage.common[this.labels.prof.toLowerCase()] + "+" + mod,
       parts: [data.damage.common[this.labels.prof.toLowerCase()], mod],
