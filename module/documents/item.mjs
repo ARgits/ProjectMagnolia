@@ -164,6 +164,7 @@ export class ARd20Item extends Item {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
       abil[k] = v;
     }
+    let prof_bonus;
     if (this.data.type === "weapon") {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0].value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
