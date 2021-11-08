@@ -79,9 +79,9 @@ export class ARd20Actor extends Actor {
     /*
     calculate character's defences, including damage resistances
     */
-   for(let [key, def] of Object.entries(def_stats)){
-     def.bonus = def.bonus ?? 0
-   }
+    for (let [key, def] of Object.entries(def_stats)) {
+      def.bonus = def.bonus ?? 0;
+    }
     def_stats.reflex.value = 10 + attributes.prof_bonus + abilities.dex.mod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
     def_stats.reflex.label = "Reflex";
     def_stats.fortitude.value = 10 + attributes.prof_bonus + abilities.str.mod + abilities.con.mod + parseInt(def_stats.fortitude.bonus);

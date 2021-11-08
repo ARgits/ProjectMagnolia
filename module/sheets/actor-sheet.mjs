@@ -14,7 +14,7 @@ export class ARd20ActorSheet extends ActorSheet {
       template: "systems/ard20/templates/actor/actor-sheet.html",
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }],
     });
   }
   /** @override */
@@ -173,7 +173,7 @@ export class ARd20ActorSheet extends ActorSheet {
     //open "character advancement" window
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this));
     //item's roll
-    html.find(".item-roll").click(this._onItemRoll.bind(this))
+    html.find(".item-roll").click(this._onItemRoll.bind(this));
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
@@ -185,7 +185,7 @@ export class ARd20ActorSheet extends ActorSheet {
     }
   }
   /**
-   * Open @class CharacterAdvancement 
+   * Open @class CharacterAdvancement
    */
   _OnAdvanceMenu(event) {
     event.preventDefault();
@@ -204,7 +204,7 @@ export class ARd20ActorSheet extends ActorSheet {
    */
   _onToggleItem(event) {
     event.preventDefault();
-    const itemid = event.currentTarget.closest(".item").dataset.itemid;
+    const itemid = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemid);
     //const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
     const attr = "data.equipped";
@@ -221,13 +221,13 @@ export class ARd20ActorSheet extends ActorSheet {
     let skill = event.currentTarget.parentElement.dataset.skill;
     return this.actor.rollSkill(skill, { event: event });
   }
-  _onItemRoll(event){
-    event.preventDefault()
-    console.log('БРОСОК')
-    const id = event.currentTarget.closest(".item").dataset.itemid
-    const item = this.actor.items.get(id)
-    const [hasAttack,hasDamage] = Array(2).fill(item.type==='weapon'?true:false)
-    if (item) return item.roll({hasAttack,hasDamage})
+  _onItemRoll(event) {
+    event.preventDefault();
+    console.log("БРОСОК");
+    const id = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(id);
+    const [hasAttack, hasDamage] = Array(2).fill(item.type === "weapon" ? true : false);
+    if (item) return item.roll({ hasAttack, hasDamage });
   }
 
   /**
@@ -270,30 +270,30 @@ export class ARd20ActorSheet extends ActorSheet {
     // Handle item rolls.
     if (dataset.rollType) {
       if (dataset.rollType == "item") {
-        const itemid = element.closest(".item").dataset.itemid;
+        const itemid = element.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemid);
         if (item) return item.roll();
       }
       /*else if (dataset.rollType==='weapon'){
-        const itemid = element.closest(".item").dataset.itemid
+        const itemid = element.closest(".item").dataset.itemId
         const item = this.actor.items.get(itemid)
         if (item) return item.DamageRoll()
       }*/
     }
   }
   /**
-   * _onDrop method with 
+   * _onDrop method with
    */
   async _onDrop(event) {
-    if(!game.user.isGM){
-      ui.notifications.error("you don't have permissions to add documents to this actor manually")
-      return
+    if (!game.user.isGM) {
+      ui.notifications.error("you don't have permissions to add documents to this actor manually");
+      return;
     }
 
     // Try to extract the data
     let data;
     try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'));
+      data = JSON.parse(event.dataTransfer.getData("text/plain"));
     } catch (err) {
       return false;
     }
@@ -308,10 +308,10 @@ export class ARd20ActorSheet extends ActorSheet {
      * @param {object} data      The data that has been dropped onto the sheet
      */
     const allowed = Hooks.call("dropActorSheetData", actor, this, data);
-    if ( allowed === false ) return;
+    if (allowed === false) return;
 
     // Handle different data types
-    switch ( data.type ) {
+    switch (data.type) {
       case "ActiveEffect":
         return this._onDropActiveEffect(event, data);
       case "Actor":

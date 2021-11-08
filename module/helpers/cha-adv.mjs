@@ -385,9 +385,9 @@ export class CharacterAdvancement extends FormApplication {
     const table = element.closest("div.tab");
     const tr = element.closest("tr");
     const trDOM = tr.querySelectorAll("td:not(.description)");
-    const tdDesc = table.querySelector("td.description")
-    const bColor = window.getComputedStyle(tr).getPropertyValue('background-color')
-    tdDesc.style["background-color"] = bColor
+    const tdDesc = table.querySelector("td.description");
+    const bColor = window.getComputedStyle(tr).getPropertyValue("background-color");
+    tdDesc.style["background-color"] = bColor;
     trDOM?.forEach((td) => {
       td.classList.toggle("chosen", event.type == "mouseenter");
       if (td.nextElementSibling === null || td.nextElementSibling.classList[0] === "description") {
@@ -395,7 +395,7 @@ export class CharacterAdvancement extends FormApplication {
       }
     });
     tr.nextElementSibling?.querySelectorAll("td:not(.description)").forEach((td) => td.classList.toggle("under-chosen", event.type == "mouseenter"));
-    tr.previousElementSibling?.querySelectorAll("th:not(.description)").forEach((th)=>th.classList.toggle("over-chosen", event.type == "mouseenter"))
+    tr.previousElementSibling?.querySelectorAll("th:not(.description)").forEach((th) => th.classList.toggle("over-chosen", event.type == "mouseenter"));
     tr.previousElementSibling?.querySelectorAll("td:not(.description)").forEach((td) => td.classList.toggle("over-chosen", event.type == "mouseenter"));
     const type = table.dataset.tab;
     if (type !== "feats") return;
