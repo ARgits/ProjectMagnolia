@@ -22,6 +22,8 @@ export class ARd20Item extends Item {
     this._prepareWeaponData(itemData, labels);
     this._prepareFeatureData(itemData, labels);
     this._prepareRaceData(itemData, labels);
+    if (itemData.data.hasAttack) this._prepareAttack(itemData);
+    if (itemData.data.hasDamage) this._prepareDamage(itemData);
     if (!this.isOwned) this.prepareFinalAttributes();
   }
   /**
@@ -93,9 +95,7 @@ export class ARd20Item extends Item {
     data.source.value = data.source.value || "mar";
     labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
     data.source.label = labels.source;
-
     data.keys = [];
-
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
     data.level.max = data.level.has ? data.level.max || 4 : 1;
@@ -153,7 +153,8 @@ export class ARd20Item extends Item {
   Prepare Data that uses actor's data
   */
   prepareFinalAttributes() {
-    const data = this.data.data;
+    const itemData = this.data;
+    const data = itemData.data;
     const labels = this.labels;
     labels.abil = {};
     labels.skills = {};
@@ -163,10 +164,6 @@ export class ARd20Item extends Item {
       v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
       abil[k] = v;
     }
-    this._prepareWeaponAttr(data, abil);
-  }
-
-  _prepareWeaponAttr(data, abil) {
     if (this.data.type === "weapon") {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0].value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
@@ -179,15 +176,27 @@ export class ARd20Item extends Item {
       } else if (data.prof.value === 2) {
         prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
       }
-      data.damage.current = {
-        formula: data.damage.common[this.labels.prof.toLowerCase()] + "+" + abil.str,
-        parts: [data.damage.common[this.labels.prof.toLowerCase()], abil.str],
-      };
-      data.attack = {
-        formula: "1d20+" + prof_bonus + "+" + abil.dex,
-        parts: [abil.dex, prof_bonus],
-      };
     }
+    this._prepareAttack(itemData, prof_bonus, abil);
+    this._prepareDamage(itemData, abil);
+  }
+  _prepareAttack(itemData, prof_bonus, abil) {
+    const data = itemData.data;
+    if (!data.hasAttack) return;
+    let mod = itemData.type === "weapon" ? abil.dex : 0;
+    data.attack = {
+      formula: "1d20+" + prof_bonus + "+" + mod,
+      parts: [mod, prof_bonus],
+    };
+  }
+  _prepareDamage(itemData, abil) {
+    const data = itemData.data;
+    if (!data.hasDamage) return;
+    let mod = itemData.type === "weapon" ? abil.str : 0;
+    data.damage.current = {
+      formula: data.damage.common[this.labels.prof.toLowerCase()] + "+" + mod,
+      parts: [data.damage.common[this.labels.prof.toLowerCase()], mod],
+    };
   }
 
   /**
@@ -260,22 +269,10 @@ export class ARd20Item extends Item {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
-    html.on("mouseenter mouseleave", ".attack-roll .flexrow .value", function (event) {
+    html.on("hover", ".attack-roll .flexrow .value", function (event) {
       event.preventDefault();
       const element = this.closest("li.flexrow");
       element.querySelector(".attack-roll .hover-roll")?.classList.toggle("shown", event.type == "mouseenter");
-    });
-  }
-  /*html.on("mouseenter mouseleave", ".attack-roll .flexrow #value", (event) => {
-      if (event.type == "mouseenter") {
-        event.preventDefault();
-        const element = event.currentTarget.closest("li.flexrow");
-        $(element).find(".attack-roll").find(".hover-roll").addClass("shown");
-      } else {
-        event.preventDefault();
-        const element = event.currentTarget.closest("li.flexrow");
-        $(element).find(".attack-roll").find(".hover-roll").removeClass("shown");
-      }
     });
   }
 
