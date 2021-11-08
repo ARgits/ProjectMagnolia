@@ -51,14 +51,14 @@
 }
 
 input:-moz-read-only {
-  background: inherit;
+  background: initial;
   box-shadow: none;
   border: #d5d3c7;
   cursor: default;
 }
 
 input:read-only {
-  background: inherit;
+  background: initial;
   -webkit-box-shadow: none;
   box-shadow: none;
   border: #d5d3c7;

@@ -165,7 +165,7 @@ export class ARd20Actor extends Actor {
    */
   rollAbilityTest(abilityId, options = {}) {
     const label = game.i18n.localize(CONFIG.ARd20.abilities[abilityId]);
-    const abl = this.data.abilities[abilityId];
+    const abl = this.data.data.abilities[abilityId];
 
     // Construct parts
     const parts = ["@mod"];

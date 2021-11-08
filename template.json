@@ -5,7 +5,7 @@
       "base": {
         "health": {
           "value": 0,
-          "max":0
+          "max": 0
         },
         "biography": ""
       }
@@ -20,90 +20,120 @@
         },
         "level": 0
       },
-      "speed":{
-        "bonus":0
+      "speed": {
+        "bonus": 0
       },
       "abilities": {
         "str": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "dex": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "con": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "int": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "wis": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "cha": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         }
       },
       "skills": {
         "acr": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "ath": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "ani": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "arc": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "dec": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "his": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "ins": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "itm": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "inv": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "med": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "nat": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "prc": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "prf": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "per": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "rel": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "slt": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "ste": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         },
         "sur": {
-          "rank": 0
+          "rank": 0,
+          "bonus": 0
         }
       },
       "defences": {
         "stats": {
-          "reflex": {},
-          "fortitude": {},
-          "will": {}
+          "reflex": {
+            "bonus": 0
+          },
+          "fortitude": {
+            "bonus": 0
+          },
+          "will": {
+            "bonus": 0
+          }
         },
         "damage": {
           "physic": {},
@@ -122,8 +152,8 @@
     "templates": {
       "base": {
         "description": "",
-        "hasAttack":false,
-        "hasDamage":false
+        "hasAttack": false,
+        "hasDamage": false
       }
     },
     "item": {
