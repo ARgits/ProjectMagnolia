@@ -11,7 +11,7 @@
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
         {{#if hasAttack}}      
-            <div class="flexrow flex2" data-targetID="{{target.uuid}}">
+            <div class="flexrow flex2" data-target-id="{{target.uuid}}">
                 <div class="attack-roll">
                     <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
                     <div>{{{@root.atk}}}</div>

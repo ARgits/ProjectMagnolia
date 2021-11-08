@@ -295,7 +295,7 @@ export class ARd20Item extends Item {
     const messageId = card.closest(".message").dataset.messageId;
     const message = game.messages.get(messageId);
     const action = button.dataset.action;
-    const targetUuid = button.closest(".flexrow").dataset.targetid;
+    const targetUuid = button.closest(".flexrow").dataset.targetId;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
@@ -328,7 +328,7 @@ export class ARd20Item extends Item {
         dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
         if (targetUuid) {
-          html.find(`[data-targetid="${targetUuid}"]`).find("button").replaceWith(dam);
+          html.find(`[data-targetId="${targetUuid}"]`).find("button").replaceWith(dam);
         } else {
           html.find(".damage-roll").find("button").replaceWith(dam);
         }
@@ -378,7 +378,7 @@ export class ARd20Item extends Item {
     const element = event.currentTarget;
     const card = element.closest(".chat-card");
     const message = game.messages.get(card.closest(".message").dataset.messageId);
-    const targetUuid = element.closest("li.flexrow").dataset.targetid;
+    const targetUuid = element.closest("li.flexrow").dataset.targetId;
     // Recover the actor for the chat card
     const actor = await this._getChatCardActor(card);
     if (!actor) return;
@@ -394,9 +394,9 @@ export class ARd20Item extends Item {
     });
     const html = $(message.data.content);
     let damHTML = await dam.render();
-    console.log(html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll")[0]);
-    html.find(`[data-targetid="${targetUuid}"]`).find(".damage-roll").append(damHTML);
-    html.find(`[data-targetid="${targetUuid}"]`).find(".accept").prop("hidden", true);
+    console.log(html.find(`[data-targetId="${targetUuid}"]`).find(".damage-roll")[0]);
+    html.find(`[data-targetId="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+    html.find(`[data-targetId="${targetUuid}"]`).find(".accept").remove();
     console.log(html[0]);
     await message.update({ content: html[0].outerHTML });
   }
