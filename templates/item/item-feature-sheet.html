@@ -12,8 +12,8 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
     {{#if isGM}}
-    <a class="item" data-tab="attributes">Attributes</a>
-    <a class="item" data-tab="effects">Effects</a>
+      <a class="item" data-tab="attributes">Attributes</a>
+      <a class="item" data-tab="effects">Effects</a>
     {{/if}}
   </nav>
 
@@ -26,33 +26,28 @@
 
     {{!-- Attributes Tab --}}
     {{#if isGM}}
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      <select multiple name="data.source.value">
-        {{#select data.source.value}}
-          {{#each config.source as |name sch|}}
-            <option value="{{sch}}">{{localize name}}</option>
-          {{/each}}
-        {{/select}}
-      </select>
-      <div>
-        has level
-        <input type="checkbox" name="data.level.has" {{checked data.level.has}} />
-        {{#if data.level.has}} level
-          <input type="number" name="data.level.current" value="{{data.level.current}}" min="0" max="{{data.level.max}}" />
-          /
-          <input type="number" name="data.level.max" value="{{data.level.max}}" />
-        {{/if}}
+      <div class="tab attributes" data-group="primary" data-tab="attributes">
+        <select multiple name="data.source.value">
+          {{#selectOptions config.source localize=true}}
+        </select>
+        <div>
+          has level
+          <input type="checkbox" name="data.level.has" {{checked data.level.has}} />
+          {{#if data.level.has}} level
+            <input type="number" name="data.level.current" value="{{data.level.current}}" min="0" max="{{data.level.max}}" />
+            /
+            <input type="number" name="data.level.max" value="{{data.level.max}}" />
+          {{/if}}
+        </div>
+        <div>
+          base Cost
+          <input type="text" name="data.xp.0" value="{{data.xp.[0]}}" data-dtype="Number" />
+        </div>
+        <div>
+          <button type="button" class="config-button" data-action="feat-req">Requierements</button>
+        </div>
       </div>
-      <div>
-        base Cost
-        <input type="text" name="data.xp.0" value="{{data.xp.[0]}}" data-dtype="Number" />
-      </div>
-      <div>
-        <button type="button" class="config-button" data-action="feat-req">Requierements</button>
-      </div>
-    </div>
-    {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}</div>
-  {{/if}}
-  </section>
+      {{!-- Active Effects Tab --}}
+      <div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}</div>
+    {{/if}}
 </form>
