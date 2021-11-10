@@ -85,6 +85,11 @@ Handlebars.registerHelper("toLowerCase", function (str) {
 Handlebars.registerHelper("add", function (value1, value2) {
   return Number(value1) + Number(value2);
 });
+Handlebars.registerHelper("select2",function(document){
+  $(document).ready(()=>{
+    $('.select2').select2()
+  })
+})
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
