@@ -394,9 +394,9 @@ export class ARd20Item extends Item {
     });
     const html = $(message.data.content);
     let damHTML = await dam.render();
-    console.log(html.find(`[data-targetId="${targetUuid}"]`).find(".damage-roll")[0]);
-    html.find(`[data-targetId="${targetUuid}"]`).find(".damage-roll").append(damHTML);
-    html.find(`[data-targetId="${targetUuid}"]`).find(".accept").remove();
+    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
     console.log(html[0]);
     await message.update({ content: html[0].outerHTML });
   }
@@ -564,9 +564,6 @@ export class ARd20Item extends Item {
   async rollAttack(mAtk, options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
-    /*if (!this.hasAttack) {
-      throw new Error("you may not place an Attack Roll with this Item.");
-    }*/
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
 
     const { parts, rollData } = this.getAttackToHit();
@@ -582,8 +579,6 @@ export class ARd20Item extends Item {
       flavor: title,
       dialogOptions: {
         width: 400,
-        //top: options.event ? options.event.clientY - 80 : null,
-        //left: window.innerWidth - 710,
       },
       chatMessage: true,
       options: {
@@ -592,10 +587,6 @@ export class ARd20Item extends Item {
       targetValue: targets,
       type: "attack",
       mAtk: mAtk,
-      /*messageData: {
-        "flags.ard20.roll": { type: "attack", itemId: this.id },
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      },*/
     };
     rollConfig = mergeObject(rollConfig, options);
     const roll = await d20Roll(rollConfig);
