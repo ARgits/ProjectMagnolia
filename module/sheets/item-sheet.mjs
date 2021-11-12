@@ -55,11 +55,12 @@ export class ARd20ItemSheet extends ItemSheet {
     context.select = {
       feat: [],
     };
-    if ((context.select.feat.length = 0)) {
+    if (context.select.feat.length === 0) {
       for (let [key, name] of Object.entries(CONFIG.ARd20.source)) {
-        data.feat.push({ id: key, text: game.i18n.localize(name) });
+        context.select.feat.push({ id: key, text: game.i18n.localize(name) });
       }
     }
+    console.log(context)
     return context;
   }
 
