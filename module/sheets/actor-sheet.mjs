@@ -141,6 +141,7 @@ export class ARd20ActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+    $('.select2', html).select2()
 
     // Render the item sheet for viewing/editing prior to the editable check.
     html.find(".item-toggle").click(this._onToggleItem.bind(this));

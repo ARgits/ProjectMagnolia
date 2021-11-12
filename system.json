@@ -2,13 +2,13 @@
   "name": "ard20",
   "title": "Project Magnolia (test)",
   "description": "Попытки сделать свою систему",
-  "version": "0.0.1.11.37.5",
+  "version": "0.0.1.11.38",
   "minimumCoreVersion": "0.8.3",
   "compatibleCoreVersion": "0.8.9",
   "author": "ARgits",
   "esmodules": ["module/ard20.mjs"],
-  "styles": ["css/ard20.css"],
-  "scripts": ["lib/filtrex.js"],
+  "styles": ["css/ard20.css", "node_modules/select2/dist/css/select2.css"],
+  "scripts": ["lib/filtrex.js","node_modules/select2/dist/js/select2.js"],
   "packs": [],
   "languages": [
     {

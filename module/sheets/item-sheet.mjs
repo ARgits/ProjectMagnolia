@@ -60,6 +60,7 @@ export class ARd20ItemSheet extends ItemSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+    $('.select2', html).select2()
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
