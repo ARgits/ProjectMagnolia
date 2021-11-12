@@ -52,10 +52,10 @@ export class ARd20ItemSheet extends ItemSheet {
     context.flags = itemData.flags;
     context.isGM = game.user.isGM;
     context.effects = prepareActiveEffectCategories(this.item.effects);
-    const data = {
+    context.select = {
       feat: [],
     };
-    if ((data.feat.length = 0)) {
+    if ((context.select.feat.length = 0)) {
       for (let [key, name] of Object.entries(CONFIG.ARd20.source)) {
         data.feat.push({ id: key, text: game.i18n.localize(name) });
       }
@@ -70,7 +70,7 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
 
     $(".select2 feat", html).select2({
-      data: data.feat,
+      data: this.getData().select.feat,
     });
 
     // Everything below here is only needed if the sheet is editable
