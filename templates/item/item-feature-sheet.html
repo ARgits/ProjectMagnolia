@@ -27,7 +27,10 @@
     {{!-- Attributes Tab --}}
     {{#if isGM}}
       <div class="tab attributes" data-group="primary" data-tab="attributes">
-        <select class="select2" multiple="multiple" name="data.source.value">
+        <select class="select2" name="data.source.value">
+          {{#each config.source as |val name|}}
+            <option value="{{val}}">{{localize name}}</option>
+          {{each}}
         </select>
         <div>
           has level
