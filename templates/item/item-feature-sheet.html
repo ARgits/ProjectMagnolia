@@ -27,7 +27,7 @@
     {{!-- Attributes Tab --}}
     {{#if isGM}}
       <div class="tab attributes" data-group="primary" data-tab="attributes">
-        <select multiple class="select2" name="data.source.value">
+        <select multiple type="select-multiple" class="select2">
           {{#each config.source as |name val|}}
             <option value="{{val}}">{{localize name}}</option>
           {{/each}}
