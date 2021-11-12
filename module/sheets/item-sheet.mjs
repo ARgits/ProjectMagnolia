@@ -69,7 +69,7 @@ export class ARd20ItemSheet extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    $(".select2 feat", html).select2({
+    $(".select2.feat", html).select2({
       data: this.getData().select.feat,
     });
 
