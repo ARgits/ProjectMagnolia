@@ -56,11 +56,11 @@ ARd20.prof = {
   2: "ARd20.Master",
 };
 ARd20.source = [
-  { id: mar, text: game.i18n.localize("ARd20.Martial") },
-  { id: mag, text: game.i18n.localize("ARd20.Magical") },
-  { id: div, text: game.i18n.localize("ARd20.Divine") },
-  { id: pri, text: game.i18n.localize("ARd20.Primal") },
-  { id: psy, text: game.i18n.localize("ARd20.Psyhic") },
+  { id: "mar", text: game.i18n.localize("ARd20.Martial") },
+  { id: "mag", text: game.i18n.localize("ARd20.Magical") },
+  { id: "div", text: game.i18n.localize("ARd20.Divine") },
+  { id: "pri", text: game.i18n.localize("ARd20.Primal") },
+  { id: "psy", text: game.i18n.localize("ARd20.Psyhic") },
 ];
 ARd20.Prop = {
   aff: "ARd20.Affixed",
