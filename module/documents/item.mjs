@@ -94,17 +94,9 @@ export class ARd20Item extends Item {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
     // Handle Source of the feature
-    let value_list = []
-    if (this._sheet){
-      $(this._sheet.form).find("select.feat").select2('data').forEach(item=>console.log(item.id))
-      $(this._sheet.form).find("select.feat").select2('data').forEach(item => value_list.push(item.id))
-    }
-
-    value_list = value_list || ["mar"]
-    console.log(value_list)
-    data.source.value = !this._sheet ? ["mar"]: value_list
-    //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
-    //data.source.label = labels.source;
+    data.cource.value = data.cource.value || ["mar"];
+    labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value[0]]);
+    data.source.label = labels.source;
     data.keys = [];
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
@@ -276,7 +268,6 @@ export class ARd20Item extends Item {
   /* -------------------------------------------- */
 
   static chatListeners(html) {
-    
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));

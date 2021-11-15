@@ -27,7 +27,8 @@
     {{!-- Attributes Tab --}}
     {{#if isGM}}
       <div class="tab attributes" data-group="primary" data-tab="attributes">
-        <select multiple type="select-multiple" class="select2 feat">
+        <select type="select-multiple" class="feat">
+          {{selectOptions config.source localize=true}}
         </select>
         <div>
           has level

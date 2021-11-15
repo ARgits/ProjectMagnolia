@@ -60,7 +60,7 @@ export class ARd20ItemSheet extends ItemSheet {
         context.select.feat.push({ id: key, text: game.i18n.localize(name) });
       }
     }
-    console.log(context)
+    console.log(context);
     return context;
   }
 
