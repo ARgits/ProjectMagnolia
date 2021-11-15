@@ -216,7 +216,7 @@
     "feature": {
       "templates": ["base"],
       "source": {
-        "value": ["mar"]
+        "value": ["mar","div"]
       },
       "xp": [0],
       "level": {
