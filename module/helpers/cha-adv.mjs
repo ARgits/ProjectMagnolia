@@ -150,17 +150,10 @@ export class CharacterAdvancement extends FormApplication {
        * Count features by source
        */
       for (let [k, v] of Object.entries(this.data.feats.learned)) {
-        if (v.data.data.source?.value === "mar") {
-          this.data.count.feats.mar += 1;
-        } else if (v.data.data.source?.value === "div") {
-          this.data.count.feats.div += 1;
-        } else if (v.data.data.source?.value === "mag" || v.type === "spell") {
-          this.data.count.feats.mag += 1;
-        } else if (v.data.data.source?.value === "pri") {
-          this.data.count.feats.pri += 1;
-        } else if (v.data.data.source?.value === "psy") {
-          this.data.count.feats.psy += 1;
-        }
+        v.data.source.value.forEach((val) => {
+          console.log(val);
+          this.data.count.feats[val] += 1;
+        });
       }
       this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description);
     }
