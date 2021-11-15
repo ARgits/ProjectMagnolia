@@ -203,7 +203,8 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, object] of Object.entries(this.data.feats.awail)) {
       let pass = [];
       let allCount = this.data.count.feats.all;
-      let featCount = this.data.count.feats[object.data.source?.value];
+      let featCount = 0;
+      object.data.source?.value.forEach((val) => (featCount += this.data.count.feats[val]));
       object.data.level.xp = object.data.level.xp || {};
       for (let i = object.data.level.initial; i < object.data.level.max; i++) {
         object.data.level.xp[i] = object.data.xp?.[i] ? Math.ceil((object.data.xp[i] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
@@ -253,7 +254,6 @@ export class CharacterAdvancement extends FormApplication {
     for (let [key, race] of Object.entries(this.data.races.list)) {
       let dieNumber = Math.ceil(Math.max(this.data.abilities.con.value + race.data.bonus.abil.con.value - 7, 0) / 4);
       let firstDie = CONFIG.ARd20.HPdice.slice(CONFIG.ARd20.HPdice.indexOf(race.data.FhpDie));
-      console.log(`For ${race.name} we take ${firstDie} array with ${dieNumber} element`);
       let race_mod = Math.floor((this.data.abilities.con.value + race.data.bonus.abil.con.value - 10) / 2);
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + race_mod;
       race.chosen = this.data.races.chosen === race._id ? true : false;
@@ -301,7 +301,7 @@ export class CharacterAdvancement extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".change").click(this._onChange.bind(this));
-    html.find("td:not(.description)").hover(this._onHover.bind(this), this._onHover.bind(this));
+    html.find("td:not(.description)").hover(this._onHover.bind(this));
   }
   _onChange(event) {
     const button = event.currentTarget;
@@ -385,7 +385,7 @@ export class CharacterAdvancement extends FormApplication {
     const tr = element.closest("tr");
     const trDOM = tr.querySelectorAll("td:not(.description)");
     const tdDesc = table.querySelector("td.description");
-    const bColor = window.getComputedStyle(tr).getPropertyValue("background-color");
+    const bColor = window.getComputedStyle(element).getPropertyValue("background-color");
     tdDesc.style["background-color"] = bColor;
     trDOM?.forEach((td) => {
       td.classList.toggle("chosen", event.type == "mouseenter");
