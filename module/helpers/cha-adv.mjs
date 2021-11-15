@@ -1,4 +1,3 @@
-import { filtrex } from "../../lib/filtrex.js";
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
