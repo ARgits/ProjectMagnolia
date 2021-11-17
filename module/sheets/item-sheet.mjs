@@ -74,7 +74,7 @@ export class ARd20ItemSheet extends ItemSheet {
     $(".select2.feat", html)
       .select2({
         data: context.select.feat,
-        width: auto,
+        width: "auto",
         dropdownAutoWidth: true,
       })
       .val(context.data.source.value)
