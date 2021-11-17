@@ -97,7 +97,7 @@ export class ARd20Item extends Item {
     labels.source = [];
     data.source.label = "";
     data.source.value.forEach((value, key) => {
-      labels.source.push(game.i18n.localize(Config.ARd20.source[value]));
+      labels.source.push(game.i18n.localize(CONFIG.ARd20.source[value]));
       data.source.label += key === 0 ? labels.source[key] : `, ${labels.source[key]}`;
     });
     //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
