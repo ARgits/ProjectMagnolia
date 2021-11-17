@@ -69,10 +69,11 @@ export class ARd20ItemSheet extends ItemSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+    context = this.getData()
 
     $(".select2.feat", html).select2({
-      data: this.getData().select.feat,
-    });
+      data: context.select.feat,
+    }).val(context.data.source.value).trigger("change");
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
