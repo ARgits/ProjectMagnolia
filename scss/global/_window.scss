@@ -5,9 +5,9 @@
     }
   }
 }
-@include digits();
 .window-app {
   font-family: $font-primary;
+  @include digits();
 }
 
 .rollable {
@@ -18,7 +18,9 @@
     cursor: pointer;
   }
 }
-
+textarea{
+  min-height: 0px;
+}
 input {
   &:read-only {
     background: initial;
