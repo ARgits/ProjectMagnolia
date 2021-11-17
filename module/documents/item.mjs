@@ -94,9 +94,14 @@ export class ARd20Item extends Item {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
     // Handle Source of the feature
-    labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value[0]]);
+    labels.source = [];
+    data.source.label = "";
+    data.source.value.forEach((value, key) => {
+      labels.source.push(game.i18n.localize(Config.ARd20.source[value]));
+      data.source.label += key === 0 ? labels.source[key] : `, ${labels.source[key]}`;
+    });
     //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
-    data.source.label = labels.source;
+
     data.keys = [];
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;

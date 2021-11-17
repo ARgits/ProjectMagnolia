@@ -150,13 +150,10 @@ export class CharacterAdvancement extends FormApplication {
        * Count features by source
        */
       for (let [k, v] of Object.entries(this.data.feats.learned)) {
-        /*
         v.data.source.value.forEach((val) => {
           console.log(val);
           this.data.count.feats[val] += 1;
         });
-      */
-        this.data.count.feats[v.data.source.value] += 1;
       }
       this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description);
     }
@@ -199,11 +196,8 @@ export class CharacterAdvancement extends FormApplication {
     for (let [k, object] of Object.entries(this.data.feats.awail)) {
       let pass = [];
       let allCount = this.data.count.feats.all;
-      /*
       let featCount = 0;
       object.data.source?.value.forEach((val) => (featCount += this.data.count.feats[val]));
-      */
-      featCount = this.data.count.feats[object.data.source?.value];
       object.data.level.xp = object.data.level.xp || {};
       for (let i = object.data.level.initial; i < object.data.level.max; i++) {
         object.data.level.xp[i] = object.data.xp?.[i] ? Math.ceil((object.data.xp[i] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;

@@ -69,13 +69,15 @@ export class ARd20ItemSheet extends ItemSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
+    const edit = !this.isEditable;
     const context = this.getData();
-
-    $(".select2.feat", html)
+    const type = context.item.type;
+    $(`.select2.${type}`, html)
       .select2({
         data: context.select.feat,
         width: "auto",
         dropdownAutoWidth: true,
+        disabled: edit,
       })
       .val(context.data.source.value)
       .trigger("change");
@@ -83,7 +85,6 @@ export class ARd20ItemSheet extends ItemSheet {
       if (!evt.params.originalEvent) {
         return;
       }
-
       evt.params.originalEvent.stopPropagation();
     });
 
