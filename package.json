@@ -18,10 +18,15 @@
     "filtrex": "^2.2.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
-    "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.4.4",
     "select2": "^4.1.0-rc.0"
+  },
+  "devDependencies": {
+    "@types/gulp-sass": "^5.0.0",
+    "@types/sass": "^1.43.0",
+    "gulp-sass": "^5.0.0",
+    "sass": "^1.43.4"
   }
 }
