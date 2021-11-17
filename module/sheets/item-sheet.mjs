@@ -79,6 +79,13 @@ export class ARd20ItemSheet extends ItemSheet {
       })
       .val(context.data.source.value)
       .trigger("change");
+    $("select").on("select2:unselect", function (evt) {
+      if (!evt.params.originalEvent) {
+        return;
+      }
+
+      evt.params.originalEvent.stopPropagation();
+    });
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;

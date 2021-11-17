@@ -27,13 +27,12 @@
     {{!-- Attributes Tab --}}
     {{#if isGM}}
       <div class="tab attributes" data-group="primary" data-tab="attributes">
-        <select multiple data-dtype="JSON" type="select-multiple" class="feat select2" name="data.source.value">
-        </select>
-        <!--
-        <select class="feat" name="data.source.value">
-          {{selectOptions config.source selected=data.source.value localize=true}}
-        </select>
-        -->
+        <label for="data.source.value">
+          Source
+          <select multiple data-dtype="JSON" type="select-multiple" class="feat select2" name="data.source.value">
+          </select>
+        </label>
+
         <div>
           has level
           <input type="checkbox" name="data.level.has" {{checked data.level.has}} />
