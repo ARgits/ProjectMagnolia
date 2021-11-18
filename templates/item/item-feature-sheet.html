@@ -30,6 +30,7 @@
         <label for="data.source.value">
           Source
           <select multiple data-dtype="JSON" type="select-multiple" class="feature select2" name="data.source.value">
+            {{selectOptions config.source selected=data.source.value localize=true}}
           </select>
         </label>
 

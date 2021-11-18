@@ -71,16 +71,18 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    const type = context.type;
-    $(`.select2.${type}`, html)
-      .select2({
-        data: context.select,
-        width: "auto",
-        dropdownAutoWidth: true,
-        disabled: edit,
-      })
-      .val(context.data.source.value)
-      .trigger("change");
+    html.querySelectorAll(".select2").forEach((elem) => {
+      let value = getProperty(context, $(elem).attr("name"));
+      $(`.select2`, html)
+        .select2({
+          //data: context.select,
+          width: "auto",
+          dropdownAutoWidth: true,
+          disabled: edit,
+        })
+        //.val(value)
+        //.trigger("change");
+    });
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
         return;
