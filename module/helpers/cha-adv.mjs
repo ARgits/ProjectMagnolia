@@ -345,14 +345,14 @@ export class CharacterAdvancement extends FormApplication {
       case "feat":
         switch (button.dataset.action) {
           case "plus":
-            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
+            data.feats.awail[button.dataset.key].data.source.value.forEach((val) => (data.count.feats[val] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0));
             data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.xp.used += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.feats.awail[button.dataset.key].data.level.initial += 1;
             break;
           case "minus":
             data.feats.awail[button.dataset.key].data.level.initial -= 1;
-            data.count.feats[data.feats.awail[button.dataset.key].data.source.value] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0;
+            data.feats.awail[button.dataset.key].data.source.value.forEach((val) => (data.count.feats[val] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0));
             data.xp.get += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             data.xp.used -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
             break;

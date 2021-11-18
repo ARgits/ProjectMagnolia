@@ -178,16 +178,8 @@
         "value": 0
       },
       "damage": {
-        "common": {
-          "untrained": "1d4",
-          "basic": "1d6",
-          "master": "1d8"
-        },
-        "ver": {
-          "untrained": "1d6",
-          "basic": "1d8",
-          "master": "1d10"
-        }
+        "common": {},
+        "ver": {}
       },
       "range": {
         "untrained": {
@@ -216,7 +208,7 @@
     "feature": {
       "templates": ["base"],
       "source": {
-        "value":["mar"]
+        "value": ["mar"]
       },
       "xp": [0],
       "level": {

@@ -51,13 +51,13 @@ export class ARd20ItemSheet extends ItemSheet {
     context.data = itemData.data;
     context.flags = itemData.flags;
     context.isGM = game.user.isGM;
+    context.type = context.item.type;
     context.effects = prepareActiveEffectCategories(this.item.effects);
-    context.select = {
-      feat: [],
-    };
-    if (context.select.feat.length === 0) {
-      for (let [key, name] of Object.entries(CONFIG.ARd20.source)) {
-        context.select.feat.push({ id: key, text: game.i18n.localize(name) });
+    context.select = [];
+    if (context.select.length === 0) {
+      let arr = context.type === "feature" ? CONFIG.ARd20.source : CONFIG.ARd20.Prop;
+      for (let [key, name] of Object.entries(arr)) {
+        context.select.push({ id: key, text: game.i18n.localize(name) });
       }
     }
     console.log(context);
@@ -71,10 +71,10 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    const type = context.item.type;
+    const type = context.type;
     $(`.select2.${type}`, html)
       .select2({
-        data: context.select.feat,
+        data: context.select,
         width: "auto",
         dropdownAutoWidth: true,
         disabled: edit,

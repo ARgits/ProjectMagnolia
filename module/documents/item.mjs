@@ -200,9 +200,11 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     if (!data.hasDamage) return;
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
+    const prop = itemData.type === "weapon" ? `damage.common.${this.labels.prof.toLowerCase()}` : "damage";
+    baseDamage = getProperty(data, prop);
     data.damage.current = {
-      formula: data.damage.common[this.labels.prof.toLowerCase()] + "+" + mod,
-      parts: [data.damage.common[this.labels.prof.toLowerCase()], mod],
+      formula: baseDamage + "+" + mod,
+      parts: [[baseDamage], [mod]],
     };
   }
 
