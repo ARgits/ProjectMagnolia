@@ -60,6 +60,27 @@ export class ARd20ItemSheet extends ItemSheet {
     console.log(context);
     return context;
   }
+  _getSubmitData(updateData = {}) {
+    console.log('ААААААААААААААААААААААА')
+    // Create the expanded update data object
+    const fd = new FormDataExtended(this.form, { editors: this.editors });
+    let data = fd.toObject();
+    if (updateData) data = mergeObject(data, updateData);
+    else data = expandObject(data);
+    console.log(data)
+
+    // Handle Damage array
+    const damage = data.data?.damage;
+    if (damage) {
+      if(damage.parts)
+      damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
+    else{
+      for(let [prof,key] of Object.entries(damage)){
+        console.log(prof,key)
+      }
+    }}
+    return flattenObject(data);
+  }
   /* -------------------------------------------- */
 
   /** @override */
