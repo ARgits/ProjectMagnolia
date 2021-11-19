@@ -62,13 +62,13 @@ export class ARd20ItemSheet extends ItemSheet {
     // Handle Damage array
     const damage = data.data?.damage;
     if (damage) {
-      if (damage.parts) damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
+      if (damage.parts) damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || "", d[2] || ""]);
       else {
         for (let [key, type] of Object.entries(damage)) {
           console.log(key, type);
           for (let [key, prof] of Object.entries(type)) {
             console.log(key, prof);
-            prof.parts = Object.values(prof?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
+            prof.parts = Object.values(prof?.parts || {}).map((d) => [d[0] || "", d[1] || "", d[2] || ""]);
           }
         }
       }
@@ -130,7 +130,7 @@ export class ARd20ItemSheet extends ItemSheet {
       const damage = getProperty(this.item.data, path);
       path += ".parts";
       const update = {};
-      update[path] = damage.parts.concat([["", ""]]);
+      update[path] = damage.parts.concat([["", "", ""]]);
       return this.item.update(update);
     }
     if (a.classList.contains("delete-damage")) {
