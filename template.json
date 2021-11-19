@@ -178,8 +178,28 @@
         "value": 0
       },
       "damage": {
-        "common": {},
-        "ver": {}
+        "common": {
+          "untrained": {
+            "parts": []
+          },
+          "basic": {
+            "parts": []
+          },
+          "master": {
+            "parts": []
+          }
+        },
+        "ver": {
+          "untrained": {
+            "parts": []
+          },
+          "basic": {
+            "parts": []
+          },
+          "master": {
+            "parts": []
+          }
+        }
       },
       "range": {
         "untrained": {

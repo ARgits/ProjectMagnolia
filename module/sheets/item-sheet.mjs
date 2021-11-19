@@ -17,7 +17,6 @@ export class ARd20ItemSheet extends ItemSheet {
       ],
     });
   }
-
   /** @override */
   get template() {
     const path = "systems/ard20/templates/item";
@@ -28,9 +27,7 @@ export class ARd20ItemSheet extends ItemSheet {
     // unique item sheet by type, like `weapon-sheet.html`.
     return `${path}/item-${this.item.data.type}-sheet.html`;
   }
-
   /* -------------------------------------------- */
-
   /** @override */
   getData() {
     // Retrieve base data structure.
@@ -63,7 +60,6 @@ export class ARd20ItemSheet extends ItemSheet {
     console.log(context);
     return context;
   }
-
   /* -------------------------------------------- */
 
   /** @override */
@@ -73,15 +69,14 @@ export class ARd20ItemSheet extends ItemSheet {
     const context = this.getData();
     html[0].querySelectorAll(".select2").forEach((elem) => {
       let value = getProperty(context, $(elem).attr("name"));
-      $(`.select2`, html)
-        .select2({
-          //data: context.select,
-          width: "auto",
-          dropdownAutoWidth: true,
-          disabled: edit,
-        })
-        //.val(value)
-        //.trigger("change");
+      $(`.select2`, html).select2({
+        //data: context.select,
+        width: "auto",
+        dropdownAutoWidth: true,
+        disabled: edit,
+      });
+      //.val(value)
+      //.trigger("change");
     });
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
@@ -89,13 +84,13 @@ export class ARd20ItemSheet extends ItemSheet {
       }
       evt.params.originalEvent.stopPropagation();
     });
-
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.item));
     // Roll handlers, click handlers, etc. would go here.
     html.find(".config-button").click(this._FeatReq.bind(this));
     html.find("i.rollable").click(this._ChangeSign.bind(this));
+    html.find(".damage-control").click(this._onDamageControl.bind(this));
   }
   _ChangeSign(event) {
     if (this.item.data.type !== "race") return;
@@ -116,5 +111,29 @@ export class ARd20ItemSheet extends ItemSheet {
       }
       app?.render(true);
     }
+  }
+  async _onDamageControl(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    if (a.classList.contains("add-damage")) {
+      await this._onSubmit(event);
+      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
+      const damage = getProperty(this.item.data, path);
+      path += ".parts";
+      return this.item.update({ path: damage.parts.concat([["", ""]]) });
+    }
+    if (a.classList.contains("delete-damage")) {
+      await this._onSubmit(event);
+      const li = a.closest(".damage-part");
+      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
+      const damage = getProperty(this.item.data, path);
+      damage.parts.splice(NUmber(li.dataset.damagePart), 1);
+      path += ".parts";
+      return this.item.update({ path: damage.parts });
+    }
+  }
+  async _onSubmit(...args) {
+    if (this._tabs[0].active === "Data") this.position.height = "auto";
+    await super._onSubmit(...args);
   }
 }
