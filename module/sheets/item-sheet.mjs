@@ -160,7 +160,7 @@ export class ARd20ItemSheet extends ItemSheet {
     }
   }
   async _onSubmit(...args) {
-    if (this._tabs[0].active === "Data") this.position.height = "auto";
+    if (this._tabs[0].active === "data") this.position.height = "auto";
     await super._onSubmit(...args);
   }
 }
