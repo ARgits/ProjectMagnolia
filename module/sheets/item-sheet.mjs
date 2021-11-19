@@ -68,15 +68,18 @@ export class ARd20ItemSheet extends ItemSheet {
     if (updateData) data = mergeObject(data, updateData);
     else data = expandObject(data);
     console.log(data)
-
     // Handle Damage array
     const damage = data.data?.damage;
     if (damage) {
       if(damage.parts)
       damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
     else{
-      for(let [prof,key] of Object.entries(damage)){
-        console.log(prof,key)
+      for(let [key,type] of Object.entries(damage)){
+        console.log(key,type)
+        for (let [key, prof] of Object.entries(type)){
+          console.log(key,prof)
+          prof.parts = Object.values(prof?.parts || {}).map((d) => [d[0] || "", d[1] || ""])
+        }
       }
     }}
     return flattenObject(data);
@@ -140,6 +143,7 @@ export class ARd20ItemSheet extends ItemSheet {
       await this._onSubmit(event);
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
+      console.log(damage)
       path += ".parts";
       return this.item.update({ path: damage.parts.concat([["", ""]]) });
     }
@@ -148,7 +152,8 @@ export class ARd20ItemSheet extends ItemSheet {
       const li = a.closest(".damage-part");
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
-      damage.parts.splice(NUmber(li.dataset.damagePart), 1);
+      console.log(damage)
+      damage.parts.splice(Number(li.dataset.damagePart), 1);
       path += ".parts";
       return this.item.update({ path: damage.parts });
     }
