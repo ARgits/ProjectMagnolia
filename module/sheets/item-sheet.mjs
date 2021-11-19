@@ -145,7 +145,11 @@ export class ARd20ItemSheet extends ItemSheet {
       const damage = getProperty(this.item.data, path);
       console.log(damage)
       path += ".parts";
-      return this.item.update({ path: damage.parts.concat([["", ""]]) });
+      console.log(path)
+      console.log(damage.parts.concat([["", ""]]))
+      const update={}
+      update[path]=damage.parts.concat([["",""]])
+      return this.item.update(update);
     }
     if (a.classList.contains("delete-damage")) {
       await this._onSubmit(event);
@@ -154,9 +158,12 @@ export class ARd20ItemSheet extends ItemSheet {
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
       console.log(damage)
+      console.log(damage.parts.splice(Number(li.dataset.damagePart), 1))
       damage.parts.splice(Number(li.dataset.damagePart), 1);
       path += ".parts";
-      return this.item.update({ path: damage.parts });
+      const update={}
+      update[path]=damage.parts
+      return this.item.update(update);
     }
   }
   async _onSubmit(...args) {

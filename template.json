@@ -179,26 +179,14 @@
       },
       "damage": {
         "common": {
-          "untrained": {
-            "parts": [["",""]]
-          },
-          "basic": {
-            "parts": [["",""]]
-          },
-          "master": {
-            "parts": [["",""]]
-          }
+          "untrained": {},
+          "basic": {},
+          "master": {}
         },
         "ver": {
-          "untrained": {
-            "parts": [["",""]]
-          },
-          "basic": {
-            "parts": [["",""]]
-          },
-          "master": {
-            "parts": [["",""]]
-          }
+          "untrained": {},
+          "basic": {},
+          "master": {}
         }
       },
       "range": {
