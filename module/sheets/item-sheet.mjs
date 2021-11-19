@@ -71,7 +71,7 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    html.querySelectorAll(".select2").forEach((elem) => {
+    html[0].querySelectorAll(".select2").forEach((elem) => {
       let value = getProperty(context, $(elem).attr("name"));
       $(`.select2`, html)
         .select2({
