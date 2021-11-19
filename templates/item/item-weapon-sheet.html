@@ -173,10 +173,10 @@
                 {{log part i}}
                 <input type="text" name="data.damage.common.{{ind}}.parts.{{i}}.0" value="{{lookup this '0'}}" />
                 <select type="select-multiple" name="data.damage.common.{{ind}}.parts.{{i}}.1">
-                  {{selectOptions config.DamageTypes selected=this localize=true}}
+                  {{selectOptions config.DamageTypes selected=this[i].1 localize=true}}
                 </select>
                 <select type="select-multiple" name="data.damage.common.{{ind}}.parts.{{i}}.2">
-                  {{selectOptions config.DamageSubTypes selected=this localize=true}}
+                  {{selectOptions config.DamageSubTypes selected=this[i].2 localize=true}}
                 </select>
                 <a class="damage-control delete-damage" data-type=".common.{{ind}}"><i class="fas fa-minus"></i></a>
               </li>
