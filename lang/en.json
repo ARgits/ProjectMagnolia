@@ -528,6 +528,7 @@
   "ARd20.MovementUnits": "Units",
   "ARd20.NewDay": "Is New Day?",
   "ARd20.NewDayHint": "Recover limited use abilities which recharge \"per day\"?",
+  "ARd20.Physical":"Physical",
   "ARd20.Senses": "Senses",
   "ARd20.SensesConfig": "Configure Senses",
   "ARd20.SensesConfigHint": "Configure any special sensory perception abilities that this actor possesses.",
