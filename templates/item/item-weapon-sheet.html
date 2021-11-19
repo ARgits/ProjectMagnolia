@@ -135,8 +135,7 @@
         </div>
       </details>
     </div>
-
-    {{!-- Attributes Tab --}}
+    {{!-- Data Tab --}}
     <div class="tab" data-group="primary" data-tab="data">
       <div class="grid grid-2col">
         <div>
@@ -162,109 +161,31 @@
           </div>
         </div>
       </div>
-      <nav class="data-tabs tabs" data-group="secondary">
-        <a class="item" data-tab="untrained">{{localize "ARd20.Untrained"}}</a>
-        <a class="item" data-tab="basic">{{localize "ARd20.Basic"}}</a>
-        <a class="item" data-tab="master">{{localize "ARd20.Master"}}</a>
-      </nav>
-      <section class="data-section" data-group="secondary">
-        {{!-- Untrained properties --}}
-        <div class="tab" data-group="secondary" data-tab="untrained">
-          <div class="flexcol">
-            <label class="flexlarge">{{localize "ARd20.properties"}}</label>
-            <div>
-              <div class="grid grid-5col">
-                {{#each config.Prop as |name prop|}}
-                  <label class="checkbox">
-                    <input type="checkbox" name="data.property.untrained.{{prop}}" {{checked (lookup ../data.property.untrained prop)}} />{{localize name}}
-                  </label>
-                {{/each}}
-              </div>
-              <div>
-                {{#each data.damage.common as |prof ind|}}
-                  {{log prof ind}}
-                  <label for="data.damage.common.{{ind}}">
-                    {{localize "ARd20.index"}}
-                  </label>
-                  <a class="damage-control add-damage" data-type=".common.{{ind}}"><i class="fas fa-plus"></i></a>
-                  <ol>
-                    {{#each prof.parts as |part i|}}
-                      <li class="damage-part" data-damage-part="{{i}}">
-                        {{log part i}}
-                        <input type="text" name="data.damage.common.{{ind}}.parts.{{i}}.0" value="{{lookup this '0'}}" />
-                        <select type="select-multiple" class="damType" name="data.damage.common.{{ind}}.parts.{{i}}.1">
-                        </select>
-                        <a class="damage-control delete-damage" data-type=".common.{{ind}}"><i class="fas fa-minus"></i></a>
-                      </li>
-                    {{/each}}
-                  </ol>
-                {{/each}}
-              </div>
-              {{#if data.property.untrained.ran}}
-                <div class="grid-span-2">
-                  Range
-                  <input type="number" name="data.range.untrained.min" value="{{data.range.untrained.min}}" data-dtype="Number" />/<input type="number" name="data.range.untrained.max" value="{{data.range.untrained.max}}" data-dtype="Number" />
-                </div>
-              {{/if}} {{#if data.property.untrained.ver}} Versatile Damage
-                
-              {{/if}} {{#if data.property.untrained.def}} Deflect
-                <input type="text" name="data.deflect.untrained" value="{{data.deflect.untrained}}" />
-              {{/if}}
-            </div>
-          </div>
-        </div>
-        {{!-- Basic properties --}}
-        <div class="tab" data-group="secondary" data-tab="basic">
-          <div class="flexcol">
-            <label class="flexlarge">{{localize "ARd20.properties"}}</label>
-            <div>
-              <div class="grid grid-5col">
-                {{#each config.Prop as |name prop|}}
-                  <label class="checkbox">
-                    <input type="checkbox" name="data.property.basic.{{prop}}" {{checked (lookup ../data.property.basic prop)}} />{{localize
-                  name}}
-                  </label>
-                {{/each}}
-              </div>
-              <div class="grid grid-10col flex-group-center">
-               
-                {{#if data.property.basic.ran}}
-                  <div class="grid-span-3">
-                    Range<input type="text" name="data.range.basic.min" value="{{data.range.basic.min}}" data-dtype="Number" />/<input type="text" name="data.range.basic.max" value="{{data.range.basic.max}}" data-dtype="Number" />
-                  </div>
-                {{/if}} {{#if data.property.basic.ver}}
-                {{/if}} {{#if data.property.basic.def}} Deflect<input type="text" name="data.deflect.basic" value="{{data.deflect.basic}}" />
-                {{/if}}
-              </div>
-            </div>
-          </div>
-        </div>
-        {{!-- Master properties --}}
-        <div class="tab" data-group="secondary" data-tab="master">
-          <div class="flexcol">
-            <label class="flexlarge">{{localize "ARd20.properties"}}</label>
-            <div>
-              <div class="grid grid-5col">
-                {{#each config.Prop as |name prop|}}
-                  <label class="checkbox">
-                    <input type="checkbox" name="data.property.master.{{prop}}" {{checked (lookup ../data.property.master prop)}}> {{localize
-                  name}}</label>
-                {{/each}}
-              </div>
-              <div class="grid grid-10col flex-group-center">
-                Damage
-                {{#if data.property.master.ran}}
-                  <div class="grid-span-3">
-                    Range<input type="text" name="data.range.master.min" value="{{data.range.master.min}}" data-dtype="Number" />/<input type="text" name="data.range.master.max" value="{{data.range.master.max}}" data-dtype="Number" />
-                  </div>
-                {{/if}} {{#if data.property.master.ver}} Versatile Damage
-                {{/if}} {{#if data.property.master.def}} Deflect<input type="text" name="data.deflect.master" value="{{data.deflect.master}}" />
-                {{/if}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div class="flexcol">
+        {{#each data.damage.common as |prof ind|}} {{log prof ind}}
+          <label for="data.damage.common.{{ind}}">
+            {{localize "ARd20.index"}}
+          </label>
+          <a class="damage-control add-damage" data-type=".common.{{ind}}"><i class="fas fa-plus"></i></a>
+          <ol>
+            {{#each prof.parts as |part i|}}
+              <li class="damage-part flexrow" data-damage-part="{{i}}">
+                {{log part i}}
+                <input type="text" name="data.damage.common.{{ind}}.parts.{{i}}.0" value="{{lookup this '0'}}" />
+                <select type="select-multiple" name="data.damage.common.{{ind}}.parts.{{i}}.1">
+                  {{selectOptions config.DamageTypes selected=this localize=true}}
+                </select>
+                <select type="select-multiple" name="data.damage.common.{{ind}}.parts.{{i}}.2">
+                  {{selectOptions config.DamageSubTypes selected=this localize=true}}
+                </select>
+                <a class="damage-control delete-damage" data-type=".common.{{ind}}"><i class="fas fa-minus"></i></a>
+              </li>
+            {{/each}}
+          </ol>
+        {{/each}}
+      </div>
     </div>
+  </section>
+  </div>
   </section>
 </form>

@@ -50,38 +50,29 @@ export class ARd20ItemSheet extends ItemSheet {
     context.isGM = game.user.isGM;
     context.type = context.item.type;
     context.effects = prepareActiveEffectCategories(this.item.effects);
-    context.select = [];
-    if (context.select.length === 0) {
-      let arr = context.type === "feature" ? CONFIG.ARd20.source : CONFIG.ARd20.Prop;
-      for (let [key, name] of Object.entries(arr)) {
-        context.select.push({ id: key, text: game.i18n.localize(name) });
-      }
-    }
-    console.log(context);
     return context;
   }
   _getSubmitData(updateData = {}) {
-    console.log('ААААААААААААААААААААААА')
     // Create the expanded update data object
     const fd = new FormDataExtended(this.form, { editors: this.editors });
     let data = fd.toObject();
     if (updateData) data = mergeObject(data, updateData);
     else data = expandObject(data);
-    console.log(data)
+    console.log(data);
     // Handle Damage array
     const damage = data.data?.damage;
     if (damage) {
-      if(damage.parts)
-      damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
-    else{
-      for(let [key,type] of Object.entries(damage)){
-        console.log(key,type)
-        for (let [key, prof] of Object.entries(type)){
-          console.log(key,prof)
-          prof.parts = Object.values(prof?.parts || {}).map((d) => [d[0] || "", d[1] || ""])
+      if (damage.parts) damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
+      else {
+        for (let [key, type] of Object.entries(damage)) {
+          console.log(key, type);
+          for (let [key, prof] of Object.entries(type)) {
+            console.log(key, prof);
+            prof.parts = Object.values(prof?.parts || {}).map((d) => [d[0] || "", d[1] || ""]);
+          }
         }
       }
-    }}
+    }
     return flattenObject(data);
   }
   /* -------------------------------------------- */
@@ -91,16 +82,10 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    html[0].querySelectorAll(".select2").forEach((elem) => {
-      let value = getProperty(context, $(elem).attr("name"));
-      $(`.select2`, html).select2({
-        //data: context.select,
-        width: "auto",
-        dropdownAutoWidth: true,
-        disabled: edit,
-      });
-      //.val(value)
-      //.trigger("change");
+    $(`.select2`, html).select2({
+      width: "auto",
+      dropdownAutoWidth: true,
+      disabled: edit,
     });
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
@@ -143,26 +128,20 @@ export class ARd20ItemSheet extends ItemSheet {
       await this._onSubmit(event);
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
-      console.log(damage)
       path += ".parts";
-      console.log(path)
-      console.log(damage.parts.concat([["", ""]]))
-      const update={}
-      update[path]=damage.parts.concat([["",""]])
+      const update = {};
+      update[path] = damage.parts.concat([["", ""]]);
       return this.item.update(update);
     }
     if (a.classList.contains("delete-damage")) {
       await this._onSubmit(event);
       const li = a.closest(".damage-part");
-      console.log(li.dataset)
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
-      console.log(damage)
-      console.log(damage.parts.splice(Number(li.dataset.damagePart), 1))
       damage.parts.splice(Number(li.dataset.damagePart), 1);
       path += ".parts";
-      const update={}
-      update[path]=damage.parts
+      const update = {};
+      update[path] = damage.parts;
       return this.item.update(update);
     }
   }
