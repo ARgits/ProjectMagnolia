@@ -45,7 +45,7 @@
         <div>
           <label class="" data-roll="@data.damage.common.untrained">Damage:
           </label>
-          <span>{{data.damage.common.untrained}}</span>
+          <span>{{data.damage.common.untrained.formula}}</span>
         </div>
         {{#if data.property.untrained.ver}}
           <div>
@@ -77,7 +77,7 @@
         <div>
           <label class="">Damage:
           </label>
-          <span>{{data.damage.common.basic}}</span>
+          <span>{{data.damage.common.basic.formula}}</span>
         </div>
         {{#if data.property.basic.ver}}
           <div>
@@ -110,7 +110,7 @@
           <div>
             <label class=" ">Damage:
             </label>
-            <span>{{data.damage.common.master}}</span>
+            <span>{{data.damage.common.master.formula}}</span>
           </div>
           {{#if data.property.master.ver}}
             <div>
@@ -164,7 +164,7 @@
       <div class="flexcol">
         {{#each data.damage.common as |prof ind|}} {{log prof ind}}
           <label for="data.damage.common.{{ind}}">
-            {{localize "ARd20.index"}}
+            {{ind}} damage
           </label>
           <a class="damage-control add-damage" data-type=".common.{{ind}}"><i class="fas fa-plus"></i></a>
           <ol>

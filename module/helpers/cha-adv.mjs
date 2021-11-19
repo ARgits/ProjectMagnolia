@@ -155,7 +155,7 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.feats[val] += 1;
         });
       }
-      this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0].data.description);
+      this.data.hover.feat = TextEditor.enrichHTML(this.data.feats.awail[0]?.data.description);
     }
     this.data.count.feats.all = 0;
     this.data.count.feats.all = Object.values(this.data.count.feats).reduce(function (a, b) {

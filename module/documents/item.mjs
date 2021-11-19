@@ -46,6 +46,12 @@ export class ARd20Item extends Item {
     this._SetProperties(data);
     this._setDeflect(data);
     this._setTypeAndSubtype(data, flags, labels);
+    for (let [key, prof] of Object.entries(data.damage)) {
+      if (key !== "current") {
+        prof.formula = "";
+        prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}`));
+      }
+    }
   }
   _SetProperties(data) {
     for (let [k, v] of Object.entries(data.property.untrained)) {
@@ -200,14 +206,18 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     if (!data.hasDamage) return;
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-    const prop = itemData.type === "weapon" ? `damage.common.${this.labels.prof.toLowerCase()}` : "damage";
+    const prop = itemData.type === "weapon" ? `damage.common.${this.labels.prof.toLowerCase()}.parts` : "damage.parts";
     let baseDamage = getProperty(data, prop);
+    console.log(baseDamage);
     data.damage.current = {
-      formula: baseDamage + "+" + mod,
-      parts: [[baseDamage], [mod]],
+      formula: "",
+      parts: baseDamage,
     };
+    baseDamage.forEach((part) => {
+      console.log(part);
+      data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
+    });
   }
-
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
