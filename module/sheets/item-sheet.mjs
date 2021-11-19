@@ -150,6 +150,7 @@ export class ARd20ItemSheet extends ItemSheet {
     if (a.classList.contains("delete-damage")) {
       await this._onSubmit(event);
       const li = a.closest(".damage-part");
+      console.log(li.dataset)
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
       console.log(damage)
