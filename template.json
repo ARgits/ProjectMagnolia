@@ -180,24 +180,24 @@
       "damage": {
         "common": {
           "untrained": {
-            "parts": []
+            "parts": [["",""]]
           },
           "basic": {
-            "parts": []
+            "parts": [["",""]]
           },
           "master": {
-            "parts": []
+            "parts": [["",""]]
           }
         },
         "ver": {
           "untrained": {
-            "parts": []
+            "parts": [["",""]]
           },
           "basic": {
-            "parts": []
+            "parts": [["",""]]
           },
           "master": {
-            "parts": []
+            "parts": [["",""]]
           }
         }
       },
