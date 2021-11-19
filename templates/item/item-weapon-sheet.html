@@ -182,7 +182,7 @@
                 {{/each}}
               </div>
               {{#each data.damage.common as |prof index|}}
-              {{log prof, index}}
+              {{log prof index}}
                 <label for="data.damage.common.{{index}}">
                   {{#each prof.parts as |part i|}}
                     {{log part i}}
