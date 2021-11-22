@@ -111,7 +111,7 @@
                         <th>Magical</th>
                     </tr>
                     {{#each config.DamageSubTypes as |dam key|}}
-                        {{log @root.data.defences.damage}}
+                        {{log @root.data.defences.damage.phys.[key]}}
                         <tr>
                             <td>{{localize dam}}</td>
                             <td>{{#if (or (ne key "force") (or (ne key "rad") (ne key "physic")))}}
