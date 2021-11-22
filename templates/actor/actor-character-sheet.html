@@ -114,7 +114,7 @@
                         <tr>
                             <td>{{localize dam}}</td>
                             <td>{{#if (or(ne key "force")(ne key "rad")(ne key "physic"))}}{{#if (eq data.defences.phys.[key].type "imm")}}immune{{else}}{{data.defences.phys.[key].value}}{{/if}}{{else}}-{{/if}}</td>
-                            <td>{{#if (ne data.defences.mag.[key] "undefined")}}{{#if (eq data.defences.mag.[key].type "imm")}}immune{{else}}{{data.defences.mag.[key].value}}{{/if}}{{else}}-{{/if}}</td>
+                            <td>{{#if (eq data.defences.mag.[key].type "imm")}}immune{{else}}{{data.defences.mag.[key].value}}{{/if}}</td>
                         </tr>
                     {{/each}}
                 </table>
