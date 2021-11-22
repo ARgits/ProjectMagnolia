@@ -399,8 +399,9 @@ export class ARd20Item extends Item {
     const card = element.closest(".chat-card");
     const message = game.messages.get(card.closest(".message").dataset.messageId);
     const targetUuid = element.closest("li.flexrow").dataset.targetId;
-    const token = await fromUuid(targetUuid).actor;
-    const tData = token.data.data;
+    const token = await fromUuid(targetUuid);
+    const tActor = token.actor
+    const tData = tActor.data.data;
     const tHealth = tData.health.value;
     console.log(tHealth, "здоровье цели");
     // Recover the actor for the chat card
@@ -413,14 +414,14 @@ export class ARd20Item extends Item {
     if (!item) {
       return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
     }
-    let dam = await item.rollDamage({
+    const dam = await item.rollDamage({
       event: event,
     });
-    const value = dam.total;
+    let value = dam.total;
     dam.terms.forEach((term) => {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
-        let res = this.actor.data.data.defences.damage[damageType[0]][damageType[1]];
+        let res = tData.defences.damage[damageType[0]][damageType[1]];
         value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
       }
     });
@@ -642,6 +643,7 @@ export class ARd20Item extends Item {
     const aData = this.actor.data.data;
     console.log(event);
     const parts = iData.damage.current.parts.map((d) => d[0]);
+    options.damageType = iData.damage.current.parts.map(d=>[d[1],d[2]])
     const hasAttack = false;
     const hasDamage = true;
     const rollData = this.getRollData(hasAttack, hasDamage);
