@@ -42,7 +42,6 @@
    */
   configureDamage() {
     let critBonus = 0;
-    console.log(this.terms);
     for (let [i, term] of this.terms.entries()) {
       if (!(term instanceof OperatorTerm)) {
         term.options.damageType = i !== 0 && this.terms[i - 1] instanceof OperatorTerm ? this.options.damageType[i - 1] : this.options.damageType[i];
@@ -145,7 +144,6 @@
    */
   _onDialogSubmit(html, isCritical) {
     const form = html[0].querySelector("form");
-    console.log(form);
 
     // Append a situational bonus term
     if (form.bonus.value) {

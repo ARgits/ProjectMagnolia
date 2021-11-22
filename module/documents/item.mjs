@@ -415,6 +415,7 @@ export class ARd20Item extends Item {
       event: event,
     });
     let value = dam.total;
+    console.log('урон до резистов')
     dam.terms.forEach((term) => {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
@@ -425,8 +426,9 @@ export class ARd20Item extends Item {
         console.log("до", value);
       }
     });
-    console.log(value, "результат броска");
+    console.log(value, "итоговый урон");
     tHealth -= value;
+    console.log('хп стало', tHealth)
     let obj = {};
     obj["data.health.value"] = tHealth;
     if (game.user.isGM) {
