@@ -17,6 +17,30 @@ export class ARd20Actor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+    const actorData = this.data;
+    const data = actorData.data;
+    const flags = actorData.flags.ard20 || {};
+    const def_dam = data.defences.damage;
+    const def_stats = data.defences.stats;
+    const abilities = data.abilities;
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+      if (!(key === "force" || key === "rad" || key === "psyhic")) {
+        def_dam.phys[key] = {
+          bonus: 0,
+          type: "res",
+        };
+      }
+      def_dam.mag[key] = {
+        bonus: 0,
+        type: "res",
+      };
+    }
+    for (let [key, def] of Object.entries(def_stats)) {
+      def.bonus = 0;
+    }
+    for (let [key, ability] of Object.entries(abilities)) {
+      ability.bonus = 0;
+    }
   }
 
   /**
@@ -55,6 +79,7 @@ export class ARd20Actor extends Actor {
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(abilities)) {
       // Calculate the modifier using d20 rules.
+      ability.total = ability.value + ability.bonus;
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
     //calculate level and expierence
@@ -79,9 +104,7 @@ export class ARd20Actor extends Actor {
     /*
     calculate character's defences, including damage resistances
     */
-    for (let [key, def] of Object.entries(def_stats)) {
-      def.bonus = def.bonus ?? 0;
-    }
+
     def_stats.reflex.value = 10 + attributes.prof_bonus + abilities.dex.mod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
     def_stats.reflex.label = "Reflex";
     def_stats.fortitude.value = 10 + attributes.prof_bonus + abilities.str.mod + abilities.con.mod + parseInt(def_stats.fortitude.bonus);
@@ -90,18 +113,11 @@ export class ARd20Actor extends Actor {
     def_stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
-        def_dam.phys[key]={}
-        def_dam.phys[key].bonus = def_dam.phys[key]?.bonus ?? 0
-        def_dam.phys[key].type = def_dam.phys[key]?.type ? def_dam.phys[key].type : "res"
-        def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type === "imm" ? (def_dam.phys[key].value + parseInt(def_dam.phys[key].bonus)) || 0 : 0;
-        def_dam.phys[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key]
-        
+        def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type === "imm" ? def_dam.phys[key].value + parseInt(def_dam.phys[key].bonus) || 0 : 0;
+        def_dam.phys[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
       }
-      def_dam.mag[key]={}
-        def_dam.mag[key].bonus = def_dam.mag[key]?.bonus ?? 0
-        def_dam.mag[key].type = def_dam.mag[key]?.type ? def_dam.mag[key].type : "res"
-        def_dam.mag[key].value = def_dam.mag[key]?.value || def_dam.mag[key]?.type === "imm" ? (def_dam.mag[key].value + parseInt(def_dam.mag[key].bonus)) || 0 : 0;
-        def_dam.mag[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key]
+      def_dam.mag[key].value = def_dam.mag[key]?.value || def_dam.mag[key]?.type === "imm" ? def_dam.mag[key].value + parseInt(def_dam.mag[key].bonus) || 0 : 0;
+      def_dam.mag[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills
     for (let [key, skill] of Object.entries(data.skills)) {
