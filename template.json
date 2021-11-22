@@ -191,13 +191,16 @@
         },
         "ver": {
           "untrained": {
-            "parts": []
+            "parts": [],
+            "formula":""
           },
           "basic": {
-            "parts": []
+            "parts": [],
+            "formula":""
           },
           "master": {
-            "parts": []
+            "parts": [],
+            "formula":""
           }
         }
       },
