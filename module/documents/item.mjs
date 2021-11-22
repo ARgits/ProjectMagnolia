@@ -46,10 +46,13 @@ export class ARd20Item extends Item {
     this._SetProperties(data);
     this._setDeflect(data);
     this._setTypeAndSubtype(data, flags, labels);
-    for (let [key, prof] of Object.entries(data.damage)) {
+    for (let [key, type] of Object.entries(data.damage)) {
       if (key !== "current") {
-        prof.formula = "";
-        prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}`));
+        for (let [key, prof] of Object.entries(type)) {
+          console.log(prof);
+          prof.formula = "";
+          prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}`));
+        }
       }
     }
   }
