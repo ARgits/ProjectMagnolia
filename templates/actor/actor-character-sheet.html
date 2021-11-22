@@ -111,10 +111,23 @@
                         <th>Magical</th>
                     </tr>
                     {{#each config.DamageSubTypes as |dam key|}}
+                        {{log dam key}}
                         <tr>
                             <td>{{localize dam}}</td>
-                            <td>{{#if (or (ne key "force") (ne key "rad") (ne key "physic"))}}{{#if (eq data.defences.damage.phys.[key].type "imm")}}immune{{else}}{{data.defences.damage.phys.[key].value}}{{/if}}{{else}}-{{/if}}</td>
-                            <td>{{#if (eq data.defences.damage.mag.[key].type "imm")}}immune{{else}}{{data.defences.damage.mag.[key].value}}{{/if}}</td>
+                            <td>{{#if (or (ne key "force") (ne key "rad") (ne key "physic"))}}
+                                    {{#if (eq data.defences.damage.phys.[key].type "imm")}}
+                                        immune
+                                    {{else}}
+                                    {{data.defences.damage.phys.[key].value}}
+                                    {{/if}}
+                                {{else}}
+                                    -
+                                {{/if}}</td>
+                            <td>{{#if (eq data.defences.damage.mag.[key].type "imm") }}
+                                    immune
+                                {{else}}
+                                    {{data.defences.damage.mag.[key].value}}
+                                {{/if}}</td>
                         </tr>
                     {{/each}}
                 </table>
