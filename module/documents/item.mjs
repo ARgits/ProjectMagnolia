@@ -1,3 +1,4 @@
+import { max, min } from "mathjs";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 
 /**
@@ -399,6 +400,10 @@ export class ARd20Item extends Item {
     const card = element.closest(".chat-card");
     const message = game.messages.get(card.closest(".message").dataset.messageId);
     const targetUuid = element.closest("li.flexrow").dataset.targetId;
+    const token = await fromUuid(targetUuid).actor;
+    const tData = token.data.data;
+    const tHealth = tData.health.value;
+    console.log(tHealth, "здоровье цели");
     // Recover the actor for the chat card
     const actor = await this._getChatCardActor(card);
     if (!actor) return;
@@ -412,6 +417,28 @@ export class ARd20Item extends Item {
     let dam = await item.rollDamage({
       event: event,
     });
+    const value = dam.total;
+    dam.terms.forEach((term) => {
+      if (!(term instanceof OperatorTerm)) {
+        let damageType = term.options.damageType;
+        let res = this.actor.data.data.defences.damage[damageType[0]][damageType[1]];
+        value -= res.type === "imm" ? term.total : min(res.value, term.total);
+      }
+    });
+    console.log(value, "результат броска");
+    tHealth -= value;
+    let obj = {};
+    obj[data.health.value] = tHealth;
+    if (game.user.isGM) {
+      await token.update(obj);
+    } else {
+      game.socket.emit("system.ard20", {
+        operation: "updateActorData",
+        actor: actor,
+        update: obj,
+        value: value,
+      });
+    }
     const html = $(message.data.content);
     let damHTML = await dam.render();
     console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
@@ -487,8 +514,6 @@ export class ARd20Item extends Item {
       atkHTML[0] = hasAttack ? await atk[0].render() : null;
     }
     let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
-    //let dmgRoll = hasDamage ? await this.rollDamage() : null;
-    //let dmg = await dmgRoll.render()
     const templateData = {
       actor: this.actor.data,
       tokenId: token?.uuid || null,
@@ -617,7 +642,7 @@ export class ARd20Item extends Item {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     console.log(event);
-    const parts = iData.damage.current.parts;
+    const parts = iData.damage.current.parts.map((d) => d[0]);
     const hasAttack = false;
     const hasDamage = true;
     const rollData = this.getRollData(hasAttack, hasDamage);

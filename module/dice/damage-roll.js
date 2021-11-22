@@ -9,11 +9,11 @@
  * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
  *
  */
- export default class DamageRoll extends Roll {
+export default class DamageRoll extends Roll {
   constructor(formula, data, options) {
     super(formula, data, options);
     // For backwards compatibility, skip rolls which do not have the "critical" option defined
-    if ( this.options.critical !== undefined ) this.configureDamage();
+    if (this.options.critical !== undefined) this.configureDamage();
   }
 
   /**
@@ -42,42 +42,45 @@
    */
   configureDamage() {
     let critBonus = 0;
-    console.log(this.terms)
-    for ( let [i, term] of this.terms.entries() ) {
+    console.log(this.terms);
+    for (let [i, term] of this.terms.entries()) {
+      if (!(term instanceof OperatorTerm)) {
+        term.options.damageType = i !== 0 && this.terms[i - 1] instanceof OperatorTerm ? this.options.damageType[i - 1] : this.options.damageType[i];
+      }
       // Multiply dice terms
-      if ( term instanceof DiceTerm ) {
+      if (term instanceof DiceTerm) {
         term.options.baseNumber = term.options.baseNumber ?? term.number; // Reset back
         term.number = term.options.baseNumber;
-        if ( this.isCritical ) {           
-            critBonus += (term.number * term.faces);
-            let [oper,num] = [new OperatorTerm({operator: "+"}), new NumericTerm({number: critBonus, options:{flavor:"Crit"}}) ]
-            this.terms.splice(1, 0, oper);
-            this.terms.splice(2, 0, num);        
-            let cb = (this.options.criticalBonusDice && (i === 0)) ? this.options.criticalBonusDice : 0;
-            term.alter(1, cb);
-            term.options.critical = true;
-        } 
+        if (this.isCritical) {
+          critBonus += term.number * term.faces;
+          let [oper, num] = [new OperatorTerm({ operator: "+" }), new NumericTerm({ number: critBonus, options: { flavor: "Crit" } })];
+          this.terms.splice(1, 0, oper);
+          this.terms.splice(2, 0, num);
+          let cb = this.options.criticalBonusDice && i === 0 ? this.options.criticalBonusDice : 0;
+          term.alter(1, cb);
+          term.options.critical = true;
+        }
       }
       // Multiply numeric terms
-      else if ( this.options.multiplyNumeric && (term instanceof NumericTerm)  ) {
+      else if (this.options.multiplyNumeric && term instanceof NumericTerm) {
         term.options.baseNumber = term.options.baseNumber ?? term.number; // Reset back
         term.number = term.options.baseNumber;
-        if ( this.isCritical ) {
-          term.number *= (this.options.criticalMultiplier ?? 2);
+        if (this.isCritical) {
+          term.number *= this.options.criticalMultiplier ?? 2;
           term.options.critical = true;
         }
       }
     }
-    console.log(this.terms)
+    console.log(this.terms);
     this._formula = this.constructor.getFormula(this.terms);
   }
 
   /* -------------------------------------------- */
 
   /** @inheritdoc */
-  toMessage(messageData={}, options={}) {
+  toMessage(messageData = {}, options = {}) {
     messageData.flavor = messageData.flavor || this.options.flavor;
-    if ( this.isCritical ) {
+    if (this.isCritical) {
       const label = game.i18n.localize("ARd20.CriticalHit");
       messageData.flavor = messageData.flavor ? `${messageData.flavor} (${label})` : label;
     }
@@ -100,8 +103,7 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({title, defaultRollMode, defaultCritical=false, template, allowCritical=true}={}, options={}) {
-
+  async configureDialog({ title, defaultRollMode, defaultCritical = false, template, allowCritical = true } = {}, options = {}) {
     // Render the Dialog inner HTML
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
@@ -110,24 +112,27 @@
     });
 
     // Create the Dialog window and await submission of the form
-    return new Promise(resolve => {
-      new Dialog({
-        title,
-        content,
-        buttons: {
-          critical: {
-            condition: allowCritical,
-            label: game.i18n.localize("ARd20.CriticalHit"),
-            callback: html => resolve(this._onDialogSubmit(html, true))
+    return new Promise((resolve) => {
+      new Dialog(
+        {
+          title,
+          content,
+          buttons: {
+            critical: {
+              condition: allowCritical,
+              label: game.i18n.localize("ARd20.CriticalHit"),
+              callback: (html) => resolve(this._onDialogSubmit(html, true)),
+            },
+            normal: {
+              label: game.i18n.localize(allowCritical ? "ARd20.Normal" : "ARd20.Roll"),
+              callback: (html) => resolve(this._onDialogSubmit(html, false)),
+            },
           },
-          normal: {
-            label: game.i18n.localize(allowCritical ? "ARd20.Normal" : "ARd20.Roll"),
-            callback: html => resolve(this._onDialogSubmit(html, false))
-          }
+          default: defaultCritical ? "critical" : "normal",
+          close: () => resolve(null),
         },
-        default: defaultCritical ? "critical" : "normal",
-        close: () => resolve(null)
-      }, options).render(true);
+        options
+      ).render(true);
     });
   }
 
@@ -141,11 +146,12 @@
    */
   _onDialogSubmit(html, isCritical) {
     const form = html[0].querySelector("form");
+    console.log(form);
 
     // Append a situational bonus term
-    if ( form.bonus.value ) {
+    if (form.bonus.value) {
       const bonus = new Roll(form.bonus.value, this.data);
-      if ( !(bonus.terms[0] instanceof OperatorTerm) ) this.terms.push(new OperatorTerm({operator: "+"}));
+      if (!(bonus.terms[0] instanceof OperatorTerm)) this.terms.push(new OperatorTerm({ operator: "+" }));
       this.terms = this.terms.concat(bonus.terms);
     }
 

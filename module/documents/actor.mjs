@@ -90,15 +90,15 @@ export class ARd20Actor extends Actor {
     def_stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
-        def_dam.physic[key] = {
-          type: def_dam.physic[key]?.type ? def_dam.physic[key].type : "res",
-          sens_value: def_dam.physic[key]?.value || def_dam.physic[key]?.type === "imm" ? def_dam.physic[key].value : 0,
+        def_dam.phys[key] = {
+          type: def_dam.phys[key]?.type ? def_dam.phys[key].type : "res",
+          value: def_dam.phys[key]?.value || def_dam.phys[key]?.type === "imm" ? def_dam.phys[key].value : 0,
           label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
         };
       }
-      def_dam.magic[key] = {
-        type: def_dam.physic[key]?.type ? def_dam.physic[key].type : "res",
-        value: def_dam.magic[key]?.value || def_dam.physic[key]?.type === "imm" ? def_dam.magic[key].value : 0,
+      def_dam.mag[key] = {
+        type: def_dam.phys[key]?.type ? def_dam.phys[key].type : "res",
+        value: def_dam.mag[key]?.value || def_dam.phys[key]?.type === "imm" ? def_dam.mag[key].value : 0,
         label: game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key],
       };
     }

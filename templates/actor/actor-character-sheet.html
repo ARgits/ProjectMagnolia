@@ -104,6 +104,20 @@
                         {{> "systems/ard20/templates/actor/parts/actor-features.html"}}
                     </section>
                 </section>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Physical</th>
+                        <th>Magical</th>
+                    </tr>
+                    {{#each config.DamageSubTypes as |dam key|}}
+                        <tr>
+                            <td>{{localize dam}}</td>
+                            <td>{{#if data.defences.phys.[key]}}{{#if (eq data.defences.phys.[key].type "imm")}}immune{{else}}{{data.defences.phys.[key].value}}{{/if}}{{else}}-{{/if}}</td>
+                            <td>{{#if data.defences.mag.[key]}}{{#if (eq data.defences.mag.[key].type "imm")}}immune{{else}}{{data.defences.mag.[key].value}}{{/if}}{{else}}-{{/if}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
             </div>
 
             {{!-- Biography Tab --}}
