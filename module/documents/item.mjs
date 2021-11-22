@@ -415,7 +415,7 @@ export class ARd20Item extends Item {
       event: event,
     });
     let value = dam.total;
-    console.log('урон до резистов')
+    console.log('урон до резистов: ',value)
     dam.terms.forEach((term) => {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
