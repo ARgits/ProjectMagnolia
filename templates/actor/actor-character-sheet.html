@@ -111,26 +111,28 @@
                         <th>Magical</th>
                     </tr>
                     {{#each config.DamageSubTypes as |dam key|}}
-                        {{log @key}}
-                        {{#with (lookup @root.data.defences.damage.phys @key)}}
-                            {{log type value}}
-                        {{/with}}
                         <tr>
                             <td>{{localize dam}}</td>
-                            <td>{{#if (or (ne key "force") (or (ne key "rad") (ne key "physic")))}}
-                                    {{#if (eq @root.data.defences.damage.phys.[key].type "imm")}}
-                                        immune
-                                    {{else}}
-                                    {{@root.data.defences.damage.phys.[key].value}}
-                                    {{/if}}
+                            <td>{{#if (or (ne key 'rad') (or (ne key 'force') (ne key 'psyhic')))}}
+                                    {{#with (lookup @root.data.defences.damage.phys key)}}
+                                        {{#if (ne type 'imm')}}
+                                            {{value}}
+                                        {{else}}
+                                            immune
+                                        {{/if}}
+                                    {{/with}}
                                 {{else}}
                                     ---
-                                {{/if}}</td>
-                            <td>{{#if (eq @root.data.defences.damage.mag.[key].type "imm") }}
-                                    immune
-                                {{else}}
-                                    {{@root.data.defences.damage.mag.[key].value}}
-                                {{/if}}</td>
+                                {{/if}}
+                            </td>
+                            <td>{{#with (lookup @root.data.defences.damage.mag key)}}
+                                    {{#if (ne type 'imm')}}
+                                        {{value}}
+                                    {{else}}
+                                        immune
+                                    {{/if}}
+                                {{/with}}
+                            </td>
                         </tr>
                     {{/each}}
                 </table>
