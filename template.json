@@ -136,8 +136,8 @@
           }
         },
         "damage": {
-          "physic": {},
-          "magic": {}
+          "phys": {},
+          "mag": {}
         },
         "conditions": {}
       }
