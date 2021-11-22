@@ -397,7 +397,7 @@ export class ARd20Item extends Item {
     const message = game.messages.get(card.closest(".message").dataset.messageId);
     const targetUuid = element.closest("li.flexrow").dataset.targetId;
     const token = await fromUuid(targetUuid);
-    const tActor = token.actor
+    const tActor = token.actor;
     const tData = tActor.data.data;
     let tHealth = tData.health.value;
     console.log(tHealth, "здоровье цели");
@@ -419,13 +419,16 @@ export class ARd20Item extends Item {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
         let res = tData.defences.damage[damageType[0]][damageType[1]];
+        if (res.type === "imm") console.log("Иммунитет");
+        console.log("урон уменьшился с ", value);
         value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
+        console.log("до", value);
       }
     });
     console.log(value, "результат броска");
     tHealth -= value;
     let obj = {};
-    obj['data.health.value'] = tHealth;
+    obj["data.health.value"] = tHealth;
     if (game.user.isGM) {
       await tActor.update(obj);
     } else {
@@ -640,7 +643,7 @@ export class ARd20Item extends Item {
     const aData = this.actor.data.data;
     console.log(event);
     const parts = iData.damage.current.parts.map((d) => d[0]);
-    options.damageType = iData.damage.current.parts.map(d=>[d[1],d[2]])
+    options.damageType = iData.damage.current.parts.map((d) => [d[1], d[2]]);
     const hasAttack = false;
     const hasDamage = true;
     const rollData = this.getRollData(hasAttack, hasDamage);
