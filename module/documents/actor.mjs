@@ -113,10 +113,10 @@ export class ARd20Actor extends Actor {
     def_stats.will.label = "Will";
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
-        def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type === "imm" ? def_dam.phys[key].value + parseInt(def_dam.phys[key].bonus) || 0 : 0;
+        def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type !== "imm" ? (Math.max(isNaN(def_dam.phys[key].value)?0:def_dam.phys[key].value) + parseInt(def_dam.phys[key].bonus)): 0;
         def_dam.phys[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
       }
-      def_dam.mag[key].value = def_dam.mag[key]?.value || def_dam.mag[key]?.type === "imm" ? def_dam.mag[key].value + parseInt(def_dam.mag[key].bonus) || 0 : 0;
+      def_dam.mag[key].value = def_dam.mag[key]?.value || def_dam.mag[key]?.type !== "imm" ? (Math.max(isNaN(def_dam.mag[key].value)?0:def_dam.mag[key].value) + parseInt(def_dam.mag[key].bonus)): 0;
       def_dam.mag[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills

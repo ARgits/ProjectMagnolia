@@ -9,7 +9,7 @@
  * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
  *
  */
-export default class DamageRoll extends Roll {
+ export default class DamageRoll extends Roll {
   constructor(formula, data, options) {
     super(formula, data, options);
     // For backwards compatibility, skip rolls which do not have the "critical" option defined
@@ -71,7 +71,6 @@ export default class DamageRoll extends Roll {
         }
       }
     }
-    console.log(this.terms);
     this._formula = this.constructor.getFormula(this.terms);
   }
 

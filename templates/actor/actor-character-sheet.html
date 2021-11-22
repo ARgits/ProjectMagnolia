@@ -76,7 +76,7 @@
                             {{#each data.abilities as |ability key|}}
                                 <div class="ability flexrow" data-ability="{{key}}">
                                     <label for="data.abilities.{{key}}.value" class="resource-label ability-name rollable flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-                                    <input type="text" name="data.abilities.{{key}}.value" value="{{ability.total}}" data-dtype="Number" />
+                                    <input type="text" name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
                                     <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
                                 </div>
                             {{/each}}
@@ -113,7 +113,7 @@
                     {{#each config.DamageSubTypes as |dam key|}}
                         <tr>
                             <td>{{localize dam}}</td>
-                            <td>{{#if (ne data.defences.phys.[key] "undefined")}}{{#if (eq data.defences.phys.[key].type "imm")}}immune{{else}}{{data.defences.phys.[key].value}}{{/if}}{{else}}-{{/if}}</td>
+                            <td>{{#if (or(ne key "force")(ne key "rad")(ne key "physic"))}}{{#if (eq data.defences.phys.[key].type "imm")}}immune{{else}}{{data.defences.phys.[key].value}}{{/if}}{{else}}-{{/if}}</td>
                             <td>{{#if (ne data.defences.mag.[key] "undefined")}}{{#if (eq data.defences.mag.[key].type "imm")}}immune{{else}}{{data.defences.mag.[key].value}}{{/if}}{{else}}-{{/if}}</td>
                         </tr>
                     {{/each}}
