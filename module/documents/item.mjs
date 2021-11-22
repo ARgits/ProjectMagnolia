@@ -49,7 +49,6 @@ export class ARd20Item extends Item {
     for (let [key, type] of Object.entries(data.damage)) {
       if (key !== "current") {
         for (let [key, prof] of Object.entries(type)) {
-          console.log(prof);
           prof.formula = "";
           prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}`));
         }
@@ -211,7 +210,6 @@ export class ARd20Item extends Item {
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
     const prop = itemData.type === "weapon" ? `damage.common.${this.labels.prof.toLowerCase()}.parts` : "damage.parts";
     let baseDamage = getProperty(data, prop);
-    console.log(baseDamage);
     data.damage.current = {
       formula: "",
       parts: baseDamage,
@@ -402,7 +400,7 @@ export class ARd20Item extends Item {
     const token = await fromUuid(targetUuid);
     const tActor = token.actor
     const tData = tActor.data.data;
-    const tHealth = tData.health.value;
+    let tHealth = tData.health.value;
     console.log(tHealth, "здоровье цели");
     // Recover the actor for the chat card
     const actor = await this._getChatCardActor(card);
@@ -428,13 +426,13 @@ export class ARd20Item extends Item {
     console.log(value, "результат броска");
     tHealth -= value;
     let obj = {};
-    obj[data.health.value] = tHealth;
+    obj['data.health.value'] = tHealth;
     if (game.user.isGM) {
-      await token.update(obj);
+      await tActor.update(obj);
     } else {
       game.socket.emit("system.ard20", {
         operation: "updateActorData",
-        actor: actor,
+        actor: tActor,
         update: obj,
         value: value,
       });
