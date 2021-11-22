@@ -1,4 +1,3 @@
-import { max, min } from "mathjs";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 
 /**
@@ -422,7 +421,7 @@ export class ARd20Item extends Item {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
         let res = this.actor.data.data.defences.damage[damageType[0]][damageType[1]];
-        value -= res.type === "imm" ? term.total : min(res.value, term.total);
+        value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
       }
     });
     console.log(value, "результат броска");
