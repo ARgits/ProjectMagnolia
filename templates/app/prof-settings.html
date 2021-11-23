@@ -1,34 +1,30 @@
 <form>
-    <hr>
+    <hr />
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
         <a class="item" data-tab="weapons">Weapons</a>
-        <a class="item" data-tab='armor'>Armor</a>
-        <a class='item' data-tab="tools">tools</a>
+        <a class="item" data-tab="armor">Armor</a>
+        <a class="item" data-tab="tools">tools</a>
     </nav>
-    <hr>
-    <section class='sheet-body'>
+    <hr />
+    <section class="sheet-body">
         <div class="tab" data-tab="weapons" data-group="primary-tabs">
             <div class="ability flexcoll flex-group-center align-center">
                 {{#each profs.weapon as |pr key|}}
-                    <div class='grid grid-3col'>
-                        <input class="ability" type="text" data-dtype="text" data-name='name' data-key="{{key}}" name='weapon.{{key}}.name' value="{{pr.name}}" />
-                        <select name="weapon.{{key}}.type" data-key='{{key}}' data-name='type'>
-                            {{#select pr.type}}
-                                {{#each ../config.WeaponType as |name sch|}}
+                    <div class="grid grid-3col">
+                        <input class="ability" type="text" data-dtype="text" data-name="name" data-key="{{key}}" name="weapon.{{key}}.name" value="{{pr.name}}" />
+                        <select name="weapon.{{key}}.type" data-key="{{key}}" data-name="type">
+                            {{#select pr.type}} {{#each ../config.WeaponType as |name sch|}}
                                     <option value="{{sch}}">{{localize name}}</option>
-                                {{/each}}
-                            {{/select}}
+                                {{/each}} {{/select}}
                         </select>
                         <button type="button" class="minus far fa-minus-square" data-key="{{key}}"></button>
                     </div>
                 {{/each}}
-                <button type='button' class='add far fa-plus-square'></button>
+                <button type="button" class="add far fa-plus-square"></button>
             </div>
         </div>
     </section>
     <footer>
-        <button type="submit" name="submit" value="1">
-            <i class="far fa-save"></i> Submit
-        </button>
+        <button type="submit" name="submit" value="1"><i class="far fa-save"></i> Submit</button>
     </footer>
 </form>
