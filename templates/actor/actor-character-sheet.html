@@ -113,7 +113,7 @@
                     {{#each config.DamageSubTypes as |dam key|}}
                         <tr>
                             <td>{{localize dam}}</td>
-                            <td>{{#if (or (ne key 'rad') (or (ne key 'force') (ne key 'psyhic')))}}
+                            <td>{{#if (or (ne key 'rad') (ne key 'force') (ne key 'psyhic'))}}
                                     {{#with (lookup @root.data.defences.damage.phys key)}}
                                         {{#if (ne type 'imm')}}
                                             {{value}}
