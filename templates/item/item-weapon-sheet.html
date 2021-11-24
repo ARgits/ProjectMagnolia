@@ -175,7 +175,7 @@
                 <select type="select-multiple" name="data.damage.common.{{ind}}.parts.{{i}}.damType">
                   {{#each @root.config.DamageTypes as |dam key|}}
                     <optgroup label={{localize dam}}>
-                      {{#each @root.config.DamageSubtypes as |sub k|}}
+                      {{#each @root.config.DamageSubTypes as |sub k|}}
                         <option value="[{{key}},{{k}}]">{{localize sub}}</option>                        
                       {{/each}}
                     </optgroup>
