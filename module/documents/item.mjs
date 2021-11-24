@@ -490,7 +490,7 @@ export class ARd20Item extends Item {
     const elem = event.currentTarget;
     const 
   }*/
-  async displayCard({ rollMode, createMessage = true, hasAttack, hasDamage, targets, mAtk } = {}) {
+  async displayCard({ rollMode, createMessage = true, hasAttack=Boolean(), hasDamage=Boolean(), targets=[], mAtk=Boolean() } = {}) {
     // Render the chat card template
     let atk = {};
     let dc = {};
@@ -608,7 +608,7 @@ export class ARd20Item extends Item {
    * @param {object} options        Roll options which are configured and provided to the d20Roll function
    * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
    */
-  async rollAttack(mAtk, options = {}) {
+  async rollAttack(mAtk=Boolean(), options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -640,7 +640,7 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {damageType=[]}, } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     console.log(event);

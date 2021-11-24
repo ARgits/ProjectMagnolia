@@ -1,3 +1,5 @@
 {
-  "include": ["foundry.js"]
+  "compilerOptions": {
+    "types": ["@league-of-foundry-developers/foundry-vtt-types"]
+  }
 }

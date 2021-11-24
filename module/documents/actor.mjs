@@ -1,9 +1,11 @@
+
 import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
 export class ARd20Actor extends Actor {
+  //@ts-check
   /** @override */
   prepareData() {
     // Prepare data for the actor. Calling the super version of this executes
@@ -15,6 +17,7 @@ export class ARd20Actor extends Actor {
   }
   /** @override */
   prepareBaseData() {
+    //@ts-check
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
     const actorData = this.data;
@@ -23,6 +26,10 @@ export class ARd20Actor extends Actor {
     const def_dam = data.defences.damage;
     const def_stats = data.defences.stats;
     const abilities = data.abilities;
+    /** 
+     * @param {Number} bonus bonus
+     * @param {Number} type
+     */
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
         def_dam.phys[key] = {
