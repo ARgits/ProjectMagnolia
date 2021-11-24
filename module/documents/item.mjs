@@ -640,7 +640,7 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {damageType=[]}, } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     console.log(event);
