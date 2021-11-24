@@ -66,9 +66,9 @@ export class ARd20ItemSheet extends ItemSheet {
       else {
         for (let [key, type] of Object.entries(damage)) {
           console.log(key, type);
-          for (let [key, prof] of Object.entries(type)) {
+          for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
-            prof.parts = Object.values(prof?.parts || {}).map((d) => [d[0] || "", JSON.parse(prof.damType[k])[0] || "", JSON.parse(prof.damType[k])[1] || ""]);
+            prof.parts = Object.values(prof?.parts || {}).map((d,ind) => [d[0] || "", `${JSON.parse(prof.damType[ind])[0]}` || "", `${JSON.parse(prof.damType[ind])[1]}` || ""]);
           }
         }
       }
