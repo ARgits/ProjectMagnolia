@@ -68,7 +68,11 @@ export class ARd20ItemSheet extends ItemSheet {
           console.log(key, type);
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
-            prof.parts = Object.values(prof?.parts || {}).map((d, ind) => [d[0] || "", `${JSON.parse(prof.damType[ind])[0]}` || "", `${JSON.parse(prof.damType[ind])[1]}` || ""]);
+            prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
+              let a = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[0];
+              let b = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[1];
+              return [d[0] || "", a || "", b || ""];
+            });
           }
         }
       }
@@ -84,7 +88,8 @@ export class ARd20ItemSheet extends ItemSheet {
     const context = this.getData();
     $(`.select2`, html)
       .toArray()
-      .forEach((elem) =>
+      .forEach((elem) => {
+        console.log(elem.name);
         $(elem)
           .select2({
             width: "auto",
@@ -92,8 +97,8 @@ export class ARd20ItemSheet extends ItemSheet {
             disabled: edit,
           })
           .val(elem.name)
-          .trigger("change")
-      );
+          .trigger("change");
+      });
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
         return;
