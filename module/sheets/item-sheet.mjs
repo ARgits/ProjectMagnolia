@@ -68,7 +68,7 @@ export class ARd20ItemSheet extends ItemSheet {
           console.log(key, type);
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
-            prof.parts = Object.values(prof?.parts || {}).map((d,ind) => [d[0] || "", `${JSON.parse(prof.damType[ind])[0]}` || "", `${JSON.parse(prof.damType[ind])[1]}` || ""]);
+            prof.parts = Object.values(prof?.parts || {}).map((d, ind) => [d[0] || "", `${JSON.parse(prof.damType[ind])[0]}` || "", `${JSON.parse(prof.damType[ind])[1]}` || ""]);
           }
         }
       }
@@ -82,11 +82,18 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    $(`.select2`, html).select2({
-      width: "auto",
-      dropdownAutoWidth: true,
-      disabled: edit,
-    });
+    $(`.select2`, html)
+      .toArray()
+      .forEach((elem) =>
+        $(elem)
+          .select2({
+            width: "auto",
+            dropdownAutoWidth: true,
+            disabled: edit,
+          })
+          .val(elem.name)
+          .trigger("change")
+      );
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
         return;
