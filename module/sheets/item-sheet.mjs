@@ -62,7 +62,10 @@ export class ARd20ItemSheet extends ItemSheet {
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
-              let a = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind]);
+              let a = ["",""]
+              if(prof.damType[ind].length !== 0){
+                a=[]
+                prof.damType[ind].forEach((sub,i)=>a.push(JSON.parse(prof.damType[ind][i])));}
               if (a === "") return [d[0] || "", "", ""];
               else return [d[0] || "", a];
             });
