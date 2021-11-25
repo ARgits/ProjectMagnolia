@@ -50,7 +50,7 @@ export class ARd20Item extends Item {
       if (key !== "current") {
         for (let [key, prof] of Object.entries(type)) {
           prof.formula = "";
-          prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}`));
+          prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `));
         }
       }
     }

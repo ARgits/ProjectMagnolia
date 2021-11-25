@@ -86,17 +86,31 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    $(`.select2`, html)
+    $(`select.select2`, html)
       .toArray()
       .forEach((elem) => {
-        console.log(elem.name);
+        const value = getProperty(context, elem.name);
+        console.log(value);
         $(elem)
           .select2({
             width: "auto",
             dropdownAutoWidth: true,
             disabled: edit,
+            formatResult: function (state) {
+              console.log(state)
+              if (!state.id) return state.text;
+              return state.text;
+            },
+            formatSelection: function (state) {
+              console.log(state)
+              if (!state.id) return state.text;
+              return state.text;
+            },
+            escapeMarkup: function (m) {
+              return m;
+            },
           })
-          .val(elem.name)
+          .val(value)
           .trigger("change");
       });
     $("select").on("select2:unselect", function (evt) {

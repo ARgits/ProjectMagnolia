@@ -178,7 +178,7 @@
                       <optgroup label={{localize dam}}>
                         {{#each @root.config.DamageSubTypes as |sub k|}}
                           {{#if (or (ne key 'rad') (ne key 'force') (ne key 'psyhic'))}}
-                            <option value='["{{key}}", "{{k}}"]'>{{localize dam}} {{localize sub}}</option>
+                            <option value='["{{key}}", "{{k}}"]'>{{localize sub}}</option>
                           {{/if}}
                         {{/each}}
                       </optgroup>
