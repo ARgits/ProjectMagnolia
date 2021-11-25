@@ -172,12 +172,12 @@
               <li class="damage-part flexrow" data-damage-part="{{i}}">
                 {{log part i}}
                 <input type="text" name="data.damage.common.{{ind}}.parts.{{i}}.0" value="{{part.[0]}}" />
-                <select class="select2" type="select-multiple" name="data.damage.common.{{ind}}.damType.{{i}}">
+                <select class="select2" multiple type="select-multiple" name="data.damage.common.{{ind}}.damType.{{i}}">
                   {{log (lookup prof.damType i)}}
                     {{#each @root.config.DamageTypes as |dam key|}}
                       <optgroup label={{localize dam}}>
                         {{#each @root.config.DamageSubTypes as |sub k|}}
-                          {{#if (or (ne key 'rad') (ne key 'force') (ne key 'psyhic'))}}
+                          {{#if (or (ne k 'rad') (ne k 'force') (ne k 'psyhic'))}}
                             <option value='["{{key}}", "{{k}}"]'>{{localize sub}}</option>
                           {{/if}}
                         {{/each}}

@@ -596,6 +596,11 @@ table tr th.under-chosen {
 .ard20 .sheet-body .tab ol li.header {
   background: rgba(0, 0, 0, 0.05);
 }
+.ard20 .select2-results > .select2-results__options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 .ard20 .tox .tox-editor-container {
   background: #fff;
 }
