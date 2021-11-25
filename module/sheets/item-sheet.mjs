@@ -69,8 +69,8 @@ export class ARd20ItemSheet extends ItemSheet {
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
-              let a = prof.damType[ind].length === 0 ? "" : JSON.parse(prof.damType[ind])[0];
-              let b = prof.damType[ind].length === 0 ? "" : JSON.parse(prof.damType[ind])[1];
+              let a = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[0];
+              let b = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[1];
               return [d[0] || "", a || "", b || ""];
             });
           }
@@ -86,6 +86,10 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
+    function format(state) {
+      if (!state.id) return state.id;
+      return state.id;
+    }
     $(`select.select2`, html)
       .toArray()
       .forEach((elem) => {
@@ -95,14 +99,8 @@ export class ARd20ItemSheet extends ItemSheet {
             width: "auto",
             dropdownAutoWidth: true,
             disabled: edit,
-            formatResult: function (state) {
-              if (!state.id) return state.text;
-              return state.text;
-            },
-            formatSelection: function (state) {
-              if (!state.id) return state.text;
-              return state.text;
-            },
+            formatResult: format,
+            formatSelection: format,
             escapeMarkup: function (m) {
               return m;
             },
