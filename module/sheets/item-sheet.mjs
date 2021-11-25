@@ -87,8 +87,9 @@ export class ARd20ItemSheet extends ItemSheet {
     const edit = !this.isEditable;
     const context = this.getData();
     function format(state) {
-      if (!state.id) return state.id;
-      return state.id;
+      const optgroup = $(state.element).parent().attr('label');
+      if (!state.id) return state.text;
+      return optgroup+' '+state.text;
     }
     $(`select.select2`, html)
       .toArray()
@@ -99,8 +100,7 @@ export class ARd20ItemSheet extends ItemSheet {
             width: "auto",
             dropdownAutoWidth: true,
             disabled: edit,
-            formatResult: format,
-            formatSelection: format,
+            templateSelection: format,
             escapeMarkup: function (m) {
               return m;
             },
