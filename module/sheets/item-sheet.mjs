@@ -69,8 +69,8 @@ export class ARd20ItemSheet extends ItemSheet {
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
-              let a = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[0];
-              let b = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[1];
+              let a = prof.damType[ind].length === 0 ? "" : JSON.parse(prof.damType[ind])[0];
+              let b = prof.damType[ind].length === 0 ? "" : JSON.parse(prof.damType[ind])[1];
               return [d[0] || "", a || "", b || ""];
             });
           }
@@ -90,19 +90,16 @@ export class ARd20ItemSheet extends ItemSheet {
       .toArray()
       .forEach((elem) => {
         const value = getProperty(context, elem.name);
-        console.log(value);
         $(elem)
           .select2({
             width: "auto",
             dropdownAutoWidth: true,
             disabled: edit,
             formatResult: function (state) {
-              console.log(state)
               if (!state.id) return state.text;
               return state.text;
             },
             formatSelection: function (state) {
-              console.log(state)
               if (!state.id) return state.text;
               return state.text;
             },
