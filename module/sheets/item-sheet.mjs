@@ -86,10 +86,17 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    function format(state) {
-      const optgroup = $(state.element).parent().attr('label');
+    function formatSelection(state) {
+      const optgroup = $(state.element).parent().attr("label");
       if (!state.id) return state.text;
-      return optgroup+' '+state.text;
+      const subtype = state.text.toLowerCase();
+      const url = `../../css/${subtype}.svg`;
+      return `<div><img src=${url} />${optgroup} ${state.text}</div>`;
+    }
+    function formatResult(state) {
+      if (!state.id) return state.text;
+      const url = `../../css/${subtype}.svg`;
+      return `<div><img src=${url} />${optgroup} ${state.text}</div>`;
     }
     $(`select.select2`, html)
       .toArray()
@@ -100,7 +107,8 @@ export class ARd20ItemSheet extends ItemSheet {
             width: "auto",
             dropdownAutoWidth: true,
             disabled: edit,
-            templateSelection: format,
+            templateSelection: formatSelection,
+            templateResult: formatResult,
             escapeMarkup: function (m) {
               return m;
             },
