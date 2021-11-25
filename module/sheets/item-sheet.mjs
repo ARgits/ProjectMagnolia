@@ -20,11 +20,6 @@ export class ARd20ItemSheet extends ItemSheet {
   /** @override */
   get template() {
     const path = "systems/ard20/templates/item";
-    // Return a single sheet for all item types.
-    // return `${path}/item-sheet.html`;
-
-    // Alternatively, you could use the following return statement to do a
-    // unique item sheet by type, like `weapon-sheet.html`.
     return `${path}/item-${this.item.data.type}-sheet.html`;
   }
   /* -------------------------------------------- */
@@ -32,7 +27,6 @@ export class ARd20ItemSheet extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-
     // Use a safe clone of the item data for further operations.
     const itemData = context.item.data;
     context.labels = this.item.labels;
@@ -58,7 +52,6 @@ export class ARd20ItemSheet extends ItemSheet {
     let data = fd.toObject();
     if (updateData) data = mergeObject(data, updateData);
     else data = expandObject(data);
-    console.log(data);
     // Handle Damage array
     const damage = data.data?.damage;
     if (damage) {
@@ -69,9 +62,9 @@ export class ARd20ItemSheet extends ItemSheet {
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
-              let a = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[0];
-              let b = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind])[1];
-              return [d[0] || "", a || "", b || ""];
+              let a = prof.damType[ind] === "" ? "" : JSON.parse(prof.damType[ind]);
+              if (a === "") return [d[0] || "", "", ""];
+              else return [d[0] || "", a];
             });
           }
         }
@@ -86,17 +79,21 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
+    console.log(context);
     function formatSelection(state) {
+      const parent = $(state.element).parent().prop("tagName");
+      if (!state.id || parent !== "OPTGROUP") return state.text;
       const optgroup = $(state.element).parent().attr("label");
-      if (!state.id) return state.text;
-      const subtype = state.text.toLowerCase();
-      const url = `../../css/${subtype}.svg`;
-      return `<div><img src=${url} />${optgroup} ${state.text}</div>`;
+      const subtype = state.element.value.match(/(\w+)/g)[1];
+      const url = `systems/ard20/css/${subtype}.svg`;
+      return `<div><img style="width:15px; background-color:black; margin-left:2px" src=${url} />${optgroup} ${state.text}</div>`;
     }
     function formatResult(state) {
-      if (!state.id) return state.text;
-      const url = `../../css/${subtype}.svg`;
-      return `<div><img src=${url} />${optgroup} ${state.text}</div>`;
+      const parent = $(state.element).parent().prop("tagName");
+      if (!state.id || parent !== "OPTGROUP") return state.text;
+      const subtype = state.element.value.match(/(\w+)/g)[1];
+      const url = `systems/ard20/css/${subtype}.svg`;
+      return `<div><img style="width:15px; background-color:black; margin-left:2px" src=${url} /> ${state.text}</div>`;
     }
     $(`select.select2`, html)
       .toArray()

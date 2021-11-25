@@ -50,7 +50,20 @@ export class ARd20Item extends Item {
       if (key !== "current") {
         for (let [key, prof] of Object.entries(type)) {
           prof.formula = "";
-          prof.parts.forEach((part) => (prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `));
+          prof.parts.forEach((part) => {
+            if (Array.isArray(part[1])) {
+              prof.formula += `${part[0]}`;
+              part[1].forEach((sub, ind) => {
+                if (ind === 0) {
+                  prof.formula += ` {${sub[0]} ${sub[1]}`;
+                  prof.formula += ind === part[1].length - 1 ? "}" : "";
+                } else {
+                  prof.formula += ` or ${sub[0]} ${sub[1]}`;
+                  prof.formula += ind === part[1].length - 1 ? "}" : "";
+                }
+              });
+            } else prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `;
+          });
         }
       }
     }
@@ -415,7 +428,7 @@ export class ARd20Item extends Item {
       event: event,
     });
     let value = dam.total;
-    console.log('урон до резистов: ',value)
+    console.log("урон до резистов: ", value);
     dam.terms.forEach((term) => {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
@@ -428,7 +441,7 @@ export class ARd20Item extends Item {
     });
     console.log(value, "итоговый урон");
     tHealth -= value;
-    console.log('хп стало', tHealth)
+    console.log("хп стало", tHealth);
     let obj = {};
     obj["data.health.value"] = tHealth;
     if (game.user.isGM) {
@@ -490,7 +503,7 @@ export class ARd20Item extends Item {
     const elem = event.currentTarget;
     const 
   }*/
-  async displayCard({ rollMode, createMessage = true, hasAttack=Boolean(), hasDamage=Boolean(), targets=[], mAtk=Boolean() } = {}) {
+  async displayCard({ rollMode, createMessage = true, hasAttack = Boolean(), hasDamage = Boolean(), targets = [], mAtk = Boolean() } = {}) {
     // Render the chat card template
     let atk = {};
     let dc = {};
@@ -608,7 +621,7 @@ export class ARd20Item extends Item {
    * @param {object} options        Roll options which are configured and provided to the d20Roll function
    * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
    */
-  async rollAttack(mAtk=Boolean(), options = {}) {
+  async rollAttack(mAtk = Boolean(), options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -640,7 +653,7 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     console.log(event);
