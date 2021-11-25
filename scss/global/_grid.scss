@@ -81,3 +81,10 @@ table {
     }
   }
 }
+.select2-results__options {
+  display: flex;
+}
+.select2-results-dept-0 { /* do the columns */
+  float: left;
+  width: 20%;
+}

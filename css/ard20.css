@@ -450,6 +450,18 @@ table tr th.under-chosen {
   border-top: 1px solid red;
 }
 
+.select2-results__options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.select2-results-dept-0 {
+  /* do the columns */
+  float: left;
+  width: 20%;
+}
+
 .flex-group-center,
 .flex-group-left,
 .flex-group-right {
@@ -595,16 +607,6 @@ table tr th.under-chosen {
 }
 .ard20 .sheet-body .tab ol li.header {
   background: rgba(0, 0, 0, 0.05);
-}
-.ard20 .select2-results__options {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.ard20 .select2-results-dept-0 {
-  /* do the columns */
-  float: left;
-  width: 20%;
 }
 .ard20 .tox .tox-editor-container {
   background: #fff;
