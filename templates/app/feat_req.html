@@ -11,37 +11,43 @@
         </div>
       </li>
       {{#each req.values as |r key|}}
-      <li class="item flexrow align-center">
-        <div>{{add key 1}}</div>
-        <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
-          {{#select r.type}} {{#each @root.type as |t k|}}
-          <option value="{{t}}">{{t}}</option>
-          {{/each}} {{/select}}
-        </select>
-        <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="value">
-          {{#select r.name}} {{#each r.subtype_list as |sub k|}}
-          <option value="{{sub}}">{{sub}}</option>
-          {{/each}} {{/select}}
-        </select>
-        <div class="item-controls">
-          <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
-        </div>
-      </li>
-      <li class="item flexrow align-center">
-        {{#if (eq r.type "feat")}}
-        <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key="{{key}}" data-type="value" value="{{r.maxLevel}}" />
-        {{/if}} {{#each r.input as |inp k|}}
-        <div>{{add k 1}}:</div>
-        {{#if (eq r.type "skill")}}
-        <select name="req.values.{{key}}.input.{{k}}" data-key="{{key}}" data-type="value" data-order="{{k}}">
-          {{#select inp}} {{#each @root.prof as |ran i|}}
-          <option value="{{i}}">{{localize ran}}</option>
-          {{/each}} {{/select}}
-        </select>
-        {{else}} <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value"
-        data-key="{{key}}" data-order="{{k}}" value="{{inp}}"> {{/if}} {{/each}}
-      </li>
-      <hr />
+        <li class="item flexrow align-center">
+          <div>{{add key 1}}</div>
+          <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
+            {{#select r.type}}
+              {{#each @root.type as |t k|}}
+                <option value="{{t}}">{{t}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+          <select name="req.values.{{key}}.name" data-key="{{key}}" data-type="value">
+            {{#select r.name}}
+              {{#each r.subtype_list as |sub k|}}
+                <option value="{{sub}}">{{sub}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+          <div class="item-controls">
+            <a class="item-control item-delete" data-key="{{key}}" title="Delete Item"><i class="fas fa-trash"></i></a>
+          </div>
+        </li>
+        <li class="item flexrow align-center">
+          {{#if (eq r.type "feat")}}
+            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key="{{key}}" data-type="value" value="{{r.maxLevel}}" />
+          {{/if}} {{#each r.input as |inp k|}}
+            <div>{{add k 1}}:</div>
+            {{#if (eq r.type "skill")}}
+              <select name="req.values.{{key}}.input.{{k}}" data-key="{{key}}" data-type="value" data-order="{{k}}">
+                {{#select inp}}
+                  {{#each @root.prof as |ran i|}}
+                    <option value="{{i}}">{{localize ran}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+            {{else}} <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}"> {{/if}}
+          {{/each}}
+        </li>
+        <hr />
       {{/each}}
     </ol>
     <ol class="items-list">
@@ -50,10 +56,10 @@
         <div>Logic</div>
       </li>
       {{#each req.logic as |l key|}}
-      <li class="item flexrow align-center">
-        <div>{{add key 1}}</div>
-        <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{l}}" />
-      </li>
+        <li class="item flexrow align-center">
+          <div>{{add key 1}}</div>
+          <input type="text" name="req.logic.{{key}}" data-key="{{key}}" data-type="logic" value="{{l}}" />
+        </li>
       {{/each}}
     </ol>
   </section>

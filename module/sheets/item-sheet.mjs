@@ -62,10 +62,11 @@ export class ARd20ItemSheet extends ItemSheet {
           for (let [k, prof] of Object.entries(type)) {
             console.log(k, prof);
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
-              let a = ["",""]
-              if(prof.damType[ind].length !== 0){
-                a=[]
-                prof.damType[ind].forEach((sub,i)=>a.push(JSON.parse(prof.damType[ind][i])));}
+              let a = "";
+              if (prof.damType[ind].length !== 0) {
+                a = [];
+                prof.damType[ind].forEach((sub, i) => a.push(JSON.parse(prof.damType[ind][i])));
+              }
               if (a === "") return [d[0] || "", "", ""];
               else return [d[0] || "", a];
             });
@@ -138,17 +139,15 @@ export class ARd20ItemSheet extends ItemSheet {
     this.item.update({ [attr]: !getProperty(this.item.data, attr) });
   }
   _FeatReq(event) {
-    {
-      event.preventDefault();
-      const button = event.currentTarget;
-      let app;
-      switch (button.dataset.action) {
-        case "feat-req":
-          app = new FeatRequirements(this.object);
-          break;
-      }
-      app?.render(true);
+    event.preventDefault();
+    const button = event.currentTarget;
+    let app;
+    switch (button.dataset.action) {
+      case "feat-req":
+        app = new FeatRequirements(this.object);
+        break;
     }
+    app?.render(true);
   }
   async _onDamageControl(event) {
     event.preventDefault();
