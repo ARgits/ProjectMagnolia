@@ -55,20 +55,25 @@ export class ARd20ItemSheet extends ItemSheet {
     // Handle Damage array
     const damage = data.data?.damage;
     if (damage) {
-      if (damage.parts) damage.parts = Object.values(damage?.parts || {}).map((d) => [d[0] || "", d[1] || "", d[2] || ""]);
-      else {
+      if (damage.parts) {
+        damage.damType = Object.values(damage?.damType || {})
+        damage.parts = Object.values(damage?.parts || {}).map(function (d, ind) {
+          let a = [];
+          if (prof.damType[ind].length !== 0) {
+            prof.damType[ind].forEach((sub, i) => a.push(JSON.parse(prof.damType[ind][i])));
+          }
+          return [d[0] || "", a];
+        });
+      } else {
         for (let [key, type] of Object.entries(damage)) {
-          console.log(key, type);
           for (let [k, prof] of Object.entries(type)) {
-            console.log(k, prof);
+            prof.damType = Object.values(prof?.damType || {})
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
-              let a = "";
-              if (prof.damType[ind].length !== 0) {
-                a = [];
+              let a = [];
+              if (prof.damType[ind].length !== 0 && prof.damType[ind][0]!=="") {
                 prof.damType[ind].forEach((sub, i) => a.push(JSON.parse(prof.damType[ind][i])));
               }
-              if (a === "") return [d[0] || "", "", ""];
-              else return [d[0] || "", a];
+              return [d[0] || "", a];
             });
           }
         }
@@ -83,7 +88,6 @@ export class ARd20ItemSheet extends ItemSheet {
     super.activateListeners(html);
     const edit = !this.isEditable;
     const context = this.getData();
-    console.log(context);
     function formatSelection(state) {
       const parent = $(state.element).parent().prop("tagName");
       if (!state.id || parent !== "OPTGROUP") return state.text;
@@ -156,9 +160,13 @@ export class ARd20ItemSheet extends ItemSheet {
       await this._onSubmit(event);
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
-      path += ".parts";
+      damage.damType = damage.damType || []
+      const partsPath = path + ".parts";
+      const damTypePath = path + ".damType";
       const update = {};
-      update[path] = damage.parts.concat([["", "", ""]]);
+      update[partsPath] = damage.parts.concat([["", ["",""]]]);
+      update[damTypePath] = damage.damType?.concat([[""]]);
+      console.log(update)
       return this.item.update(update);
     }
     if (a.classList.contains("delete-damage")) {
@@ -166,10 +174,15 @@ export class ARd20ItemSheet extends ItemSheet {
       const li = a.closest(".damage-part");
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
+      console.log(damage)
       damage.parts.splice(Number(li.dataset.damagePart), 1);
-      path += ".parts";
+      damage.damType.splice(Number(li.dataset.damagePart), 1);
+      const partsPath = path + ".parts";
+      const damTypePath = path + ".damType";
       const update = {};
-      update[path] = damage.parts;
+      update[partsPath] = damage.parts;
+      update[damTypePath] = damage.damType;
+      console.log(update)
       return this.item.update(update);
     }
   }

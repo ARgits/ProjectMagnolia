@@ -51,11 +51,9 @@ export class ARd20Item extends Item {
         for (let [key, prof] of Object.entries(type)) {
           prof.formula = "";
           prof.parts.forEach((part) => {
-            console.log(part)
             if (Array.isArray(part[1])) {
               prof.formula += `${part[0]}`;
               part[1].forEach((sub, ind) => {
-                console.log(sub,ind)
                 if (ind === 0) {
                   prof.formula += ` {${sub[0]} ${sub[1]}`;
                   prof.formula += ind === part[1].length - 1 ? "}" : "";
