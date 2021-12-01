@@ -56,7 +56,7 @@ export class ARd20ItemSheet extends ItemSheet {
     const damage = data.data?.damage;
     if (damage) {
       if (damage.parts) {
-        damage.damType = Object.values(damage?.damType || {})
+        damage.damType = Object.values(damage?.damType || {});
         damage.parts = Object.values(damage?.parts || {}).map(function (d, ind) {
           let a = [];
           if (prof.damType[ind].length !== 0) {
@@ -67,10 +67,10 @@ export class ARd20ItemSheet extends ItemSheet {
       } else {
         for (let [key, type] of Object.entries(damage)) {
           for (let [k, prof] of Object.entries(type)) {
-            prof.damType = Object.values(prof?.damType || {})
+            prof.damType = Object.values(prof?.damType || {});
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
               let a = [];
-              if (prof.damType[ind].length !== 0 && prof.damType[ind][0]!=="") {
+              if (prof.damType[ind].length !== 0 && prof.damType[ind][0] !== "") {
                 prof.damType[ind].forEach((sub, i) => a.push(JSON.parse(prof.damType[ind][i])));
               }
               return [d[0] || "", a];
@@ -104,23 +104,21 @@ export class ARd20ItemSheet extends ItemSheet {
       return `<div><img style="width:15px; background-color:black; margin-left:2px" src=${url} /> ${state.text}</div>`;
     }
     $(`select.select2`, html)
-      .toArray()
-      .forEach((elem) => {
+      .select2({
+        width: "auto",
+        dropdownAutoWidth: true,
+        disabled: edit,
+        templateSelection: formatSelection,
+        templateResult: formatResult,
+        escapeMarkup: function (m) {
+          return m;
+        },
+      })
+      .val((elem) => {
         const value = getProperty(context, elem.name);
-        $(elem)
-          .select2({
-            width: "auto",
-            dropdownAutoWidth: true,
-            disabled: edit,
-            templateSelection: formatSelection,
-            templateResult: formatResult,
-            escapeMarkup: function (m) {
-              return m;
-            },
-          })
-          .val(value)
-          .trigger("change");
-      });
+        return value;
+      })
+      .trigger("change");
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
         return;
@@ -157,24 +155,23 @@ export class ARd20ItemSheet extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
     if (a.classList.contains("add-damage")) {
-      await this._onSubmit(event);
+      //await this._onSubmit(event);
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
-      damage.damType = damage.damType || []
+      damage.damType = damage.damType || [];
       const partsPath = path + ".parts";
       const damTypePath = path + ".damType";
       const update = {};
-      update[partsPath] = damage.parts.concat([["", ["",""]]]);
+      update[partsPath] = damage.parts.concat([["", ["", ""]]]);
       update[damTypePath] = damage.damType?.concat([[""]]);
-      console.log(update)
-      return this.item.update(update);
+      await this.item.update(update);
     }
     if (a.classList.contains("delete-damage")) {
-      await this._onSubmit(event);
+      //await this._onSubmit(event);
       const li = a.closest(".damage-part");
       let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
       const damage = getProperty(this.item.data, path);
-      console.log(damage)
+      console.log(damage);
       damage.parts.splice(Number(li.dataset.damagePart), 1);
       damage.damType.splice(Number(li.dataset.damagePart), 1);
       const partsPath = path + ".parts";
@@ -182,11 +179,11 @@ export class ARd20ItemSheet extends ItemSheet {
       const update = {};
       update[partsPath] = damage.parts;
       update[damTypePath] = damage.damType;
-      console.log(update)
-      return this.item.update(update);
+      await this.item.update(update);
     }
   }
   async _onSubmit(...args) {
+    console.log(...args);
     if (this._tabs[0].active === "data") this.position.height = "auto";
     await super._onSubmit(...args);
   }
