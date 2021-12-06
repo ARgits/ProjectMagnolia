@@ -104,7 +104,7 @@ export class ARd20ItemSheet extends ItemSheet {
       return `<div><img style="width:15px; background-color:black; margin-left:2px" src=${url} /> ${state.text}</div>`;
     }
     $(`select.select2`, html).select2({
-      theme:"classic",
+      theme:"material",
       width: "auto",
       dropdownAutoWidth: true,
       disabled: edit,
