@@ -103,22 +103,18 @@ export class ARd20ItemSheet extends ItemSheet {
       const url = `systems/ard20/css/${subtype}.svg`;
       return `<div><img style="width:15px; background-color:black; margin-left:2px" src=${url} /> ${state.text}</div>`;
     }
-    $(`select.select2`, html)
-      .select2({
-        width: "auto",
-        dropdownAutoWidth: true,
-        disabled: edit,
-        templateSelection: formatSelection,
-        templateResult: formatResult,
-        escapeMarkup: function (m) {
-          return m;
-        },
-      })
-      .val((elem) => {
-        const value = getProperty(context, elem.name);
-        return value;
-      })
-      .trigger("change");
+    $(`select.select2`, html).select2({
+      width: "auto",
+      dropdownAutoWidth: true,
+      disabled: edit,
+      templateSelection: formatSelection,
+      templateResult: formatResult,
+      escapeMarkup: function (m) {
+        return m;
+      },
+    }).val(function(index, valu){
+      console.log(index,valu)
+    });
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
         return;
@@ -183,7 +179,6 @@ export class ARd20ItemSheet extends ItemSheet {
     }
   }
   async _onSubmit(...args) {
-    console.log(...args);
     if (this._tabs[0].active === "data") this.position.height = "auto";
     await super._onSubmit(...args);
   }
