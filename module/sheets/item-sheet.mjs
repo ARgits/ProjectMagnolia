@@ -104,6 +104,7 @@ export class ARd20ItemSheet extends ItemSheet {
       return `<div><img style="width:15px; background-color:black; margin-left:2px" src=${url} /> ${state.text}</div>`;
     }
     $(`select.select2`, html).select2({
+      theme:"classic",
       width: "auto",
       dropdownAutoWidth: true,
       disabled: edit,
@@ -113,8 +114,10 @@ export class ARd20ItemSheet extends ItemSheet {
         return m;
       },
     }).val(function(index, valu){
-      console.log(index,valu)
-    });
+      const name = $('select.select2',html)[index].name
+      const val = getProperty(context, name)
+      return val
+    }).trigger('change');
     $("select").on("select2:unselect", function (evt) {
       if (!evt.params.originalEvent) {
         return;
