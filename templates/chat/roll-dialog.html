@@ -18,10 +18,11 @@
   </div>
   {{#if (eq type "damage")}}
     {{#each damageType as |part|}}
+      {{log "part", part}}
       {{#if (gt part.length 1)}}
         <label>Choose damageType</label>
         <select name="options.damageType.{{part}}">
-          {{selectOptions part selected part.0}}
+          {{selectOptions part selected part.[0]}}
         </select>
       {{/if}} 
     {{/each}}
