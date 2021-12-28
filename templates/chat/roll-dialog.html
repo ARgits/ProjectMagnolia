@@ -16,6 +16,16 @@
     <label> {{localize "ARd20.RollSituationalBonus"}} </label>
     <input type="text" name="bonus" value="" placeholder="{{localize "ARd20.RollExample"}}" />
   </div>
+  {{#if (eq type "damage")}}
+    {{#each damageType as |part|}}
+      {{#if (gt part.length 1)}}
+        <label>Choose damageType</label>
+        <select name="options.damageType.{{part}}">
+          {{selectOptions part selected part.0}}
+        </select>
+      {{/if}} 
+    {{/each}}
+  {{/if}}
   <div class="form-group">
     <label> {{localize "ARd20.RollMode"}} </label>
     <select name="rollMode">
