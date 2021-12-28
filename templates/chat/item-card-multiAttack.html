@@ -31,7 +31,7 @@
         {{/if}}
         {{#each targets as |target key|}}
             {{log target}}
-            <li class="flexrow" data-target-id="{{target.uuid}}">
+            <li class="flexrow" data-target-id="{{target.document.uuid}}">
                 <div class="chat-portrait item item-prop">
                     <img src="{{target.data.img}}" title="{{target.name}}" />
                 </div>
