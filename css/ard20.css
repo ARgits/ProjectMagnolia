@@ -450,6 +450,10 @@ table tr th.under-chosen {
   border-top: 1px solid red;
 }
 
+.select2-selection--multiple .select2-selection__choice {
+  padding: left 0;
+}
+
 .select2-results > .select2-results__options {
   display: -webkit-box;
   display: -ms-flexbox;

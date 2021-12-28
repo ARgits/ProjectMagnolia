@@ -4,7 +4,7 @@
   "description": "Попытки сделать свою систему",
   "version": "0.0.1.11.127",
   "minimumCoreVersion": "0.8.3",
-  "compatibleCoreVersion": "0.8.9",
+  "compatibleCoreVersion": "Version 9",
   "author": "ARgits",
   "esmodules": ["module/ard20.mjs"],
   "styles": ["css/ard20.css", "css/select2.css", "https://cdn.jsdelivr.net/gh/djibe/material@4.5.3-rc3/css/material-plugins.min.css"],
