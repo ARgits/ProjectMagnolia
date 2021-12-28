@@ -157,6 +157,7 @@
     // Apply advantage or disadvantage
     this.options.critical = isCritical;
     this.options.rollMode = form.rollMode.value;
+    this.options.damageType = form.damageType
     this.configureDamage();
     return this;
   }

@@ -1,5 +1,6 @@
 <form>
   {{log "roll-dialog form " this}}
+  {{log this.form}}
   <div class="form-group">
     <label> {{localize "ARd20.Formula"}} </label>
     <input type="text" name="formula" value="{{formula}}" disabled />
@@ -22,8 +23,8 @@
         {{log "part " part "index " ind}}
         {{#if (gt part.length 1)}}
           <label>Choose damageType</label>
-          <select name="options.damageType.{{ind}}">
-            {{selectOptions part selected=part.[0]}}
+          <select name="damageType.{{ind}}">
+            {{selectOptions part}}
           </select>
         {{/if}}
       {{/each}}
