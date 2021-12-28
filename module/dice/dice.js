@@ -250,7 +250,6 @@ export async function damageRoll({
   rollMode,
   speaker,
   type,
-  damageType,
   flavor, // Chat Message customization
 } = {}) {
   // Handle input arguments
