@@ -235,7 +235,7 @@ export async function damageRoll({
   parts = [],
   data, // Roll creation
   critical = false,
-  damageType,
+  damType,
   criticalBonusDice,
   criticalMultiplier,
   multiplyNumeric, // Damage customization
@@ -264,7 +264,7 @@ export async function damageRoll({
     criticalBonusDice,
     criticalMultiplier,
     multiplyNumeric,
-    damageType:damageType,
+    damType,
     type
   });
 
@@ -278,7 +278,7 @@ export async function damageRoll({
         template,
         allowCritical,
         type,
-        damageType:damageType
+        damType
       },
       dialogOptions
     );

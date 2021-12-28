@@ -660,13 +660,14 @@ export class ARd20Item extends Item {
     console.log(event);
     const parts = iData.damage.current.parts.map((d) => d[0]);
     console.log(parts);
-    const damageType = iData.damage.current.parts.map((d) =>
+    const damType = iData.damage.current.parts.map((d) =>
       d[1].map((c) => {
         let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
         let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
         return `${a} ${b}`
       })
     );
+    options.damageType = iData.damage.current.parts.map((d)=> d[1])
     const hasAttack = false;
     const hasDamage = true;
     const rollData = this.getRollData(hasAttack, hasDamage);
@@ -677,7 +678,7 @@ export class ARd20Item extends Item {
       event: event,
       parts: parts,
       type: "damage",
-      damageType: damageType,
+      damType: damType,
     };
 
     return damageRoll(mergeObject(rollConfig, options));

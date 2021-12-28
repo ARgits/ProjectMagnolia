@@ -101,15 +101,14 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({ title, defaultRollMode,type,damageType, defaultCritical = false, template, allowCritical = true } = {}, options = {}) {
+  async configureDialog({ title, defaultRollMode,type,damType, defaultCritical = false, template, allowCritical = true } = {}, options = {}) {
     // Render the Dialog inner HTML
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
       defaultRollMode,
       rollModes: CONFIG.Dice.rollModes,
       type,
-      damageType
-
+      damType
     });
 
     // Create the Dialog window and await submission of the form
