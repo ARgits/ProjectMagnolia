@@ -23,12 +23,7 @@
         {{#if (gt part.length 1)}}
           <label>Choose damageType</label>
           <select name="damageType.{{ind}}">
-            {{#select}}
-              {{#each part as |p i|}}
-              {{log p i}}
-                <option value="{{i}}">{{p}}</option>
-              {{/each}}
-            {{/select}}
+            {{selectOptions part}}
           </select>
         {{/if}}
       {{/each}}
