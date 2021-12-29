@@ -661,10 +661,12 @@ export class ARd20Item extends Item {
     const parts = iData.damage.current.parts.map((d) => d[0]);
     console.log(parts);
     const damType = iData.damage.current.parts.map((d) =>
-      d[1].map((c) => {
+      d[1].map((c, ind) => {
+        console.log(c,ind)
         let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
         let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
-        return `${a} ${b}`
+        let obj = {key:ind, label:`${a} ${b}`}
+        return obj
       })
     );
     options.damageType = iData.damage.current.parts.map((d)=> d[1])
