@@ -25,6 +25,7 @@
           <select name="damageType.{{ind}}">
             {{#select}}
               {{#each part as |p i|}}
+              {{log p i}}
                 <option value="{{i}}">{{p}}</option>
               {{/each}}
             {{/select}}
