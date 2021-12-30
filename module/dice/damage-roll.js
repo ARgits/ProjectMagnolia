@@ -9,7 +9,7 @@
  * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
  *
  */
-export default class DamageRoll extends Roll {
+ export default class DamageRoll extends Roll {
   constructor(formula, data, options) {
     super(formula, data, options);
     // For backwards compatibility, skip rolls which do not have the "critical" option defined
@@ -157,7 +157,8 @@ export default class DamageRoll extends Roll {
     // Apply advantage or disadvantage
     this.options.critical = isCritical;
     this.options.rollMode = form.rollMode.value;
-    this.options.damageType.forEach((part, ind) => (this.options.damageType[ind] = form[`damageType.${ind}`] ? form[`damageType.${ind}`].value : part));
+    this.options.damageType.forEach((part, ind) => (this.options.damageType[ind] = form[`damageType.${ind}`] ? part[form[`damageType.${ind}`].value] : part[0]));
+    console.log(this.options.damageType)
     this.configureDamage();
     return this;
   }
