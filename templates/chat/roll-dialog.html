@@ -21,7 +21,7 @@
       {{#each damType as |part ind|}}
         {{log "part " part "index " ind}}
         {{#if (gt part.length 1)}}
-          <label>Choose damageType</label>
+          <label>Choose damage type for {{ind}} part of formula: </label>
           <select name="damageType.{{ind}}">
             {{selectOptions part selected=0 nameAttr="key" labelAttr="label"}}
           </select>

@@ -9,7 +9,7 @@
  * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
  *
  */
- export default class DamageRoll extends Roll {
+export default class DamageRoll extends Roll {
   constructor(formula, data, options) {
     super(formula, data, options);
     // For backwards compatibility, skip rolls which do not have the "critical" option defined
@@ -101,14 +101,14 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({ title, defaultRollMode,type,damType, defaultCritical = false, template, allowCritical = true } = {}, options = {}) {
+  async configureDialog({ title, defaultRollMode, type, damType, defaultCritical = false, template, allowCritical = true } = {}, options = {}) {
     // Render the Dialog inner HTML
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
       defaultRollMode,
       rollModes: CONFIG.Dice.rollModes,
       type,
-      damType
+      damType,
     });
 
     // Create the Dialog window and await submission of the form
@@ -157,7 +157,7 @@
     // Apply advantage or disadvantage
     this.options.critical = isCritical;
     this.options.rollMode = form.rollMode.value;
-    this.options.damageType = form.damageType
+    this.options.damageType.forEach((part, ind) => (this.options.damageType[ind] = form[`damageType.${ind}`] ? form[`damageType.${ind}`].value : part));
     this.configureDamage();
     return this;
   }
