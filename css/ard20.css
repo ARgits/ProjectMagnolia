@@ -34,6 +34,10 @@
   width: calc(5px + 10 * 10px);
 }
 
+.select2-dropdown {
+  z-index: 1051;
+}
+
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
@@ -611,9 +615,6 @@ table tr th.under-chosen {
 }
 .ard20 .sheet-body .tab ol li.header {
   background: rgba(0, 0, 0, 0.05);
-}
-.ard20 .select2-dropdown {
-  z-index: 1051;
 }
 .ard20 .tox .tox-editor-container {
   background: #fff;
