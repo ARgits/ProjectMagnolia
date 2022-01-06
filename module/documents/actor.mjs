@@ -1,4 +1,3 @@
-
 import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -26,7 +25,7 @@ export class ARd20Actor extends Actor {
     const def_dam = data.defences.damage;
     const def_stats = data.defences.stats;
     const abilities = data.abilities;
-    /** 
+    /**
      * @param {Number} bonus bonus
      * @param {Number} type
      */
@@ -48,6 +47,22 @@ export class ARd20Actor extends Actor {
     for (let [key, ability] of Object.entries(abilities)) {
       ability.bonus = 0;
     }
+  }
+  prepareEmbeddedDocuments() {
+    const actorData = this.data;
+    const data = actorData.data;
+    const flags = actorData.flags.ard20 || {};
+    const def_dam = data.defences.damage;
+    const def_stats = data.defences.stats;
+    const abilities = data.abilities;
+    this.itemTypes.armor.forEach((item) => {
+      for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+        if (!(key === "force" || key === "rad" || key === "psyhic")) {
+          def_dam.phys[key].bonus += item.res.phys[key];
+        }
+        def_dam.mag[key].bonus += item.res.mag[key];
+      }
+    });
   }
 
   /**

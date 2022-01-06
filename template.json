@@ -226,7 +226,11 @@
     },
     "Armor": {
       "templates": ["base"],
-      "type": "light"
+      "type": "light",
+      "res":{
+        "phys":{},
+        "mag":{}
+      }
     },
     "feature": {
       "templates": ["base"],
