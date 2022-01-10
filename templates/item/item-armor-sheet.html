@@ -47,12 +47,12 @@
               <td>{{localize dam}}</td>
               <td>
                 {{#if (and (ne key 'rad') (ne key 'force') (ne key 'psyhic'))}}
-                  <input value="data.res.phys.{{key}}" />
+                  <input name="data.res.phys.{{key}}" value="{{lookup @root.data.res.phys key}}" />
                 {{else}}
                   ---
                 {{/if}}
               </td>
-              <td><input value="data.res.mag.{{key}}" /> </td>
+              <td><input name="data.res.mag.{{key}}" value="{{lookup @root.data.res.mag key}}" /></td>
             </tr>
           {{/each}}
         </table>
