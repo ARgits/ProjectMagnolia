@@ -56,11 +56,16 @@ export class ARd20Actor extends Actor {
     const def_stats = data.defences.stats;
     const abilities = data.abilities;
     this.itemTypes.armor.forEach((item) => {
+      console.log(item);
       for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
         if (!(key === "force" || key === "rad" || key === "psyhic")) {
-          def_dam.phys[key].bonus += item.data.res.phys[key];
+          let ph = item.data.data.res.phys[key];
+          def_dam.phys[key].bonus += ph !== "imm" ? parseInt(ph) : 0;
+          def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
         }
-        def_dam.mag[key].bonus += item.data.res.mag[key];
+        let mg = item.data.data.res.mag[key];
+        def_dam.mag[key].bonus += mg !== "imm" ? pareseInt(mg) : 0;
+        def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
       }
     });
   }

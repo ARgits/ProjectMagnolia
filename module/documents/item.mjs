@@ -187,8 +187,8 @@ export class ARd20Item extends Item {
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
         data.res.phys[key] = data.res.phys[key] ?? 0;
-        data.res.mag[key] = data.res.mag[key] ?? 0;
       }
+      data.res.mag[key] = data.res.mag[key] ?? 0;
     }
   }
   /**
