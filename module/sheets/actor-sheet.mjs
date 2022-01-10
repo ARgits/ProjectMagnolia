@@ -91,6 +91,7 @@ export class ARd20ActorSheet extends ActorSheet {
     const gear = [];
     const features = [];
     const weapons = [];
+    const armor = [];
     const spells = {
       0: [],
       1: [],
@@ -120,12 +121,14 @@ export class ARd20ActorSheet extends ActorSheet {
         if (i.data.spellLevel != undefined) {
           spells[i.data.spellLevel].push(i);
         }
-      } else if (i.type === "weapon") {
+      } else if (i.type === "armor" || i.type === "weapon") {
         const isActive = getProperty(i.data, "equipped");
 
         i.toggleClass = isActive ? "active" : "";
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
-        weapons.push(i);
+        i.data.equipped = !isActive;
+        if (i.type === "armor") armor.push(i);
+        else weapons.push(i);
       }
     }
 
@@ -134,6 +137,7 @@ export class ARd20ActorSheet extends ActorSheet {
     context.features = features;
     context.spells = spells;
     context.weapons = weapons;
+    context.armor = armor;
   }
 
   /* -------------------------------------------- */
@@ -141,7 +145,7 @@ export class ARd20ActorSheet extends ActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    $('.select2', html).select2()
+    $(".select2", html).select2();
 
     // Render the item sheet for viewing/editing prior to the editable check.
     html.find(".item-toggle").click(this._onToggleItem.bind(this));

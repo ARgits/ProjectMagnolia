@@ -166,6 +166,7 @@
       "templates": ["base"],
       "quantity": 1,
       "weight": 0,
+      "equipped":false,
       "type": {
         "value": ""
       },
@@ -227,6 +228,7 @@
     "armor": {
       "templates": ["base"],
       "type": "light",
+      "equipped":false,
       "res":{
         "phys":{},
         "mag":{}

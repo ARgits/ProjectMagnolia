@@ -48,27 +48,6 @@ export class ARd20Actor extends Actor {
       ability.bonus = 0;
     }
   }
-  prepareEmbeddedDocuments() {
-    super.prepareEmbeddedDocuments()
-    const actorData = this.data;
-    const data = actorData.data;
-    const flags = actorData.flags.ard20 || {};
-    const def_dam = data.defences.damage;
-    const def_stats = data.defences.stats;
-    const abilities = data.abilities;
-    this.itemTypes.armor.forEach((item) => {
-      for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-        if (!(key === "force" || key === "rad" || key === "psyhic")) {
-          let ph = item.data.data.res.phys[key];
-          def_dam.phys[key].bonus += ph !== "imm" ? parseInt(ph) : 0;
-          def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
-        }
-        let mg = item.data.data.res.mag[key];
-        def_dam.mag[key].bonus += mg !== "imm" ? parseInt(mg) : 0;
-        def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
-      }
-    });
-  }
 
   /**
    * @override
@@ -102,6 +81,18 @@ export class ARd20Actor extends Actor {
     const attributes = data.attributes;
     const def_stats = data.defences.stats;
     const def_dam = data.defences.damage;
+    this.itemTypes.armor.forEach((item) => {
+      for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+        if (!(key === "force" || key === "rad" || key === "psyhic")) {
+          let ph = item.data.data.res.phys[key];
+          def_dam.phys[key].bonus += item.data.ph !== "imm" ? parseInt(ph) : 0;
+          def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
+        }
+        let mg = item.data.data.res.mag[key];
+        def_dam.mag[key].bonus += mg !== "imm" ? parseInt(mg) : 0;
+        def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
+      }
+    });
 
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(abilities)) {
