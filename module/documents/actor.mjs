@@ -49,6 +49,7 @@ export class ARd20Actor extends Actor {
     }
   }
   prepareEmbeddedDocuments() {
+    super.prepareEmbeddedDocuments()
     const actorData = this.data;
     const data = actorData.data;
     const flags = actorData.flags.ard20 || {};
@@ -56,7 +57,6 @@ export class ARd20Actor extends Actor {
     const def_stats = data.defences.stats;
     const abilities = data.abilities;
     this.itemTypes.armor.forEach((item) => {
-      console.log(item);
       for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
         if (!(key === "force" || key === "rad" || key === "psyhic")) {
           let ph = item.data.data.res.phys[key];
