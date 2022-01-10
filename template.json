@@ -148,7 +148,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell", "weapon", "race"],
+    "types": ["item", "feature", "spell", "weapon", "race","armor"],
     "templates": {
       "base": {
         "description": "",
