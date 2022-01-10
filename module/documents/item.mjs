@@ -103,7 +103,9 @@ export class ARd20Item extends Item {
       let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
       data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;
     }
-    data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type).length===0 ? data.settings[0].name : data.sub_type;
+    console.log(data.sub_type)
+    data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type).length===0 ? data.settings[0].name : data.sub_type || data.settings[0].name;
+    console.log(data.sub_type)
     labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
     labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
     data.prof.label = labels.prof;
@@ -208,7 +210,7 @@ export class ARd20Item extends Item {
     }
     let prof_bonus = 0;
     if (this.data.type === "weapon") {
-      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0].value : 0;
+      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0]?.value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
       data.prof.label = this.labels.prof;
       if (data.prof.value === 0) {
