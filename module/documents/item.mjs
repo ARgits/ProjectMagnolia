@@ -22,6 +22,7 @@ export class ARd20Item extends Item {
     this._prepareWeaponData(itemData, labels);
     this._prepareFeatureData(itemData, labels);
     this._prepareRaceData(itemData, labels);
+    this._prepareArmorData(itemData, labels);
     if (itemData.data.hasAttack) this._prepareAttack(itemData);
     if (itemData.data.hasDamage) this._prepareDamage(itemData);
     if (!this.isOwned) this.prepareFinalAttributes();
@@ -176,6 +177,19 @@ export class ARd20Item extends Item {
     if (itemData.type !== "race") return;
     const data = itemData.data;
     data.HPdie = CONFIG.ARd20.HPdice.slice(0, 7);
+  }
+  /**
+   * Prepare data for "armor" type item
+   */
+  _prepareArmorData(itemData, labels) {
+    if (itemData.type !== "armor") return;
+    const data = itemData.data;
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+      if (!(key === "force" || key === "rad" || key === "psyhic")) {
+        data.res.phys[key] = data.res.phys[key] ?? 0;
+        data.res.mag[key] = data.res.mag[key] ?? 0;
+      }
+    }
   }
   /**
   Prepare Data that uses actor's data
@@ -664,11 +678,11 @@ export class ARd20Item extends Item {
       d[1].map((c, ind) => {
         let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
         let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
-        let obj = {key:ind, label:`${a} ${b}`}
-        return obj
+        let obj = { key: ind, label: `${a} ${b}` };
+        return obj;
       })
     );
-    options.damageType = iData.damage.current.parts.map((d)=> d[1])
+    options.damageType = iData.damage.current.parts.map((d) => d[1]);
     const hasAttack = false;
     const hasDamage = true;
     const rollData = this.getRollData(hasAttack, hasDamage);

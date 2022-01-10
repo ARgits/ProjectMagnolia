@@ -58,9 +58,9 @@ export class ARd20Actor extends Actor {
     this.itemTypes.armor.forEach((item) => {
       for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
         if (!(key === "force" || key === "rad" || key === "psyhic")) {
-          def_dam.phys[key].bonus += item.res.phys[key];
+          def_dam.phys[key].bonus += item.data.res.phys[key];
         }
-        def_dam.mag[key].bonus += item.res.mag[key];
+        def_dam.mag[key].bonus += item.data.res.mag[key];
       }
     });
   }

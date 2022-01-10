@@ -224,7 +224,7 @@
         "master": ""
       }
     },
-    "Armor": {
+    "armor": {
       "templates": ["base"],
       "type": "light",
       "res":{
@@ -289,9 +289,6 @@
         },
         "skill": {}
       }
-    },
-    "armor":{
-      "part":"chest"
     }
   }
 }
