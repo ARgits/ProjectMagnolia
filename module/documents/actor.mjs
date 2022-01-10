@@ -64,7 +64,7 @@ export class ARd20Actor extends Actor {
           def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
         }
         let mg = item.data.data.res.mag[key];
-        def_dam.mag[key].bonus += mg !== "imm" ? pareseInt(mg) : 0;
+        def_dam.mag[key].bonus += mg !== "imm" ? parseInt(mg) : 0;
         def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
       }
     });
