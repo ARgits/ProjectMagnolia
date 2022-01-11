@@ -85,12 +85,12 @@ export class ARd20Actor extends Actor {
       for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
         if (!(key === "force" || key === "rad" || key === "psyhic")) {
           let ph = item.data.data.res.phys[key];
-          def_dam.phys[key].bonus += item.data.ph !== "imm" ? parseInt(ph) : 0;
-          def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
+          def_dam.phys[key].bonus += item.data.ph !== "imm" && item.data.equipped ? parseInt(ph) : 0;
+          def_dam.phys[key].type = ph === "imm" ? "imm" && item.data.equipped : def_dam.phys[key].type;
         }
         let mg = item.data.data.res.mag[key];
-        def_dam.mag[key].bonus += mg !== "imm" ? parseInt(mg) : 0;
-        def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
+        def_dam.mag[key].bonus += mg !== "imm" && item.data.equipped ? parseInt(mg) : 0;
+        def_dam.mag[key].type = mg === "imm" && item.data.equipped ? "imm" : def_dam.mag[key].type;
       }
     });
 
