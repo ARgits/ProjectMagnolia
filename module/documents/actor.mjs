@@ -1,4 +1,3 @@
-import { math } from "../../lib/math.js";
 import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
