@@ -190,6 +190,7 @@ export class ARd20Item extends Item {
       }
       data.res.mag[key] = data.res.mag[key] ?? 0;
     }
+    data.heavyPoints = CONFIG.ARd20.HeavyPoints[data.type][data.slot]
   }
   /**
   Prepare Data that uses actor's data

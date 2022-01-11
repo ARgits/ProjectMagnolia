@@ -1,3 +1,4 @@
+import { math } from "../../lib/math.js";
 import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -81,18 +82,23 @@ export class ARd20Actor extends Actor {
     const attributes = data.attributes;
     const def_stats = data.defences.stats;
     const def_dam = data.defences.damage;
+    let heavyPoints = 0;
     this.itemTypes.armor.forEach((item) => {
       for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-        if (!(key === "force" || key === "rad" || key === "psyhic")) {
-          let ph = item.data.data.res.phys[key];
-          def_dam.phys[key].bonus += ph !== "imm" && item.data.data.equipped ? parseInt(ph) : 0;
-          def_dam.phys[key].type = ph === "imm" ? "imm" && item.data.data.equipped : def_dam.phys[key].type;
+        if (item.data.data.equipped) {
+          if (!(key === "force" || key === "rad" || key === "psyhic")) {
+            let ph = item.data.data.res.phys[key];
+            def_dam.phys[key].bonus += ph !== "imm" ? parseInt(ph) : 0;
+            def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
+          }
+          let mg = item.data.data.res.mag[key];
+          def_dam.mag[key].bonus += mg !== "imm" ? parseInt(mg) : 0;
+          def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
+          heavyPoints += item.data.data.heavyPoints;
         }
-        let mg = item.data.data.res.mag[key];
-        def_dam.mag[key].bonus += mg !== "imm" && item.data.data.equipped ? parseInt(mg) : 0;
-        def_dam.mag[key].type = mg === "imm" && item.data.data.equipped ? "imm" : def_dam.mag[key].type;
       }
     });
+    let dexMod = heavyPoints < 10 ? abilities.dex.mod : heavyPoints < 16 ? Math.min(2, abilities.dex.mod) : Math.min(0, abilities.dex.mod);
 
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(abilities)) {
@@ -123,7 +129,7 @@ export class ARd20Actor extends Actor {
     calculate character's defences, including damage resistances
     */
 
-    def_stats.reflex.value = 10 + attributes.prof_bonus + abilities.dex.mod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
+    def_stats.reflex.value = 10 + attributes.prof_bonus + dexMod + abilities.int.mod + parseInt(def_stats.reflex.bonus);
     def_stats.reflex.label = "Reflex";
     def_stats.fortitude.value = 10 + attributes.prof_bonus + abilities.str.mod + abilities.con.mod + parseInt(def_stats.fortitude.bonus);
     def_stats.fortitude.label = "Fortitude";

@@ -228,6 +228,7 @@
     "armor": {
       "templates": ["base"],
       "type": "light",
+      "slot":"chest",
       "equipped":false,
       "res":{
         "phys":{},
