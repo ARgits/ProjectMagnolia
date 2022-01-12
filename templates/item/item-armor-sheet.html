@@ -37,19 +37,23 @@
       {{! As you add new fields, add them in here! }}
       <div>
         <label for="data.type">Type
-        <select name="data.type">
-          <option value="light">Light</option>
-          <option value="medium">Medium</option>
-          <option value="heavy">Heavy</option>
-        </select>
+          <select name="data.type">
+            {{#select data.type}}
+              <option value="light">Light</option>
+              <option value="medium">Medium</option>
+              <option value="heavy">Heavy</option>
+            {{/select}}
+          </select>
         </label>
         <label for="data.slot">slot
           <select name="data.slot">
-            <option value="chest">Chest</option>
-            <option value="gloves">Gloves</option>
-            <option value="boots">Boots</option>
-            <option value="head">Head</option>
-            <option value="pants">Pants</option>
+            {{#select data.slot}}
+              <option value="chest">Chest</option>
+              <option value="gloves">Gloves</option>
+              <option value="boots">Boots</option>
+              <option value="head">Head</option>
+              <option value="pants">Pants</option>
+            {{/select}}
           </select>
         </label>
         <Label for="data.heavyPoints">
