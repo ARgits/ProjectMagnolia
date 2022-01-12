@@ -59,8 +59,8 @@ export class ARd20ItemSheet extends ItemSheet {
         damage.damType = Object.values(damage?.damType || {});
         damage.parts = Object.values(damage?.parts || {}).map(function (d, ind) {
           let a = [];
-          if (prof.damType[ind].length !== 0) {
-            prof.damType[ind].forEach((sub, i) => a.push(JSON.parse(prof.damType[ind][i])));
+          if (damage.damType[ind].length !== 0) {
+            damage.damType[ind].forEach((sub, i) => a.push(JSON.parse(damage.damType[ind][i])));
           }
           return [d[0] || "", a];
         });
