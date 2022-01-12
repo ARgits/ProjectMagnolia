@@ -248,6 +248,10 @@
       "req": {
         "values": [],
         "logic": []
+      },
+      "damage":{
+        "parts":[],
+        "formula":""
       }
     },
     "spell": {

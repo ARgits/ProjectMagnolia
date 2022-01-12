@@ -83,8 +83,8 @@ export class ARd20Actor extends Actor {
     const def_dam = data.defences.damage;
     data.heavyPoints = 0;
     this.itemTypes.armor.forEach((item) => {
-      for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-        if (item.data.data.equipped) {
+      if (item.data.data.equipped) {
+        for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
           if (!(key === "force" || key === "rad" || key === "psyhic")) {
             let ph = item.data.data.res.phys[key];
             def_dam.phys[key].bonus += ph !== "imm" ? parseInt(ph) : 0;

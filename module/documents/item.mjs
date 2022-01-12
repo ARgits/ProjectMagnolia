@@ -242,6 +242,7 @@ export class ARd20Item extends Item {
       formula: "",
       parts: baseDamage,
     };
+    console.log(baseDamage)
     baseDamage.forEach((part) => {
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });

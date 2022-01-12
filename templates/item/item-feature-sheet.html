@@ -51,6 +51,38 @@
           <button type="button" class="config-button" data-action="feat-req">Requierements</button>
         </div>
       </div>
+      <label>Has damage?
+        <input type="checkbox" value="{{data.hasDamage}}" />
+      </label>
+      {{#if data.hasDamage}}
+        <div class="flexcol">
+          <label for="data.damage">
+            damage
+          </label>
+          <a class="damage-control add-damage" data-type=""><i class="fas fa-plus"></i></a>
+          <ol>
+            {{#each data.damage.parts as |part i|}}
+              <li class="damage-part flexrow" data-damage-part="{{i}}">
+                <input type="text" name="data.damage.parts.{{i}}.0" value="{{part.[0]}}" />
+                <label for="data.damage.damType.{{i}}"> Damage type:
+                  <select class="select2" multiple type="select-multiple" data-dtype="JSON" name="data.damage.damType.{{i}}">
+                    {{#each @root.config.DamageTypes as |dam key|}}
+                      <optgroup label={{localize dam}}>
+                        {{#each @root.config.DamageSubTypes as |sub k|}}
+                          {{#if (or (eq key 'mag') (and (ne k 'rad') (ne k 'force') (ne k 'psyhic')))}}
+                            <option value='["{{key}}", "{{k}}"]'>{{localize sub}}</option>
+                          {{/if}}
+                        {{/each}}
+                      </optgroup>
+                    {{/each}}
+                  </select>
+                </label>
+                <a class="damage-control delete-damage" data-type=""><i class="fas fa-minus"></i></a>
+              </li>
+            {{/each}}
+          </ol>
+        </div>
+      {{/if}}
       {{!-- Active Effects Tab --}}
       <div class="tab effects flexcol" data-group="primary" data-tab="effects">{{> "systems/ard20/templates/actor/parts/actor-effects.html"}}</div>
     {{/if}}
