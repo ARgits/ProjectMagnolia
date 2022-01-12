@@ -81,7 +81,7 @@ export class ARd20Actor extends Actor {
     const attributes = data.attributes;
     const def_stats = data.defences.stats;
     const def_dam = data.defences.damage;
-    let heavyPoints = 0;
+    data.heavyPoints = 0;
     this.itemTypes.armor.forEach((item) => {
       for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
         if (item.data.data.equipped) {
@@ -93,11 +93,14 @@ export class ARd20Actor extends Actor {
           let mg = item.data.data.res.mag[key];
           def_dam.mag[key].bonus += mg !== "imm" ? parseInt(mg) : 0;
           def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
-          heavyPoints += item.data.data.heavyPoints;
+          console.log(item.data.data.heavyPoints)
+          data.heavyPoints += item.data.data.heavyPoints;
         }
       }
     });
+    console.log(heavyPoints)
     let dexMod = heavyPoints < 10 ? abilities.dex.mod : heavyPoints < 16 ? Math.min(2, abilities.dex.mod) : Math.min(0, abilities.dex.mod);
+    console.log(dexMod)
 
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(abilities)) {

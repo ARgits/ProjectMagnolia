@@ -137,7 +137,7 @@ ARd20.DRtypes = {
   imm: "ARd20.Immunity",
 };
 ARd20.HPdice = ["1d6", "1d8", "1d10", "1d12", "1d12+2", "1d12+4", "1d20", "1d20+2", "1d20+4", "1d20+6", "1d20+8", "1d20+10", "1d20+12"];
-ARd20.HeavyPoins = {
+ARd20.HeavyPoints = {
   light: { chest: 3, gloves: 1, boots: 1, pants: 2, head: 1 },
   medium: { chest: 5, gloves: 2, boots: 2, pants: 3, head: 2 },
   heavy: { chest: 8, gloves: 3, boots: 3, pants: 5, head: 3 },

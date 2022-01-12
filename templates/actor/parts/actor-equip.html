@@ -30,7 +30,7 @@
       {{/each}}
     </ol>
   </li>
-  <li><div class="items-header">Armor</div>
+  <li><div class="items-header flexcol"><div>Armor</div><div>Подвижность: {{data.heavyPoints}}</div></div>
     <ol>
       <li class="item flexrow items-header">
         <div class="item-name">Name</div>
@@ -47,6 +47,7 @@
             </div>
             <h4>{{item.name}}</h4>
           </div>
+          <div>{{item.data.type}}</div>
           <div class="item-controls">
             <a class="item-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i class="fas fa-shield-alt"></i></a>
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>

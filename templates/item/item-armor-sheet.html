@@ -35,7 +35,28 @@
     {{! Attributes Tab }}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{! As you add new fields, add them in here! }}
-      <div class="resource">
+      <div>
+        <label for="data.type">Type
+        <select name="data.type">
+          <option value="light">Light</option>
+          <option value="medium">Medium</option>
+          <option value="heavy">Heavy</option>
+        </select>
+        </label>
+        <label for="data.slot">slot
+          <select name="data.slot">
+            <option value="chest">Chest</option>
+            <option value="gloves">Gloves</option>
+            <option value="boots">Boots</option>
+            <option value="head">Head</option>
+            <option value="pants">Pants</option>
+          </select>
+        </label>
+        <Label for="data.heavyPoints">
+          "Подвижность": {{data.heavyPoints}}
+        </Label>
+      </div>
+      <div>
         <table>
           <tr>
             <th>Name</th>
