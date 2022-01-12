@@ -240,6 +240,8 @@
       "source": {
         "value": ["mar"]
       },
+      "hasDamage":false,
+      "hasAttack":true,
       "xp": [0],
       "level": {
         "initial": 0,

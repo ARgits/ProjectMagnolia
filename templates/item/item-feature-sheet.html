@@ -52,7 +52,7 @@
         </div>
       </div>
       <label>Has damage?
-        <input type="checkbox" value="{{data.hasDamage}}" />
+        <input type="checkbox" name="data.hasDamage" {{checked data.hasDamage}} />
       </label>
       {{#if data.hasDamage}}
         <div class="flexcol">
