@@ -1,4 +1,3 @@
-
 <div class="ard20 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenId}}data-token-id="{{tokenId}}" {{/if}} {{#if isSpell}}data-spell-level="{{item.data.level}}" {{/if}}>
     <header class="card-header flexrow">
         <img src="{{item.img}}" title="{{item.name}}" width="36" height="36" />
@@ -10,16 +9,20 @@
         {{#if data.materials.value}}
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
-        {{#if hasAttack}}      
+        {{#if or(hasAttack, hasDamage)}}
             <div class="flexrow flex2" data-target-id="{{target.uuid}}">
-                <div class="attack-roll">
-                    <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
-                    <div>{{{@root.atk}}}</div>
-                </div>
-                <div class="damage-roll card-buttons">
-                    <div style="text-align:center">Damage:</div>
-                    <button data-action="damage">{{localize "ARd20.Damage"}}</button>
-                </div>
+                {{#if hasAttack}}
+                    <div class="attack-roll">
+                        <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
+                        <div>{{{@root.atk}}}</div>
+                    </div>
+                {{/if}}
+                {{#if hasDamage}}
+                    <div class="damage-roll card-buttons">
+                        <div style="text-align:center">Damage:</div>
+                        <button data-action="damage">{{localize "ARd20.Damage"}}</button>
+                    </div>
+                {{/if}}
             </div>
         {{/if}}
     </div>

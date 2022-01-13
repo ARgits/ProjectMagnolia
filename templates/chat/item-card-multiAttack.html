@@ -8,58 +8,70 @@
         {{#if data.materials.value}}
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
-        {{#if hasAttack}}
+        {{#if or(hasAttack,hasDamage)}}
             <ol class="flexcol items-list attack-target">
                 {{#if (gt targets.length 0)}}
                     <li class=" flexrow items-header">
-                <div class="flex2">Target:</div>
-                <div>{{localize "ARd20.Attack"}}:</div>
-                <div>{{localize "ARd20.Damage"}}</div>
-                </li>
-        {{/if}}
-        {{#if (eq targets.length 0)}}
-            <li class="flexrow">
-                <div class="attack-roll">
-                    <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
-                    <div>{{{atkHTML.[0]}}}</div>
-                </div>
-                <div class="damage-roll card-buttons">
-                    <div style="text-align:center">Damage:</div>
-                    <button data-action="damage">{{localize "ARd20.Damage"}}</button>
-                </div>
-            </li>
-        {{/if}}
-        {{#each targets as |target key|}}
-            {{log target}}
-            <li class="flexrow" data-target-id="{{target.document.uuid}}">
-                <div class="chat-portrait item item-prop">
-                    <img src="{{target.data.img}}" title="{{target.name}}" />
-                </div>
-                <div class="item item-prop">{{target.name}}</div>
-                <div class="attack-roll item item-prop">
-                    <div class="flexrow">
-                        <div class="value">
-                            {{lookup @root.atk key}} vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
+                        <div class="flex2">Target:</div>
+                        {{#if hasAttack}}
+                            <div>{{localize "ARd20.Attack"}}:</div>
+                        {{/if}}
+                        {{#if hasDamage}}
+                            <div>{{localize "ARd20.Damage"}}</div>
+                        {{/if}}
+                    </li>
+                {{/if}}
+                {{#if (eq targets.length 0)}}
+                    <li class="flexrow">
+                        {{#if hasAttack}}
+                            <div class="attack-roll">
+                                <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
+                                <div>{{{atkHTML.[0]}}}</div>
+                            </div>
+                        {{/if}}
+                        {{#if hasDamage}}
+                            <div class="damage-roll card-buttons">
+                                <div style="text-align:center">Damage:</div>
+                                <button data-action="damage">{{localize "ARd20.Damage"}}</button>
+                            </div>
+                        {{/if}}
+                    </li>
+                {{/if}}
+                {{#each targets as |target key|}}
+                    {{log target}}
+                    <li class="flexrow" data-target-id="{{target.document.uuid}}">
+                        <div class="chat-portrait item item-prop">
+                            <img src="{{target.data.img}}" title="{{target.name}}" />
                         </div>
-                        <div class="roll-controls">
-                            <span class="warning fas fa-exclamation-circle"></span>
-                            {{#if (lookup @root.hit key)}}<span class="accept fas fa-check-circle"></span>{{/if}}
-                        </div>
-                    </div>
-                    <div class="hover-roll">
-                        {{{lookup @root.atkHTML key}}}
-                    </div>
-                </div>
-                <div class="damage-roll card-buttons item item-prop">
-                    {{#if mAtk}}
-                        <button data-action="damage">{{localize "ARd20.Damage"}}</button>
-                    {{else}}
-                        {{{lookup @root.dmgHTML key}}}
-                    {{/if}}
-                </div>
-            </li>
-        {{/each}}
-        </ol>
+                        <div class="item item-prop">{{target.name}}</div>
+                        {{#if hasAttack}}
+                            <div class="attack-roll item item-prop">
+                                <div class="flexrow">
+                                    <div class="value">
+                                        {{lookup @root.atk key}} vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
+                                    </div>
+                                    <div class="roll-controls">
+                                        <span class="warning fas fa-exclamation-circle"></span>
+                                        {{#if (lookup @root.hit key)}}<span class="accept fas fa-check-circle"></span>{{/if}}
+                                    </div>
+                                </div>
+                                <div class="hover-roll">
+                                    {{{lookup @root.atkHTML key}}}
+                                </div>
+                            </div>
+                        {{/if}}
+                        {{#if hasDamage}}
+                            <div class="damage-roll card-buttons item item-prop">
+                                {{#if mAtk}}
+                                    <button data-action="damage">{{localize "ARd20.Damage"}}</button>
+                                {{else}}
+                                    {{{lookup @root.dmgHTML key}}}
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                    </li>
+                {{/each}}
+            </ol>
         {{/if}}
     </div>
     <footer class="card-footer">
