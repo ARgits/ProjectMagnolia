@@ -8,7 +8,7 @@
         {{#if data.materials.value}}
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
-        {{#if or(hasAttack,hasDamage)}}
+        {{#if (or hasAttack hasDamage)}}
             <ol class="flexcol items-list attack-target">
                 {{#if (gt targets.length 0)}}
                     <li class=" flexrow items-header">

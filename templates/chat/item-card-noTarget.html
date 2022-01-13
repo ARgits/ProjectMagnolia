@@ -9,7 +9,7 @@
         {{#if data.materials.value}}
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
-        {{#if or(hasAttack, hasDamage)}}
+        {{#if (or hasAttack hasDamage)}}
             <div class="flexrow flex2" data-target-id="{{target.uuid}}">
                 {{#if hasAttack}}
                     <div class="attack-roll">

@@ -103,7 +103,7 @@ export class ARd20Item extends Item {
       let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
       data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;
     }
-    data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type).length===0 ? data.settings[0].name : data.sub_type || data.settings[0].name;
+    data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type).length === 0 ? data.settings[0].name : data.sub_type || data.settings[0].name;
     labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
     labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
     data.prof.label = labels.prof;
@@ -190,7 +190,7 @@ export class ARd20Item extends Item {
       }
       data.res.mag[key] = data.res.mag[key] ?? 0;
     }
-    data.heavyPoints = CONFIG.ARd20.HeavyPoints[data.type][data.slot]
+    data.heavyPoints = CONFIG.ARd20.HeavyPoints[data.type][data.slot];
   }
   /**
   Prepare Data that uses actor's data
@@ -226,8 +226,7 @@ export class ARd20Item extends Item {
   _prepareAttack(itemData, prof_bonus, abil) {
     const data = itemData.data;
     if (!data.hasAttack) return;
-    if(data.atkMod){
-      
+    if (data.atkMod) {
     }
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
     data.attack = {
@@ -245,7 +244,7 @@ export class ARd20Item extends Item {
       formula: "",
       parts: baseDamage,
     };
-    console.log(baseDamage)
+    console.log(baseDamage);
     baseDamage.forEach((part) => {
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });
@@ -544,7 +543,7 @@ export class ARd20Item extends Item {
       }
     } else {
       atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
-      mAtk = atk[0].options.mAtk;
+      mAtk = atk[0] ? atk[0].options.mAtk : false;
       atkHTML[0] = hasAttack ? await atk[0].render() : null;
     }
     let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
