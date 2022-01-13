@@ -240,7 +240,7 @@
       "source": {
         "value": ["mar"]
       },
-      "hasDamage":false,
+      "hasDamage":true,
       "hasAttack":true,
       "xp": [0],
       "level": {

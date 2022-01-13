@@ -226,7 +226,10 @@ export class ARd20Item extends Item {
   _prepareAttack(itemData, prof_bonus, abil) {
     const data = itemData.data;
     if (!data.hasAttack) return;
-    let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : 0;
+    if(data.atkMod){
+      
+    }
+    let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
     data.attack = {
       formula: "1d20+" + prof_bonus + "+" + mod,
       parts: [mod, prof_bonus],

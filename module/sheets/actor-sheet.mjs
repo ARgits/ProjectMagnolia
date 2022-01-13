@@ -231,7 +231,7 @@ export class ARd20ActorSheet extends ActorSheet {
     console.log("БРОСОК");
     const id = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(id);
-    const [hasAttack, hasDamage] = Array(2).fill(item.data.hasAttack, item.data.hasDamage);
+    const [hasAttack, hasDamage] = Array(2).fill(item.data.data.hasAttack, item.data.data.hasDamage);
     if (item) return item.roll({ hasAttack, hasDamage });
   }
 
