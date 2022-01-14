@@ -158,7 +158,6 @@
     this.options.critical = isCritical;
     this.options.rollMode = form.rollMode.value;
     this.options.damageType.forEach((part, ind) => (this.options.damageType[ind] = form[`damageType.${ind}`] ? part[form[`damageType.${ind}`].value] : part[0]));
-    console.log(this.options.damageType)
     this.configureDamage();
     return this;
   }
