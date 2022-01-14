@@ -35,7 +35,7 @@
       {{selectOptions rollModes selected=defaultRollMode localize=true}}
     </select>
   </div>
-  {{#if (eq type "attack")}}
+  {{#if (or (eq type "attack") (eq type "damage"))}}
     <div class="form-group">
       <label> is Multiattack? </label>
       <input type="checkbox" name="mAtk" {{checked this.mAtk}} />

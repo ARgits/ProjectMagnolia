@@ -532,14 +532,20 @@ export class ARd20Item extends Item {
     const token = this.actor.token;
     if (targets.length !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
-      mAtk = atkRoll.options.mAtk;
       for (let [key, target] of Object.entries(targets)) {
-        dc[key] = target.actor.data.data.defences.stats[def].value;
-        atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
-        atkHTML[key] = hasAttack ? await atk[key].render() : null;
-        atk[key] = atk[key].total;
-        result[key] = atk[key] > dc[key] ? "hit" : "miss";
-        hit[key] = result[key] === "hit" ? true : false;
+        if (atkRoll) {
+          mAtk = atkRoll.options.mAtk;
+          dc[key] = target.actor.data.data.defences.stats[def].value;
+          atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
+          atkHTML[key] = hasAttack ? await atk[key].render() : null;
+          atk[key] = atk[key].total;
+          result[key] = atk[key] > dc[key] ? "hit" : "miss";
+          hit[key] = result[key] === "hit" ? true : false;
+        }
+        else{
+          let dmgRoll = hasDamage?await this.rollDamage(mAtk):null
+
+        }
       }
     } else {
       atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
@@ -671,7 +677,7 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {} } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mAtk } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     console.log(event);

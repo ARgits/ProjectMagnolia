@@ -251,6 +251,7 @@ export async function damageRoll({
   rollMode,
   speaker,
   type,
+  mAtk,
   flavor, // Chat Message customization
 } = {}) {
   // Handle input arguments
@@ -266,7 +267,7 @@ export async function damageRoll({
     criticalMultiplier,
     multiplyNumeric,
     damType,
-    type,
+    mAtk,
     damageType
   });
 
@@ -279,6 +280,7 @@ export async function damageRoll({
         defaultCritical: isCritical,
         template,
         allowCritical,
+        mAtk,
         type,
         damType
       },

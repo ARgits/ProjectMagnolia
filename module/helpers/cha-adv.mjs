@@ -77,7 +77,9 @@ export class CharacterAdvancement extends FormApplication {
       for (let key of game.settings.get("ard20", "feat").packs) {
         if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
           let feat_list = [];
-          feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
+          console.log(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.type === "Item")))
+          console.log(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.type === "Item")[0]))
+          feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.type === "Item")[0].index));
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
             let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
@@ -150,7 +152,8 @@ export class CharacterAdvancement extends FormApplication {
        * Count features by source
        */
       for (let [k, v] of Object.entries(this.data.feats.learned)) {
-        v.data.source.value.forEach((val) => {
+          console.log(v)
+        v.data.data.source.value.forEach((val) => {
           console.log(val);
           this.data.count.feats[val] += 1;
         });
