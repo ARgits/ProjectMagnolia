@@ -544,7 +544,6 @@ export class ARd20Item extends Item {
         }
         else{
           let dmgRoll = hasDamage?await this.rollDamage(mAtk):null
-
         }
       }
     } else {
@@ -569,7 +568,6 @@ export class ARd20Item extends Item {
       result,
       hit,
     };
-    //const html = await renderTemplate(`systems/ard20/templates/chat/item-card-${templateState}.html`, templateData);
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
 
     // Create the ChatMessage data object
@@ -680,9 +678,7 @@ export class ARd20Item extends Item {
   rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mAtk } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
-    console.log(event);
     const parts = iData.damage.current.parts.map((d) => d[0]);
-    console.log(parts);
     const damType = iData.damage.current.parts.map((d) =>
       d[1].map((c, ind) => {
         let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
