@@ -26,13 +26,13 @@
                 {{#if (eq targets.length 0)}}
                     {{log "0 targets"}}
                     <li class="flexrow">
-                        {{#if hasAttack}}
+                        {{#if @root.hasAttack}}
                             <div class="attack-roll">
                                 <div style="text-align:center"> {{localize "ARd20.Attack"}}:</div>
                                 <div>{{{atkHTML.[0]}}}</div>
                             </div>
                         {{/if}}
-                        {{#if hasDamage}}
+                        {{#if @root.hasDamage}}
                             <div class="damage-roll card-buttons">
                                 <div style="text-align:center">Damage:</div>
                                 <button data-action="damage">{{localize "ARd20.Damage"}}</button>
@@ -47,7 +47,7 @@
                             <img src="{{target.data.img}}" title="{{target.name}}" />
                         </div>
                         <div class="item item-prop">{{target.name}}</div>
-                        {{#if hasAttack}}
+                        {{#if @root.hasAttack}}
                             {{log "attack for " key " target"}}
                             <div class="attack-roll item item-prop">
                                 <div class="flexrow">
@@ -64,10 +64,10 @@
                                 </div>
                             </div>
                         {{/if}}
-                        {{#if hasDamage}}
+                        {{#if @root.hasDamage}}
                             {{log "damage for " key " target"}}
                             <div class="damage-roll card-buttons item item-prop">
-                                {{#if mAtk}}
+                                {{#if @root.mAtk}}
                                     {{log "mAtk true"}}
                                     <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                                 {{else}}
