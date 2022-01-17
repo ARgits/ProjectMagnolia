@@ -510,7 +510,7 @@ export class ARd20Item extends Item {
     const token = this.actor.token;
     if (targets.length !== 0) {
       let atkRoll = hasAttack ? await this.rollAttack(mRoll, { canMult: true }) : null;
-      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll, { canMult: true }) : null;
+      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage({ canMult: true }) : null;
       for (let [key, target] of Object.entries(targets)) {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll;
