@@ -684,8 +684,8 @@ export class ARd20Item extends Item {
       damType: damType,
       mRoll: mRoll,
     };
-    const roll = await damageRoll(mergeObject(rollConfig, options));
-    return roll;
+    return damageRoll(mergeObject(rollConfig, options));
+    
   }
   /**
    * Update a label to the Item detailing its total to hit bonus.
