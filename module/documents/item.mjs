@@ -445,6 +445,7 @@ export class ARd20Item extends Item {
     }
     const dam = await item.rollDamage({
       event: event,
+      canMult: false,
     });
     const html = $(message.data.content);
     let damHTML = await dam.render();
@@ -520,6 +521,7 @@ export class ARd20Item extends Item {
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           hit[key] = result[key] === "hit" ? true : false;
         } else {
+          mRoll = dmgRoll.options.mRoll;
           dmg[key] = hasDamage ? (Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : await dmgRoll.reroll()) : null;
           dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
         }
@@ -654,7 +656,7 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean() } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean() } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     const parts = iData.damage.current.parts.map((d) => d[0]);
@@ -676,7 +678,7 @@ export class ARd20Item extends Item {
       data: rollData,
       event: event,
       parts: parts,
-      type: "damage",
+      canMult: canMult,
       damType: damType,
       mRoll: mRoll,
     };

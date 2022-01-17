@@ -250,10 +250,11 @@ export async function damageRoll({
   messageData = {},
   rollMode,
   speaker,
-  type,
+  canMult,
   flavor,
   mRoll
 } = {}) {
+  console.log(mRoll)
   // Handle input arguments
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
 
@@ -281,7 +282,7 @@ export async function damageRoll({
         template,
         allowCritical,
         mRoll,
-        type,
+        canMult,
         damType
       },
       dialogOptions

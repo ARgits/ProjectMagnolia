@@ -35,7 +35,7 @@
       {{selectOptions rollModes selected=defaultRollMode localize=true}}
     </select>
   </div>
-  {{#if (or (eq type "attack") (eq type "damage"))}}
+  {{#if canMult}}
     <div class="form-group">
       <label> Roll for each target separately </label>
       <input type="checkbox" name="mRoll" {{checked mRoll}} />
