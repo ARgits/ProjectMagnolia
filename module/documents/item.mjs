@@ -509,8 +509,8 @@ export class ARd20Item extends Item {
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
-      let atkRoll = hasAttack ? await this.rollAttack(mRoll, {canMult:true}) : null;
-      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll, {canMult:true}) : null;
+      let atkRoll = hasAttack ? await this.rollAttack(mRoll, { canMult: true }) : null;
+      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll, { canMult: true }) : null;
       for (let [key, target] of Object.entries(targets)) {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll;
@@ -684,8 +684,8 @@ export class ARd20Item extends Item {
       damType: damType,
       mRoll: mRoll,
     };
-
-    return damageRoll(mergeObject(rollConfig, options));
+    const roll = await damageRoll(mergeObject(rollConfig, options));
+    return roll;
   }
   /**
    * Update a label to the Item detailing its total to hit bonus.

@@ -254,7 +254,7 @@ export async function damageRoll({
   flavor,
   mRoll
 } = {}) {
-  console.log(mRoll)
+  console.log(canMult)
   // Handle input arguments
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
 
