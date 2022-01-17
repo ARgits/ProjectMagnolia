@@ -20,7 +20,7 @@ export class CharacterAdvancement extends FormApplication {
   async getData(options) {
     if (!this.data) {
       this.data = {
-        isReady: duplicate(this.object.data.data.isReady),
+        isReady: duplicate(this.object.data.data.isReady), // check, if the character is ready
         abilities: duplicate(this.object.data.data.abilities),
         skills: duplicate(this.object.data.data.skills),
         xp: duplicate(this.object.data.data.attributes.xp),
@@ -28,15 +28,15 @@ export class CharacterAdvancement extends FormApplication {
         health: duplicate(this.object.data.data.health),
         races: { list: [], chosen: null },
         count: {
-          // counter for skills, features and other things for proper xp calculations
+          // counter for skills and feats
           skills: {
-            //counter for skills with 'untrained', 'basic', and 'mastery' rank
+            // count skills by their level
             0: 0,
             1: 0,
             2: 0,
           },
           feats: {
-            //counter for features by their source
+            // count feats by their source
             mar: 0,
             mag: 0,
             div: 0,
@@ -45,13 +45,13 @@ export class CharacterAdvancement extends FormApplication {
           },
         },
         content: {
-          // descriptions
+          // descriptions for skills and feats
           skills: {},
           feats: {},
         },
         feats: {
-          learned: [], //items that character already has
-          awail: [], //items that character can purchase
+          learned: [], // array of feats that have been learned
+          awail: [], // array of feats that are available to learn
         },
         allow: {
           ability: false,
@@ -65,20 +65,15 @@ export class CharacterAdvancement extends FormApplication {
           feat: null,
         },
       };
-      let temp_feat_list = [];
-      let pack_list = [];
-      let folder_list = [];
+      let pack_list = []; // array of feats from Compendium
       let pack_name = [];
+      let folder_list = []; // array of feats from game folders
       let folder_name = [];
+      let temp_feat_list = []; // final array of feats
       this.data.xp.get = this.data.isReady || this.data.xp.used !== 0 ? this.data.xp.get : 10000;
-      /*
-       * Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums
-       */
       for (let key of game.settings.get("ard20", "feat").packs) {
         if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
           let feat_list = [];
-          console.log(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.type === "Item")))
-          console.log(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.type === "Item")[0]))
           feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.type === "Item")[0].index));
           feat_list = feat_list.flat();
           for (let feat of feat_list) {
@@ -136,9 +131,7 @@ export class CharacterAdvancement extends FormApplication {
       }
       temp_feat_list = temp_feat_list.filter((item) => (item.type === "feature" && !name_array.includes(item.name)) || item.data.level.current !== item.data.level.max);
       this.data.feats.awail = temp_feat_list;
-      /*
-       * Count skills by rank
-       */
+      // count skills by rank
       for (let [k, v] of Object.entries(CONFIG.ARd20.skills)) {
         if (this.data.skills[k].rank === 0) {
           this.data.count.skills[0] += 1;
@@ -148,11 +141,9 @@ export class CharacterAdvancement extends FormApplication {
           this.data.count.skills[2] += 1;
         }
       }
-      /*
-       * Count features by source
-       */
+      // count feats by source
       for (let [k, v] of Object.entries(this.data.feats.learned)) {
-          console.log(v)
+        console.log(v);
         v.data.data.source.value.forEach((val) => {
           console.log(val);
           this.data.count.feats[val] += 1;
@@ -254,9 +245,7 @@ export class CharacterAdvancement extends FormApplication {
       race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + race_mod;
       race.chosen = this.data.races.chosen === race._id ? true : false;
     }
-    /*
-     * Check if all right at character creation
-     */
+    // At character creation, check all conditions
     if (!this.object.data.isReady) {
       let abil_sum = null;
       for (let [key, abil] of Object.entries(this.data.abilities)) {
@@ -402,7 +391,6 @@ export class CharacterAdvancement extends FormApplication {
   }
   async _updateObject(event, formData) {
     let updateData = expandObject(formData);
-    console.log(updateData);
     const actor = this.object;
     this.render();
     const obj = {};
@@ -435,7 +423,6 @@ export class CharacterAdvancement extends FormApplication {
         feats_data.new.push(v);
       }
     }
-    console.log("update", feats_data.new);
     let pass = [];
     for (let [k, v] of Object.entries(feats_data.exist)) {
       pass.push(v.pass.slice(0, v.pass.length - 1));

@@ -9,8 +9,10 @@
             <p><strong>{{ localize "ARd20.RequiredMaterials" }}.</strong> {{data.materials.value}}</p>
         {{/if}}
         {{#if (or hasAttack hasDamage)}}
+            {{log "attack card"}}
             <ol class="flexcol items-list attack-target">
                 {{#if (gt targets.length 0)}}
+                    {{log "targets more than 0"}}
                     <li class=" flexrow items-header">
                         <div class="flex2">Target:</div>
                         {{#if hasAttack}}
@@ -22,6 +24,7 @@
                     </li>
                 {{/if}}
                 {{#if (eq targets.length 0)}}
+                    {{log "0 targets"}}
                     <li class="flexrow">
                         {{#if hasAttack}}
                             <div class="attack-roll">
@@ -38,12 +41,14 @@
                     </li>
                 {{/if}}
                 {{#each targets as |target key|}}
+                    {{log "several targets"}}
                     <li class="flexrow" data-target-id="{{target.document.uuid}}">
                         <div class="chat-portrait item item-prop">
                             <img src="{{target.data.img}}" title="{{target.name}}" />
                         </div>
                         <div class="item item-prop">{{target.name}}</div>
                         {{#if hasAttack}}
+                            {{log "attack for " key " target"}}
                             <div class="attack-roll item item-prop">
                                 <div class="flexrow">
                                     <div class="value">
@@ -60,10 +65,13 @@
                             </div>
                         {{/if}}
                         {{#if hasDamage}}
+                            {{log "damage for " key " target"}}
                             <div class="damage-roll card-buttons item item-prop">
                                 {{#if mAtk}}
+                                    {{log "mAtk true"}}
                                     <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                                 {{else}}
+                                    {{log "mAtk false"}}
                                     {{{lookup @root.dmgHTML key}}}
                                 {{/if}}
                             </div>
