@@ -509,8 +509,8 @@ export class ARd20Item extends Item {
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
-      let atkRoll = hasAttack ? await this.rollAttack(mRoll) : null;
-      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll) : null;
+      let atkRoll = hasAttack ? await this.rollAttack(mRoll, canMult=true) : null;
+      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll, canMult=true) : null;
       for (let [key, target] of Object.entries(targets)) {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll;
@@ -624,7 +624,7 @@ export class ARd20Item extends Item {
    * @param {object} options        Roll options which are configured and provided to the d20Roll function
    * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
    */
-  async rollAttack(mRoll = Boolean(), options = {}) {
+  async rollAttack(mRoll = Boolean(),canMult=Boolean(), options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -648,7 +648,7 @@ export class ARd20Item extends Item {
         create: false,
       },
       targetValue: targets,
-      type: "attack",
+      canMult:canMult,
       mRoll: mRoll,
     };
     rollConfig = mergeObject(rollConfig, options);
