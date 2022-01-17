@@ -67,11 +67,11 @@
                         {{#if @root.hasDamage}}
                             {{log "damage for " key " target"}}
                             <div class="damage-roll card-buttons item item-prop">
-                                {{#if @root.mAtk}}
-                                    {{log "mAtk true"}}
+                                {{#if @root.mRoll}}
+                                    {{log "mRoll true"}}
                                     <button data-action="damage">{{localize "ARd20.Damage"}}</button>
                                 {{else}}
-                                    {{log "mAtk false"}}
+                                    {{log "mRoll false"}}
                                     {{{lookup @root.dmgHTML key}}}
                                 {{/if}}
                             </div>

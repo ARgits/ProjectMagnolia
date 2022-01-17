@@ -282,8 +282,8 @@ export class ARd20Item extends Item {
     const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
     const targets = Array.from(game.user.targets);
-    const mAtk = this.data.data.mAtk || false;
-    return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mAtk });
+    const mRoll = this.data.data.mRoll || false;
+    return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mRoll });
   }
   async AttackCheck(attack, damage, targets) {
     for (let target of targets) {
@@ -445,6 +445,16 @@ export class ARd20Item extends Item {
     const dam = await item.rollDamage({
       event: event,
     });
+    _applyDamage(dam);
+    const html = $(message.data.content);
+    let damHTML = await dam.render();
+    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
+    console.log(html[0]);
+    await message.update({ content: html[0].outerHTML });
+  }
+  async _applyDamage(dam) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach((term) => {
@@ -472,15 +482,7 @@ export class ARd20Item extends Item {
         value: value,
       });
     }
-    const html = $(message.data.content);
-    let damHTML = await dam.render();
-    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
-    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
-    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
-    console.log(html[0]);
-    await message.update({ content: html[0].outerHTML });
   }
-
   /* -------------------------------------------- */
 
   /**
@@ -521,37 +523,40 @@ export class ARd20Item extends Item {
     const elem = event.currentTarget;
     const 
   }*/
-  async displayCard({ rollMode, createMessage = true, hasAttack = Boolean(), hasDamage = Boolean(), targets = [], mAtk = Boolean() } = {}) {
+  async displayCard({ rollMode, createMessage = true, hasAttack = Boolean(), hasDamage = Boolean(), targets = [], mRoll = Boolean() } = {}) {
     // Render the chat card template
     let atk = {};
     let dc = {};
     let atkHTML = {};
+    let dmgHTML = {};
     let result = {};
     let hit = {};
+    let dmg = {};
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
-      let atkRoll = hasAttack ? await this.rollAttack(mAtk) : null;
+      let atkRoll = hasAttack ? await this.rollAttack(mRoll) : null;
+      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll) : null;
       for (let [key, target] of Object.entries(targets)) {
         if (atkRoll) {
-          mAtk = atkRoll.options.mAtk;
+          mRoll = atkRoll.options.mRoll;
           dc[key] = target.actor.data.data.defences.stats[def].value;
-          atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mAtk ? atkRoll : atkRoll.reroll()) : null;
+          atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : atkRoll.reroll()) : null;
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           atk[key] = atk[key].total;
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           hit[key] = result[key] === "hit" ? true : false;
-        }
-        else{
-          let dmgRoll = hasDamage?await this.rollDamage(mAtk):null
+        } else {
+          dmg[key] = hasDamage ? (Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : dmgRoll.reroll()) : null;
+          dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
         }
       }
     } else {
-      atk[0] = hasAttack ? await this.rollAttack(mAtk) : null;
-      mAtk = atk[0] ? atk[0].options.mAtk : false;
+      atk[0] = hasAttack ? await this.rollAttack(mRoll) : null;
+      mRoll = atk[0] ? atk[0].options.mRoll : false;
       atkHTML[0] = hasAttack ? await atk[0].render() : null;
     }
-    let templateState = targets.size !== 0 ? (mAtk ? "multiAttack" : "oneAttack") : "noTarget";
+    let templateState = targets.size !== 0 ? (mRoll ? "multiAttack" : "oneAttack") : "noTarget";
     const templateData = {
       actor: this.actor.data,
       tokenId: token?.uuid || null,
@@ -567,6 +572,7 @@ export class ARd20Item extends Item {
       dc,
       result,
       hit,
+      dmgHTML,
     };
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
 
@@ -643,7 +649,7 @@ export class ARd20Item extends Item {
    * @param {object} options        Roll options which are configured and provided to the d20Roll function
    * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
    */
-  async rollAttack(mAtk = Boolean(), options = {}) {
+  async rollAttack(mRoll = Boolean(), options = {}) {
     const itemData = this.data.data;
     const flags = this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -668,14 +674,14 @@ export class ARd20Item extends Item {
       },
       targetValue: targets,
       type: "attack",
-      mAtk: mAtk,
+      mRoll: mRoll,
     };
     rollConfig = mergeObject(rollConfig, options);
     const roll = await d20Roll(rollConfig);
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mAtk } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean() } = {}) {
     const iData = this.data.data;
     const aData = this.actor.data.data;
     const parts = iData.damage.current.parts.map((d) => d[0]);
@@ -699,6 +705,7 @@ export class ARd20Item extends Item {
       parts: parts,
       type: "damage",
       damType: damType,
+      mRoll: mRoll,
     };
 
     return damageRoll(mergeObject(rollConfig, options));

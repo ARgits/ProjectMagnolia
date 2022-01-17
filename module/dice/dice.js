@@ -133,7 +133,7 @@ export async function d20Roll({
   options,
   flavor,
   type,
-  mAtk, 
+  mRoll, 
 } = {}) {
   // Handle input arguments
   const formula = ["1d20"].concat(parts).join(" + ");
@@ -151,7 +151,7 @@ export async function d20Roll({
     critical,
     fumble,
     targetValue,
-    mAtk,
+    mRoll,
   });
 
   // Prompt a Dialog to further configure the D20Roll
@@ -165,7 +165,7 @@ export async function d20Roll({
         defaultAbility: data?.item?.ability,
         template,
         type,
-        mAtk,
+        mRoll,
       },
       dialogOptions
     );
@@ -251,7 +251,7 @@ export async function damageRoll({
   rollMode,
   speaker,
   type,
-  mAtk,
+  mRoll,
   flavor, // Chat Message customization
 } = {}) {
   // Handle input arguments
@@ -267,7 +267,7 @@ export async function damageRoll({
     criticalMultiplier,
     multiplyNumeric,
     damType,
-    mAtk,
+    mRoll,
     damageType
   });
 
@@ -280,7 +280,7 @@ export async function damageRoll({
         defaultCritical: isCritical,
         template,
         allowCritical,
-        mAtk,
+        mRoll,
         type,
         damType
       },

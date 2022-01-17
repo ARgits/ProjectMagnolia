@@ -37,8 +37,8 @@
   </div>
   {{#if (or (eq type "attack") (eq type "damage"))}}
     <div class="form-group">
-      <label> is Multiattack? </label>
-      <input type="checkbox" name="mAtk" {{checked this.mAtk}} />
+      <label> Roll for each target separately </label>
+      <input type="checkbox" name="mRoll" {{checked this.mRoll}} />
     </div>
   {{/if}}
 </form>
