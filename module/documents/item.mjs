@@ -509,10 +509,8 @@ export class ARd20Item extends Item {
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
-      const canMult = true;
-      let atkRoll = hasAttack ? await this.rollAttack(mRoll, canMult) : null;
-      console.log(canMult);
-      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll, canMult) : null;
+      let atkRoll = hasAttack ? await this.rollAttack(mRoll, {canMult:true}) : null;
+      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage(mRoll, {canMult:true}) : null;
       for (let [key, target] of Object.entries(targets)) {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll;
