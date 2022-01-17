@@ -132,7 +132,7 @@ export async function d20Roll({
   speaker,
   options,
   flavor,
-  type,
+  canMult,
   mRoll, 
 } = {}) {
   // Handle input arguments
@@ -164,7 +164,7 @@ export async function d20Roll({
         defaultAction: advantageMode,
         defaultAbility: data?.item?.ability,
         template,
-        type,
+        canMult,
         mRoll,
       },
       dialogOptions

@@ -121,7 +121,7 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({ title, defaultRollMode, type, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
+  async configureDialog({ title, defaultRollMode, canMult, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
     // Render the Dialog inner HTML
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
@@ -130,7 +130,7 @@
       chooseModifier,
       defaultAbility,
       abilities: CONFIG.ARd20.abilities,
-      type,
+      canMult,
       mRoll,
     });
     let defaultButton = "normal";
