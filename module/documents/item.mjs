@@ -285,32 +285,6 @@ export class ARd20Item extends Item {
     const mRoll = this.data.data.mRoll || false;
     return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mRoll });
   }
-  async AttackCheck(attack, damage, targets) {
-    for (let target of targets) {
-      let actor = target.actor;
-      const reflex = actor.data.data.defences.reflex.value;
-      let { value } = actor.data.data.health;
-      let obj = {};
-      value -= target.data.damage;
-      obj["data.health.value"] = value;
-      if (target.data.attack >= reflex) {
-        console.log("HIT!");
-        if (game.user.isGM) {
-          console.log("GM");
-          await actor.update(obj);
-        } else {
-          console.log("not GM");
-          game.socket.emit("system.ard20", {
-            operation: "updateActorData",
-            actor: actor,
-            update: obj,
-            value: value,
-          });
-        }
-      } else console.log("miss");
-    }
-  }
-
   /* -------------------------------------------- */
   /*  Chat Message Helpers                        */
   /* -------------------------------------------- */
@@ -420,41 +394,7 @@ export class ARd20Item extends Item {
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
-
-  static async _rollDamage(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    const card = element.closest(".chat-card");
-    const message = game.messages.get(card.closest(".message").dataset.messageId);
-    const targetUuid = element.closest("li.flexrow").dataset.targetId;
-    const token = await fromUuid(targetUuid);
-    const tActor = token.actor;
-    const tData = tActor.data.data;
-    let tHealth = tData.health.value;
-    console.log(tHealth, "здоровье цели");
-    // Recover the actor for the chat card
-    const actor = await this._getChatCardActor(card);
-    if (!actor) return;
-
-    // Get the Item from stored flag data or by the item ID on the Actor
-    const storedData = message.getFlag("ard20", "itemData");
-    const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
-    if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
-    }
-    const dam = await item.rollDamage({
-      event: event,
-    });
-    _applyDamage(dam);
-    const html = $(message.data.content);
-    let damHTML = await dam.render();
-    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
-    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
-    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
-    console.log(html[0]);
-    await message.update({ content: html[0].outerHTML });
-  }
-  async _applyDamage(dam) {
+  async _applyDamage(dam, tData, tHealth, tActor) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach((term) => {
@@ -483,6 +423,39 @@ export class ARd20Item extends Item {
       });
     }
   }
+  static async _rollDamage(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const card = element.closest(".chat-card");
+    const message = game.messages.get(card.closest(".message").dataset.messageId);
+    const targetUuid = element.closest("li.flexrow").dataset.targetId;
+    const token = await fromUuid(targetUuid);
+    const tActor = token.actor;
+    const tData = tActor.data.data;
+    let tHealth = tData.health.value;
+    console.log(tHealth, "здоровье цели");
+    // Recover the actor for the chat card
+    const actor = await this._getChatCardActor(card);
+    if (!actor) return;
+    // Get the Item from stored flag data or by the item ID on the Actor
+    const storedData = message.getFlag("ard20", "itemData");
+    const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
+    if (!item) {
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+    }
+    const dam = await item.rollDamage({
+      event: event,
+    });
+    const html = $(message.data.content);
+    let damHTML = await dam.render();
+    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
+    console.log(html[0]);
+    await message.update({ content: html[0].outerHTML });
+    await item._applyDamage(dam, tData, tHealth, tActor);
+  }
+
   /* -------------------------------------------- */
 
   /**
