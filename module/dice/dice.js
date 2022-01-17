@@ -251,8 +251,8 @@ export async function damageRoll({
   rollMode,
   speaker,
   type,
-  mRoll,
-  flavor, // Chat Message customization
+  flavor,
+  mRoll
 } = {}) {
   // Handle input arguments
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");

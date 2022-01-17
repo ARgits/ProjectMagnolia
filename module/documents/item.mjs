@@ -514,13 +514,13 @@ export class ARd20Item extends Item {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll;
           dc[key] = target.actor.data.data.defences.stats[def].value;
-          atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : atkRoll.reroll()) : null;
+          atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           atk[key] = atk[key].total;
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           hit[key] = result[key] === "hit" ? true : false;
         } else {
-          dmg[key] = hasDamage ? (Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : dmgRoll.reroll()) : null;
+          dmg[key] = hasDamage ? (Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : await dmgRoll.reroll()) : null;
           dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
         }
       }
