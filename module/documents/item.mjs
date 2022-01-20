@@ -506,7 +506,7 @@ export class ARd20Item extends Item {
     let result = {};
     let hit = {};
     let dmg = {};
-    let dieResultCss;
+    let dieResultCss = {};
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
