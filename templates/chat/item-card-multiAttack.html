@@ -40,6 +40,7 @@
                 {{/if}}
                 {{#each targets as |target key|}}
                     {{log key}}
+                    {{log (lookup @root.dieResultCss key)}}
                     <li class="flexrow" data-target-id="{{target.document.uuid}}">
                         <div class="chat-portrait item item-prop">
                             <img src="{{target.data.img}}" title="{{target.name}}" />
@@ -49,7 +50,7 @@
                             <div class="attack-roll item item-prop">
                                 <div class="flexrow">
                                     <div class="value">
-                                        <span class=" {{lookup @root.dieResultCss key}} "> {{@root.atk key}}</span> vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
+                                        <span class="{{lookup @root.dieResultCss key}}"> {{@root.atk key}}</span> vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
                                     </div>
                                     <div class="roll-controls">
                                         <span class="warning fas fa-exclamation-circle"></span>
