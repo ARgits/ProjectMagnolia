@@ -114,18 +114,18 @@ function _isUnsupportedTerm(term) {
  */
 export async function d20Roll({
   parts = [],
-  data = {}, // Roll creation
+  data = {},
   advantage,
   disadvantage,
   fumble = 1,
   critical = 20,
-  targetValue, // Roll customization
+  targetValue,
   chooseModifier = false,
   fastForward = false,
   event,
   template,
   title,
-  dialogOptions, // Dialog configuration
+  dialogOptions,
   chatMessage = true,
   messageData = {},
   rollMode,

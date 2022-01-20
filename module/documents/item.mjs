@@ -506,6 +506,8 @@ export class ARd20Item extends Item {
     let result = {};
     let hit = {};
     let dmg = {};
+    let critDie = {};
+    let fumbleDie = {};
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
@@ -518,6 +520,9 @@ export class ARd20Item extends Item {
           atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           atk[key] = atk[key].total;
+          let d20 = atk[key] ? atk[key].terms[0] : null;
+          critDie[key] = d20 ? d20.total >= d20.options.critical : false;
+          fumbleDie[key] = d20 ? d20.total <= d20.options.fumble : false;
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           hit[key] = result[key] === "hit" ? true : false;
         } else {
@@ -548,6 +553,8 @@ export class ARd20Item extends Item {
       result,
       hit,
       dmgHTML,
+      critDie,
+      fumbleDie,
     };
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
 
@@ -685,7 +692,6 @@ export class ARd20Item extends Item {
       mRoll: mRoll,
     };
     return damageRoll(mergeObject(rollConfig, options));
-    
   }
   /**
    * Update a label to the Item detailing its total to hit bonus.

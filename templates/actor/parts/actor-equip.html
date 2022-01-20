@@ -35,6 +35,7 @@
     <ol>
       <li class="item flexrow items-header">
         <div class="item-name">Name</div>
+        <div class="item-prop">Slot</div>
         <div class="item-prop">Type</div>
         <div class="item-controls">
           <a class="item-control item-create" title="Create item" data-type="armor"><i class="fas fa-plus"></i> Add item</a>
@@ -48,6 +49,7 @@
             </div>
             <h4>{{item.name}}</h4>
           </div>
+          <div>{{item.data.slot}}</div>
           <div>{{item.data.type}}</div>
           <div class="item-controls">
             <a class="item-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i class="fas fa-shield-alt"></i></a>
