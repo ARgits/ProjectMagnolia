@@ -519,8 +519,8 @@ export class ARd20Item extends Item {
           dc[key] = target.actor.data.data.defences.stats[def].value;
           atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
-          atk[key] = atk[key].total;
           let d20 = atk[key] ? atk[key].terms[0] : null;
+          atk[key] = atk[key].total;
           critDie[key] = d20 ? d20.total >= d20.options.critical : false;
           fumbleDie[key] = d20 ? d20.total <= d20.options.fumble : false;
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
