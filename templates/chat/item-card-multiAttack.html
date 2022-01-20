@@ -49,7 +49,7 @@
                             <div class="attack-roll item item-prop">
                                 <div class="flexrow">
                                     <div class="value">
-                                        <span {{#if (lookup @root.critDie key)}} style="color:green;" {{/if}}{{#if (lookup @root.fumbleDie key)}} style="color:red" {{/if}}> {{@root.atk key}}</span> vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
+                                        <span class=" {{lookup @root.dieResultCss key}} "> {{@root.atk key}}</span> vs {{#if owner}}{{lookup @root.dc key}}{{else}}???{{/if}}: {{lookup @root.result key}}
                                     </div>
                                     <div class="roll-controls">
                                         <span class="warning fas fa-exclamation-circle"></span>

@@ -879,6 +879,15 @@ table tr th.under-chosen {
   font-style: normal;
   font-size: 12px;
 }
+.ard20.chat-card .d20crit {
+  color: green;
+}
+.ard20.chat-card .d20fumble {
+  color: red;
+}
+.ard20.chat-card .d20normal {
+  color: initial;
+}
 .ard20.chat-card .card-header {
   padding: 3px 0;
   border-top: 2px groove #fff;

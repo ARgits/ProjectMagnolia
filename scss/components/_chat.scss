@@ -2,7 +2,15 @@
 .ard20.chat-card {
   font-style: normal;
   font-size: 12px;
-
+  .d20crit{
+    color: green;
+  }
+  .d20fumble{
+    color: red;
+  }
+  .d20normal{
+    color: initial;
+  }
   .card-header {
     padding: 3px 0;
     border-top: 2px groove #fff;

@@ -506,8 +506,7 @@ export class ARd20Item extends Item {
     let result = {};
     let hit = {};
     let dmg = {};
-    let critDie = {};
-    let fumbleDie = {};
+    let dieResultCss;
     const def = this.data.data.attack?.def ?? "reflex";
     const token = this.actor.token;
     if (targets.length !== 0) {
@@ -521,8 +520,7 @@ export class ARd20Item extends Item {
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           let d20 = atk[key] ? atk[key].terms[0] : null;
           atk[key] = atk[key].total;
-          critDie[key] = d20 ? d20.total >= d20.options.critical : false;
-          fumbleDie[key] = d20 ? d20.total <= d20.options.fumble : false;
+          dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           hit[key] = result[key] === "hit" ? true : false;
         } else {
@@ -553,8 +551,7 @@ export class ARd20Item extends Item {
       result,
       hit,
       dmgHTML,
-      critDie,
-      fumbleDie,
+      dieResultCss,
     };
     const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
 
