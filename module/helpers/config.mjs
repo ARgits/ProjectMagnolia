@@ -142,3 +142,9 @@ ARd20.HeavyPoints = {
   medium: { chest: 5, gloves: 2, boots: 2, pants: 3, head: 2 },
   heavy: { chest: 8, gloves: 3, boots: 3, pants: 5, head: 3 },
 };
+ARd20.RollResult={
+  0:"ARd20.Fumble",
+  1:"ARd20.Fail",
+  2:"ARd20.Success",
+  3:"ARd20.Crit"
+}

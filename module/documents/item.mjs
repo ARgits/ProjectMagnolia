@@ -517,6 +517,7 @@ export class ARd20Item extends Item {
           mRoll = atkRoll.options.mRoll;
           dc[key] = target.actor.data.data.defences.stats[def].value;
           atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
+          console.log(atk[key])
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           let d20 = atk[key] ? atk[key].terms[0] : null;
           atk[key] = atk[key].total;
