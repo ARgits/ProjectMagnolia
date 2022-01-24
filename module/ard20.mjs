@@ -1,5 +1,5 @@
 // Import document classes.
-import { ARd20Actor } from "./documents/actor.mjs";
+import { ARd20Actor } from "./documents/actor.js";
 import { ARd20Item } from "./documents/item.mjs";
 // Import sheet classes.
 import { ARd20ActorSheet } from "./sheets/actor-sheet.mjs";
