@@ -1,8 +1,14 @@
+import { ActorData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs";
 import { d20Roll } from "../dice/dice.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
+declare global{
+  interface DocumentClassConfig{
+    Actor:typeof ARd20Actor
+  }
+}
 export class ARd20Actor extends Actor {
   //@ts-check
   /** @override */
@@ -25,10 +31,6 @@ export class ARd20Actor extends Actor {
     const def_dam = data.defences.damage;
     const def_stats = data.defences.stats;
     const abilities = data.abilities;
-    /**
-     * @param {Number} bonus bonus
-     * @param {Number} type
-     */
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psyhic")) {
         def_dam.phys[key] = {
@@ -72,7 +74,7 @@ export class ARd20Actor extends Actor {
   /**
    * Prepare Character type specific data
    */
-  _prepareCharacterData(actorData) {
+  _prepareCharacterData(actorData: ActorData) {
     if (actorData.type !== "character") return;
 
     // Make modifications to data here. For example:

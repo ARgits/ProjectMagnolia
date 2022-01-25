@@ -1,9 +1,7 @@
-export class ARd20Actor extends Actor {}
-export class ARd20Item extends Item {}
+export {};
 declare global {
-  interface DocumentClassConfig {
-    Actor: typeof ARd20Actor;
-    Item: typeof ARd20Item;
+  interface CONFIG {
+    ARd20: ARd20CONFIG;
   }
   interface SourceConfig {
     Item: ARd20ItemDataSource;
@@ -14,14 +12,86 @@ declare global {
     Actor: ARd20ActorDataProperties;
   }
 }
-
+type ARd20CONFIG = ARd20CONFIGData;
 type ARd20ActorDataSource = CharacterDataSource | NPCDataSource;
 type ARd20ActorDataProperties = CharacterDataProperties;
 type ARd20ItemDataSource = ItemDataSource | FeatureDataSource | SpellDataSource | WeaponDataSource | RaceDataSource | ArmorDataSource;
 type ARd20ItemDataProperties = ItemDataProperties | FeatureDataProperties | SpellDataProperties | WeaponDataProperties | RaceDataProperties | ArmorDataProperties;
+type Abilities = "str" | "dex" | "int" | "wis" | "cha" | "con";
+type Skills = "acr" | "ani" | "arc" | "ath" | "dec" | "his" | "ins" | "itm" | "inv" | "med" | "nat" | "prc" | "prf" | "per" | "rel" | "slt" | "ste" | "sur";
+type Sources = "mar" | "mag" | "div" | "pri" | "psy";
+type WeaponProperties =
+  | "aff"
+  | "awk"
+  | "con"
+  | "bra"
+  | "def"
+  | "dis"
+  | "dou"
+  | "ent"
+  | "fin"
+  | "fir"
+  | "hea"
+  | "lau"
+  | "lig"
+  | "lun"
+  | "mel"
+  | "one"
+  | "pen"
+  | "ran"
+  | "rea"
+  | "rel"
+  | "sta"
+  | "thr"
+  | "tri"
+  | "two"
+  | "ver";
+type WeaponType = "amb" | "axe" | "blu" | "bow" | "sli" | "cbl" | "cro" | "dbl" | "fir" | "fla" | "whi" | "ham" | "pic" | "pol" | "spe" | "thr";
+type DmgTypes = "acid"|"blud"|"cold"|"fire"|"force"|"light"|"necr"|"pierc"|"poison"|"slash"|"sound"|"rad"|"psyhic"
+type WithMod<T> = T & {
+  mod: number;
+  total: number;
+};
+type Res<T>=T&{
+  value:number
+  label:string
+  bonus:number
+  type:string
+}
+
+interface ARd20CONFIGData {
+  Abilities: { [Ability in Abilities]: string };
+  AbilityAbbreviations: { [Ability in Abilities]: string };
+  CHARACTER_EXP_LEVELS: Array<number>;
+  SpellSchool: {};
+  Skills: { [Skill in Skills]: string };
+  Rank: {
+    0: string;
+    1: string;
+    2: string;
+  };
+  Source: { [Source in Sources]: string };
+  WeaponProp: { [Prop in WeaponProperties]: string };
+  WeaponType: { [Type in WeaponType]: string };
+  AbilXP: Array<number>;
+  SkillXp: {
+    0: Array<number>;
+    1: Array<number>;
+  };
+  DamageTypes: {};
+  DamageSubTypes: {[Dmg in DmgTypes]:string};
+  ResistTypes: {};
+  HPDice: Array<string>;
+  HeavyPoints: {};
+  RollResult: {};
+}
 interface CharacterDataSource {
   type: "character";
   data: CharacterDataSourceData;
+}
+interface CharacterDataProperties {
+  type: "character";
+  data: CharacterDataPropertiesData;
 }
 interface NPCDataSource {
   type: "npc";
@@ -47,150 +117,51 @@ interface CharacterDataSourceData extends ActorBaseTemplate {
     bonus: number;
   };
   abilities: {
-    str: {
-      value: number;
-      bonus: number;
-    };
-    dex: {
-      value: number;
-      bonus: number;
-    };
-    con: {
-      value: number;
-      bonus: number;
-    };
-    int: {
-      value: number;
-      bonus: number;
-    };
-    wis: {
-      value: number;
-      bonus: number;
-    };
-    cha: {
+    [Ability in Abilities]: {
       value: number;
       bonus: number;
     };
   };
-  skills: {
-    acr: {
-      rank: number;
-      bonus: number;
-    };
-    ath: {
-      rank: number;
-      bonus: number;
-    };
-    ani: {
-      rank: number;
-      bonus: number;
-    };
-    arc: {
-      rank: number;
-      bonus: number;
-    };
-    dec: {
-      rank: number;
-      bonus: number;
-    };
-    his: {
-      rank: number;
-      bonus: number;
-    };
-    ins: {
-      rank: number;
-      bonus: number;
-    };
-    itm: {
-      rank: number;
-      bonus: number;
-    };
-    inv: {
-      rank: number;
-      bonus: number;
-    };
-    med: {
-      rank: number;
-      bonus: number;
-    };
-    nat: {
-      rank: number;
-      bonus: number;
-    };
-    prc: {
-      rank: number;
-      bonus: number;
-    };
-    prf: {
-      rank: number;
-      bonus: number;
-    };
-    per: {
-      rank: number;
-      bonus: number;
-    };
-    rel: {
-      rank: number;
-      bonus: number;
-    };
-    slt: {
-      rank: number;
-      bonus: number;
-    };
-    ste: {
-      rank: number;
-      bonus: number;
-    };
-    sur: {
-      rank: number;
-      bonus: number;
-    };
-    defences: {
-      stats: {
-        reflex: {
-          bonus: number;
-        };
-        fortitude: {
-          bonus: number;
-        };
-        will: {
-          bonus: 0;
-        };
+  skills: { [Skill in Skills]: { rank: number; bonus: number } };
+  defences: {
+    stats: {
+      reflex: {
+        bonus: number;
       };
-      damage: {
-        phys: object;
-        mag: object;
+      fortitude: {
+        bonus: number;
       };
-      conditions: object;
+      will: {
+        bonus: number;
+      };
     };
+    damage: {
+      phys: object;
+      mag: object;
+    };
+    conditions: object;
   };
 }
 interface NPCDataSourceData extends ActorBaseTemplate {
   cr: number;
 }
-interface CharacterDataProperties extends CharacterDataSourceData {
-  abilities: {
-    str: CharacterDataSourceData["abilities"]["str"] & {
-      mod: number;
-    };
-    dex: CharacterDataSourceData["abilities"]["dex"] & {
-      mod: number;
-    };
-    con: CharacterDataSourceData["abilities"]["con"] & {
-      mod: number;
-    };
-    int: CharacterDataSourceData["abilities"]["int"] & {
-      mod: number;
-    };
-    wis: CharacterDataSourceData["abilities"]["wis"] & {
-      mod: number;
-    };
-    cha: CharacterDataSourceData["abilities"]["cha"] & {
-      mod: number;
-    };
-  };
-  
+interface CharacterDataPropertiesData extends CharacterDataSourceData {
+  abilities: { [Ability in keyof CharacterDataSourceData["abilities"]]: WithMod<CharacterDataSourceData["abilities"][Ability]> };
+  defences:{
+    damage:{
+      phys:{[Resist in DmgTypes]:Res<CharacterDataSourceData["defences"]["damage"]["phys"][Resist]>}
+      mag:{[Res in DmgTypes]:{
+        value:number
+        label:string
+        bonus:number
+        type:string
+      }}
+    }
+    stats:{[stat in keyof CharacterDataSourceData["defences"]["stats"]]:&CharacterDataSourceData["defences"]["stats"][stat]}
+    conditions:{}
+  }
 }
+
 interface ItemBaseTemplate {
   description: string;
   hasAttack: boolean;
