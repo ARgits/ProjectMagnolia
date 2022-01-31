@@ -53,7 +53,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.registerSystemSettings = void 0;
 var registerSystemSettings = function () {
-    game.settings.register('ard20', 'profs', {
+    game.settings.register('ard20', 'proficiencies', {
         scope: "world",
         config: false,
         "default": {
@@ -137,7 +137,7 @@ var ProfFormApp = /** @class */ (function (_super) {
     });
     ProfFormApp.prototype.getData = function (options) {
         var sheetData = {
-            profs: game.settings.get('ard20', 'profs'),
+            proficiencies: game.settings.get('ard20', 'proficiencies'),
             config: CONFIG.ARd20
         };
         return sheetData;
@@ -149,14 +149,14 @@ var ProfFormApp = /** @class */ (function (_super) {
     };
     ProfFormApp.prototype._onAdd = function (event) {
         return __awaiter(this, void 0, void 0, function () {
-            var profs;
+            var proficiencies;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         event.preventDefault();
-                        profs = game.settings.get('ard20', 'profs');
-                        profs.weapon.push({ name: 'name', type: 'amb' });
-                        return [4 /*yield*/, game.settings.set('ard20', 'profs', profs)];
+                        proficiencies = game.settings.get('ard20', 'proficiencies');
+                        proficiencies.weapon.push({ name: 'name', type: 'amb' });
+                        return [4 /*yield*/, game.settings.set('ard20', 'proficiencies', proficiencies)];
                     case 1:
                         _a.sent();
                         this.render();
@@ -167,14 +167,14 @@ var ProfFormApp = /** @class */ (function (_super) {
     };
     ProfFormApp.prototype._Delete = function (event) {
         return __awaiter(this, void 0, void 0, function () {
-            var profs;
+            var proficiencies;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         event.preventDefault();
-                        profs = game.settings.get('ard20', 'profs');
-                        profs.weapon.splice(event.currentTarget.dataset.key, 1);
-                        return [4 /*yield*/, game.settings.set('ard20', 'profs', profs)];
+                        proficiencies = game.settings.get('ard20', 'proficiencies');
+                        proficiencies.weapon.splice(event.currentTarget.dataset.key, 1);
+                        return [4 /*yield*/, game.settings.set('ard20', 'proficiencies', proficiencies)];
                     case 1:
                         _a.sent();
                         this.render();
@@ -185,11 +185,11 @@ var ProfFormApp = /** @class */ (function (_super) {
     };
     ProfFormApp.prototype._updateObject = function (event, formData) {
         return __awaiter(this, void 0, void 0, function () {
-            var profs, dirty, _i, _a, _b, fieldName, value, _c, type, index, propertyName;
+            var proficiencies, dirty, _i, _a, _b, fieldName, value, _c, type, index, propertyName;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        profs = game.settings.get('ard20', 'profs');
+                        proficiencies = game.settings.get('ard20', 'proficiencies');
                         console.log(formData);
                         dirty = false;
                         _i = 0, _a = Object.entries(foundry.utils.flattenObject(formData));
@@ -198,13 +198,13 @@ var ProfFormApp = /** @class */ (function (_super) {
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         _b = _a[_i], fieldName = _b[0], value = _b[1];
                         _c = fieldName.split('.'), type = _c[0], index = _c[1], propertyName = _c[2];
-                        if (profs[type][index][propertyName] !== value) {
+                        if (proficiencies[type][index][propertyName] !== value) {
                             //log({index, propertyName, value});
-                            profs[type][index][propertyName] = value;
+                            proficiencies[type][index][propertyName] = value;
                             dirty = dirty || true;
                         }
                         if (!dirty) return [3 /*break*/, 3];
-                        return [4 /*yield*/, game.settings.set('ard20', 'profs', profs)];
+                        return [4 /*yield*/, game.settings.set('ard20', 'proficiencies', proficiencies)];
                     case 2:
                         _d.sent();
                         _d.label = 3;

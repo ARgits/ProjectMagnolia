@@ -3,6 +3,30 @@ declare global {
   interface CONFIG {
     ARd20: ARd20CONFIG;
   }
+  interface LenientGlobalVariableTypes {
+    game: never;
+  }
+  namespace ClientSettings {
+    interface Values {
+      "ard20.proficiencies": {
+        weapon: [
+          {
+            name: string;
+            type: string;
+          }
+        ];
+        armor: [];
+        tools: [];
+        skills: [
+          {
+            name: string;
+            untrain: boolean;
+            default: string;
+          }
+        ];
+      };
+    }
+  }
   interface SourceConfig {
     Item: ARd20ItemDataSource;
     Actor: ARd20ActorDataSource;
@@ -13,11 +37,11 @@ declare global {
   }
 }
 type ARd20CONFIG = ARd20CONFIGData;
-type ARd20ActorDataSource = CharacterDataSource | NPCDataSource;
-type ARd20ActorDataProperties = CharacterDataProperties;
+type ARd20ActorDataSource = CharacterDataSource 
+type ARd20ActorDataProperties = CharacterDataProperties 
 type ARd20ItemDataSource = ItemDataSource | FeatureDataSource | SpellDataSource | WeaponDataSource | RaceDataSource | ArmorDataSource;
 type ARd20ItemDataProperties = ItemDataProperties | FeatureDataProperties | SpellDataProperties | WeaponDataProperties | RaceDataProperties | ArmorDataProperties;
-type Abilities = "str" | "dex" | "int" | "wis" | "cha" | "con";
+type Attributes = "str" | "dex" | "int" | "wis" | "cha" | "con";
 type Skills = "acr" | "ani" | "arc" | "ath" | "dec" | "his" | "ins" | "itm" | "inv" | "med" | "nat" | "prc" | "prf" | "per" | "rel" | "slt" | "ste" | "sur";
 type Sources = "mar" | "mag" | "div" | "pri" | "psy";
 type WeaponProperties =
@@ -47,21 +71,12 @@ type WeaponProperties =
   | "two"
   | "ver";
 type WeaponType = "amb" | "axe" | "blu" | "bow" | "sli" | "cbl" | "cro" | "dbl" | "fir" | "fla" | "whi" | "ham" | "pic" | "pol" | "spe" | "thr";
-type DmgTypes = "acid"|"blud"|"cold"|"fire"|"force"|"light"|"necr"|"pierc"|"poison"|"slash"|"sound"|"rad"|"psyhic"
-type WithMod<T> = T & {
-  mod: number;
-  total: number;
-};
-type Res<T>=T&{
-  value:number
-  label:string
-  bonus:number
-  type:string
-}
+type DmgPhysTypes = "acid" | "blud" | "cold" | "fire" | "light" | "necr" | "pierc" | "poison" | "slash";
+type DmgTypes = DmgPhysTypes | "force" | "rad" | "psychic";
 
 interface ARd20CONFIGData {
-  Abilities: { [Ability in Abilities]: string };
-  AbilityAbbreviations: { [Ability in Abilities]: string };
+  Attributes: { [Ability in Attributes]: string };
+  AbilityAbbreviations: { [Ability in Attributes]: string };
   CHARACTER_EXP_LEVELS: Array<number>;
   SpellSchool: {};
   Skills: { [Skill in Skills]: string };
@@ -69,6 +84,8 @@ interface ARd20CONFIGData {
     0: string;
     1: string;
     2: string;
+    3: string;
+    4: string;
   };
   Source: { [Source in Sources]: string };
   WeaponProp: { [Prop in WeaponProperties]: string };
@@ -79,7 +96,7 @@ interface ARd20CONFIGData {
     1: Array<number>;
   };
   DamageTypes: {};
-  DamageSubTypes: {[Dmg in DmgTypes]:string};
+  DamageSubTypes: { [Dmg in DmgTypes]: string };
   ResistTypes: {};
   HPDice: Array<string>;
   HeavyPoints: {};
@@ -97,6 +114,10 @@ interface NPCDataSource {
   type: "npc";
   data: NPCDataSourceData;
 }
+interface NPCDataProperties{
+  type:"npc"
+  data:NPCDataPropertiesData
+}
 interface ActorBaseTemplate {
   health: {
     value: number;
@@ -106,60 +127,74 @@ interface ActorBaseTemplate {
 }
 interface CharacterDataSourceData extends ActorBaseTemplate {
   isReady: boolean;
-  attributes: {
+  advancement: {
     xp: {
       get: number;
       used: number;
     };
-    level: 0;
+    level: number;
   };
-  speed: {
-    bonus: number;
-  };
-  abilities: {
-    [Ability in Abilities]: {
+  mobility: {};
+  speed: {};
+  attributes: {
+    [Attribute in Attributes]: {
       value: number;
-      bonus: number;
     };
   };
-  skills: { [Skill in Skills]: { rank: number; bonus: number } };
+  skills: { [Skill in Skills]: { value: number } };
   defences: {
     stats: {
-      reflex: {
-        bonus: number;
-      };
-      fortitude: {
-        bonus: number;
-      };
-      will: {
-        bonus: number;
-      };
+      reflex: {};
+      fortitude: {};
+      will: {};
     };
     damage: {
-      phys: object;
-      mag: object;
+      phys: {};
+      mag: {};
     };
     conditions: object;
   };
+  proficiencies:{
+    weapon:[]
+    armor:[]
+    tools:[]
+  }
 }
 interface NPCDataSourceData extends ActorBaseTemplate {
   cr: number;
 }
 interface CharacterDataPropertiesData extends CharacterDataSourceData {
-  abilities: { [Ability in keyof CharacterDataSourceData["abilities"]]: WithMod<CharacterDataSourceData["abilities"][Ability]> };
-  defences:{
-    damage:{
-      phys:{[Resist in DmgTypes]:Res<CharacterDataSourceData["defences"]["damage"]["phys"][Resist]>}
-      mag:{[Res in DmgTypes]:{
-        value:number
-        label:string
-        bonus:number
-        type:string
-      }}
-    }
-    stats:{[stat in keyof CharacterDataSourceData["defences"]["stats"]]:&CharacterDataSourceData["defences"]["stats"][stat]}
-    conditions:{}
-  }
+  attributes: { [Ability in keyof CharacterDataSourceData["attributes"]]: CharacterDataSourceData["attributes"][Ability] & { mod: number; total: number; bonus: number } };
+  advancement: { xp: CharacterDataSourceData["advancement"]["xp"] & { level: number; level_min: number; bar_max: number; bar_min: number }; level: number };
+  skills: { [Skill in keyof CharacterDataSourceData["skills"]]: CharacterDataSourceData["skills"][Skill] & { bonus: number; level: number } };
+  defences: {
+    damage: {
+      phys: {
+        [dmg in DmgPhysTypes]: {
+          value: number;
+          label: string;
+          bonus: number;
+          type: string;
+        };
+      };
+      mag: {
+        [Res in DmgTypes]: {
+          value: number;
+          label: string;
+          bonus: number;
+          type: string;
+        };
+      };
+    };
+    stats: { [stat in keyof CharacterDataSourceData["defences"]["stats"]]: CharacterDataSourceData["defences"]["stats"][stat] & { bonus: number; value: number; label: string; level: number } };
+    conditions: {};
+  };
+  proficiencies:CharacterDataSourceData["proficiencies"]
+  speed: { value: number; bonus: number };
+  mobility: { value: number; bonus: number };
+}
+interface NPCDataPropertiesData extends NPCDataSourceData{
+  xp:number
 }
 
 interface ItemBaseTemplate {

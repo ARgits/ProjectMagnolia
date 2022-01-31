@@ -37,14 +37,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 // Import document classes.
-var actor_mjs_1 = require("./documents/actor.mjs");
+var actor_js_1 = require("./documents/actor.js");
 var item_mjs_1 = require("./documents/item.mjs");
 // Import sheet classes.
 var actor_sheet_mjs_1 = require("./sheets/actor-sheet.mjs");
 var item_sheet_mjs_1 = require("./sheets/item-sheet.mjs");
 // Import helper/utility classes and constants.
 var templates_mjs_1 = require("./helpers/templates.mjs");
-var config_mjs_1 = require("./helpers/config.mjs");
+var config_js_1 = require("./helpers/config.js");
 var socket_js_1 = require("./helpers/socket.js");
 var settings_mjs_1 = require("./helpers/settings.mjs");
 var dice = require("./dice/dice.js");
@@ -59,15 +59,15 @@ Hooks.once("init", function () {
             // accessible in global contexts.
             game.ard20 = {
                 documents: {
-                    ARd20Actor: actor_mjs_1.ARd20Actor,
+                    ARd20Actor: actor_js_1.ARd20Actor,
                     ARd20Item: item_mjs_1.ARd20Item
                 },
                 rollItemMacro: rollItemMacro,
-                config: config_mjs_1.ARd20,
+                config: config_js_1.ARd20,
                 dice: dice
             };
             // Add custom constants for configuration.
-            CONFIG.ARd20 = config_mjs_1.ARd20;
+            CONFIG.ARd20 = config_js_1.ARd20;
             CONFIG.Dice.DamageRoll = dice.DamageRoll;
             CONFIG.Dice.D20Roll = dice.D20Roll;
             CONFIG.Dice.rolls.push(dice.D20Roll);
@@ -85,7 +85,7 @@ Hooks.once("init", function () {
                 decimals: 2
             };
             // Define custom Document classes
-            CONFIG.Actor.documentClass = actor_mjs_1.ARd20Actor;
+            CONFIG.Actor.documentClass = actor_js_1.ARd20Actor;
             CONFIG.Item.documentClass = item_mjs_1.ARd20Item;
             // Register sheet application classes
             Actors.unregisterSheet("core", ActorSheet);

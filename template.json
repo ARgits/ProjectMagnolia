@@ -13,7 +13,7 @@
     "character": {
       "templates": ["base"],
       "isReady": false,
-      "attributes": {
+      "advancement": {
         "xp": {
           "get": 0,
           "used": 0
@@ -23,116 +23,89 @@
       "speed": {
         "bonus": 0
       },
-      "abilities": {
+      "attributes": {
         "str": {
-          "value": 5,
-          "bonus": 0
+          "value": 5
         },
         "dex": {
-          "value": 5,
-          "bonus": 0
+          "value": 5
         },
         "con": {
-          "value": 5,
-          "bonus": 0
+          "value": 5
         },
         "int": {
-          "value": 5,
-          "bonus": 0
+          "value": 5
         },
         "wis": {
-          "value": 5,
-          "bonus": 0
+          "value": 5
         },
         "cha": {
-          "value": 5,
-          "bonus": 0
+          "value": 5
         }
       },
       "skills": {
         "acr": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "ath": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "ani": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "arc": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "dec": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "his": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "ins": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "itm": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "inv": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "med": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "nat": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "prc": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "prf": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "per": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "rel": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "slt": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "ste": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         },
         "sur": {
-          "rank": 0,
-          "bonus": 0
+          "level": 0
         }
       },
       "defences": {
         "stats": {
           "reflex": {
-            "bonus": 0
           },
           "fortitude": {
-            "bonus": 0
           },
           "will": {
-            "bonus": 0
           }
         },
         "damage": {
@@ -148,7 +121,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell", "weapon", "race","armor"],
+    "types": ["item", "feature", "spell", "weapon", "race", "armor"],
     "templates": {
       "base": {
         "description": "",
@@ -166,7 +139,7 @@
       "templates": ["base"],
       "quantity": 1,
       "weight": 0,
-      "equipped":false,
+      "equipped": false,
       "type": {
         "value": ""
       },
@@ -193,15 +166,15 @@
         "ver": {
           "untrained": {
             "parts": [],
-            "formula":""
+            "formula": ""
           },
           "basic": {
             "parts": [],
-            "formula":""
+            "formula": ""
           },
           "master": {
             "parts": [],
-            "formula":""
+            "formula": ""
           }
         }
       },
@@ -228,11 +201,11 @@
     "armor": {
       "templates": ["base"],
       "type": "light",
-      "slot":"chest",
-      "equipped":false,
-      "res":{
-        "phys":{},
-        "mag":{}
+      "slot": "chest",
+      "equipped": false,
+      "res": {
+        "phys": {},
+        "mag": {}
       }
     },
     "feature": {
@@ -240,8 +213,8 @@
       "source": {
         "value": ["mar"]
       },
-      "hasDamage":true,
-      "hasAttack":true,
+      "hasDamage": true,
+      "hasAttack": true,
       "xp": [0],
       "level": {
         "initial": 0,
@@ -251,9 +224,9 @@
         "values": [],
         "logic": []
       },
-      "damage":{
-        "parts":[],
-        "formula":""
+      "damage": {
+        "parts": [],
+        "formula": ""
       }
     },
     "spell": {

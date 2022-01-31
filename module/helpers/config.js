@@ -1,6 +1,6 @@
 export const ARd20 = CONFIG.ARd20;
 
-ARd20.Abilities = {
+ARd20.Attributes = {
   str: "ARd20.AbilityStr",
   dex: "ARd20.AbilityDex",
   con: "ARd20.AbilityCon",
@@ -53,7 +53,9 @@ ARd20.Skills = {
 ARd20.Rank = {
   0: "ARd20.Untrained",
   1: "ARd20.Basic",
-  2: "ARd20.Master",
+  2: "ARd20.Expert",
+  3: "ARd20.Master",
+  4: "ARd20.Legend",
 };
 ARd20.Source = {
   mar: "ARd20.Martial",
@@ -127,9 +129,8 @@ ARd20.DamageSubTypes = {
   pierc: "ARd20.DamagePiercing",
   poison: "ARd20.DamagePoison",
   slash: "ARd20.DamageSlashing",
-  sound: "ARd20.DamageSound",
   rad: "ARd20.DamageRadiant",
-  psyhic: "ARd20.DamagePsyhic",
+  psychic: "ARd20.DamagePsychic",
 };
 ARd20.ResistTypes = {
   res: "ARd20.Resistance",
