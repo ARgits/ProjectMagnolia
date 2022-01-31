@@ -212,9 +212,10 @@ export class ARd20Item extends Item {
       data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0]?.value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.Rank[data.prof.value]) ?? CONFIG.ARd20.Rank[data.prof.value];
       data.prof.label = this.labels.prof;
-      prof_bonus = data.prof.value*4
-    this._prepareAttack(itemData, prof_bonus, abil);
-    this._prepareDamage(itemData, abil);
+      prof_bonus = data.prof.value * 4;
+      this._prepareAttack(itemData, prof_bonus, abil);
+      this._prepareDamage(itemData, abil);
+    }
   }
   _prepareAttack(itemData, prof_bonus, abil) {
     const data = itemData.data;
@@ -510,7 +511,7 @@ export class ARd20Item extends Item {
           mRoll = atkRoll.options.mRoll;
           dc[key] = target.actor.data.data.defences.stats[def].value;
           atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
-          console.log(atk[key])
+          console.log(atk[key]);
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           let d20 = atk[key] ? atk[key].terms[0] : null;
           atk[key] = atk[key].total;
