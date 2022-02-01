@@ -13,7 +13,21 @@ export class ARd20Item extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
-  prepareBaseData() {}
+  prepareBaseData() {
+    super.prepareBaseData();
+    const itemData = this.data;
+    this.prepareBaseWeaponData(itemData);
+  }
+  prepareBaseWeaponData(itemData) {
+    const data = itemData.data;
+    const properties = data.property;
+    for (let [k, v] of Object.entries(CONFIG.ARd20.WeaponProp)) {
+      console.log(k, v);
+      properties[k] = properties[k] || {};
+      properties[k].value = properties[k].value || 0;
+      properties[k].label = game.i18n.localize(CONFIG.ARd20.WeaponProp[k]) ?? v;
+    }
+  }
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
@@ -69,7 +83,11 @@ export class ARd20Item extends Item {
       }
     }
   }
-  _SetProperties(data) {
+  /*_SetProperties(data) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.WeaponProp)) {
+      console.log(k, v);
+      data.property[k];
+    }
     for (let [k, v] of Object.entries(data.property.untrained)) {
       v = CONFIG.ARd20.Prop[k] ?? k;
     }
@@ -90,7 +108,7 @@ export class ARd20Item extends Item {
    *Set deflect die equal to damage die, if not
    */
   _setDeflect(data) {
-    for (let [k, v] of Object.entries(CONFIG.ARd20.Rank)) {
+    for (let [k, v] of Object.entries(data.property)) {
       v = game.i18n.localize(CONFIG.ARd20.Rank[k]) ?? k;
       v = v.toLowerCase();
       data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;

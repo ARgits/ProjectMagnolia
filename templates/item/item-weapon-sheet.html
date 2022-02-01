@@ -33,105 +33,6 @@
         <span>{{labels.prof}}</span>
       </div>
       <hr />
-      <details>
-        <summary>{{localize "ARd20.Untrained"}}</summary>
-        <div>
-          <label class="">Properties:</label>
-          {{#each config.WeaponProp as |name prop|}} {{#if (lookup
-          ../data.property.untrained prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-        </div>
-        <div>
-          <label class="" data-roll="@data.damage.common.untrained">Damage:
-          </label>
-          <span>{{data.damage.common.untrained.formula}}</span>
-        </div>
-        {{#if data.property.untrained.ver}}
-          <div>
-            <label class="">Versatile Damage: </label>
-            <span>{{data.damage.ver.untrained}}</span>
-          </div>
-        {{/if}} {{#if data.property.untrained.ran}}
-          <div>
-            <label class="">Range: </label>
-            <span>{{numberFormat data.range.untrained.min decimals=0 sign=false}}</span>
-            <span>/</span>
-            <span>{{numberFormat data.range.untrained.max decimals=0 sign=false}}</span>
-          </div>
-        {{/if}} {{#if data.property.untrained.def}}
-          <div>
-            <label class="">Deflect: </label>
-            <span>{{data.deflect.untrained}}</span>
-          </div>
-        {{/if}}
-      </details>
-      <hr />
-      <details>
-        <summary>{{localize "ARd20.Basic"}}</summary>
-        <div>
-          <label class="">Properties:</label>
-          {{#each config.WeaponProp as |name prop|}} {{#if (lookup
-          ../data.property.basic prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-        </div>
-        <div>
-          <label class="">Damage:
-          </label>
-          <span>{{data.damage.common.basic.formula}}</span>
-        </div>
-        {{#if data.property.basic.ver}}
-          <div>
-            <label class="">Versatile Damage: </label>
-            <span>{{data.damage.ver.basic}}</span>
-          </div>
-        {{/if}} {{#if data.property.basic.ran}}
-          <div>
-            <label class="">Range: </label>
-            <span>{{numberFormat data.range.basic.min decimals=0 sign=false}}</span>
-            <span>/</span>
-            <span>{{numberFormat data.range.basic.max decimals=0 sign=false}}</span>
-          </div>
-        {{/if}} {{#if data.property.untrained.def}}
-          <div>
-            <label class="">Deflect: </label>
-            <span>{{data.deflect.basic}}</span>
-          </div>
-        {{/if}}
-      </details>
-      <hr />
-      <details>
-        <summary>{{localize "ARd20.Master"}}</summary>
-        <div>
-          <div>
-            <label class="">Properties:</label>
-            {{#each config.WeaponProp as |name prop|}} {{#if (lookup
-            ../data.property.master prop)}}<span>{{localize name}}</span>{{/if}}{{/each}}
-          </div>
-          <div>
-            <label class=" ">Damage:
-            </label>
-            <span>{{data.damage.common.master.formula}}</span>
-          </div>
-          {{#if data.property.master.ver}}
-            <div>
-              <label class="">Versatile Damage: </label>
-              <span>{{data.damage.ver.master}}</span>
-            </div>
-          {{/if}} {{#if data.property.master.ran}}
-            <div>
-              <label class="">Range: </label>
-              <span>{{numberFormat data.range.master.min decimals=0
-              sign=false}}</span>
-              <span>/</span>
-              <span>{{numberFormat data.range.master.max decimals=0
-              sign=false}}</span>
-            </div>
-          {{/if}} {{#if data.property.master.def}}
-            <div>
-              <label class="">Deflect: </label>
-              <span>{{data.deflect.master}}</span>
-            </div>
-          {{/if}}
-        </div>
-      </details>
     </div>
     {{!-- Data Tab --}}
     <div class="tab" data-group="primary" data-tab="data">
@@ -155,6 +56,16 @@
             </select>
           </div>
         </div>
+      </div>
+      <div class="grid grid-6col">
+        {{#each data.property as |prop key|}}
+          <div class="grid grid-span-2">
+            <span>{{prop.label}}</span>
+            <select name="data.property.{{key}}.value">
+              {{selectOptions config.Rank selected=prop.value}}
+            </select>
+          </div>
+        {{/each}}
       </div>
       <div class="flexcol">
         {{#each data.damage.common as |prof ind|}}

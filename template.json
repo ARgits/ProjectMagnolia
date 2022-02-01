@@ -101,12 +101,9 @@
       },
       "defences": {
         "stats": {
-          "reflex": {
-          },
-          "fortitude": {
-          },
-          "will": {
-          }
+          "reflex": {},
+          "fortitude": {},
+          "will": {}
         },
         "damage": {
           "phys": {},
@@ -143,11 +140,7 @@
       "type": {
         "value": ""
       },
-      "property": {
-        "untrained": {},
-        "basic": {},
-        "master": {}
-      },
+      "property": {},
       "prof": {
         "value": 0
       },
