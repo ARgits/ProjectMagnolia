@@ -9,12 +9,7 @@ declare global {
   namespace ClientSettings {
     interface Values {
       "ard20.proficiencies": {
-        weapon: [
-          {
-            name: string;
-            type: string;
-          }
-        ];
+        weapon: WeaponProficienciesSetting[];
         armor: [];
         tools: [];
         skills: [
@@ -36,9 +31,13 @@ declare global {
     Actor: ARd20ActorDataProperties;
   }
 }
+interface WeaponProficienciesSetting {
+  name: string;
+  type: string;
+}
 type ARd20CONFIG = ARd20CONFIGData;
-type ARd20ActorDataSource = CharacterDataSource 
-type ARd20ActorDataProperties = CharacterDataProperties 
+type ARd20ActorDataSource = CharacterDataSource;
+type ARd20ActorDataProperties = CharacterDataProperties;
 type ARd20ItemDataSource = ItemDataSource | FeatureDataSource | SpellDataSource | WeaponDataSource | RaceDataSource | ArmorDataSource;
 type ARd20ItemDataProperties = ItemDataProperties | FeatureDataProperties | SpellDataProperties | WeaponDataProperties | RaceDataProperties | ArmorDataProperties;
 type Attributes = "str" | "dex" | "int" | "wis" | "cha" | "con";
@@ -114,9 +113,9 @@ interface NPCDataSource {
   type: "npc";
   data: NPCDataSourceData;
 }
-interface NPCDataProperties{
-  type:"npc"
-  data:NPCDataPropertiesData
+interface NPCDataProperties {
+  type: "npc";
+  data: NPCDataPropertiesData;
 }
 interface ActorBaseTemplate {
   health: {
@@ -154,11 +153,25 @@ interface CharacterDataSourceData extends ActorBaseTemplate {
     };
     conditions: object;
   };
-  proficiencies:{
-    weapon:[]
-    armor:[]
-    tools:[]
-  }
+  proficiencies: {
+    //weapon: Record<number,WeaponProficiencies>[];
+    weapon: WeaponProficiencies[];
+    armor: Record<number, ArmorProficiencies>;
+    tools: Record<number, ToolProficiencies>;
+  };
+}
+interface WeaponProficiencies {
+  value: number;
+  type: WeaponProficienciesSetting["type"];
+  name: string;
+  type_hover: string;
+  type_value: string;
+}
+interface ArmorProficiencies {
+  value: number;
+}
+interface ToolProficiencies {
+  value: number;
 }
 interface NPCDataSourceData extends ActorBaseTemplate {
   cr: number;
@@ -166,7 +179,7 @@ interface NPCDataSourceData extends ActorBaseTemplate {
 interface CharacterDataPropertiesData extends CharacterDataSourceData {
   attributes: { [Ability in keyof CharacterDataSourceData["attributes"]]: CharacterDataSourceData["attributes"][Ability] & { mod: number; total: number; bonus: number } };
   advancement: { xp: CharacterDataSourceData["advancement"]["xp"] & { level: number; level_min: number; bar_max: number; bar_min: number }; level: number };
-  skills: { [Skill in keyof CharacterDataSourceData["skills"]]: CharacterDataSourceData["skills"][Skill] & { bonus: number; level: number } };
+  skills: { [Skill in keyof CharacterDataSourceData["skills"]]: CharacterDataSourceData["skills"][Skill] & { bonus: number; level: number; name: string; rankName: string } };
   defences: {
     damage: {
       phys: {
@@ -189,12 +202,12 @@ interface CharacterDataPropertiesData extends CharacterDataSourceData {
     stats: { [stat in keyof CharacterDataSourceData["defences"]["stats"]]: CharacterDataSourceData["defences"]["stats"][stat] & { bonus: number; value: number; label: string; level: number } };
     conditions: {};
   };
-  proficiencies:CharacterDataSourceData["proficiencies"]
+  proficiencies: CharacterDataSourceData["proficiencies"];
   speed: { value: number; bonus: number };
   mobility: { value: number; bonus: number };
 }
-interface NPCDataPropertiesData extends NPCDataSourceData{
-  xp:number
+interface NPCDataPropertiesData extends NPCDataSourceData {
+  xp: number;
 }
 
 interface ItemBaseTemplate {

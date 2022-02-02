@@ -32,16 +32,14 @@ export class ARd20Actor extends Actor {
     const def_stats = data.defences.stats;
     const attributes = data.attributes;
     //const entries = Object.entries as unknown as <K extends string, V>(o: {[s in K]: V}) => [K, V][];
-
-    for (const dr of Object.values(def_dam.phys)) {
-      dr.bonus = 0;
-      dr.type = "res";
+    for (const [key, dr] of Object.entries(def_dam.phys)) {
+      def_dam.phys[key as keyof typeof def_dam.phys].bonus = 0;
+      def_dam.phys[key as keyof typeof def_dam.phys].type = "res";
     }
-    for (const dr of Object.values(def_dam.mag)) {
-      dr.bonus = 0;
-      dr.type = "res";
+    for (const [key, dr] of Object.entries(def_dam.mag)) {
+      def_dam.mag[key as keyof typeof def_dam.mag].bonus = 0;
+      def_dam.mag[key as keyof typeof def_dam.mag].type = "res";
     }
-    def_dam.mag.acid.bonus;
     for (const [key, def] of Object.entries(def_stats)) {
       def.bonus = 0;
     }
@@ -82,6 +80,10 @@ export class ARd20Actor extends Actor {
     const advancement = data.advancement;
     const def_stats = data.defences.stats;
     const def_dam = data.defences.damage;
+    const proficiencies = data.proficiencies;
+    const prof_weapon = proficiencies.weapon;
+    const prof_armor = proficiencies.armor;
+    const prof_tool = proficiencies.tools;
     const entries = Object.entries as unknown as <K extends string, V>(o: { [s in K]: V }) => [K, V][];
     data.mobility.value = 0;
     this.itemTypes.armor.forEach((item) => {
@@ -136,7 +138,7 @@ export class ARd20Actor extends Actor {
     def_stats.fortitude.label = "Fortitude";
     def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
-    for (let [key, dr] of entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psychic")) {
         def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type !== "imm" ? Math.max(isNaN(def_dam.phys[key].value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key].bonus : 0;
         def_dam.phys[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
@@ -145,20 +147,32 @@ export class ARd20Actor extends Actor {
       def_dam.mag[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills
-    for (let [key, skill] of Object.entries(data.skills)) {
+    for (let [key, skill] of obj_entries(data.skills)) {
       skill.level = skill.level < 4 ? skill.level : 4;
       skill.value = skill.level * 4 + skill.bonus;
+      skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
+      skill.rankName = game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level)) ?? getValues(CONFIG.ARd20.Rank, skill.level);
     }
+    function obj_entries<Obj extends object>(obj: Obj) {
+      return Object.entries(obj) as [keyof Obj, Obj[keyof Obj]][];
+    }
+    function getValues<Obj extends object>(SourceObject: Obj, key: keyof Obj | string | number) {
+      return SourceObject[key as keyof Obj];
+    }
+
     //calculate character's armor,weapon and tool proficinecies
-    for (let [key, prof] of entries(game.settings.get("ard20", "proficiencies").weapon)) {
-      data.proficiencies.weapon[key].value = data.proficiencies.weapon[prof].value ? data.proficiencies.weapon[prof].value : 0;
-      data.proficiencies.weapon[prof].type = game.settings.get("ard20", "proficiencies").weapon[prof].type;
-      data.proficiencies.weapon[prof].name = game.settings.get("ard20", "proficiencies").weapon[prof].name;
-      data.proficiencies.weapon[prof].type_hover = game.i18n.localize(CONFIG.ARd20.WeaponType[data.proficiencies.weapon[prof].type]) ?? CONFIG.ARd20.WeaponType[data.proficiencies.weapon[prof].type];
-      data.proficiencies.weapon[prof].type_value = game.i18n.localize(CONFIG.ARd20.prof[data.proficiencies.weapon[prof].value]) ?? CONFIG.ARd20.prof[data.proficiencies.weapon[prof].value];
+    const weapon_set = game.settings.get("ard20", "proficiencies").weapon;
+    for (let [key, prof] of obj_entries(weapon_set)) {
+      prof_weapon[key].value = prof_weapon[key].value ? prof_weapon[key].value : 0;
+      prof_weapon[key].type = weapon_set[key].type;
+      prof_weapon[key].name = weapon_set[key].name;
+      prof_weapon[key].type_hover =
+        game.i18n.localize(getValues(CONFIG.ARd20.WeaponType, prof_weapon[key].type)) ?? getValues(CONFIG.ARd20.WeaponType, prof_weapon[key].type);
+      prof_weapon[key].type_value =
+        game.i18n.localize(CONFIG.ARd20.Rank[prof_weapon[key].value as keyof typeof CONFIG.ARd20.Rank]) ?? CONFIG.ARd20.Rank[prof_weapon[key].value as keyof typeof CONFIG.ARd20.Rank];
     }
-    if (data.proficiencies.weapon.length > game.settings.get("ard20", "proficiencies").weapon.length) {
-      data.proficiencies.weapon.splice(game.settings.get("ard20", "proficiencies").weapon.length + 1, data.proficiencies.weapon.length - game.settings.get("ard20", "proficiencies").weapon.length);
+    if (prof_weapon.length > weapon_set.length) {
+      prof_weapon.splice(weapon_set.length + 1, prof_weapon.length - weapon_set.length);
     }
     data.speed.value = this.itemTypes.race[0]?.data.data.speed + attributes.dex.mod + data.speed.bonus;
   }
@@ -191,9 +205,9 @@ export class ARd20Actor extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollAbilityTest(abilityId:string, options: object = {}): Promise<Roll> {
+  rollAbilityTest(abilityId: string, options: object = {}): Promise<Roll> {
     const label = game.i18n.localize(CONFIG.ARd20.Attributes[abilityId]);
-    const abl = this.data.data.attributes
+    const abl = this.data.data.attributes;
 
     // Construct parts
     const parts = ["@mod"];
@@ -223,7 +237,7 @@ export class ARd20Actor extends Actor {
    * @param {Object} options      Options which configure how the skill check is rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollSkill(skillId:string, options = {}) {
+  rollSkill(skillId: string, options = {}) {
     const skl = this.data.data.skills[skillId];
 
     // Compose roll parts and data
