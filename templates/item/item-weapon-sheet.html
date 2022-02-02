@@ -62,8 +62,8 @@
           <div class="grid grid-span-2">
             <span>{{prop.label}}</span>
             <select name="data.property.{{key}}.value">
-              {{log config.Rank}}
-              {{selectOptions config.Rank selected=0 localize=true}}
+              {{log @root.config.Rank}}
+              {{selectOptions @root.config.Rank selected=0 localize=true}}
             </select>
           </div>
         {{/each}}

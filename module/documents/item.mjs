@@ -23,7 +23,7 @@ export class ARd20Item extends Item {
     const properties = data.property;
     for (let [k, v] of Object.entries(CONFIG.ARd20.WeaponProp)) {
       console.log(k, v);
-      properties[k] = properties[k] || {};
+      properties[k] = properties?.[k] || {};
       properties[k].value = properties[k].value || 0;
       properties[k].label = game.i18n.localize(CONFIG.ARd20.WeaponProp[k]) ?? v;
     }
@@ -116,7 +116,7 @@ export class ARd20Item extends Item {
   }
   _setTypeAndSubtype(data, flags, labels) {
     data.type.value = data.type.value || "amb";
-    data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
+    data.settings = game.settings.get("ard20", "proficiencies").weapon.filter((prof) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
       data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;

@@ -13,7 +13,6 @@ export class ARd20ItemSheet extends ItemSheet {
       height: 480,
       tabs: [
         { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" },
-        { navSelector: ".data-tabs", contentSelector: ".data-section", initial: "untrained" },
       ],
     });
   }
@@ -33,7 +32,6 @@ export class ARd20ItemSheet extends ItemSheet {
     context.config = CONFIG.ARd20;
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
-    const props = [];
     let actor = this.object?.parent ?? null;
     if (actor) {
       context.rollData = actor.getRollData();
