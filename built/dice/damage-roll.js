@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * A type of Roll specific to a damage (or healing) roll in the 5e system.
  * @param {string} formula                       The string formula to parse
@@ -179,15 +179,15 @@ var DamageRoll = /** @class */ (function (_super) {
                                         critical: {
                                             condition: allowCritical,
                                             label: game.i18n.localize("ARd20.CriticalHit"),
-                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, true)); }
+                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, true)); },
                                         },
                                         normal: {
                                             label: game.i18n.localize(allowCritical ? "ARd20.Normal" : "ARd20.Roll"),
-                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, false)); }
-                                        }
+                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, false)); },
+                                        },
                                     },
-                                    "default": defaultCritical ? "critical" : "normal",
-                                    close: function () { return resolve(null); }
+                                    default: defaultCritical ? "critical" : "normal",
+                                    close: function () { return resolve(null); },
                                 }, options).render(true);
                             })];
                 }
@@ -234,4 +234,4 @@ var DamageRoll = /** @class */ (function (_super) {
     DamageRoll.EVALUATION_TEMPLATE = "systems/ard20/templates/chat/roll-dialog.html";
     return DamageRoll;
 }(Roll));
-exports["default"] = DamageRoll;
+exports.default = DamageRoll;

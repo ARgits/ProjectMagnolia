@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterAdvancement = void 0;
 var CharacterAdvancement = /** @class */ (function (_super) {
     __extends(CharacterAdvancement, _super);
@@ -70,10 +70,10 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                     {
                         navSelector: ".sheet-tabs",
                         contentSelector: ".sheet-body",
-                        initial: "stats"
+                        initial: "stats",
                     },
                 ],
-                closeOnSubmit: false
+                closeOnSubmit: false,
             });
         },
         enumerable: false,
@@ -102,7 +102,7 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                                     // count skills by their level
                                     0: 0,
                                     1: 0,
-                                    2: 0
+                                    2: 0,
                                 },
                                 feats: {
                                     // count feats by their source
@@ -110,29 +110,29 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                                     mag: 0,
                                     div: 0,
                                     pri: 0,
-                                    psy: 0
-                                }
+                                    psy: 0,
+                                },
                             },
                             content: {
                                 // descriptions for skills and feats
                                 skills: {},
-                                feats: {}
+                                feats: {},
                             },
                             feats: {
                                 learned: [],
-                                awail: []
+                                awail: [], // array of feats that are available to learn
                             },
                             allow: {
                                 ability: false,
                                 race: false,
-                                final: false
+                                final: false,
                             },
                             hover: {
                                 ability: null,
                                 skill: null,
                                 race: null,
-                                feat: null
-                            }
+                                feat: null,
+                            },
                         };
                         pack_list = [];
                         pack_name_1 = [];
@@ -405,7 +405,7 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                             races: this.data.races,
                             health: this.data.health,
                             allow: this.data.allow,
-                            isReady: this.data.isReady
+                            isReady: this.data.isReady,
                         };
                         console.log(this.form);
                         console.log(templateData);
@@ -548,8 +548,8 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                         obj["data.isReady"] = this.data.allow.final;
                         console.log(obj);
                         feats_data = {
-                            "new": [],
-                            exist: []
+                            new: [],
+                            exist: [],
                         };
                         feats = this.data.feats.awail.filter(function (item) { return item.data.level.initial > item.data.level.current; });
                         for (_c = 0, _d = Object.entries(feats); _c < _d.length; _c++) {
@@ -561,12 +561,12 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                                         feats_data.exist.push(v);
                                     }
                                     else {
-                                        feats_data["new"].push(v);
+                                        feats_data.new.push(v);
                                     }
                                 }
                             }
                             else {
-                                feats_data["new"].push(v);
+                                feats_data.new.push(v);
                             }
                         }
                         pass = [];
@@ -574,7 +574,7 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                             _l = _k[_j], k = _l[0], v = _l[1];
                             pass.push(v.pass.slice(0, v.pass.length - 1));
                         }
-                        for (_m = 0, _o = Object.entries(feats_data["new"]); _m < _o.length; _m++) {
+                        for (_m = 0, _o = Object.entries(feats_data.new); _m < _o.length; _m++) {
                             _p = _o[_m], k = _p[0], v = _p[1];
                             pass.push(v.pass.slice(0, v.pass.length - 1));
                         }
@@ -600,14 +600,14 @@ var CharacterAdvancement = /** @class */ (function (_super) {
                         if (!(feats_data.exist.length > 0)) return [3 /*break*/, 7];
                         return [4 /*yield*/, actor.updateEmbeddedDocuments("Item", feats_data.exist.map(function (item) { return ({
                                 _id: item._id,
-                                "data.level.initial": item.data.level.initial
+                                "data.level.initial": item.data.level.initial,
                             }); }))];
                     case 6:
                         _q.sent();
                         _q.label = 7;
                     case 7:
-                        if (!(feats_data["new"].length > 0)) return [3 /*break*/, 9];
-                        return [4 /*yield*/, actor.createEmbeddedDocuments("Item", feats_data["new"])];
+                        if (!(feats_data.new.length > 0)) return [3 /*break*/, 9];
+                        return [4 /*yield*/, actor.createEmbeddedDocuments("Item", feats_data.new)];
                     case 8:
                         _q.sent();
                         _q.label = 9;

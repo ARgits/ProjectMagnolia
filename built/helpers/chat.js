@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.addChatMessageContextOptions = exports.displayChatActionButtons = exports.highlightCriticalSuccessFailure = void 0;
 /**
  * Highlight critical success or failure on d20 rolls

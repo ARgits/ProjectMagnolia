@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.ARd20ActorSheet = void 0;
 var effects_mjs_1 = require("../helpers/effects.mjs");
 var cha_adv_mjs_1 = require("../helpers/cha-adv.mjs");
@@ -71,7 +71,7 @@ var ARd20ActorSheet = /** @class */ (function (_super) {
                 template: "systems/ard20/templates/actor/actor-sheet.html",
                 width: 600,
                 height: 600,
-                tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
+                tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
             });
         },
         enumerable: false,
@@ -158,7 +158,7 @@ var ARd20ActorSheet = /** @class */ (function (_super) {
             6: [],
             7: [],
             8: [],
-            9: []
+            9: [],
         };
         // Iterate through items, allocating to containers
         for (var _i = 0, _a = context.items; _i < _a.length; _i++) {
@@ -219,7 +219,7 @@ var ARd20ActorSheet = /** @class */ (function (_super) {
         html.find(".item-delete").click(function (ev) {
             var li = $(ev.currentTarget).parents(".item");
             var item = _this.actor.items.get(li.data("itemId"));
-            item["delete"]();
+            item.delete();
             li.slideUp(200, function () { return _this.render(false); });
         });
         // Active Effect management
@@ -307,7 +307,7 @@ var ARd20ActorSheet = /** @class */ (function (_super) {
                         itemData = {
                             name: name,
                             type: type,
-                            data: data
+                            data: data,
                         };
                         // Remove the type from the dataset since it's in the itemData.type prop.
                         delete itemData.data["type"];

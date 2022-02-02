@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * A type of Roll specific to a d20-based check, save, or attack roll in the 5e system.
  * @param {string} formula                       The string formula to parse
@@ -190,7 +190,7 @@ var D20Roll = /** @class */ (function (_super) {
                             defaultAbility: defaultAbility,
                             abilities: CONFIG.ARd20.abilities,
                             canMult: canMult,
-                            mRoll: mRoll
+                            mRoll: mRoll,
                         })];
                     case 1:
                         content = _e.sent();
@@ -211,19 +211,19 @@ var D20Roll = /** @class */ (function (_super) {
                                     buttons: {
                                         advantage: {
                                             label: game.i18n.localize("ARd20.Advantage"),
-                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, D20Roll.ADV_MODE.ADVANTAGE)); }
+                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, D20Roll.ADV_MODE.ADVANTAGE)); },
                                         },
                                         normal: {
                                             label: game.i18n.localize("ARd20.Normal"),
-                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, D20Roll.ADV_MODE.NORMAL)); }
+                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, D20Roll.ADV_MODE.NORMAL)); },
                                         },
                                         disadvantage: {
                                             label: game.i18n.localize("ARd20.Disadvantage"),
-                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, D20Roll.ADV_MODE.DISADVANTAGE)); }
-                                        }
+                                            callback: function (html) { return resolve(_this._onDialogSubmit(html, D20Roll.ADV_MODE.DISADVANTAGE)); },
+                                        },
                                     },
-                                    "default": defaultButton,
-                                    close: function () { return resolve(null); }
+                                    default: defaultButton,
+                                    close: function () { return resolve(null); },
                                 }, options).render(true);
                             })];
                 }
@@ -276,7 +276,7 @@ var D20Roll = /** @class */ (function (_super) {
     D20Roll.ADV_MODE = {
         NORMAL: 0,
         ADVANTAGE: 1,
-        DISADVANTAGE: -1
+        DISADVANTAGE: -1,
     };
     /**
      * The HTML template path used to configure evaluation of this Roll
@@ -285,4 +285,4 @@ var D20Roll = /** @class */ (function (_super) {
     D20Roll.EVALUATION_TEMPLATE = "systems/ard20/templates/chat/roll-dialog.html";
     return D20Roll;
 }(Roll));
-exports["default"] = D20Roll;
+exports.default = D20Roll;

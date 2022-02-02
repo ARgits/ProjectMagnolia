@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.ARd20ItemSheet = void 0;
 var effects_mjs_1 = require("../helpers/effects.mjs");
 var feat_req_mjs_1 = require("../helpers/feat_req.mjs");
@@ -73,7 +73,7 @@ var ARd20ItemSheet = /** @class */ (function (_super) {
                 tabs: [
                     { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" },
                     { navSelector: ".data-tabs", contentSelector: ".data-section", initial: "untrained" },
-                ]
+                ],
             });
         },
         enumerable: false,
@@ -191,7 +191,7 @@ var ARd20ItemSheet = /** @class */ (function (_super) {
             templateResult: formatResult,
             escapeMarkup: function (m) {
                 return m;
-            }
+            },
         }).val(function (index, valu) {
             var name = $('select.select2', html)[index].name;
             var val = getProperty(context, name);

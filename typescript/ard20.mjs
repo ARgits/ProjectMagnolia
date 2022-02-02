@@ -8,7 +8,7 @@ import { ARd20ItemSheet } from "./sheets/item-sheet.mjs";
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { ARd20 } from "./helpers/config.js";
 import ARd20SocketHandler from "./helpers/socket.js";
-import { registerSystemSettings } from "./helpers/settings.mjs";
+import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
 

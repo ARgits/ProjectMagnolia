@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.ARd20Item = void 0;
 var dice_js_1 = require("../dice/dice.js");
 /**
@@ -323,7 +323,7 @@ var ARd20Item = /** @class */ (function (_super) {
         var mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
         data.attack = {
             formula: "1d20+" + prof_bonus + "+" + mod,
-            parts: [mod, prof_bonus]
+            parts: [mod, prof_bonus],
         };
     };
     ARd20Item.prototype._prepareDamage = function (itemData, abil) {
@@ -335,7 +335,7 @@ var ARd20Item = /** @class */ (function (_super) {
         var baseDamage = getProperty(data, prop);
         data.damage.current = {
             formula: "",
-            parts: baseDamage
+            parts: baseDamage,
         };
         console.log(baseDamage);
         baseDamage.forEach(function (part) {
@@ -444,7 +444,7 @@ var ARd20Item = /** @class */ (function (_super) {
                             critical: event.altKey,
                             event: event,
                             spellLevel: spellLevel,
-                            versatile: action === "versatile"
+                            versatile: action === "versatile",
                         })];
                     case 3:
                         dam = _b.sent();
@@ -549,7 +549,7 @@ var ARd20Item = /** @class */ (function (_super) {
                             operation: "updateActorData",
                             actor: tActor,
                             update: obj,
-                            value: value
+                            value: value,
                         });
                         _a.label = 3;
                     case 3: return [2 /*return*/];
@@ -587,7 +587,7 @@ var ARd20Item = /** @class */ (function (_super) {
                         }
                         return [4 /*yield*/, item.rollDamage({
                                 event: event,
-                                canMult: false
+                                canMult: false,
                             })];
                     case 3:
                         dam = _a.sent();
@@ -823,7 +823,7 @@ var ARd20Item = /** @class */ (function (_super) {
                             result: result,
                             hit: hit,
                             dmgHTML: dmgHTML,
-                            dieResultCss: dieResultCss
+                            dieResultCss: dieResultCss,
                         };
                         return [4 /*yield*/, renderTemplate("systems/ard20/templates/chat/item-card-multiAttack.html", templateData)];
                     case 35:
@@ -834,7 +834,7 @@ var ARd20Item = /** @class */ (function (_super) {
                             content: html,
                             flavor: this.data.data.chatFlavor || this.name,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor, token: token }),
-                            flags: { "core.canPopout": true }
+                            flags: { "core.canPopout": true },
                         };
                         // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
                         if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
@@ -919,15 +919,15 @@ var ARd20Item = /** @class */ (function (_super) {
                             title: title,
                             flavor: title,
                             dialogOptions: {
-                                width: 400
+                                width: 400,
                             },
                             chatMessage: true,
                             options: {
-                                create: false
+                                create: false,
                             },
                             targetValue: targets,
                             canMult: canMult,
-                            mRoll: mRoll
+                            mRoll: mRoll,
                         };
                         rollConfig = mergeObject(rollConfig, options);
                         return [4 /*yield*/, (0, dice_js_1.d20Roll)(rollConfig)];
@@ -967,7 +967,7 @@ var ARd20Item = /** @class */ (function (_super) {
             parts: parts,
             canMult: canMult,
             damType: damType,
-            mRoll: mRoll
+            mRoll: mRoll,
         };
         return (0, dice_js_1.damageRoll)(mergeObject(rollConfig, options));
     };

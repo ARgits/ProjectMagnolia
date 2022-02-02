@@ -1,11 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -42,12 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.damageRoll = exports.d20Roll = exports.simplifyRollFormula = exports.DamageRoll = exports.D20Roll = void 0;
 var d20_roll_js_1 = require("./d20-roll.js");
-__createBinding(exports, d20_roll_js_1, "default", "D20Roll");
+Object.defineProperty(exports, "D20Roll", { enumerable: true, get: function () { return d20_roll_js_1.default; } });
 var damage_roll_js_1 = require("./damage-roll.js");
-__createBinding(exports, damage_roll_js_1, "default", "DamageRoll");
+Object.defineProperty(exports, "DamageRoll", { enumerable: true, get: function () { return damage_roll_js_1.default; } });
 /**
  * A standardized helper function for simplifying the constant parts of a multipart roll formula
  *
@@ -174,7 +167,7 @@ function d20Roll(_a) {
                         critical: critical,
                         fumble: fumble,
                         targetValue: targetValue,
-                        mRoll: mRoll
+                        mRoll: mRoll,
                     });
                     if (!!isFF) return [3 /*break*/, 2];
                     return [4 /*yield*/, roll.configureDialog({
@@ -185,7 +178,7 @@ function d20Roll(_a) {
                             defaultAbility: (_b = data === null || data === void 0 ? void 0 : data.item) === null || _b === void 0 ? void 0 : _b.ability,
                             template: template,
                             canMult: canMult,
-                            mRoll: mRoll
+                            mRoll: mRoll,
                         }, dialogOptions)];
                 case 1:
                     configured = _o.sent();

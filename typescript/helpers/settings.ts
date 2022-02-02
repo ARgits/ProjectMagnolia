@@ -1,3 +1,4 @@
+import  {FeatFormAppData} from "../types/FormApp"
 export const registerSystemSettings = function () {
     game.settings.register('ard20', 'proficiencies', {
         scope: "world",
@@ -7,7 +8,7 @@ export const registerSystemSettings = function () {
                 {name: "Punch Dagger", type: 'amb'},
                 {name: 'Whip Dagger', type: 'amb'},
                 {name: 'Gauntlet', type: 'amb'},
-                {name: 'Hidden Blade', typel: 'amb'},
+                {name: 'Hidden Blade', type: 'amb'},
                 {name: 'Knucke Axe', type: 'amb'},
                 {name: 'Side Baton', type: 'amb'},
                 {name: 'Unarmed strike', type: 'amb'},
@@ -22,9 +23,9 @@ export const registerSystemSettings = function () {
                 {name: 'Heavy club', type: 'blu'},
                 {name: 'Light Club', type: 'blu'}],
             armor: [],
-            tools: []
+            tools: [],
+            skills:[]
         },
-        type: Object,
         onChange: value => {
             console.log('Настройка изменилась ', value)
         }
@@ -115,7 +116,7 @@ class ProfFormApp extends FormApplication {
         }
     }
 }
-class FeatFormApp extends FormApplication {
+class FeatFormApp extends FormApplication<FormApplication.Options,FeatFormAppData> {
     static get defaultOptions () {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
@@ -128,7 +129,7 @@ class FeatFormApp extends FormApplication {
             closeOnSubmit: false,
         })
     }
-    getData (options) {
+    getData ():FeatFormAppData {
         const sheetData = {
             feat: game.settings.get('ard20', 'feat')
         }
@@ -170,7 +171,7 @@ class FeatFormApp extends FormApplication {
         }
         this.render()
     }
-    async _updateObject (event, formData) {
+    protected async _updateObject (event:Event, formData?:object):Promise<void> {
         const feat = game.settings.get('ard20', 'feat')
         console.log(formData)
         let dirty = false

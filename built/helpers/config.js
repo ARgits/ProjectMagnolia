@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.ARd20 = void 0;
 exports.ARd20 = CONFIG.ARd20;
 exports.ARd20.Attributes = {
@@ -8,7 +8,7 @@ exports.ARd20.Attributes = {
     con: "ARd20.AbilityCon",
     int: "ARd20.AbilityInt",
     wis: "ARd20.AbilityWis",
-    cha: "ARd20.AbilityCha"
+    cha: "ARd20.AbilityCha",
 };
 exports.ARd20.AbilityAbbreviations = {
     str: "ARd20.AbilityStrAbbr",
@@ -16,7 +16,7 @@ exports.ARd20.AbilityAbbreviations = {
     con: "ARd20.AbilityConAbbr",
     int: "ARd20.AbilityIntAbbr",
     wis: "ARd20.AbilityWisAbbr",
-    cha: "ARd20.AbilityChaAbbr"
+    cha: "ARd20.AbilityChaAbbr",
 };
 exports.ARd20.CHARACTER_EXP_LEVELS = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
 exports.ARd20.SpellSchool = {
@@ -27,7 +27,7 @@ exports.ARd20.SpellSchool = {
     evo: "ARd20.SchoolEvo",
     ill: "ARd20.SchoolIll",
     nec: "ARd20.SchoolNec",
-    trs: "ARd20.SchoolTrs"
+    trs: "ARd20.SchoolTrs",
 };
 exports.ARd20.Skills = {
     acr: "ARd20.SkillAcr",
@@ -47,21 +47,21 @@ exports.ARd20.Skills = {
     rel: "ARd20.SkillRel",
     slt: "ARd20.SkillSlt",
     ste: "ARd20.SkillSte",
-    sur: "ARd20.SkillSur"
+    sur: "ARd20.SkillSur",
 };
 exports.ARd20.Rank = {
     0: "ARd20.Untrained",
     1: "ARd20.Basic",
     2: "ARd20.Expert",
     3: "ARd20.Master",
-    4: "ARd20.Legend"
+    4: "ARd20.Legend",
 };
 exports.ARd20.Source = {
     mar: "ARd20.Martial",
     mag: "ARd20.Magical",
     div: "ARd20.Divine",
     pri: "ARd20.Primal",
-    psy: "ARd20.Psyhic"
+    psy: "ARd20.Psyhic",
 };
 exports.ARd20.WeaponProp = {
     aff: "ARd20.Affixed",
@@ -88,7 +88,7 @@ exports.ARd20.WeaponProp = {
     thr: "ARd20.Thrown",
     tri: "ARd20.Trip",
     two: "ARd20.Two-Handed",
-    ver: "ARd20.Versatile"
+    ver: "ARd20.Versatile",
 };
 exports.ARd20.WeaponType = {
     amb: "ARd20.Ambush",
@@ -106,16 +106,16 @@ exports.ARd20.WeaponType = {
     pic: "ARd20.Pick",
     pol: "ARd20.Polearm",
     spe: "ARd20.Spear",
-    thr: "ARd20.Throwing"
+    thr: "ARd20.Throwing",
 };
 exports.ARd20.AbilXP = [50, 50, 50, 50, 70, 90, 120, 150, 190, 290, 440, 660, 990, 1500, 2700, 4800, 8400, 14700, 25700, 51500, 103000, 206000, 412000, 824000, 2060000];
 exports.ARd20.SkillXp = {
     0: [50, 80, 125, 185, 260, 350, 455, 575, 710, 860, 1025, 1205, 1400, 1610, 1835, 2075, 2330, 2600],
-    1: [115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470]
+    1: [115, 190, 295, 430, 595, 790, 1015, 1270, 1555, 1870, 2215, 2590, 2995, 3430, 3895, 4390, 4915, 5470],
 };
 exports.ARd20.DamageTypes = {
     mag: "ARd20.Magical",
-    phys: "ARd20.Physical"
+    phys: "ARd20.Physical",
 };
 exports.ARd20.DamageSubTypes = {
     acid: "ARd20.DamageAcid",
@@ -129,22 +129,22 @@ exports.ARd20.DamageSubTypes = {
     poison: "ARd20.DamagePoison",
     slash: "ARd20.DamageSlashing",
     rad: "ARd20.DamageRadiant",
-    psychic: "ARd20.DamagePsychic"
+    psychic: "ARd20.DamagePsychic",
 };
 exports.ARd20.ResistTypes = {
     res: "ARd20.Resistance",
     vul: "Ard20.Vulnerability",
-    imm: "ARd20.Immunity"
+    imm: "ARd20.Immunity",
 };
 exports.ARd20.HPDice = ["1d6", "1d8", "1d10", "1d12", "1d12+2", "1d12+4", "1d20", "1d20+2", "1d20+4", "1d20+6", "1d20+8", "1d20+10", "1d20+12"];
 exports.ARd20.HeavyPoints = {
     light: { chest: 3, gloves: 1, boots: 1, pants: 2, head: 1 },
     medium: { chest: 5, gloves: 2, boots: 2, pants: 3, head: 2 },
-    heavy: { chest: 8, gloves: 3, boots: 3, pants: 5, head: 3 }
+    heavy: { chest: 8, gloves: 3, boots: 3, pants: 5, head: 3 },
 };
 exports.ARd20.RollResult = {
     0: "ARd20.Fumble",
     1: "ARd20.Fail",
     2: "ARd20.Success",
-    3: "ARd20.Crit"
+    3: "ARd20.Crit",
 };

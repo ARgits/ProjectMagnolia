@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 // Import document classes.
 var actor_js_1 = require("./documents/actor.js");
 var item_mjs_1 = require("./documents/item.mjs");
@@ -46,7 +46,7 @@ var item_sheet_mjs_1 = require("./sheets/item-sheet.mjs");
 var templates_mjs_1 = require("./helpers/templates.mjs");
 var config_js_1 = require("./helpers/config.js");
 var socket_js_1 = require("./helpers/socket.js");
-var settings_mjs_1 = require("./helpers/settings.mjs");
+var settings_js_1 = require("./helpers/settings.js");
 var dice = require("./dice/dice.js");
 var chat = require("./helpers/chat.js");
 /* -------------------------------------------- */
@@ -60,11 +60,11 @@ Hooks.once("init", function () {
             game.ard20 = {
                 documents: {
                     ARd20Actor: actor_js_1.ARd20Actor,
-                    ARd20Item: item_mjs_1.ARd20Item
+                    ARd20Item: item_mjs_1.ARd20Item,
                 },
                 rollItemMacro: rollItemMacro,
                 config: config_js_1.ARd20,
-                dice: dice
+                dice: dice,
             };
             // Add custom constants for configuration.
             CONFIG.ARd20 = config_js_1.ARd20;
@@ -74,7 +74,7 @@ Hooks.once("init", function () {
             CONFIG.Dice.rolls.push(dice.DamageRoll);
             game.socket.on("system.ard20", function (data) {
                 if (data.operation === "updateActorData")
-                    socket_js_1["default"].updateActorData(data);
+                    socket_js_1.default.updateActorData(data);
             });
             /**
              * Set an initiative formula for the system
@@ -82,7 +82,7 @@ Hooks.once("init", function () {
              */
             CONFIG.Combat.initiative = {
                 formula: "1d20 + @abilities.dex.mod",
-                decimals: 2
+                decimals: 2,
             };
             // Define custom Document classes
             CONFIG.Actor.documentClass = actor_js_1.ARd20Actor;
@@ -92,7 +92,7 @@ Hooks.once("init", function () {
             Actors.registerSheet("ard20", actor_sheet_mjs_1.ARd20ActorSheet, { makeDefault: true });
             Items.unregisterSheet("core", ItemSheet);
             Items.registerSheet("ard20", item_sheet_mjs_1.ARd20ItemSheet, { makeDefault: true });
-            (0, settings_mjs_1.registerSystemSettings)();
+            (0, settings_js_1.registerSystemSettings)();
             // Preload Handlebars templates.
             return [2 /*return*/, (0, templates_mjs_1.preloadHandlebarsTemplates)()];
         });
@@ -158,7 +158,7 @@ function createItemMacro(data, slot) {
                             type: "script",
                             img: item.img,
                             command: command,
-                            flags: { "ard20.itemMacro": true }
+                            flags: { "ard20.itemMacro": true },
                         })];
                 case 1:
                     macro = _a.sent();

@@ -159,10 +159,14 @@ export class ARd20Actor extends Actor {
     function getValues<Obj extends object>(SourceObject: Obj, key: keyof Obj | string | number) {
       return SourceObject[key as keyof Obj];
     }
+    function obj_keys<Obj extends object>(obj:Obj){
+      return Object.keys(obj) as Array<keyof typeof obj>
+    }
 
     //calculate character's armor,weapon and tool proficinecies
     const weapon_set = game.settings.get("ard20", "proficiencies").weapon;
-    for (let [key, prof] of obj_entries(weapon_set)) {
+    for (let key of obj_keys(weapon_set)) {
+      const weapon = weapon_set[key]
       prof_weapon[key].value = prof_weapon[key].value ? prof_weapon[key].value : 0;
       prof_weapon[key].type = weapon_set[key].type;
       prof_weapon[key].name = weapon_set[key].name;

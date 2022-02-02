@@ -50,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeatRequirements = void 0;
 var FeatRequirements = /** @class */ (function (_super) {
     __extends(FeatRequirements, _super);
@@ -65,7 +65,7 @@ var FeatRequirements = /** @class */ (function (_super) {
                 template: "systems/ard20/templates/app/feat_req.html",
                 id: "feat_req",
                 width: 800,
-                height: "auto"
+                height: "auto",
             });
         },
         enumerable: false,
@@ -109,7 +109,7 @@ var FeatRequirements = /** @class */ (function (_super) {
                                         if (doc.data.type === 'feature') {
                                             item = {
                                                 name: duplicate(feat.name),
-                                                maxLevel: duplicate(doc.data.data.level.max)
+                                                maxLevel: duplicate(doc.data.data.level.max),
                                             };
                                             pack_list_1.push(item);
                                         }
@@ -143,7 +143,7 @@ var FeatRequirements = /** @class */ (function (_super) {
                                     var feat = _24[_23];
                                     var doc = {
                                         name: duplicate(feat.name),
-                                        maxLevel: duplicate(feat.data.data.level.max)
+                                        maxLevel: duplicate(feat.data.data.level.max),
                                     };
                                     folder_list.push(doc);
                                 }
@@ -156,14 +156,14 @@ var FeatRequirements = /** @class */ (function (_super) {
                         }
                         this.feat = {
                             awail: pack_list_1.concat(folder_list.filter(function (item) { return pack_list_1.indexOf(item) < 0; })),
-                            current: Object.values(foundry.utils.deepClone(this.object.data.data.req.values.filter(function (item) { return item.type === "feature"; })))
+                            current: Object.values(foundry.utils.deepClone(this.object.data.data.req.values.filter(function (item) { return item.type === "feature"; }))),
                         };
                         for (_1 = 0, _2 = Object.entries(CONFIG.ARd20.abilities); _1 < _2.length; _1++) {
                             _3 = _2[_1], k = _3[0], v = _3[1];
                             this.data.push({
                                 name: (_a = game.i18n.localize(CONFIG.ARd20.abilities[k])) !== null && _a !== void 0 ? _a : k,
                                 value: k,
-                                type: "ability"
+                                type: "ability",
                             });
                         }
                         for (_4 = 0, _5 = Object.entries(CONFIG.ARd20.skills); _4 < _5.length; _4++) {
@@ -171,7 +171,7 @@ var FeatRequirements = /** @class */ (function (_super) {
                             this.data.push({
                                 name: (_b = game.i18n.localize(CONFIG.ARd20.skills[k])) !== null && _b !== void 0 ? _b : k,
                                 value: k,
-                                type: "skill"
+                                type: "skill",
                             });
                         }
                         name_array_1 = [];
@@ -197,7 +197,7 @@ var FeatRequirements = /** @class */ (function (_super) {
                                 this_1.data.push({
                                     name: v.name,
                                     type: "feat",
-                                    maxLevel: v.maxLevel
+                                    maxLevel: v.maxLevel,
                                 });
                             }
                         };
@@ -265,7 +265,7 @@ var FeatRequirements = /** @class */ (function (_super) {
                             config: CONFIG.ARd20,
                             req: this.req,
                             formApp: this.formApp,
-                            prof: this.prof
+                            prof: this.prof,
                         };
                         console.log("FormData", FormData);
                         console.log("Form html", this.form);

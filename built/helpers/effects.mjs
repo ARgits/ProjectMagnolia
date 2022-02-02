@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.prepareActiveEffectCategories = exports.onManageActiveEffect = void 0;
 /**
  * Manage Active Effect instances through the Actor Sheet via effect control buttons.
@@ -23,7 +23,7 @@ function onManageActiveEffect(event, owner) {
         case "edit":
             return effect.sheet.render(true);
         case "delete":
-            return effect["delete"]();
+            return effect.delete();
         case "toggle":
             return effect.update({ disabled: !effect.data.disabled });
     }
