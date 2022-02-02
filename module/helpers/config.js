@@ -54,8 +54,8 @@ ARd20.Rank = {
   0: "ARd20.Untrained",
   1: "ARd20.Basic",
   2: "ARd20.Expert",
- // 3: "ARd20.Master",
- // 4: "ARd20.Legend",
+  3: "ARd20.Master",
+  4: "ARd20.Legend",
 };
 ARd20.Source = {
   mar: "ARd20.Martial",

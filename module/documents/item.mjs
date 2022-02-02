@@ -58,7 +58,7 @@ export class ARd20Item extends Item {
     const flags = itemData.flags;
     data.hasAttack = data.hasAttack || true;
     data.hasDamage = data.hasDamage || true;
-    this._SetProperties(data);
+    //this._SetProperties(data);
     this._setDeflect(data);
     this._setTypeAndSubtype(data, flags, labels);
     for (let [key, type] of Object.entries(data.damage)) {
