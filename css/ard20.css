@@ -535,6 +535,41 @@ table tr th.under-chosen {
   text-align: center;
 }
 
+.grid-like-2col {
+  max-width: calc((100% - 2%) / 2);
+  min-width: calc((100% - 2%) / 2);
+  margin-right: 2%;
+  margin-top: 2%;
+}
+
+.grid-like-3col {
+  max-width: calc((100% - 3%) / 3);
+  min-width: calc((100% - 3%) / 3);
+  margin-right: 3%;
+  margin-top: 2%;
+}
+
+.grid-like-4col {
+  max-width: calc((100% - 4%) / 4);
+  min-width: calc((100% - 4%) / 4);
+  margin-right: 4%;
+  margin-top: 2%;
+}
+
+.grid-like-5col {
+  max-width: calc((100% - 5%) / 5);
+  min-width: calc((100% - 5%) / 5);
+  margin-right: 5%;
+  margin-top: 2%;
+}
+
+.grid-like-6col {
+  max-width: calc((100% - 6%) / 6);
+  min-width: calc((100% - 6%) / 6);
+  margin-right: 6%;
+  margin-top: 2%;
+}
+
 /* Styles limited to ard20 sheets */
 .ard20 {
   /* ----------------------------------------- */

@@ -57,17 +57,18 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-6col">
+      <label>Properties:
+      <div class="flexrow flex-group-center">
         {{#each data.property as |prop key|}}
-          <div class="grid grid-span-2">
+          <div class="flexcol flex-group center grid-like-5col">
             <span>{{prop.label}}</span>
             <select name="data.property.{{key}}.value">
-              {{log @root.config.Rank}}
-              {{selectOptions @root.config.Rank selected=0 localize=true}}
+              {{selectOptions @root.config.Rank selected=prop.value localize=true}}
             </select>
           </div>
         {{/each}}
       </div>
+      </label>
       <div class="flexcol">
         {{#each data.damage.common as |prof ind|}}
           <label for="data.damage.common.{{ind}}">

@@ -21,6 +21,7 @@ export class ARd20Item extends Item {
   prepareBaseWeaponData(itemData) {
     const data = itemData.data;
     const properties = data.property;
+    console.log(properties)
     for (let [k, v] of Object.entries(CONFIG.ARd20.WeaponProp)) {
       console.log(k, v);
       properties[k] = properties?.[k] || {};

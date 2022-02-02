@@ -44,3 +44,12 @@
   justify-content: center;
   text-align: center;
 }
+@for $i from 2 through 6 {
+  $j: $i + 0%;
+  .grid-like-#{$i}col {
+    max-width: calc((100% - #{$j}) / $i);
+    min-width: calc((100% - #{$j}) / $i);
+    margin-right: #{$j};
+    margin-top: 2%;
+  }
+}
