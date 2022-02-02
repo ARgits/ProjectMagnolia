@@ -536,37 +536,37 @@ table tr th.under-chosen {
 }
 
 .grid-like-2col {
-  max-width: calc((100% - 2%) / 2);
-  min-width: calc((100% - 2%) / 2);
+  max-width: calc((100% - 4%) / 2);
+  min-width: calc((100% - 4%) / 2);
   margin-right: 2%;
   margin-top: 2%;
 }
 
 .grid-like-3col {
-  max-width: calc((100% - 3%) / 3);
-  min-width: calc((100% - 3%) / 3);
-  margin-right: 3%;
+  max-width: calc((100% - 6%) / 3);
+  min-width: calc((100% - 6%) / 3);
+  margin-right: 2%;
   margin-top: 2%;
 }
 
 .grid-like-4col {
-  max-width: calc((100% - 4%) / 4);
-  min-width: calc((100% - 4%) / 4);
-  margin-right: 4%;
+  max-width: calc((100% - 8%) / 4);
+  min-width: calc((100% - 8%) / 4);
+  margin-right: 2%;
   margin-top: 2%;
 }
 
 .grid-like-5col {
-  max-width: calc((100% - 5%) / 5);
-  min-width: calc((100% - 5%) / 5);
-  margin-right: 5%;
+  max-width: calc((100% - 10%) / 5);
+  min-width: calc((100% - 10%) / 5);
+  margin-right: 2%;
   margin-top: 2%;
 }
 
 .grid-like-6col {
-  max-width: calc((100% - 6%) / 6);
-  min-width: calc((100% - 6%) / 6);
-  margin-right: 6%;
+  max-width: calc((100% - 12%) / 6);
+  min-width: calc((100% - 12%) / 6);
+  margin-right: 2%;
   margin-top: 2%;
 }
 

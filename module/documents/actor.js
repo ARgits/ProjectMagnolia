@@ -76,6 +76,7 @@ export class ARd20Actor extends Actor {
     const advancement = data.advancement;
     const def_stats = data.defences.stats;
     const def_dam = data.defences.damage;
+    const skills = data.skills;
     data.mobility.value = 0;
     this.itemTypes.armor.forEach((item) => {
       if (item.data.data.equipped) {
@@ -138,9 +139,11 @@ export class ARd20Actor extends Actor {
       def_dam.mag[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills
-    for (let [key, skill] of Object.entries(data.skills)) {
+    for (let [key, skill] of Object.entries(skills)) {
       skill.level = skill.level < 4 ? skill.level : 4;
       skill.value = skill.level * 4 + skill.bonus;
+      skill.rankName = game.i18n.localize(CONFIG.ARd20.Rank[skill.level]) ?? CONFIG.ARd20.Rank[skill.level];
+      skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
     }
     //calculate character's armor,weapon and tool proficinecies
     for (let [key, prof] of entries(game.settings.get("ard20", "proficiencies").weapon)) {
@@ -153,7 +156,6 @@ export class ARd20Actor extends Actor {
     if (data.proficiencies.weapon.length > game.settings.get("ard20", "proficiencies").weapon.length) {
       data.proficiencies.weapon.splice(game.settings.get("ard20", "proficiencies").weapon.length + 1, data.proficiencies.weapon.length - game.settings.get("ard20", "proficiencies").weapon.length);
     }
-    data.speed.value = this.itemTypes.race[0]?.data.data.speed + attributes.dex.mod + data.speed.bonus;
   }
 
   /**
@@ -184,9 +186,9 @@ export class ARd20Actor extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollAbilityTest(abilityId,options) {
+  rollAbilityTest(abilityId, options) {
     const label = game.i18n.localize(CONFIG.ARd20.Attributes[abilityId]);
-    const abl = this.data.data.attributes
+    const abl = this.data.data.attributes;
 
     // Construct parts
     const parts = ["@mod"];

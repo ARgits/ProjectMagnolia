@@ -45,11 +45,11 @@
   text-align: center;
 }
 @for $i from 2 through 6 {
-  $j: $i + 0%;
+  $j: $i *2%;
   .grid-like-#{$i}col {
     max-width: calc((100% - #{$j}) / $i);
     min-width: calc((100% - #{$j}) / $i);
-    margin-right: #{$j};
+    margin-right: 2%;
     margin-top: 2%;
   }
 }

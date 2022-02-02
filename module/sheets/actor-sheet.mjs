@@ -73,10 +73,6 @@ export class ARd20ActorSheet extends ActorSheet {
     for (let [k, v] of Object.entries(context.data.abilities)) {
       v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
     }
-    for (let [k, v] of Object.entries(context.data.skills)) {
-      v.name = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
-      v.rank_name = game.i18n.localize(CONFIG.ARd20.prof[v.rank]) ?? v.rank;
-    }
   }
 
   /**
