@@ -17,7 +17,7 @@ export class CharacterAdvancement extends FormApplication {
       closeOnSubmit: false,
     });
   }
-  async getData(options) {
+  async getData() {
     if (!this.data) {
       this.data = {
         isReady: duplicate(this.object.data.data.isReady), // check, if the character is ready
@@ -79,10 +79,12 @@ export class CharacterAdvancement extends FormApplication {
           for (let feat of feat_list) {
             let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
             let doc = await game.packs.get(new_key).getDocument(feat._id);
-            let item = doc.toObject();
-            item.data = foundry.utils.deepClone(doc.data.data);
-            pack_list.push(item);
-            pack_name.push(item.name);
+            if (doc !== null || doc !== undefined) {
+              let item = doc.toObject();
+              item.data = foundry.utils.deepClone(doc.data.data);
+              pack_list.push(item);
+              pack_name.push(item.name);
+            }
           }
           pack_list = pack_list.flat();
         }

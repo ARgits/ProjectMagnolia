@@ -1,15 +1,17 @@
 export {};
 declare global {
- 
   interface LenientGlobalVariableTypes {
     game: never;
-  }
+  } 
   namespace ClientSettings {
+    interface PartialMenuSetting{
+      scope:"world"|"client"
+    }
     interface Values {
       "ard20.proficiencies": {
         weapon: Array<WeaponProficienciesSetting>;
-        armor: [];
-        tools: [];
+        armor: Array<ArmorProficienciesSetting>;
+        tools: Array<ToolProficienciesSetting>;
         skills: {
           name: string;
           untrain: boolean;
@@ -22,17 +24,17 @@ declare global {
       };
     }
   }
+
+  
+  interface WeaponProficienciesSetting {
+    name: string;
+    type: string;
+  }
+  interface ArmorProficienciesSetting {
+    name: string;
+    type: string;
+  }
+  interface ToolProficienciesSetting {
+    name: string;
+  }
 }
-interface FeatFormAppData {
-  sheetData: { feat: { packs: string[]; folders: string[] } };
-}
-interface WeaponProficienciesSetting {
-  name: string;
-  type: string;
-}
-type FeatFormAppDataType = FeatFormAppData
-
-
-
-
-

@@ -1,11 +1,11 @@
 // Import document classes.
 import { ARd20Actor } from "./documents/actor.js";
-import { ARd20Item } from "./documents/item.mjs";
+import { ARd20Item } from "./documents/item.js";
 // Import sheet classes.
-import { ARd20ActorSheet } from "./sheets/actor-sheet.mjs";
-import { ARd20ItemSheet } from "./sheets/item-sheet.mjs";
+import { ARd20ActorSheet } from "./sheets/actor-sheet.js";
+import { ARd20ItemSheet } from "./sheets/item-sheet.js";
 // Import helper/utility classes and constants.
-import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
+import { preloadHandlebarsTemplates } from "./helpers/templates.js";
 import { ARd20 } from "./helpers/config.js";
 import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
@@ -15,7 +15,18 @@ import * as chat from "./helpers/chat.js";
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
-
+export function obj_entries<Obj extends object>(obj: Obj) {
+  return Object.entries(obj) as [keyof Obj, Obj[keyof Obj]][];
+}
+export function getValues<Obj extends object>(SourceObject: Obj, key: keyof Obj | string | number) {
+  return SourceObject[key as keyof Obj];
+}
+export function obj_keys<Obj extends object>(obj: Obj) {
+  return Object.keys(obj) as unknown as Array<keyof Obj>;
+}
+export function array_keys<Obj extends Array<any>>(obj: Obj) {
+  return Object.keys(obj) as unknown as Array<Exclude<keyof Obj, keyof Array<any>>>;
+}
 Hooks.once("init", async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.

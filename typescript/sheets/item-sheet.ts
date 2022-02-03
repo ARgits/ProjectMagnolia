@@ -1,5 +1,5 @@
-import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
-import { FeatRequirements } from "../helpers/feat_req.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
+import { FeatRequirements } from "../helpers/feat_req.js";
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}

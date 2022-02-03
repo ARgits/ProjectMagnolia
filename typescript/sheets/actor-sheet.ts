@@ -1,5 +1,5 @@
-import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
-import { CharacterAdvancement } from "../helpers/cha-adv.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
+import { CharacterAdvancement } from "../helpers/cha-adv.js";
 import { ARd20Actor } from "../documents/actor.js";
 
 /**

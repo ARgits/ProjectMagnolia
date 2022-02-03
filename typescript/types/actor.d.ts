@@ -1,13 +1,18 @@
+import { ARd20Actor } from "../documents/actor";
+
 export {};
 declare global {
+  interface DocumentClassConfig {
+    Actor: typeof ARd20Actor;
+  }
   interface SourceConfig {
     Actor: ARd20ActorDataSource;
   }
   interface DataConfig {
     Actor: ARd20ActorDataProperties;
   }
-  type ARd20ActorDataSource = CharacterDataSource;
-  type ARd20ActorDataProperties = CharacterDataProperties;
+  type ARd20ActorDataSource = CharacterDataSource | NPCDataSource;
+  type ARd20ActorDataProperties = CharacterDataProperties | NPCDataPropertiesData;
   type Attributes = "str" | "dex" | "int" | "wis" | "cha" | "con";
   type Skills = "acr" | "ani" | "arc" | "ath" | "dec" | "his" | "ins" | "itm" | "inv" | "med" | "nat" | "prc" | "prf" | "per" | "rel" | "slt" | "ste" | "sur";
   type Sources = "mar" | "mag" | "div" | "pri" | "psy";
@@ -44,16 +49,14 @@ declare global {
     type: "character";
     data: CharacterDataSourceData;
   }
-  interface CharacterDataProperties {
-    type: "character";
+  interface CharacterDataProperties extends CharacterDataSource {
     data: CharacterDataPropertiesData;
   }
   interface NPCDataSource {
     type: "npc";
     data: NPCDataSourceData;
   }
-  interface NPCDataProperties {
-    type: "npc";
+  interface NPCDataProperties extends NPCDataSource {
     data: NPCDataPropertiesData;
   }
   interface ActorBaseTemplate {
@@ -94,16 +97,12 @@ declare global {
     };
     proficiencies: {
       weapon: Array<WeaponProficiencies>;
-      armor: Record<number, ArmorProficiencies>;
-      tools: Record<number, ToolProficiencies>;
+      armor: Array<ArmorProficiencies>;
+      tools: Array<ToolProficiencies>;
     };
   }
-  interface WeaponProficiencies {
+  interface WeaponProficiencies extends WeaponProficienciesSetting {
     value: number;
-    type: string;
-    name: string;
-    type_hover: string;
-    type_value: string;
   }
   interface ArmorProficiencies {
     value: number;
@@ -115,7 +114,13 @@ declare global {
     cr: number;
   }
   interface CharacterDataPropertiesData extends CharacterDataSourceData {
-    attributes: { [Ability in keyof CharacterDataSourceData["attributes"]]: CharacterDataSourceData["attributes"][Ability] & { mod: number; total: number; bonus: number } };
+    attributes: {
+      [Ability in keyof CharacterDataSourceData["attributes"]]: CharacterDataSourceData["attributes"][Ability] & {
+        mod: number;
+        total: number;
+        bonus: number;
+      };
+    };
     advancement: { xp: CharacterDataSourceData["advancement"]["xp"] & { level: number; level_min: number; bar_max: number; bar_min: number }; level: number };
     skills: { [Skill in keyof CharacterDataSourceData["skills"]]: CharacterDataSourceData["skills"][Skill] & { bonus: number; level: number; name: string; rankName: string } };
     defences: {
@@ -137,7 +142,14 @@ declare global {
           };
         };
       };
-      stats: { [stat in keyof CharacterDataSourceData["defences"]["stats"]]: CharacterDataSourceData["defences"]["stats"][stat] & { bonus: number; value: number; label: string; level: number } };
+      stats: {
+        [stat in keyof CharacterDataSourceData["defences"]["stats"]]: CharacterDataSourceData["defences"]["stats"][stat] & {
+          bonus: number;
+          value: number;
+          label: string;
+          level: number;
+        };
+      };
       conditions: {};
     };
     proficiencies: CharacterDataSourceData["proficiencies"];
@@ -147,6 +159,4 @@ declare global {
   interface NPCDataPropertiesData extends NPCDataSourceData {
     xp: number;
   }
-  
-
 }

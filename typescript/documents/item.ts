@@ -1,3 +1,5 @@
+import { ItemData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs";
+import { getValues, obj_entries } from "../ard20.js";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 
 /**
@@ -30,15 +32,15 @@ export class ARd20Item extends Item {
   /**
    *Prepare data for Spells
    */
-  _prepareSpellData(itemData, labels) {
+  _prepareSpellData(itemData: ItemData, labels: { school?: any }) {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
-    labels.school = CONFIG.ARd20.SpellSchool[data.school];
+    labels.school = getValues(CONFIG.ARd20.SpellSchool, data.school);
   }
   /**
    *Prepare data for weapons
    */
-  _prepareWeaponData(itemData, labels) {
+  _prepareWeaponData(itemData: ItemData, labels: {}) {
     if (itemData.type !== "weapon") return;
     const data = itemData.data;
     const flags = itemData.flags;
@@ -51,7 +53,7 @@ export class ARd20Item extends Item {
       if (key !== "current") {
         for (let [key, prof] of Object.entries(type)) {
           prof.formula = "";
-          prof.parts.forEach((part) => {
+          prof.parts.forEach((part: any[]) => {
             if (Array.isArray(part[1])) {
               prof.formula += `${part[0]}`;
               part[1].forEach((sub, ind) => {
@@ -69,7 +71,9 @@ export class ARd20Item extends Item {
       }
     }
   }
-  _SetProperties(data) {
+  _SetProperties(data: {
+    property: { untrained: { [s: string]: unknown } | ArrayLike<unknown>; basic: { [s: string]: unknown } | ArrayLike<unknown>; master: { [s: string]: unknown } | ArrayLike<unknown> };
+  }) {
     for (let [k, v] of Object.entries(data.property.untrained)) {
       v = CONFIG.ARd20.Prop[k] ?? k;
     }
@@ -89,21 +93,25 @@ export class ARd20Item extends Item {
   /**
    *Set deflect die equal to damage die, if not
    */
-  _setDeflect(data) {
+  _setDeflect(data: { deflect: { [x: string]: any }; property: { [x: string]: { def: any } }; damage: { common: { [x: string]: any } } }) {
     for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
       data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
     }
   }
-  _setTypeAndSubtype(data, flags, labels) {
+  _setTypeAndSubtype(
+    data: { type: { value: string; label: any }; settings: { name: any }[]; sub_type: undefined; prof: { value: string | number; label: any } },
+    flags: { core: { sourceId: string } },
+    labels: { type: string; prof: string }
+  ) {
     data.type.value = data.type.value || "amb";
-    data.settings = game.settings.get("ard20", "profs").weapon.filter((prof) => prof.type === data.type.value);
+    data.settings = game.settings.get("ard20", "profs").weapon.filter((prof: { type: any }) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
       data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;
     }
-    data.sub_type = data.settings.filter((prof) => prof.name === data.sub_type).length === 0 ? data.settings[0].name : data.sub_type || data.settings[0].name;
+    data.sub_type = data.settings.filter((prof: { name: any }) => prof.name === data.sub_type).length === 0 ? data.settings[0].name : data.sub_type || data.settings[0].name;
     labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
     labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
     data.prof.label = labels.prof;
@@ -112,13 +120,13 @@ export class ARd20Item extends Item {
   /**
    *Prepare data for features
    */
-  _prepareFeatureData(itemData, labels) {
+  _prepareFeatureData(itemData: ItemData, labels: { source?: any }) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
     // Handle Source of the feature
     labels.source = [];
     data.source.label = "";
-    data.source.value.forEach((value, key) => {
+    data.source.value.forEach((value: string | number, key: number) => {
       labels.source.push(game.i18n.localize(CONFIG.ARd20.source[value]));
       data.source.label += key === 0 ? labels.source[key] : `, ${labels.source[key]}`;
     });
@@ -148,13 +156,13 @@ export class ARd20Item extends Item {
       req.pass = Array.from("0".repeat(data.level.max));
       switch (req.type) {
         case "ability":
-          for (let [key, v] of Object.entries(CONFIG.ARd20.abilities)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.abilities[key])) req.value = key;
+          for (let [key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key])) req.value = key;
           }
           break;
         case "skill":
-          for (let [key, v] of Object.entries(CONFIG.ARd20.skills)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.skills[key])) req.value = key;
+          for (let [key, v] of obj_entries(CONFIG.ARd20.Skills)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key])) req.value = key;
           }
           break;
       }
@@ -173,19 +181,19 @@ export class ARd20Item extends Item {
   /**
    * Prepare data for 'race' type of item
    */
-  _prepareRaceData(itemData, labels) {
+  _prepareRaceData(itemData: ItemData, labels: {}) {
     if (itemData.type !== "race") return;
     const data = itemData.data;
-    data.HPdie = CONFIG.ARd20.HPdice.slice(0, 7);
+    data.HPdie = CONFIG.ARd20.HPDice.slice(0, 7);
   }
   /**
    * Prepare data for "armor" type item
    */
-  _prepareArmorData(itemData, labels) {
+  _prepareArmorData(itemData: ItemData, labels: {}) {
     if (itemData.type !== "armor") return;
     const data = itemData.data;
-    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-      if (!(key === "force" || key === "rad" || key === "psyhic")) {
+    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+      if (!(key === "force" || key === "rad" || key === "psychic")) {
         data.res.phys[key] = data.res.phys[key] ?? 0;
       }
       data.res.mag[key] = data.res.mag[key] ?? 0;
@@ -203,38 +211,32 @@ export class ARd20Item extends Item {
     labels.skills = {};
     labels.feats = {};
     const abil = (data.abil = {});
-    for (let [k, v] of Object.entries(CONFIG.ARd20.abilities)) {
-      v = this.isOwned ? getProperty(this.actor.data, `data.abilities.${k}.mod`) : null;
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
+      v = this.isOwned ? getProperty(this.actor.data, `data.attributes.${k}.mod`) : null;
       abil[k] = v;
     }
-    let prof_bonus = 0;
+    let prof_bonus:number = 0
     if (this.data.type === "weapon") {
-      data.prof.value = this.isOwned ? Object.values(this.actor?.data.data.profs.weapon).filter((pr) => pr.name === data.sub_type)[0]?.value : 0;
-      this.labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
-      data.prof.label = this.labels.prof;
-      if (data.prof.value === 0) {
-        prof_bonus = 0;
-      } else if (data.prof.value === 1) {
-        prof_bonus = this.actor.data.data.attributes.prof_die;
-      } else if (data.prof.value === 2) {
-        prof_bonus = this.actor.data.data.attributes.prof_die + "+" + this.actor.data.data.attributes.prof_bonus;
-      }
+      data.level.value = this.isOwned ? Object.values(this.actor?.data.data.proficiencies.weapon).filter((pr) => pr.name === data.sub_type)[0]?.value : 0;
+      this.labels.prof = game.i18n.localize(CONFIG.ARd20.Rank[data.level.value]) ?? CONFIG.ARd20.Rank[data.level.value];
+      data.level.label = this.labels.prof;
+      prof_bonus = data.level.value;
     }
-    this._prepareAttack(itemData, prof_bonus, abil);
-    this._prepareDamage(itemData, abil);
+    if (data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
+    if (data.hasDamage) this._prepareDamage(itemData, abil);
   }
-  _prepareAttack(itemData, prof_bonus, abil) {
+  _prepareAttack(itemData: ItemData, prof_bonus?: number, abil?: { dex?: number }) {
     const data = itemData.data;
     if (!data.hasAttack) return;
-    if (data.atkMod) {
-    }
+    /*if (data.atkMod) {
+    }*/
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
     data.attack = {
       formula: "1d20+" + prof_bonus + "+" + mod,
       parts: [mod, prof_bonus],
     };
   }
-  _prepareDamage(itemData, abil) {
+  _prepareDamage(itemData: ItemData, abil: { str?: any } | undefined) {
     const data = itemData.data;
     if (!data.hasDamage) return;
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
@@ -245,7 +247,7 @@ export class ARd20Item extends Item {
       parts: baseDamage,
     };
     console.log(baseDamage);
-    baseDamage.forEach((part) => {
+    baseDamage.forEach((part: any[]) => {
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });
   }
@@ -253,7 +255,7 @@ export class ARd20Item extends Item {
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-  getRollData(hasAttack, hasDamage) {
+  getRollData(hasAttack: boolean, hasDamage: boolean) {
     // If present, return the actor's roll data.
     if (!this.actor) return null;
     const rollData = this.actor.getRollData();
@@ -274,7 +276,7 @@ export class ARd20Item extends Item {
     const id = item.id;
     const iData = this.data.data; //Item data
     const actor = this.actor;
-    const aData = actor.data.data;
+    const aData = actor?.data.data;
     hasDamage = iData.hasDamage || hasDamage;
     hasAttack = iData.hasAttack || hasAttack;
     // Initialize chat data.
@@ -289,11 +291,11 @@ export class ARd20Item extends Item {
   /*  Chat Message Helpers                        */
   /* -------------------------------------------- */
 
-  static chatListeners(html) {
+  static chatListeners(html: { on: (arg0: string, arg1: string, arg2: { (event: any): Promise<void>; (event: any): void; (event: any): Promise<void>; (event: any): void }) => void }) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
-    html.on("hover", ".attack-roll .flexrow .value", function (event) {
+    html.on("hover", ".attack-roll .flexrow .value", function (event: { preventDefault: () => void; type: string }) {
       event.preventDefault();
       const element = this.closest("li.flexrow");
       element.querySelector(".attack-roll .hover-roll")?.classList.toggle("shown", event.type == "mouseenter");
@@ -308,7 +310,7 @@ export class ARd20Item extends Item {
    * @returns {Promise}         A promise which resolves once the handler workflow is complete
    * @private
    */
-  static async _onChatCardAction(event) {
+  static async _onChatCardAction(event: { preventDefault: () => void; currentTarget: any; altKey: any }) {
     event.preventDefault();
 
     // Extract card data
@@ -387,17 +389,17 @@ export class ARd20Item extends Item {
    * @param {Event} event   The originating click event
    * @private
    */
-  static _onChatCardToggleContent(event) {
+  static _onChatCardToggleContent(event: { preventDefault: () => void; currentTarget: any }) {
     event.preventDefault();
     const header = event.currentTarget;
     const card = header.closest(".chat-card");
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
-  async _applyDamage(dam, tData, tHealth, tActor) {
+  async _applyDamage(dam: { total: any; terms: any[] }, tData: { defences: { damage: { [x: string]: { [x: string]: any } } } }, tHealth: number, tActor: { update: (arg0: {}) => any }) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
-    dam.terms.forEach((term) => {
+    dam.terms.forEach((term: { options: { damageType: any }; total: number }) => {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
         let res = tData.defences.damage[damageType[0]][damageType[1]];
@@ -423,14 +425,14 @@ export class ARd20Item extends Item {
       });
     }
   }
-  static async _rollDamage(event) {
+  static async _rollDamage(event: { preventDefault: () => void; currentTarget: any }) {
     event.preventDefault();
     const element = event.currentTarget;
     const card = element.closest(".chat-card");
     const message = game.messages.get(card.closest(".message").dataset.messageId);
     const targetUuid = element.closest("li.flexrow").dataset.targetId;
     const token = await fromUuid(targetUuid);
-    const tActor = token.actor;
+    const tActor = token?.actor;
     const tData = tActor.data.data;
     let tHealth = tData.health.value;
     console.log(tHealth, "здоровье цели");
@@ -465,7 +467,7 @@ export class ARd20Item extends Item {
    * @return {Actor|null}         The Actor entity or null
    * @private
    */
-  static async _getChatCardActor(card) {
+  static async _getChatCardActor(card: { dataset: { tokenId: string; actorId: any } }) {
     // Case 1 - a synthetic actor from a Token
     if (card.dataset.tokenId) {
       const token = await fromUuid(card.dataset.tokenId);
@@ -486,7 +488,7 @@ export class ARd20Item extends Item {
    * @return {Actor[]}            An Array of Actor entities, if any
    * @private
    */
-  static _getChatCardTargets(card) {
+  static _getChatCardTargets(card: any) {
     let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
     if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
     if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
@@ -517,7 +519,7 @@ export class ARd20Item extends Item {
           mRoll = atkRoll.options.mRoll;
           dc[key] = target.actor.data.data.defences.stats[def].value;
           atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
-          console.log(atk[key])
+          console.log(atk[key]);
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
           let d20 = atk[key] ? atk[key].terms[0] : null;
           atk[key] = atk[key].total;
@@ -666,16 +668,16 @@ export class ARd20Item extends Item {
     console.log(canMult);
     const iData = this.data.data;
     const aData = this.actor.data.data;
-    const parts = iData.damage.current.parts.map((d) => d[0]);
-    const damType = iData.damage.current.parts.map((d) =>
-      d[1].map((c, ind) => {
+    const parts = iData.damage.current.parts.map((d: any[]) => d[0]);
+    const damType = iData.damage.current.parts.map((d: any[][]) =>
+      d[1].map((c: (string | number)[], ind: any) => {
         let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
         let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
         let obj = { key: ind, label: `${a} ${b}` };
         return obj;
       })
     );
-    options.damageType = iData.damage.current.parts.map((d) => d[1]);
+    options.damageType = iData.damage.current.parts.map((d: any[]) => d[1]);
     const hasAttack = false;
     const hasDamage = true;
     const rollData = this.getRollData(hasAttack, hasDamage);

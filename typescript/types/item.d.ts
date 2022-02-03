@@ -1,5 +1,10 @@
+import { ARd20Item } from "../documents/item";
+
 export {};
 declare global {
+  interface DocumentClassConfig{
+    Item:typeof ARd20Item
+  }
   interface SourceConfig {
     Item: ARd20ItemDataSource;
   }
@@ -37,6 +42,24 @@ declare global {
     type: "armor";
     data: ArmorDataSourceData;
   }
+  interface ItemDataProperties extends ItemDataSource{
+    data: ItemDataPropertiesData
+  }
+  interface FeatureDataProperties extends FeatureDataSource{
+    data:FeatureDataPropertiesData
+  }
+  interface SpellDataProperties extends SpellDataSource{
+    data:SpellDataPropertiesData
+  }
+  interface WeaponDataProperties extends WeaponDataSource{
+    data:WeaponDataPropertiesData
+  }
+  interface RaceDataProperties extends RaceDataSource{
+    data:RaceDataPropertiesData
+  }
+  interface ArmorDataProperties extends ArmorDataSource{
+    data:ArmorDataPropertiesData
+  }
   interface ItemDataSourceData extends ItemBaseTemplate {
     quantity: number;
     weight: number;
@@ -54,7 +77,7 @@ declare global {
       basic: object;
       master: object;
     };
-    prof: {
+    level: {
       value: number;
     };
     damage: {
@@ -169,10 +192,10 @@ declare global {
       skill: object;
     };
   }
-  interface ItemDataProperties extends ItemDataSourceData{}
-  interface FeatureDataProperties extends FeatureDataSourceData{}
-  interface WeaponDataProperties extends WeaponDataSourceData{}
-  interface SpellDataProperties extends SpellDataSourceData{}
-  interface RaceDataProperties extends RaceDataSourceData{}
-  interface ArmorDataProperties extends ArmorDataSourceData{}
+  interface ItemDataPropertiesData extends ItemDataSourceData{}
+  interface FeatureDataPropertiesData extends FeatureDataSourceData{}
+  interface WeaponDataPropertiesData extends WeaponDataSourceData{}
+  interface SpellDataPropertiesData extends SpellDataSourceData{}
+  interface RaceDataPropertiesData extends RaceDataSourceData{}
+  interface ArmorDataPropertiesData extends ArmorDataSourceData{}
 }

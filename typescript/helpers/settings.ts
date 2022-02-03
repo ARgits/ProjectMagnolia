@@ -1,4 +1,3 @@
-import  {FeatFormAppData} from "../types/FormApp"
 export const registerSystemSettings = function () {
     game.settings.register('ard20', 'proficiencies', {
         scope: "world",
@@ -45,7 +44,6 @@ export const registerSystemSettings = function () {
             packs: [],
             folders: []
         },
-        type: Object,
         onChange: value => {
             console.log('Настройка изменилась', value)
         }
@@ -72,7 +70,7 @@ class ProfFormApp extends FormApplication {
             tabs: [{navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'weapons'}]
         })
     }
-    getData (options) {
+    getData () {
         const sheetData = {
             proficiencies: game.settings.get('ard20', 'proficiencies'),
             config: CONFIG.ARd20
