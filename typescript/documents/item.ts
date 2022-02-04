@@ -1,5 +1,5 @@
 import { ItemData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs";
-import { getValues, obj_entries } from "../ard20.js";
+import { getValues, obj_entries, obj_keys } from "../ard20.js";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 
 /**
@@ -15,7 +15,22 @@ export class ARd20Item extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
-  prepareBaseData() {}
+  prepareBaseData() {
+    super.prepareBaseData()
+    const itemData = this.data
+    this._prepareBaseWeaponData(itemData)
+  }
+  _prepareBaseWeaponData(itemData:ItemData){
+    if (itemData.type!=="weapon")return
+      const data = itemData.data
+      const properties = data.property
+      for (let key of obj_keys(CONFIG.ARd20.WeaponProp)){
+        properties[key].value = properties[key]?.value??0
+        properties[key].bonus = 0
+        properties[key].label = game.i18n.localize(CONFIG.ARd20.WeaponProp[key])??CONFIG.ARd20.WeaponProp[key]
+      }
+    
+  };
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
@@ -71,9 +86,7 @@ export class ARd20Item extends Item {
       }
     }
   }
-  _SetProperties(data: {
-    property: { untrained: { [s: string]: unknown } | ArrayLike<unknown>; basic: { [s: string]: unknown } | ArrayLike<unknown>; master: { [s: string]: unknown } | ArrayLike<unknown> };
-  }) {
+  _SetProperties() {
     for (let [k, v] of Object.entries(data.property.untrained)) {
       v = CONFIG.ARd20.Prop[k] ?? k;
     }

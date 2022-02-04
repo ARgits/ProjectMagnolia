@@ -57,7 +57,6 @@ export class ARd20Actor extends Actor {
     const actorData = this.data;
     const data = actorData.data;
     const flags = actorData.flags.ard20 || {};
-    this.data.
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.

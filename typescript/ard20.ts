@@ -30,48 +30,52 @@ export function array_keys<Obj extends Array<any>>(obj: Obj) {
 Hooks.once("init", async function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.ard20 = {
-    documents: {
-      ARd20Actor,
-      ARd20Item,
-    },
-    rollItemMacro,
-    config: ARd20,
-    dice: dice,
-  };
+  if (game instanceof Game) {
+    game.ard20 = {
+      documents: {
+        ARd20Actor,
+        ARd20Item,
+      },
+      rollItemMacro,
+      config: ARd20,
+      dice: dice,
+    };
 
-  // Add custom constants for configuration.
-  CONFIG.ARd20 = ARd20;
-  CONFIG.Dice.DamageRoll = dice.DamageRoll;
-  CONFIG.Dice.D20Roll = dice.D20Roll;
-  CONFIG.Dice.rolls.push(dice.D20Roll);
-  CONFIG.Dice.rolls.push(dice.DamageRoll);
-  game.socket.on("system.ard20", (data) => {
-    if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
-  });
+    // Add custom constants for configuration.
+    CONFIG.ARd20 = ARd20;
+    CONFIG.Dice.DamageRoll = dice.DamageRoll;
+    CONFIG.Dice.D20Roll = dice.D20Roll;
+    CONFIG.Dice.rolls.push(dice.D20Roll);
+    CONFIG.Dice.rolls.push(dice.DamageRoll);
+    game.socket.on("system.ard20", (data) => {
+      if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
+    });
 
-  /**
-   * Set an initiative formula for the system
-   * @type {String}
-   */
-  CONFIG.Combat.initiative = {
-    formula: "1d20 + @abilities.dex.mod",
-    decimals: 2,
-  };
+    /**
+     * Set an initiative formula for the system
+     * @type {String}
+     */
+    CONFIG.Combat.initiative = {
+      formula: "1d20 + @abilities.dex.mod",
+      decimals: 2,
+    };
 
-  // Define custom Document classes
-  CONFIG.Actor.documentClass = ARd20Actor;
-  CONFIG.Item.documentClass = ARd20Item;
+    // Define custom Document classes
+    CONFIG.Actor.documentClass = ARd20Actor;
+    CONFIG.Item.documentClass = ARd20Item;
 
-  // Register sheet application classes
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
-  Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
-  registerSystemSettings();
+    // Register sheet application classes
+    Actors.unregisterSheet("core", ActorSheet);
+    Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
+    Items.unregisterSheet("core", ItemSheet);
+    Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
+    registerSystemSettings();
 
-  // Preload Handlebars templates.
-  return preloadHandlebarsTemplates();
+    // Preload Handlebars templates.
+    return preloadHandlebarsTemplates();
+  } else {
+    throw new Error("game not initialized yet!");
+  }
 });
 
 /* -------------------------------------------- */
@@ -144,16 +148,18 @@ async function createItemMacro(data, slot) {
  * @param {string} itemName
  * @return {Promise}
  */
-function rollItemMacro(itemName) {
-  const speaker = ChatMessage.getSpeaker();
-  let actor;
-  if (speaker.token) actor = game.actors.tokens[speaker.token];
-  if (!actor) actor = game.actors.get(speaker.actor);
-  const item = actor ? actor.items.find((i) => i.name === itemName) : null;
-  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+export function rollItemMacro(itemName: string){
+  if (game instanceof Game) {
+    const speaker = ChatMessage.getSpeaker();
+    let actor;
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    if (!actor) actor = game.actors.get(speaker.actor);
+    const item = actor ? actor.items.find((i) => i.name === itemName) : null;
+    if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
-  // Trigger the item roll
-  return item.roll();
+    // Trigger the item roll
+    return item.roll();
+  }
 }
 Hooks.on("renderChatMessage", (app, html, data) => {
   // Display action buttons

@@ -12,51 +12,24 @@ declare global {
     Actor: ARd20ActorDataProperties;
   }
   type ARd20ActorDataSource = CharacterDataSource | NPCDataSource;
-  type ARd20ActorDataProperties = CharacterDataProperties | NPCDataPropertiesData;
+  type ARd20ActorDataProperties = CharacterDataProperties | NPCDataProperties;
   type Attributes = "str" | "dex" | "int" | "wis" | "cha" | "con";
   type Skills = "acr" | "ani" | "arc" | "ath" | "dec" | "his" | "ins" | "itm" | "inv" | "med" | "nat" | "prc" | "prf" | "per" | "rel" | "slt" | "ste" | "sur";
-  type Sources = "mar" | "mag" | "div" | "pri" | "psy";
-  type WeaponProperties =
-    | "aff"
-    | "awk"
-    | "con"
-    | "bra"
-    | "def"
-    | "dis"
-    | "dou"
-    | "ent"
-    | "fin"
-    | "fir"
-    | "hea"
-    | "lau"
-    | "lig"
-    | "lun"
-    | "mel"
-    | "one"
-    | "pen"
-    | "ran"
-    | "rea"
-    | "rel"
-    | "sta"
-    | "thr"
-    | "tri"
-    | "two"
-    | "ver";
-  type WeaponType = "amb" | "axe" | "blu" | "bow" | "sli" | "cbl" | "cro" | "dbl" | "fir" | "fla" | "whi" | "ham" | "pic" | "pol" | "spe" | "thr";
-  type DmgPhysTypes = "acid" | "blud" | "cold" | "fire" | "light" | "necr" | "pierc" | "poison" | "slash";
-  type DmgTypes = DmgPhysTypes | "force" | "rad" | "psychic";
+  
   interface CharacterDataSource {
     type: "character";
     data: CharacterDataSourceData;
   }
-  interface CharacterDataProperties extends CharacterDataSource {
+  interface CharacterDataProperties {
+    type:"character"
     data: CharacterDataPropertiesData;
   }
   interface NPCDataSource {
     type: "npc";
     data: NPCDataSourceData;
   }
-  interface NPCDataProperties extends NPCDataSource {
+  interface NPCDataProperties{
+    type:"npc"
     data: NPCDataPropertiesData;
   }
   interface ActorBaseTemplate {
@@ -96,18 +69,12 @@ declare global {
       conditions: object;
     };
     proficiencies: {
-      weapon: Array<WeaponProficiencies>;
-      armor: Array<ArmorProficiencies>;
-      tools: Array<ToolProficiencies>;
+      weapon: [];
+      armor: [];
+      tools: [];
     };
   }
   interface WeaponProficiencies extends WeaponProficienciesSetting {
-    value: number;
-  }
-  interface ArmorProficiencies {
-    value: number;
-  }
-  interface ToolProficiencies {
     value: number;
   }
   interface NPCDataSourceData extends ActorBaseTemplate {
@@ -152,7 +119,7 @@ declare global {
       };
       conditions: {};
     };
-    proficiencies: CharacterDataSourceData["proficiencies"];
+    proficiencies: { [Prof in keyof CharacterDataSourceData["proficiencies"]]: CharacterDataSourceData["proficiencies"][Prof] & Array<WeaponProficiencies> };
     speed: { value: number; bonus: number };
     mobility: { value: number; bonus: number };
   }

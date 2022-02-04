@@ -12,7 +12,7 @@
  * @param {boolean} [options.reliableTalent=false]     Allow Reliable Talent to modify this roll?
  */
  export default class D20Roll extends Roll {
-  constructor(formula, data, options) {
+  constructor(formula:string, data:{}, options={}) {
     super(formula, data, options);
     if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
       throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
@@ -121,7 +121,7 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({ title, defaultRollMode, canMult, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
+  async configureDialog({ title:string, defaultRollMode:number, canMult:boolean, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll:boolean, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
     // Render the Dialog inner HTML
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,

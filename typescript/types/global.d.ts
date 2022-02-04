@@ -1,8 +1,28 @@
+import { rollItemMacro } from "../ard20";
+import { ARd20Actor } from "../documents/actor";
+import { ARd20Item } from "../documents/item";
+import * as dice from "../dice/dice"
+
 export {};
 declare global {
   interface LenientGlobalVariableTypes {
     game: never;
   } 
+  interface Game{
+    ard20:{
+      documents:{
+        ARd20Actor:typeof ARd20Actor;
+        ARd20Item:typeof ARd20Item
+      }
+      rollItemMacro:typeof rollItemMacro
+      config:CONFIG["ARd20"];
+      dice:typeof dice
+
+    }
+  }
+  interface rollItemMacroType{
+    (itemName:string):ARd20Item["roll"]
+  }
   namespace ClientSettings {
     interface PartialMenuSetting{
       scope:"world"|"client"

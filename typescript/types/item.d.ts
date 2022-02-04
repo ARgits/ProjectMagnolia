@@ -72,10 +72,10 @@ declare global {
     type: {
       value: string;
     };
-    property: {
-      untrained: object;
-      basic: object;
-      master: object;
+    property: {[Prop in keyof ARd20CONFIGData["WeaponProp"]]:{
+      value:number
+      bonus:number
+    }
     };
     level: {
       value: number;
@@ -194,7 +194,11 @@ declare global {
   }
   interface ItemDataPropertiesData extends ItemDataSourceData{}
   interface FeatureDataPropertiesData extends FeatureDataSourceData{}
-  interface WeaponDataPropertiesData extends WeaponDataSourceData{}
+  interface WeaponDataPropertiesData extends WeaponDataSourceData{
+    property:{[Prop in keyof WeaponDataSourceData["property"]]:WeaponDataSourceData["property"][Prop]&{
+      label:string
+    }}
+  }
   interface SpellDataPropertiesData extends SpellDataSourceData{}
   interface RaceDataPropertiesData extends RaceDataSourceData{}
   interface ArmorDataPropertiesData extends ArmorDataSourceData{}
