@@ -1,6 +1,9 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
 import { CharacterAdvancement } from "../helpers/cha-adv.js";
 import { ARd20Actor } from "../documents/actor.js";
+import { ActorData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/actorData";
+import { obj_entries } from "../ard20.js";
+import { DEFAULT_TOKEN } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/constants.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -8,7 +11,7 @@ import { ARd20Actor } from "../documents/actor.js";
  */
 export class ARd20ActorSheet extends ActorSheet {
   /** @override */
-  static get defaultOptions() {
+  static get defaultOptions():ActorSheet.Options {
     return mergeObject(super.defaultOptions, {
       classes: ["ard20", "sheet", "actor"],
       template: "systems/ard20/templates/actor/actor-sheet.html",
@@ -30,25 +33,26 @@ export class ARd20ActorSheet extends ActorSheet {
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
+    
     const context = super.getData();
 
     // Use a safe clone of the actor data for further operations.
-    const actorData = context.actor.data;
+    const actorData = this.actor.data;
 
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = actorData.data;
     context.flags = actorData.flags;
     context.config = CONFIG.ARd20;
-    context.isGM = game.user.isGM;
+    context.isGM = game.user!.isGM;
 
     // Prepare character data and items.
-    if (actorData.type == "character") {
+    if (actorData.type === "character") {
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
 
     // Prepare NPC data and items.
-    if (actorData.type == "npc") {
+    if (actorData.type === "npc") {
       this._prepareItems(context);
     }
 
@@ -68,14 +72,14 @@ export class ARd20ActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareCharacterData(context) {
+  _prepareCharacterData(context:ActorData) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.data.abilities)) {
-      v.label = game.i18n.localize(CONFIG.ARd20.abilities[k]) ?? k;
+    for (let [k, v] of obj_entries(context.data.attributes)) {
+      v.label = game.i18n.localize(CONFIG.ARd20.Attributes[k]) ?? k;
     }
-    for (let [k, v] of Object.entries(context.data.skills)) {
-      v.name = game.i18n.localize(CONFIG.ARd20.skills[k]) ?? k;
-      v.rank_name = game.i18n.localize(CONFIG.ARd20.prof[v.rank]) ?? v.rank;
+    for (let [k, v] of obj_entries(context.data.skills)) {
+      v.name = game.i18n.localize(CONFIG.ARd20.Skills[k]) ?? k;
+      v.rank_name = game.i18n.localize(CONFIG.ARd20.Rank[v.rank]) ?? v.rank;
     }
   }
 
@@ -86,7 +90,7 @@ export class ARd20ActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareItems(context) {
+  _prepareItems(context:ActorData) {
     // Initialize containers.
     const gear = [];
     const features = [];
@@ -143,16 +147,16 @@ export class ARd20ActorSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  activateListeners(html) {
+  activateListeners(html:Event) {
     super.activateListeners(html);
     $(".select2", html).select2();
 
     // Render the item sheet for viewing/editing prior to the editable check.
     html.find(".item-toggle").click(this._onToggleItem.bind(this));
-    html.find(".item-edit").click((ev) => {
+    html.find(".item-edit").click((ev: { currentTarget: any; }) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      item.sheet.render(true);
+      item!.sheet!.render(true);
     });
 
     // -------------------------------------------------------------
@@ -166,12 +170,12 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
-      item.delete();
+      item!.delete();
       li.slideUp(200, () => this.render(false));
     });
 
     // Active Effect management
-    html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.actor));
+    html.find(".effect-control").click((ev: Event) => onManageActiveEffect(ev, this.actor));
     //roll abilities and skills
     html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this));
@@ -181,10 +185,10 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-roll").click(this._onItemRoll.bind(this));
     // Drag events for macros.
     if (this.actor.isOwner) {
-      let handler = (ev) => this._onDragStart(ev);
-      html.find("li.item").each((i, li) => {
+      let handler = (ev:Event) => this._onDragStart(ev);
+      html.find("li.item").each((i:number, li:Element) => {
         if (li.classList.contains("inventory-header")) return;
-        li.setAttribute("draggable", true);
+        li.setAttribute("draggable", "true");
         li.addEventListener("dragstart", handler, false);
       });
     }
@@ -192,11 +196,12 @@ export class ARd20ActorSheet extends ActorSheet {
   /**
    * Open @class CharacterAdvancement
    */
-  _OnAdvanceMenu(event) {
+  _OnAdvanceMenu(event:Event) {
     event.preventDefault();
     const button = event.currentTarget;
     let app;
-    switch (button.dataset.action) {
+    //@ts-ignore
+    switch (button!.dataset?.action) {
       case "adv":
         app = new CharacterAdvancement(this.object);
         break;
@@ -207,31 +212,36 @@ export class ARd20ActorSheet extends ActorSheet {
    * Change @param data.equipped
    * by toggling it on sheet
    */
-  _onToggleItem(event) {
+  _onToggleItem(event:Event) {
     event.preventDefault();
-    const itemid = event.currentTarget.closest(".item").dataset.itemId;
+    //@ts-ignore
+    const itemid = event.currentTarget!.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemid);
     //const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
     const attr = "data.equipped";
-    return item.update({ [attr]: !getProperty(item.data, attr) });
+    return item!.update({ [attr]: !getProperty(item!.data, attr) });
   }
 
-  _onRollAbilityTest(event) {
+  _onRollAbilityTest(event:Event) {
     event.preventDefault();
-    let ability = event.currentTarget.parentElement.dataset.ability;
+    //@ts-ignore
+    let ability = event.currentTarget!.parentElement.dataset.ability;
     return this.actor.rollAbilityTest(ability, { event: event });
   }
-  _onRollSkillCheck(event) {
+  _onRollSkillCheck(event:Event) {
     event.preventDefault();
-    let skill = event.currentTarget.parentElement.dataset.skill;
+    //@ts-ignore
+    let skill = event.currentTarget!.parentElement.dataset.skill;
     return this.actor.rollSkill(skill, { event: event });
   }
-  _onItemRoll(event) {
+  _onItemRoll(event:Event) {
     event.preventDefault();
     console.log("БРОСОК");
-    const id = event.currentTarget.closest(".item").dataset.itemId;
+    //@ts-ignore
+    const id = event.currentTarget!.closest(".item").dataset.itemId;
     const item = this.actor.items.get(id);
-    const [hasAttack, hasDamage] = Array(2).fill(item.data.data.hasAttack, item.data.data.hasDamage);
+    const hasAttack = item!.data.data.hasAttack
+    const hasDamage = item!.data.data.hasDamage
     if (item) return item.roll({ hasAttack, hasDamage });
   }
 
@@ -240,13 +250,15 @@ export class ARd20ActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  async _onItemCreate(event) {
+  async _onItemCreate(event:Event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
-    const type = header.dataset.type;
+    //@ts-ignore
+    const type = header!.dataset.type;
     // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
+    //@ts-ignore
+    const data = duplicate(header!.dataset);
     // Initialize a default name.
     const name = `New ${type.capitalize()}`;
     // Prepare the item object.
@@ -267,15 +279,16 @@ export class ARd20ActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onRoll(event) {
+  _onRoll(event:Event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const dataset = element.dataset;
+    const dataset = element!.dataset;
 
     // Handle item rolls.
     if (dataset.rollType) {
       if (dataset.rollType == "item") {
-        const itemid = element.closest(".item").dataset.itemId;
+        //@ts-ignore
+        const itemid = element!.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemid);
         if (item) return item.roll();
       }
@@ -289,16 +302,16 @@ export class ARd20ActorSheet extends ActorSheet {
   /**
    * _onDrop method with
    */
-  async _onDrop(event) {
-    if (!game.user.isGM) {
-      ui.notifications.error("you don't have permissions to add documents to this actor manually");
+  async _onDrop(event:DragEvent) {
+    if (!game.user!.isGM) {
+      ui.notifications!.error("you don't have permissions to add documents to this actor manually");
       return;
     }
 
     // Try to extract the data
     let data;
     try {
-      data = JSON.parse(event.dataTransfer.getData("text/plain"));
+      data = JSON.parse(event.dataTransfer!.getData("text/plain"));
     } catch (err) {
       return false;
     }

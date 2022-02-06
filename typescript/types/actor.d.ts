@@ -1,7 +1,13 @@
+import { ConfiguredDocumentClass } from "@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes";
 import { ARd20Actor } from "../documents/actor";
+import { ARd20ActorSheet } from "../sheets/actor-sheet";
 
 export {};
 declare global {
+  interface Data<Options extends ActorSheet.Options = ActorSheet.Options>
+  extends DocumentSheet.Data<InstanceType<ConfiguredDocumentClass<typeof Actor>>, Options> {
+  
+  }
   interface DocumentClassConfig {
     Actor: typeof ARd20Actor;
   }
@@ -69,9 +75,6 @@ declare global {
       conditions: object;
     };
     proficiencies: {
-      weapon: [];
-      armor: [];
-      tools: [];
     };
   }
   interface WeaponProficiencies extends WeaponProficienciesSetting {
@@ -119,7 +122,11 @@ declare global {
       };
       conditions: {};
     };
-    proficiencies: { [Prof in keyof CharacterDataSourceData["proficiencies"]]: CharacterDataSourceData["proficiencies"][Prof] & Array<WeaponProficiencies> };
+    proficiencies: {
+      weapon:Array<WeaponProficiencies>
+      armor:Array<WeaponProficiencies>
+      tools:Array<WeaponProficiencies>
+    };
     speed: { value: number; bonus: number };
     mobility: { value: number; bonus: number };
   }

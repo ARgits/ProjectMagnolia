@@ -11,6 +11,8 @@ import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
+import { ItemData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
+import { DocumentData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/module.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -45,11 +47,15 @@ Hooks.once("init", async function () {
     CONFIG.ARd20 = ARd20;
     CONFIG.Dice.DamageRoll = dice.DamageRoll;
     CONFIG.Dice.D20Roll = dice.D20Roll;
+    //@ts-expect-error
     CONFIG.Dice.rolls.push(dice.D20Roll);
+    //@ts-expect-error
     CONFIG.Dice.rolls.push(dice.DamageRoll);
-    game.socket.on("system.ard20", (data) => {
-      if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
-    });
+    if (game.socket instanceof io.Socket) {
+      game.socket.on("system.ard20", (data) => {
+        if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
+      });
+    }
 
     /**
      * Set an initiative formula for the system
@@ -68,6 +74,7 @@ Hooks.once("init", async function () {
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
+    //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
     registerSystemSettings();
 
@@ -121,25 +128,33 @@ Hooks.once("ready", async function () {
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise}
  */
-async function createItemMacro(data, slot) {
-  if (data.type !== "Item") return;
-  if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
-  const item = data.data;
+async function createItemMacro(data: {}, slot: number): Promise<any> {
+  if (game instanceof Game) {
+    //@ts-expect-error
+    if (data.type !== "Item") return;
+    if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items");
+    //@ts-expect-error
+    const item = data.data;
 
-  // Create the macro command
-  const command = `game.ard20.rollItemMacro("${item.name}");`;
-  let macro = game.macros.entities.find((m) => m.name === item.name && m.command === command);
-  if (!macro) {
-    macro = await Macro.create({
-      name: item.name,
-      type: "script",
-      img: item.img,
-      command: command,
-      flags: { "ard20.itemMacro": true },
-    });
+    // Create the macro command
+    const command = `game.ard20.rollItemMacro("${item.name}");`;
+    let macroList = game.macros!.contents.filter((m) => m.name === item.name && m?.command === command);
+    let macroCheck: Macro | null = macroList.length !== 0 ? macroList[0] : null;
+    if (macroCheck !== null) {
+      let macro = await Macro.create({
+        name: item.name,
+        type: "script",
+        img: item.img,
+        command: command,
+        flags: { "ard20.itemMacro": true },
+      });
+      if (macro instanceof Macro) {
+        game.user?.assignHotbarMacro(macro, slot);
+      }
+    }
+
+    return false;
   }
-  game.user.assignHotbarMacro(macro, slot);
-  return false;
 }
 
 /**
@@ -152,10 +167,10 @@ export function rollItemMacro(itemName: string){
   if (game instanceof Game) {
     const speaker = ChatMessage.getSpeaker();
     let actor;
-    if (speaker.token) actor = game.actors.tokens[speaker.token];
-    if (!actor) actor = game.actors.get(speaker.actor);
+    if (speaker.token) actor = game.actors!.tokens[speaker.token];
+    if (!actor && typeof speaker.actor === "string") actor = game.actors!.get(speaker.actor);
     const item = actor ? actor.items.find((i) => i.name === itemName) : null;
-    if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+    if (!item) return ui.notifications!.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
     // Trigger the item roll
     return item.roll();

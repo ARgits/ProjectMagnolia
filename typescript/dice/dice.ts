@@ -11,7 +11,7 @@ export { default as DamageRoll } from "./damage-roll.js";
  *
  * @return {string}                        The resulting simplified formula
  */
-export function simplifyRollFormula(formula, data, { constantFirst = false } = {}) {
+export function simplifyRollFormula(formula: string, data: object, { constantFirst = false }: * @param {boolean} options.constantFirst Puts the constants before the dice terms in the resulting formula = {}): string {
   const roll = new Roll(formula, data); // Parses the formula and replaces any @properties
   const terms = roll.terms;
 
@@ -70,7 +70,7 @@ export function simplifyRollFormula(formula, data, { constantFirst = false } = {
  * @param {*} term - A single Dice term to check support on
  * @return {Boolean} True when unsupported, false if supported
  */
-function _isUnsupportedTerm(term) {
+function _isUnsupportedTerm(term: any): boolean {
   const diceTerm = term instanceof DiceTerm;
   const operator = term instanceof OperatorTerm && ["+", "-"].includes(term.operator);
   const number = term instanceof NumericTerm;
@@ -134,7 +134,7 @@ export async function d20Roll({
   flavor,
   canMult,
   mRoll, 
-} = {}) {
+}: string[] = {}): Promise<D20Roll | null> {
   // Handle input arguments
   const formula = ["1d20"].concat(parts).join(" + ");
   const { advantageMode, isFF } = _determineAdvantageMode({ advantage, disadvantage, fastForward, event });
@@ -190,7 +190,7 @@ export async function d20Roll({
  * Determines whether this d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied
  * @returns {{isFF: boolean, advantageMode: number}}  Whether the roll is fast-forward, and its advantage mode
  */
-function _determineAdvantageMode({ event, advantage = false, disadvantage = false, fastForward = false } = {}) {
+function _determineAdvantageMode({ event, advantage = false, disadvantage = false, fastForward = false } = {}): { isFF: boolean; advantageMode: number; } {
   const isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
   let advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.NORMAL;
   if (advantage || event?.altKey) advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.ADVANTAGE;
@@ -253,7 +253,7 @@ export async function damageRoll({
   canMult,
   flavor,
   mRoll
-} = {}) {
+}: string[] = {}): Promise<DamageRoll | null> {
   console.log(canMult)
   // Handle input arguments
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
@@ -308,7 +308,7 @@ export async function damageRoll({
  * Determines whether this d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied
  * @returns {{isFF: boolean, isCritical: boolean}}  Whether the roll is fast-forward, and whether it is a critical hit
  */
-function _determineCriticalMode({ event, critical = false, fastForward = false } = {}) {
+function _determineCriticalMode({ event, critical = false, fastForward = false } = {}): { isFF: boolean; isCritical: boolean; } {
   const isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
   if (event?.altKey) critical = true;
   return { isFF, isCritical: critical };

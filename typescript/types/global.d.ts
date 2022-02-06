@@ -20,6 +20,9 @@ declare global {
 
     }
   }
+  interface Macro{
+    command:string
+  }
   interface rollItemMacroType{
     (itemName:string):ARd20Item["roll"]
   }

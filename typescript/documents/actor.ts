@@ -18,10 +18,15 @@ export class ARd20Actor extends Actor {
   }
   /** @override */
   prepareBaseData() {
-    //@ts-check
+    super.prepareBaseData();
+    this._prepareCharacterBaseData();
+    this._prepareNPCBaseData();
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+  }
+  _prepareCharacterBaseData() {
     const actorData = this.data;
+    if (actorData.type !== "character") return;
     const data = actorData.data;
     const flags = actorData.flags.ard20 || {};
     const def_dam = data.defences.damage;
@@ -42,6 +47,9 @@ export class ARd20Actor extends Actor {
     for (const [key, ability] of Object.entries(attributes)) {
       ability.bonus = 0;
     }
+  }
+  _prepareNPCBaseData() {
+    if (this.data.type !== "npc") return;
   }
 
   /**
@@ -77,9 +85,6 @@ export class ARd20Actor extends Actor {
     const def_stats = data.defences.stats;
     const def_dam = data.defences.damage;
     const proficiencies = data.proficiencies;
-    const prof_weapon = proficiencies.weapon;
-    const prof_armor = proficiencies.armor;
-    const prof_tool = proficiencies.tools;
     data.mobility.value = 0;
     this.itemTypes.armor.forEach((item) => {
       if (item.data.type === "armor") {
@@ -145,11 +150,6 @@ export class ARd20Actor extends Actor {
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {
       return { ...setting, value: proficiencies.weapon[key].value ?? 0 };
     });
-    let raceSpeed = 0;
-    if (this.itemTypes.race[0]?.data.type === "race") {
-      raceSpeed = this.itemTypes.race[0].data.data.speed;
-    }
-    data.speed.value = raceSpeed + attributes.dex.mod + data.speed.bonus;
     data.speed.value = this.itemTypes.race[0]?.data.type === "race" ? this.itemTypes.race[0].data.data.speed : 0;
     data.speed.value += attributes.dex.mod + data.speed.bonus;
   }
@@ -178,15 +178,15 @@ export class ARd20Actor extends Actor {
   /**
    * Roll an Ability Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {Number} abilityId    The ability ID (e.g. "str")
+   * @param {Number} attributeId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollAbilityTest(abilityId: string, options: object = {}): Promise<Roll> {
-    const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, abilityId));
+  rollAbilityTest(attributeId: string, options: {parts:[]} = {parts:[]}): Promise<Roll> {
+    const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
     const actorData = this.data.data;
     const attributes = actorData.attributes;
-    const attr = getValues(attributes, abilityId);
+    const attr = getValues(attributes, attributeId);
 
     // Construct parts
     const parts: string[] = ["@mod"];

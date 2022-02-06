@@ -13,7 +13,6 @@ export class ARd20ItemSheet extends ItemSheet {
       height: 480,
       tabs: [
         { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" },
-        { navSelector: ".data-tabs", contentSelector: ".data-section", initial: "untrained" },
       ],
     });
   }
