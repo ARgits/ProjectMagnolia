@@ -23,6 +23,7 @@ declare global {
   interface RollOptions{
     parts?:Array<string>
     speaker?:string
+    event?:Event
   }
   interface Macro{
     command:string

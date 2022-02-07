@@ -37,7 +37,7 @@ export class ARd20Item extends Item {
   /**
    *Prepare data for weapons
    */
-  _prepareWeaponData(itemData: ItemData, labels: {}) {
+  _prepareWeaponData(itemData: ItemData) {
     if (itemData.type !== "weapon") return;
     const data = itemData.data;
     const flags = itemData.flags;
@@ -95,7 +95,7 @@ export class ARd20Item extends Item {
   /**
    *Prepare data for features
    */
-  _prepareFeatureData(itemData: ItemData, labels: { source?: any }) {
+  _prepareFeatureData(itemData: ItemData) {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
     // Handle Source of the feature
@@ -210,7 +210,7 @@ export class ARd20Item extends Item {
       parts: [mod, prof_bonus],
     };
   }
-  _prepareDamage(itemData: ItemData, abil: { str?: any } | undefined) {
+  _prepareDamage(itemData: ItemData, abil?: { str?: any } | undefined) {
     const data = itemData.data;
     if (!data.hasDamage) return;
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
@@ -245,7 +245,7 @@ export class ARd20Item extends Item {
    * @private
    */
 
-  async roll({ configureDialog = true, rollMode, hasDamage = false, hasAttack = false, createMessage = true } = {}) {
+  async roll({ configureDialog = true, rollMode:any, hasDamage = false, hasAttack = false, createMessage = true }) {
     let item = this;
     const id = item.id;
     const iData = this.data.data; //Item data

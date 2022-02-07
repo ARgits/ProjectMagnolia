@@ -1,8 +1,7 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
 import { CharacterAdvancement } from "../helpers/cha-adv.js";
-import { ARd20Actor } from "../documents/actor.js";
 import { ActorData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/actorData";
-import { obj_entries } from "../ard20.js";
+import { getValues, obj_entries } from "../ard20.js";
 import { DEFAULT_TOKEN } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/constants.mjs";
 
 /**
@@ -11,7 +10,8 @@ import { DEFAULT_TOKEN } from "@league-of-foundry-developers/foundry-vtt-types/s
  */
 export class ARd20ActorSheet extends ActorSheet {
   /** @override */
-  static get defaultOptions():ActorSheet.Options {
+  static get defaultOptions(): ActorSheet.Options {
+    //@ts-expect-error
     return mergeObject(super.defaultOptions, {
       classes: ["ard20", "sheet", "actor"],
       template: "systems/ard20/templates/actor/actor-sheet.html",
@@ -33,33 +33,42 @@ export class ARd20ActorSheet extends ActorSheet {
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
-    
+
     const context = super.getData();
 
     // Use a safe clone of the actor data for further operations.
     const actorData = this.actor.data;
 
     // Add the actor's data to context.data for easier access, as well as flags.
+    //@ts-expect-error
     context.data = actorData.data;
+    //@ts-expect-error
     context.flags = actorData.flags;
+    //@ts-expect-error
     context.config = CONFIG.ARd20;
+    //@ts-expect-error
     context.isGM = game.user!.isGM;
 
     // Prepare character data and items.
     if (actorData.type === "character") {
+      //@ts-expect-error
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
 
     // Prepare NPC data and items.
+    //@ts-expect-error
     if (actorData.type === "npc") {
+      //@ts-expect-error
       this._prepareItems(context);
     }
 
     // Add roll data for TinyMCE editors.
+  //@ts-expect-error
     context.rollData = context.actor.getRollData();
 
     // Prepare active effects
+    //@ts-expect-error
     context.effects = prepareActiveEffectCategories(this.actor.effects);
 
     return context;
@@ -72,14 +81,17 @@ export class ARd20ActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareCharacterData(context:ActorData) {
+  //@ts-expect-error
+  _prepareCharacterData(context) {
     // Handle ability scores.
     for (let [k, v] of obj_entries(context.data.attributes)) {
-      v.label = game.i18n.localize(CONFIG.ARd20.Attributes[k]) ?? k;
+      //@ts-expect-error
+      v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
     }
     for (let [k, v] of obj_entries(context.data.skills)) {
-      v.name = game.i18n.localize(CONFIG.ARd20.Skills[k]) ?? k;
-      v.rank_name = game.i18n.localize(CONFIG.ARd20.Rank[v.rank]) ?? v.rank;
+      //@ts-expect-error
+      v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
+      v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
     }
   }
 
@@ -90,7 +102,7 @@ export class ARd20ActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  _prepareItems(context:ActorData) {
+  _prepareItems(context: ActorData) {
     // Initialize containers.
     const gear = [];
     const features = [];
@@ -110,6 +122,7 @@ export class ARd20ActorSheet extends ActorSheet {
     };
 
     // Iterate through items, allocating to containers
+    //@ts-expect-error
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
       // Append to gear.
@@ -123,6 +136,7 @@ export class ARd20ActorSheet extends ActorSheet {
       // Append to spells.
       else if (i.type === "spell") {
         if (i.data.spellLevel != undefined) {
+          //@ts-expect-error
           spells[i.data.spellLevel].push(i);
         }
       } else if (i.type === "armor" || i.type === "weapon") {
@@ -137,23 +151,29 @@ export class ARd20ActorSheet extends ActorSheet {
     }
 
     // Assign and return
+    //@ts-expect-error
     context.gear = gear;
+    //@ts-expect-error
     context.features = features;
+    //@ts-expect-error
     context.spells = spells;
+    //@ts-expect-error
     context.weapons = weapons;
+    //@ts-expect-error
     context.armor = armor;
   }
 
   /* -------------------------------------------- */
 
   /** @override */
-  activateListeners(html:Event) {
+  activateListeners(html:any) {
     super.activateListeners(html);
+    //@ts-expect-error
     $(".select2", html).select2();
 
     // Render the item sheet for viewing/editing prior to the editable check.
     html.find(".item-toggle").click(this._onToggleItem.bind(this));
-    html.find(".item-edit").click((ev: { currentTarget: any; }) => {
+    html.find(".item-edit").click((ev: { currentTarget: any }) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item!.sheet!.render(true);
@@ -167,7 +187,7 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-create").click(this._onItemCreate.bind(this));
 
     // Delete Inventory Item
-    html.find(".item-delete").click((ev) => {
+    html.find(".item-delete").click((ev:any) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item!.delete();
@@ -185,8 +205,8 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-roll").click(this._onItemRoll.bind(this));
     // Drag events for macros.
     if (this.actor.isOwner) {
-      let handler = (ev:Event) => this._onDragStart(ev);
-      html.find("li.item").each((i:number, li:Element) => {
+      let handler = (ev: DragEvent) => this._onDragStart(ev);
+      html.find("li.item").each((i: number, li: HTMLElement) => {
         if (li.classList.contains("inventory-header")) return;
         li.setAttribute("draggable", "true");
         li.addEventListener("dragstart", handler, false);
@@ -196,7 +216,7 @@ export class ARd20ActorSheet extends ActorSheet {
   /**
    * Open @class CharacterAdvancement
    */
-  _OnAdvanceMenu(event:Event) {
+  _OnAdvanceMenu(event: Event) {
     event.preventDefault();
     const button = event.currentTarget;
     let app;
@@ -212,7 +232,7 @@ export class ARd20ActorSheet extends ActorSheet {
    * Change @param data.equipped
    * by toggling it on sheet
    */
-  _onToggleItem(event:Event) {
+  _onToggleItem(event: Event) {
     event.preventDefault();
     //@ts-ignore
     const itemid = event.currentTarget!.closest(".item").dataset.itemId;
@@ -222,27 +242,29 @@ export class ARd20ActorSheet extends ActorSheet {
     return item!.update({ [attr]: !getProperty(item!.data, attr) });
   }
 
-  _onRollAbilityTest(event:Event) {
+  _onRollAbilityTest(event: Event) {
     event.preventDefault();
     //@ts-ignore
     let ability = event.currentTarget!.parentElement.dataset.ability;
-    return this.actor.rollAbilityTest(ability, { event: event });
+    return this.actor.rollAbilityTest(ability, { event:event});
   }
-  _onRollSkillCheck(event:Event) {
+  _onRollSkillCheck(event: Event) {
     event.preventDefault();
     //@ts-ignore
     let skill = event.currentTarget!.parentElement.dataset.skill;
     return this.actor.rollSkill(skill, { event: event });
   }
-  _onItemRoll(event:Event) {
+  _onItemRoll(event: Event) {
     event.preventDefault();
     console.log("БРОСОК");
     //@ts-ignore
     const id = event.currentTarget!.closest(".item").dataset.itemId;
     const item = this.actor.items.get(id);
-    const hasAttack = item!.data.data.hasAttack
-    const hasDamage = item!.data.data.hasDamage
-    if (item) return item.roll({ hasAttack, hasDamage });
+    const hasAttack = item!.data.data.hasAttack;
+    const hasDamage = item!.data.data.hasDamage;
+
+    //@ts-expect-error
+    if (item) return item.roll({ hasAttack, hasDamage});
   }
 
   /**
@@ -250,7 +272,7 @@ export class ARd20ActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  async _onItemCreate(event:Event) {
+  async _onItemCreate(event: Event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
@@ -279,9 +301,10 @@ export class ARd20ActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onRoll(event:Event) {
+  _onRoll(event: Event) {
     event.preventDefault();
     const element = event.currentTarget;
+    //@ts-expect-error
     const dataset = element!.dataset;
 
     // Handle item rolls.
@@ -290,6 +313,7 @@ export class ARd20ActorSheet extends ActorSheet {
         //@ts-ignore
         const itemid = element!.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemid);
+        //@ts-expect-error
         if (item) return item.roll();
       }
       /*else if (dataset.rollType==='weapon'){
@@ -302,7 +326,7 @@ export class ARd20ActorSheet extends ActorSheet {
   /**
    * _onDrop method with
    */
-  async _onDrop(event:DragEvent) {
+  async _onDrop(event: DragEvent) {
     if (!game.user!.isGM) {
       ui.notifications!.error("you don't have permissions to add documents to this actor manually");
       return;
