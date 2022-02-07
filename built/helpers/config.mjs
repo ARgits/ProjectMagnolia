@@ -3,20 +3,20 @@ exports.__esModule = true;
 exports.ARd20 = void 0;
 exports.ARd20 = {};
 exports.ARd20.abilities = {
-    str: "ARd20.AbilityStr",
-    dex: "ARd20.AbilityDex",
-    con: "ARd20.AbilityCon",
-    int: "ARd20.AbilityInt",
-    wis: "ARd20.AbilityWis",
-    cha: "ARd20.AbilityCha"
+    str: "ARd20.AttributeStr",
+    dex: "ARd20.AttributeDex",
+    con: "ARd20.AttributeCon",
+    int: "ARd20.AttributeInt",
+    wis: "ARd20.AttributeWis",
+    cha: "ARd20.AttributeCha"
 };
 exports.ARd20.abilityAbbreviations = {
-    str: "ARd20.AbilityStrAbbr",
-    dex: "ARd20.AbilityDexAbbr",
-    con: "ARd20.AbilityConAbbr",
-    int: "ARd20.AbilityIntAbbr",
-    wis: "ARd20.AbilityWisAbbr",
-    cha: "ARd20.AbilityChaAbbr"
+    str: "ARd20.AttributeStrAbbr",
+    dex: "ARd20.AttributeDexAbbr",
+    con: "ARd20.AttributeConAbbr",
+    int: "ARd20.AttributeIntAbbr",
+    wis: "ARd20.AttributeWisAbbr",
+    cha: "ARd20.AttributeChaAbbr"
 };
 exports.ARd20.CHARACTER_EXP_LEVELS = [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000];
 exports.ARd20.SpellSchool = {

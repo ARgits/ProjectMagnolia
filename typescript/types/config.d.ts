@@ -1,17 +1,9 @@
-import * as dice from "../dice/dice"
+import * as dice from "../dice/dice";
 export {};
 declare global {
-  interface CONFIG{
+  interface CONFIG {
     ARd20: ARd20CONFIG;
-    Dice: &{
-      DamageRoll: typeof dice.DamageRoll
-      D20Roll: typeof dice.D20Roll
-    }
   }
-  interface NewDice{
-      DamageRoll: typeof dice.DamageRoll
-      D20Roll: typeof dice.D20Roll
-    }
   type ARd20CONFIG = ARd20CONFIGData;
   type Sources = "mar" | "mag" | "div" | "pri" | "psy";
   type WeaponProperties =
@@ -45,7 +37,7 @@ declare global {
   type DmgTypes = DmgPhysTypes | "force" | "rad" | "psychic";
   interface ARd20CONFIGData {
     Attributes: { [Ability in Attributes]: string };
-    AbilityAbbreviations: { [Ability in Attributes]: string };
+    AttributeAbbreviations: { [Ability in Attributes]: string };
     CHARACTER_EXP_LEVELS: Array<number>;
     SpellSchool: {};
     Skills: { [Skill in Skills]: string };
@@ -68,7 +60,20 @@ declare global {
     DamageSubTypes: { [Dmg in DmgTypes]: string };
     ResistTypes: {};
     HPDice: Array<string>;
-    HeavyPoints: {};
+    HeavyPoints: {
+      [index: string]: HeavyPointsSlotType;
+      light: HeavyPointsSlotType;
+      medium: HeavyPointsSlotType;
+      heavy: HeavyPointsSlotType;
+    };
     RollResult: {};
+  }
+  interface HeavyPointsSlotType {
+    [index: string]: number;
+    chest: number;
+    gloves: number;
+    boots: number;
+    pants: number;
+    head: number;
   }
 }

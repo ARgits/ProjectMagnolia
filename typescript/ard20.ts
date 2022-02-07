@@ -11,8 +11,6 @@ import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
-import { ItemData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
-import { DocumentData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/abstract/module.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -45,11 +43,11 @@ Hooks.once("init", async function () {
 
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20;
+    //@ts-expect-error
     CONFIG.Dice.DamageRoll = dice.DamageRoll;
+    //@ts-expect-error
     CONFIG.Dice.D20Roll = dice.D20Roll;
-    //@ts-expect-error
     CONFIG.Dice.rolls.push(dice.D20Roll);
-    //@ts-expect-error
     CONFIG.Dice.rolls.push(dice.DamageRoll);
     if (game.socket instanceof io.Socket) {
       game.socket.on("system.ard20", (data) => {
@@ -72,6 +70,7 @@ Hooks.once("init", async function () {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
+    //@ts-expect-error
     Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
     //@ts-expect-error
@@ -186,5 +185,7 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Optionally collapse the content
 });
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
+//@ts-expect-error
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
+//@ts-expect-error
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));

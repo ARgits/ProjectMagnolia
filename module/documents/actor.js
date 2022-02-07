@@ -203,7 +203,7 @@ export class ARd20Actor extends Actor {
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
+      title: game.i18n.format("ARd20.AttributePromptTitle", { ability: label }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
         "flags.ard20.roll": { type: "ability", abilityId },

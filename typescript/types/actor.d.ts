@@ -4,10 +4,7 @@ import { ARd20ActorSheet } from "../sheets/actor-sheet";
 
 export {};
 declare global {
-  interface Data<Options extends ActorSheet.Options = ActorSheet.Options>
-  extends DocumentSheet.Data<InstanceType<ConfiguredDocumentClass<typeof Actor>>, Options> {
-  
-  }
+  interface Data<Options extends ActorSheet.Options = ActorSheet.Options> extends DocumentSheet.Data<InstanceType<ConfiguredDocumentClass<typeof Actor>>, Options> {}
   interface DocumentClassConfig {
     Actor: typeof ARd20Actor;
   }
@@ -17,25 +14,25 @@ declare global {
   interface DataConfig {
     Actor: ARd20ActorDataProperties;
   }
-  type ARd20ActorDataSource = CharacterDataSource | NPCDataSource;
-  type ARd20ActorDataProperties = CharacterDataProperties | NPCDataProperties;
+  type ARd20ActorDataSource = CharacterDataSource; //| NPCDataSource;
+  type ARd20ActorDataProperties = CharacterDataProperties; //| NPCDataProperties;
   type Attributes = "str" | "dex" | "int" | "wis" | "cha" | "con";
   type Skills = "acr" | "ani" | "arc" | "ath" | "dec" | "his" | "ins" | "itm" | "inv" | "med" | "nat" | "prc" | "prf" | "per" | "rel" | "slt" | "ste" | "sur";
-  
+
   interface CharacterDataSource {
     type: "character";
     data: CharacterDataSourceData;
   }
   interface CharacterDataProperties {
-    type:"character"
+    type: "character";
     data: CharacterDataPropertiesData;
   }
   interface NPCDataSource {
     type: "npc";
     data: NPCDataSourceData;
   }
-  interface NPCDataProperties{
-    type:"npc"
+  interface NPCDataProperties {
+    type: "npc";
     data: NPCDataPropertiesData;
   }
   interface ActorBaseTemplate {
@@ -54,28 +51,48 @@ declare global {
       };
       level: number;
     };
-    mobility: {};
-    speed: {};
+    mobility: {
+      bonus: number;
+    };
+    speed: {
+      bonus: number;
+    };
     attributes: {
       [Attribute in Attributes]: {
         value: number;
+        bonus: 0;
       };
     };
     skills: { [Skill in Skills]: { value: number } };
     defences: {
       stats: {
-        reflex: {};
-        fortitude: {};
-        will: {};
+        reflex: {
+          bonus: 0;
+        };
+        fortitude: {
+          bonus: 0;
+        };
+        will: {
+          bonus: 0;
+        };
       };
       damage: {
-        phys: {};
-        mag: {};
+        phys: {
+          [DMG in DmgPhysTypes]: {
+            bonus: number;
+            type: string;
+          };
+        };
+        mag: {
+          [DMG in DmgTypes]: {
+            bonus: number;
+            type: string;
+          };
+        };
       };
       conditions: object;
     };
-    proficiencies: {
-    };
+    proficiencies: {};
   }
   interface WeaponProficiencies extends WeaponProficienciesSetting {
     value: number;
@@ -96,19 +113,19 @@ declare global {
     defences: {
       damage: {
         phys: {
-          [dmg in DmgPhysTypes]: {
-            value: number;
-            label: string;
+          [Res in DmgPhysTypes]: {
             bonus: number;
+            value: number;
             type: string;
+            name: string;
           };
         };
         mag: {
           [Res in DmgTypes]: {
-            value: number;
-            label: string;
             bonus: number;
+            value: number;
             type: string;
+            name: string;
           };
         };
       };
@@ -123,12 +140,16 @@ declare global {
       conditions: {};
     };
     proficiencies: {
-      weapon:Array<WeaponProficiencies>
-      armor:Array<WeaponProficiencies>
-      tools:Array<WeaponProficiencies>
+      weapon: Array<WeaponProficiencies>;
+      armor: Array<WeaponProficiencies>;
+      tools: Array<WeaponProficiencies>;
     };
-    speed: { value: number; bonus: number };
-    mobility: { value: number; bonus: number };
+    speed: CharacterDataSourceData["speed"] & {
+      value: number;
+    };
+    mobility: CharacterDataSourceData["mobility"] & {
+      value: number;
+    };
   }
   interface NPCDataPropertiesData extends NPCDataSourceData {
     xp: number;

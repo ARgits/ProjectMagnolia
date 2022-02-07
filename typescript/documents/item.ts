@@ -15,31 +15,14 @@ export class ARd20Item extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
-  prepareBaseData() {
-    super.prepareBaseData()
-    const itemData = this.data
-    this._prepareBaseWeaponData(itemData)
-  }
-  _prepareBaseWeaponData(itemData:ItemData){
-    if (itemData.type!=="weapon")return
-      const data = itemData.data
-      const properties = data.property
-      for (let key of obj_keys(CONFIG.ARd20.WeaponProp)){
-        properties[key].value = properties[key]?.value??0
-        properties[key].bonus = 0
-        properties[key].label = game.i18n.localize(CONFIG.ARd20.WeaponProp[key])??CONFIG.ARd20.WeaponProp[key]
-      }
-    
-  };
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
-    const labels = (this.labels = {});
-    this._prepareSpellData(itemData, labels);
-    this._prepareWeaponData(itemData, labels);
-    this._prepareFeatureData(itemData, labels);
-    this._prepareRaceData(itemData, labels);
-    this._prepareArmorData(itemData, labels);
+    this._prepareSpellData(itemData);
+    this._prepareWeaponData(itemData);
+    this._prepareFeatureData(itemData);
+    this._prepareRaceData(itemData);
+    this._prepareArmorData(itemData);
     if (itemData.data.hasAttack) this._prepareAttack(itemData);
     if (itemData.data.hasDamage) this._prepareDamage(itemData);
     if (!this.isOwned) this.prepareFinalAttributes();
@@ -47,10 +30,9 @@ export class ARd20Item extends Item {
   /**
    *Prepare data for Spells
    */
-  _prepareSpellData(itemData: ItemData, labels: { school?: any }) {
+  _prepareSpellData(itemData: ItemData) {
     if (itemData.type !== "spell") return;
     const data = itemData.data;
-    labels.school = getValues(CONFIG.ARd20.SpellSchool, data.school);
   }
   /**
    *Prepare data for weapons
@@ -61,8 +43,7 @@ export class ARd20Item extends Item {
     const flags = itemData.flags;
     data.hasAttack = data.hasAttack || true;
     data.hasDamage = data.hasDamage || true;
-    this._SetProperties(data);
-    this._setDeflect(data);
+    //TODO: this._setDeflect(data);
     this._setTypeAndSubtype(data, flags, labels);
     for (let [key, type] of Object.entries(data.damage)) {
       if (key !== "current") {
@@ -86,49 +67,30 @@ export class ARd20Item extends Item {
       }
     }
   }
-  _SetProperties() {
-    for (let [k, v] of Object.entries(data.property.untrained)) {
-      v = CONFIG.ARd20.Prop[k] ?? k;
-    }
-    for (let [k, v] of Object.entries(data.property.basic)) {
-      v = CONFIG.ARd20.Prop[k] ?? k;
-      if (data.property.untrained[k] === true && k != "awk") {
-        data.property.basic[k] = true;
-      }
-    }
-    for (let [k, v] of Object.entries(data.property.master)) {
-      v = CONFIG.ARd20.Prop[k] ?? k;
-      if (data.property.basic[k] === true && k != "awk") {
-        data.property.master[k] = true;
-      }
-    }
-  }
   /**
    *Set deflect die equal to damage die, if not
    */
-  _setDeflect(data: { deflect: { [x: string]: any }; property: { [x: string]: { def: any } }; damage: { common: { [x: string]: any } } }) {
-    for (let [k, v] of Object.entries(CONFIG.ARd20.prof)) {
+  /* TODO:
+  _setDeflect(data: object & WeaponDataPropertiesData) {
+    for (let [k, v] of obj_entries(CONFIG.ARd20.Rank)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
       data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
     }
   }
-  _setTypeAndSubtype(
-    data: { type: { value: string; label: any }; settings: { name: any }[]; sub_type: undefined; prof: { value: string | number; label: any } },
-    flags: { core: { sourceId: string } },
-    labels: { type: string; prof: string }
-  ) {
-    data.type.value = data.type.value || "amb";
-    data.settings = game.settings.get("ard20", "profs").weapon.filter((prof: { type: any }) => prof.type === data.type.value);
+  */
+  _setTypeAndSubtype(data: object & WeaponDataPropertiesData, flags: Record<string, unknown>) {
+    data.sub_type_array = game!.settings.get("ard20", "proficiencies").weapon.filter((prof: { type: any }) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
-      let id = /Item.(.+)/.exec(flags.core.sourceId)[1] || null;
-      data.sub_type = data.sub_type === undefined ? game.items?.get(id).data.data.sub_type : data.sub_type;
+      const id = /Item.(.+)/.exec(flags.core.sourceId)![1];
+      const item = game.items!.get(id);
+      if (item?.data.type === "weapon") {
+        data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
+      }
     }
-    data.sub_type = data.settings.filter((prof: { name: any }) => prof.name === data.sub_type).length === 0 ? data.settings[0].name : data.sub_type || data.settings[0].name;
-    labels.type = game.i18n.localize(CONFIG.ARd20.WeaponType[data.type.value]) ?? CONFIG.ARd20.WeaponType[data.type.value];
-    labels.prof = game.i18n.localize(CONFIG.ARd20.prof[data.prof.value]) ?? CONFIG.ARd20.prof[data.prof.value];
-    data.prof.label = labels.prof;
-    data.type.label = labels.type;
+    data.sub_type = data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
+    data.proficiency.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ?? getValues(CONFIG.ARd20.Rank, data.proficiency.level);
+    data.type.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ?? getValues(CONFIG.ARd20.Rank, data.type.value);
   }
   /**
    *Prepare data for features
@@ -194,15 +156,13 @@ export class ARd20Item extends Item {
   /**
    * Prepare data for 'race' type of item
    */
-  _prepareRaceData(itemData: ItemData, labels: {}) {
+  _prepareRaceData(itemData: ItemData) {
     if (itemData.type !== "race") return;
-    const data = itemData.data;
-    data.HPdie = CONFIG.ARd20.HPDice.slice(0, 7);
   }
   /**
    * Prepare data for "armor" type item
    */
-  _prepareArmorData(itemData: ItemData, labels: {}) {
+  _prepareArmorData(itemData: ItemData) {
     if (itemData.type !== "armor") return;
     const data = itemData.data;
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
@@ -211,7 +171,8 @@ export class ARd20Item extends Item {
       }
       data.res.mag[key] = data.res.mag[key] ?? 0;
     }
-    data.heavyPoints = CONFIG.ARd20.HeavyPoints[data.type][data.slot];
+    data.mobility.value = data.mobility.value ?? CONFIG.ARd20.HeavyPoints[data.type][data.slot];
+    data.mobility.value += data.mobility.bonus;
   }
   /**
   Prepare Data that uses actor's data
@@ -228,7 +189,7 @@ export class ARd20Item extends Item {
       v = this.isOwned ? getProperty(this.actor.data, `data.attributes.${k}.mod`) : null;
       abil[k] = v;
     }
-    let prof_bonus:number = 0
+    let prof_bonus: number = 0;
     if (this.data.type === "weapon") {
       data.level.value = this.isOwned ? Object.values(this.actor?.data.data.proficiencies.weapon).filter((pr) => pr.name === data.sub_type)[0]?.value : 0;
       this.labels.prof = game.i18n.localize(CONFIG.ARd20.Rank[data.level.value]) ?? CONFIG.ARd20.Rank[data.level.value];

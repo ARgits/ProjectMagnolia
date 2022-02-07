@@ -16,41 +16,6 @@ export class ARd20Actor extends Actor {
     super.prepareData();
     this.items.forEach((item) => item.prepareFinalAttributes());
   }
-  /** @override */
-  prepareBaseData() {
-    super.prepareBaseData();
-    this._prepareCharacterBaseData();
-    this._prepareNPCBaseData();
-    // Data modifications in this step occur before processing embedded
-    // documents or derived data.
-  }
-  _prepareCharacterBaseData() {
-    const actorData = this.data;
-    if (actorData.type !== "character") return;
-    const data = actorData.data;
-    const flags = actorData.flags.ard20 || {};
-    const def_dam = data.defences.damage;
-    const def_stats = data.defences.stats;
-    const attributes = data.attributes;
-    //const entries = Object.entries as unknown as <K extends string, V>(o: {[s in K]: V}) => [K, V][];
-    for (const key of obj_keys(def_dam.phys)) {
-      def_dam.phys[key].bonus = 0;
-      def_dam.phys[key].type = "res";
-    }
-    for (const key of obj_keys(def_dam.mag)) {
-      def_dam.mag[key].bonus = 0;
-      def_dam.mag[key].type = "res";
-    }
-    for (const [key, def] of Object.entries(def_stats)) {
-      def.bonus = 0;
-    }
-    for (const [key, ability] of Object.entries(attributes)) {
-      ability.bonus = 0;
-    }
-  }
-  _prepareNPCBaseData() {
-    if (this.data.type !== "npc") return;
-  }
 
   /**
    * @override
@@ -91,15 +56,15 @@ export class ARd20Actor extends Actor {
         if (item.data.data.equipped) {
           for (let key of obj_keys(def_dam.phys)) {
             let ph = item.data.data.res.phys[key];
-            def_dam.phys[key].bonus += ph !== "imm" ? ph : 0;
-            def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
+            def_dam.phys[key].bonus += ph.type !== "imm" ? ph.value : 0;
+            def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
           }
           for (let key of obj_keys(def_dam.mag)) {
             let mg = item.data.data.res.mag[key];
-            def_dam.mag[key].bonus += mg !== "imm" ? mg : 0;
-            def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
+            def_dam.mag[key].bonus += mg.type !== "imm" ? mg.value : 0;
+            def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
           }
-          data.mobility.value += item.data.data.mobility;
+          data.mobility.value += item.data.data.mobility.value;
         }
       }
     });
@@ -135,10 +100,10 @@ export class ARd20Actor extends Actor {
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "rad" || key === "psychic")) {
         def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type !== "imm" ? Math.max(isNaN(def_dam.phys[key].value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key].bonus : 0;
-        def_dam.phys[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
+        def_dam.phys[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
       }
       def_dam.mag[key].value = def_dam.mag[key]?.value || def_dam.mag[key]?.type !== "imm" ? Math.max(isNaN(def_dam.mag[key].value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key].bonus : 0;
-      def_dam.mag[key].label = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
+      def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills
     for (let [key, skill] of obj_entries(data.skills)) {
@@ -158,10 +123,12 @@ export class ARd20Actor extends Actor {
    * Prepare NPC type specific data.
    */
   _prepareNpcData(actorData: ActorData) {
+    //@ts-expect-error
     if (actorData.type !== "npc") return;
 
     // Make modifications to data here. For example:
     const data = actorData.data;
+    //@ts-expect-error
     data.xp = data.cr * data.cr * 100;
   }
 
@@ -182,31 +149,32 @@ export class ARd20Actor extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollAbilityTest(attributeId: string, options: {parts:[]} = {parts:[]}): Promise<Roll> {
+  rollAbilityTest(attributeId: string, options: RollOptions): Promise<Roll> {
     const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
     const actorData = this.data.data;
     const attributes = actorData.attributes;
     const attr = getValues(attributes, attributeId);
 
     // Construct parts
-    const parts: string[] = ["@mod"];
+    const parts = ["@mod"];
     const data = { mod: attr };
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if (options.parts?.length > 0) {
-      parts.push(...options.parts);
+    if (options.parts!.length > 0) {
+      parts.push(...options.parts!);
     }
 
     // Roll and return
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.AbilityPromptTitle", { ability: label }),
+      title: game.i18n.format("ARd20.AttributePromptTitle", { attribute: label }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
-        "flags.ard20.roll": { type: "ability", abilityId },
+        "flags.ard20.roll": { type: "attribute", attributeId },
       },
     });
+    //@ts-expect-error
     return d20Roll(rollData);
   }
   /**
@@ -216,38 +184,29 @@ export class ARd20Actor extends Actor {
    * @param {Object} options      Options which configure how the skill check is rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollSkill(skillId: string, options = {}) {
-    const skl = this.data.data.skills[skillId];
+  rollSkill(skillId: string, options: RollOptions) {
+    const skl = getValues(this.data.data.skills, skillId);
 
     // Compose roll parts and data
-    const parts = ["@mod"];
-    const data = { attributes: this.getRollData().attributes };
-
-    //if character'skill have prof_bonus and/or prof_die, they will be added to roll dialog
-    if (skl.prof_bonus) {
-      parts.unshift("@prof_bonus");
-      data.prof_bonus = skl.prof_bonus;
-    }
-    if (skl.prof_die) {
-      parts.unshift("@prof_die");
-      data.prof_die = skl.prof_die;
-    }
+    const parts = ["@proficiency", "@mod"];
+    const data = { attributes: this.getRollData().attributes, proficiency: skl.value };
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if (options.parts?.length > 0) {
-      parts.push(...options.parts);
+    if (options.parts!.length > 0) {
+      parts.push(...options.parts!);
     }
     // Roll and return
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize(CONFIG.ARd20.skills[skillId]) }),
+      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId)) }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
         "flags.ard20.roll": { type: "skill", skillId },
       },
       chooseModifier: true,
     });
+    //@ts-expect-error
     return d20Roll(rollData);
   }
 }

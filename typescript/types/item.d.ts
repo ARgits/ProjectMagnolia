@@ -2,8 +2,8 @@ import { ARd20Item } from "../documents/item";
 
 export {};
 declare global {
-  interface DocumentClassConfig{
-    Item:typeof ARd20Item
+  interface DocumentClassConfig {
+    Item: typeof ARd20Item;
   }
   interface SourceConfig {
     Item: ARd20ItemDataSource;
@@ -42,23 +42,29 @@ declare global {
     type: "armor";
     data: ArmorDataSourceData;
   }
-  interface ItemDataProperties extends ItemDataSource{
-    data: ItemDataPropertiesData
+  interface ItemDataProperties {
+    type: "item";
+    data: ItemDataPropertiesData;
   }
-  interface FeatureDataProperties extends FeatureDataSource{
-    data:FeatureDataPropertiesData
+  interface FeatureDataProperties {
+    type: "feature";
+    data: FeatureDataPropertiesData;
   }
-  interface SpellDataProperties extends SpellDataSource{
-    data:SpellDataPropertiesData
+  interface SpellDataProperties {
+    type: "spell";
+    data: SpellDataPropertiesData;
   }
-  interface WeaponDataProperties extends WeaponDataSource{
-    data:WeaponDataPropertiesData
+  interface WeaponDataProperties {
+    type: "weapon";
+    data: WeaponDataPropertiesData;
   }
-  interface RaceDataProperties extends RaceDataSource{
-    data:RaceDataPropertiesData
+  interface RaceDataProperties {
+    type: "race";
+    data: RaceDataPropertiesData;
   }
-  interface ArmorDataProperties extends ArmorDataSource{
-    data:ArmorDataPropertiesData
+  interface ArmorDataProperties {
+    type: "armor";
+    data: ArmorDataPropertiesData;
   }
   interface ItemDataSourceData extends ItemBaseTemplate {
     quantity: number;
@@ -72,65 +78,42 @@ declare global {
     type: {
       value: string;
     };
-    property: {[Prop in keyof ARd20CONFIGData["WeaponProp"]]:{
-      value:number
-      bonus:number
-    }
+    property: {
+      [Prop in keyof ARd20CONFIGData["WeaponProp"]]: {
+        value: number;
+        bonus: number;
+      };
     };
-    level: {
-      value: number;
+    proficiency: {
+      level: 0 | 1 | 2 | 3 | 4;
     };
     damage: {
-      common: {
-        untrained: {
-          parts: Array<string>;
-        };
-        basic: {
-          parts: Array<string>;
-        };
-        master: {
-          parts: Array<string>;
-        };
-      };
-      ver: {
-        untrained: {
-          parts: Array<string>;
-        };
-        basic: {
-          parts: Array<string>;
-        };
-        master: {
-          parts: Array<string>;
-        };
-      };
+      common: {};
+      ver: {};
     };
-    range: {
-      untrained: {
-        min: number;
-        max: number;
-      };
-      basic: {
-        min: number;
-        max: number;
-      };
-      master: {
-        min: number;
-        max: number;
-      };
-    };
-    deflect: {
-      untrained: string;
-      basic: string;
-      master: string;
-    };
+    range: {};
+    deflect: {};
   }
   interface ArmorDataSourceData extends ItemBaseTemplate {
     type: string;
     slot: string;
     equipped: boolean;
     res: {
-      phys: object;
-      mag: object;
+      phys: {
+        [DMG in DmgPhysTypes]: {
+          bonus: number;
+          type: string;
+        };
+      };
+      mag: {
+        [DMG in DmgTypes]: {
+          bonus: number;
+          type: string;
+        };
+      };
+    };
+    mobility: {
+      bonus: number;
     };
   }
   interface FeatureDataSourceData extends ItemBaseTemplate {
@@ -163,43 +146,52 @@ declare global {
   interface RaceDataSourceData extends ItemBaseTemplate {
     speed: number;
     bonus: {
-      abil: {
-        str: {
+      attributes: {
+        [Attr in Attributes]: {
           value: number;
-          sign: boolean;
-        };
-        dex: {
-          value: number;
-          sign: boolean;
-        };
-        con: {
-          value: number;
-          sign: boolean;
-        };
-        int: {
-          value: number;
-          sign: boolean;
-        };
-        wis: {
-          value: number;
-          sign: boolean;
-        };
-        cha: {
-          value: number;
-          sign: boolean;
         };
       };
-      skill: object;
+      skills: {
+        [Skill in Skills]:{
+          value:number
+        }
+      };
     };
   }
-  interface ItemDataPropertiesData extends ItemDataSourceData{}
-  interface FeatureDataPropertiesData extends FeatureDataSourceData{}
-  interface WeaponDataPropertiesData extends WeaponDataSourceData{
-    property:{[Prop in keyof WeaponDataSourceData["property"]]:WeaponDataSourceData["property"][Prop]&{
-      label:string
-    }}
+  interface ItemDataPropertiesData extends ItemDataSourceData {}
+  interface FeatureDataPropertiesData extends FeatureDataSourceData {}
+  interface WeaponDataPropertiesData extends WeaponDataSourceData {
+    property: {
+      [Prop in keyof WeaponDataSourceData["property"]]: WeaponDataSourceData["property"][Prop] & {
+        label: string;
+      };
+    };
+    sub_type: string;
+    sub_type_array: WeaponProficienciesSetting[];
+    proficiency: WeaponDataSourceData["proficiency"] & {
+      name: string;
+    };
+    type: WeaponDataSourceData["type"] & {
+      name: string;
+    };
   }
-  interface SpellDataPropertiesData extends SpellDataSourceData{}
-  interface RaceDataPropertiesData extends RaceDataSourceData{}
-  interface ArmorDataPropertiesData extends ArmorDataSourceData{}
+  interface SpellDataPropertiesData extends SpellDataSourceData {}
+  interface RaceDataPropertiesData extends RaceDataSourceData {}
+  interface ArmorDataPropertiesData extends ArmorDataSourceData {
+    res: {
+      phys: {
+        [DMG in keyof ArmorDataSourceData["res"]["phys"]]: ArmorDataSourceData["res"]["phys"][DMG] & {
+          value: number;
+        };
+      };
+      mag: {
+        [DMG in keyof ArmorDataSourceData["res"]["mag"]]: ArmorDataSourceData["res"]["mag"][DMG] & {
+          value: number;
+        };
+      };
+    };
+    mobility: ArmorDataSourceData["mobility"] & {
+      value: number;
+    };
+  }
 }

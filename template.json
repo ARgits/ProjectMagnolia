@@ -5,7 +5,8 @@
       "base": {
         "health": {
           "value": 0,
-          "max": 0
+          "max": 0,
+          "bonus": 0
         },
         "biography": ""
       }
@@ -23,91 +24,147 @@
       "speed": {
         "bonus": 0
       },
+      "mobility": {
+        "bonus": 0
+      },
       "attributes": {
         "str": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "dex": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "con": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "int": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "wis": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         },
         "cha": {
-          "value": 5
+          "value": 5,
+          "bonus": 0
         }
       },
       "skills": {
         "acr": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "ath": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "ani": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "arc": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "dec": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "his": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "ins": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "itm": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "inv": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "med": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "nat": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "prc": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "prf": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "per": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "rel": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "slt": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "ste": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         },
         "sur": {
-          "level": 0
+          "level": 0,
+          "bonus": 0
         }
       },
       "defences": {
         "stats": {
-          "reflex": {},
-          "fortitude": {},
-          "will": {}
+          "reflex": {
+            "bonus": 0
+          },
+          "fortitude": {
+            "bonus": 0
+          },
+          "will": {
+            "bonus": 0
+          }
         },
         "damage": {
-          "phys": {},
-          "mag": {}
+          "phys": {
+            "acid": { "bonus": 0, "type": "res" },
+            "bludgeoning": { "bonus": 0, "type": "res" },
+            "cold": { "bonus": 0, "type": "res" },
+            "fire": { "bonus": 0, "type": "res" },
+            "lightning": { "bonus": 0, "type": "res" },
+            "necr": { "bonus": 0, "type": "res" },
+            "piercing": { "bonus": 0, "type": "res" },
+            "poison": { "bonus": 0, "type": "res" },
+            "slashing": { "bonus": 0, "type": "res" }
+          },
+          "mag": {
+            "acid": { "bonus": 0, "type": "res" },
+            "bludgeoning": { "bonus": 0, "type": "res" },
+            "cold": { "bonus": 0, "type": "res" },
+            "fire": { "bonus": 0, "type": "res" },
+            "lightning": { "bonus": 0, "type": "res" },
+            "necr": { "bonus": 0, "type": "res" },
+            "piercing": { "bonus": 0, "type": "res" },
+            "poison": { "bonus": 0, "type": "res" },
+            "slashing": { "bonus": 0, "type": "res" },
+            "force": { "bonus": 0, "type": "res" },
+            "radiant": { "bonus": 0, "type": "res" },
+            "psychic": { "bonus": 0, "type": "res" }
+          }
         },
         "conditions": {}
       }
@@ -138,168 +195,154 @@
       "weight": 0,
       "equipped": false,
       "type": {
-        "value": ""
+        "value": "amb"
       },
       "property": {
-         "aff":{
-           "value":-1,
-           "bonus":0
-         },
-     "awk":{
-      "value":-1,
-      "bonus":0
-    },
-     "con":{
-      "value":-1,
-      "bonus":0
-    },
-     "bra":{
-      "value":-1,
-      "bonus":0
-    },
-     "def":{
-      "value":-1,
-      "bonus":0
-    },
-     "dis":{
-      "value":-1,
-      "bonus":0
-    },
-     "dou":{
-      "value":-1,
-      "bonus":0
-    },
-     "ent":{
-      "value":-1,
-      "bonus":0
-    },
-     "fin":{
-      "value":-1,
-      "bonus":0
-    },
-     "fir":{
-      "value":-1,
-      "bonus":0
-    },
-     "hea":{
-      "value":-1,
-      "bonus":0
-    },
-     "lau":{
-      "value":-1,
-      "bonus":0
-    },
-     "lig":{
-      "value":-1,
-      "bonus":0
-    },
-     "lun":{
-      "value":-1,
-      "bonus":0
-    },
-     "mel":{
-      "value":-1,
-      "bonus":0
-    },
-     "one":{
-      "value":-1,
-      "bonus":0
-    },
-     "pen":{
-      "value":-1,
-      "bonus":0
-    },
-     "ran":{
-      "value":-1,
-      "bonus":0
-    },
-     "rea":{
-      "value":-1,
-      "bonus":0
-    },
-     "rel":{
-      "value":-1,
-      "bonus":0
-    },
-     "sta":{
-      "value":-1,
-      "bonus":0
-    },
-     "thr":{
-      "value":-1,
-      "bonus":0
-    },
-     "tri":{
-      "value":-1,
-      "bonus":0
-    },
-     "two":{
-      "value":-1,
-      "bonus":0
-    },
-     "ver":{
-      "value":-1,
-      "bonus":0
-    }
+        "aff": {
+          "value": -1,
+          "bonus": 0
+        },
+        "awk": {
+          "value": -1,
+          "bonus": 0
+        },
+        "con": {
+          "value": -1,
+          "bonus": 0
+        },
+        "bra": {
+          "value": -1,
+          "bonus": 0
+        },
+        "def": {
+          "value": -1,
+          "bonus": 0
+        },
+        "dis": {
+          "value": -1,
+          "bonus": 0
+        },
+        "dou": {
+          "value": -1,
+          "bonus": 0
+        },
+        "ent": {
+          "value": -1,
+          "bonus": 0
+        },
+        "fin": {
+          "value": -1,
+          "bonus": 0
+        },
+        "fir": {
+          "value": -1,
+          "bonus": 0
+        },
+        "hea": {
+          "value": -1,
+          "bonus": 0
+        },
+        "lau": {
+          "value": -1,
+          "bonus": 0
+        },
+        "lig": {
+          "value": -1,
+          "bonus": 0
+        },
+        "lun": {
+          "value": -1,
+          "bonus": 0
+        },
+        "mel": {
+          "value": -1,
+          "bonus": 0
+        },
+        "one": {
+          "value": -1,
+          "bonus": 0
+        },
+        "pen": {
+          "value": -1,
+          "bonus": 0
+        },
+        "ran": {
+          "value": -1,
+          "bonus": 0
+        },
+        "rea": {
+          "value": -1,
+          "bonus": 0
+        },
+        "rel": {
+          "value": -1,
+          "bonus": 0
+        },
+        "sta": {
+          "value": -1,
+          "bonus": 0
+        },
+        "thr": {
+          "value": -1,
+          "bonus": 0
+        },
+        "tri": {
+          "value": -1,
+          "bonus": 0
+        },
+        "two": {
+          "value": -1,
+          "bonus": 0
+        },
+        "ver": {
+          "value": -1,
+          "bonus": 0
+        }
       },
-      "prof": {
+      "proficiency": {
         "value": 0
       },
       "damage": {
-        "common": {
-          "untrained": {
-            "parts": []
-          },
-          "basic": {
-            "parts": []
-          },
-          "master": {
-            "parts": []
-          }
-        },
-        "ver": {
-          "untrained": {
-            "parts": [],
-            "formula": ""
-          },
-          "basic": {
-            "parts": [],
-            "formula": ""
-          },
-          "master": {
-            "parts": [],
-            "formula": ""
-          }
-        }
+        "common": {},
+        "ver": {}
       },
-      "range": {
-        "untrained": {
-          "min": 15,
-          "max": 30
-        },
-        "basic": {
-          "min": 30,
-          "max": 45
-        },
-        "master": {
-          "min": 45,
-          "max": 90
-        }
-      },
-      "deflect": {
-        "untrained": "",
-        "basic": "",
-        "master": ""
-      }
+      "range": {},
+      "deflect": {}
     },
     "armor": {
       "templates": ["base"],
       "type": "light",
       "slot": "chest",
       "equipped": false,
+      "mobility": {
+        "bonus": 0
+      },
       "res": {
-        "phys": {},
-        "mag": {}
+        "phys": {
+          "acid": { "bonus": 0, "type": "res" },
+          "bludgeoning": { "bonus": 0, "type": "res" },
+          "cold": { "bonus": 0, "type": "res" },
+          "fire": { "bonus": 0, "type": "res" },
+          "lightning": { "bonus": 0, "type": "res" },
+          "necr": { "bonus": 0, "type": "res" },
+          "piercing": { "bonus": 0, "type": "res" },
+          "poison": { "bonus": 0, "type": "res" },
+          "slashing": { "bonus": 0, "type": "res" }
+        },
+        "mag": {
+          "acid": { "bonus": 0, "type": "res" },
+          "bludgeoning": { "bonus": 0, "type": "res" },
+          "cold": { "bonus": 0, "type": "res" },
+          "fire": { "bonus": 0, "type": "res" },
+          "lightning": { "bonus": 0, "type": "res" },
+          "necr": { "bonus": 0, "type": "res" },
+          "piercing": { "bonus": 0, "type": "res" },
+          "poison": { "bonus": 0, "type": "res" },
+          "slashing": { "bonus": 0, "type": "res" },
+          "force": { "bonus": 0, "type": "res" },
+          "radiant": { "bonus": 0, "type": "res" },
+          "psychic": { "bonus": 0, "type": "res" }
+        }
       }
     },
     "feature": {
@@ -337,34 +380,84 @@
       "templates": ["base"],
       "speed": 6,
       "bonus": {
-        "abil": {
+        "attributes": {
           "str": {
-            "value": 0,
-            "sign": true
+            "value": 0
           },
           "dex": {
-            "value": 0,
-            "sign": true
+            "value": 0
           },
           "con": {
-            "value": 0,
-            "sign": true
+            "value": 0
           },
           "int": {
-            "value": 0,
-            "sign": true
+            "value": 0
           },
           "wis": {
-            "value": 0,
-            "sign": true
+            "value": 0
           },
           "cha": {
-            "value": 0,
-            "sign": true
+            "value": 0
           }
         },
-        "skill": {}
-      }
+        "skill": {
+          "acr": {
+            "bonus": 0
+          },
+          "ath": {
+            "bonus": 0
+          },
+          "ani": {
+            "bonus": 0
+          },
+          "arc": {
+            "bonus": 0
+          },
+          "dec": {
+            "bonus": 0
+          },
+          "his": {
+            "bonus": 0
+          },
+          "ins": {
+            "bonus": 0
+          },
+          "itm": {
+            "bonus": 0
+          },
+          "inv": {
+            "bonus": 0
+          },
+          "med": {
+            "bonus": 0
+          },
+          "nat": {
+            "bonus": 0
+          },
+          "prc": {
+            "bonus": 0
+          },
+          "prf": {
+            "bonus": 0
+          },
+          "per": {
+            "bonus": 0
+          },
+          "rel": {
+            "bonus": 0
+          },
+          "slt": {
+            "bonus": 0
+          },
+          "ste": {
+            "bonus": 0
+          },
+          "sur": {
+            "bonus": 0
+          }
+        }
+      },
+      "health": 10
     }
   }
 }

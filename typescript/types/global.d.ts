@@ -20,6 +20,10 @@ declare global {
 
     }
   }
+  interface RollOptions{
+    parts?:Array<string>
+    speaker?:string
+  }
   interface Macro{
     command:string
   }
