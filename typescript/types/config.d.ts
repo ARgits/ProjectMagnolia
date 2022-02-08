@@ -42,6 +42,7 @@ declare global {
     SpellSchool: {};
     Skills: { [Skill in Skills]: string };
     Rank: {
+      [index: number]: string;
       0: string;
       1: string;
       2: string;

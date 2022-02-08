@@ -179,32 +179,27 @@ export class ARd20Item extends Item {
   */
   prepareFinalAttributes() {
     const itemData = this.data;
-    const data = itemData.data;
-    const labels = this.labels;
-    labels.abil = {};
-    labels.skills = {};
-    labels.feats = {};
-    const abil = (data.abil = {});
-    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
-      v = this.isOwned ? getProperty(this.actor.data, `data.attributes.${k}.mod`) : null;
-      abil[k] = v;
+    //@ts-expect-error
+    const abil: { [index: string]: number } = (data.abil = {});
+    for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+      abil[k] = this.isOwned ? getProperty(this.actor!.data, `data.attributes.${k}.mod`) : null;
     }
     let prof_bonus: number = 0;
-    if (this.data.type === "weapon") {
-      data.level.value = this.isOwned ? Object.values(this.actor?.data.data.proficiencies.weapon).filter((pr) => pr.name === data.sub_type)[0]?.value : 0;
-      this.labels.prof = game.i18n.localize(CONFIG.ARd20.Rank[data.level.value]) ?? CONFIG.ARd20.Rank[data.level.value];
-      data.level.label = this.labels.prof;
-      prof_bonus = data.level.value;
+    if (itemData.type === "weapon") {
+      const data = itemData.data;
+      data.proficiency.level = this.isOwned ? this.actor?.data.data.proficiencies.weapon!.filter((pr) => pr.name === data.sub_type)[0].value! : 0;
+      data.proficiency.levelName = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level]) ?? CONFIG.ARd20.Rank[data.proficiency.level];
+      prof_bonus = data.proficiency.level * 4;
     }
-    if (data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
-    if (data.hasDamage) this._prepareDamage(itemData, abil);
+    if (itemData.data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
+    if (itemData.data.hasDamage) this._prepareDamage(itemData, abil);
   }
   _prepareAttack(itemData: ItemData, prof_bonus?: number, abil?: { dex?: number }) {
     const data = itemData.data;
     if (!data.hasAttack) return;
-    /*if (data.atkMod) {
-    }*/
+    //@ts-expect-error
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
+    //@ts-expect-error
     data.attack = {
       formula: "1d20+" + prof_bonus + "+" + mod,
       parts: [mod, prof_bonus],
@@ -214,14 +209,16 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     if (!data.hasDamage) return;
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-    const prop = itemData.type === "weapon" ? `damage.common.${this.labels.prof.toLowerCase()}.parts` : "damage.parts";
+    const prop = "damage.parts";
     let baseDamage = getProperty(data, prop);
+    //@ts-expect-error
     data.damage.current = {
       formula: "",
       parts: baseDamage,
     };
     console.log(baseDamage);
     baseDamage.forEach((part: any[]) => {
+      //@ts-expect-error
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });
   }
@@ -229,13 +226,19 @@ export class ARd20Item extends Item {
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-  getRollData(hasAttack: boolean, hasDamage: boolean) {
+  getRollData() {
     // If present, return the actor's roll data.
     if (!this.actor) return null;
     const rollData = this.actor.getRollData();
+    const hasDamage = this.data.data.hasDamage
+    const hasAttack = this.data.data.hasAttack
+    //@ts-expect-error
     rollData.item = foundry.utils.deepClone(this.data.data);
+    //@ts-expect-error
     rollData.damageDie = hasDamage ? this.data.data.damage.current.parts[0] : null;
+    //@ts-expect-error
     rollData.mod = hasAttack ? this.data.data.attack.parts[0] : hasDamage ? this.data.data.damage.current.parts[1] : null;
+    //@ts-expect-error
     rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
     return rollData;
   }
@@ -244,21 +247,23 @@ export class ARd20Item extends Item {
    * @param {Event} event   The originating click event
    * @private
    */
-
-  async roll({ configureDialog = true, rollMode:any, hasDamage = false, hasAttack = false, createMessage = true }) {
+//@ts-expect-error
+  async roll({ configureDialog = true, rollMode, hasDamage = false, hasAttack = false, createMessage = true }) {
     let item = this;
     const id = item.id;
     const iData = this.data.data; //Item data
-    const actor = this.actor;
+    const actor = this.actor!;
     const aData = actor?.data.data;
     hasDamage = iData.hasDamage || hasDamage;
     hasAttack = iData.hasAttack || hasAttack;
     // Initialize chat data.
-    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const speaker = ChatMessage.getSpeaker({ actor: actor});
     const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
-    const targets = Array.from(game.user.targets);
+    const targets = Array.from(game.user!.targets);
+    //@ts-expect-error
     const mRoll = this.data.data.mRoll || false;
+    //@ts-expect-error
     return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mRoll });
   }
   /* -------------------------------------------- */
@@ -267,10 +272,12 @@ export class ARd20Item extends Item {
 
   static chatListeners(html: { on: (arg0: string, arg1: string, arg2: { (event: any): Promise<void>; (event: any): void; (event: any): Promise<void>; (event: any): void }) => void }) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
+    //@ts-expect-error
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
     html.on("hover", ".attack-roll .flexrow .value", function (event: { preventDefault: () => void; type: string }) {
       event.preventDefault();
+      //@ts-expect-error
       const element = this.closest("li.flexrow");
       element.querySelector(".attack-roll .hover-roll")?.classList.toggle("shown", event.type == "mouseenter");
     });

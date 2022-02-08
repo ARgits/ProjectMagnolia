@@ -85,7 +85,8 @@ declare global {
       };
     };
     proficiency: {
-      level: 0 | 1 | 2 | 3 | 4;
+      level: number;
+      levelName:string
     };
     damage: {
       common: {};
