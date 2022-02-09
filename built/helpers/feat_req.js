@@ -1,4 +1,4 @@
-import { getValues, obj_entries } from "../ard20";
+import { getValues, obj_entries } from "../ard20.js";
 export class FeatRequirements extends FormApplication {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {

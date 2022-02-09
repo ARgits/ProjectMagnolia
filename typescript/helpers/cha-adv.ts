@@ -1,4 +1,4 @@
-import { obj_entries } from "../ard20";
+import { obj_entries } from "../ard20.js";
 
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {

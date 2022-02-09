@@ -1,4 +1,4 @@
-import { rollItemMacro } from "../ard20";
+import { rollItemMacro } from "../ard20.js";
 import { ARd20Actor } from "../documents/actor";
 import { ARd20Item } from "../documents/item";
 import * as dice from "../dice/dice"

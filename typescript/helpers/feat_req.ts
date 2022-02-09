@@ -1,4 +1,4 @@
-import { getValues, obj_entries } from "../ard20";
+import { getValues, obj_entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item";
 
 export class FeatRequirements extends FormApplication {
