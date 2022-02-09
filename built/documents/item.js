@@ -1,79 +1,21 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ARd20Item = void 0;
-var ard20_js_1 = require("../ard20.js");
-var dice_js_1 = require("../dice/dice.js");
+import { getValues, obj_entries } from "../ard20.js";
+import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-var ARd20Item = /** @class */ (function (_super) {
-    __extends(ARd20Item, _super);
-    function ARd20Item() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
+export class ARd20Item extends Item {
     /**
      * Augment the basic Item data model with additional dynamic data.
      */
-    ARd20Item.prototype.prepareData = function () {
+    prepareData() {
         // As with the actor class, items are documents that can have their data
         // preparation methods overridden (such as prepareBaseData()).
-        _super.prototype.prepareData.call(this);
-    };
-    ARd20Item.prototype.prepareDerivedData = function () {
-        _super.prototype.prepareDerivedData.call(this);
-        var itemData = this.data;
+        super.prepareData();
+    }
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        const itemData = this.data;
         this._prepareSpellData(itemData);
         this._prepareWeaponData(itemData);
         this._prepareFeatureData(itemData);
@@ -85,57 +27,52 @@ var ARd20Item = /** @class */ (function (_super) {
             this._prepareDamage(itemData);
         if (!this.isOwned)
             this.prepareFinalAttributes();
-    };
+    }
     /**
      *Prepare data for Spells
      */
-    ARd20Item.prototype._prepareSpellData = function (itemData) {
+    _prepareSpellData(itemData) {
         if (itemData.type !== "spell")
             return;
-        var data = itemData.data;
-    };
+        const data = itemData.data;
+    }
     /**
      *Prepare data for weapons
      */
-    ARd20Item.prototype._prepareWeaponData = function (itemData) {
+    _prepareWeaponData(itemData) {
         if (itemData.type !== "weapon")
             return;
-        var data = itemData.data;
-        var flags = itemData.flags;
+        const data = itemData.data;
+        const flags = itemData.flags;
         data.hasAttack = data.hasAttack || true;
         data.hasDamage = data.hasDamage || true;
         //TODO: this._setDeflect(data);
         this._setTypeAndSubtype(data, flags);
-        for (var _i = 0, _a = (0, ard20_js_1.obj_entries)(data.damage); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], type = _b[1];
+        for (let [key, type] of obj_entries(data.damage)) {
             if (key !== "current") {
-                var _loop_1 = function (key_1, prof) {
+                for (let [key, prof] of obj_entries(type)) {
                     prof.formula = "";
-                    prof.parts.forEach(function (part) {
+                    prof.parts.forEach((part) => {
                         if (Array.isArray(part[1])) {
-                            prof.formula += "".concat(part[0]);
-                            part[1].forEach(function (sub, ind) {
+                            prof.formula += `${part[0]}`;
+                            part[1].forEach((sub, ind) => {
                                 if (ind === 0) {
-                                    prof.formula += " {".concat(sub[0], " ").concat(sub[1]);
+                                    prof.formula += ` {${sub[0]} ${sub[1]}`;
                                     prof.formula += ind === part[1].length - 1 ? "}" : "";
                                 }
                                 else {
-                                    prof.formula += " or ".concat(sub[0], " ").concat(sub[1]);
+                                    prof.formula += ` or ${sub[0]} ${sub[1]}`;
                                     prof.formula += ind === part[1].length - 1 ? "}" : "";
                                 }
                             });
                         }
                         else
-                            prof.formula += "".concat(part[0], " {").concat(part[1], " ").concat(part[2], "}; ");
+                            prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `;
                     });
-                };
-                for (var _c = 0, _d = (0, ard20_js_1.obj_entries)(type); _c < _d.length; _c++) {
-                    var _e = _d[_c], key_1 = _e[0], prof = _e[1];
-                    _loop_1(key_1, prof);
                 }
             }
         }
-    };
+    }
     /**
      *Set deflect die equal to damage die, if not
      */
@@ -149,32 +86,31 @@ var ARd20Item = /** @class */ (function (_super) {
     }
     */
     //@ts-expect-error
-    ARd20Item.prototype._setTypeAndSubtype = function (data, flags) {
-        var _a, _b, _c;
-        data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.filter(function (prof) { return prof.type === data.type.value; });
-        if ((_a = flags.core) === null || _a === void 0 ? void 0 : _a.sourceId) {
-            var id = /Item.(.+)/.exec(flags.core.sourceId)[1];
-            var item = game.items.get(id);
-            if ((item === null || item === void 0 ? void 0 : item.data.type) === "weapon") {
+    _setTypeAndSubtype(data, flags) {
+        data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.filter((prof) => prof.type === data.type.value);
+        if (flags.core?.sourceId) {
+            const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
+            const item = game.items.get(id);
+            if (item?.data.type === "weapon") {
                 data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
             }
         }
-        data.sub_type = data.sub_type_array.filter(function (prof) { return prof.name === data.sub_type; }).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-        data.proficiency.name = (_b = game.i18n.localize((0, ard20_js_1.getValues)(CONFIG.ARd20.Rank, data.proficiency.level))) !== null && _b !== void 0 ? _b : (0, ard20_js_1.getValues)(CONFIG.ARd20.Rank, data.proficiency.level);
-        data.type.name = (_c = game.i18n.localize((0, ard20_js_1.getValues)(CONFIG.ARd20.Rank, data.type.value))) !== null && _c !== void 0 ? _c : (0, ard20_js_1.getValues)(CONFIG.ARd20.Rank, data.type.value);
-    };
+        data.sub_type = data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
+        data.proficiency.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ?? getValues(CONFIG.ARd20.Rank, data.proficiency.level);
+        data.type.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ?? getValues(CONFIG.ARd20.Rank, data.type.value);
+    }
     /**
      *Prepare data for features
      */
-    ARd20Item.prototype._prepareFeatureData = function (itemData) {
+    _prepareFeatureData(itemData) {
         if (itemData.type !== "feature")
             return;
-        var data = itemData.data;
+        const data = itemData.data;
         // Handle Source of the feature
         data.source.label = "";
-        data.source.value.forEach(function (value, key) {
-            var label = game.i18n.localize((0, ard20_js_1.getValues)(CONFIG.ARd20.Source, value));
-            data.source.label += key === 0 ? label : ", ".concat(label);
+        data.source.value.forEach((value, key) => {
+            let label = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
+            data.source.label += key === 0 ? label : `, ${label}`;
         });
         //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
         //define levels
@@ -183,40 +119,37 @@ var ARd20Item = /** @class */ (function (_super) {
         data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0;
         //define exp cost
         if (data.level.max > 1) {
-            var n = (10 - data.level.max) / data.level.max;
-            var k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
+            let n = (10 - data.level.max) / data.level.max;
+            let k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
             if (data.xp.length < data.level.max) {
-                for (var i = 1; i < data.level.max; i++) {
+                for (let i = 1; i < data.level.max; i++) {
                     data.xp.push(Math.round((data.xp[i - 1] * k) / 5) * 5);
                 }
             }
             else {
-                for (var i = 1; i < data.level.max; i++) {
+                for (let i = 1; i < data.level.max; i++) {
                     data.xp[i] = Math.round((data.xp[i - 1] * k) / 5) * 5;
                 }
             }
         }
-        for (var _i = 0, _a = Object.entries(data.req.values); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], req = _b[1];
+        for (let [key, req] of Object.entries(data.req.values)) {
             req.pass = Array.from("0".repeat(data.level.max));
             switch (req.type) {
                 case "ability":
-                    for (var _c = 0, _d = (0, ard20_js_1.obj_entries)(CONFIG.ARd20.Attributes); _c < _d.length; _c++) {
-                        var _e = _d[_c], key_2 = _e[0], v = _e[1];
-                        if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key_2]))
-                            req.value = key_2;
+                    for (let [key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+                        if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key]))
+                            req.value = key;
                     }
                     break;
                 case "skill":
-                    for (var _f = 0, _g = (0, ard20_js_1.obj_entries)(CONFIG.ARd20.Skills); _f < _g.length; _f++) {
-                        var _h = _g[_f], key_3 = _h[0], v = _h[1];
-                        if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key_3]))
-                            req.value = key_3;
+                    for (let [key, v] of obj_entries(CONFIG.ARd20.Skills)) {
+                        if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key]))
+                            req.value = key;
                     }
                     break;
             }
         }
-        for (var i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
+        for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
             if (i === 0) {
                 data.req.logic.push("1");
             }
@@ -224,101 +157,97 @@ var ARd20Item = /** @class */ (function (_super) {
                 data.req.logic.push(data.req.logic[i - 1]);
             }
         }
-        for (var i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
+        for (let i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
             data.req.logic.splice(data.req.logic.length - 1, 1);
         }
-    };
+    }
     /**
      * Prepare data for 'race' type of item
      */
-    ARd20Item.prototype._prepareRaceData = function (itemData) {
+    _prepareRaceData(itemData) {
         if (itemData.type !== "race")
             return;
-    };
+    }
     /**
      * Prepare data for "armor" type item
      */
-    ARd20Item.prototype._prepareArmorData = function (itemData) {
-        var _a, _b, _c;
+    _prepareArmorData(itemData) {
         if (itemData.type !== "armor")
             return;
-        var data = itemData.data;
-        for (var _i = 0, _d = (0, ard20_js_1.obj_entries)(CONFIG.ARd20.DamageSubTypes); _i < _d.length; _i++) {
-            var _e = _d[_i], key = _e[0], dr = _e[1];
+        const data = itemData.data;
+        for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
             if (!(key === "force" || key === "rad" || key === "psychic")) {
-                data.res.phys[key] = (_a = data.res.phys[key]) !== null && _a !== void 0 ? _a : 0;
+                data.res.phys[key] = data.res.phys[key] ?? 0;
             }
-            data.res.mag[key] = (_b = data.res.mag[key]) !== null && _b !== void 0 ? _b : 0;
+            data.res.mag[key] = data.res.mag[key] ?? 0;
         }
-        data.mobility.value = (_c = data.mobility.value) !== null && _c !== void 0 ? _c : CONFIG.ARd20.HeavyPoints[data.type][data.slot];
+        data.mobility.value = data.mobility.value ?? CONFIG.ARd20.HeavyPoints[data.type][data.slot];
         data.mobility.value += data.mobility.bonus;
-    };
+    }
     /**
     Prepare Data that uses actor's data
     */
-    ARd20Item.prototype.prepareFinalAttributes = function () {
-        var _a, _b;
-        var itemData = this.data;
+    prepareFinalAttributes() {
+        const itemData = this.data;
         //@ts-expect-error
-        var abil = (data.abil = {});
-        for (var _i = 0, _c = (0, ard20_js_1.obj_entries)(CONFIG.ARd20.Attributes); _i < _c.length; _i++) {
-            var _d = _c[_i], k = _d[0], v = _d[1];
-            abil[k] = this.isOwned ? getProperty(this.actor.data, "data.attributes.".concat(k, ".mod")) : null;
+        const abil = (data.abil = {});
+        for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+            abil[k] = this.isOwned ? getProperty(this.actor.data, `data.attributes.${k}.mod`) : null;
         }
-        var prof_bonus = 0;
+        let prof_bonus = 0;
         if (itemData.type === "weapon") {
-            var data_1 = itemData.data;
-            data_1.proficiency.level = this.isOwned ? (_a = this.actor) === null || _a === void 0 ? void 0 : _a.data.data.proficiencies.weapon.filter(function (pr) { return pr.name === data_1.sub_type; })[0].value : 0;
-            data_1.proficiency.levelName = (_b = game.i18n.localize(CONFIG.ARd20.Rank[data_1.proficiency.level])) !== null && _b !== void 0 ? _b : CONFIG.ARd20.Rank[data_1.proficiency.level];
-            prof_bonus = data_1.proficiency.level * 4;
+            const data = itemData.data;
+            data.proficiency.level = this.isOwned ? this.actor?.data.data.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value : 0;
+            data.proficiency.levelName = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level]) ?? CONFIG.ARd20.Rank[data.proficiency.level];
+            prof_bonus = data.proficiency.level * 4;
         }
         if (itemData.data.hasAttack)
             this._prepareAttack(itemData, prof_bonus, abil);
         if (itemData.data.hasDamage)
             this._prepareDamage(itemData, abil);
-    };
-    ARd20Item.prototype._prepareAttack = function (itemData, prof_bonus, abil) {
-        var data = itemData.data;
+    }
+    _prepareAttack(itemData, prof_bonus, abil) {
+        const data = itemData.data;
         if (!data.hasAttack)
             return;
         //@ts-expect-error
-        var mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
+        let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod;
         //@ts-expect-error
         data.attack = {
             formula: "1d20+" + prof_bonus + "+" + mod,
             parts: [mod, prof_bonus],
         };
-    };
-    ARd20Item.prototype._prepareDamage = function (itemData, abil) {
-        var data = itemData.data;
+    }
+    _prepareDamage(itemData, abil) {
+        const data = itemData.data;
         if (!data.hasDamage)
             return;
-        var mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-        var prop = "damage.parts";
-        var baseDamage = getProperty(data, prop);
+        let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
+        const prop = "damage.parts";
+        let baseDamage = getProperty(data, prop);
         //@ts-expect-error
         data.damage.current = {
             formula: "",
             parts: baseDamage,
         };
         console.log(baseDamage);
-        baseDamage.forEach(function (part) {
+        baseDamage.forEach((part) => {
             //@ts-expect-error
-            data.damage.current.formula += part[0] + "[".concat(part[1], ", ").concat(part[2], "] ");
+            data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
         });
-    };
+    }
     /**
      * Prepare a data object which is passed to any Roll formulas which are created related to this Item
      * @private
      */
     //@ts-expect-error
-    ARd20Item.prototype.getRollData = function () {
+    getRollData() {
         // If present, return the actor's roll data.
         if (!this.actor)
             return null;
-        var rollData = this.actor.getRollData();
-        var hasDamage = this.data.data.hasDamage;
-        var hasAttack = this.data.data.hasAttack;
+        const rollData = this.actor.getRollData();
+        const hasDamage = this.data.data.hasDamage;
+        const hasAttack = this.data.data.hasAttack;
         //@ts-expect-error
         rollData.item = foundry.utils.deepClone(this.data.data);
         //@ts-expect-error
@@ -328,48 +257,44 @@ var ARd20Item = /** @class */ (function (_super) {
         //@ts-expect-error
         rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
         return rollData;
-    };
+    }
     /**
      * Handle clickable rolls.
      * @param {Event} event   The originating click event
      * @private
      */
     //@ts-expect-error
-    ARd20Item.prototype.roll = function (_a) {
-        var _b = _a.configureDialog, configureDialog = _b === void 0 ? true : _b, rollMode = _a.rollMode, _c = _a.hasDamage, hasDamage = _c === void 0 ? false : _c, _d = _a.hasAttack, hasAttack = _d === void 0 ? false : _d, _e = _a.createMessage, createMessage = _e === void 0 ? true : _e;
-        return __awaiter(this, void 0, void 0, function () {
-            var item, id, iData, actor, aData, speaker, iName, targets, mRoll;
-            return __generator(this, function (_f) {
-                item = this;
-                id = item.id;
-                iData = this.data.data;
-                actor = this.actor;
-                aData = actor === null || actor === void 0 ? void 0 : actor.data.data;
-                hasDamage = iData.hasDamage || hasDamage;
-                hasAttack = iData.hasAttack || hasAttack;
-                speaker = ChatMessage.getSpeaker({ actor: actor });
-                iName = this.name;
-                targets = Array.from(game.user.targets);
-                mRoll = this.data.data.mRoll || false;
-                //@ts-expect-error
-                return [2 /*return*/, item.displayCard({ rollMode: rollMode, createMessage: createMessage, hasAttack: hasAttack, hasDamage: hasDamage, targets: targets, mRoll: mRoll })];
-            });
-        });
-    };
+    async roll({ configureDialog = true, rollMode, hasDamage = false, hasAttack = false, createMessage = true }) {
+        let item = this;
+        const id = item.id;
+        const iData = this.data.data; //Item data
+        const actor = this.actor;
+        const aData = actor?.data.data;
+        hasDamage = iData.hasDamage || hasDamage;
+        hasAttack = iData.hasAttack || hasAttack;
+        // Initialize chat data.
+        const speaker = ChatMessage.getSpeaker({ actor: actor });
+        const iName = this.name;
+        // Otherwise, create a roll and send a chat message from it.
+        const targets = Array.from(game.user.targets);
+        //@ts-expect-error
+        const mRoll = this.data.data.mRoll || false;
+        //@ts-expect-error
+        return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mRoll });
+    }
     /* -------------------------------------------- */
     /*  Chat Message Helpers                        */
     /* -------------------------------------------- */
-    ARd20Item.chatListeners = function (html) {
+    static chatListeners(html) {
         html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
         html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
         html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
         html.on("hover", ".attack-roll .flexrow .value", function (event) {
-            var _a;
             event.preventDefault();
-            var element = this.closest("li.flexrow");
-            (_a = element.querySelector(".attack-roll .hover-roll")) === null || _a === void 0 ? void 0 : _a.classList.toggle("shown", event.type == "mouseenter");
+            const element = this.closest("li.flexrow");
+            element.querySelector(".attack-roll .hover-roll")?.classList.toggle("shown", event.type == "mouseenter");
         });
-    };
+    }
     /* -------------------------------------------- */
     /**
      * Handle execution of a chat card action via a click event on one of the card buttons
@@ -378,215 +303,159 @@ var ARd20Item = /** @class */ (function (_super) {
      * @private
      */
     //@ts-expect-error
-    ARd20Item._onChatCardAction = function (event) {
-        return __awaiter(this, void 0, void 0, function () {
-            var button, card, messageId, message, action, targetUuid, isTargetted, actor, storedData, item, spellLevel, _a, dam, html, targets, _i, targets_1, token, speaker, template;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        event.preventDefault();
-                        button = event.currentTarget;
-                        card = button.closest(".chat-card");
-                        messageId = card.closest(".message").dataset.messageId;
-                        message = game.messages.get(messageId);
-                        action = button.dataset.action;
-                        targetUuid = button.closest(".flexrow").dataset.targetId;
-                        isTargetted = action === "save";
-                        if (!(isTargetted || game.user.isGM || message.isAuthor))
-                            return [2 /*return*/];
-                        return [4 /*yield*/, this._getChatCardActor(card)];
-                    case 1:
-                        actor = _b.sent();
-                        if (!actor)
-                            return [2 /*return*/];
-                        storedData = message.getFlag("ard20", "itemData");
-                        item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
-                        if (!item) {
-                            return [2 /*return*/, ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }))];
-                        }
-                        spellLevel = parseInt(card.dataset.spellLevel) || null;
-                        _a = action;
-                        switch (_a) {
-                            case "damage": return [3 /*break*/, 2];
-                            case "versatile": return [3 /*break*/, 2];
-                            case "formula": return [3 /*break*/, 6];
-                            case "save": return [3 /*break*/, 8];
-                            case "toolCheck": return [3 /*break*/, 13];
-                            case "placeTemplate": return [3 /*break*/, 15];
-                        }
-                        return [3 /*break*/, 16];
-                    case 2: return [4 /*yield*/, item.rollDamage({
-                            critical: event.altKey,
-                            event: event,
-                            spellLevel: spellLevel,
-                            versatile: action === "versatile",
-                        })];
-                    case 3:
-                        dam = _b.sent();
-                        html = $(message.data.content);
-                        return [4 /*yield*/, dam.render()];
-                    case 4:
-                        dam = _b.sent();
-                        //dom.querySelector('button').replaceWith(dam)
-                        if (targetUuid) {
-                            html.find("[data-targetId=\"".concat(targetUuid, "\"]")).find("button").replaceWith(dam);
-                        }
-                        else {
-                            html.find(".damage-roll").find("button").replaceWith(dam);
-                        }
-                        //console.log(dom)
-                        return [4 /*yield*/, message.update({ content: html[0].outerHTML })];
-                    case 5:
-                        //console.log(dom)
-                        _b.sent();
-                        return [3 /*break*/, 16];
-                    case 6: return [4 /*yield*/, item.rollFormula({ event: event, spellLevel: spellLevel })];
-                    case 7:
-                        _b.sent();
-                        return [3 /*break*/, 16];
-                    case 8:
-                        targets = this._getChatCardTargets(card);
-                        _i = 0, targets_1 = targets;
-                        _b.label = 9;
-                    case 9:
-                        if (!(_i < targets_1.length)) return [3 /*break*/, 12];
-                        token = targets_1[_i];
-                        speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token });
-                        //@ts-expect-error
-                        return [4 /*yield*/, token.actor.rollAbilitySave(button.dataset.ability, { event: event, speaker: speaker })];
-                    case 10:
-                        //@ts-expect-error
-                        _b.sent();
-                        _b.label = 11;
-                    case 11:
-                        _i++;
-                        return [3 /*break*/, 9];
-                    case 12: return [3 /*break*/, 16];
-                    case 13: return [4 /*yield*/, item.rollToolCheck({ event: event })];
-                    case 14:
-                        _b.sent();
-                        return [3 /*break*/, 16];
-                    case 15:
-                        template = game.ard20.canvas.AbilityTemplate.fromItem(item);
-                        if (template)
-                            template.drawPreview();
-                        return [3 /*break*/, 16];
-                    case 16:
-                        // Re-enable the button
-                        button.disabled = false;
-                        return [2 /*return*/];
+    static async _onChatCardAction(event) {
+        event.preventDefault();
+        // Extract card data
+        const button = event.currentTarget;
+        const card = button.closest(".chat-card");
+        const messageId = card.closest(".message").dataset.messageId;
+        const message = game.messages.get(messageId);
+        const action = button.dataset.action;
+        const targetUuid = button.closest(".flexrow").dataset.targetId;
+        // Validate permission to proceed with the roll
+        const isTargetted = action === "save";
+        if (!(isTargetted || game.user.isGM || message.isAuthor))
+            return;
+        // Recover the actor for the chat card
+        const actor = await this._getChatCardActor(card);
+        if (!actor)
+            return;
+        // Get the Item from stored flag data or by the item ID on the Actor
+        const storedData = message.getFlag("ard20", "itemData");
+        //@ts-expect-error
+        const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
+        if (!item) {
+            return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+        }
+        const spellLevel = parseInt(card.dataset.spellLevel) || null;
+        // Handle different actions
+        switch (action) {
+            case "damage":
+            case "versatile":
+                let dam = await item.rollDamage({
+                    critical: event.altKey,
+                    event: event,
+                    spellLevel: spellLevel,
+                    versatile: action === "versatile",
+                });
+                //const dom = new DOMParser().parseFromString(message.data.content,"text/html")
+                const html = $(message.data.content);
+                dam = await dam.render();
+                //dom.querySelector('button').replaceWith(dam)
+                if (targetUuid) {
+                    html.find(`[data-targetId="${targetUuid}"]`).find("button").replaceWith(dam);
                 }
-            });
-        });
-    };
+                else {
+                    html.find(".damage-roll").find("button").replaceWith(dam);
+                }
+                //console.log(dom)
+                await message.update({ content: html[0].outerHTML });
+                break;
+            case "formula":
+                await item.rollFormula({ event, spellLevel });
+                break;
+            case "save":
+                const targets = this._getChatCardTargets(card);
+                for (let token of targets) {
+                    //@ts-expect-error
+                    const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token });
+                    //@ts-expect-error
+                    await token.actor.rollAbilitySave(button.dataset.ability, { event, speaker });
+                }
+                break;
+            case "toolCheck":
+                await item.rollToolCheck({ event });
+                break;
+            case "placeTemplate":
+                ///@ts-expect-error
+                const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
+                if (template)
+                    template.drawPreview();
+                break;
+        }
+        // Re-enable the button
+        button.disabled = false;
+    }
     /* -------------------------------------------- */
     /**
      * Handle toggling the visibility of chat card content when the name is clicked
      * @param {Event} event   The originating click event
      * @private
      */
-    ARd20Item._onChatCardToggleContent = function (event) {
+    static _onChatCardToggleContent(event) {
         event.preventDefault();
-        var header = event.currentTarget;
-        var card = header.closest(".chat-card");
-        var content = card.querySelector(".card-content");
+        const header = event.currentTarget;
+        const card = header.closest(".chat-card");
+        const content = card.querySelector(".card-content");
         content.style.display = content.style.display === "none" ? "block" : "none";
-    };
-    ARd20Item.prototype._applyDamage = function (dam, tData, tHealth, tActor) {
-        return __awaiter(this, void 0, void 0, function () {
-            var value, obj;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        value = dam.total;
-                        console.log("урон до резистов: ", value);
-                        dam.terms.forEach(function (term) {
-                            if (!(term instanceof OperatorTerm)) {
-                                var damageType = term.options.damageType;
-                                var res = tData.defences.damage[damageType[0]][damageType[1]];
-                                if (res.type === "imm")
-                                    console.log("Иммунитет");
-                                console.log("урон уменьшился с ", value);
-                                value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
-                                console.log("до", value);
-                            }
-                        });
-                        console.log(value, "итоговый урон");
-                        tHealth -= value;
-                        console.log("хп стало", tHealth);
-                        obj = {};
-                        obj["data.health.value"] = tHealth;
-                        if (!game.user.isGM) return [3 /*break*/, 2];
-                        return [4 /*yield*/, tActor.update(obj)];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        game.socket.emit("system.ard20", {
-                            operation: "updateActorData",
-                            actor: tActor,
-                            update: obj,
-                            value: value,
-                        });
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
-                }
-            });
+    }
+    async _applyDamage(dam, tData, tHealth, tActor) {
+        let value = dam.total;
+        console.log("урон до резистов: ", value);
+        dam.terms.forEach((term) => {
+            if (!(term instanceof OperatorTerm)) {
+                let damageType = term.options.damageType;
+                let res = tData.defences.damage[damageType[0]][damageType[1]];
+                if (res.type === "imm")
+                    console.log("Иммунитет");
+                console.log("урон уменьшился с ", value);
+                value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
+                console.log("до", value);
+            }
         });
-    };
-    ARd20Item._rollDamage = function (event) {
-        return __awaiter(this, void 0, void 0, function () {
-            var element, card, message, targetUuid, token, tActor, tData, tHealth, actor, storedData, item, dam, html, damHTML;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        event.preventDefault();
-                        element = event.currentTarget;
-                        card = element.closest(".chat-card");
-                        message = game.messages.get(card.closest(".message").dataset.messageId);
-                        targetUuid = element.closest("li.flexrow").dataset.targetId;
-                        return [4 /*yield*/, fromUuid(targetUuid)];
-                    case 1:
-                        token = _a.sent();
-                        tActor = token === null || token === void 0 ? void 0 : token.actor;
-                        tData = tActor.data.data;
-                        tHealth = tData.health.value;
-                        console.log(tHealth, "здоровье цели");
-                        return [4 /*yield*/, this._getChatCardActor(card)];
-                    case 2:
-                        actor = _a.sent();
-                        if (!actor)
-                            return [2 /*return*/];
-                        storedData = message.getFlag("ard20", "itemData");
-                        item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
-                        if (!item) {
-                            return [2 /*return*/, ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }))];
-                        }
-                        return [4 /*yield*/, item.rollDamage({
-                                event: event,
-                                canMult: false,
-                            })];
-                    case 3:
-                        dam = _a.sent();
-                        html = $(message.data.content);
-                        return [4 /*yield*/, dam.render()];
-                    case 4:
-                        damHTML = _a.sent();
-                        console.log(html.find("[data-target-id=\"".concat(targetUuid, "\"]")).find(".damage-roll")[0]);
-                        html.find("[data-target-id=\"".concat(targetUuid, "\"]")).find(".damage-roll").append(damHTML);
-                        html.find("[data-target-id=\"".concat(targetUuid, "\"]")).find(".accept").remove();
-                        console.log(html[0]);
-                        return [4 /*yield*/, message.update({ content: html[0].outerHTML })];
-                    case 5:
-                        _a.sent();
-                        return [4 /*yield*/, item._applyDamage(dam, tData, tHealth, tActor)];
-                    case 6:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
+        console.log(value, "итоговый урон");
+        tHealth -= value;
+        console.log("хп стало", tHealth);
+        let obj = {};
+        obj["data.health.value"] = tHealth;
+        if (game.user.isGM) {
+            await tActor.update(obj);
+        }
+        else {
+            game.socket.emit("system.ard20", {
+                operation: "updateActorData",
+                actor: tActor,
+                update: obj,
+                value: value,
             });
+        }
+    }
+    static async _rollDamage(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const card = element.closest(".chat-card");
+        const message = game.messages.get(card.closest(".message").dataset.messageId);
+        const targetUuid = element.closest("li.flexrow").dataset.targetId;
+        const token = await fromUuid(targetUuid);
+        //@ts-expect-error
+        const tActor = token?.actor;
+        const tData = tActor.data.data;
+        let tHealth = tData.health.value;
+        console.log(tHealth, "здоровье цели");
+        // Recover the actor for the chat card
+        const actor = await this._getChatCardActor(card);
+        if (!actor)
+            return;
+        // Get the Item from stored flag data or by the item ID on the Actor
+        const storedData = message.getFlag("ard20", "itemData");
+        //@ts-expect-error
+        const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
+        if (!item) {
+            return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+        }
+        const dam = await item.rollDamage({
+            event: event,
+            canMult: false,
         });
-    };
+        const html = $(message.data.content);
+        let damHTML = await dam.render();
+        console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
+        html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+        html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
+        console.log(html[0]);
+        await message.update({ content: html[0].outerHTML });
+        await item._applyDamage(dam, tData, tHealth, tActor);
+    }
     /* -------------------------------------------- */
     /**
      * Get the Actor which is the author of a chat card
@@ -594,27 +463,19 @@ var ARd20Item = /** @class */ (function (_super) {
      * @return {Actor|null}         The Actor entity or null
      * @private
      */
-    ARd20Item._getChatCardActor = function (card) {
-        return __awaiter(this, void 0, void 0, function () {
-            var token, actorId;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!card.dataset.tokenId) return [3 /*break*/, 2];
-                        return [4 /*yield*/, fromUuid(card.dataset.tokenId)];
-                    case 1:
-                        token = _a.sent();
-                        if (!token)
-                            return [2 /*return*/, null];
-                        //@ts-expect-error
-                        return [2 /*return*/, token.actor];
-                    case 2:
-                        actorId = card.dataset.actorId;
-                        return [2 /*return*/, game.actors.get(actorId) || null];
-                }
-            });
-        });
-    };
+    static async _getChatCardActor(card) {
+        // Case 1 - a synthetic actor from a Token
+        if (card.dataset.tokenId) {
+            const token = await fromUuid(card.dataset.tokenId);
+            if (!token)
+                return null;
+            //@ts-expect-error
+            return token.actor;
+        }
+        // Case 2 - use Actor ID directory
+        const actorId = card.dataset.actorId;
+        return game.actors.get(actorId) || null;
+    }
     /* -------------------------------------------- */
     /**
      * Get the Actor which is the author of a chat card
@@ -622,249 +483,133 @@ var ARd20Item = /** @class */ (function (_super) {
      * @return {Actor[]}            An Array of Actor entities, if any
      * @private
      */
-    ARd20Item._getChatCardTargets = function (card) {
-        var targets = canvas.tokens.controlled.filter(function (t) { return !!t.actor; });
+    static _getChatCardTargets(card) {
+        let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
         //@ts-expect-error
         if (!targets.length && game.user.character)
             targets = targets.concat(game.user.character.getActiveTokens());
         if (!targets.length)
             ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
         return targets;
-    };
+    }
     /*showRollDetail(event){
       event.preventDefault();
       const elem = event.currentTarget;
       const
     }*/
     //@ts-expect-error
-    ARd20Item.prototype.displayCard = function (_a) {
-        var _b, _c;
-        var _d = _a === void 0 ? {} : _a, rollMode = _d.rollMode, _e = _d.createMessage, createMessage = _e === void 0 ? true : _e, _f = _d.hasAttack, hasAttack = _f === void 0 ? Boolean() : _f, _g = _d.hasDamage, hasDamage = _g === void 0 ? Boolean() : _g, _h = _d.targets, targets = _h === void 0 ? [] : _h, _j = _d.mRoll, mRoll = _j === void 0 ? Boolean() : _j;
-        return __awaiter(this, void 0, void 0, function () {
-            var atk, dc, atkHTML, dmgHTML, result, hit, dmg, dieResultCss, def, token, atkRoll, _k, dmgRoll, _l, _i, _m, _o, key, target, _p, _q, _r, _s, _t, _u, _v, d20, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, templateState, templateData, html, chatData;
-            return __generator(this, function (_9) {
-                switch (_9.label) {
-                    case 0:
-                        atk = {};
-                        dc = {};
-                        atkHTML = {};
-                        dmgHTML = {};
-                        result = {};
-                        hit = {};
-                        dmg = {};
-                        dieResultCss = {};
-                        def = (_c = (_b = this.data.data.attack) === null || _b === void 0 ? void 0 : _b.def) !== null && _c !== void 0 ? _c : "reflex";
-                        token = this.actor.token;
-                        if (!(targets.length !== 0)) return [3 /*break*/, 27];
-                        if (!hasAttack) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.rollAttack(mRoll, { canMult: true })];
-                    case 1:
-                        _k = _9.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        _k = null;
-                        _9.label = 3;
-                    case 3:
-                        atkRoll = _k;
-                        if (!(hasDamage && !hasAttack)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, this.rollDamage({ canMult: true })];
-                    case 4:
-                        _l = _9.sent();
-                        return [3 /*break*/, 6];
-                    case 5:
-                        _l = null;
-                        _9.label = 6;
-                    case 6:
-                        dmgRoll = _l;
-                        _i = 0, _m = Object.entries(targets);
-                        _9.label = 7;
-                    case 7:
-                        if (!(_i < _m.length)) return [3 /*break*/, 26];
-                        _o = _m[_i], key = _o[0], target = _o[1];
-                        if (!atkRoll) return [3 /*break*/, 16];
-                        mRoll = atkRoll.options.mRoll;
-                        //@ts-expect-error
-                        dc[key] = target.actor.data.data.defences.stats[def].value;
-                        //@ts-expect-error
-                        _p = atk;
-                        _q = key;
-                        if (!hasAttack) return [3 /*break*/, 11];
-                        if (!(Object.keys(atk).length === 0 || !mRoll)) return [3 /*break*/, 8];
-                        _s = atkRoll;
-                        return [3 /*break*/, 10];
-                    case 8: return [4 /*yield*/, atkRoll.reroll()];
-                    case 9:
-                        _s = _9.sent();
-                        _9.label = 10;
-                    case 10:
-                        _r = (_s);
-                        return [3 /*break*/, 12];
-                    case 11:
-                        _r = null;
-                        _9.label = 12;
-                    case 12:
-                        //@ts-expect-error
-                        _p[_q] = _r;
-                        //@ts-expect-error
-                        console.log(atk[key]);
-                        //@ts-expect-error
-                        _t = atkHTML;
-                        _u = key;
-                        if (!hasAttack) return [3 /*break*/, 14];
-                        return [4 /*yield*/, atk[key].render()];
-                    case 13:
-                        _v = _9.sent();
-                        return [3 /*break*/, 15];
-                    case 14:
-                        _v = null;
-                        _9.label = 15;
-                    case 15:
-                        //@ts-expect-error
-                        _t[_u] = _v;
-                        d20 = atk[key] ? atk[key].terms[0] : null;
-                        //@ts-expect-error
-                        atk[key] = atk[key].total;
-                        //@ts-expect-error
-                        dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
-                        //@ts-expect-error
-                        result[key] = atk[key] > dc[key] ? "hit" : "miss";
-                        //@ts-expect-error
-                        hit[key] = result[key] === "hit" ? true : false;
-                        return [3 /*break*/, 25];
-                    case 16:
-                        mRoll = dmgRoll.options.mRoll;
-                        //@ts-expect-error
-                        _w = dmg;
-                        _x = key;
-                        if (!hasDamage) return [3 /*break*/, 20];
-                        if (!(Object.keys(dmg).length === 0 || !mRoll)) return [3 /*break*/, 17];
-                        _z = dmgRoll;
-                        return [3 /*break*/, 19];
-                    case 17: return [4 /*yield*/, dmgRoll.reroll()];
-                    case 18:
-                        _z = _9.sent();
-                        _9.label = 19;
-                    case 19:
-                        _y = (_z);
-                        return [3 /*break*/, 21];
-                    case 20:
-                        _y = null;
-                        _9.label = 21;
-                    case 21:
-                        //@ts-expect-error
-                        _w[_x] = _y;
-                        //@ts-expect-error
-                        _0 = dmgHTML;
-                        _1 = key;
-                        if (!hasDamage) return [3 /*break*/, 23];
-                        return [4 /*yield*/, dmg[key].render()];
-                    case 22:
-                        _2 = _9.sent();
-                        return [3 /*break*/, 24];
-                    case 23:
-                        _2 = null;
-                        _9.label = 24;
-                    case 24:
-                        //@ts-expect-error
-                        _0[_1] = _2;
-                        _9.label = 25;
-                    case 25:
-                        _i++;
-                        return [3 /*break*/, 7];
-                    case 26: return [3 /*break*/, 34];
-                    case 27:
-                        //@ts-expect-error
-                        _3 = atk;
-                        _4 = 0;
-                        if (!hasAttack) return [3 /*break*/, 29];
-                        return [4 /*yield*/, this.rollAttack(mRoll)];
-                    case 28:
-                        _5 = _9.sent();
-                        return [3 /*break*/, 30];
-                    case 29:
-                        _5 = null;
-                        _9.label = 30;
-                    case 30:
-                        //@ts-expect-error
-                        _3[_4] = _5;
-                        //@ts-expect-error
-                        mRoll = atk[0] ? atk[0].options.mRoll : false;
-                        //@ts-expect-error
-                        _6 = atkHTML;
-                        _7 = 0;
-                        if (!hasAttack) return [3 /*break*/, 32];
-                        return [4 /*yield*/, atk[0].render()];
-                    case 31:
-                        _8 = _9.sent();
-                        return [3 /*break*/, 33];
-                    case 32:
-                        _8 = null;
-                        _9.label = 33;
-                    case 33:
-                        //@ts-expect-error
-                        _6[_7] = _8;
-                        _9.label = 34;
-                    case 34:
-                        templateState = targets.size !== 0 ? (mRoll ? "multiAttack" : "oneAttack") : "noTarget";
-                        templateData = {
-                            //@ts-expect-error
-                            actor: this.actor.data,
-                            tokenId: (token === null || token === void 0 ? void 0 : token.uuid) || null,
-                            item: this.data,
-                            data: this.getChatData(),
-                            //@ts-expect-error
-                            labels: this.labels,
-                            hasAttack: hasAttack,
-                            hasDamage: hasDamage,
-                            atk: atk,
-                            atkHTML: atkHTML,
-                            targets: targets,
-                            //@ts-expect-error
-                            owner: this.actor.isOwner || game.user.isGM,
-                            dc: dc,
-                            result: result,
-                            hit: hit,
-                            dmgHTML: dmgHTML,
-                            dieResultCss: dieResultCss,
-                        };
-                        return [4 /*yield*/, renderTemplate("systems/ard20/templates/chat/item-card-multiAttack.html", templateData)];
-                    case 35:
-                        html = _9.sent();
-                        chatData = {
-                            user: game.user.data._id,
-                            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-                            content: html,
-                            //@ts-expect-error
-                            flavor: this.data.data.chatFlavor || this.name,
-                            //@ts-expect-error
-                            speaker: ChatMessage.getSpeaker({ actor: this.actor, token: token }),
-                            flags: { "core.canPopout": true },
-                        };
-                        // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
-                        /*
-                        if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
-                          chatData.flags["ard20.itemData"] = this.data;
-                        }*/
-                        // Apply the roll mode to adjust message visibility
-                        ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode"));
-                        // Create the Chat Message or return its data
-                        return [2 /*return*/, createMessage ? ChatMessage.create(chatData) : chatData];
+    async displayCard({ rollMode, createMessage = true, hasAttack = Boolean(), hasDamage = Boolean(), targets = [], mRoll = Boolean() } = {}) {
+        // Render the chat card template
+        let atk = {};
+        let dc = {};
+        let atkHTML = {};
+        let dmgHTML = {};
+        let result = {};
+        let hit = {};
+        let dmg = {};
+        let dieResultCss = {};
+        //@ts-expect-error
+        const def = this.data.data.attack?.def ?? "reflex";
+        const token = this.actor.token;
+        if (targets.length !== 0) {
+            //@ts-expect-error
+            let atkRoll = hasAttack ? await this.rollAttack(mRoll, { canMult: true }) : null;
+            let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage({ canMult: true }) : null;
+            for (let [key, target] of Object.entries(targets)) {
+                if (atkRoll) {
+                    mRoll = atkRoll.options.mRoll;
+                    //@ts-expect-error
+                    dc[key] = target.actor.data.data.defences.stats[def].value;
+                    //@ts-expect-error
+                    atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
+                    //@ts-expect-error
+                    console.log(atk[key]);
+                    //@ts-expect-error
+                    atkHTML[key] = hasAttack ? await atk[key].render() : null;
+                    //@ts-expect-error
+                    let d20 = atk[key] ? atk[key].terms[0] : null;
+                    //@ts-expect-error
+                    atk[key] = atk[key].total;
+                    //@ts-expect-error
+                    dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
+                    //@ts-expect-error
+                    result[key] = atk[key] > dc[key] ? "hit" : "miss";
+                    //@ts-expect-error
+                    hit[key] = result[key] === "hit" ? true : false;
                 }
-            });
-        });
-    };
+                else {
+                    mRoll = dmgRoll.options.mRoll;
+                    //@ts-expect-error
+                    dmg[key] = hasDamage ? (Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : await dmgRoll.reroll()) : null;
+                    //@ts-expect-error
+                    dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
+                }
+            }
+        }
+        else {
+            //@ts-expect-error
+            atk[0] = hasAttack ? await this.rollAttack(mRoll) : null;
+            //@ts-expect-error
+            mRoll = atk[0] ? atk[0].options.mRoll : false;
+            //@ts-expect-error
+            atkHTML[0] = hasAttack ? await atk[0].render() : null;
+        }
+        //@ts-expect-error
+        let templateState = targets.size !== 0 ? (mRoll ? "multiAttack" : "oneAttack") : "noTarget";
+        const templateData = {
+            //@ts-expect-error
+            actor: this.actor.data,
+            tokenId: token?.uuid || null,
+            item: this.data,
+            data: this.getChatData(),
+            //@ts-expect-error
+            labels: this.labels,
+            hasAttack,
+            hasDamage,
+            atk,
+            atkHTML,
+            targets,
+            //@ts-expect-error
+            owner: this.actor.isOwner || game.user.isGM,
+            dc,
+            result,
+            hit,
+            dmgHTML,
+            dieResultCss,
+        };
+        const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData);
+        // Create the ChatMessage data object
+        const chatData = {
+            user: game.user.data._id,
+            type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            content: html,
+            //@ts-expect-error
+            flavor: this.data.data.chatFlavor || this.name,
+            //@ts-expect-error
+            speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
+            flags: { "core.canPopout": true },
+        };
+        // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
+        /*
+        if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
+          chatData.flags["ard20.itemData"] = this.data;
+        }*/
+        // Apply the roll mode to adjust message visibility
+        ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode"));
+        // Create the Chat Message or return its data
+        return createMessage ? ChatMessage.create(chatData) : chatData;
+    }
     /**
      * Prepare an object of chat data used to display a card for the Item in the chat log.
      * @param {object} htmlOptions    Options used by the TextEditor.enrichHTML function.
      * @returns {object}              An object of chat data to render.
      */
-    ARd20Item.prototype.getChatData = function (htmlOptions) {
-        if (htmlOptions === void 0) { htmlOptions = {}; }
-        var data = foundry.utils.deepClone(this.data.data);
+    getChatData(htmlOptions = {}) {
+        const data = foundry.utils.deepClone(this.data.data);
         // Rich text description
         //data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
         // Item type specific properties
-        var props = [];
+        const props = [];
         // Equipment properties
         /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
           /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
@@ -882,7 +627,7 @@ var ARd20Item = /** @class */ (function (_super) {
       data.properties = props.filter((p) => !!p);
       */
         return data;
-    };
+    }
     /* -------------------------------------------- */
     /**
      * Prepare chat card data for weapon type items.
@@ -899,85 +644,69 @@ var ARd20Item = /** @class */ (function (_super) {
      * @param {object} options        Roll options which are configured and provided to the d20Roll function
      * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
      */
-    ARd20Item.prototype.rollAttack = function (mRoll, canMult, options) {
-        var _a;
-        if (mRoll === void 0) { mRoll = Boolean(); }
-        if (canMult === void 0) { canMult = Boolean(); }
-        if (options === void 0) { options = {}; }
-        return __awaiter(this, void 0, void 0, function () {
-            var itemData, flags, title, _b, parts, rollData, targets, rollConfig, roll;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        console.log(canMult);
-                        itemData = this.data.data;
-                        flags = this.actor.data.flags.ard20 || {};
-                        title = "".concat(this.name, " - ").concat(game.i18n.localize("ARd20.AttackRoll"));
-                        _b = this.getAttackToHit(), parts = _b.parts, rollData = _b.rollData;
-                        targets = game.user.targets;
-                        //@ts-expect-error
-                        if (((_a = options.parts) === null || _a === void 0 ? void 0 : _a.length) > 0) {
-                            //@ts-expect-error
-                            parts.push.apply(parts, options.parts);
-                        }
-                        rollConfig = {
-                            parts: parts,
-                            actor: this.actor,
-                            data: rollData,
-                            title: title,
-                            flavor: title,
-                            dialogOptions: {
-                                width: 400,
-                            },
-                            chatMessage: true,
-                            options: {
-                                create: false,
-                            },
-                            targetValue: targets,
-                            canMult: canMult,
-                            mRoll: mRoll,
-                        };
-                        //@ts-expect-error
-                        rollConfig = mergeObject(rollConfig, options);
-                        return [4 /*yield*/, (0, dice_js_1.d20Roll)(rollConfig)];
-                    case 1:
-                        roll = _c.sent();
-                        if (roll === false)
-                            return [2 /*return*/, null];
-                        return [2 /*return*/, roll];
-                }
-            });
-        });
-    };
-    ARd20Item.prototype.rollDamage = function (_a) {
-        var _b;
-        var _c = _a === void 0 ? {} : _a, _d = _c.critical, critical = _d === void 0 ? false : _d, _e = _c.event, event = _e === void 0 ? null : _e, _f = _c.spellLevel, spellLevel = _f === void 0 ? null : _f, _g = _c.versatile, versatile = _g === void 0 ? false : _g, _h = _c.options, options = _h === void 0 ? {} : _h, _j = _c.mRoll, mRoll = _j === void 0 ? Boolean() : _j, _k = _c.canMult, canMult = _k === void 0 ? Boolean() : _k;
+    async rollAttack(mRoll = Boolean(), canMult = Boolean(), options = {}) {
         console.log(canMult);
-        var iData = this.data.data;
-        var aData = this.actor.data.data;
+        const itemData = this.data.data;
         //@ts-expect-error
-        var parts = iData.damage.current.parts.map(function (d) { return d[0]; });
+        const flags = this.actor.data.flags.ard20 || {};
+        let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
+        const { parts, rollData } = this.getAttackToHit();
+        const targets = game.user.targets;
         //@ts-expect-error
-        var damType = iData.damage.current.parts.map(function (d) {
-            return d[1].map(function (c, ind) {
-                //@ts-expect-error
-                var a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
-                //@ts-expect-error
-                var b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
-                var obj = { key: ind, label: "".concat(a, " ").concat(b) };
-                return obj;
-            });
-        });
+        if (options.parts?.length > 0) {
+            //@ts-expect-error
+            parts.push(...options.parts);
+        }
+        let rollConfig = {
+            parts: parts,
+            actor: this.actor,
+            data: rollData,
+            title: title,
+            flavor: title,
+            dialogOptions: {
+                width: 400,
+            },
+            chatMessage: true,
+            options: {
+                create: false,
+            },
+            targetValue: targets,
+            canMult: canMult,
+            mRoll: mRoll,
+        };
         //@ts-expect-error
-        options.damageType = iData.damage.current.parts.map(function (d) { return d[1]; });
-        var hasAttack = false;
-        var hasDamage = true;
+        rollConfig = mergeObject(rollConfig, options);
         //@ts-expect-error
-        var rollData = this.getRollData(hasAttack, hasDamage);
-        var rollConfig = {
+        const roll = await d20Roll(rollConfig);
+        if (roll === false)
+            return null;
+        return roll;
+    }
+    rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean() } = {}) {
+        console.log(canMult);
+        const iData = this.data.data;
+        const aData = this.actor.data.data;
+        //@ts-expect-error
+        const parts = iData.damage.current.parts.map((d) => d[0]);
+        //@ts-expect-error
+        const damType = iData.damage.current.parts.map((d) => d[1].map((c, ind) => {
+            //@ts-expect-error
+            let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
+            //@ts-expect-error
+            let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
+            let obj = { key: ind, label: `${a} ${b}` };
+            return obj;
+        }));
+        //@ts-expect-error
+        options.damageType = iData.damage.current.parts.map((d) => d[1]);
+        const hasAttack = false;
+        const hasDamage = true;
+        //@ts-expect-error
+        const rollData = this.getRollData(hasAttack, hasDamage);
+        const rollConfig = {
             actor: this.actor,
             //@ts-expect-error
-            critical: (_b = critical !== null && critical !== void 0 ? critical : event === null || event === void 0 ? void 0 : event.altkey) !== null && _b !== void 0 ? _b : false,
+            critical: critical ?? event?.altkey ?? false,
             data: rollData,
             event: event,
             parts: parts,
@@ -986,8 +715,8 @@ var ARd20Item = /** @class */ (function (_super) {
             mRoll: mRoll,
         };
         //@ts-expect-error
-        return (0, dice_js_1.damageRoll)(mergeObject(rollConfig, options));
-    };
+        return damageRoll(mergeObject(rollConfig, options));
+    }
     /**
      * Update a label to the Item detailing its total to hit bonus.
      * Sources:
@@ -998,16 +727,16 @@ var ARd20Item = /** @class */ (function (_super) {
      *
      * @returns {{rollData: object, parts: string[]}|null}  Data used in the item's Attack roll.
      */
-    ARd20Item.prototype.getAttackToHit = function () {
-        var itemData = this.data.data;
-        var hasAttack = true;
-        var hasDamage = false;
+    getAttackToHit() {
+        const itemData = this.data.data;
+        const hasAttack = true;
+        const hasDamage = false;
         //if (!this.hasAttack || !itemData) return;
         //@ts-expect-error
-        var rollData = this.getRollData(hasAttack, hasDamage);
+        const rollData = this.getRollData(hasAttack, hasDamage);
         console.log("ROLL DATA", rollData);
         // Define Roll bonuses
-        var parts = [];
+        const parts = [];
         // Include the item's innate attack bonus as the initial value and label
         //@ts-expect-error
         if (itemData.attackBonus) {
@@ -1018,7 +747,7 @@ var ARd20Item = /** @class */ (function (_super) {
         }
         // Take no further action for un-owned items
         if (!this.isOwned)
-            return { rollData: rollData, parts: parts };
+            return { rollData, parts };
         // Ability score modifier
         parts.push("@prof", "@mod");
         /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
@@ -1051,14 +780,12 @@ var ARd20Item = /** @class */ (function (_super) {
         */
         // Condense the resulting attack bonus formula into a simplified label
         //@ts-expect-error
-        var roll = new Roll(parts.join("+"), rollData);
+        const roll = new Roll(parts.join("+"), rollData);
         //@ts-expect-error
-        var formula = (0, dice_js_1.simplifyRollFormula)(roll.formula);
+        const formula = simplifyRollFormula(roll.formula);
         //@ts-expect-error
-        this.labels.toHit = !/^[+-]/.test(formula) ? "+ ".concat(formula) : formula;
+        this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula;
         // Update labels and return the prepared roll data
-        return { rollData: rollData, parts: parts };
-    };
-    return ARd20Item;
-}(Item));
-exports.ARd20Item = ARd20Item;
+        return { rollData, parts };
+    }
+}

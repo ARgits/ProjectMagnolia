@@ -1,28 +1,25 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.addChatMessageContextOptions = exports.displayChatActionButtons = exports.highlightCriticalSuccessFailure = void 0;
 /**
  * Highlight critical success or failure on d20 rolls
  */
 //@ts-expect-error
-var highlightCriticalSuccessFailure = function (message, html, data) {
+export const highlightCriticalSuccessFailure = function (message, html, data) {
     if (!message.isRoll || !message.isContentVisible)
         return;
     // Highlight rolls where the first part is a d20 roll
-    var roll = message.roll;
+    const roll = message.roll;
     if (!roll.dice.length)
         return;
-    var d = roll.dice[0];
+    const d = roll.dice[0];
     // Ensure it is an un-modified d20 roll
-    var isD20 = (d.faces === 20) && (d.values.length === 1);
+    const isD20 = (d.faces === 20) && (d.values.length === 1);
     if (!isD20)
         return;
-    var isModifiedRoll = ("success" in d.results[0]) || d.options.marginSuccess || d.options.marginFailure;
+    const isModifiedRoll = ("success" in d.results[0]) || d.options.marginSuccess || d.options.marginFailure;
     if (isModifiedRoll)
         return;
     // Highlight successes and failures
-    var critical = d.options.critical || 20;
-    var fumble = d.options.fumble || 1;
+    const critical = d.options.critical || 20;
+    const fumble = d.options.fumble || 1;
     if (d.total >= critical)
         html.find(".dice-total").addClass("critical");
     else if (d.total <= fumble)
@@ -34,35 +31,33 @@ var highlightCriticalSuccessFailure = function (message, html, data) {
             html.find(".dice-total").addClass("failure");
     }
 };
-exports.highlightCriticalSuccessFailure = highlightCriticalSuccessFailure;
 /* -------------------------------------------- */
 /**
  * Optionally hide the display of chat card action buttons which cannot be performed by the user
  */
 //@ts-expect-error
-var displayChatActionButtons = function (message, html, data) {
-    var chatCard = html.find(".ard20.chat-card");
+export const displayChatActionButtons = function (message, html, data) {
+    const chatCard = html.find(".ard20.chat-card");
     if (chatCard.length > 0) {
-        var flavor = html.find(".flavor-text");
+        const flavor = html.find(".flavor-text");
         if (flavor.text() === html.find(".item-name").text())
             flavor.remove();
         // If the user is the message author or the actor owner, proceed
-        var actor = game.actors.get(data.message.speaker.actor);
+        let actor = game.actors.get(data.message.speaker.actor);
         if (actor && actor.isOwner)
             return;
         else if (game.user.isGM || (data.author.id === game.user.id))
             return;
         // Otherwise conceal action buttons except for saving throw
-        var buttons = chatCard.find("button[data-action]");
+        const buttons = chatCard.find("button[data-action]");
         //@ts-expect-error
-        buttons.each(function (i, btn) {
+        buttons.each((i, btn) => {
             if (btn.dataset.action === "save")
                 return;
             btn.style.display = "none";
         });
     }
 };
-exports.displayChatActionButtons = displayChatActionButtons;
 /* -------------------------------------------- */
 /**
  * This function is used to hook into the Chat Log context menu to add additional options to each message
@@ -73,12 +68,11 @@ exports.displayChatActionButtons = displayChatActionButtons;
  *
  * @return {Array}              The extended options Array including new context choices
  */
-var addChatMessageContextOptions = function (html, options) {
-    var canApply = function (li) {
-        var _a;
+export const addChatMessageContextOptions = function (html, options) {
+    let canApply = (li) => {
         //@ts-expect-error
-        var message = game.messages.get(li.data("messageId"));
-        return (message === null || message === void 0 ? void 0 : message.isRoll) && (message === null || message === void 0 ? void 0 : message.isContentVisible) && ((_a = canvas.tokens) === null || _a === void 0 ? void 0 : _a.controlled.length);
+        const message = game.messages.get(li.data("messageId"));
+        return message?.isRoll && message?.isContentVisible && canvas.tokens?.controlled.length;
     };
     options.push({
         //@ts-expect-error
@@ -88,29 +82,28 @@ var addChatMessageContextOptions = function (html, options) {
         //@ts-expect-error
         condition: canApply,
         //@ts-expect-error
-        callback: function (li) { return applyChatCardDamage(li, 1); }
+        callback: li => applyChatCardDamage(li, 1)
     }, {
         name: game.i18n.localize("ARd20.ChatContextHealing"),
         icon: '<i class="fas fa-user-plus"></i>',
         condition: canApply,
         //@ts-expect-error
-        callback: function (li) { return applyChatCardDamage(li, -1); }
+        callback: li => applyChatCardDamage(li, -1)
     }, {
         name: game.i18n.localize("ARd20.ChatContextDoubleDamage"),
         icon: '<i class="fas fa-user-injured"></i>',
         condition: canApply,
         //@ts-expect-error
-        callback: function (li) { return applyChatCardDamage(li, 2); }
+        callback: li => applyChatCardDamage(li, 2)
     }, {
         name: game.i18n.localize("ARd20.ChatContextHalfDamage"),
         icon: '<i class="fas fa-user-shield"></i>',
         condition: canApply,
         //@ts-expect-error
-        callback: function (li) { return applyChatCardDamage(li, 0.5); }
+        callback: li => applyChatCardDamage(li, 0.5)
     });
     return options;
 };
-exports.addChatMessageContextOptions = addChatMessageContextOptions;
 /* -------------------------------------------- */
 /**
  * Apply rolled dice damage to the token or tokens which are currently controlled.
@@ -122,10 +115,10 @@ exports.addChatMessageContextOptions = addChatMessageContextOptions;
  */
 function applyChatCardDamage(li, multiplier) {
     //@ts-expect-error
-    var message = game.messages.get(li.data("messageId"));
-    var roll = message.roll;
-    return Promise.all(canvas.tokens.controlled.map(function (t) {
-        var a = t.actor;
+    const message = game.messages.get(li.data("messageId"));
+    const roll = message.roll;
+    return Promise.all(canvas.tokens.controlled.map(t => {
+        const a = t.actor;
         //@ts-expect-error
         return a.applyDamage(roll.total, multiplier);
     }));

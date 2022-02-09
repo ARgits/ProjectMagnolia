@@ -1,17 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.prepareActiveEffectCategories = exports.onManageActiveEffect = void 0;
 /**
  * Manage Active Effect instances through the Actor Sheet via effect control buttons.
  * @param {MouseEvent} event      The left-click event on the effect control
  * @param {Actor|Item} owner      The owning entity which manages this effect
  */
-function onManageActiveEffect(event, owner) {
+export function onManageActiveEffect(event, owner) {
     event.preventDefault();
-    var a = event.currentTarget;
+    const a = event.currentTarget;
     //@ts-expect-error
-    var li = a.closest("li");
-    var effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
+    const li = a.closest("li");
+    const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
     //@ts-expect-error
     switch (a.dataset.action) {
         case "create":
@@ -30,15 +27,14 @@ function onManageActiveEffect(event, owner) {
             return effect.update({ disabled: !effect.data.disabled });
     }
 }
-exports.onManageActiveEffect = onManageActiveEffect;
 /**
  * Prepare the data structure for Active Effects which are currently applied to an Actor or Item.
  * @param {ActiveEffect[]} effects    The array of Active Effect instances to prepare sheet data for
  * @return {object}                   Data for rendering
  */
-function prepareActiveEffectCategories(effects) {
+export function prepareActiveEffectCategories(effects) {
     // Define effect header categories
-    var categories = {
+    const categories = {
         temporary: {
             type: "temporary",
             label: "Temporary Effects",
@@ -56,8 +52,7 @@ function prepareActiveEffectCategories(effects) {
         }
     };
     // Iterate over active effects, classifying them into categories
-    for (var _i = 0, effects_1 = effects; _i < effects_1.length; _i++) {
-        var e = effects_1[_i];
+    for (let e of effects) {
         //@ts-expect-error
         e._getSourceName(); // Trigger a lookup for the source name
         //@ts-expect-error
@@ -72,4 +67,3 @@ function prepareActiveEffectCategories(effects) {
     }
     return categories;
 }
-exports.prepareActiveEffectCategories = prepareActiveEffectCategories;
