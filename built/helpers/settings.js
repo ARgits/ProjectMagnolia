@@ -53,36 +53,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerSystemSettings = void 0;
 var registerSystemSettings = function () {
-    game.settings.register('ard20', 'proficiencies', {
+    game.settings.register("ard20", "proficiencies", {
         scope: "world",
         config: false,
         default: {
             weapon: [
-                { name: "Punch Dagger", type: 'amb' },
-                { name: 'Whip Dagger', type: 'amb' },
-                { name: 'Gauntlet', type: 'amb' },
-                { name: 'Hidden Blade', type: 'amb' },
-                { name: 'Knucke Axe', type: 'amb' },
-                { name: 'Side Baton', type: 'amb' },
-                { name: 'Unarmed strike', type: 'amb' },
-                { name: 'Battle Axe', type: 'axe' },
-                { name: 'Great Axe', type: 'axe' },
-                { name: 'Handaxe', type: 'axe' },
-                { name: 'Hook Sword', type: 'axe' },
-                { name: 'Khopesh', type: 'axe' },
-                { name: 'Poleaxe', type: 'axe' },
-                { name: 'Tomahawk', type: 'axe' },
-                { name: 'Great club', type: 'blu' },
-                { name: 'Heavy club', type: 'blu' },
-                { name: 'Light Club', type: 'blu' }
+                { name: "Punch Dagger", type: "amb" },
+                { name: "Whip Dagger", type: "amb" },
+                { name: "Gauntlet", type: "amb" },
+                { name: "Hidden Blade", type: "amb" },
+                { name: "Knucke Axe", type: "amb" },
+                { name: "Side Baton", type: "amb" },
+                { name: "Unarmed strike", type: "amb" },
+                { name: "Battle Axe", type: "axe" },
+                { name: "Great Axe", type: "axe" },
+                { name: "Handaxe", type: "axe" },
+                { name: "Hook Sword", type: "axe" },
+                { name: "Khopesh", type: "axe" },
+                { name: "Poleaxe", type: "axe" },
+                { name: "Tomahawk", type: "axe" },
+                { name: "Great club", type: "blu" },
+                { name: "Heavy club", type: "blu" },
+                { name: "Light Club", type: "blu" },
             ],
             armor: [],
             tools: [],
-            skills: []
+            skills: [],
         },
         onChange: function (value) {
-            console.log('Настройка изменилась ', value);
-        }
+            console.log("Настройка изменилась ", value);
+        },
     });
     game.settings.registerMenu("ard20", "gearProfManage", {
         name: "SETTINGS.ProfManage",
@@ -90,26 +90,25 @@ var registerSystemSettings = function () {
         scope: "world",
         type: ProfFormApp,
         restricted: false,
-        icon: "fab fa-buffer"
+        icon: "fab fa-buffer",
     });
-    game.settings.register('ard20', 'feat', {
-        scope: 'world',
+    game.settings.register("ard20", "feat", {
+        scope: "world",
         config: false,
         default: {
             packs: [],
-            folders: []
+            folders: [],
         },
-        type: Object,
         onChange: function (value) {
-            console.log('Настройка изменилась', value);
-        }
+            console.log("Настройка изменилась", value);
+        },
     });
-    game.settings.registerMenu('ard20', 'featManage', {
-        name: 'SETTINGS.FeatureManage',
-        label: 'SETTINGS.FeatureManage',
-        scope: 'world',
+    game.settings.registerMenu("ard20", "featManage", {
+        name: "SETTINGS.FeatureManage",
+        label: "SETTINGS.FeatureManage",
+        scope: "world",
         type: FeatFormApp,
-        restricted: false
+        restricted: false,
     });
 };
 exports.registerSystemSettings = registerSystemSettings;
@@ -120,33 +119,37 @@ var ProfFormApp = /** @class */ (function (_super) {
     }
     Object.defineProperty(ProfFormApp, "defaultOptions", {
         get: function () {
+            //@ts-expect-error
             return foundry.utils.mergeObject(_super.defaultOptions, {
                 classes: ["ard20"],
-                title: 'Armor/Weapon Proficiencies',
-                template: 'systems/ard20/templates/app/prof-settings.html',
-                id: 'prof-settings',
+                title: "Armor/Weapon Proficiencies",
+                template: "systems/ard20/templates/app/prof-settings.html",
+                id: "prof-settings",
                 width: 600,
-                height: 'auto',
+                height: "auto",
                 submitOnChange: true,
                 closeOnSubmit: false,
-                tabs: [{ navSelector: '.sheet-tabs', contentSelector: '.sheet-body', initial: 'weapons' }]
+                tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "weapons" }],
             });
         },
         enumerable: false,
         configurable: true
     });
-    ProfFormApp.prototype.getData = function (options) {
+    //@ts-expect-error
+    ProfFormApp.prototype.getData = function () {
         var sheetData = {
-            proficiencies: game.settings.get('ard20', 'proficiencies'),
-            config: CONFIG.ARd20
+            proficiencies: game.settings.get("ard20", "proficiencies"),
+            config: CONFIG.ARd20,
         };
         return sheetData;
     };
+    //@ts-expect-error
     ProfFormApp.prototype.activateListeners = function (html) {
         _super.prototype.activateListeners.call(this, html);
-        html.find('.add').click(this._onAdd.bind(this));
-        html.find('.minus').click(this._Delete.bind(this));
+        html.find(".add").click(this._onAdd.bind(this));
+        html.find(".minus").click(this._Delete.bind(this));
     };
+    //@ts-expect-error
     ProfFormApp.prototype._onAdd = function (event) {
         return __awaiter(this, void 0, void 0, function () {
             var proficiencies;
@@ -154,9 +157,9 @@ var ProfFormApp = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         event.preventDefault();
-                        proficiencies = game.settings.get('ard20', 'proficiencies');
-                        proficiencies.weapon.push({ name: 'name', type: 'amb' });
-                        return [4 /*yield*/, game.settings.set('ard20', 'proficiencies', proficiencies)];
+                        proficiencies = game.settings.get("ard20", "proficiencies");
+                        proficiencies.weapon.push({ name: "name", type: "amb" });
+                        return [4 /*yield*/, game.settings.set("ard20", "proficiencies", proficiencies)];
                     case 1:
                         _a.sent();
                         this.render();
@@ -165,6 +168,7 @@ var ProfFormApp = /** @class */ (function (_super) {
             });
         });
     };
+    //@ts-expect-error
     ProfFormApp.prototype._Delete = function (event) {
         return __awaiter(this, void 0, void 0, function () {
             var proficiencies;
@@ -172,9 +176,9 @@ var ProfFormApp = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         event.preventDefault();
-                        proficiencies = game.settings.get('ard20', 'proficiencies');
+                        proficiencies = game.settings.get("ard20", "proficiencies");
                         proficiencies.weapon.splice(event.currentTarget.dataset.key, 1);
-                        return [4 /*yield*/, game.settings.set('ard20', 'proficiencies', proficiencies)];
+                        return [4 /*yield*/, game.settings.set("ard20", "proficiencies", proficiencies)];
                     case 1:
                         _a.sent();
                         this.render();
@@ -183,13 +187,14 @@ var ProfFormApp = /** @class */ (function (_super) {
             });
         });
     };
+    //@ts-expect-error
     ProfFormApp.prototype._updateObject = function (event, formData) {
         return __awaiter(this, void 0, void 0, function () {
             var proficiencies, dirty, _i, _a, _b, fieldName, value, _c, type, index, propertyName;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        proficiencies = game.settings.get('ard20', 'proficiencies');
+                        proficiencies = game.settings.get("ard20", "proficiencies");
                         console.log(formData);
                         dirty = false;
                         _i = 0, _a = Object.entries(foundry.utils.flattenObject(formData));
@@ -197,14 +202,16 @@ var ProfFormApp = /** @class */ (function (_super) {
                     case 1:
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         _b = _a[_i], fieldName = _b[0], value = _b[1];
-                        _c = fieldName.split('.'), type = _c[0], index = _c[1], propertyName = _c[2];
+                        _c = fieldName.split("."), type = _c[0], index = _c[1], propertyName = _c[2];
+                        //@ts-expect-error
                         if (proficiencies[type][index][propertyName] !== value) {
                             //log({index, propertyName, value});
+                            //@ts-expect-error
                             proficiencies[type][index][propertyName] = value;
                             dirty = dirty || true;
                         }
                         if (!dirty) return [3 /*break*/, 3];
-                        return [4 /*yield*/, game.settings.set('ard20', 'proficiencies', proficiencies)];
+                        return [4 /*yield*/, game.settings.set("ard20", "proficiencies", proficiencies)];
                     case 2:
                         _d.sent();
                         _d.label = 3;
@@ -218,6 +225,7 @@ var ProfFormApp = /** @class */ (function (_super) {
     };
     return ProfFormApp;
 }(FormApplication));
+//@ts-expect-error
 var FeatFormApp = /** @class */ (function (_super) {
     __extends(FeatFormApp, _super);
     function FeatFormApp() {
@@ -225,13 +233,14 @@ var FeatFormApp = /** @class */ (function (_super) {
     }
     Object.defineProperty(FeatFormApp, "defaultOptions", {
         get: function () {
+            //@ts-expect-error
             return foundry.utils.mergeObject(_super.defaultOptions, {
                 classes: ["ard20"],
-                title: 'Features Management',
-                template: 'systems/ard20/templates/app/feat-settings.html',
-                id: 'feat-settings',
+                title: "Features Management",
+                template: "systems/ard20/templates/app/feat-settings.html",
+                id: "feat-settings",
                 width: 600,
-                height: 'auto',
+                height: "auto",
                 submitOnChange: true,
                 closeOnSubmit: false,
             });
@@ -239,17 +248,19 @@ var FeatFormApp = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
-    FeatFormApp.prototype.getData = function (options) {
+    FeatFormApp.prototype.getData = function () {
         var sheetData = {
-            feat: game.settings.get('ard20', 'feat')
+            feat: game.settings.get("ard20", "feat"),
         };
         return sheetData;
     };
+    //@ts-expect-error
     FeatFormApp.prototype.activateListeners = function (html) {
         _super.prototype.activateListeners.call(this, html);
-        html.find('.add').click(this._onAdd.bind(this));
-        html.find('.minus').click(this._Delete.bind(this));
+        html.find(".add").click(this._onAdd.bind(this));
+        html.find(".minus").click(this._Delete.bind(this));
     };
+    //@ts-expect-error
     FeatFormApp.prototype._onAdd = function (event) {
         return __awaiter(this, void 0, void 0, function () {
             var feat, button, _a;
@@ -257,23 +268,23 @@ var FeatFormApp = /** @class */ (function (_super) {
                 switch (_b.label) {
                     case 0:
                         event.preventDefault();
-                        feat = game.settings.get('ard20', 'feat');
+                        feat = game.settings.get("ard20", "feat");
                         button = event.currentTarget;
                         _a = button.dataset.type;
                         switch (_a) {
-                            case 'pack': return [3 /*break*/, 1];
-                            case 'folder': return [3 /*break*/, 3];
+                            case "pack": return [3 /*break*/, 1];
+                            case "folder": return [3 /*break*/, 3];
                         }
                         return [3 /*break*/, 5];
                     case 1:
-                        feat.packs.push('new compendium');
-                        return [4 /*yield*/, game.settings.set('ard20', 'feat', feat)];
+                        feat.packs.push("new compendium");
+                        return [4 /*yield*/, game.settings.set("ard20", "feat", feat)];
                     case 2:
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 3:
-                        feat.folders.push('new folder');
-                        return [4 /*yield*/, game.settings.set('ard20', 'feat', feat)];
+                        feat.folders.push("new folder");
+                        return [4 /*yield*/, game.settings.set("ard20", "feat", feat)];
                     case 4:
                         _b.sent();
                         _b.label = 5;
@@ -284,6 +295,7 @@ var FeatFormApp = /** @class */ (function (_super) {
             });
         });
     };
+    //@ts-expect-error
     FeatFormApp.prototype._Delete = function (event) {
         return __awaiter(this, void 0, void 0, function () {
             var feat, button, _a;
@@ -291,23 +303,23 @@ var FeatFormApp = /** @class */ (function (_super) {
                 switch (_b.label) {
                     case 0:
                         event.preventDefault();
-                        feat = game.settings.get('ard20', 'feat');
+                        feat = game.settings.get("ard20", "feat");
                         button = event.currentTarget;
                         _a = button.dataset.type;
                         switch (_a) {
-                            case 'pack': return [3 /*break*/, 1];
-                            case 'folder': return [3 /*break*/, 3];
+                            case "pack": return [3 /*break*/, 1];
+                            case "folder": return [3 /*break*/, 3];
                         }
                         return [3 /*break*/, 5];
                     case 1:
                         feat.packs.splice(button.dataset.key, 1);
-                        return [4 /*yield*/, game.settings.set('ard20', 'feat', feat)];
+                        return [4 /*yield*/, game.settings.set("ard20", "feat", feat)];
                     case 2:
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 3:
                         feat.folders.splice(button.dataset.key, 1);
-                        return [4 /*yield*/, game.settings.set('ard20', 'feat', feat)];
+                        return [4 /*yield*/, game.settings.set("ard20", "feat", feat)];
                     case 4:
                         _b.sent();
                         return [3 /*break*/, 5];
@@ -324,7 +336,7 @@ var FeatFormApp = /** @class */ (function (_super) {
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        feat = game.settings.get('ard20', 'feat');
+                        feat = game.settings.get("ard20", "feat");
                         console.log(formData);
                         dirty = false;
                         _i = 0, _a = Object.entries(foundry.utils.flattenObject(formData));
@@ -332,14 +344,16 @@ var FeatFormApp = /** @class */ (function (_super) {
                     case 1:
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         _b = _a[_i], fieldName = _b[0], value = _b[1];
-                        _c = fieldName.split('.'), type = _c[0], index = _c[1];
+                        _c = fieldName.split("."), type = _c[0], index = _c[1];
+                        //@ts-expect-error
                         if (feat[type][index] !== value) {
                             //log({index, propertyName, value});
+                            //@ts-expect-error
                             feat[type][index] = value;
                             dirty = dirty || true;
                         }
                         if (!dirty) return [3 /*break*/, 3];
-                        return [4 /*yield*/, game.settings.set('ard20', 'feat', feat)];
+                        return [4 /*yield*/, game.settings.set("ard20", "feat", feat)];
                     case 2:
                         _d.sent();
                         _d.label = 3;

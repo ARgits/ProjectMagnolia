@@ -1,4 +1,15 @@
 "use strict";
+/**
+ * A type of Roll specific to a damage (or healing) roll in the 5e system.
+ * @param {string} formula                       The string formula to parse
+ * @param {object} data                          The data object against which to parse attributes within the formula
+ * @param {object} [options={}]                  Extra optional arguments which describe or modify the DamageRoll
+ * @param {number} [options.criticalBonusDice=0]      A number of bonus damage dice that are added for critical hits
+ * @param {number} [options.criticalMultiplier=2]     A critical hit multiplier which is applied to critical hits
+ * @param {boolean} [options.multiplyNumeric=false]   Multiply numeric terms by the critical multiplier
+ * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
+ *
+ */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -51,22 +62,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * A type of Roll specific to a damage (or healing) roll in the 5e system.
- * @param {string} formula                       The string formula to parse
- * @param {object} data                          The data object against which to parse attributes within the formula
- * @param {object} [options={}]                  Extra optional arguments which describe or modify the DamageRoll
- * @param {number} [options.criticalBonusDice=0]      A number of bonus damage dice that are added for critical hits
- * @param {number} [options.criticalMultiplier=2]     A critical hit multiplier which is applied to critical hits
- * @param {boolean} [options.multiplyNumeric=false]   Multiply numeric terms by the critical multiplier
- * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
- *
- */
+//@ts-expect-error
 var DamageRoll = /** @class */ (function (_super) {
     __extends(DamageRoll, _super);
+    //@ts-expect-error
     function DamageRoll(formula, data, options) {
         var _this = _super.call(this, formula, data, options) || this;
         // For backwards compatibility, skip rolls which do not have the "critical" option defined
+        //@ts-expect-error
         if (_this.options.critical !== undefined)
             _this.configureDamage();
         return _this;
@@ -78,6 +81,7 @@ var DamageRoll = /** @class */ (function (_super) {
          * @type {boolean}
          */
         get: function () {
+            //@ts-expect-error
             return this.options.critical;
         },
         enumerable: false,
@@ -93,35 +97,47 @@ var DamageRoll = /** @class */ (function (_super) {
     DamageRoll.prototype.configureDamage = function () {
         var _a, _b, _c;
         var critBonus = 0;
+        //@ts-expect-error
         for (var _i = 0, _d = this.terms.entries(); _i < _d.length; _i++) {
             var _e = _d[_i], i = _e[0], term = _e[1];
             if (!(term instanceof OperatorTerm)) {
+                //@ts-expect-error
                 term.options.damageType = i !== 0 && this.terms[i - 1] instanceof OperatorTerm ? this.options.damageType[i - 1] : this.options.damageType[i];
             }
             // Multiply dice terms
             if (term instanceof DiceTerm) {
+                //@ts-expect-error
                 term.options.baseNumber = (_a = term.options.baseNumber) !== null && _a !== void 0 ? _a : term.number; // Reset back
+                //@ts-expect-error
                 term.number = term.options.baseNumber;
                 if (this.isCritical) {
                     critBonus += term.number * term.faces;
                     var _f = [new OperatorTerm({ operator: "+" }), new NumericTerm({ number: critBonus, options: { flavor: "Crit" } })], oper = _f[0], num = _f[1];
                     this.terms.splice(1, 0, oper);
                     this.terms.splice(2, 0, num);
+                    //@ts-expect-error
                     var cb = this.options.criticalBonusDice && i === 0 ? this.options.criticalBonusDice : 0;
                     term.alter(1, cb);
+                    //@ts-expect-error
                     term.options.critical = true;
                 }
             }
             // Multiply numeric terms
+            //@ts-expect-error
             else if (this.options.multiplyNumeric && term instanceof NumericTerm) {
+                //@ts-expect-error
                 term.options.baseNumber = (_b = term.options.baseNumber) !== null && _b !== void 0 ? _b : term.number; // Reset back
+                //@ts-expect-error
                 term.number = term.options.baseNumber;
                 if (this.isCritical) {
+                    //@ts-expect-error
                     term.number *= (_c = this.options.criticalMultiplier) !== null && _c !== void 0 ? _c : 2;
+                    //@ts-expect-error
                     term.options.critical = true;
                 }
             }
         }
+        //@ts-expect-error
         this._formula = this.constructor.getFormula(this.terms);
     };
     /* -------------------------------------------- */
@@ -130,11 +146,14 @@ var DamageRoll = /** @class */ (function (_super) {
         var _a;
         if (messageData === void 0) { messageData = {}; }
         if (options === void 0) { options = {}; }
+        //@ts-expect-error
         messageData.flavor = messageData.flavor || this.options.flavor;
         if (this.isCritical) {
             var label = game.i18n.localize("ARd20.CriticalHit");
+            //@ts-expect-error
             messageData.flavor = messageData.flavor ? "".concat(messageData.flavor, " (").concat(label, ")") : label;
         }
+        //@ts-expect-error
         options.rollMode = (_a = options.rollMode) !== null && _a !== void 0 ? _a : this.options.rollMode;
         return _super.prototype.toMessage.call(this, messageData, options);
     };
@@ -152,6 +171,7 @@ var DamageRoll = /** @class */ (function (_super) {
      * @param {object} options                  Additional Dialog customization options
      * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
      */
+    //@ts-expect-error
     DamageRoll.prototype.configureDialog = function (_a, options) {
         var _b = _a === void 0 ? {} : _a, title = _b.title, defaultRollMode = _b.defaultRollMode, canMult = _b.canMult, damType = _b.damType, mRoll = _b.mRoll, _c = _b.defaultCritical, defaultCritical = _c === void 0 ? false : _c, template = _b.template, _d = _b.allowCritical, allowCritical = _d === void 0 ? true : _d;
         if (options === void 0) { options = {}; }
@@ -177,6 +197,7 @@ var DamageRoll = /** @class */ (function (_super) {
                                     content: content,
                                     buttons: {
                                         critical: {
+                                            //@ts-expect-error
                                             condition: allowCritical,
                                             label: game.i18n.localize("ARd20.CriticalHit"),
                                             callback: function (html) { return resolve(_this._onDialogSubmit(html, true)); },
@@ -201,6 +222,7 @@ var DamageRoll = /** @class */ (function (_super) {
      * @param {boolean} isCritical      Is the damage a critical hit?
      * @private
      */
+    //@ts-expect-error
     DamageRoll.prototype._onDialogSubmit = function (html, isCritical) {
         var _this = this;
         var _a;
@@ -213,17 +235,23 @@ var DamageRoll = /** @class */ (function (_super) {
             this.terms = this.terms.concat(bonus.terms);
         }
         // Apply advantage or disadvantage
+        //@ts-expect-error
         this.options.critical = isCritical;
+        //@ts-expect-error
         this.options.rollMode = form.rollMode.value;
+        //@ts-expect-error
         this.options.damageType.forEach(function (part, ind) { return (_this.options.damageType[ind] = form["damageType.".concat(ind)] ? part[form["damageType.".concat(ind)].value] : part[0]); });
+        //@ts-expect-error
         this.options.mRoll = (_a = form.mRoll) === null || _a === void 0 ? void 0 : _a.checked;
         this.configureDamage();
         return this;
     };
     /* -------------------------------------------- */
     /** @inheritdoc */
+    //@ts-expect-error
     DamageRoll.fromData = function (data) {
         var roll = _super.fromData.call(this, data);
+        //@ts-expect-error
         roll._formula = this.getFormula(roll.terms);
         return roll;
     };

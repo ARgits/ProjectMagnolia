@@ -9,10 +9,14 @@
  * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
  *
  */
- export default class DamageRoll extends Roll {
+
+//@ts-expect-error
+export default class DamageRoll extends Roll {
+  //@ts-expect-error
   constructor(formula, data, options) {
     super(formula, data, options);
     // For backwards compatibility, skip rolls which do not have the "critical" option defined
+    //@ts-expect-error
     if (this.options.critical !== undefined) this.configureDamage();
   }
 
@@ -29,6 +33,7 @@
    * @type {boolean}
    */
   get isCritical() {
+    //@ts-expect-error
     return this.options.critical;
   }
 
@@ -42,34 +47,46 @@
    */
   configureDamage() {
     let critBonus = 0;
+    //@ts-expect-error
     for (let [i, term] of this.terms.entries()) {
       if (!(term instanceof OperatorTerm)) {
+        //@ts-expect-error
         term.options.damageType = i !== 0 && this.terms[i - 1] instanceof OperatorTerm ? this.options.damageType[i - 1] : this.options.damageType[i];
       }
       // Multiply dice terms
       if (term instanceof DiceTerm) {
+        //@ts-expect-error
         term.options.baseNumber = term.options.baseNumber ?? term.number; // Reset back
+        //@ts-expect-error
         term.number = term.options.baseNumber;
         if (this.isCritical) {
           critBonus += term.number * term.faces;
           let [oper, num] = [new OperatorTerm({ operator: "+" }), new NumericTerm({ number: critBonus, options: { flavor: "Crit" } })];
           this.terms.splice(1, 0, oper);
           this.terms.splice(2, 0, num);
+          //@ts-expect-error
           let cb = this.options.criticalBonusDice && i === 0 ? this.options.criticalBonusDice : 0;
           term.alter(1, cb);
+          //@ts-expect-error
           term.options.critical = true;
         }
       }
       // Multiply numeric terms
+      //@ts-expect-error
       else if (this.options.multiplyNumeric && term instanceof NumericTerm) {
+        //@ts-expect-error
         term.options.baseNumber = term.options.baseNumber ?? term.number; // Reset back
+        //@ts-expect-error
         term.number = term.options.baseNumber;
         if (this.isCritical) {
+          //@ts-expect-error
           term.number *= this.options.criticalMultiplier ?? 2;
+          //@ts-expect-error
           term.options.critical = true;
         }
       }
     }
+    //@ts-expect-error
     this._formula = this.constructor.getFormula(this.terms);
   }
 
@@ -77,11 +94,14 @@
 
   /** @inheritdoc */
   toMessage(messageData = {}, options = {}) {
+    //@ts-expect-error
     messageData.flavor = messageData.flavor || this.options.flavor;
     if (this.isCritical) {
       const label = game.i18n.localize("ARd20.CriticalHit");
+      //@ts-expect-error
       messageData.flavor = messageData.flavor ? `${messageData.flavor} (${label})` : label;
     }
+    //@ts-expect-error
     options.rollMode = options.rollMode ?? this.options.rollMode;
     return super.toMessage(messageData, options);
   }
@@ -101,8 +121,10 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
+  //@ts-expect-error
   async configureDialog({ title, defaultRollMode, canMult, damType,mRoll, defaultCritical = false, template, allowCritical = true } = {}, options = {}) {
     // Render the Dialog inner HTML
+    //@ts-expect-error
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
       defaultRollMode,
@@ -120,6 +142,7 @@
           content,
           buttons: {
             critical: {
+              //@ts-expect-error
               condition: allowCritical,
               label: game.i18n.localize("ARd20.CriticalHit"),
               callback: (html) => resolve(this._onDialogSubmit(html, true)),
@@ -145,6 +168,7 @@
    * @param {boolean} isCritical      Is the damage a critical hit?
    * @private
    */
+  //@ts-expect-error
   _onDialogSubmit(html, isCritical) {
     const form = html[0].querySelector("form");
 
@@ -156,9 +180,13 @@
     }
 
     // Apply advantage or disadvantage
+    //@ts-expect-error
     this.options.critical = isCritical;
+    //@ts-expect-error
     this.options.rollMode = form.rollMode.value;
+    //@ts-expect-error
     this.options.damageType.forEach((part, ind) => (this.options.damageType[ind] = form[`damageType.${ind}`] ? part[form[`damageType.${ind}`].value] : part[0]));
+    //@ts-expect-error
     this.options.mRoll = form.mRoll?.checked
     this.configureDamage();
     return this;
@@ -167,8 +195,10 @@
   /* -------------------------------------------- */
 
   /** @inheritdoc */
+  //@ts-expect-error
   static fromData(data) {
     const roll = super.fromData(data);
+    //@ts-expect-error
     roll._formula = this.getFormula(roll.terms);
     return roll;
   }

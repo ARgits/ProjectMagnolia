@@ -52,7 +52,7 @@ Object.defineProperty(exports, "DamageRoll", { enumerable: true, get: function (
  * @return {string}                        The resulting simplified formula
  */
 function simplifyRollFormula(formula, data, _a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.constantFirst, constantFirst = _c === void 0 ? false : _c;
+    var _b = _a.constantFirst, constantFirst = _b === void 0 ? false : _b;
     var roll = new Roll(formula, data); // Parses the formula and replaces any @properties
     var terms = roll.terms;
     // Some terms are "too complicated" for this algorithm to simplify
@@ -146,9 +146,68 @@ function _isUnsupportedTerm(term) {
  *
  * @return {Promise<D20Roll|null>}  The evaluated D20Roll, or null if the workflow was cancelled
  */
+//@ts-expect-error
 function d20Roll(_a) {
     var _b;
-    var _c = _a === void 0 ? {} : _a, _d = _c.parts, parts = _d === void 0 ? [] : _d, _e = _c.data, data = _e === void 0 ? {} : _e, advantage = _c.advantage, disadvantage = _c.disadvantage, _f = _c.fumble, fumble = _f === void 0 ? 1 : _f, _g = _c.critical, critical = _g === void 0 ? 20 : _g, targetValue = _c.targetValue, _h = _c.chooseModifier, chooseModifier = _h === void 0 ? false : _h, _j = _c.fastForward, fastForward = _j === void 0 ? false : _j, event = _c.event, template = _c.template, title = _c.title, dialogOptions = _c.dialogOptions, _k = _c.chatMessage, chatMessage = _k === void 0 ? true : _k, _l = _c.messageData, messageData = _l === void 0 ? {} : _l, rollMode = _c.rollMode, speaker = _c.speaker, options = _c.options, flavor = _c.flavor, canMult = _c.canMult, mRoll = _c.mRoll;
+    var _c = _a === void 0 ? {} : _a, 
+    //@ts-expect-error
+    _d = _c.parts, 
+    //@ts-expect-error
+    parts = _d === void 0 ? [] : _d, 
+    //@ts-expect-error
+    _e = _c.data, 
+    //@ts-expect-error
+    data = _e === void 0 ? {} : _e, 
+    //@ts-expect-error
+    advantage = _c.advantage, 
+    //@ts-expect-error
+    disadvantage = _c.disadvantage, 
+    //@ts-expect-error
+    _f = _c.fumble, 
+    //@ts-expect-error
+    fumble = _f === void 0 ? 1 : _f, 
+    //@ts-expect-error
+    _g = _c.critical, 
+    //@ts-expect-error
+    critical = _g === void 0 ? 20 : _g, 
+    //@ts-expect-error
+    targetValue = _c.targetValue, 
+    //@ts-expect-error
+    _h = _c.chooseModifier, 
+    //@ts-expect-error
+    chooseModifier = _h === void 0 ? false : _h, 
+    //@ts-expect-error
+    _j = _c.fastForward, 
+    //@ts-expect-error
+    fastForward = _j === void 0 ? false : _j, 
+    //@ts-expect-error
+    event = _c.event, 
+    //@ts-expect-error
+    template = _c.template, 
+    //@ts-expect-error
+    title = _c.title, 
+    //@ts-expect-error
+    dialogOptions = _c.dialogOptions, 
+    //@ts-expect-error
+    _k = _c.chatMessage, 
+    //@ts-expect-error
+    chatMessage = _k === void 0 ? true : _k, 
+    //@ts-expect-error
+    _l = _c.messageData, 
+    //@ts-expect-error
+    messageData = _l === void 0 ? {} : _l, 
+    //@ts-expect-error
+    rollMode = _c.rollMode, 
+    //@ts-expect-error
+    speaker = _c.speaker, 
+    //@ts-expect-error
+    options = _c.options, 
+    //@ts-expect-error
+    flavor = _c.flavor, 
+    //@ts-expect-error
+    canMult = _c.canMult, 
+    //@ts-expect-error
+    mRoll = _c.mRoll;
     return __awaiter(this, void 0, void 0, function () {
         var formula, _m, advantageMode, isFF, defaultRollMode, roll, configured;
         return __generator(this, function (_o) {
@@ -212,12 +271,16 @@ exports.d20Roll = d20Roll;
  * Determines whether this d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied
  * @returns {{isFF: boolean, advantageMode: number}}  Whether the roll is fast-forward, and its advantage mode
  */
+//@ts-expect-error
 function _determineAdvantageMode(_a) {
     var _b = _a === void 0 ? {} : _a, event = _b.event, _c = _b.advantage, advantage = _c === void 0 ? false : _c, _d = _b.disadvantage, disadvantage = _d === void 0 ? false : _d, _e = _b.fastForward, fastForward = _e === void 0 ? false : _e;
     var isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
+    //@ts-expect-error
     var advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.NORMAL;
+    //@ts-expect-error
     if (advantage || (event === null || event === void 0 ? void 0 : event.altKey))
         advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.ADVANTAGE;
+    //@ts-expect-error
     else if (disadvantage || (event === null || event === void 0 ? void 0 : event.ctrlKey) || (event === null || event === void 0 ? void 0 : event.metaKey))
         advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.DISADVANTAGE;
     return { isFF: isFF, advantageMode: advantageMode };
@@ -254,14 +317,65 @@ function _determineAdvantageMode(_a) {
  *
  * @return {Promise<DamageRoll|null>} The evaluated DamageRoll, or null if the workflow was canceled
  */
+//@ts-expect-error
 function damageRoll(_a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.parts, parts = _c === void 0 ? [] : _c, data = _b.data, // Roll creation
+    var _b = _a === void 0 ? {} : _a, 
+    //@ts-expect-error
+    _c = _b.parts, 
+    //@ts-expect-error
+    parts = _c === void 0 ? [] : _c, 
+    //@ts-expect-error
+    data = _b.data, // Roll creation
+    //@ts-expect-error
     _d = _b.critical, // Roll creation
-    critical = _d === void 0 ? false : _d, damType = _b.damType, damageType = _b.damageType, criticalBonusDice = _b.criticalBonusDice, criticalMultiplier = _b.criticalMultiplier, multiplyNumeric = _b.multiplyNumeric, // Damage customization
+    //@ts-expect-error
+    critical = _d === void 0 ? false : _d, 
+    //@ts-expect-error
+    damType = _b.damType, 
+    //@ts-expect-error
+    damageType = _b.damageType, 
+    //@ts-expect-error
+    criticalBonusDice = _b.criticalBonusDice, 
+    //@ts-expect-error
+    criticalMultiplier = _b.criticalMultiplier, 
+    //@ts-expect-error
+    multiplyNumeric = _b.multiplyNumeric, // Damage customization
+    //@ts-expect-error
     _e = _b.fastForward, // Damage customization
-    fastForward = _e === void 0 ? false : _e, event = _b.event, _f = _b.allowCritical, allowCritical = _f === void 0 ? true : _f, template = _b.template, title = _b.title, dialogOptions = _b.dialogOptions, // Dialog configuration
+    //@ts-expect-error
+    fastForward = _e === void 0 ? false : _e, 
+    //@ts-expect-error
+    event = _b.event, 
+    //@ts-expect-error
+    _f = _b.allowCritical, 
+    //@ts-expect-error
+    allowCritical = _f === void 0 ? true : _f, 
+    //@ts-expect-error
+    template = _b.template, 
+    //@ts-expect-error
+    title = _b.title, 
+    //@ts-expect-error
+    dialogOptions = _b.dialogOptions, // Dialog configuration
+    //@ts-expect-error
     _g = _b.chatMessage, // Dialog configuration
-    chatMessage = _g === void 0 ? false : _g, _h = _b.messageData, messageData = _h === void 0 ? {} : _h, rollMode = _b.rollMode, speaker = _b.speaker, canMult = _b.canMult, flavor = _b.flavor, mRoll = _b.mRoll;
+    //@ts-expect-error
+    chatMessage = _g === void 0 ? false : _g, 
+    //@ts-expect-error
+    _h = _b.messageData, 
+    //@ts-expect-error
+    messageData = _h === void 0 ? {} : _h, 
+    //@ts-expect-error
+    rollMode = _b.rollMode, 
+    //@ts-expect-error
+    speaker = _b.speaker, 
+    //@ts-expect-error
+    canMult = _b.canMult, 
+    //@ts-expect-error
+    flavor = _b.flavor, 
+    //@ts-expect-error
+    mRoll = _b.mRoll
+    //@ts-expect-error
+    ;
     return __awaiter(this, void 0, void 0, function () {
         var defaultRollMode, formula, _j, isCritical, isFF, roll, configured;
         return __generator(this, function (_k) {
@@ -324,6 +438,7 @@ exports.damageRoll = damageRoll;
  * Determines whether this d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied
  * @returns {{isFF: boolean, isCritical: boolean}}  Whether the roll is fast-forward, and whether it is a critical hit
  */
+//@ts-expect-error
 function _determineCriticalMode(_a) {
     var _b = _a === void 0 ? {} : _a, event = _b.event, _c = _b.critical, critical = _c === void 0 ? false : _c, _d = _b.fastForward, fastForward = _d === void 0 ? false : _d;
     var isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));

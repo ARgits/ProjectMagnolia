@@ -4,6 +4,7 @@ exports.addChatMessageContextOptions = exports.displayChatActionButtons = export
 /**
  * Highlight critical success or failure on d20 rolls
  */
+//@ts-expect-error
 var highlightCriticalSuccessFailure = function (message, html, data) {
     if (!message.isRoll || !message.isContentVisible)
         return;
@@ -38,6 +39,7 @@ exports.highlightCriticalSuccessFailure = highlightCriticalSuccessFailure;
 /**
  * Optionally hide the display of chat card action buttons which cannot be performed by the user
  */
+//@ts-expect-error
 var displayChatActionButtons = function (message, html, data) {
     var chatCard = html.find(".ard20.chat-card");
     if (chatCard.length > 0) {
@@ -52,6 +54,7 @@ var displayChatActionButtons = function (message, html, data) {
             return;
         // Otherwise conceal action buttons except for saving throw
         var buttons = chatCard.find("button[data-action]");
+        //@ts-expect-error
         buttons.each(function (i, btn) {
             if (btn.dataset.action === "save")
                 return;
@@ -73,28 +76,36 @@ exports.displayChatActionButtons = displayChatActionButtons;
 var addChatMessageContextOptions = function (html, options) {
     var canApply = function (li) {
         var _a;
+        //@ts-expect-error
         var message = game.messages.get(li.data("messageId"));
         return (message === null || message === void 0 ? void 0 : message.isRoll) && (message === null || message === void 0 ? void 0 : message.isContentVisible) && ((_a = canvas.tokens) === null || _a === void 0 ? void 0 : _a.controlled.length);
     };
     options.push({
+        //@ts-expect-error
         name: game.i18n.localize("ARd20.ChatContextDamage"),
+        //@ts-expect-error
         icon: '<i class="fas fa-user-minus"></i>',
+        //@ts-expect-error
         condition: canApply,
+        //@ts-expect-error
         callback: function (li) { return applyChatCardDamage(li, 1); }
     }, {
         name: game.i18n.localize("ARd20.ChatContextHealing"),
         icon: '<i class="fas fa-user-plus"></i>',
         condition: canApply,
+        //@ts-expect-error
         callback: function (li) { return applyChatCardDamage(li, -1); }
     }, {
         name: game.i18n.localize("ARd20.ChatContextDoubleDamage"),
         icon: '<i class="fas fa-user-injured"></i>',
         condition: canApply,
+        //@ts-expect-error
         callback: function (li) { return applyChatCardDamage(li, 2); }
     }, {
         name: game.i18n.localize("ARd20.ChatContextHalfDamage"),
         icon: '<i class="fas fa-user-shield"></i>',
         condition: canApply,
+        //@ts-expect-error
         callback: function (li) { return applyChatCardDamage(li, 0.5); }
     });
     return options;
@@ -110,10 +121,12 @@ exports.addChatMessageContextOptions = addChatMessageContextOptions;
  * @return {Promise}
  */
 function applyChatCardDamage(li, multiplier) {
+    //@ts-expect-error
     var message = game.messages.get(li.data("messageId"));
     var roll = message.roll;
     return Promise.all(canvas.tokens.controlled.map(function (t) {
         var a = t.actor;
+        //@ts-expect-error
         return a.applyDamage(roll.total, multiplier);
     }));
 }

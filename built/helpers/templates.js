@@ -36,28 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ARd20SocketHandler = /** @class */ (function () {
-    function ARd20SocketHandler() {
-    }
-    //@ts-expect-error
-    ARd20SocketHandler.updateActorData = function (data) {
-        return __awaiter(this, void 0, void 0, function () {
-            var actor;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!game.user.isGM) return [3 /*break*/, 2];
-                        actor = game.actors.get(data.actor._id);
-                        if (!actor) return [3 /*break*/, 2];
-                        return [4 /*yield*/, actor.update(data.update, { "data.health.value": data.value })];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
-                }
-            });
+exports.preloadHandlebarsTemplates = void 0;
+/**
+ * Define a set of template paths to pre-load
+ * Pre-loaded templates are compiled and cached for fast access when rendering
+ * @return {Promise}
+ */
+var preloadHandlebarsTemplates = function () {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, loadTemplates([
+                    // Actor partials.
+                    "systems/ard20/templates/actor/parts/actor-features.html",
+                    "systems/ard20/templates/actor/parts/actor-items.html",
+                    "systems/ard20/templates/actor/parts/actor-spells.html",
+                    "systems/ard20/templates/actor/parts/actor-effects.html",
+                    "systems/ard20/templates/actor/parts/actor-equip.html",
+                    // Character Advancement
+                    "systems/ard20/templates/actor/parts/actor-adv.html",
+                    // Settings
+                    "systems/ard20/templates/app/prof-settings.html",
+                    "systems/ard20/templates/app/feat-settings.html",
+                    // Requirements for features
+                    "systems/ard20/templates/app/feat_req.html",
+                ])];
         });
-    };
-    return ARd20SocketHandler;
-}());
-exports.default = ARd20SocketHandler;
+    });
+};
+exports.preloadHandlebarsTemplates = preloadHandlebarsTemplates;

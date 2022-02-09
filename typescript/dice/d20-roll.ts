@@ -45,6 +45,7 @@
    * @type {boolean}
    */
   get hasAdvantage() {
+    //@ts-expect-error
     return this.options.advantageMode === D20Roll.ADV_MODE.ADVANTAGE;
   }
 
@@ -53,6 +54,7 @@
    * @type {boolean}
    */
   get hasDisadvantage() {
+    //@ts-expect-error
     return this.options.advantageMode === D20Roll.ADV_MODE.DISADVANTAGE;
   }
 
@@ -66,25 +68,37 @@
    */
   configureModifiers() {
     const d20 = this.terms[0];
+    //@ts-expect-error
     d20.modifiers = [];
 
     // Handle Advantage or Disadvantage
     if (this.hasAdvantage) {
+      //@ts-expect-error
       d20.number = 2;
+      //@ts-expect-error
       d20.modifiers.push("kh");
+      //@ts-expect-error
       d20.options.advantage = true;
     } else if (this.hasDisadvantage) {
+      //@ts-expect-error
       d20.number = 2;
+      //@ts-expect-error
       d20.modifiers.push("kl");
+      //@ts-expect-error
       d20.options.disadvantage = true;
+      //@ts-expect-error
     } else d20.number = 1;
 
     // Assign critical and fumble thresholds
+    //@ts-expect-error
     if (this.options.critical) d20.options.critical = this.options.critical;
+    //@ts-expect-error
     if (this.options.fumble) d20.options.fumble = this.options.fumble;
+    //@ts-expect-error
     if (this.options.targetValue) d20.options.target = this.options.targetValue;
 
     // Re-compile the underlying formula
+    //@ts-expect-error
     this._formula = this.constructor.getFormula(this.terms);
   }
 
@@ -96,11 +110,15 @@
     if (!this._evaluated) await this.evaluate({ async: true });
 
     // Add appropriate advantage mode message flavor and ard20 roll flags
+    //@ts-expect-error
     messageData.flavor = messageData.flavor || this.options.flavor;
+    //@ts-expect-error
     if (this.hasAdvantage) messageData.flavor += ` (${game.i18n.localize("ARd20.Advantage")})`;
+    //@ts-expect-error
     else if (this.hasDisadvantage) messageData.flavor += ` (${game.i18n.localize("ARd20.Disadvantage")})`;
 
     // Record the preferred rollMode
+    //@ts-expect-error
     options.rollMode = options.rollMode ?? this.options.rollMode;
     return super.toMessage(messageData, options);
   }
@@ -121,16 +139,21 @@
    * @param {object} options                  Additional Dialog customization options
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
-  async configureDialog({ title:string, defaultRollMode:number, canMult:boolean, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll:boolean, chooseModifier = false, defaultAbility, template } = {}, options = {}) {
+  //@ts-expect-error
+  async configureDialog({ title:string, defaultRollMode:number, canMult:boolean, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll:boolean, chooseModifier = false, defaultAttribute, template } = {}, options = {}) {
     // Render the Dialog inner HTML
+    //@ts-expect-error
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
       formula: `${this.formula} + @bonus`,
+      //@ts-expect-error
       defaultRollMode,
       rollModes: CONFIG.Dice.rollModes,
       chooseModifier,
-      defaultAbility,
-      abilities: CONFIG.ARd20.abilities,
+      defaultAttribute,
+      attributes: CONFIG.ARd20.Attributes,
+      //@ts-expect-error
       canMult,
+      //@ts-expect-error
       mRoll,
     });
     let defaultButton = "normal";
@@ -147,6 +170,7 @@
     return new Promise((resolve) => {
       new Dialog(
         {
+          //@ts-expect-error
           title,
           content,
           buttons: {
@@ -179,6 +203,7 @@
    * @param {number} advantageMode    The chosen advantage mode
    * @private
    */
+  //@ts-expect-error
   _onDialogSubmit(html, advantageMode) {
     const form = html[0].querySelector("form");
     console.log(this);
@@ -191,10 +216,13 @@
 
     // Customize the modifier
     if (form.ability?.value) {
-      const abl = this.data.abilities[form.ability.value];
+      //@ts-expect-error
+      const abl = this.data.attributes[form.ability.value];
       console.log(abl);
+      //@ts-expect-error
       this.terms.findSplice((t) => t.term === "@mod", new NumericTerm({ number: abl.mod }));
-      this.options.flavor += ` (${game.i18n.localize(CONFIG.ARd20.abilities[form.ability.value])})`;
+      //@ts-expect-error
+      this.options.flavor += ` (${game.i18n.localize(CONFIG.ARd20.Attributes[form.ability.value])})`;
     }
    /* if (form.prof_type?.value) {
       const pr = this.data[form.prof_type.value][form.prof_value.value];
@@ -204,8 +232,11 @@
     }*/
 
     // Apply advantage or disadvantage
+    //@ts-expect-error
     this.options.advantageMode = advantageMode;
+    //@ts-expect-error
     this.options.rollMode = form.rollMode.value;
+    //@ts-expect-error
     this.options.mRoll = form.mRoll?.checked;
     this.configureModifiers();
     return this;

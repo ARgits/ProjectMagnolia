@@ -44,10 +44,10 @@ export class ARd20Item extends Item {
     data.hasAttack = data.hasAttack || true;
     data.hasDamage = data.hasDamage || true;
     //TODO: this._setDeflect(data);
-    this._setTypeAndSubtype(data, flags, labels);
-    for (let [key, type] of Object.entries(data.damage)) {
+    this._setTypeAndSubtype(data, flags);
+    for (let [key, type] of obj_entries(data.damage)) {
       if (key !== "current") {
-        for (let [key, prof] of Object.entries(type)) {
+        for (let [key, prof] of obj_entries(type)) {
           prof.formula = "";
           prof.parts.forEach((part: any[]) => {
             if (Array.isArray(part[1])) {
@@ -79,7 +79,8 @@ export class ARd20Item extends Item {
     }
   }
   */
-  _setTypeAndSubtype(data: object & WeaponDataPropertiesData, flags: Record<string, unknown>) {
+  //@ts-expect-error
+  _setTypeAndSubtype(data: object & WeaponDataPropertiesData, flags) {
     data.sub_type_array = game!.settings.get("ard20", "proficiencies").weapon.filter((prof: { type: any }) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       const id = /Item.(.+)/.exec(flags.core.sourceId)![1];
@@ -99,15 +100,12 @@ export class ARd20Item extends Item {
     if (itemData.type !== "feature") return;
     const data = itemData.data;
     // Handle Source of the feature
-    labels.source = [];
     data.source.label = "";
-    data.source.value.forEach((value: string | number, key: number) => {
-      labels.source.push(game.i18n.localize(CONFIG.ARd20.source[value]));
-      data.source.label += key === 0 ? labels.source[key] : `, ${labels.source[key]}`;
+    data.source.value.forEach((value: string, key: number) => {
+      let label: string = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
+      data.source.label += key === 0 ? label : `, ${label}`;
     });
     //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
-
-    data.keys = [];
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
     data.level.max = data.level.has ? data.level.max || 4 : 1;
@@ -226,12 +224,13 @@ export class ARd20Item extends Item {
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
+  //@ts-expect-error
   getRollData() {
     // If present, return the actor's roll data.
     if (!this.actor) return null;
     const rollData = this.actor.getRollData();
-    const hasDamage = this.data.data.hasDamage
-    const hasAttack = this.data.data.hasAttack
+    const hasDamage = this.data.data.hasDamage;
+    const hasAttack = this.data.data.hasAttack;
     //@ts-expect-error
     rollData.item = foundry.utils.deepClone(this.data.data);
     //@ts-expect-error
@@ -247,7 +246,7 @@ export class ARd20Item extends Item {
    * @param {Event} event   The originating click event
    * @private
    */
-//@ts-expect-error
+  //@ts-expect-error
   async roll({ configureDialog = true, rollMode, hasDamage = false, hasAttack = false, createMessage = true }) {
     let item = this;
     const id = item.id;
@@ -257,7 +256,7 @@ export class ARd20Item extends Item {
     hasDamage = iData.hasDamage || hasDamage;
     hasAttack = iData.hasAttack || hasAttack;
     // Initialize chat data.
-    const speaker = ChatMessage.getSpeaker({ actor: actor});
+    const speaker = ChatMessage.getSpeaker({ actor: actor });
     const iName = this.name;
     // Otherwise, create a roll and send a chat message from it.
     const targets = Array.from(game.user!.targets);
@@ -270,14 +269,12 @@ export class ARd20Item extends Item {
   /*  Chat Message Helpers                        */
   /* -------------------------------------------- */
 
-  static chatListeners(html: { on: (arg0: string, arg1: string, arg2: { (event: any): Promise<void>; (event: any): void; (event: any): Promise<void>; (event: any): void }) => void }) {
+  static chatListeners(html: JQuery) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
-    //@ts-expect-error
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
     html.on("hover", ".attack-roll .flexrow .value", function (event: { preventDefault: () => void; type: string }) {
       event.preventDefault();
-      //@ts-expect-error
       const element = this.closest("li.flexrow");
       element.querySelector(".attack-roll .hover-roll")?.classList.toggle("shown", event.type == "mouseenter");
     });
@@ -291,30 +288,32 @@ export class ARd20Item extends Item {
    * @returns {Promise}         A promise which resolves once the handler workflow is complete
    * @private
    */
-  static async _onChatCardAction(event: { preventDefault: () => void; currentTarget: any; altKey: any }) {
+  //@ts-expect-error
+  static async _onChatCardAction(event) {
     event.preventDefault();
 
     // Extract card data
     const button = event.currentTarget;
     const card = button.closest(".chat-card");
     const messageId = card.closest(".message").dataset.messageId;
-    const message = game.messages.get(messageId);
+    const message = game.messages!.get(messageId);
     const action = button.dataset.action;
     const targetUuid = button.closest(".flexrow").dataset.targetId;
 
     // Validate permission to proceed with the roll
     const isTargetted = action === "save";
-    if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
+    if (!(isTargetted || game.user!.isGM || message!.isAuthor)) return;
 
     // Recover the actor for the chat card
     const actor = await this._getChatCardActor(card);
     if (!actor) return;
 
     // Get the Item from stored flag data or by the item ID on the Actor
-    const storedData = message.getFlag("ard20", "itemData");
+    const storedData = message!.getFlag("ard20", "itemData");
+    //@ts-expect-error
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+      return ui.notifications!.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
 
@@ -329,7 +328,7 @@ export class ARd20Item extends Item {
           versatile: action === "versatile",
         });
         //const dom = new DOMParser().parseFromString(message.data.content,"text/html")
-        const html = $(message.data.content);
+        const html = $(message!.data.content);
         dam = await dam.render();
         //dom.querySelector('button').replaceWith(dam)
         if (targetUuid) {
@@ -338,7 +337,7 @@ export class ARd20Item extends Item {
           html.find(".damage-roll").find("button").replaceWith(dam);
         }
         //console.log(dom)
-        await message.update({ content: html[0].outerHTML });
+        await message!.update({ content: html[0].outerHTML });
         break;
       case "formula":
         await item.rollFormula({ event, spellLevel });
@@ -346,14 +345,17 @@ export class ARd20Item extends Item {
       case "save":
         const targets = this._getChatCardTargets(card);
         for (let token of targets) {
-          const speaker = ChatMessage.getSpeaker({ scene: canvas.scene, token: token });
-          await token.actor.rollAbilitySave(button.dataset.ability, { event, speaker });
+          //@ts-expect-error
+          const speaker = ChatMessage.getSpeaker({ scene: canvas!.scene, token: token });
+          //@ts-expect-error
+          await token.actor!.rollAbilitySave(button.dataset.ability, { event, speaker });
         }
         break;
       case "toolCheck":
         await item.rollToolCheck({ event });
         break;
       case "placeTemplate":
+        ///@ts-expect-error
         const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
         if (template) template.drawPreview();
         break;
@@ -393,12 +395,12 @@ export class ARd20Item extends Item {
     console.log(value, "итоговый урон");
     tHealth -= value;
     console.log("хп стало", tHealth);
-    let obj = {};
+    let obj: { [index: string]: number } = {};
     obj["data.health.value"] = tHealth;
-    if (game.user.isGM) {
+    if (game.user!.isGM) {
       await tActor.update(obj);
     } else {
-      game.socket.emit("system.ard20", {
+      game.socket!.emit("system.ard20", {
         operation: "updateActorData",
         actor: tActor,
         update: obj,
@@ -410,9 +412,10 @@ export class ARd20Item extends Item {
     event.preventDefault();
     const element = event.currentTarget;
     const card = element.closest(".chat-card");
-    const message = game.messages.get(card.closest(".message").dataset.messageId);
+    const message = game.messages!.get(card.closest(".message").dataset.messageId);
     const targetUuid = element.closest("li.flexrow").dataset.targetId;
     const token = await fromUuid(targetUuid);
+    //@ts-expect-error
     const tActor = token?.actor;
     const tData = tActor.data.data;
     let tHealth = tData.health.value;
@@ -421,22 +424,23 @@ export class ARd20Item extends Item {
     const actor = await this._getChatCardActor(card);
     if (!actor) return;
     // Get the Item from stored flag data or by the item ID on the Actor
-    const storedData = message.getFlag("ard20", "itemData");
+    const storedData = message!.getFlag("ard20", "itemData");
+    //@ts-expect-error
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+      return ui.notifications!.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
     }
     const dam = await item.rollDamage({
       event: event,
       canMult: false,
     });
-    const html = $(message.data.content);
+    const html = $(message!.data.content);
     let damHTML = await dam.render();
     console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
     html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
     html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
     console.log(html[0]);
-    await message.update({ content: html[0].outerHTML });
+    await message!.update({ content: html[0].outerHTML });
     await item._applyDamage(dam, tData, tHealth, tActor);
   }
 
@@ -453,12 +457,13 @@ export class ARd20Item extends Item {
     if (card.dataset.tokenId) {
       const token = await fromUuid(card.dataset.tokenId);
       if (!token) return null;
+      //@ts-expect-error
       return token.actor;
     }
 
     // Case 2 - use Actor ID directory
     const actorId = card.dataset.actorId;
-    return game.actors.get(actorId) || null;
+    return game.actors!.get(actorId) || null;
   }
 
   /* -------------------------------------------- */
@@ -470,9 +475,10 @@ export class ARd20Item extends Item {
    * @private
    */
   static _getChatCardTargets(card: any) {
-    let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
-    if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
-    if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
+    let targets = canvas!.tokens!.controlled.filter((t) => !!t.actor);
+    //@ts-expect-error
+    if (!targets.length && game.user!.character) targets = targets.concat(game.user.character.getActiveTokens());
+    if (!targets.length) ui.notifications!.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
     return targets;
   }
   /*showRollDetail(event){
@@ -480,6 +486,7 @@ export class ARd20Item extends Item {
     const elem = event.currentTarget;
     const 
   }*/
+  //@ts-expect-error
   async displayCard({ rollMode, createMessage = true, hasAttack = Boolean(), hasDamage = Boolean(), targets = [], mRoll = Boolean() } = {}) {
     // Render the chat card template
     let atk = {};
@@ -490,46 +497,66 @@ export class ARd20Item extends Item {
     let hit = {};
     let dmg = {};
     let dieResultCss = {};
+    //@ts-expect-error
     const def = this.data.data.attack?.def ?? "reflex";
-    const token = this.actor.token;
+    const token = this.actor!.token;
     if (targets.length !== 0) {
+      //@ts-expect-error
       let atkRoll = hasAttack ? await this.rollAttack(mRoll, { canMult: true }) : null;
       let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage({ canMult: true }) : null;
       for (let [key, target] of Object.entries(targets)) {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll;
+          //@ts-expect-error
           dc[key] = target.actor.data.data.defences.stats[def].value;
+          //@ts-expect-error
           atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
+          //@ts-expect-error
           console.log(atk[key]);
+          //@ts-expect-error
           atkHTML[key] = hasAttack ? await atk[key].render() : null;
+          //@ts-expect-error
           let d20 = atk[key] ? atk[key].terms[0] : null;
+          //@ts-expect-error
           atk[key] = atk[key].total;
+          //@ts-expect-error
           dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
+          //@ts-expect-error
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
+          //@ts-expect-error
           hit[key] = result[key] === "hit" ? true : false;
         } else {
           mRoll = dmgRoll.options.mRoll;
+          //@ts-expect-error
           dmg[key] = hasDamage ? (Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : await dmgRoll.reroll()) : null;
+          //@ts-expect-error
           dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
         }
       }
     } else {
+      //@ts-expect-error
       atk[0] = hasAttack ? await this.rollAttack(mRoll) : null;
+      //@ts-expect-error
       mRoll = atk[0] ? atk[0].options.mRoll : false;
+      //@ts-expect-error
       atkHTML[0] = hasAttack ? await atk[0].render() : null;
     }
+    //@ts-expect-error
     let templateState = targets.size !== 0 ? (mRoll ? "multiAttack" : "oneAttack") : "noTarget";
     const templateData = {
+      //@ts-expect-error
       actor: this.actor.data,
       tokenId: token?.uuid || null,
       item: this.data,
       data: this.getChatData(),
+      //@ts-expect-error
       labels: this.labels,
       hasAttack,
       hasDamage,
       atk,
       atkHTML,
       targets,
+      //@ts-expect-error
       owner: this.actor.isOwner || game.user.isGM,
       dc,
       result,
@@ -541,18 +568,21 @@ export class ARd20Item extends Item {
 
     // Create the ChatMessage data object
     const chatData = {
-      user: game.user.data._id,
+      user: game.user!.data._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       content: html,
+      //@ts-expect-error
       flavor: this.data.data.chatFlavor || this.name,
+      //@ts-expect-error
       speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
       flags: { "core.canPopout": true },
     };
 
     // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
+    /*
     if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
       chatData.flags["ard20.itemData"] = this.data;
-    }
+    }*/
 
     // Apply the roll mode to adjust message visibility
     ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode"));
@@ -568,7 +598,6 @@ export class ARd20Item extends Item {
    */
   getChatData(htmlOptions = {}) {
     const data = foundry.utils.deepClone(this.data.data);
-    const labels = this.labels;
 
     // Rich text description
     //data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
@@ -577,11 +606,11 @@ export class ARd20Item extends Item {
     const props = [];
 
     // Equipment properties
-    if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
+    /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
       /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
         props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
       }*/
-      props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
+      /*props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
     }
 
     // Ability activation properties
@@ -591,6 +620,7 @@ export class ARd20Item extends Item {
 
     // Filter properties and return
     data.properties = props.filter((p) => !!p);
+    */
     return data;
   }
   /* -------------------------------------------- */
@@ -615,12 +645,15 @@ export class ARd20Item extends Item {
   async rollAttack(mRoll = Boolean(), canMult = Boolean(), options = {}) {
     console.log(canMult);
     const itemData = this.data.data;
+    //@ts-expect-error
     const flags = this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
 
     const { parts, rollData } = this.getAttackToHit();
-    const targets = game.user.targets;
+    const targets = game.user!.targets;
+    //@ts-expect-error
     if (options.parts?.length > 0) {
+      //@ts-expect-error
       parts.push(...options.parts);
     }
     let rollConfig = {
@@ -640,7 +673,9 @@ export class ARd20Item extends Item {
       canMult: canMult,
       mRoll: mRoll,
     };
+    //@ts-expect-error
     rollConfig = mergeObject(rollConfig, options);
+    //@ts-expect-error
     const roll = await d20Roll(rollConfig);
     if (roll === false) return null;
     return roll;
@@ -648,22 +683,29 @@ export class ARd20Item extends Item {
   rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean() } = {}) {
     console.log(canMult);
     const iData = this.data.data;
-    const aData = this.actor.data.data;
+    const aData = this.actor!.data.data;
+    //@ts-expect-error
     const parts = iData.damage.current.parts.map((d: any[]) => d[0]);
+    //@ts-expect-error
     const damType = iData.damage.current.parts.map((d: any[][]) =>
       d[1].map((c: (string | number)[], ind: any) => {
+        //@ts-expect-error
         let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
+        //@ts-expect-error
         let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
         let obj = { key: ind, label: `${a} ${b}` };
         return obj;
       })
     );
+    //@ts-expect-error
     options.damageType = iData.damage.current.parts.map((d: any[]) => d[1]);
     const hasAttack = false;
     const hasDamage = true;
+    //@ts-expect-error
     const rollData = this.getRollData(hasAttack, hasDamage);
     const rollConfig = {
       actor: this.actor,
+      //@ts-expect-error
       critical: critical ?? event?.altkey ?? false,
       data: rollData,
       event: event,
@@ -672,6 +714,7 @@ export class ARd20Item extends Item {
       damType: damType,
       mRoll: mRoll,
     };
+    //@ts-expect-error
     return damageRoll(mergeObject(rollConfig, options));
   }
   /**
@@ -689,6 +732,7 @@ export class ARd20Item extends Item {
     const hasAttack = true;
     const hasDamage = false;
     //if (!this.hasAttack || !itemData) return;
+    //@ts-expect-error
     const rollData = this.getRollData(hasAttack, hasDamage);
     console.log("ROLL DATA", rollData);
 
@@ -696,8 +740,11 @@ export class ARd20Item extends Item {
     const parts = [];
 
     // Include the item's innate attack bonus as the initial value and label
+    //@ts-expect-error
     if (itemData.attackBonus) {
+      //@ts-expect-error
       parts.push(itemData.attackBonus);
+      //@ts-expect-error
       this.labels.toHit = itemData.attackBonus;
     }
 
@@ -739,8 +786,11 @@ export class ARd20Item extends Item {
     */
 
     // Condense the resulting attack bonus formula into a simplified label
+    //@ts-expect-error
     const roll = new Roll(parts.join("+"), rollData);
+    //@ts-expect-error
     const formula = simplifyRollFormula(roll.formula);
+    //@ts-expect-error
     this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula;
 
     // Update labels and return the prepared roll data

@@ -195,7 +195,7 @@ export class ARd20ActorSheet extends ActorSheet {
     });
 
     // Active Effect management
-    html.find(".effect-control").click((ev: Event) => onManageActiveEffect(ev, this.actor));
+    html.find(".effect-control").click((ev: MouseEvent) => onManageActiveEffect(ev, this.actor));
     //roll abilities and skills
     html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this));

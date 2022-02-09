@@ -14,9 +14,25 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ARd20Actor = void 0;
 var dice_js_1 = require("../dice/dice.js");
+var ard20_1 = require("../ard20");
+/**
+ * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
+ * @extends {Actor}
+ */
 var ARd20Actor = /** @class */ (function (_super) {
     __extends(ARd20Actor, _super);
     function ARd20Actor() {
@@ -31,37 +47,6 @@ var ARd20Actor = /** @class */ (function (_super) {
         // prepareDerivedData().
         _super.prototype.prepareData.call(this);
         this.items.forEach(function (item) { return item.prepareFinalAttributes(); });
-    };
-    /** @override */
-    ARd20Actor.prototype.prepareBaseData = function () {
-        //@ts-check
-        // Data modifications in this step occur before processing embedded
-        // documents or derived data.
-        var actorData = this.data;
-        var data = actorData.data;
-        var flags = actorData.flags.ard20 || {};
-        var def_dam = data.defences.damage;
-        var def_stats = data.defences.stats;
-        var attributes = data.attributes;
-        //const entries = Object.entries as unknown as <K extends string, V>(o: {[s in K]: V}) => [K, V][];
-        for (var _i = 0, _a = Object.entries(def_dam.phys); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], dr = _b[1];
-            def_dam.phys[key].bonus = 0;
-            def_dam.phys[key].type = "res";
-        }
-        for (var _c = 0, _d = Object.entries(def_dam.mag); _c < _d.length; _c++) {
-            var _e = _d[_c], key = _e[0], dr = _e[1];
-            def_dam.mag[key].bonus = 0;
-            def_dam.mag[key].type = "res";
-        }
-        for (var _f = 0, _g = Object.entries(def_stats); _f < _g.length; _f++) {
-            var _h = _g[_f], key = _h[0], def = _h[1];
-            def.bonus = 0;
-        }
-        for (var _j = 0, _k = Object.entries(attributes); _j < _k.length; _j++) {
-            var _l = _k[_j], key = _l[0], ability = _l[1];
-            ability.bonus = 0;
-        }
     };
     /**
      * @override
@@ -85,7 +70,7 @@ var ARd20Actor = /** @class */ (function (_super) {
      * Prepare Character type specific data
      */
     ARd20Actor.prototype._prepareCharacterData = function (actorData) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         if (actorData.type !== "character")
             return;
         // Make modifications to data here. For example:
@@ -95,32 +80,30 @@ var ARd20Actor = /** @class */ (function (_super) {
         var def_stats = data.defences.stats;
         var def_dam = data.defences.damage;
         var proficiencies = data.proficiencies;
-        var prof_weapon = proficiencies.weapon;
-        var prof_armor = proficiencies.armor;
-        var prof_tool = proficiencies.tools;
-        var entries = Object.entries;
         data.mobility.value = 0;
         this.itemTypes.armor.forEach(function (item) {
-            if (item.data.data.equipped) {
-                for (var _i = 0, _a = entries(def_dam.phys); _i < _a.length; _i++) {
-                    var _b = _a[_i], key = _b[0], dr = _b[1];
-                    var ph = item.data.data.res.phys[key];
-                    def_dam.phys[key].bonus += ph !== "imm" ? ph : 0;
-                    def_dam.phys[key].type = ph === "imm" ? "imm" : def_dam.phys[key].type;
+            if (item.data.type === "armor") {
+                if (item.data.data.equipped) {
+                    for (var _i = 0, _a = (0, ard20_1.obj_keys)(def_dam.phys); _i < _a.length; _i++) {
+                        var key = _a[_i];
+                        var ph = item.data.data.res.phys[key];
+                        def_dam.phys[key].bonus += ph.type !== "imm" ? ph.value : 0;
+                        def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
+                    }
+                    for (var _b = 0, _c = (0, ard20_1.obj_keys)(def_dam.mag); _b < _c.length; _b++) {
+                        var key = _c[_b];
+                        var mg = item.data.data.res.mag[key];
+                        def_dam.mag[key].bonus += mg.type !== "imm" ? mg.value : 0;
+                        def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
+                    }
+                    data.mobility.value += item.data.data.mobility.value;
                 }
-                for (var _c = 0, _d = entries(def_dam.mag); _c < _d.length; _c++) {
-                    var _e = _d[_c], key = _e[0], dr = _e[1];
-                    var mg = item.data.data.res.mag[key];
-                    def_dam.mag[key].bonus += mg !== "imm" ? mg : 0;
-                    def_dam.mag[key].type = mg === "imm" ? "imm" : def_dam.mag[key].type;
-                }
-                data.mobility.value += item.data.data.mobility;
             }
         });
         data.mobility.value += data.mobility.bonus;
         // Loop through ability scores, and add their modifiers to our sheet output.
-        for (var _i = 0, _o = Object.values(attributes); _i < _o.length; _i++) {
-            var ability = _o[_i];
+        for (var _i = 0, _l = Object.values(attributes); _i < _l.length; _i++) {
+            var ability = _l[_i];
             // Calculate the modifier using d20 rules.
             ability.total = ability.value + ability.bonus;
             ability.mod = Math.floor((ability.value - 10) / 2);
@@ -140,71 +123,46 @@ var ARd20Actor = /** @class */ (function (_super) {
         }
         advancement.xp.bar_max = advancement.xp.level - advancement.xp.level_min;
         advancement.xp.bar_min = advancement.xp.used - advancement.xp.level_min;
-        /*
-        calculate proficiency bonus and die
-        */
-        //advancement.prof_bonus = Math.floor((7 + advancement.level) / 4);
-        //advancement.prof_die = "1d" + advancement.prof_bonus * 2;
-        /*
-        calculate character's defences, including damage resistances
-        */
         def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
         def_stats.reflex.label = "Reflex";
         def_stats.fortitude.value = 10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
         def_stats.fortitude.label = "Fortitude";
         def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
         def_stats.will.label = "Will";
-        for (var _p = 0, _q = obj_entries(CONFIG.ARd20.DamageSubTypes); _p < _q.length; _p++) {
-            var _r = _q[_p], key = _r[0], dr = _r[1];
+        for (var _m = 0, _o = (0, ard20_1.obj_entries)(CONFIG.ARd20.DamageSubTypes); _m < _o.length; _m++) {
+            var _p = _o[_m], key = _p[0], dr = _p[1];
             if (!(key === "force" || key === "rad" || key === "psychic")) {
                 def_dam.phys[key].value = ((_b = def_dam.phys[key]) === null || _b === void 0 ? void 0 : _b.value) || ((_c = def_dam.phys[key]) === null || _c === void 0 ? void 0 : _c.type) !== "imm" ? Math.max(isNaN(def_dam.phys[key].value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key].bonus : 0;
-                def_dam.phys[key].label = (_d = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _d !== void 0 ? _d : CONFIG.ARd20.DamageSubTypes[key];
+                def_dam.phys[key].name = (_d = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _d !== void 0 ? _d : CONFIG.ARd20.DamageSubTypes[key];
             }
             def_dam.mag[key].value = ((_e = def_dam.mag[key]) === null || _e === void 0 ? void 0 : _e.value) || ((_f = def_dam.mag[key]) === null || _f === void 0 ? void 0 : _f.type) !== "imm" ? Math.max(isNaN(def_dam.mag[key].value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key].bonus : 0;
-            def_dam.mag[key].label = (_g = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _g !== void 0 ? _g : CONFIG.ARd20.DamageSubTypes[key];
+            def_dam.mag[key].name = (_g = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _g !== void 0 ? _g : CONFIG.ARd20.DamageSubTypes[key];
         }
         //calculate rolls for character's skills
-        for (var _s = 0, _t = obj_entries(data.skills); _s < _t.length; _s++) {
-            var _u = _t[_s], key = _u[0], skill = _u[1];
+        for (var _q = 0, _r = (0, ard20_1.obj_entries)(data.skills); _q < _r.length; _q++) {
+            var _s = _r[_q], key = _s[0], skill = _s[1];
             skill.level = skill.level < 4 ? skill.level : 4;
             skill.value = skill.level * 4 + skill.bonus;
             skill.name = (_h = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _h !== void 0 ? _h : CONFIG.ARd20.Skills[key];
-            skill.rankName = (_j = game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level))) !== null && _j !== void 0 ? _j : getValues(CONFIG.ARd20.Rank, skill.level);
+            skill.rankName = (_j = game.i18n.localize((0, ard20_1.getValues)(CONFIG.ARd20.Rank, skill.level))) !== null && _j !== void 0 ? _j : (0, ard20_1.getValues)(CONFIG.ARd20.Rank, skill.level);
         }
-        function obj_entries(obj) {
-            return Object.entries(obj);
-        }
-        function getValues(SourceObject, key) {
-            return SourceObject[key];
-        }
-        function obj_keys(obj) {
-            return Object.keys(obj);
-        }
-        //calculate character's armor,weapon and tool proficinecies
-        var weapon_set = game.settings.get("ard20", "proficiencies").weapon;
-        for (var _v = 0, _w = obj_keys(weapon_set); _v < _w.length; _v++) {
-            var key = _w[_v];
-            prof_weapon[key].value = prof_weapon[key].value ? prof_weapon[key].value : 0;
-            prof_weapon[key].type = weapon_set[key].type;
-            prof_weapon[key].name = weapon_set[key].name;
-            prof_weapon[key].type_hover =
-                (_k = game.i18n.localize(getValues(CONFIG.ARd20.WeaponType, prof_weapon[key].type))) !== null && _k !== void 0 ? _k : getValues(CONFIG.ARd20.WeaponType, prof_weapon[key].type);
-            prof_weapon[key].type_value =
-                (_l = game.i18n.localize(CONFIG.ARd20.Rank[prof_weapon[key].value])) !== null && _l !== void 0 ? _l : CONFIG.ARd20.Rank[prof_weapon[key].value];
-        }
-        if (prof_weapon.length > weapon_set.length) {
-            prof_weapon.splice(weapon_set.length + 1, prof_weapon.length - weapon_set.length);
-        }
-        data.speed.value = ((_m = this.itemTypes.race[0]) === null || _m === void 0 ? void 0 : _m.data.data.speed) + attributes.dex.mod + data.speed.bonus;
+        proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map(function (setting, key) {
+            var _a;
+            return __assign(__assign({}, setting), { value: (_a = proficiencies.weapon[key].value) !== null && _a !== void 0 ? _a : 0 });
+        });
+        data.speed.value = ((_k = this.itemTypes.race[0]) === null || _k === void 0 ? void 0 : _k.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
+        data.speed.value += attributes.dex.mod + data.speed.bonus;
     };
     /**
      * Prepare NPC type specific data.
      */
     ARd20Actor.prototype._prepareNpcData = function (actorData) {
+        //@ts-expect-error
         if (actorData.type !== "npc")
             return;
         // Make modifications to data here. For example:
         var data = actorData.data;
+        //@ts-expect-error
         data.xp = data.cr * data.cr * 100;
     };
     /**
@@ -218,32 +176,33 @@ var ARd20Actor = /** @class */ (function (_super) {
     /**
      * Roll an Ability Test
      * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-     * @param {Number} abilityId    The ability ID (e.g. "str")
+     * @param {Number} attributeId    The ability ID (e.g. "str")
      * @param {Object} options      Options which configure how ability tests are rolled
      * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
      */
-    ARd20Actor.prototype.rollAbilityTest = function (abilityId, options) {
-        var _a;
-        if (options === void 0) { options = {}; }
-        var label = game.i18n.localize(CONFIG.ARd20.Attributes[abilityId]);
-        var abl = this.data.data.attributes;
+    ARd20Actor.prototype.rollAbilityTest = function (attributeId, options) {
+        var label = game.i18n.localize((0, ard20_1.getValues)(CONFIG.ARd20.Attributes, attributeId));
+        var actorData = this.data.data;
+        var attributes = actorData.attributes;
+        var attr = (0, ard20_1.getValues)(attributes, attributeId);
         // Construct parts
         var parts = ["@mod"];
-        var data = { mod: abl.mod };
+        var data = { mod: attr };
         // Add provided extra roll parts now because they will get clobbered by mergeObject below
-        if (((_a = options.parts) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+        if (options.parts.length > 0) {
             parts.push.apply(parts, options.parts);
         }
         // Roll and return
         var rollData = foundry.utils.mergeObject(options, {
             parts: parts,
             data: data,
-            title: game.i18n.format("ARd20.AttributePromptTitle", { ability: label }),
+            title: game.i18n.format("ARd20.AttributePromptTitle", { attribute: label }),
             messageData: {
                 speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
-                "flags.ard20.roll": { type: "ability", abilityId: abilityId },
+                "flags.ard20.roll": { type: "attribute", attributeId: attributeId },
             },
         });
+        //@ts-expect-error
         return (0, dice_js_1.d20Roll)(rollData);
     };
     /**
@@ -254,36 +213,26 @@ var ARd20Actor = /** @class */ (function (_super) {
      * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
      */
     ARd20Actor.prototype.rollSkill = function (skillId, options) {
-        var _a;
-        if (options === void 0) { options = {}; }
-        var skl = this.data.data.skills[skillId];
+        var skl = (0, ard20_1.getValues)(this.data.data.skills, skillId);
         // Compose roll parts and data
-        var parts = ["@mod"];
-        var data = { attributes: this.getRollData().attributes };
-        //if character'skill have prof_bonus and/or prof_die, they will be added to roll dialog
-        if (skl.prof_bonus) {
-            parts.unshift("@prof_bonus");
-            data.prof_bonus = skl.prof_bonus;
-        }
-        if (skl.prof_die) {
-            parts.unshift("@prof_die");
-            data.prof_die = skl.prof_die;
-        }
+        var parts = ["@proficiency", "@mod"];
+        var data = { attributes: this.getRollData().attributes, proficiency: skl.value };
         // Add provided extra roll parts now because they will get clobbered by mergeObject below
-        if (((_a = options.parts) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+        if (options.parts.length > 0) {
             parts.push.apply(parts, options.parts);
         }
         // Roll and return
         var rollData = foundry.utils.mergeObject(options, {
             parts: parts,
             data: data,
-            title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize(CONFIG.ARd20.skills[skillId]) }),
+            title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize((0, ard20_1.getValues)(CONFIG.ARd20.Skills, skillId)) }),
             messageData: {
                 speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
                 "flags.ard20.roll": { type: "skill", skillId: skillId },
             },
             chooseModifier: true,
         });
+        //@ts-expect-error
         return (0, dice_js_1.d20Roll)(rollData);
     };
     return ARd20Actor;

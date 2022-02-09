@@ -86,7 +86,7 @@ declare global {
     };
     proficiency: {
       level: number;
-      levelName:string
+      levelName: string;
     };
     damage: {
       common: {};
@@ -120,11 +120,14 @@ declare global {
   interface FeatureDataSourceData extends ItemBaseTemplate {
     source: {
       value: Array<string>;
+      label: string;
     };
     xp: Array<number>;
     level: {
       initial: number;
       current: number;
+      has:boolean
+      max:number
     };
     req: {
       values: Array<any>;
@@ -153,9 +156,9 @@ declare global {
         };
       };
       skills: {
-        [Skill in Skills]:{
-          value:number
-        }
+        [Skill in Skills]: {
+          value: number;
+        };
       };
     };
   }
@@ -171,6 +174,11 @@ declare global {
     sub_type_array: WeaponProficienciesSetting[];
     proficiency: WeaponDataSourceData["proficiency"] & {
       name: string;
+    };
+    damage: {
+      common: Array<DamageFormula>;
+      ver: DamageFormula;
+      current: DamageFormula;
     };
     type: WeaponDataSourceData["type"] & {
       name: string;
@@ -194,5 +202,10 @@ declare global {
     mobility: ArmorDataSourceData["mobility"] & {
       value: number;
     };
+  }
+  interface DamageFormula {
+    [index: number]: DamageFormula;
+    formula: string;
+    parts: [];
   }
 }

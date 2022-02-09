@@ -70,7 +70,6 @@ Hooks.once("init", async function () {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    //@ts-expect-error
     Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
     //@ts-expect-error
@@ -172,6 +171,7 @@ export function rollItemMacro(itemName: string){
     if (!item) return ui.notifications!.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
     // Trigger the item roll
+    //@ts-expect-error
     return item.roll();
   }
 }

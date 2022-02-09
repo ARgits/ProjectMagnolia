@@ -53,7 +53,7 @@ declare global {
     WeaponProp: { [Prop in WeaponProperties]: string };
     WeaponType: { [Type in WeaponType]: string };
     AbilXP: Array<number>;
-    SkillXp: {
+    SkillXP: {
       0: Array<number>;
       1: Array<number>;
     };

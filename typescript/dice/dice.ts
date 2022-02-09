@@ -11,7 +11,9 @@ export { default as DamageRoll } from "./damage-roll.js";
  *
  * @return {string}                        The resulting simplified formula
  */
-export function simplifyRollFormula(formula: string, data: object, { constantFirst = false }: * @param {boolean} options.constantFirst Puts the constants before the dice terms in the resulting formula = {}): string {
+
+export function simplifyRollFormula(formula: string, data: object, { constantFirst = false }): string {
+ 
   const roll = new Roll(formula, data); // Parses the formula and replaces any @properties
   const terms = roll.terms;
 
@@ -112,28 +114,51 @@ function _isUnsupportedTerm(term: any): boolean {
  *
  * @return {Promise<D20Roll|null>}  The evaluated D20Roll, or null if the workflow was cancelled
  */
+//@ts-expect-error
 export async function d20Roll({
+  //@ts-expect-error
   parts = [],
+  //@ts-expect-error
   data = {},
+  //@ts-expect-error
   advantage,
+  //@ts-expect-error
   disadvantage,
+  //@ts-expect-error
   fumble = 1,
+  //@ts-expect-error
   critical = 20,
+  //@ts-expect-error
   targetValue,
+  //@ts-expect-error
   chooseModifier = false,
+  //@ts-expect-error
   fastForward = false,
+  //@ts-expect-error
   event,
+  //@ts-expect-error
   template,
+  //@ts-expect-error
   title,
+  //@ts-expect-error
   dialogOptions,
+  //@ts-expect-error
   chatMessage = true,
+  //@ts-expect-error
   messageData = {},
+  //@ts-expect-error
   rollMode,
+  //@ts-expect-error
   speaker,
+  //@ts-expect-error
   options,
+  //@ts-expect-error
   flavor,
+  //@ts-expect-error
   canMult,
+  //@ts-expect-error
   mRoll, 
+  //@ts-expect-error
 }: string[] = {}): Promise<D20Roll | null> {
   // Handle input arguments
   const formula = ["1d20"].concat(parts).join(" + ");
@@ -144,6 +169,7 @@ export async function d20Roll({
   }
 
   // Construct the D20Roll instance
+  //@ts-expect-error
   const roll = new CONFIG.Dice.D20Roll(formula, data, {
     flavor: flavor || title,
     advantageMode,
@@ -190,10 +216,14 @@ export async function d20Roll({
  * Determines whether this d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied
  * @returns {{isFF: boolean, advantageMode: number}}  Whether the roll is fast-forward, and its advantage mode
  */
+//@ts-expect-error
 function _determineAdvantageMode({ event, advantage = false, disadvantage = false, fastForward = false } = {}): { isFF: boolean; advantageMode: number; } {
   const isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
+  //@ts-expect-error
   let advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.NORMAL;
+  //@ts-expect-error
   if (advantage || event?.altKey) advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.ADVANTAGE;
+  //@ts-expect-error
   else if (disadvantage || event?.ctrlKey || event?.metaKey) advantageMode = CONFIG.Dice.D20Roll.ADV_MODE.DISADVANTAGE;
   return { isFF, advantageMode };
 }
@@ -231,28 +261,51 @@ function _determineAdvantageMode({ event, advantage = false, disadvantage = fals
  *
  * @return {Promise<DamageRoll|null>} The evaluated DamageRoll, or null if the workflow was canceled
  */
+//@ts-expect-error
 export async function damageRoll({
+  //@ts-expect-error
   parts = [],
+  //@ts-expect-error
   data, // Roll creation
+  //@ts-expect-error
   critical = false,
+  //@ts-expect-error
   damType,
+  //@ts-expect-error
   damageType,
+  //@ts-expect-error
   criticalBonusDice,
+  //@ts-expect-error
   criticalMultiplier,
+  //@ts-expect-error
   multiplyNumeric, // Damage customization
+  //@ts-expect-error
   fastForward = false,
+  //@ts-expect-error
   event,
+  //@ts-expect-error
   allowCritical = true,
+  //@ts-expect-error
   template,
+  //@ts-expect-error
   title,
+  //@ts-expect-error
   dialogOptions, // Dialog configuration
+  //@ts-expect-error
   chatMessage = false,
+  //@ts-expect-error
   messageData = {},
+  //@ts-expect-error
   rollMode,
+  //@ts-expect-error
   speaker,
+  //@ts-expect-error
   canMult,
+  //@ts-expect-error
   flavor,
+  //@ts-expect-error
   mRoll
+  //@ts-expect-error
 }: string[] = {}): Promise<DamageRoll | null> {
   console.log(canMult)
   // Handle input arguments
@@ -261,6 +314,7 @@ export async function damageRoll({
   // Construct the DamageRoll instance
   const formula = parts.join(" + ");
   const { isCritical, isFF } = _determineCriticalMode({ critical, fastForward, event });
+  //@ts-expect-error
   const roll = new CONFIG.Dice.DamageRoll(formula, data, {
     flavor: flavor || title,
     critical: isCritical,
@@ -308,6 +362,7 @@ export async function damageRoll({
  * Determines whether this d20 roll should be fast-forwarded, and whether advantage or disadvantage should be applied
  * @returns {{isFF: boolean, isCritical: boolean}}  Whether the roll is fast-forward, and whether it is a critical hit
  */
+//@ts-expect-error
 function _determineCriticalMode({ event, critical = false, fastForward = false } = {}): { isFF: boolean; isCritical: boolean; } {
   const isFF = fastForward || (event && (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey));
   if (event?.altKey) critical = true;
