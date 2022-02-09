@@ -33,8 +33,8 @@ declare global {
     | "two"
     | "ver";
   type WeaponType = "amb" | "axe" | "blu" | "bow" | "sli" | "cbl" | "cro" | "dbl" | "fir" | "fla" | "whi" | "ham" | "pic" | "pol" | "spe" | "thr";
-  type DmgPhysTypes = "acid" | "blud" | "cold" | "fire" | "light" | "necr" | "pierc" | "poison" | "slash";
-  type DmgTypes = DmgPhysTypes | "force" | "rad" | "psychic";
+  type DmgPhysTypes = "acid" | "bludgeoning" | "cold" | "fire" | "lightning" | "necr" | "piercing" | "poison" | "slashing";
+  type DmgTypes = DmgPhysTypes | "force" | "radiant" | "psychic";
   interface ARd20CONFIGData {
     Attributes: { [Ability in Attributes]: string };
     AttributeAbbreviations: { [Ability in Attributes]: string };

@@ -121,16 +121,16 @@ ARd20.DamageTypes = {
 };
 ARd20.DamageSubTypes = {
   acid: "ARd20.DamageAcid",
-  blud: "ARd20.DamageBludgeoning",
+  bludgeoning: "ARd20.DamageBludgeoning",
   cold: "ARd20.DamageCold",
   fire: "ARd20.DamageFire",
   force: "ARd20.DamageForce",
-  light: "ARd20.DamageLightning",
+  lightning: "ARd20.DamageLightning",
   necr: "ARd20.DamageNecrotic",
-  pierc: "ARd20.DamagePiercing",
+  piercing: "ARd20.DamagePiercing",
   poison: "ARd20.DamagePoison",
-  slash: "ARd20.DamageSlashing",
-  rad: "ARd20.DamageRadiant",
+  slashing: "ARd20.DamageSlashing",
+  radiant: "ARd20.DamageRadiant",
   psychic: "ARd20.DamagePsychic",
 };
 ARd20.ResistTypes = {
