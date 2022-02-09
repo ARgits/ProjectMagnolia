@@ -13,7 +13,7 @@
             </div>
             {{#unless isReady}}
                 <aside>
-                    <div>Attributes {{#if allow.ability}}<i class=" check fas fa-check"></i>{{else}}<i class="check fas fa-times"></i>{{/if}}</div>
+                    <div>Attributes {{#if allow.attribute}}<i class=" check fas fa-check"></i>{{else}}<i class="check fas fa-times"></i>{{/if}}</div>
                     <div>Race {{#if allow.race}}<i class="check fas fa-check"></i>{{else}}<i class="check fas fa-times"></i>{{/if}}</div>
                     <div>Final {{#if allow.final}}<i class="check fas fa-check"></i>{{else}}<i class="check fas fa-times"></i>{{/if}}</div>
                 </aside>
@@ -43,16 +43,16 @@
                     <th>XP cost</th>
                     <th class="description">Description</th>
                 </tr>
-                {{#each abilities as |ability key|}}
+                {{#each attributes as |attribute key|}}
                     <tr>
-                        <td>{{ability.label}}</td>
-                        <td><button class="change far fa-arrow-alt-circle-down" data-type="ability" type="button" {{#if ability.isEq}} disabled {{/if}} data-action="minus" data-key="{{key}}"></button></td>
-                        <td><input readonly type="number" class="max-dig-2" value={{ability.value}} name="abilities.{{key}}.value" /></td>
-                        <td>{{numberFormat ability.mod decimals=0 sign=true}}</td>
-                        <td><button class="change far fa-arrow-alt-circle-up" data-type="ability" type="button" data-action="plus" data-key="{{key}}" {{#if ability.isXP}} disabled{{/if}}></button></td>
-                        <td class="max-dig-5">{{numberFormat ability.xp decimals=0 sign=false}}</td>
+                        <td>{{attribute.label}}</td>
+                        <td><button class="change far fa-arrow-alt-circle-down" data-type="attribute" type="button" {{#if attribute.isEq}} disabled {{/if}} data-action="minus" data-key="{{key}}"></button></td>
+                        <td><input readonly type="number" class="max-dig-2" value={{attribute.value}} name="attributes.{{key}}.value" /></td>
+                        <td>{{numberFormat attribute.mod decimals=0 sign=true}}</td>
+                        <td><button class="change far fa-arrow-alt-circle-up" data-type="attribute" type="button" data-action="plus" data-key="{{key}}" {{#if attribute.isXP}} disabled{{/if}}></button></td>
+                        <td class="max-dig-5">{{numberFormat attribute.xp decimals=0 sign=false}}</td>
                         {{#if (eq key "str")}}
-                            <td rowspan="0" class="description"> ability description</td>
+                            <td rowspan="0" class="description"> attribute description</td>
                         {{/if}}
                     </tr>
                 {{/each}}
@@ -114,7 +114,7 @@
                             <input hidden name="profs.weapon.{{key}}.value" value="{{prof.value}}" type="number" />
                             <label for="profs.weapon.{{key}}.value" data-label="{{prof.hover}}">{{prof.value_hover}}</label>
                             <button class="change far fa-arrow-alt-circle-up" data-type="prof" type="button" {{#if prof.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button>
-                            {{#if prof.xp}}<span class="ability" name="profs.weapon.{{key}}.xp">{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
+                            {{#if prof.xp}}<span class="attribute" name="profs.weapon.{{key}}.xp">{{numberFormat prof.xp decimals=0 sign=false}}</span>{{/if}}
                         </div>
                     {{/each}}
                 </div>

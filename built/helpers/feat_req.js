@@ -25,7 +25,7 @@ export class FeatRequirements extends FormApplication {
             let pack_list = [];
             let folder_list = [];
             //@ts-expect-error
-            this.type_list = ["ability", "skill", "feat"];
+            this.type_list = ["attribute", "skill", "feat"];
             //@ts-expect-error
             if (this.req.logic)
                 /*Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
@@ -77,7 +77,7 @@ export class FeatRequirements extends FormApplication {
                 this.data.push({
                     name: game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k,
                     value: k,
-                    type: "ability",
+                    type: "attribute",
                 });
             }
             for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
@@ -138,7 +138,7 @@ export class FeatRequirements extends FormApplication {
         //@ts-expect-error
         for (let [k, value] of obj_entries(this.req.values)) {
             //@ts-expect-error
-            this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "ability";
+            this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "attribute";
             //@ts-expect-error
             let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
             //@ts-expect-error

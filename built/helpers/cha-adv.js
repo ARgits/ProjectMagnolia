@@ -31,9 +31,9 @@ export class CharacterAdvancement extends FormApplication {
                 //@ts-expect-error
                 skills: duplicate(this.object.data.data.skills),
                 //@ts-expect-error
-                xp: duplicate(this.object.data.data.attributes.xp),
+                xp: duplicate(this.object.data.data.advancement.xp),
                 //@ts-expect-error
-                profs: duplicate(this.object.data.data.profs),
+                profs: duplicate(this.object.data.data.proficiencies),
                 //@ts-expect-error
                 health: duplicate(this.object.data.data.health),
                 races: { list: [], chosen: null },
@@ -64,12 +64,12 @@ export class CharacterAdvancement extends FormApplication {
                     awail: [], // array of feats that are available to learn
                 },
                 allow: {
-                    ability: false,
+                    attribute: false,
                     race: false,
                     final: false,
                 },
                 hover: {
-                    ability: null,
+                    attribute: null,
                     skill: null,
                     race: null,
                     feat: null,
@@ -233,7 +233,7 @@ export class CharacterAdvancement extends FormApplication {
             v.value_hover = game.i18n.localize(CONFIG.ARd20.Rank[v.value]) ?? CONFIG.ARd20.Rank[v.value];
         }
         /*
-         * Calculate features cost and their availability
+         * Calculate features cost and their availattribute
          */
         //@ts-expect-error
         for (let [k, object] of obj_entries(this.data.feats.awail)) {
@@ -254,7 +254,7 @@ export class CharacterAdvancement extends FormApplication {
             object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp[object.data.level.initial] > this.data.xp.get;
             for (let [key, r] of obj_entries(object.data.req.values)) {
                 switch (r.type) {
-                    case "ability": //check if character's ability is equal or higher than value entered in feature requirements
+                    case "attribute": //check if character's attribute is equal or higher than value entered in feature requirements
                         //@ts-expect-error
                         r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= this.data.attributes[r.value].final));
                         break;
@@ -324,7 +324,7 @@ export class CharacterAdvancement extends FormApplication {
                 abil_sum += abil.value;
             }
             //@ts-expect-error
-            this.data.allow.ability = abil_sum >= 60 && abil_sum <= 80 ? true : false;
+            this.data.allow.attribute = abil_sum >= 60 && abil_sum <= 80 ? true : false;
             //@ts-expect-error
             this.data.allow.race = Boolean(this.data.races.chosen) ? true : false;
             let allow_list = [];
@@ -383,7 +383,7 @@ export class CharacterAdvancement extends FormApplication {
         //@ts-expect-error
         const data = this.data;
         switch (button.dataset.type) {
-            case "ability":
+            case "attribute":
                 switch (button.dataset.action) {
                     case "plus":
                         data.attributes[button.dataset.key].value += 1;
