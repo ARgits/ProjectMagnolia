@@ -1,6 +1,6 @@
 import { ActorData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs";
 import { d20Roll } from "../dice/dice.js";
-import { obj_entries, obj_keys, getValues, array_keys } from "../ard20";
+import { obj_entries, obj_keys, getValues, array_keys } from "../ard20.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}

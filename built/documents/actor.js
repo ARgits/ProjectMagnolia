@@ -1,5 +1,5 @@
 import { d20Roll } from "../dice/dice.js";
-import { obj_entries, obj_keys, getValues } from "../ard20";
+import { obj_entries, obj_keys, getValues } from "../ard20.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
