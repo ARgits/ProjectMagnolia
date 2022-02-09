@@ -1,21 +1,13 @@
 <form>
     <hr />
     <nav class="sheet-tabs tabs" data-group="primary-tabs">
-       {{! <a class="item" data-tab="skills">Skills</a>}}
+        {{! <a class="item" data-tab="skills">Skills</a>}}
         <a class="item" data-tab="weapons">Weapons</a>
         <a class="item" data-tab="armor">Armor</a>
         <a class="item" data-tab="tools">tools</a>
     </nav>
     <hr />
     <section class="sheet-body">
-        {{!<div class="tab" data-tab="skills" data-group="primary-tabs">
-            <div class="ability flexcoll flex-group-center align-center">
-                {{#each proficiencies.skills as |skill key|}}
-                    {{!-- <div class="grid grid-3col">
-                        <input type="text" data-dtype="text" data-name="name" data-key="{{key}}" name="skill.{{key}}.name" value="{{skill.name}}" />
-                    {{!</div>
-            </div>
-        </div>!}}
         <div class="tab" data-tab="weapons" data-group="primary-tabs">
             <div class="ability flexcoll flex-group-center align-center">
                 {{#each proficiencies.weapon as |pr key|}}
