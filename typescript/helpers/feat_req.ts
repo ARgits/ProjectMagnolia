@@ -3,7 +3,6 @@ import { ARd20Item } from "../documents/item";
 
 export class FeatRequirements extends FormApplication {
   static get defaultOptions() {
-    //@ts-expect-error
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Feature Requirements",

@@ -11,7 +11,6 @@ import { DEFAULT_TOKEN } from "@league-of-foundry-developers/foundry-vtt-types/s
 export class ARd20ActorSheet extends ActorSheet {
   /** @override */
   static get defaultOptions(): ActorSheet.Options {
-    //@ts-expect-error
     return mergeObject(super.defaultOptions, {
       classes: ["ard20", "sheet", "actor"],
       template: "systems/ard20/templates/actor/actor-sheet.html",
@@ -64,7 +63,7 @@ export class ARd20ActorSheet extends ActorSheet {
     }
 
     // Add roll data for TinyMCE editors.
-  //@ts-expect-error
+    //@ts-expect-error
     context.rollData = context.actor.getRollData();
 
     // Prepare active effects
@@ -122,8 +121,8 @@ export class ARd20ActorSheet extends ActorSheet {
     };
 
     // Iterate through items, allocating to containers
-    //@ts-expect-error
     for (let i of context.items) {
+      //@ts-expect-error
       i.img = i.img || DEFAULT_TOKEN;
       // Append to gear.
       if (i.type === "item") {
@@ -135,15 +134,18 @@ export class ARd20ActorSheet extends ActorSheet {
       }
       // Append to spells.
       else if (i.type === "spell") {
+        //@ts-expect-error
         if (i.data.spellLevel != undefined) {
           //@ts-expect-error
           spells[i.data.spellLevel].push(i);
         }
       } else if (i.type === "armor" || i.type === "weapon") {
         const isActive = getProperty(i.data, "equipped");
-
+        //@ts-expect-error
         i.toggleClass = isActive ? "active" : "";
+        //@ts-expect-error
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
+        //@ts-expect-error
         i.data.equipped = !isActive;
         if (i.type === "armor") armor.push(i);
         else weapons.push(i);
@@ -166,7 +168,7 @@ export class ARd20ActorSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  activateListeners(html:any) {
+  activateListeners(html: any) {
     super.activateListeners(html);
     //@ts-expect-error
     $(".select2", html).select2();
@@ -187,7 +189,7 @@ export class ARd20ActorSheet extends ActorSheet {
     html.find(".item-create").click(this._onItemCreate.bind(this));
 
     // Delete Inventory Item
-    html.find(".item-delete").click((ev:any) => {
+    html.find(".item-delete").click((ev: any) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
       item!.delete();
@@ -246,7 +248,7 @@ export class ARd20ActorSheet extends ActorSheet {
     event.preventDefault();
     //@ts-ignore
     let ability = event.currentTarget!.parentElement.dataset.ability;
-    return this.actor.rollAbilityTest(ability, { event:event});
+    return this.actor.rollAbilityTest(ability, { event: event });
   }
   _onRollSkillCheck(event: Event) {
     event.preventDefault();
@@ -264,7 +266,7 @@ export class ARd20ActorSheet extends ActorSheet {
     const hasDamage = item!.data.data.hasDamage;
 
     //@ts-expect-error
-    if (item) return item.roll({ hasAttack, hasDamage});
+    if (item) return item.roll({ hasAttack, hasDamage });
   }
 
   /**

@@ -8,7 +8,6 @@ import { FeatRequirements } from "../helpers/feat_req.js";
 export class ARd20ItemSheet extends ItemSheet {
   /** @override */
   static get defaultOptions() {
-    //@ts-expect-error
     return mergeObject(super.defaultOptions, {
       classes: ["ard20", "sheet", "item"],
       width: 520,

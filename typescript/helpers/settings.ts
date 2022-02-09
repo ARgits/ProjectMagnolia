@@ -59,7 +59,6 @@ export const registerSystemSettings = function () {
 };
 class ProfFormApp extends FormApplication {
   static get defaultOptions() {
-    //@ts-expect-error
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Armor/Weapon Proficiencies",
@@ -125,7 +124,6 @@ class ProfFormApp extends FormApplication {
 //@ts-expect-error
 class FeatFormApp extends FormApplication<FormApplication.Options, FeatFormAppData> {
   static get defaultOptions() {
-    //@ts-expect-error
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Features Management",

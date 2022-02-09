@@ -2,7 +2,6 @@ import { obj_entries } from "../ard20";
 
 export class CharacterAdvancement extends FormApplication {
   static get defaultOptions() {
-    //@ts-expect-error
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Character Advancement",
