@@ -47,7 +47,6 @@ export default class DamageRoll extends Roll {
    */
   configureDamage() {
     let critBonus = 0;
-    //@ts-expect-error
     for (let [i, term] of this.terms.entries()) {
       if (!(term instanceof OperatorTerm)) {
         //@ts-expect-error
