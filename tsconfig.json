@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "outDir": "./built",
-        "allowJs": true,
         "types": ["@league-of-foundry-developers/foundry-vtt-types"],
         "moduleResolution": "node",
         "strict": true,
