@@ -178,7 +178,7 @@ export class ARd20Item extends Item {
   prepareFinalAttributes() {
     const itemData = this.data;
     //@ts-expect-error
-    const abil: { [index: string]: number } = (data.abil = {});
+    const abil: { [index: string]: number } = (itemData.abil = {});
     for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
       abil[k] = this.isOwned ? getProperty(this.actor!.data, `data.attributes.${k}.mod`) : null;
     }

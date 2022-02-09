@@ -23,29 +23,29 @@
                         <span data-label="data.speed.value">{{numberFormat data.speed.value decimals=0 sign=false}}</span>
                     </div>
                     <div class="resource flexcol grid-span-2">
-                        <label for="data.attributes.xp.used" class="resource-label">xp</label>
+                        <label for="data.advancement.xp.used" class="resource-label">xp</label>
                         <div class="resource-content flexrow flex-center">
-                            <input type="number" name="data.attributes.xp.get" value="{{data.attributes.xp.get}}" />
+                            <input type="number" name="data.advancement.xp.get" value="{{data.advancement.xp.get}}" />
                             <span>/</span>
-                            <input type="number" {{#unless isGM}} readonly{{/unless}} name="data.attributes.xp.used" value="{{data.attributes.xp.used}}" />
+                            <input type="number" {{#unless isGM}} readonly{{/unless}} name="data.advancement.xp.used" value="{{data.advancement.xp.used}}" />
                         </div>
                     </div>
                     <div class="resource flexcol grid-span-3">
                         <div>
-                            <progress max="{{data.attributes.xp.bar_max}}" value="{{data.attributes.xp.bar_min}}"></progress>
-                            <span data-label="data.attributes.xp.level">{{numberFormat data.attributes.xp.level decimals=0 sign=false}}</span>
+                            <progress max="{{data.advancement.xp.bar_max}}" value="{{data.advancement.xp.bar_min}}"></progress>
+                            <span data-label="data.advancement.xp.level">{{numberFormat data.advancement.xp.level decimals=0 sign=false}}</span>
                             <div class="resource-content flexrow flex-center flex-between">
-                                <label for="data.attributes.level" class="resource-label">Level </label><span class="resource-content" data-label="data.attributes.level">{{numberFormat data.attributes.level decimals=0 sign=false}}</span>
+                                <label for="data.advancement.level" class="resource-label">Level </label><span class="resource-content" data-label="data.advancement.level">{{numberFormat data.advancement.level decimals=0 sign=false}}</span>
                             </div>
                         </div>
                         <div class="flex-group-center grid grid-5col">
                             <div class="resource-content flexrow flex-center flex-between grid grid-span-2">
-                                <label for="data.attributes.prof_bonus" class="resource-label">Bonus</label>
-                                <span class="resource-content flex-center" data-label="data.attributes.prof_bonus">{{numberFormat data.attributes.prof_bonus decimals=0 sign=false}}</span>
+                                <label for="data.advancement.prof_bonus" class="resource-label">Bonus</label>
+                                <span class="resource-content flex-center" data-label="data.advancement.prof_bonus">{{numberFormat data.advancement.prof_bonus decimals=0 sign=false}}</span>
                             </div>
                             <div class="resource-content flexrow flex-center flex-between grid-span-2">
-                                <label for="data.attributes.prof_die" class="resource-label">die</label>
-                                <span class="resource-content rollable flex-center" data-roll="@attributes.prof_die" data-label="data.attributes.prof_die">{{data.attributes.prof_die}}</span>
+                                <label for="data.advancement.prof_die" class="resource-label">die</label>
+                                <span class="resource-content rollable flex-center" data-roll="@advancement.prof_die" data-label="data.advancement.prof_die">{{data.advancement.prof_die}}</span>
                             </div>
                             <button type="button" class="config-button" data-action="adv">Advancement</button>
                         </div>
@@ -71,21 +71,21 @@
 
             <div class="tab main" data-group="primary" data-tab="main">
                 <section class="grid grid-6col flexcol">
-                    <aside class="ability grid grid-3col">
-                        <div class="ability flex-group-center grid-span-2">
-                            {{#each data.abilities as |ability key|}}
-                                <div class="ability flexrow" data-ability="{{key}}">
-                                    <label for="data.abilities.{{key}}.value" class="resource-label ability-name rollable flexlarge align-left" data-label="{{ability.label}}">{{ability.label}}</label>
-                                    <input name="data.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
-                                    <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+                    <aside class="attribute grid grid-3col">
+                        <div class="attribute flex-group-center grid-span-2">
+                            {{#each data.attributes as |attribute key|}}
+                                <div class="attribute flexrow" data-attribute="{{key}}">
+                                    <label for="data.attributes.{{key}}.value" class="resource-label attribute-name rollable flexlarge align-left" data-label="{{attribute.label}}">{{attribute.label}}</label>
+                                    <input name="data.attributes.{{key}}.value" value="{{attribute.value}}" data-dtype="Number" />
+                                    <span class="attribute-mod rollable" data-roll="d20+@attributes.{{key}}.mod" data-label="{{attribute.label}}">{{numberFormat attribute.mod decimals=0 sign=true}}</span>
                                 </div>
                             {{/each}}
                         </div>
                         <div>
                             {{#each data.defences.stats as |defence key|}}
-                                <div class="ability flexrow">
+                                <div class="attribute flexrow">
                                     <label for="data.defences.stats.{{key}}.value" class="resource-label flexlarge align-left rollable" data-roll="1d20+{{numberFormat defence.value decimals=0 sign=false}}-10" data-label="{{defence.label}}">{{defence.label}}</label>
-                                    <span class="ability-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0 sign=false}}
+                                    <span class="attribute-mod " data-label="{{defence.label}}">{{numberFormat defence.value decimals=0 sign=false}}
                                 </div>
                             {{/each}}
                         </div>
