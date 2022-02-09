@@ -1,7 +1,6 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
 import { CharacterAdvancement } from "../helpers/cha-adv.js";
 import { getValues, obj_entries } from "../ard20.js";
-import { DEFAULT_TOKEN } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/constants.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
