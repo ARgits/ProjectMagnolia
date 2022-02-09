@@ -167,6 +167,11 @@
           }
         },
         "conditions": {}
+      },
+      "proficiencies":{
+        "weapon":[],
+        "armor":[],
+        "tool":[]
       }
     },
     "npc": {
