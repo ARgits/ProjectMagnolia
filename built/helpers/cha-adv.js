@@ -202,19 +202,12 @@ export class CharacterAdvancement extends FormApplication {
             //@ts-expect-error
             this.data.attributes[k].isXP = this.data.xp.get < this.data.attributes[k].xp;
             //@ts-expect-error
-            let race_abil = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].value ?? 0;
+            let race_abil = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.attributes[k].value ?? 0;
             //@ts-expect-error
-            let race_sign = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.abil[k].sign ? 1 : -1;
-            //@ts-expect-error
-            this.data.attributes[k].final = this.data.isReady ? this.data.attributes[k].value : this.data.attributes[k].value + race_abil * race_sign;
+            this.data.attributes[k].final = this.data.isReady ? this.data.attributes[k].value : this.data.attributes[k].value + race_abil;
             //@ts-expect-error
             this.data.attributes[k].mod = Math.floor((this.data.attributes[k].final - 10) / 2);
         }
-        /*
-         * Calculate Character's hp
-         */
-        //@ts-expect-error
-        this.data.health.max = this.data.races.list.filter((race) => race.chosen === true)?.[0]?.data.startHP;
         /*
          * Calculate skills' xp cost
          */
@@ -306,15 +299,12 @@ export class CharacterAdvancement extends FormApplication {
         //@ts-expect-error
         for (let [key, race] of obj_entries(this.data.races.list)) {
             //@ts-expect-error
-            let dieNumber = Math.ceil(Math.max(this.data.attributes.con.value + race.data.bonus.abil.con.value - 7, 0) / 4);
-            let firstDie = CONFIG.ARd20.HPDice.slice(CONFIG.ARd20.HPDice.indexOf(race.data.FhpDie));
-            //@ts-expect-error
-            let race_mod = Math.floor((this.data.attributes.con.value + race.data.bonus.abil.con.value - 10) / 2);
-            //@ts-expect-error
-            race.data.startHP = new Roll(firstDie[dieNumber]).evaluate({ maximize: true }).total + race_mod;
-            //@ts-expect-error
             race.chosen = this.data.races.chosen === race._id ? true : false;
         }
+        //@ts-expect-error
+        const raceHP = this.data.races.chosen ? game.items?.get(this.data.races.chosen)?.data.data.health : 0;
+        //@ts-expect-error
+        this.data.health.max = this.data.attributes.con.value + raceHP;
         // At character creation, check all conditions
         //@ts-expect-error
         if (!this.object.data.isReady) {

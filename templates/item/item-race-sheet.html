@@ -24,25 +24,14 @@
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{!-- As you add new fields, add them in here! --}}
-      speed<input name="data.speed" type="number" min="6" value="{{data.speed}}" />
-      start dice <select name="data.FhpDie">
-        {{#select data.FhpDie}}
-          {{#each data.HPdie as |hp key|}}
-            <option value="{{hp}}">{{hp}}</option>
-          {{/each}}
-        {{/select}}
-      </select>
+      <label for="data.speed">speed<input name="data.speed" type="number" data-dType="number" min="6" value="{{data.speed}}" /></label>
+      <label for="data.health">health<input name="data.health" type="number" data-dType="number" value="{{data.health}}" /></label>
       attribute bonuses
-      {{#each data.bonus.abil as |ability key|}}
-        {{log ability key}}
+      {{#each data.bonus.attributes as |attribute key|}}
+        {{log attribute key}}
         <div class="grid grid-6col flexrow">
           <label class="grid-span-3">{{key}}</label>
-          {{#if ability.sign}}
-            <i class="fas fa-plus rollable" data-key="{{key}}"></i>
-          {{else}}
-            <i class="fas fa-minus rollable" data-key="{{key}}"></i>
-          {{/if}}
-          <input class="grid-span-2" name="data.bonus.abil.{{key}}.value" type="number" value="{{ability.value}}" />
+          <input class="grid-span-2" name="data.bonus.attributes.{{key}}.value" data-dType="number" type="number" value="{{attribute.value}}" />
         </div>
       {{/each}}
 
