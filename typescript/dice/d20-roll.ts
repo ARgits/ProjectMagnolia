@@ -140,7 +140,7 @@
    * @returns {Promise<D20Roll|null>}         A resulting D20Roll object constructed with the dialog, or null if the dialog was closed
    */
   //@ts-expect-error
-  async configureDialog({ title:string, defaultRollMode:number, canMult:boolean, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll:boolean, chooseModifier = false, defaultAttribute, template } = {}, options = {}) {
+  async configureDialog({ title:string, defaultRollMode:number, canMult:boolean, defaultAction = D20Roll.ADV_MODE.NORMAL, mRoll, chooseModifier = false, defaultAttribute, template } = {}, options = {}) {
     // Render the Dialog inner HTML
     //@ts-expect-error
     const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
@@ -153,7 +153,6 @@
       attributes: CONFIG.ARd20.Attributes,
       //@ts-expect-error
       canMult,
-      //@ts-expect-error
       mRoll,
     });
     let defaultButton = "normal";
