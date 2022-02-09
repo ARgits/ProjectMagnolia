@@ -1,4 +1,5 @@
-export const ARd20 = CONFIG.ARd20;
+//@ts-expect-error
+export const ARd20:typeof CONFIG.ARd20 = {};
 
 ARd20.Attributes = {
   str: "ARd20.AttributeStr",
