@@ -17,6 +17,9 @@ import * as chat from "./helpers/chat.js";
 export function obj_entries(obj) {
     return Object.entries(obj);
 }
+export function arr_entries(arr) {
+    return Object.entries(arr);
+}
 export function getValues(SourceObject, key) {
     return SourceObject[key];
 }

@@ -54,6 +54,7 @@ declare global {
     WeaponType: { [Type in WeaponType]: string };
     AbilXP: Array<number>;
     SkillXP: {
+      [index: number]: number[];
       0: Array<number>;
       1: Array<number>;
     };

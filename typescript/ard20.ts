@@ -18,6 +18,9 @@ import * as chat from "./helpers/chat.js";
 export function obj_entries<Obj extends object>(obj: Obj) {
   return Object.entries(obj) as [keyof Obj, Obj[keyof Obj]][];
 }
+export function arr_entries<Arr extends Array<any>>(arr: Arr) {
+  return Object.entries(arr) as [keyof Arr, Arr[keyof Arr]][];
+}
 export function getValues<Obj extends object>(SourceObject: Obj, key: keyof Obj | string | number) {
   return SourceObject[key as keyof Obj];
 }
@@ -161,7 +164,7 @@ async function createItemMacro(data: {}, slot: number): Promise<any> {
  * @param {string} itemName
  * @return {Promise}
  */
-export function rollItemMacro(itemName: string){
+export function rollItemMacro(itemName: string) {
   if (game instanceof Game) {
     const speaker = ChatMessage.getSpeaker();
     let actor;

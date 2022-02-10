@@ -70,7 +70,7 @@
                     <tr data-key="{{key}}">
                         <td><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></td>
                         <td>{{race.name}}</td>
-                        <td>{{race.data.startHP}}</td>
+                        <td>{{race.data.health}}</td>
                         {{#if (eq key 0)}}
                             <td rowspan="0" class="description">{{{@root.hover.race}}}</td>
                         {{/if}}

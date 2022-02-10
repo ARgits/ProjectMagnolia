@@ -121,14 +121,14 @@ export class ARd20Item extends Item {
         if (data.level.max > 1) {
             let n = (10 - data.level.max) / data.level.max;
             let k = 1.7 + (Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100) * Math.sign(n);
-            if (data.xp.length < data.level.max) {
+            if (data.xp.basicCost.length < data.level.max) {
                 for (let i = 1; i < data.level.max; i++) {
-                    data.xp.push(Math.round((data.xp[i - 1] * k) / 5) * 5);
+                    data.xp.basicCost.push(Math.round((data.xp.basicCost[i - 1] * k) / 5) * 5);
                 }
             }
             else {
                 for (let i = 1; i < data.level.max; i++) {
-                    data.xp[i] = Math.round((data.xp[i - 1] * k) / 5) * 5;
+                    data.xp.basicCost[i] = Math.round((data.xp.basicCost[i - 1] * k) / 5) * 5;
                 }
             }
         }
@@ -616,16 +616,16 @@ export class ARd20Item extends Item {
             props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
           }*/
         /*props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
-      }
-  
-      // Ability activation properties
-      if (data.hasOwnProperty("activation")) {
-        props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
-      }
-  
-      // Filter properties and return
-      data.properties = props.filter((p) => !!p);
-      */
+        }
+    
+        // Ability activation properties
+        if (data.hasOwnProperty("activation")) {
+          props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
+        }
+    
+        // Filter properties and return
+        data.properties = props.filter((p) => !!p);
+        */
         return data;
     }
     /* -------------------------------------------- */

@@ -357,7 +357,6 @@
       },
       "hasDamage": true,
       "hasAttack": true,
-      "xp": [0],
       "level": {
         "initial": 0,
         "current": 0

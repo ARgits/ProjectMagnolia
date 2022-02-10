@@ -11,16 +11,16 @@ declare global {
   interface DataConfig {
     Item: ARd20ItemDataProperties;
   }
-  type ARd20ItemDataSource = ItemDataSource | FeatureDataSource | SpellDataSource | WeaponDataSource | RaceDataSource | ArmorDataSource;
-  type ARd20ItemDataProperties = ItemDataProperties | FeatureDataProperties | SpellDataProperties | WeaponDataProperties | RaceDataProperties | ArmorDataProperties;
+  type ARd20ItemDataSource = MyItemDataSource | FeatureDataSource | SpellDataSource | WeaponDataSource | RaceDataSource | ArmorDataSource;
+  type ARd20ItemDataProperties = MyItemDataProperties | FeatureDataProperties | SpellDataProperties | WeaponDataProperties | RaceDataProperties | ArmorDataProperties;
   interface ItemBaseTemplate {
     description: string;
     hasAttack: boolean;
     hasDamage: boolean;
   }
-  interface ItemDataSource {
+  interface MyItemDataSource {
     type: "item";
-    data: ItemDataSourceData;
+    data: MyItemDataSourceData;
   }
   interface FeatureDataSource {
     type: "feature";
@@ -42,9 +42,9 @@ declare global {
     type: "armor";
     data: ArmorDataSourceData;
   }
-  interface ItemDataProperties {
+  interface MyItemDataProperties {
     type: "item";
-    data: ItemDataPropertiesData;
+    data: MyItemDataPropertiesData;
   }
   interface FeatureDataProperties {
     type: "feature";
@@ -66,7 +66,7 @@ declare global {
     type: "armor";
     data: ArmorDataPropertiesData;
   }
-  interface ItemDataSourceData extends ItemBaseTemplate {
+  interface MyItemDataSourceData extends ItemBaseTemplate {
     quantity: number;
     weight: number;
     formula: string;
@@ -122,12 +122,11 @@ declare global {
       value: Array<string>;
       label: string;
     };
-    xp: Array<number>;
     level: {
       initial: number;
       current: number;
-      has:boolean
-      max:number
+      has: boolean;
+      max: number;
     };
     req: {
       values: Array<any>;
@@ -162,8 +161,10 @@ declare global {
       };
     };
   }
-  interface ItemDataPropertiesData extends ItemDataSourceData {}
-  interface FeatureDataPropertiesData extends FeatureDataSourceData {}
+  interface MyItemDataPropertiesData extends MyItemDataSourceData {}
+  interface FeatureDataPropertiesData extends FeatureDataSourceData {
+    xp: { basicCost: number[]; AdvancedCost: number[] };
+  }
   interface WeaponDataPropertiesData extends WeaponDataSourceData {
     property: {
       [Prop in keyof WeaponDataSourceData["property"]]: WeaponDataSourceData["property"][Prop] & {
