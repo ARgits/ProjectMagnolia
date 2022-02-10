@@ -136,6 +136,7 @@ declare global {
       parts: Array<any>;
       formula: string;
     };
+    xp: { basicCost: number[]; AdvancedCost: number[] };
   }
   interface SpellDataSourceData extends ItemBaseTemplate {
     spellLevel: number;
@@ -162,9 +163,7 @@ declare global {
     };
   }
   interface MyItemDataPropertiesData extends MyItemDataSourceData {}
-  interface FeatureDataPropertiesData extends FeatureDataSourceData {
-    xp: { basicCost: number[]; AdvancedCost: number[] };
-  }
+  interface FeatureDataPropertiesData extends FeatureDataSourceData {}
   interface WeaponDataPropertiesData extends WeaponDataSourceData {
     property: {
       [Prop in keyof WeaponDataSourceData["property"]]: WeaponDataSourceData["property"][Prop] & {

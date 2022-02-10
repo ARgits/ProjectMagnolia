@@ -238,15 +238,14 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
         let featCount = 0;
         object.data.source.value.forEach((val: string) => (featCount += templateData.count.feats[val]));
         for (let i = object.data.level.initial; i < object.data.level.max; i++) {
-          //@ts-expect-error
           object.data.xp.AdvancedCost[i] = object.data.xp.basicCost[i] ? Math.ceil((object.data.xp.basicCost[i] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
         }
         //@ts-expect-error
-        object.data.current_xp = object.data.level.xp[object.data.level.initial];
+        object.data.current_xp = object.data.xp.AdvancedCost[object.data.level.initial];
         //@ts-expect-error
         object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
         //@ts-expect-error
-        object.isXP = object.data.level.initial === object.data.level.max || object.data.level.xp[object.data.level.initial] > templateData.xp.get;
+        object.isXP = object.data.level.initial === object.data.level.max || object.data.xp.AdvancedCost[object.data.level.initial] > templateData.xp.get;
         for (let [key, r] of obj_entries(object.data.req.values)) {
           switch (r.type) {
             case "attribute": //check if character's attribute is equal or higher than value entered in feature requirements
@@ -392,16 +391,16 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
           case "plus":
             //@ts-expect-error
             data.feats.awail[button.dataset.key].data.source.value.forEach((val) => (data.count.feats[val] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0));
-            data.xp.get -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
-            data.xp.used += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.get -= data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.used += data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
             data.feats.awail[button.dataset.key].data.level.initial += 1;
             break;
           case "minus":
             data.feats.awail[button.dataset.key].data.level.initial -= 1;
             //@ts-expect-error
             data.feats.awail[button.dataset.key].data.source.value.forEach((val) => (data.count.feats[val] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0));
-            data.xp.get += data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
-            data.xp.used -= data.feats.awail[button.dataset.key].data.level.xp[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.get += data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
+            data.xp.used -= data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
             break;
         }
         break;

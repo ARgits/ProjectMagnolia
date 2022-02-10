@@ -365,6 +365,10 @@
         "values": [],
         "logic": []
       },
+      "xp":{
+        "basicCost":[0],
+        "AdvancedCost":[0]
+      },
       "damage": {
         "parts": [],
         "formula": ""
