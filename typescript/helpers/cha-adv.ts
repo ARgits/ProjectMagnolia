@@ -324,11 +324,12 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
     raceList.forEach((race) => {
       race.chosen = raceChosen === race._id ? true : false;
     });
-    const raceHP = raceChosen
-      ? raceList.filter((race) => {
-          race._id! === raceChosen;
-        })[0].data.health
-      : 0;
+    let raceHP = 0;
+    raceList.forEach((race) => {
+      if (race._id === raceChosen) {
+        raceHP = race.data.health;
+      }
+    });
     health.max = attributes.con.value + raceHP;
     // At character creation, check all conditions
     if (!this.object.data.data.isReady) {
