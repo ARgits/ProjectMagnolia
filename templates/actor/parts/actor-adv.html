@@ -68,7 +68,7 @@
                 </tr>
                 {{#each races.list as |race key|}}
                     <tr data-key="{{key}}">
-                        <td><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" id="{{race._id}}" {{checked race.chosen}} /></td>
+                        <td><input name="race.chosen" type="radio" data-key="{{key}}" data-type="race" value="{{race._id}}" {{checked race.chosen}} /></td>
                         <td>{{race.name}}</td>
                         <td>{{race.data.health}}</td>
                         {{#if (eq key 0)}}
@@ -141,7 +141,7 @@
                         <td><input class="max-dig-2" readonly type="number" value="{{feat.data.level.initial}}" name="feats.awail.{{key}}.data.level.initial" /></td>
                         <td><input class="max-dig-2" readonly type="number" value="{{feat.data.level.max}}" name="feats.awail.{{key}}.data.level.max" /></td>
                         <td><button class="change fas fa-plus-square" data-type="feat" type="button" {{#if feat.isXP}}disabled{{/if}} data-action="plus" data-key="{{key}}"></button></td>
-                        <td class="max-dig-5">{{#if (lt feat.data.level.initial feat.data.level.max)}}{{numberFormat feat.current_xp decimals=0 sign=false}}{{/if}}</td>
+                        <td class="max-dig-5">{{#if (lt feat.data.level.initial feat.data.level.max)}}{{numberFormat feat.currentXP decimals=0 sign=false}}{{/if}}</td>
                         {{#if (eq key 0)}}
                             <td rowspan="0" class="description">{{{@root.hover.feat}}}</td>
                         {{/if}}

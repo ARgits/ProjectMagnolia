@@ -1,5 +1,5 @@
-import { ItemData} from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
-import { obj_entries} from "../ard20.js";
+import { ItemData, ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
+import { obj_entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item.js";
 
 //@ts-expect-error
@@ -111,13 +111,8 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
     startingData.hover.feat = TextEditor.enrichHTML(startingData.feats.awail[0]?.data.description!);
     return startingData;
   }
-  getFoldersAndPacks() {
-    let packs = this.getPacks();
-    let folders = this.getFolders();
-    return { packs, folders };
-  }
   async getPacks() {
-    let pack_list: ItemData[] = []; // array of feats from Compendium
+    let pack_list: ItemDataSource[] = []; // array of feats from Compendium
     let pack_name: string[] = [];
     for (const key of game.settings.get("ard20", "feat").packs) {
       if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
@@ -129,7 +124,8 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
             const new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
             const doc = await game.packs.get(new_key)!.getDocument(feat.id!);
             if (doc instanceof ARd20Item) {
-              const item = foundry.utils.deepClone(doc.data);
+              const item = doc.data.toObject();
+              item.data = doc.data.data;
               pack_list.push(item);
               pack_name.push(item.name);
             }
@@ -144,7 +140,7 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
     };
   }
   getFolders() {
-    let folder_list: ItemData[] = []; // array of feats from game folders
+    let folder_list: ItemDataSource[] = []; // array of feats from game folders
     let folder_name: string[] = [];
     for (let key of game.settings.get("ard20", "feat").folders) {
       if (game.folders!.filter((folder) => folder.data.name === key).length !== 0) {
@@ -154,7 +150,8 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
         for (let feat of feat_list) {
           if (feat instanceof ARd20Item) {
             console.log("item added from folder ", feat);
-            const item = foundry.utils.deepClone(feat.data);
+            const item = feat.data.toObject();
+            item.data = feat.data.data;
             folder_list.push(item);
             folder_name.push(item.name);
           }
@@ -236,7 +233,7 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
      * Calculate attributes' modifiers and xp cost
      */
     for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
-      const race_abil = raceList.filter((race) => race.chosen === true)?.[0].data.bonus.attributes[k].value;
+      const race_abil = raceList.filter((race) => race.chosen === true)?.[0]?.data.bonus.attributes[k].value ?? 0;
       attributes[k].mod = Math.floor((attributes[k].value - 10) / 2);
       attributes[k].xp = CONFIG.ARd20.AbilXP[attributes[k].value - 5];
       attributes[k].isEq = attributes[k].value === this.object.data.data.attributes[k].value;
@@ -263,6 +260,7 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
     featsAwail.forEach((object) => {
       if (object.type === "feature") {
         let pass: boolean[][] = [];
+        object.pass = [];
         let allCount = templateData.count.feats.all;
         let featCount = 0;
         object.data.source.value.forEach((val: string) => (featCount += templateData.count.feats[val]));
@@ -441,8 +439,7 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
   _onChangeInput(event) {
     super._onChangeInput(event);
     const data = this.options.data;
-    const button = event.currentTarget.id;
-    const k = event.currentTarget.dataset.key;
+    const k = parseInt(event.currentTarget.dataset.key);
     data.races.list.forEach((race, key) => {
       data.races.list[key].chosen = key === k ? true : false;
       data.races.chosen = data.races.list[key].chosen ? race._id! : data.races.chosen;

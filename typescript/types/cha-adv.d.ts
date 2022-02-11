@@ -73,8 +73,8 @@ declare global {
       feat: string;
     };
   }
-  type RaceItem = ItemData & RaceItemData;
-  type FeatureItem = ItemData & FeatureItemData;
+  type RaceItem = (ItemDataSource|ItemData) & RaceItemData;
+  type FeatureItem = (ItemDataSource|ItemData) & FeatureItemData;
   interface RaceItemData extends RaceDataProperties {
     chosen: boolean;
   }
