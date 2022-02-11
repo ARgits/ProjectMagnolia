@@ -23,6 +23,10 @@ export class CharacterAdvancement extends FormApplication {
     async InitilizeData() {
         if (this.form)
             return;
+        const pack = await this.getPacks();
+        const folder = this.getFolders();
+        const rList = await this.getRacesList(pack, folder);
+        const fList = await this.getFeaturesList(pack, folder);
         const startingData = {
             isReady: duplicate(this.object.data.data.isReady),
             attributes: duplicate(this.object.data.data.attributes),
@@ -30,7 +34,7 @@ export class CharacterAdvancement extends FormApplication {
             xp: duplicate(this.object.data.data.advancement.xp),
             profs: duplicate(this.object.data.data.proficiencies),
             health: duplicate(this.object.data.data.health),
-            races: { list: await this.getRacesList(), chosen: "" },
+            races: { list: rList, chosen: "" },
             count: {
                 // counter for skills and feats
                 skills: {
@@ -56,8 +60,8 @@ export class CharacterAdvancement extends FormApplication {
                 feats: {},
             },
             feats: {
-                learned: (await this.getFeaturesList()).learnedFeatures,
-                awail: (await this.getFeaturesList()).temp_feat_list, // array of feats that are available to learn
+                learned: fList.learnedFeatures,
+                awail: fList.temp_feat_list, // array of feats that are available to learn
             },
             allow: {
                 attribute: false,
@@ -125,8 +129,8 @@ export class CharacterAdvancement extends FormApplication {
                         const new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
                         const doc = await game.packs.get(new_key).getDocument(feat.id);
                         if (doc instanceof ARd20Item) {
-                            const item = doc.data.toObject();
-                            item.data = doc.data.data;
+                            const item = doc.toObject();
+                            item.data = foundry.utils.deepClone(doc.data.data);
                             pack_list.push(item);
                             pack_name.push(item.name);
                         }
@@ -151,8 +155,8 @@ export class CharacterAdvancement extends FormApplication {
                 for (let feat of feat_list) {
                     if (feat instanceof ARd20Item) {
                         console.log("item added from folder ", feat);
-                        const item = feat.data.toObject();
-                        item.data = feat.data.data;
+                        const item = feat.toObject();
+                        item.data = foundry.utils.deepClone(feat.data.data);
                         folder_list.push(item);
                         folder_name.push(item.name);
                     }
@@ -165,10 +169,10 @@ export class CharacterAdvancement extends FormApplication {
             folder_name,
         };
     }
-    async getRacesList() {
-        const pack_list = (await this.getPacks()).pack_list;
-        const pack_name = (await this.getPacks()).pack_name;
-        const folder_list = this.getFolders().folder_list;
+    async getRacesList(pack, folder) {
+        const pack_list = pack.pack_list;
+        const pack_name = pack.pack_name;
+        const folder_list = folder.folder_list;
         let race_pack_list = [];
         let race_folder_list = [];
         pack_list.forEach((item) => {
@@ -185,10 +189,10 @@ export class CharacterAdvancement extends FormApplication {
         });
         return race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
     }
-    async getFeaturesList() {
-        const pack_list = (await this.getPacks()).pack_list;
-        const pack_name = (await this.getPacks()).pack_name;
-        const folder_list = this.getFolders().folder_list;
+    async getFeaturesList(pack, folder) {
+        const pack_list = pack.pack_list;
+        const pack_name = pack.pack_name;
+        const folder_list = folder.folder_list;
         let feat_pack_list = [];
         pack_list.forEach((item) => {
             if (item.type === "feature") {
