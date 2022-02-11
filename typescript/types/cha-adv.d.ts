@@ -1,4 +1,4 @@
-import { ItemData, ItemDataBaseProperties, ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
+import { ItemData, ItemDataBaseProperties, ItemDataProperties, ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
 import { PropertiesToSource } from "@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes";
 import { ARd20Actor } from "../documents/actor";
 import { ARd20Item } from "../documents/item";
@@ -32,8 +32,8 @@ declare global {
     profs: CharacterDataPropertiesData["proficiencies"];
     health: CharacterDataPropertiesData["health"];
     races: {
-      chosen: string | null;
-      list: any[];
+      chosen: string;
+      list: RaceItem[];
     };
     count: {
       skills: {
@@ -46,11 +46,11 @@ declare global {
       };
       feats: {
         [index: string]: number;
-        mar: 0;
-        mag: 0;
-        div: 0;
-        pri: 0;
-        psy: 0;
+        mar: number;
+        mag: number;
+        div: number;
+        pri: number;
+        psy: number;
       };
     };
     content: {
@@ -58,8 +58,8 @@ declare global {
       feats: {};
     };
     feats: {
-      learned: ItemData[];
-      awail: ItemDataSource[];
+      learned: FeatureItem[];
+      awail: FeatureItem[];
     };
     allow: {
       attribute: boolean;
@@ -73,5 +73,20 @@ declare global {
       feat: string;
     };
   }
-  type featureType = ItemDataSource & { data: object & FeatureDataSourceData & { level: FeatureDataPropertiesData["level"] & { xp: {} } } };
+  type RaceItem = ItemData & RaceItemData;
+  type FeatureItem = ItemData & FeatureItemData;
+  interface RaceItemData extends RaceDataProperties {
+    chosen: boolean;
+  }
+  interface FeatureItemData extends FeatureDataProperties {
+    currentXP: number;
+    isEq: boolean;
+    isXP: boolean;
+    pass:boolean[]
+    data:FeatureDataProperties["data"]&{
+
+    }
+  }
+
+  type ItemOfType<Type extends foundry.data.ItemData["type"]> = ARd20Item & { data: { type: Type; _source: { type: Type } } };
 }

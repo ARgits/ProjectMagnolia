@@ -150,6 +150,7 @@ declare global {
     mobility: CharacterDataSourceData["mobility"] & {
       value: number;
     };
+    isReady:boolean
   }
   interface NPCDataPropertiesData extends NPCDataSourceData {
     xp: number;

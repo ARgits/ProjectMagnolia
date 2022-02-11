@@ -46,6 +46,12 @@ declare global {
     type: "item";
     data: MyItemDataPropertiesData;
   }
+  /**
+   * Next parameters used only in CharacterAdvancement FormApplication
+   * @param {number} currentXP
+   * @param {boolean} isEq
+   * @param {boolean} isXP
+   */
   interface FeatureDataProperties {
     type: "feature";
     data: FeatureDataPropertiesData;
@@ -161,6 +167,7 @@ declare global {
         };
       };
     };
+    health:number
   }
   interface MyItemDataPropertiesData extends MyItemDataSourceData {}
   interface FeatureDataPropertiesData extends FeatureDataSourceData {}

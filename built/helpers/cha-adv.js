@@ -1,5 +1,6 @@
 import { obj_entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item.js";
+import { compileExpression } from "filtrex";
 //@ts-expect-error
 export class CharacterAdvancement extends FormApplication {
     static get defaultOptions() {
@@ -30,7 +31,7 @@ export class CharacterAdvancement extends FormApplication {
             xp: duplicate(this.object.data.data.advancement.xp),
             profs: duplicate(this.object.data.data.proficiencies),
             health: duplicate(this.object.data.data.health),
-            races: { list: await this.getRacesList(), chosen: null },
+            races: { list: await this.getRacesList(), chosen: "" },
             count: {
                 // counter for skills and feats
                 skills: {
@@ -56,8 +57,8 @@ export class CharacterAdvancement extends FormApplication {
                 feats: {},
             },
             feats: {
-                learned: [],
-                awail: [], // array of feats that are available to learn
+                learned: (await this.getFeaturesList()).learnedFeatures,
+                awail: (await this.getFeaturesList()).temp_feat_list, // array of feats that are available to learn
             },
             allow: {
                 attribute: false,
@@ -72,40 +73,22 @@ export class CharacterAdvancement extends FormApplication {
             },
         };
         startingData.xp.get = startingData.isReady || startingData.xp.used !== 0 ? startingData.xp.get : 10000;
-        const pack_list = (await this.getPacks()).pack_list;
-        const pack_name = (await this.getPacks()).pack_name;
-        const folder_list = this.getFolders().folder_list;
-        const folder_name = this.getFolders().folder_name;
-        /*
-         * Create final list of features
-         */
-        let feat_pack_list = pack_list.filter((item) => {
-            return item.type === "feature";
-        });
-        let feat_folder_list = folder_list.filter((item) => {
-            return item.type === "feature";
-        });
-        let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
-        let arr = pack_list.map((item) => {
-            if (item.type === "feature")
-                return item;
-        });
-        startingData.feats.learned = this.object.itemTypes.feature.map((item) => item.data);
+        let awailFeats = startingData.feats.awail;
         let name_array = [];
         for (let i of startingData.feats.learned) {
             name_array.push(i.name);
         }
-        temp_feat_list.forEach((v, k) => {
+        awailFeats.forEach((v, k) => {
             if (name_array.includes(v.name)) {
-                console.log("this item is already learned", temp_feat_list[k]);
-                temp_feat_list[k].data = foundry.utils.deepClone(startingData.feats.learned.filter((item) => item.name === v.name)[0].data);
+                console.log("this item is already learned", awailFeats[k]);
+                awailFeats[k].data = foundry.utils.deepClone(startingData.feats.learned.filter((item) => item.name === v.name)[0].data);
             }
         });
-        temp_feat_list = temp_feat_list.filter((item) => {
+        awailFeats = awailFeats.filter((item) => {
             if (item.type === "feature")
                 return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
         });
-        startingData.feats.awail = temp_feat_list;
+        startingData.feats.awail = awailFeats;
         // count skills by rank
         for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
             if (startingData.skills[k].level === 0) {
@@ -147,9 +130,8 @@ export class CharacterAdvancement extends FormApplication {
                     if (feat instanceof ARd20Item) {
                         const new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
                         const doc = await game.packs.get(new_key).getDocument(feat.id);
-                        if (doc instanceof ARd20Item && doc.data.type === "feature") {
-                            let item = doc.toObject();
-                            item.data = foundry.utils.deepClone(doc.data.data);
+                        if (doc instanceof ARd20Item) {
+                            const item = foundry.utils.deepClone(doc.data);
                             pack_list.push(item);
                             pack_name.push(item.name);
                         }
@@ -174,8 +156,7 @@ export class CharacterAdvancement extends FormApplication {
                 for (let feat of feat_list) {
                     if (feat instanceof ARd20Item) {
                         console.log("item added from folder ", feat);
-                        let item = feat.toObject();
-                        item.data = foundry.utils.deepClone(feat.data.data);
+                        const item = foundry.utils.deepClone(feat.data);
                         folder_list.push(item);
                         folder_name.push(item.name);
                     }
@@ -192,28 +173,78 @@ export class CharacterAdvancement extends FormApplication {
         const pack_list = (await this.getPacks()).pack_list;
         const pack_name = (await this.getPacks()).pack_name;
         const folder_list = this.getFolders().folder_list;
-        let race_pack_list = pack_list.filter((item) => item.type === "race");
-        let race_folder_list = folder_list.filter((item) => item.type === "race");
+        let race_pack_list = [];
+        let race_folder_list = [];
+        pack_list.forEach((item) => {
+            if (item.type === "race") {
+                let raceItem = { ...item, chosen: false };
+                race_pack_list.push(raceItem);
+            }
+        });
+        folder_list.forEach((item) => {
+            if (item.type === "race") {
+                let raceItem = { ...item, chosen: false };
+                race_folder_list.push(raceItem);
+            }
+        });
         return race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
+    }
+    async getFeaturesList() {
+        const pack_list = (await this.getPacks()).pack_list;
+        const pack_name = (await this.getPacks()).pack_name;
+        const folder_list = this.getFolders().folder_list;
+        let feat_pack_list = [];
+        pack_list.forEach((item) => {
+            if (item.type === "feature") {
+                let FeatureItem = { ...item, currentXP: 0, isEq: false, isXP: false };
+                feat_pack_list.push(FeatureItem);
+            }
+        });
+        let feat_folder_list = [];
+        folder_list.forEach((item) => {
+            if (item.type === "feature") {
+                let FeatureItem = { ...item, currentXP: 0, isEq: false, isXP: false };
+                feat_folder_list.push(FeatureItem);
+            }
+        });
+        let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
+        let learnedFeatures = [];
+        this.object.itemTypes.feature.forEach((item) => {
+            if (item.data.type === "feature") {
+                let FeatureItem = { ...item.data, currentXP: 0, isEq: false };
+                learnedFeatures.push(FeatureItem);
+            }
+        });
+        return { temp_feat_list, learnedFeatures };
     }
     async getData() {
         this.options.data = !this.form ? (await this.InitilizeData()) : this.options.data;
         const templateData = this.options.data;
-        templateData.count.feats.all = 0;
-        templateData.count.feats.all = Object.values(templateData.count.feats).reduce(function (a, b) {
+        const count = templateData.count;
+        const attributes = templateData.attributes;
+        const xp = templateData.xp;
+        const raceList = templateData.races.list;
+        const raceChosen = templateData.races.chosen;
+        const isReady = templateData.isReady;
+        const skills = templateData.skills;
+        const featsAwail = templateData.feats.awail;
+        const featsLearned = templateData.feats.learned;
+        const health = templateData.health;
+        count.feats.all = 0;
+        count.feats.all = Object.values(count.feats).reduce(function (a, b) {
             return a + b;
         }, 0);
         /*
          * Calculate attributes' modifiers and xp cost
          */
         for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
-            templateData.attributes[k].mod = Math.floor((templateData.attributes[k].value - 10) / 2);
-            templateData.attributes[k].xp = CONFIG.ARd20.AbilXP[templateData.attributes[k].value - 5];
-            templateData.attributes[k].isEq = templateData.attributes[k].value === this.object.data.data.attributes[k].value;
-            templateData.attributes[k].isXP = templateData.xp.get < templateData.attributes[k].xp;
-            let race_abil = templateData.races.list.filter((race) => race.chosen === true)?.[0]?.data.bonus.attributes[k].value ?? 0;
-            templateData.attributes[k].final = templateData.isReady ? templateData.attributes[k].value : templateData.attributes[k].value + race_abil;
-            templateData.attributes[k].mod = Math.floor((templateData.attributes[k].final - 10) / 2);
+            const race_abil = raceList.filter((race) => race.chosen === true)?.[0].data.bonus.attributes[k].value;
+            attributes[k].mod = Math.floor((attributes[k].value - 10) / 2);
+            attributes[k].xp = CONFIG.ARd20.AbilXP[attributes[k].value - 5];
+            attributes[k].isEq = attributes[k].value === this.object.data.data.attributes[k].value;
+            attributes[k].isXP = xp.get < attributes[k].xp;
+            attributes[k].final = isReady ? attributes[k].value : attributes[k].value + race_abil;
+            attributes[k].mod = Math.floor((attributes[k].final - 10) / 2);
         }
         /*
          * Calculate skills' xp cost
@@ -231,9 +262,8 @@ export class CharacterAdvancement extends FormApplication {
         /*
          * Calculate features cost and their availattribute
          */
-        for (let object of templateData.feats.awail) {
+        featsAwail.forEach((object) => {
             if (object.type === "feature") {
-                //@ts-expect-error
                 let pass = [];
                 let allCount = templateData.count.feats.all;
                 let featCount = 0;
@@ -241,35 +271,33 @@ export class CharacterAdvancement extends FormApplication {
                 for (let i = object.data.level.initial; i < object.data.level.max; i++) {
                     object.data.xp.AdvancedCost[i] = object.data.xp.basicCost[i] ? Math.ceil((object.data.xp.basicCost[i] * (1 + 0.01 * (allCount - featCount))) / 5) * 5 : 0;
                 }
-                //@ts-expect-error
-                object.data.current_xp = object.data.xp.AdvancedCost[object.data.level.initial];
-                //@ts-expect-error
+                object.currentXP = object.data.xp.AdvancedCost[object.data.level.initial];
                 object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
-                //@ts-expect-error
                 object.isXP = object.data.level.initial === object.data.level.max || object.data.xp.AdvancedCost[object.data.level.initial] > templateData.xp.get;
-                for (let [key, r] of obj_entries(object.data.req.values)) {
+                object.data.req.values.forEach((r, key) => {
                     switch (r.type) {
                         case "attribute": //check if character's attribute is equal or higher than value entered in feature requirements
                             //@ts-expect-error
-                            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= templateData.attributes[r.value].final));
+                            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= attributes[r.value].final));
                             break;
                         case "skill": //check if character's skill rank is equal or higher than value entered in feature requirements
                             //@ts-expect-error
-                            r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= templateData.skills[r.value].rank));
+                            r.pass.forEach((item, index) => (r.pass[index] = r.input <= skills[r.value].level));
                             break;
                         case "feat": //check if character has features (and their level is equal or higher) that listed in feature requirements
-                            if (templateData.feats.awail.filter((item) => item.name === r.name)?.[0] !== undefined) {
+                            if (featsAwail.filter((item) => item.name === r.name)?.[0] !== undefined) {
+                                const featLevel = featsAwail.filter((item) => item.name === r.name)[0].data.level.initial;
                                 //@ts-expect-error
-                                r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= templateData.feats.awail.filter((item) => item.name === r.name)[0].data.level.initial));
+                                r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= featLevel));
                             }
-                            else if (templateData.feats.learned.filter((item) => item.name === r.name)?.[0] !== undefined) {
+                            else if (featsLearned.filter((item) => item.name === r.name)?.[0] !== undefined) {
+                                const featLevel = featsLearned.filter((item) => item.name === r.name)[0].data.level.initial;
                                 //@ts-expect-error
-                                r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= templateData.feats.learned.filter((item) => item.name === r.name)[0].data.data.level.initial));
+                                r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= featLevel));
                             }
                             break;
                     }
                     pass.push(r.pass);
-                    //@ts-expect-error
                     object.pass = [];
                     /*
                      * Check the custom logic in feature requirements. For example "Strength 15 OR Arcana Basic"
@@ -278,37 +306,33 @@ export class CharacterAdvancement extends FormApplication {
                         if (i === object.data.level.max || pass.length === 0)
                             break;
                         let exp = object.data.req.logic[i];
-                        //@ts-expect-error
                         let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
                         let f = {};
-                        //@ts-expect-error
-                        lev_array.forEach((item, index) => {
+                        lev_array.forEach((item) => {
                             exp = exp.replace(item, `c${item}`);
-                            //@ts-expect-error
                             f["c" + item] = pass[item - 1][i];
                         });
-                        //@ts-expect-error
-                        let filter = filtrex.compileExpression(exp);
-                        //@ts-expect-error
+                        let filter = compileExpression(exp);
                         object.pass[i] = Boolean(filter(f));
                     }
-                    //@ts-expect-error
                     object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
-                }
+                });
             }
-        }
+        });
         /*
          * Calculate starting HP based on character's CON and race
          */
-        for (let [key, race] of obj_entries(templateData.races.list)) {
-            race.chosen = templateData.races.chosen === race._id ? true : false;
-        }
-        //@ts-expect-error
-        const raceHP = templateData.races.chosen ? game.items?.get(templateData.races.chosen)?.data.data.health : 0;
-        templateData.health.max = templateData.attributes.con.value + raceHP;
+        raceList.forEach((race) => {
+            race.chosen = raceChosen === race._id ? true : false;
+        });
+        const raceHP = raceChosen
+            ? raceList.filter((race) => {
+                race._id === raceChosen;
+            })[0].data.health
+            : 0;
+        health.max = attributes.con.value + raceHP;
         // At character creation, check all conditions
-        //@ts-expect-error
-        if (!this.object.data.isReady) {
+        if (!this.object.data.data.isReady) {
             let abil_sum = 0;
             for (let [key, abil] of obj_entries(templateData.attributes)) {
                 abil_sum += abil.value;
@@ -331,28 +355,32 @@ export class CharacterAdvancement extends FormApplication {
         console.log(templateData);
         return templateData;
     }
-    //@ts-expect-error
     activateListeners(html) {
         super.activateListeners(html);
-        html.find(".change").click(this._onChange.bind(this));
-        html.find("td:not(.description)").hover(this._onHover.bind(this));
+        html.find(".change").on("click", this._onChange.bind(this));
+        html.find("td:not(.description)").on("mouseover", this._onHover.bind(this));
     }
     //@ts-expect-error
     _onChange(event) {
         const button = event.currentTarget;
-        //@ts-expect-error
-        const data = this.data;
+        const data = this.options.data;
         switch (button.dataset.type) {
             case "attribute":
                 switch (button.dataset.action) {
                     case "plus":
+                        //@ts-expect-error
                         data.attributes[button.dataset.key].value += 1;
+                        //@ts-expect-error
                         data.xp.get -= data.attributes[button.dataset.key].xp;
+                        //@ts-expect-error
                         data.xp.used += data.attributes[button.dataset.key].xp;
                         break;
                     case "minus":
+                        //@ts-expect-error
                         data.attributes[button.dataset.key].value -= 1;
+                        //@ts-expect-error
                         data.xp.get += CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5] ?? CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5];
+                        //@ts-expect-error
                         data.xp.used -= CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5] ?? CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5];
                         break;
                 }
@@ -360,13 +388,17 @@ export class CharacterAdvancement extends FormApplication {
             case "skill":
                 switch (button.dataset.action) {
                     case "plus":
+                        //@ts-expect-error
                         data.skills[button.dataset.key].rank += 1;
+                        //@ts-expect-error
                         data.xp.get -= data.skills[button.dataset.key].xp;
+                        //@ts-expect-error
                         data.xp.used += data.skills[button.dataset.key].xp;
                         //@ts-expect-error
                         this.data.count.skills[this.data.skills[button.dataset.key].rank] += 1;
                         break;
                     case "minus":
+                        //@ts-expect-error
                         data.skills[button.dataset.key].rank -= 1;
                         //@ts-expect-error
                         this.data.count.skills[this.data.skills[button.dataset.key].rank + 1] -= 1;
@@ -392,7 +424,6 @@ export class CharacterAdvancement extends FormApplication {
             case "feat":
                 switch (button.dataset.action) {
                     case "plus":
-                        //@ts-expect-error
                         data.feats.awail[button.dataset.key].data.source.value.forEach((val) => (data.count.feats[val] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0));
                         data.xp.get -= data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
                         data.xp.used += data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
@@ -400,7 +431,6 @@ export class CharacterAdvancement extends FormApplication {
                         break;
                     case "minus":
                         data.feats.awail[button.dataset.key].data.level.initial -= 1;
-                        //@ts-expect-error
                         data.feats.awail[button.dataset.key].data.source.value.forEach((val) => (data.count.feats[val] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0));
                         data.xp.get += data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
                         data.xp.used -= data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
@@ -413,20 +443,19 @@ export class CharacterAdvancement extends FormApplication {
     //@ts-expect-error
     _onChangeInput(event) {
         super._onChangeInput(event);
+        const data = this.options.data;
         const button = event.currentTarget.id;
         const k = event.currentTarget.dataset.key;
-        //@ts-expect-error
-        for (let [key, race] of obj_entries(this.data.races.list)) {
-            //@ts-expect-error
-            this.data.races.list[key].chosen = key === k ? true : false;
-            //@ts-expect-error
-            this.data.races.chosen = this.data.races.list[key].chosen ? race._id : this.data.races.chosen;
-        }
+        data.races.list.forEach((race, key) => {
+            data.races.list[key].chosen = key === k ? true : false;
+            data.races.chosen = data.races.list[key].chosen ? race._id : data.races.chosen;
+        });
         this.render();
     }
     //@ts-expect-error
     _onHover(event) {
         event.preventDefault();
+        const data = this.options.data;
         const element = event.currentTarget;
         const table = element.closest("div.tab");
         const tr = element.closest("tr");
@@ -451,76 +480,61 @@ export class CharacterAdvancement extends FormApplication {
         if (type !== "feats")
             return;
         const key = tr.dataset.key;
-        //@ts-expect-error
-        const hover_desc = TextEditor.enrichHTML(this.data.feats.awail[key].data.description);
-        //@ts-expect-error
-        if (hover_desc === this.data.hover.feat)
+        const hover_desc = TextEditor.enrichHTML(data.feats.awail[key].data.description);
+        if (hover_desc === data.hover.feat)
             return;
-        //@ts-expect-error
-        this.data.hover.feat = hover_desc;
+        data.hover.feat = hover_desc;
         this.render();
     }
-    //@ts-expect-error
     async _updateObject(event, formData) {
         let updateData = expandObject(formData);
         const actor = this.object;
+        const data = this.options.data;
         this.render();
         const obj = {};
-        //@ts-expect-error
-        for (let [key, abil] of obj_entries(this.data.attributes)) {
-            //@ts-expect-error
-            obj[`data.attributes.${key}.value`] = this.data.attributes[key].final;
+        for (let [key, abil] of obj_entries(data.attributes)) {
+            obj[`data.attributes.${key}.value`] = data.attributes[key].final;
         }
-        //@ts-expect-error
-        obj["data.health.max"] = this.data.health.max;
-        //@ts-expect-error
-        if (this.data.isReady) {
+        obj["data.health.max"] = data.health.max;
+        if (data.isReady) {
             obj["data.attributes.xp"] = updateData.xp;
         }
         obj["data.skills"] = updateData.skills;
         obj["data.profs"] = updateData.profs;
-        //@ts-expect-error
-        obj["data.isReady"] = this.data.allow.final;
+        obj["data.isReady"] = data.allow.final;
         console.log(obj);
         const feats_data = {
             new: [],
             exist: [],
         };
-        //@ts-expect-error
-        const feats = this.data.feats.awail.filter((item) => item.data.level.initial > item.data.level.current);
-        for (let [k, v] of obj_entries(feats)) {
-            //@ts-expect-error
-            if (this.data.feats.learned.length > 0) {
-                //@ts-expect-error
-                for (let [n, m] of obj_entries(this.data.feats.learned)) {
-                    if (v._id === m.id) {
-                        //@ts-expect-error
-                        feats_data.exist.push(v);
+        const feats = data.feats.awail.filter((item) => item.data.level.initial > item.data.level.current);
+        feats.forEach((awItem, index) => {
+            if (data.feats.learned.length > 0) {
+                data.feats.learned.forEach((learnedItem, index) => {
+                    if (awItem._id === learnedItem._id) {
+                        feats_data.exist.push(awItem);
                     }
                     else {
-                        //@ts-expect-error
-                        feats_data.new.push(v);
+                        feats_data.new.push(awItem);
                     }
-                }
+                });
             }
             else {
-                //@ts-expect-error
-                feats_data.new.push(v);
+                feats_data.new.push(awItem);
             }
-        }
+        });
         let pass = [];
-        for (let [k, v] of obj_entries(feats_data.exist)) {
+        feats_data.exist.forEach((item) => {
             //@ts-expect-error
-            pass.push(v.pass.slice(0, v.pass.length - 1));
-        }
-        for (let [k, v] of obj_entries(feats_data.new)) {
+            pass.push(item.pass.slice(0, item.pass.length - 1));
+        });
+        feats_data.new.forEach((item) => {
             //@ts-expect-error
-            pass.push(v.pass.slice(0, v.pass.length - 1));
-        }
+            pass.push(item.pass.slice(0, item.pass.length - 1));
+        });
         pass = pass.flat();
         console.log(pass);
-        //@ts-expect-error
-        if (!this.data.isReady && !this.data.allow.final) {
+        if (!data.isReady && !data.allow.final) {
             ui.notifications.error(`Something not ready for your character to be created. Check the list`);
         }
         else if (pass.includes(false)) {
@@ -529,25 +543,21 @@ export class CharacterAdvancement extends FormApplication {
         else {
             await actor.update(obj);
             if (actor.itemTypes.race.length === 0) {
+                let race_list = this.options.data.races.list.filter((race) => race.chosen === true);
                 //@ts-expect-error
-                let race_list = this.data.races.list.filter((race) => race.chosen === true);
                 await actor.createEmbeddedDocuments("Item", race_list);
             }
             if (feats_data.exist.length > 0) {
                 await actor.updateEmbeddedDocuments("Item", feats_data.exist.map((item) => ({
-                    //@ts-expect-error
                     _id: item._id,
-                    //@ts-expect-error
                     "data.level.initial": item.data.level.initial,
                 })));
             }
             if (feats_data.new.length > 0) {
+                //@ts-expect-error
                 await actor.createEmbeddedDocuments("Item", feats_data.new);
             }
             this.close();
         }
     }
-}
-function arr_keys(temp_feat_list) {
-    throw new Error("Function not implemented.");
 }
