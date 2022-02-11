@@ -124,11 +124,13 @@ export class ARd20Item extends Item {
             if (data.xp.basicCost.length < data.level.max) {
                 for (let i = 1; i < data.level.max; i++) {
                     data.xp.basicCost.push(Math.round((data.xp.basicCost[i - 1] * k) / 5) * 5);
+                    data.xp.AdvancedCost.push(data.xp.basicCost[i]);
                 }
             }
             else {
                 for (let i = 1; i < data.level.max; i++) {
                     data.xp.basicCost[i] = Math.round((data.xp.basicCost[i - 1] * k) / 5) * 5;
+                    data.xp.AdvancedCost[i] = data.xp.AdvancedCost[i] ?? data.xp.basicCost[i];
                 }
             }
         }
