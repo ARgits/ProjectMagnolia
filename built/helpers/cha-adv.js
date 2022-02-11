@@ -1,6 +1,5 @@
 import { obj_entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item.js";
-import { compileExpression } from "filtrex";
 //@ts-expect-error
 export class CharacterAdvancement extends FormApplication {
     static get defaultOptions() {
@@ -312,7 +311,8 @@ export class CharacterAdvancement extends FormApplication {
                             exp = exp.replace(item, `c${item}`);
                             f["c" + item] = pass[item - 1][i];
                         });
-                        let filter = compileExpression(exp);
+                        //@ts-expect-error
+                        let filter = filtrex.compileExpression(exp);
                         object.pass[i] = Boolean(filter(f));
                     }
                     object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
