@@ -1,6 +1,5 @@
-import { ItemData, ItemDataBaseProperties, ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
-import { PropertiesToSource } from "@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes";
-import { arr_entries, obj_entries, obj_keys } from "../ard20.js";
+import { ItemData} from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
+import { obj_entries} from "../ard20.js";
 import { ARd20Item } from "../documents/item.js";
 import { compileExpression } from "filtrex";
 
