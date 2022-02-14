@@ -130,13 +130,16 @@
       "defences": {
         "stats": {
           "reflex": {
-            "bonus": 0
+            "bonus": 0,
+            "level": 0
           },
           "fortitude": {
-            "bonus": 0
+            "bonus": 0,
+            "level": 0
           },
           "will": {
-            "bonus": 0
+            "bonus": 0,
+            "level": 0
           }
         },
         "damage": {
@@ -168,10 +171,10 @@
         },
         "conditions": {}
       },
-      "proficiencies":{
-        "weapon":[],
-        "armor":[],
-        "tool":[]
+      "proficiencies": {
+        "weapon": [],
+        "armor": [],
+        "tool": []
       }
     },
     "npc": {
@@ -365,9 +368,9 @@
         "values": [],
         "logic": []
       },
-      "xp":{
-        "basicCost":[0],
-        "AdvancedCost":[0]
+      "xp": {
+        "basicCost": [0],
+        "AdvancedCost": [0]
       },
       "damage": {
         "parts": [],

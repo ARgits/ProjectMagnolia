@@ -287,7 +287,6 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
             case "feat": //check if character has features (and their level is equal or higher) that listed in feature requirements
               if (featsAwail.filter((item) => item.name === r.name)?.[0] !== undefined) {
                 const featLevel = featsAwail.filter((item) => item.name === r.name)[0].data.level.initial;
-                //@ts-expect-error
                 r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= featLevel));
               } else if (featsLearned.filter((item) => item.name === r.name)?.[0] !== undefined) {
                 const featLevel = featsLearned.filter((item) => item.name === r.name)[0].data.level.initial;
@@ -304,11 +303,12 @@ export class CharacterAdvancement extends FormApplication<CharacterAdvancementFo
           for (let i = 0; i <= object.data.level.initial; i++) {
             if (i === object.data.level.max || pass.length === 0) break;
             let exp = object.data.req.logic[i];
-            let lev_array = exp.match(/\d*/g).filter((item: string) => item !== "");
+            let lev_array = exp.match(/\d*/g)!.filter((item: string) => item !== "");
+            console.log(lev_array)
             let f: { [index: string]: boolean } = {};
-            lev_array.forEach((item: number) => {
+            lev_array.forEach((item, index) => {
               exp = exp.replace(item, `c${item}`);
-              f["c" + item] = pass[item - 1][i];
+              f["c" + item] = pass[index - 1][i];
             });
             //@ts-expect-error
             let filter = filtrex.compileExpression(exp);

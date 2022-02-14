@@ -128,7 +128,7 @@ export class ARd20Item extends Item {
       }
     }
     for (let [key, req] of Object.entries(data.req.values)) {
-      req.pass = Array.from("0".repeat(data.level.max));
+      req.pass = Array.from({length:data.level.max},i=>i=false);
       switch (req.type) {
         case "ability":
           for (let [key, v] of obj_entries(CONFIG.ARd20.Attributes)) {

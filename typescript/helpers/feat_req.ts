@@ -1,7 +1,9 @@
+import { ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
 import { getValues, obj_entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item";
 
-export class FeatRequirements extends FormApplication {
+//@ts-expect-error
+export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOptions, FeatRequirementsFormAppData, FeatRequirementsFormObject> {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
@@ -12,121 +14,12 @@ export class FeatRequirements extends FormApplication {
       height: "auto",
     });
   }
-  //@ts-expect-error
-  async getData() {
-    //@ts-expect-error
-    if (!this.data) {
-      console.log("First launch");
-      //@ts-expect-error
-      this.formApp = null;
-      //@ts-expect-error
-      this.data = [];
-      //@ts-expect-error
-      this.req = foundry.utils.deepClone(this.object.data.data.req);
-      //@ts-expect-error
-      let pack_list = [];
-      let folder_list = [];
-      //@ts-expect-error
-      this.type_list = ["attribute", "skill", "feat"];
-      //@ts-expect-error
-      if (this.req.logic)
-        /*Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
-        for (let key of game.settings.get("ard20", "feat").packs) {
-          if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
-            let feat_list = [];
-            feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
-            feat_list = feat_list.flat();
-            for (let feat of feat_list) {
-              let new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
-              //@ts-expect-error
-              let doc = await game.packs.get(new_key)!.getDocument(feat._id);
-              if (doc!.data.type === "feature") {
-                let item = {
-                  //@ts-expect-error
-                  name: duplicate(feat.name),
-                  maxLevel: duplicate(doc!.data.data.level.max),
-                };
-                pack_list.push(item);
-              }
-            }
-          }
-        }
-      /* Same as above, but for folders*/
-      for (let key of game.settings.get("ard20", "feat").folders) {
-        if (game.folders!.filter((folder) => folder.data.name === key).length !== 0) {
-          let feat_list = [];
-          feat_list.push(game.folders!.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].contents);
-          feat_list = feat_list.flat();
-          //@ts-expect-error
-          for (let feat of feat_list.filter((item) => item.type === "feature")) {
-            let doc = {
-              name: duplicate(feat.name),
-              maxLevel: duplicate(feat.data.data.level.max),
-            };
-            folder_list.push(doc);
-          }
-        }
-      }
-      //@ts-expect-error
-      this.feat = {
-        //@ts-expect-error
-        awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-        //@ts-expect-error
-        current: Object.values(foundry.utils.deepClone(this.object.data.data.req.values.filter((item) => item.type === "feature"))),
-      };
-      for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
-        //@ts-expect-error
-        this.data.push({
-          name: game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k,
-          value: k,
-          type: "attribute",
-        });
-      }
-      for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
-        //@ts-expect-error
-        this.data.push({
-          name: game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k,
-          value: k,
-          type: "skill",
-        });
-      }
-      let name_array = [];
-      //@ts-expect-error
-      for (let i of this.feat.current) {
-        name_array.push(i.name);
-      }
-      //@ts-expect-error
-      console.log(this.feat.awail);
-      //@ts-expect-error
-      for (let [k, v] of obj_entries(this.feat.awail)) {
-        //@ts-expect-error
-        if (v.name === this.object.name) {
-          console.log(v.name, " matches name of the feat");
-          //@ts-expect-error
-          this.feat.awail.splice(k, 1);
-        } else if (name_array.includes(v.name)) {
-          console.log(v.name, "this feat is already included", k);
-          //@ts-expect-error
-          v.input = this.feat.current[this.feat.current.indexOf(this.feat.current.filter((item) => item.name === v.name)[0])].input;
-          //@ts-expect-error
-          this.feat.awail.splice(k, 1);
-        }
-        //@ts-expect-error
-        console.log(this.feat.awail);
-        //@ts-expect-error
-        if (this.feat.awail.filter((item) => item.name === v.name).length !== 0) {
-          //@ts-expect-error
-          console.log(this.feat.awail.filter((item) => item.name === v.name));
-          console.log(v.name);
-          //@ts-expect-error
-          this.data.push({
-            name: v.name,
-            type: "feat",
-            maxLevel: v.maxLevel,
-          });
-        }
-      }
-    }
+  async getData(): Promise<FeatRequirementsFormAppData> {
+    this.options.data = !this.form ? (await this.InitializeData())! : this.options.data;
+    const templateData = this.options.data;
+    const req = templateData.req;
+    const reqValues = req.values;
+    const reqLogic = req.logic;
     console.log("data created");
     let name_array = [];
     //@ts-expect-error
@@ -163,13 +56,12 @@ export class FeatRequirements extends FormApplication {
       }
       //@ts-expect-error
       this.req.values[k].input = this.req.values[k].input || [];
-      //@ts-expect-error
       for (let i = 0; i < this.object.data.data.level.max; i++) {
         //@ts-expect-error
         console.log(this.req.values[k].input[i], this.formApp?.values?.[k]?.input[i]);
         //@ts-expect-error
         this.req.values[k].input[i] =
-        //@ts-expect-error
+          //@ts-expect-error
           this.req.values[k].type !== "skill"
             ? //@ts-expect-error
               Number(this.req.values[k].input[i]) || 10
@@ -215,33 +107,154 @@ export class FeatRequirements extends FormApplication {
     };
     console.log("FormData", FormData);
     console.log("Form html", this.form);
+    //@ts-expect-error
     return FormData;
   }
-  //@ts-expect-error
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".item-create").click(this._onAdd.bind(this));
-    html.find(".item-delete").click(this._Delete.bind(this));
-  }
-  //@ts-expect-error
-  async _onAdd(event) {
-    event.preventDefault();
+  /**
+   * Initialize Data for FormApplication
+   * Data structure looks like this:
+   * @param {Array} req - already existing requirements
+   * @param {Array} type_list - list of types for requirements, can be attribute, skill or feat
+   * @param feat.awail - array of Items with type feat from Folders and Compendium Packs
+   * @param feat.current - array of Items that was already used
+   * @returns
+   */
+  async InitializeData() {
+    if (this.form) return;
+    console.log("First launch");
+    const featList = await this.getFeats();
+    const pack_list = featList.pack_list;
+    const folder_list = featList.folder_list;
+    const folder_name = featList.folder_name;
+    const data: FeatReqData[] = []; //list of attributes, skills and feats that user can use as requirement
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
+      data.push({
+        name: game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k,
+        value: k,
+        type: "attribute",
+      });
+    }
+    for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
+      data.push({
+        name: game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k,
+        value: k,
+        type: "skill",
+      });
+    }
+    const templateData:FeatRequirementsFormAppData = {
+      formApp: {},
+      req: foundry.utils.deepClone(this.object.data.data.req), //copy existing requirements
+      type_list: ["attribute", "skill", "feat"],
+      feat: {
+        awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
+        current: this.object.data.data.req.values.filter((item) => item.type === "feature"),
+      },
+      data: data,
+    };
+    const formApp = templateData.formApp;
+    const req = templateData.req;
+    const type_list = templateData.type_list;
+    const featAwail = templateData.feat.awail;
+    const featCurrent = templateData.feat.current;
     //@ts-expect-error
-    const req = this.req;
-    req.values.push({});
+    formApp = null;
+    /*Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
+    /* Same as above, but for folders*/
+
+    let name_array: string[] = [];
+    for (let i of featCurrent) {
+      name_array.push(i.name);
+    }
+    console.log(featAwail);
+    featAwail.forEach((item, index) => {
+      if (item.name === this.object.name) {
+        console.log(item.name, " matches name of the feat");
+        featAwail.splice(index, 1);
+      } else if (name_array.includes(item.name)) {
+        console.log(item.name, "this feat is already included", index);
+        item.input = featCurrent[featCurrent.indexOf(featCurrent.filter((feat) => feat.name === item.name)[0])].input;
+        featAwail.splice(index, 1);
+      }
+      if (featAwail.filter((feat) => feat.name === item.name).length !== 0) {
+        data.push({ name: item.name, type: "feat", value: item.data.level.max });
+      }
+    });
+    return templateData;
+  }
+  /**
+   * Get features from folders and packs that were configured in settings
+   * @returns
+   */
+  async getFeats() {
+    let pack_list: FeatureType[] = [];
+    let folder_list: FeatureType[] = [];
+    let folder_name: string[] = [];
+    const packs = game.settings.get("ard20", "feat").packs;
+    const folders = game.settings.get("ard20", "feat").folders;
+    for (let key of packs) {
+      if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
+        let feat_list = [];
+        feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
+        feat_list = feat_list.flat();
+        for (let feat of feat_list) {
+          if (feat instanceof ARd20Item) {
+            const new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
+            const doc = await game.packs.get(new_key)!.getDocument(feat.id!);
+            if (doc instanceof ARd20Item) {
+              if (doc!.data.type === "feature") {
+                let item = doc.toObject();
+                item.data = doc.data.data;
+                const feature = <FeatureType>{ ...item };
+                feature.data.req.values[0]
+                pack_list.push(feature);
+              }
+            }
+          }
+        }
+      }
+    }
+    for (let key of folders) {
+      if (game.folders!.filter((folder) => folder.data.name === key).length !== 0) {
+        let feat_list = [];
+        feat_list.push(game.folders!.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].contents);
+        feat_list = feat_list.flat();
+        for (let feat of feat_list) {
+          if (feat instanceof ARd20Item) {
+            console.log("item added from folder ", feat);
+            const item = feat.toObject();
+            item.data = foundry.utils.deepClone(feat.data.data);
+            const feature = <FeatureType>{ ...item };
+            folder_list.push(feature);
+            folder_name.push(item.name);
+          }
+        }
+      }
+    }
+    return { pack_list, folder_list, folder_name };
+  }
+  activateListeners(html: JQuery) {
+    super.activateListeners(html);
+    html.find(".item-create").on("click", this._onAdd.bind(this));
+    html.find(".item-delete").on("click", this._Delete.bind(this));
+  }
+  async _onAdd(event: any) {
+    event.preventDefault();
+    const req = this.options.data.req;
+    req.values.push({
+      
+    });
     this.render();
   }
-  //@ts-expect-error
-  async _Delete(event) {
+  async _Delete(event: any) {
     event.preventDefault();
-    //@ts-expect-error
-    const req = this.req;
+    const req = this.options.data.req;
     req.values.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
-  //@ts-expect-error
-  _onChangeInput(event) {
+  _onChangeInput(event: any) {
     super._onChangeInput(event);
+    const data = this.options.data;
+    const formApp = data.formApp;
     const k = event.currentTarget.dataset.key;
     const i = event.currentTarget.dataset.order;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
@@ -249,15 +262,15 @@ export class FeatRequirements extends FormApplication {
     switch (event.currentTarget.dataset.type) {
       case "value":
         //@ts-expect-error
-        this.formApp.values[k].type = req.values[k].type;
+        formApp.values[k].type = req.values[k].type;
         //@ts-expect-error
-        this.formApp.values[k].name = req.values[k].name;
+        formApp.values[k].name = req.values[k].name;
         //@ts-expect-error
-        this.formApp.values[k].input[i] = req.values[k].input[i];
+        formApp.values[k].input[i] = req.values[k].input[i];
         break;
       case "logic":
         //@ts-expect-error
-        this.formApp.logic[k] = req.logic[k];
+        formApp.logic[k] = req.logic[k];
         break;
     }
     this.getData();
@@ -268,13 +281,11 @@ export class FeatRequirements extends FormApplication {
   async _updateObject(event, formData) {
     const item = this.object;
     this.render();
+    const req = this.options.data.req;
     const obj: { [index: string]: any[] } = {};
-    //@ts-expect-error
-    obj["data.req.values"] = this.req.values;
-    //@ts-expect-error
-    obj["data.req.logic"] = this.req.logic;
+    obj["data.req.values"] = req.values;
+    obj["data.req.logic"] = req.logic;
     console.log(obj);
-    //@ts-expect-error
     await item.update(obj);
   }
 }

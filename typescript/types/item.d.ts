@@ -46,12 +46,7 @@ declare global {
     type: "item";
     data: MyItemDataPropertiesData;
   }
-  /**
-   * Next parameters used only in CharacterAdvancement FormApplication
-   * @param {number} currentXP
-   * @param {boolean} isEq
-   * @param {boolean} isXP
-   */
+
   interface FeatureDataProperties {
     type: "feature";
     data: FeatureDataPropertiesData;
@@ -135,8 +130,8 @@ declare global {
       max: number;
     };
     req: {
-      values: Array<any>;
-      logic: Array<any>;
+      values: FeatureReqValue[];
+      logic: string[];
     };
     damage: {
       parts: Array<any>;
@@ -167,10 +162,23 @@ declare global {
         };
       };
     };
-    health:number
+    health: number;
   }
   interface MyItemDataPropertiesData extends MyItemDataSourceData {}
-  interface FeatureDataPropertiesData extends FeatureDataSourceData {}
+  interface FeatureDataPropertiesData extends FeatureDataSourceData {
+    req: {
+      values: FeatureDataSourceData["req"]["values"];
+      logic: FeatureDataSourceData["req"]["logic"];
+    };
+  }
+  interface FeatureReqValue {
+    input: number[];
+    name: string;
+    pass: boolean[];
+    subtype_list: string[];
+    type: string;
+    value: string;
+  }
   interface WeaponDataPropertiesData extends WeaponDataSourceData {
     property: {
       [Prop in keyof WeaponDataSourceData["property"]]: WeaponDataSourceData["property"][Prop] & {
