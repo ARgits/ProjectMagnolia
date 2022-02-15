@@ -166,6 +166,7 @@ export class ARd20ItemSheet extends ItemSheet {
         let app;
         switch (button.dataset.action) {
             case "feat-req":
+                //@ts-expect-error
                 app = new FeatRequirements(this.object);
                 break;
         }

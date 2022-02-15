@@ -33,7 +33,7 @@
         </li>
         <li class="item flexrow align-center">
           {{#if (eq r.type "feat")}}
-            <input hidden name="req.values.{{key}}.maxLevel" type="number" data-key="{{key}}" data-type="value" value="{{r.maxLevel}}" />
+            <input hidden name="req.values.{{key}}.value" type="number" data-key="{{key}}" data-type="value" value="{{r.maxLevel}}" />
           {{/if}}
           {{#each r.input as |inp k|}}
             <div>{{add k 1}}:</div>

@@ -13,22 +13,23 @@ declare global {
     data: FeatRequirementsFormAppData;
   }
   interface FeatRequirementsFormAppData {
-    formApp: {};
-    req: FeatureDataPropertiesData["req"];
+    formApp: {
+      values: FeatureReqValue[];
+      logic: string[];
+    };
+    req: FeatureDataPropertiesData["req"]
     type_list: string[];
     feat: {
-      awail:FeatureType[];
+      awail: FeatureType[];
       current: FeatureReqValue[];
     };
-    data:FeatReqData[]
+    data: FeatReqData[];
+    rank:Omit<CONFIG["ARd20"]["Rank"], 0>
   }
-  type FeatureType = ItemDataSource&FeatureReqItemData
-  interface FeatureReqItemData extends FeatureDataProperties{
-      input:(number|string)[]
-  }
-  interface FeatReqData{
-      name:string
-      value:string|number
-      type:string
+  type FeatureType = FeatureReqValue;
+  interface FeatReqData {
+    name: string;
+    value: string | number;
+    type: string;
   }
 }

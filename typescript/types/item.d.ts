@@ -177,7 +177,7 @@ declare global {
     pass: boolean[];
     subtype_list: string[];
     type: string;
-    value: string;
+    value: string|number;
   }
   interface WeaponDataPropertiesData extends WeaponDataSourceData {
     property: {

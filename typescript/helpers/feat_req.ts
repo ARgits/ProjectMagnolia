@@ -3,12 +3,16 @@ import { getValues, obj_entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item";
 
 //@ts-expect-error
-export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOptions, FeatRequirementsFormAppData, FeatRequirementsFormObject> {
+export class FeatRequirements extends FormApplication<
+  FeatRequirementsFormAppOptions,
+  FeatRequirementsFormAppData,
+  FeatRequirementsFormObject
+> {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Feature Requirements",
-      template: "systems/ard20/templates/app/feat_req.html",
+      template: "systems/ard20/templates/app/feat_req.hbs",
       id: "feat_req",
       width: 800,
       height: "auto",
@@ -20,95 +24,52 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
     const req = templateData.req;
     const reqValues = req.values;
     const reqLogic = req.logic;
+    const data = templateData.data;
+    let formApp = templateData.formApp;
     console.log("data created");
-    let name_array = [];
-    //@ts-expect-error
-    for (let i of this.data) {
+    let name_array: string[] = [];
+    for (let i of data) {
       name_array.push(i.name);
     }
     /**
      * Data created
      */
-    //@ts-expect-error
-    for (let [k, value] of obj_entries(this.req.values)) {
-      //@ts-expect-error
-      this.req.values[k].type = this.formApp?.values?.[k]?.type ? this.formApp?.values?.[k]?.type : this.req.values[k].type || "attribute";
-      //@ts-expect-error
-      let subtype_list = this.data.filter((item) => item.type === this.req.values[k].type);
-      //@ts-expect-error
-      this.req.values[k].name =
-        //@ts-expect-error
-        subtype_list.filter((item) => item.name === this.formApp?.values?.[k]?.name).length > 0
-          ? //@ts-expect-error
-            this.formApp?.values?.[k]?.name || this.req.values[k].name
-          : //@ts-expect-error
-            this.req.values[k].name || subtype_list[0].name;
-      //@ts-expect-error
-      this.req.values[k].subtype_list = [];
-      //@ts-expect-error
-      subtype_list.forEach((item) => this.req.values[k].subtype_list.push(item.name));
-      //@ts-expect-error
-      this.req.values[k].input = this.formApp?.values?.[k]?.input ? this.formApp?.values?.[k]?.input : this.req.values[k].input || "";
-      //@ts-expect-error
-      if (this.req.values[k].type === "feat") {
-        //@ts-expect-error
-        this.req.values[k].maxLevel = this.data.filter((item) => item.name === this.req.values[k].name)[0].maxLevel;
+    reqValues.forEach((value, index) => {
+      reqValues[index].type = formApp?.values?.[index]?.type ?? (reqValues[index].type || "attribute");
+
+      let subtype_list = data.filter((item) => (item.type = reqValues[index].type));
+
+      reqValues[index].name =
+        subtype_list.filter((item) => {
+          item.name === formApp.values?.[index]?.name;
+        }).length > 0
+          ? formApp.values?.[index].name || reqValues[index].name
+          : reqValues[index].name || subtype_list[0].name;
+
+      subtype_list.forEach((item) => reqValues[index].subtype_list.push(item.name));
+
+      reqValues[index].input = formApp.values[index].input ?? (reqValues[index].input || []);
+
+      if (reqValues[index].type === "feat") {
+        reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
       }
-      //@ts-expect-error
-      this.req.values[k].input = this.req.values[k].input || [];
       for (let i = 0; i < this.object.data.data.level.max; i++) {
-        //@ts-expect-error
-        console.log(this.req.values[k].input[i], this.formApp?.values?.[k]?.input[i]);
-        //@ts-expect-error
-        this.req.values[k].input[i] =
-          //@ts-expect-error
-          this.req.values[k].type !== "skill"
-            ? //@ts-expect-error
-              Number(this.req.values[k].input[i]) || 10
-            : //@ts-expect-error
-            this.req.values[k].input[i] > 2
-            ? 1
-            : //@ts-expect-error
-              this.req.values[k].input[i] || 1;
-        //@ts-expect-error
-        if (this.req.values[k].input[i + 1] < this.req.values[k].input[i]) {
-          //@ts-expect-error
-          this.req.values[k].input[i + 1] = this.req.values[k].input[i];
+        let inputElement = reqValues[index].input[i];
+        let nextElement = reqValues[index].input[i + 1];
+        inputElement =
+          reqValues[index].type !== "skill" ? Number(inputElement) || 10 : inputElement > 4 ? 1 : inputElement || 1;
+        if (nextElement < inputElement) {
+          nextElement = inputElement;
         }
+        reqValues[index].input[i] = inputElement;
+        reqValues[index].input[i + 1] = nextElement;
       }
-    }
-    //@ts-expect-error
-    for (let [k, value] of obj_entries(this.req.logic)) {
-      //@ts-expect-error
-      this.req.logic[k] = this.formApp?.logic?.[k] ? this.formApp.logic[k] : this.req.logic[k];
-    }
-    //@ts-expect-error
-    this.formApp = this.req;
-    //@ts-expect-error
-    this.prof = Object.values(CONFIG.ARd20.prof)
-      .slice(1)
-      .reduce((result, item, index, array) => {
-        //@ts-expect-error
-        result[index + 1] = item;
-        return result;
-      }, {});
-    const FormData = {
-      //@ts-expect-error
-      data: this.data,
-      //@ts-expect-error
-      type: this.type_list,
-      config: CONFIG.ARd20,
-      //@ts-expect-error
-      req: this.req,
-      //@ts-expect-error
-      formApp: this.formApp,
-      //@ts-expect-error
-      prof: this.prof,
-    };
-    console.log("FormData", FormData);
-    console.log("Form html", this.form);
-    //@ts-expect-error
-    return FormData;
+    });
+    reqLogic.forEach((value, index) => {
+      reqLogic[index] = formApp.logic?.[index] ?? reqLogic[index];
+    });
+    formApp = req;
+    return templateData;
   }
   /**
    * Initialize Data for FormApplication
@@ -117,7 +78,7 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
    * @param {Array} type_list - list of types for requirements, can be attribute, skill or feat
    * @param feat.awail - array of Items with type feat from Folders and Compendium Packs
    * @param feat.current - array of Items that was already used
-   * @returns
+   * @returns {object} templateData
    */
   async InitializeData() {
     if (this.form) return;
@@ -141,8 +102,15 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
         type: "skill",
       });
     }
-    const templateData:FeatRequirementsFormAppData = {
-      formApp: {},
+    const arr = Object.values(CONFIG.ARd20.Rank).filter((value, index) => {
+      if (index === 0) return CONFIG.ARd20.Rank[index];
+    });
+    const rank: Omit<CONFIG["ARd20"]["Rank"], 0> = Object.assign({}, arr);
+    const templateData: FeatRequirementsFormAppData = {
+      formApp: {
+        values: [],
+        logic: [],
+      },
       req: foundry.utils.deepClone(this.object.data.data.req), //copy existing requirements
       type_list: ["attribute", "skill", "feat"],
       feat: {
@@ -150,22 +118,17 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
         current: this.object.data.data.req.values.filter((item) => item.type === "feature"),
       },
       data: data,
+      rank: rank,
     };
     const formApp = templateData.formApp;
     const req = templateData.req;
     const type_list = templateData.type_list;
     const featAwail = templateData.feat.awail;
     const featCurrent = templateData.feat.current;
-    //@ts-expect-error
-    formApp = null;
-    /*Get items from Compendiums. In settings 'feat'.packs you input name of needed Compendiums*/
-    /* Same as above, but for folders*/
-
     let name_array: string[] = [];
     for (let i of featCurrent) {
       name_array.push(i.name);
     }
-    console.log(featAwail);
     featAwail.forEach((item, index) => {
       if (item.name === this.object.name) {
         console.log(item.name, " matches name of the feat");
@@ -176,14 +139,14 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
         featAwail.splice(index, 1);
       }
       if (featAwail.filter((feat) => feat.name === item.name).length !== 0) {
-        data.push({ name: item.name, type: "feat", value: item.data.level.max });
+        data.push({ name: item.name, type: "feat", value: item.value });
       }
     });
     return templateData;
   }
   /**
    * Get features from folders and packs that were configured in settings
-   * @returns
+   * @returns {} {pack_list, folder_list, folder_name}
    */
   async getFeats() {
     let pack_list: FeatureType[] = [];
@@ -194,7 +157,11 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
     for (let key of packs) {
       if (game.packs.filter((pack) => pack.metadata.label === key).length !== 0) {
         let feat_list = [];
-        feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index));
+        feat_list.push(
+          Array.from(
+            game.packs.filter((pack) => pack.metadata.label === key && pack.metadata.entity === "Item")[0].index
+          )
+        );
         feat_list = feat_list.flat();
         for (let feat of feat_list) {
           if (feat instanceof ARd20Item) {
@@ -204,8 +171,14 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
               if (doc!.data.type === "feature") {
                 let item = doc.toObject();
                 item.data = doc.data.data;
-                const feature = <FeatureType>{ ...item };
-                feature.data.req.values[0]
+                const feature = <FeatureType>{
+                  name: item.name,
+                  type: "feature",
+                  input: [],
+                  pass: [],
+                  subtype_list: [],
+                  value: item.data.level.max,
+                };
                 pack_list.push(feature);
               }
             }
@@ -216,14 +189,23 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
     for (let key of folders) {
       if (game.folders!.filter((folder) => folder.data.name === key).length !== 0) {
         let feat_list = [];
-        feat_list.push(game.folders!.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].contents);
+        feat_list.push(
+          game.folders!.filter((folder) => folder.data.name === key && folder.data.type === "Item")[0].contents
+        );
         feat_list = feat_list.flat();
         for (let feat of feat_list) {
-          if (feat instanceof ARd20Item) {
+          if (feat instanceof ARd20Item && feat.data.type === "feature") {
             console.log("item added from folder ", feat);
             const item = feat.toObject();
             item.data = foundry.utils.deepClone(feat.data.data);
-            const feature = <FeatureType>{ ...item };
+            const feature = <FeatureType>{
+              name: item.name,
+              type: "feature",
+              input: [],
+              pass: [],
+              subtype_list: [],
+              value: item.data.level.max,
+            };
             folder_list.push(feature);
             folder_name.push(item.name);
           }
@@ -237,20 +219,43 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
     html.find(".item-create").on("click", this._onAdd.bind(this));
     html.find(".item-delete").on("click", this._Delete.bind(this));
   }
+  /**
+   * Add new requirement. By default it "Strength>=10" for every feat's level.
+   * @param event
+   */
   async _onAdd(event: any) {
     event.preventDefault();
     const req = this.options.data.req;
-    req.values.push({
-      
-    });
+    let sub_list: string[] = []; //temporary list with attributes
+    for (let [k, i] of obj_entries(CONFIG.ARd20.Attributes)) {
+      sub_list.push(k);
+    }
+    //create default value object
+    const defaultValue = {
+      name: "Strength",
+      type: "attribute",
+      pass: Array.from({ length: this.object.data.data.level.max }, (i) => (i = false)),
+      subtype_list: sub_list,
+      value: "str",
+      input: Array.from({ length: this.object.data.data.level.max }, (i) => (i = 10)),
+    };
+    req.values.push(defaultValue);
     this.render();
   }
+  /**
+   * Delete existing requirement
+   * @param event
+   */
   async _Delete(event: any) {
     event.preventDefault();
     const req = this.options.data.req;
     req.values.splice(event.currentTarget.dataset.key, 1);
     this.render();
   }
+  /**
+   * Save typed-in values
+   * @param event
+   */
   _onChangeInput(event: any) {
     super._onChangeInput(event);
     const data = this.options.data;
@@ -259,17 +264,14 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
     const i = event.currentTarget.dataset.order;
     console.log(foundry.utils.expandObject(this._getSubmitData()));
     const req = foundry.utils.expandObject(this._getSubmitData()).req;
+
     switch (event.currentTarget.dataset.type) {
       case "value":
-        //@ts-expect-error
         formApp.values[k].type = req.values[k].type;
-        //@ts-expect-error
         formApp.values[k].name = req.values[k].name;
-        //@ts-expect-error
         formApp.values[k].input[i] = req.values[k].input[i];
         break;
       case "logic":
-        //@ts-expect-error
         formApp.logic[k] = req.logic[k];
         break;
     }
@@ -277,8 +279,7 @@ export class FeatRequirements extends FormApplication<FeatRequirementsFormAppOpt
     this.render();
   }
 
-  //@ts-expect-error
-  async _updateObject(event, formData) {
+  async _updateObject(event: Event, formData?: object): Promise<void> {
     const item = this.object;
     this.render();
     const req = this.options.data.req;
