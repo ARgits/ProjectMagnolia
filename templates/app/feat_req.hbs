@@ -15,7 +15,7 @@
           <div>{{add key 1}}</div>
           <select name="req.values.{{key}}.type" data-key="{{key}}" data-type="value">
             {{#select r.type}}
-              {{#each @root.type as |t k|}}
+              {{#each @root.type_list as |t k|}}
                 <option value="{{t}}">{{t}}</option>
               {{/each}}
             {{/select}}
@@ -33,19 +33,20 @@
         </li>
         <li class="item flexrow align-center">
           {{#if (eq r.type "feat")}}
-            <input hidden name="req.values.{{key}}.value" type="number" data-key="{{key}}" data-type="value" value="{{r.maxLevel}}" />
+            <input hidden name="req.values.{{key}}.value" type="number" data-key="{{key}}" data-type="value" value="{{r.value}}" />
           {{/if}}
           {{#each r.input as |inp k|}}
             <div>{{add k 1}}:</div>
             {{#if (eq r.type "skill")}}
               <select name="req.values.{{key}}.input.{{k}}" data-key="{{key}}" data-type="value" data-order="{{k}}">
                 {{#select inp}}
-                  {{#each @root.prof as |ran i|}}
+                  {{#each @root.rank as |ran i|}}
                     <option value="{{i}}">{{localize ran}}</option>
                   {{/each}}
                 {{/select}}
               </select>
-            {{else}} <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.maxLevel}}" {{else}} max="30" {{/if}} type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}"> {{/if}}
+            {{else}} <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.value}}" {{else}} max="30" {{/if}}
+                type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}"> {{/if}}
           {{/each}}
         </li>
         <hr />

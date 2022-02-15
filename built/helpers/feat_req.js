@@ -39,7 +39,7 @@ export class FeatRequirements extends FormApplication {
                     : reqValues[index].name || subtype_list[0].name;
             subtype_list.forEach((item) => reqValues[index].subtype_list.push(item.name));
             reqValues[index].input = formApp.values[index].input ?? (reqValues[index].input || []);
-            if (reqValues[index].type === "feat") {
+            if (reqValues[index].type === "feature") {
                 reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
             }
             for (let i = 0; i < this.object.data.data.level.max; i++) {
@@ -93,7 +93,7 @@ export class FeatRequirements extends FormApplication {
             });
         }
         const arr = Object.values(CONFIG.ARd20.Rank).filter((value, index) => {
-            if (index === 0)
+            if (index !== 0)
                 return CONFIG.ARd20.Rank[index];
         });
         const rank = Object.assign({}, arr);
@@ -103,7 +103,7 @@ export class FeatRequirements extends FormApplication {
                 logic: [],
             },
             req: foundry.utils.deepClone(this.object.data.data.req),
-            type_list: ["attribute", "skill", "feat"],
+            type_list: ["attribute", "skill", "feature"],
             feat: {
                 awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
                 current: this.object.data.data.req.values.filter((item) => item.type === "feature"),
@@ -131,7 +131,7 @@ export class FeatRequirements extends FormApplication {
                 featAwail.splice(index, 1);
             }
             if (featAwail.filter((feat) => feat.name === item.name).length !== 0) {
-                data.push({ name: item.name, type: "feat", value: item.value });
+                data.push({ name: item.name, type: "feature", value: item.value });
             }
         });
         return templateData;
