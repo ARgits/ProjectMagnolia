@@ -62,7 +62,8 @@ export class FeatRequirements extends FormApplication {
         reqLogic.forEach((value, index) => {
             reqLogic[index] = formApp.logic?.[index] ?? reqLogic[index];
         });
-        formApp = req;
+        templateData.formApp = req;
+        console.log(templateData);
         return templateData;
     }
     /**
