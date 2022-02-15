@@ -20,6 +20,7 @@ export class FeatRequirements extends FormApplication<
   }
   async getData(): Promise<FeatRequirementsFormAppData> {
     this.options.data = !this.form ? (await this.InitializeData())! : this.options.data;
+    //create easier acces to templateData
     const templateData = this.options.data;
     const req = templateData.req;
     const reqValues = req.values;
@@ -27,28 +28,29 @@ export class FeatRequirements extends FormApplication<
     const data = templateData.data;
     let formApp = templateData.formApp;
     console.log("data created");
+    //creating array with all possible requirements' names
     let name_array: string[] = [];
     for (let i of data) {
       name_array.push(i.name);
     }
-    /**
-     * Data created
-     */
+    //iterate through created requirements
     reqValues.forEach((value, index) => {
+      //setting correct type of reqirement
       reqValues[index].type = formApp?.values?.[index]?.type ?? (reqValues[index].type || "attribute");
 
-      let subtype_list = data.filter((item) => (item.type = reqValues[index].type));
+      //creating array with from data array with elements that are same type
+      let subtype_list = data.filter((item) => item.type === reqValues[index].type);
 
+      //setting correct requirement name
       reqValues[index].name =
         subtype_list.filter((item) => {
           item.name === formApp.values?.[index]?.name;
         }).length > 0
           ? formApp.values?.[index].name || reqValues[index].name
           : reqValues[index].name || subtype_list[0].name;
+      reqValues[index].subtype_list = subtype_list.map((item) => item.name);
 
-      subtype_list.forEach((item) => reqValues[index].subtype_list.push(item.name));
-
-      reqValues[index].input = formApp.values[index].input ?? (reqValues[index].input || []);
+      reqValues[index].input = formApp.values[index]?.input ?? (reqValues[index].input || []);
 
       if (reqValues[index].type === "feature") {
         reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
@@ -58,11 +60,13 @@ export class FeatRequirements extends FormApplication<
         let nextElement = reqValues[index].input[i + 1];
         inputElement =
           reqValues[index].type !== "skill" ? Number(inputElement) || 10 : inputElement > 4 ? 1 : inputElement || 1;
-        if (nextElement < inputElement) {
-          nextElement = inputElement;
+        if (nextElement) {
+          if (nextElement < inputElement) {
+            nextElement = inputElement;
+          }
+          reqValues[index].input[i + 1] = nextElement;
         }
         reqValues[index].input[i] = inputElement;
-        reqValues[index].input[i + 1] = nextElement;
       }
     });
     reqLogic.forEach((value, index) => {
@@ -230,14 +234,16 @@ export class FeatRequirements extends FormApplication<
     for (let [k, i] of obj_entries(CONFIG.ARd20.Attributes)) {
       sub_list.push(k);
     }
+    //create varible for easier access to maximum level of feature
+    const maxLevel = this.object.data.data.level.max;
     //create default value object
     const defaultValue = {
       name: "Strength",
       type: "attribute",
-      pass: Array.from({ length: this.object.data.data.level.max }, (i) => (i = false)),
+      pass: new Array(maxLevel).fill(false),
       subtype_list: sub_list,
       value: "str",
-      input: Array.from({ length: this.object.data.data.level.max }, (i) => (i = 10)),
+      input: new Array(maxLevel).fill(10),
     };
     req.values.push(defaultValue);
     this.render();
