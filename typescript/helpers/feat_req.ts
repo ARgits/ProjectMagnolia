@@ -1,6 +1,6 @@
 import { ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
 import { getValues, obj_entries } from "../ard20.js";
-import { ARd20Item } from "../documents/item";
+import { ARd20Item } from "../documents/item.js";
 
 //@ts-expect-error
 export class FeatRequirements extends FormApplication<
