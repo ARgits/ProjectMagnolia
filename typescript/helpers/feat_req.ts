@@ -58,6 +58,17 @@ export class FeatRequirements extends FormApplication<
       for (let i = 0; i < this.object.data.data.level.max; i++) {
         let inputElement = reqValues[index].input[i];
         let nextElement = reqValues[index].input[i + 1];
+        switch (reqValues[index].type) {
+          case "skill":
+            inputElement = inputElement > 4 ? 1 : inputElement || 1;
+            break;
+          case "attribute":
+            inputElement = inputElement || 10;
+            break;
+          case "feature":
+            const maxLevel = <number>reqValues[index].value;
+            inputElement = Math.min(inputElement, maxLevel);
+        }
         inputElement =
           reqValues[index].type !== "skill" ? Number(inputElement) || 10 : inputElement > 4 ? 1 : inputElement || 1;
         if (nextElement) {
@@ -73,7 +84,7 @@ export class FeatRequirements extends FormApplication<
       reqLogic[index] = formApp.logic?.[index] ?? reqLogic[index];
     });
     templateData.formApp = req;
-    console.log(templateData)
+    console.log(templateData);
     return templateData;
   }
   /**
