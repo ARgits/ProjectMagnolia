@@ -9,7 +9,7 @@
   font-family: $font-primary;
   @include digits();
 }
-.select2-dropdown{
+.select2-dropdown {
   z-index: 1051;
 }
 .rollable {
@@ -20,7 +20,7 @@
     cursor: pointer;
   }
 }
-textarea{
+textarea {
   min-height: 0px;
 }
 input {
@@ -29,9 +29,7 @@ input {
     box-shadow: none;
     border: #d5d3c7;
     cursor: default;
-    &[type] {
-      @include digits();
-    }
+    @include digits();
   }
 }
 
