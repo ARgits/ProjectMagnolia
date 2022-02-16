@@ -33,7 +33,7 @@
         </li>
         <li class="item flexrow align-center">
           {{#if (eq r.type "feat")}}
-            <input hidden name="req.values.{{key}}.value" type="number" data-key="{{key}}" data-type="value" value="{{r.value}}" />
+            <input hidden name="req.values.{{key}}.value" data-dtype="Number" data-key="{{key}}" data-type="value" value="{{r.value}}" />
           {{/if}}
           {{#each r.input as |inp k|}}
             <div>{{add k 1}}:</div>
@@ -46,7 +46,7 @@
                 {{/select}}
               </select>
             {{else}} <input name='req.values.{{key}}.input.{{k}}' min="0" {{#if (eq r.type 'skill')}} max="{{r.value}}" {{else}} max="30" {{/if}}
-                type="number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}"> {{/if}}
+                data-dtype="Number" step="1" data-type="value" data-key="{{key}}" data-order="{{k}}" value="{{inp}}"> {{/if}}
           {{/each}}
         </li>
         <hr />

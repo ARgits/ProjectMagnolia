@@ -4,11 +4,11 @@
             <div>
                 <div>
                     <label for="xp.get">XP you earn</label>
-                    <input type="number" class="max-dig-8" value="{{xp.get}}" name="xp.get" readonly />
+                    <input data-dtype="Number" class="max-dig-8" value="{{xp.get}}" name="xp.get" readonly />
                 </div>
                 <div>
                     <label for="xp.used">XP you spent</label>
-                    <input type="number" class="max-dig-8" value="{{xp.used}}" name="xp.used" readonly />
+                    <input data-dtype="Number" class="max-dig-8" value="{{xp.used}}" name="xp.used" readonly />
                 </div>
             </div>
             {{#unless isReady}}
@@ -52,7 +52,7 @@
                             </button>
                         </td>
                         <td>
-                            <input readonly type="number" class="max-dig-2" value={{attribute.value}} name="attributes.{{key}}.value" />
+                            <input readonly data-dtype="Number" class="max-dig-2" value={{attribute.value}} name="attributes.{{key}}.value" />
                         </td>
                         <td>{{numberFormat attribute.mod decimals=0 sign=true}}</td>
                         <td>
@@ -120,7 +120,7 @@
                                 data-action="minus" data-key="{{key}}">
                             </button>
                         </td>
-                        <input hidden name="skills.{{key}}.rank" value="{{skill.rank}}" type="number" data-dType="number" />
+                        <input hidden name="skills.{{key}}.rank" value="{{skill.rank}}" data-dType="number" />
                         <td>
                             {{skill.rank_name}}
                         </td>
@@ -151,7 +151,7 @@
                                 data-label="{{prof.type}}">{{prof.type_hover}}</label>
                             <button class="change far fa-arrow-alt-circle-down" data-type="prof" type="button" {{#if prof.isEq}}disabled{{/if}}
                                 data-action="minus" data-key="{{key}}"></button>
-                            <input hidden name="profs.weapon.{{key}}.value" value="{{prof.value}}" type="number" />
+                            <input hidden name="profs.weapon.{{key}}.value" value="{{prof.value}}" data-dtype="Number" />
                             <label for="profs.weapon.{{key}}.value" data-label="{{prof.hover}}">{{prof.value_hover}}</label>
                             <button class="change far fa-arrow-alt-circle-up" data-type="prof" type="button" {{#if prof.isXP}}disabled{{/if}}
                                 data-action="plus" data-key="{{key}}"></button>
@@ -192,11 +192,11 @@
                         </td>
                         <input hidden name="feats.awail.{{key}}.id" value="{{feat._id}}" type="text" />
                         <td>
-                            <input class="max-dig-2" readonly type="number" value="{{feat.data.level.initial}}"
+                            <input class="max-dig-2" readonly data-dtype="Number" value="{{feat.data.level.initial}}"
                                 name="feats.awail.{{key}}.data.level.initial" />
                         </td>
                         <td>
-                            <input class="max-dig-2" readonly type="number" value="{{feat.data.level.max}}"
+                            <input class="max-dig-2" readonly data-dtype="Number" value="{{feat.data.level.max}}"
                                 name="feats.awail.{{key}}.data.level.max" />
                         </td>
                         <td>
