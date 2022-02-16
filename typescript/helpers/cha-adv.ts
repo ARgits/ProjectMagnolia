@@ -94,8 +94,8 @@ export class CharacterAdvancement extends FormApplication<
     awailFeats.forEach((v, k) => {
       if (name_array.includes(v.name)) {
         console.log("this item is already learned", awailFeats[k]);
-        awailFeats[k].data = foundry.utils.deepClone(
-          startingData.feats.learned.filter((item) => item.name === v.name)[0].data
+        awailFeats[k] = foundry.utils.deepClone(
+          startingData.feats.learned.filter((item) => item.name === v.name)[0]
         );
       }
     });
