@@ -434,25 +434,25 @@ export class CharacterAdvancement extends FormApplication<
             //@ts-expect-error
             data.xp.used += data.skills[button.dataset.key].xp;
             //@ts-expect-error
-            this.data.count.skills[this.data.skills[button.dataset.key].rank] += 1;
+            data.count.skills[data.skills[button.dataset.key].rank] += 1;
             break;
           case "minus":
             //@ts-expect-error
             data.skills[button.dataset.key].rank -= 1;
             //@ts-expect-error
-            this.data.count.skills[this.data.skills[button.dataset.key].rank + 1] -= 1;
+            data.count.skills[data.skills[button.dataset.key].rank + 1] -= 1;
 
             data.xp.get +=
               //@ts-expect-error
               CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].rank][
                 //@ts-expect-error
-                this.data.count.skills[this.data.skills[button.dataset.key].rank + 1]
+                data.count.skills[data.skills[button.dataset.key].rank + 1]
               ];
             data.xp.used -=
               //@ts-expect-error
               CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].rank][
                 //@ts-expect-error
-                this.data.count.skills[this.data.skills[button.dataset.key].rank + 1]
+                data.count.skills[data.skills[button.dataset.key].rank + 1]
               ];
             break;
         }
