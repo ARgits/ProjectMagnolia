@@ -17,7 +17,6 @@ declare global {
         xp?: number;
         isEq?: boolean;
         isXP?: boolean;
-        final?: number;
       };
     };
     skills: {
