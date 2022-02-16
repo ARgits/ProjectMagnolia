@@ -271,7 +271,7 @@ export class CharacterAdvancement extends FormApplication<
      */
     for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
       templateData.skills[k].rankName =
-        game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level]) ?? templateData.skills[k].level;
+        game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level]) ?? CONFIG.ARd20.Rank[templateData.skills[k].level];
       templateData.skills[k].xp =
         templateData.skills[k].level < 2
           ? CONFIG.ARd20.SkillXP[templateData.skills[k].level][
@@ -428,31 +428,31 @@ export class CharacterAdvancement extends FormApplication<
         switch (button.dataset.action) {
           case "plus":
             //@ts-expect-error
-            data.skills[button.dataset.key].rank += 1;
+            data.skills[button.dataset.key].level += 1;
             //@ts-expect-error
             data.xp.get -= data.skills[button.dataset.key].xp;
             //@ts-expect-error
             data.xp.used += data.skills[button.dataset.key].xp;
             //@ts-expect-error
-            data.count.skills[data.skills[button.dataset.key].rank] += 1;
+            data.count.skills[data.skills[button.dataset.key].level] += 1;
             break;
           case "minus":
             //@ts-expect-error
-            data.skills[button.dataset.key].rank -= 1;
+            data.skills[button.dataset.key].level -= 1;
             //@ts-expect-error
-            data.count.skills[data.skills[button.dataset.key].rank + 1] -= 1;
+            data.count.skills[data.skills[button.dataset.key].level + 1] -= 1;
 
             data.xp.get +=
               //@ts-expect-error
-              CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].rank][
+              CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].level][
                 //@ts-expect-error
-                data.count.skills[data.skills[button.dataset.key].rank + 1]
+                data.count.skills[data.skills[button.dataset.key].level + 1]
               ];
             data.xp.used -=
               //@ts-expect-error
-              CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].rank][
+              CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].level][
                 //@ts-expect-error
-                data.count.skills[data.skills[button.dataset.key].rank + 1]
+                data.count.skills[data.skills[button.dataset.key].level + 1]
               ];
             break;
         }
