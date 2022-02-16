@@ -27,7 +27,9 @@ export class FeatRequirements extends FormApplication<
     const reqLogic = req.logic;
     const data = templateData.data;
     let formApp = templateData.formApp;
+
     console.log("data created");
+    
     //creating array with all possible requirements' names
     let name_array: string[] = [];
     for (let i of data) {
@@ -48,13 +50,13 @@ export class FeatRequirements extends FormApplication<
         }).length > 0
           ? formApp.values?.[index].name || reqValues[index].name
           : reqValues[index].name || subtype_list[0].name;
+
       reqValues[index].subtype_list = subtype_list.map((item) => item.name);
 
       reqValues[index].input = formApp.values[index]?.input ?? (reqValues[index].input || []);
 
-      if (reqValues[index].type === "feature") {
-        reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
-      }
+      reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
+
       for (let i = 0; i < this.object.data.data.level.max; i++) {
         let inputElement = reqValues[index].input[i];
         let previousElement = reqValues[index].input[i - 1] ?? 0;
@@ -69,13 +71,15 @@ export class FeatRequirements extends FormApplication<
             const maxLevel = <number>reqValues[index].value;
             inputElement = Math.min(inputElement, maxLevel);
         }
-        inputElement = Math.max(inputElement,previousElement)
+        inputElement = Math.max(inputElement, previousElement);
         reqValues[index].input[i] = inputElement;
       }
     });
+
     reqLogic.forEach((value, index) => {
       reqLogic[index] = formApp.logic?.[index] ?? reqLogic[index];
     });
+
     templateData.formApp = req;
     console.log(templateData);
     return templateData;

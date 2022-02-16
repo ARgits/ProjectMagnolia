@@ -42,9 +42,7 @@ export class FeatRequirements extends FormApplication {
                     : reqValues[index].name || subtype_list[0].name;
             reqValues[index].subtype_list = subtype_list.map((item) => item.name);
             reqValues[index].input = formApp.values[index]?.input ?? (reqValues[index].input || []);
-            if (reqValues[index].type === "feature") {
-                reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
-            }
+            reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
             for (let i = 0; i < this.object.data.data.level.max; i++) {
                 let inputElement = reqValues[index].input[i];
                 let previousElement = reqValues[index].input[i - 1] ?? 0;
