@@ -26,9 +26,9 @@
                     <div class="resource flexcol grid-span-2">
                         <label for="data.advancement.xp.used" class="resource-label">xp</label>
                         <div class="resource-content flexrow flex-center">
-                            <input type="text" data-dType="number" name="data.advancement.xp.get" value="{{data.advancement.xp.get}}" />
+                            <input type="text" data-dtype="Number" name="data.advancement.xp.get" value="{{data.advancement.xp.get}}" />
                             <span>/</span>
-                            <input type="text" data-dType="number" {{#unless isGM}} readonly{{/unless}} name="data.advancement.xp.used"
+                            <input type="text" data-dtype="Number" {{#unless isGM}} readonly{{/unless}} name="data.advancement.xp.used"
                                 value="{{data.advancement.xp.used}}" />
                         </div>
                     </div>
