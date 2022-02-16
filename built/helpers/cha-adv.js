@@ -319,9 +319,9 @@ export class CharacterAdvancement extends FormApplication {
                         let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
                         console.log(lev_array);
                         let f = {};
-                        lev_array.forEach((item, index) => {
+                        lev_array.forEach((item) => {
                             exp = exp.replace(item, `c${item}`);
-                            f["c" + item] = pass[index - 1][i];
+                            f["c" + item] = pass[parseInt(item) - 1][i];
                         });
                         //@ts-expect-error
                         let filter = filtrex.compileExpression(exp);
