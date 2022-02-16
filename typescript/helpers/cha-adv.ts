@@ -305,24 +305,23 @@ export class CharacterAdvancement extends FormApplication<
         object.isXP =
           object.data.level.initial === object.data.level.max ||
           object.data.xp.AdvancedCost[object.data.level.initial] > templateData.xp.get;
-        object.data.req.values.forEach((r, key) => {
+        object.data.req.values.forEach((r) => {
           switch (r.type) {
             case "attribute": //check if character's attribute is equal or higher than value entered in feature requirements
               //@ts-expect-error
-              r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= attributes[r.value].total));
+              r.pass.forEach((_item, index) => (r.pass[index] = r.input[index] <= attributes[r.value].total));
               break;
             case "skill": //check if character's skill rank is equal or higher than value entered in feature requirements
               //@ts-expect-error
-              r.pass.forEach((item, index) => (r.pass[index] = r.input <= skills[r.value].level));
+              r.pass.forEach((_item, index) => (r.pass[index] = r.input[index] <= skills[r.value].level));
               break;
             case "feat": //check if character has features (and their level is equal or higher) that listed in feature requirements
               if (featsAwail.filter((item) => item.name === r.name)?.[0] !== undefined) {
                 const featLevel = featsAwail.filter((item) => item.name === r.name)[0].data.level.initial;
-                r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= featLevel));
+                r.pass.forEach((_item, index) => (r.pass[index] = r.input[index] <= featLevel));
               } else if (featsLearned.filter((item) => item.name === r.name)?.[0] !== undefined) {
                 const featLevel = featsLearned.filter((item) => item.name === r.name)[0].data.level.initial;
-                //@ts-expect-error
-                r.pass = r.pass.forEach((item, index) => (r.pass[index] = r.input[index] <= featLevel));
+                r.pass.forEach((_item, index) => (r.pass[index] = r.input[index] <= featLevel));
               }
               break;
           }
@@ -555,7 +554,7 @@ export class CharacterAdvancement extends FormApplication<
     data.hover.feat = hover_desc;
     this.render();
   }
-  async _updateObject(event: Event, formData: {}): Promise<void> {
+  async _updateObject(_event: Event, formData: {}): Promise<void> {
     let updateData = expandObject(formData);
     const actor = this.object;
     const data = this.options.data;
@@ -577,9 +576,9 @@ export class CharacterAdvancement extends FormApplication<
       exist: [],
     };
     const feats = data.feats.awail.filter((item) => item.data.level.initial > item.data.level.current);
-    feats.forEach((awItem, index) => {
+    feats.forEach((awItem, _index) => {
       if (data.feats.learned.length > 0) {
-        data.feats.learned.forEach((learnedItem, index) => {
+        data.feats.learned.forEach((learnedItem, _index) => {
           if (awItem._id === learnedItem._id) {
             feats_data.exist.push(awItem);
           } else {

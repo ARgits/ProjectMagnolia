@@ -37,7 +37,7 @@ declare global {
   type DmgTypes = DmgPhysTypes | "force" | "radiant" | "psychic";
   interface ARd20CONFIGData {
     Attributes: { [Ability in Attributes]: string };
-    AttributeAbbreviations: { [Ability in Attributes]: string };
+    AttributeAbbreviations: { [Ability in Attributes as string]: string };
     CHARACTER_EXP_LEVELS: Array<number>;
     SpellSchool: {};
     Skills: { [Skill in Skills]: string };
