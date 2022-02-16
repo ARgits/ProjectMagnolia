@@ -252,7 +252,8 @@ export class CharacterAdvancement extends FormApplication {
          */
         for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
             templateData.skills[k].rankName =
-                game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level]) ?? CONFIG.ARd20.Rank[templateData.skills[k].level];
+                game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level]) ??
+                    CONFIG.ARd20.Rank[templateData.skills[k].level];
             templateData.skills[k].xp =
                 templateData.skills[k].level < 2
                     ? CONFIG.ARd20.SkillXP[templateData.skills[k].level][templateData.count.skills[templateData.skills[k].level + 1]]
@@ -308,27 +309,27 @@ export class CharacterAdvancement extends FormApplication {
                             break;
                     }
                     pass.push(r.pass);
-                    object.pass = [];
-                    /*
-                     * Check the custom logic in feature requirements. For example "Strength 15 OR Arcana Basic"
-                     */
-                    for (let i = 0; i <= object.data.level.initial; i++) {
-                        if (i === object.data.level.max || pass.length === 0)
-                            break;
-                        let exp = object.data.req.logic[i];
-                        let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
-                        console.log(lev_array);
-                        let f = {};
-                        lev_array.forEach((item) => {
-                            exp = exp.replace(item, `c${item}`);
-                            f["c" + item] = pass[parseInt(item) - 1][i];
-                        });
-                        //@ts-expect-error
-                        let filter = filtrex.compileExpression(exp);
-                        object.pass[i] = Boolean(filter(f));
-                    }
-                    object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
                 });
+                object.pass = [];
+                /*
+                 * Check the custom logic in feature requirements. For example "Strength 15 OR Arcana Basic"
+                 */
+                for (let i = 0; i <= object.data.level.initial; i++) {
+                    if (i === object.data.level.max || pass.length === 0)
+                        break;
+                    let exp = object.data.req.logic[i];
+                    let lev_array = exp.match(/\d*/g).filter((item) => item !== "");
+                    console.log(lev_array);
+                    let f = {};
+                    lev_array.forEach((item) => {
+                        exp = exp.replace(item, `c${item}`);
+                        f["c" + item] = pass[parseInt(item) - 1][i];
+                    });
+                    //@ts-expect-error
+                    let filter = filtrex.compileExpression(exp);
+                    object.pass[i] = Boolean(filter(f));
+                }
+                object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
             }
         });
         /*
