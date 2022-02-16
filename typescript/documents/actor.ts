@@ -75,7 +75,12 @@ export class ARd20Actor extends Actor {
       ability.total = ability.value + ability.bonus;
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
-    let dexMod = data.mobility.value < 10 ? attributes.dex.mod : data.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod);
+    let dexMod =
+      data.mobility.value < 10
+        ? attributes.dex.mod
+        : data.mobility.value < 16
+        ? Math.min(2, attributes.dex.mod)
+        : Math.min(0, attributes.dex.mod);
     //calculate level and expierence
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
     if (advancement.xp.used) {
@@ -93,16 +98,25 @@ export class ARd20Actor extends Actor {
 
     def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
     def_stats.reflex.label = "Reflex";
-    def_stats.fortitude.value = 10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
+    def_stats.fortitude.value =
+      10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
     def_stats.fortitude.label = "Fortitude";
-    def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
+    def_stats.will.value =
+      10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        def_dam.phys[key].value = def_dam.phys[key]?.value || def_dam.phys[key]?.type !== "imm" ? Math.max(isNaN(def_dam.phys[key]?.value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key]?.bonus : 0;
-        def_dam.phys[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
+        def_dam.phys[key].value =
+          def_dam.phys[key]?.value || def_dam.phys[key]?.type !== "imm"
+            ? Math.max(isNaN(def_dam.phys[key]?.value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key]?.bonus
+            : 0;
+        def_dam.phys[key].name =
+          game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
       }
-      def_dam.mag[key].value = def_dam.mag[key]?.value || def_dam.mag[key]?.type !== "imm" ? Math.max(isNaN(def_dam.mag[key]?.value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key]?.bonus : 0;
+      def_dam.mag[key].value =
+        def_dam.mag[key]?.value || def_dam.mag[key]?.type !== "imm"
+          ? Math.max(isNaN(def_dam.mag[key]?.value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key]?.bonus
+          : 0;
       def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills
@@ -110,7 +124,8 @@ export class ARd20Actor extends Actor {
       skill.level = skill.level < 4 ? skill.level : 4;
       skill.value = skill.level * 4 + skill.bonus;
       skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
-      skill.rankName = game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level)) ?? getValues(CONFIG.ARd20.Rank, skill.level);
+      skill.rankName =
+        game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level)) ?? getValues(CONFIG.ARd20.Rank, skill.level);
     }
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {
       return { ...setting, value: proficiencies.weapon[key]?.value ?? 0 };
@@ -199,7 +214,9 @@ export class ARd20Actor extends Actor {
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
       data: data,
-      title: game.i18n.format("ARd20.SkillPromptTitle", { skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId)) }),
+      title: game.i18n.format("ARd20.SkillPromptTitle", {
+        skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId)),
+      }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
         "flags.ard20.roll": { type: "skill", skillId },

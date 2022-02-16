@@ -35,13 +35,14 @@ export class CharacterAdvancement extends FormApplication<
     const folder = this.getFolders();
     const rList = await this.getRacesList(pack, folder);
     const fList = await this.getFeaturesList(pack, folder);
+    const actorData = this.object.data.data
     const startingData: CharacterAdvancementFormAppData = {
-      isReady: duplicate(this.object.data.data.isReady), // check, if the character is ready
-      attributes: duplicate(this.object.data.data.attributes),
-      skills: duplicate(this.object.data.data.skills),
-      xp: duplicate(this.object.data.data.advancement.xp),
-      profs: duplicate(this.object.data.data.proficiencies),
-      health: duplicate(this.object.data.data.health),
+      isReady: duplicate(actorData.isReady), // check, if the character is ready
+      attributes: duplicate(actorData.attributes),
+      skills: duplicate(actorData.skills),
+      xp: duplicate(actorData.advancement.xp),
+      profs: duplicate(actorData.proficiencies),
+      health: duplicate(actorData.health),
       races: { list: rList, chosen: "" },
       count: {
         // counter for skills and feats
@@ -72,9 +73,9 @@ export class CharacterAdvancement extends FormApplication<
         awail: fList.temp_feat_list, // array of feats that are available to learn
       },
       allow: {
-        attribute: false,
-        race: false,
-        final: false,
+        attribute: actorData.isReady,
+        race: actorData.isReady,
+        final: actorData.isReady,
       },
       hover: {
         attribute: "",
@@ -566,7 +567,7 @@ export class CharacterAdvancement extends FormApplication<
     }
     obj["data.health.max"] = data.health.max;
     if (data.isReady) {
-      obj["data.attributes.xp"] = updateData.xp;
+      obj["data.advancement.xp"] = updateData.xp;
     }
     obj["data.skills"] = updateData.skills;
     obj["data.profs"] = updateData.profs;
