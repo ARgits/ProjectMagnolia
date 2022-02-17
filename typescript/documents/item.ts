@@ -81,7 +81,9 @@ export class ARd20Item extends Item {
   */
   //@ts-expect-error
   _setTypeAndSubtype(data: object & WeaponDataPropertiesData, flags) {
-    data.sub_type_array = game!.settings.get("ard20", "proficiencies").weapon.filter((prof: { type: any }) => prof.type === data.type.value);
+    data.sub_type_array = game!.settings
+      .get("ard20", "proficiencies")
+      .weapon.filter((prof: { type: any }) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       const id = /Item.(.+)/.exec(flags.core.sourceId)![1];
       const item = game.items!.get(id);
@@ -89,9 +91,16 @@ export class ARd20Item extends Item {
         data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
       }
     }
-    data.sub_type = data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ?? getValues(CONFIG.ARd20.Rank, data.proficiency.level);
-    data.type.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ?? getValues(CONFIG.ARd20.Rank, data.type.value);
+    data.sub_type =
+      data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0
+        ? data.sub_type_array[0].name
+        : data.sub_type || data.sub_type_array[0].name;
+    data.proficiency.name =
+      game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ??
+      getValues(CONFIG.ARd20.Rank, data.proficiency.level);
+    data.type.name =
+      game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ??
+      getValues(CONFIG.ARd20.Rank, data.type.value);
   }
   /**
    *Prepare data for features
@@ -109,6 +118,7 @@ export class ARd20Item extends Item {
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
     data.level.max = data.level.has ? data.level.max || 4 : 1;
+    data.level.initial = Math.min(data.level.max, data.level.initial);
     data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0;
 
     //define exp cost
@@ -118,17 +128,17 @@ export class ARd20Item extends Item {
       if (data.xp.basicCost.length < data.level.max) {
         for (let i = 1; i < data.level.max; i++) {
           data.xp.basicCost.push(Math.round((data.xp.basicCost[i - 1] * k) / 5) * 5);
-          data.xp.AdvancedCost.push(data.xp.basicCost[i])
+          data.xp.AdvancedCost.push(data.xp.basicCost[i]);
         }
       } else {
         for (let i = 1; i < data.level.max; i++) {
           data.xp.basicCost[i] = Math.round((data.xp.basicCost[i - 1] * k) / 5) * 5;
-          data.xp.AdvancedCost[i]=data.xp.AdvancedCost[i]??data.xp.basicCost[i]
+          data.xp.AdvancedCost[i] = data.xp.AdvancedCost[i] ?? data.xp.basicCost[i];
         }
       }
     }
     for (let [key, req] of Object.entries(data.req.values)) {
-      req.pass = Array.from({length:data.level.max},i=>i=false);
+      req.pass = Array.from({ length: data.level.max }, (i) => (i = false));
       switch (req.type) {
         case "ability":
           for (let [key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
@@ -187,8 +197,11 @@ export class ARd20Item extends Item {
     let prof_bonus: number = 0;
     if (itemData.type === "weapon") {
       const data = itemData.data;
-      data.proficiency.level = this.isOwned ? this.actor?.data.data.proficiencies.weapon!.filter((pr) => pr.name === data.sub_type)[0].value! : 0;
-      data.proficiency.levelName = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level]) ?? CONFIG.ARd20.Rank[data.proficiency.level];
+      data.proficiency.level = this.isOwned
+        ? this.actor?.data.data.proficiencies.weapon!.filter((pr) => pr.name === data.sub_type)[0].value!
+        : 0;
+      data.proficiency.levelName =
+        game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level]) ?? CONFIG.ARd20.Rank[data.proficiency.level];
       prof_bonus = data.proficiency.level * 4;
     }
     if (itemData.data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
@@ -237,7 +250,13 @@ export class ARd20Item extends Item {
     //@ts-expect-error
     rollData.damageDie = hasDamage ? this.data.data.damage.current.parts[0] : null;
     //@ts-expect-error
-    rollData.mod = hasAttack ? this.data.data.attack.parts[0] : hasDamage ? this.data.data.damage.current.parts[1] : null;
+    rollData.mod = hasAttack
+      ? //@ts-expect-error
+        this.data.data.attack.parts[0]
+      : hasDamage
+      ? //@ts-expect-error
+        this.data.data.damage.current.parts[1]
+      : null;
     //@ts-expect-error
     rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
     return rollData;
@@ -314,7 +333,9 @@ export class ARd20Item extends Item {
     //@ts-expect-error
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications!.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+      return ui.notifications!.error(
+        game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name })
+      );
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
 
@@ -380,7 +401,12 @@ export class ARd20Item extends Item {
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
-  async _applyDamage(dam: { total: any; terms: any[] }, tData: { defences: { damage: { [x: string]: { [x: string]: any } } } }, tHealth: number, tActor: { update: (arg0: {}) => any }) {
+  async _applyDamage(
+    dam: { total: any; terms: any[] },
+    tData: { defences: { damage: { [x: string]: { [x: string]: any } } } },
+    tHealth: number,
+    tActor: { update: (arg0: {}) => any }
+  ) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach((term: { options: { damageType: any }; total: number }) => {
@@ -429,7 +455,9 @@ export class ARd20Item extends Item {
     //@ts-expect-error
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications!.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+      return ui.notifications!.error(
+        game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name })
+      );
     }
     const dam = await item.rollDamage({
       event: event,
@@ -487,8 +515,15 @@ export class ARd20Item extends Item {
     const elem = event.currentTarget;
     const 
   }*/
-  //@ts-expect-error
-  async displayCard({ rollMode, createMessage = true, hasAttack = Boolean(), hasDamage = Boolean(), targets = [], mRoll = Boolean() } = {}) {
+  async displayCard({
+    //@ts-expect-error
+    rollMode,
+    createMessage = true,
+    hasAttack = Boolean(),
+    hasDamage = Boolean(),
+    targets = [],
+    mRoll = Boolean(),
+  } = {}) {
     // Render the chat card template
     let atk = {};
     let dc = {};
@@ -521,7 +556,8 @@ export class ARd20Item extends Item {
           //@ts-expect-error
           atk[key] = atk[key].total;
           //@ts-expect-error
-          dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
+          dieResultCss[key] =
+            d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
           //@ts-expect-error
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           //@ts-expect-error
@@ -681,7 +717,15 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean() } = {}) {
+  rollDamage({
+    critical = false,
+    event = null,
+    spellLevel = null,
+    versatile = false,
+    options = {},
+    mRoll = Boolean(),
+    canMult = Boolean(),
+  } = {}) {
     console.log(canMult);
     const iData = this.data.data;
     const aData = this.actor!.data.data;
