@@ -1,4 +1,4 @@
-import { ARd20Item } from "../documents/item";
+import { ARd20Item } from "../../documents/item.js";
 
 export {};
 declare global {
@@ -165,20 +165,8 @@ declare global {
     health: number;
   }
   interface MyItemDataPropertiesData extends MyItemDataSourceData {}
-  interface FeatureDataPropertiesData extends FeatureDataSourceData {
-    req: {
-      values: FeatureDataSourceData["req"]["values"];
-      logic: FeatureDataSourceData["req"]["logic"];
-    };
-  }
-  interface FeatureReqValue {
-    input: number[];
-    name: string;
-    pass: boolean[];
-    subtype_list: string[];
-    type: string;
-    value: string|number;
-  }
+  
+ 
   interface WeaponDataPropertiesData extends WeaponDataSourceData {
     property: {
       [Prop in keyof WeaponDataSourceData["property"]]: WeaponDataSourceData["property"][Prop] & {

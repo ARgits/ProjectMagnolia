@@ -1,5 +1,5 @@
 import { ItemData, ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
-import { ARd20Item } from "../documents/item";
+import { ARd20Item } from "../../documents/item";
 
 export {};
 declare global {

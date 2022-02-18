@@ -33,7 +33,6 @@ export const registerSystemSettings = function () {
   game.settings.registerMenu("ard20", "gearProfManage", {
     name: "SETTINGS.ProfManage",
     label: "SETTINGS.ProfManage",
-    scope: "world",
     type: ProfFormApp,
     restricted: false,
     icon: "fab fa-buffer",
@@ -52,8 +51,20 @@ export const registerSystemSettings = function () {
   game.settings.registerMenu("ard20", "featManage", {
     name: "SETTINGS.FeatureManage",
     label: "SETTINGS.FeatureManage",
-    scope: "world",
     type: FeatFormApp,
+    restricted: false,
+  });
+  game.settings.register("ard20", "advancement-rate", {
+    scope: "world",
+    config: false,
+    onChange: (value) => {
+      console.log("Настройка изменилась", value);
+    },
+  });
+  game.settings.registerMenu("ard20", "advancementRateManage", {
+    name: "SETTINGS.AdvancementRateManage",
+    label: "SETTINGS.AdvancementRateManage",
+    type: AdvancementRateFormApp,
     restricted: false,
   });
 };
@@ -198,5 +209,30 @@ class FeatFormApp extends FormApplication<FormApplication.Options, FeatFormAppDa
         await game.settings.set("ard20", "feat", feat);
       }
     }
+  }
+}
+//@ts-expect-error
+class AdvancementRateFormApp extends FormApplication<FormApplication.Options, AdvancementRateFormAppData> {
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["ard20"],
+      title: "Advancement Rate",
+      template: "systems/ard20/templates/app/advancement-rate-setting.html",
+      id: "advancement-rate-setting",
+      width: 600,
+      height: "auto",
+      submitOnChange: true,
+      closeOnSubmit: false,
+    });
+  }
+  getData():AdvancementRateFormAppData {
+      const sheetData = {}
+      return sheetData
+  }
+  activateListeners(html: JQuery<HTMLElement>): void {
+      super.activateListeners(html)
+  }
+  protected async _updateObject(event: Event, formData?: object): Promise<void> {
+      
   }
 }

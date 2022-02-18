@@ -32,9 +32,6 @@ declare global {
     (itemName:string):ARd20Item["roll"]
   }
   namespace ClientSettings {
-    interface PartialMenuSetting{
-      scope:"world"|"client"
-    }
     interface Values {
       "ard20.proficiencies": {
         weapon: Array<WeaponProficienciesSetting>;

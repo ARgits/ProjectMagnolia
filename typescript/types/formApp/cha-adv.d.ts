@@ -1,7 +1,7 @@
 import { ItemData, ItemDataBaseProperties, ItemDataProperties, ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
 import { PropertiesToSource } from "@league-of-foundry-developers/foundry-vtt-types/src/types/helperTypes";
-import { ARd20Actor } from "../documents/actor";
-import { ARd20Item } from "../documents/item";
+import { ARd20Actor } from "../../documents/actor";
+import { ARd20Item } from "../../documents/item";
 
 export {};
 declare global {
