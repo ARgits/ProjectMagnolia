@@ -57,6 +57,20 @@ export const registerSystemSettings = function () {
   game.settings.register("ard20", "advancement-rate", {
     scope: "world",
     config: false,
+    default:{
+      variables: {
+        skillCount: 5,
+        featureCount: 5,
+        skillLevel: 5,
+        featureLevel: 5,
+        attributeLevel: 5,
+      },
+      formulas: {
+        skills: "n",
+        features: "n",
+        attributes: "n",
+      },
+    },
     onChange: (value) => {
       console.log("Настройка изменилась", value);
     },
@@ -225,14 +239,12 @@ class AdvancementRateFormApp extends FormApplication<FormApplication.Options, Ad
       closeOnSubmit: false,
     });
   }
-  getData():AdvancementRateFormAppData {
-      const sheetData = {}
-      return sheetData
+  getData(): AdvancementRateFormAppData {
+    const sheetData = game.settings.get("ard20","advancement-rate")
+    return sheetData;
   }
   activateListeners(html: JQuery<HTMLElement>): void {
-      super.activateListeners(html)
+    super.activateListeners(html);
   }
-  protected async _updateObject(event: Event, formData?: object): Promise<void> {
-      
-  }
+  protected async _updateObject(event: Event, formData?: object): Promise<void> {}
 }

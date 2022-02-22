@@ -47,6 +47,20 @@ declare global {
         packs: string[];
         folders: string[];
       };
+      "ard20.advancement-rate":{
+        variables: {
+          skillCount: number;
+          featureCount: number;
+          skillLevel: number;
+          featureLevel: number;
+          attributeLevel: number;
+        };
+        formulas: {
+          skills: string;
+          features: string;
+          attributes: string;
+        };
+      }
     }
   }
 
