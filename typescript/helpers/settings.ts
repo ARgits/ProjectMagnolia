@@ -61,14 +61,14 @@ export const registerSystemSettings = function () {
       variables: {
         skillCount: 5,
         featureCount: 5,
-        skillLevel: 5,
+        skillValue: 5,
         featureLevel: 5,
-        attributeLevel: 5,
+        attributeValue: 5,
       },
       formulas: {
-        skills: "n",
+        skills: "",
         features: "n",
-        attributes: "n",
+        attributes: "max(floor((AS-10)/2)+2,1)",
       },
     },
     onChange: (value) => {

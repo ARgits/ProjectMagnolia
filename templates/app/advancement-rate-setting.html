@@ -1,0 +1,28 @@
+<form>
+    <section class="grid grid-2col">
+        <div class="flexrow">
+            <label>Custom values</label>
+            <div>
+                <label>AV - Attribute Value</label>
+                <input type="text" value="{{variables.attributeValue}}" data-dtype="number">
+            </div>
+            <div>
+                <label>SV - Skill Value</label>
+                <input type="text" value="{{variables.skillValue}}" data-dtype="number">
+            </div>
+            <div> SL - Skill level</div>
+        </div>
+        <div>
+            <label>Non-custom Values</label>
+            <div>AS - Attribute Score</div>
+            <div>SS - Skill Score</div>
+            <div>SL - Skill level</div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <label>Attribute Advancement Formula</label>
+            <input type="text" value="{{formulas.attributes}}">
+        </div>
+    </section>
+</form>

@@ -5,9 +5,9 @@ declare global {
     variables: {
       skillCount: number;
       featureCount: number;
-      skillLevel: number;
+      skillValue: number;
       featureLevel: number;
-      attributeLevel: number;
+      attributeValue: number;
     };
     formulas: {
       skills: string;
