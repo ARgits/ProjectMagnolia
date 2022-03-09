@@ -1,4 +1,4 @@
-import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
+import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import AdvancementRateShell from "./advancement-rate-shell.svelte";
 export class AdvRateSettingsShim extends FormApplication {
   /**
@@ -15,7 +15,7 @@ export class AdvRateSettingsShim extends FormApplication {
     this.close();
   }
 }
-class AdvancementRateFormApp extends TJSDialog {
+class AdvancementRateFormApp extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
