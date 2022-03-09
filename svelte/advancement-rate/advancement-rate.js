@@ -22,9 +22,7 @@ class AdvancementRateFormApp extends SvelteApplication {
       title: "Advancement Rate",
       id: "advancement-rate-setting",
       width: 600,
-      height: "auto",
-      submitOnChange: true,
-      closeOnSubmit: false,
+      height: 300,
       svelte: {
         class: AdvancementRateShell,
         props: {

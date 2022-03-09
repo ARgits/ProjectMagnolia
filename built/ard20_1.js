@@ -8912,6 +8912,9 @@ function create_fragment(ctx) {
 	let label4;
 	let t19;
 	let input2;
+	let t20;
+	let footer;
+	let button;
 	let mounted;
 	let dispose;
 
@@ -8952,8 +8955,13 @@ function create_fragment(ctx) {
 			label4.textContent = "Attribute Advancement Formula";
 			t19 = space();
 			input2 = element("input");
+			t20 = space();
+			footer = element("footer");
+			button = element("button");
+			button.innerHTML = `<i class="far fa-save"></i>`;
 			attr(div3, "class", "flexrow");
 			attr(section0, "class", "grid grid-2col");
+			attr(button, "type", "button");
 			attr(form_1, "autocomplete", "off");
 		},
 		m(target, anchor) {
@@ -8984,13 +8992,17 @@ function create_fragment(ctx) {
 			append(div8, t19);
 			append(div8, input2);
 			set_input_value(input2, /*advancementSetting*/ ctx[0].formulas.attributes);
-			/*form_1_binding*/ ctx[6](form_1);
+			append(form_1, t20);
+			append(form_1, footer);
+			append(footer, button);
+			/*form_1_binding*/ ctx[7](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "input", /*input0_input_handler*/ ctx[3]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[4]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[5]),
+					listen(input0, "input", /*input0_input_handler*/ ctx[4]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[5]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[6]),
+					listen(button, "click", /*requestSubmit*/ ctx[3]),
 					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[2]), { once: true })
 				];
 
@@ -9014,7 +9026,7 @@ function create_fragment(ctx) {
 		o: noop,
 		d(detaching) {
 			if (detaching) detach(form_1);
-			/*form_1_binding*/ ctx[6](null);
+			/*form_1_binding*/ ctx[7](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -9031,7 +9043,12 @@ function instance($$self, $$props, $$invalidate) {
 		application.close();
 	}
 
+	function requestSubmit() {
+		form.requestSubmit;
+	}
+
 	console.log(advancementSetting);
+	console.log(form);
 
 	function input0_input_handler() {
 		advancementSetting.variables.attributeValue = this.value;
@@ -9063,6 +9080,7 @@ function instance($$self, $$props, $$invalidate) {
 		advancementSetting,
 		form,
 		updateSettings,
+		requestSubmit,
 		input0_input_handler,
 		input1_input_handler,
 		input2_input_handler,
@@ -9112,9 +9130,7 @@ class AdvancementRateFormApp extends SvelteApplication {
       title: "Advancement Rate",
       id: "advancement-rate-setting",
       width: 600,
-      height: "auto",
-      submitOnChange: true,
-      closeOnSubmit: false,
+      height: 300,
       svelte: {
         class: Advancement_rate_shell,
         props: {
