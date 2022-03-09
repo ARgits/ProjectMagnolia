@@ -9031,6 +9031,8 @@ function instance($$self, $$props, $$invalidate) {
 		application.close();
 	}
 
+	console.log(advancementSetting);
+
 	function input0_input_handler() {
 		advancementSetting.variables.attributeValue = this.value;
 		$$invalidate(0, advancementSetting);
@@ -9117,8 +9119,7 @@ class AdvancementRateFormApp extends SvelteApplication {
         class: Advancement_rate_shell,
         target: document.body,
         props: {
-          variables: game.settings.get("ard20", "advancement-rate").variables,
-          formulas: game.settings.get("ard20", "advancement-rate").formulas
+          advancementSetting: game.settings.get("ard20", "advancement-rate")
         }
       }
     });

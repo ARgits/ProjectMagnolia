@@ -13,6 +13,7 @@
   function requestSubmit() {
     form.requestSubmit;
   }
+  console.log(advancementSetting)
 </script>
 
 <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
