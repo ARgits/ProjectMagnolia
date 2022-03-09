@@ -13,8 +13,8 @@
   function requestSubmit() {
     form.requestSubmit;
   }
-  console.log(advancementSetting)
-  console.log(form)
+  console.log(advancementSetting);
+  console.log(form);
 </script>
 
 <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
@@ -45,6 +45,6 @@
     </div>
   </section>
   <footer>
-    <button type="button" on:click={requestSubmit}><i class="far fa-save"></i></button>
-</footer>
+    <button type="button" on:click={requestSubmit}><i class="far fa-save" /></button>
+  </footer>
 </form>
