@@ -8,7 +8,7 @@
   export let advancementSetting;
   async function updateSettings() {
     application.update(advancementSetting);
-    application;
+    application.close();
   }
   function requestSubmit() {
     form.requestSubmit;

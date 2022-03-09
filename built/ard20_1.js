@@ -9028,6 +9028,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function updateSettings() {
 		application.update(advancementSetting);
+		application.close();
 	}
 
 	function input0_input_handler() {
