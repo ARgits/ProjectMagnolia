@@ -40,9 +40,9 @@ export default () =>
 
    return [
       {  // The main module bundle
-         input: `src/init.js`,
+         input: `svelte/init.js`,
          output: {
-            file: `dist/template-svelte-esm.js`,
+            file: `built/ard20_1.js`,
             format: 'es',
             plugins: outputPlugins,
             sourcemap

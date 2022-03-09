@@ -1,4 +1,4 @@
-import {AdvancementRateFormApp} from '../../svelte/advancement-rate.js'
+import {AdvancementRateFormApp} from '../../svelte/advancement-rate/advancement-rate.js'
 export const registerSystemSettings = function () {
     game.settings.register("ard20", "proficiencies", {
         scope: "world",

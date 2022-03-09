@@ -7,7 +7,7 @@
     "compile": "gulp css",
     "watch": "gulp",
     "gulp": "gulp",
-    "build-watch":"rollup --watch --config"
+    "build-watch": "rollup --watch --config"
   },
   "browserslist": [
     "last 3 versions"
@@ -16,14 +16,15 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@typhonjs-fvtt/runtime": "0.0.7",
     "filtrex": "^2.2.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-sourcemaps": "^2.6.5",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.5.2",
+    "postcss": "^8.4.8",
     "select2": "^4.1.0-rc.0",
-    "@typhonjs-fvtt/runtime": "^0.0.7",
     "svelte": "^3.46.0",
     "svelte-preprocess": "^4.10.0"
   },

@@ -5,7 +5,6 @@ export class AdvancementRateFormApp extends  SvelteApplication{
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["ard20"],
             title: "Advancement Rate",
-            template: "systems/ard20/templates/app/advancement-rate-setting.html",
             id: "advancement-rate-setting",
             width: 600,
             height: "auto",
@@ -13,6 +12,11 @@ export class AdvancementRateFormApp extends  SvelteApplication{
             closeOnSubmit: false,
             svelte:{
                 class:AdvancementRateShell,
+                target:document.body,
+                props:{
+                    variables:game.settings.get("ard20","advancement-rate").variables,
+                    formulas:game.settings.get("ard20","advancement-rate").formulas
+                }
             }
         });
     }
