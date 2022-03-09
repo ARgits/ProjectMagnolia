@@ -27,7 +27,7 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "https://gitlab.com/ARgits/ard20",
-  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/feat-req/system.json",
-  "download": "https://gitlab.com/ARgits/ard20/-/archive/feat-req/ard20-feat-req.zip",
+  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/svelte/system.json",
+  "download": "https://gitlab.com/ARgits/ard20/-/archive/svelte/ard20-feat-req.zip",
   "license": "LICENSE.txt"
 }
