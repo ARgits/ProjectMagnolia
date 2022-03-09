@@ -27,7 +27,6 @@ class AdvancementRateFormApp extends SvelteApplication {
       closeOnSubmit: false,
       svelte: {
         class: AdvancementRateShell,
-        target: document.body,
         props: {
           advancementSetting: game.settings.get("ard20", "advancement-rate"),
         },
