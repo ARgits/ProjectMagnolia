@@ -9083,6 +9083,25 @@ class Advancement_rate_shell extends SvelteComponent {
 	}
 }
 
+class AdvRateSettingsShim extends FormApplication {
+  /**
+   * @inheritDoc
+   */
+  constructor(options = {}) {
+    super({}, options);
+    new AdvancementRateFormApp().render(true, {
+      focus: true
+    });
+  }
+
+  async _updateObject(event, formData) {}
+
+  render() {
+    this.close();
+  }
+
+}
+
 class AdvancementRateFormApp extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -9230,7 +9249,7 @@ const registerSystemSettings = function registerSystemSettings() {
   game.settings.registerMenu("ard20", "advancementRateManage", {
     name: "SETTINGS.AdvancementRateManage",
     label: "SETTINGS.AdvancementRateManage",
-    type: AdvancementRateFormApp,
+    type: AdvRateSettingsShim,
     restricted: false
   });
 };

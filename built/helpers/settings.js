@@ -1,4 +1,4 @@
-import {AdvancementRateFormApp} from '../../svelte/advancement-rate/advancement-rate.js'
+import {AdvRateSettingsShim} from '../../svelte/advancement-rate/advancement-rate.js'
 export const registerSystemSettings = function () {
     game.settings.register("ard20", "proficiencies", {
         scope: "world",
@@ -79,7 +79,7 @@ export const registerSystemSettings = function () {
     game.settings.registerMenu("ard20", "advancementRateManage", {
         name: "SETTINGS.AdvancementRateManage",
         label: "SETTINGS.AdvancementRateManage",
-        type: AdvancementRateFormApp,
+        type: AdvRateSettingsShim,
         restricted: false,
     });
 };
