@@ -12,6 +12,7 @@
   function requestSubmit() {
     form.requestSubmit;
   }
+  console.log(application)
   console.log(advancementSetting)
   console.log(form)
 </script>
