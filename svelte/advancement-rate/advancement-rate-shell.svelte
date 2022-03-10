@@ -19,6 +19,7 @@
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
     console.log("change");
+    changeFormula()
   }
   function changeFormula() {
     console.log("input");
