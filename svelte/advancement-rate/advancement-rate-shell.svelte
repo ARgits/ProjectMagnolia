@@ -11,10 +11,10 @@
     application.update(advancementSetting);
     application.close();
   }
-  let attributeFormula;
+  let attributeFormula = advancementSetting.formulas.attributes;
   for (let variable of Object.values(advancementSetting.variables)) {
     console.log(attributeFormula);
-    attributeFormula = advancementSetting.formulas.attributes.replace(variable.shortName, variable.value);
+    attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
   }
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
@@ -24,9 +24,8 @@
     console.log("input");
     console.log(attributeFormula);
     const variables = advancementSetting.variables;
-    const formulas = advancementSetting.formulas;
     for (let variable of Object.values(variables)) {
-      attributeFormula = formulas.attributes.replace(variable.shortName, variable.value);
+      attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
     }
     console.log(attributeFormula);
   }
