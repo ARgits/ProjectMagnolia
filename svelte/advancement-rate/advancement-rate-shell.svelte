@@ -15,8 +15,10 @@
   $: {
     attributeFormula = advancementSetting.formulas.attributes;
     for (let variable of Object.values(advancementSetting.variables)) {
-      console.log(attributeFormula);
-      attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
+      if (variable.value) {
+        console.log(attributeFormula);
+        attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
+      }
     }
   }
   function changeSetting() {
