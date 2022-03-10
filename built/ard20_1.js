@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, is_function, set_data, detach, run_all, prevent_default, destroy_each } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, set_data, detach, run_all, prevent_default, destroy_each } from '/modules/typhonjs/svelte/internal.js';
 import { getContext } from '/modules/typhonjs/svelte/index.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 
@@ -3857,7 +3857,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (42:8) {#each Object.values(advancementSetting.variables) as variable}
+// (38:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[14].longName + "";
@@ -3902,14 +3902,10 @@ function create_each_block(ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(input0, "input", input0_input_handler),
-					listen(input0, "input", function () {
-						if (is_function(/*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false))) /*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false).apply(this, arguments);
-					}),
+					listen(input0, "input", /*changeFormula*/ ctx[6]),
 					listen(input0, "change", /*changeSetting*/ ctx[5]),
 					listen(input1, "input", input1_input_handler),
-					listen(input1, "input", function () {
-						if (is_function(/*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false))) /*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false).apply(this, arguments);
-					}),
+					listen(input1, "input", /*changeFormula*/ ctx[6]),
 					listen(input1, "change", /*changeSetting*/ ctx[5])
 				];
 
@@ -3940,7 +3936,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (37:0) <ApplicationShell bind:elementRoot>
+// (33:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
@@ -4041,7 +4037,7 @@ function create_default_slot(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*changeFormula*/ ctx[6]("", null, true)),
+					listen(input, "input", /*changeFormula*/ ctx[6]),
 					listen(input, "change", /*changeSetting*/ ctx[5]),
 					listen(input, "input", /*input_input_handler*/ ctx[10]),
 					listen(button, "click", /*requestSubmit*/ ctx[7]),
@@ -4165,20 +4161,16 @@ function instance($$self, $$props, $$invalidate) {
 
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
-		changeFormula("", null, true);
+		changeFormula();
 	}
 
-	function changeFormula(name, val, isFormula) {
-		if (!isFormula) {
-			$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes.replace(name, val));
-		} else {
-			const variables = advancementSetting.variables;
-			const formulas = advancementSetting.formulas;
-			$$invalidate(3, attributeFormula = formulas.attributes);
+	function changeFormula() {
+		const variables = advancementSetting.variables;
+		const formulas = advancementSetting.formulas;
+		$$invalidate(3, attributeFormula = formulas.attributes);
 
-			for (let variable of Object.values(variables)) {
-				$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
-			}
+		for (let variable of Object.values(variables)) {
+			$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
 		}
 	}
 

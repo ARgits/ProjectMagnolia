@@ -14,18 +14,14 @@
   let attributeFormula = advancementSetting.formulas.attributes;
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
-    changeFormula("", null, true);
+    changeFormula();
   }
-  function changeFormula(name, val, isFormula) {
-    if (!isFormula) {
-      attributeFormula = advancementSetting.formulas.attributes.replace(name, val);
-    } else {
-      const variables = advancementSetting.variables;
-      const formulas = advancementSetting.formulas;
-      attributeFormula = formulas.attributes;
-      for (let variable of Object.values(variables)) {
-        attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
-      }
+  function changeFormula() {
+    const variables = advancementSetting.variables;
+    const formulas = advancementSetting.formulas;
+    attributeFormula = formulas.attributes;
+    for (let variable of Object.values(variables)) {
+      attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
     }
   }
   function requestSubmit() {
@@ -43,14 +39,14 @@
           <label>{variable.longName}</label>
           <input
             bind:value={variable.shortName}
-            on:input={changeFormula(variable.shortName, variable.value, false)}
+            on:input={changeFormula}
             on:change={changeSetting}
             placeholder="shortName"
           />
           <input
             type="number"
             bind:value={variable.value}
-            on:input={changeFormula(variable.shortName, variable.value, false)}
+            on:input={changeFormula}
             on:change={changeSetting}
             placeholder="custom value"
           />
@@ -68,7 +64,7 @@
         <label>Attribute Advancement Formula</label>
         <input
           type="text"
-          on:input={changeFormula("", null, true)}
+          on:input={changeFormula}
           on:change={changeSetting}
           bind:value={advancementSetting.formulas.attributes}
         />
