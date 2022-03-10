@@ -3851,16 +3851,16 @@ class ARd20SocketHandler {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[14] = list[i];
-	child_ctx[15] = list;
-	child_ctx[16] = i;
+	child_ctx[13] = list[i];
+	child_ctx[14] = list;
+	child_ctx[15] = i;
 	return child_ctx;
 }
 
-// (46:8) {#each Object.values(advancementSetting.variables) as variable}
+// (48:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[14].longName + "";
+	let t0_value = /*variable*/ ctx[13].longName + "";
 	let t0;
 	let t1;
 	let input0;
@@ -3870,11 +3870,11 @@ function create_each_block(ctx) {
 	let dispose;
 
 	function input0_input_handler() {
-		/*input0_input_handler*/ ctx[8].call(input0, /*each_value*/ ctx[15], /*variable_index*/ ctx[16]);
+		/*input0_input_handler*/ ctx[7].call(input0, /*each_value*/ ctx[14], /*variable_index*/ ctx[15]);
 	}
 
 	function input1_input_handler() {
-		/*input1_input_handler*/ ctx[9].call(input1, /*each_value*/ ctx[15], /*variable_index*/ ctx[16]);
+		/*input1_input_handler*/ ctx[8].call(input1, /*each_value*/ ctx[14], /*variable_index*/ ctx[15]);
 	}
 
 	return {
@@ -3894,18 +3894,16 @@ function create_each_block(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input0, anchor);
-			set_input_value(input0, /*variable*/ ctx[14].shortName);
+			set_input_value(input0, /*variable*/ ctx[13].shortName);
 			insert(target, t2, anchor);
 			insert(target, input1, anchor);
-			set_input_value(input1, /*variable*/ ctx[14].value);
+			set_input_value(input1, /*variable*/ ctx[13].value);
 
 			if (!mounted) {
 				dispose = [
 					listen(input0, "input", input0_input_handler),
-					listen(input0, "input", /*changeFormula*/ ctx[6]),
 					listen(input0, "change", /*changeSetting*/ ctx[5]),
 					listen(input1, "input", input1_input_handler),
-					listen(input1, "input", /*changeFormula*/ ctx[6]),
 					listen(input1, "change", /*changeSetting*/ ctx[5])
 				];
 
@@ -3914,14 +3912,14 @@ function create_each_block(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, advancementSetting*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[14].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, advancementSetting*/ 1 && t0_value !== (t0_value = /*variable*/ ctx[13].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, advancementSetting*/ 2 && input0.value !== /*variable*/ ctx[14].shortName) {
-				set_input_value(input0, /*variable*/ ctx[14].shortName);
+			if (dirty & /*Object, advancementSetting*/ 1 && input0.value !== /*variable*/ ctx[13].shortName) {
+				set_input_value(input0, /*variable*/ ctx[13].shortName);
 			}
 
-			if (dirty & /*Object, advancementSetting*/ 2 && to_number(input1.value) !== /*variable*/ ctx[14].value) {
-				set_input_value(input1, /*variable*/ ctx[14].value);
+			if (dirty & /*Object, advancementSetting*/ 1 && to_number(input1.value) !== /*variable*/ ctx[13].value) {
+				set_input_value(input1, /*variable*/ ctx[13].value);
 			}
 		},
 		d(detaching) {
@@ -3936,7 +3934,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (41:0) <ApplicationShell bind:elementRoot>
+// (43:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
@@ -3959,7 +3957,7 @@ function create_default_slot(ctx) {
 	let button;
 	let mounted;
 	let dispose;
-	let each_value = Object.values(/*advancementSetting*/ ctx[1].variables);
+	let each_value = Object.values(/*advancementSetting*/ ctx[0].variables);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -4026,21 +4024,20 @@ function create_default_slot(ctx) {
 			append(div5, label2);
 			append(div5, t12);
 			append(div5, input);
-			set_input_value(input, /*advancementSetting*/ ctx[1].formulas.attributes);
+			set_input_value(input, /*advancementSetting*/ ctx[0].formulas.attributes);
 			append(section1, t13);
 			append(section1, div6);
 			append(div6, t14);
 			append(form_1, t15);
 			append(form_1, footer);
 			append(footer, button);
-			/*form_1_binding*/ ctx[11](form_1);
+			/*form_1_binding*/ ctx[10](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*changeFormula*/ ctx[6]),
 					listen(input, "change", /*changeSetting*/ ctx[5]),
-					listen(input, "input", /*input_input_handler*/ ctx[10]),
-					listen(button, "click", /*requestSubmit*/ ctx[7]),
+					listen(input, "input", /*input_input_handler*/ ctx[9]),
+					listen(button, "click", /*requestSubmit*/ ctx[6]),
 					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[4]), { once: true })
 				];
 
@@ -4048,8 +4045,8 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Object, advancementSetting, changeFormula, changeSetting*/ 98) {
-				each_value = Object.values(/*advancementSetting*/ ctx[1].variables);
+			if (dirty & /*Object, advancementSetting, changeSetting*/ 33) {
+				each_value = Object.values(/*advancementSetting*/ ctx[0].variables);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -4071,8 +4068,8 @@ function create_default_slot(ctx) {
 				each_blocks.length = each_value.length;
 			}
 
-			if (dirty & /*advancementSetting*/ 2 && input.value !== /*advancementSetting*/ ctx[1].formulas.attributes) {
-				set_input_value(input, /*advancementSetting*/ ctx[1].formulas.attributes);
+			if (dirty & /*advancementSetting*/ 1 && input.value !== /*advancementSetting*/ ctx[0].formulas.attributes) {
+				set_input_value(input, /*advancementSetting*/ ctx[0].formulas.attributes);
 			}
 
 			if (dirty & /*attributeFormula*/ 8) set_data(t14, /*attributeFormula*/ ctx[3]);
@@ -4080,7 +4077,7 @@ function create_default_slot(ctx) {
 		d(detaching) {
 			if (detaching) detach(form_1);
 			destroy_each(each_blocks, detaching);
-			/*form_1_binding*/ ctx[11](null);
+			/*form_1_binding*/ ctx[10](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4093,7 +4090,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[12](value);
+		/*applicationshell_elementRoot_binding*/ ctx[11](value);
 	}
 
 	let applicationshell_props = {
@@ -4119,7 +4116,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 131083) {
+			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 65547) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4159,31 +4156,23 @@ function instance($$self, $$props, $$invalidate) {
 
 	let attributeFormula = advancementSetting.formulas.attributes;
 
-	for (let variable of Object.values(advancementSetting.variables)) {
-		console.log(attributeFormula);
-		attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
-	}
-
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
 		console.log("change");
 		changeFormula();
 	}
 
-	function changeFormula() {
-		console.log("input");
-		console.log(attributeFormula);
-		const variables = advancementSetting.variables;
-		const formulas = advancementSetting.formulas;
-		$$invalidate(3, attributeFormula = formulas.attributes);
-
-		for (let variable of Object.values(variables)) {
-			$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
-		}
-
-		console.log(attributeFormula);
-	}
-
+	/*function changeFormula() {
+  console.log("input");
+  console.log(attributeFormula);
+  const variables = advancementSetting.variables;
+  const formulas = advancementSetting.formulas;
+  attributeFormula = formulas.attributes
+  for (let variable of Object.values(variables)) {
+    attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
+  }
+  console.log(attributeFormula);
+}*/
 	function requestSubmit() {
 		form.requestSubmit;
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
@@ -4191,23 +4180,23 @@ function instance($$self, $$props, $$invalidate) {
 
 	function input0_input_handler(each_value, variable_index) {
 		each_value[variable_index].shortName = this.value;
-		$$invalidate(1, advancementSetting);
+		$$invalidate(0, advancementSetting);
 	}
 
 	function input1_input_handler(each_value, variable_index) {
 		each_value[variable_index].value = to_number(this.value);
-		$$invalidate(1, advancementSetting);
+		$$invalidate(0, advancementSetting);
 	}
 
 	function input_input_handler() {
 		advancementSetting.formulas.attributes = this.value;
-		$$invalidate(1, advancementSetting);
+		$$invalidate(0, advancementSetting);
 	}
 
 	function form_1_binding($$value) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			form = $$value;
-			$$invalidate(0, form);
+			$$invalidate(1, form);
 		});
 	}
 
@@ -4217,19 +4206,29 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	$$self.$$set = $$props => {
-		if ('form' in $$props) $$invalidate(0, form = $$props.form);
-		if ('advancementSetting' in $$props) $$invalidate(1, advancementSetting = $$props.advancementSetting);
+		if ('form' in $$props) $$invalidate(1, form = $$props.form);
+		if ('advancementSetting' in $$props) $$invalidate(0, advancementSetting = $$props.advancementSetting);
 		if ('elementRoot' in $$props) $$invalidate(2, elementRoot = $$props.elementRoot);
 	};
 
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*Object, advancementSetting, attributeFormula*/ 9) {
+			{
+				for (let variable of Object.values(advancementSetting.variables)) {
+					console.log(attributeFormula);
+					$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes.replace(variable.shortName, variable.value));
+				}
+			}
+		}
+	};
+
 	return [
-		form,
 		advancementSetting,
+		form,
 		elementRoot,
 		attributeFormula,
 		updateSettings,
 		changeSetting,
-		changeFormula,
 		requestSubmit,
 		input0_input_handler,
 		input1_input_handler,
@@ -4244,14 +4243,14 @@ class Advancement_rate_shell extends SvelteComponent {
 		super();
 
 		init(this, options, instance, create_fragment, safe_not_equal, {
-			form: 0,
-			advancementSetting: 1,
+			form: 1,
+			advancementSetting: 0,
 			elementRoot: 2
 		});
 	}
 
 	get form() {
-		return this.$$.ctx[0];
+		return this.$$.ctx[1];
 	}
 
 	set form(form) {
@@ -4260,7 +4259,7 @@ class Advancement_rate_shell extends SvelteComponent {
 	}
 
 	get advancementSetting() {
-		return this.$$.ctx[1];
+		return this.$$.ctx[0];
 	}
 
 	set advancementSetting(advancementSetting) {

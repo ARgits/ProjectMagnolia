@@ -11,17 +11,19 @@
     application.update(advancementSetting);
     application.close();
   }
-  let attributeFormula=advancementSetting.formulas.attributes;
-  for (let variable of Object.values(advancementSetting.variables)) {
-    console.log(attributeFormula);
-    attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
+  let attributeFormula = advancementSetting.formulas.attributes;
+  $: {
+    for (let variable of Object.values(advancementSetting.variables)) {
+      console.log(attributeFormula);
+      attributeFormula = advancementSetting.formulas.attributes.replace(variable.shortName, variable.value);
+    }
   }
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
     console.log("change");
-    changeFormula()
+    changeFormula();
   }
-  function changeFormula() {
+  /*function changeFormula() {
     console.log("input");
     console.log(attributeFormula);
     const variables = advancementSetting.variables;
@@ -31,7 +33,7 @@
       attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
     }
     console.log(attributeFormula);
-  }
+  }*/
   function requestSubmit() {
     form.requestSubmit;
     game.settings.set("ard20", "advancement-rate", advancementSetting);
@@ -47,14 +49,14 @@
           <label>{variable.longName}</label>
           <input
             bind:value={variable.shortName}
-            on:input={changeFormula}
+
             on:change={changeSetting}
             placeholder="shortName"
           />
           <input
             type="number"
             bind:value={variable.value}
-            on:input={changeFormula}
+
             on:change={changeSetting}
             placeholder="custom value"
           />
@@ -72,7 +74,7 @@
         <label>Attribute Advancement Formula</label>
         <input
           type="text"
-          on:input={changeFormula}
+
           on:change={changeSetting}
           bind:value={advancementSetting.formulas.attributes}
         />
