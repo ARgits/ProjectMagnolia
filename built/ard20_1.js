@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, text, space, element, attr, insert, append, set_input_value, listen, set_data, detach, run_all, prevent_default, destroy_each } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, text, space, element, attr, insert, append, set_input_value, listen, is_function, set_data, detach, run_all, prevent_default, destroy_each } from '/modules/typhonjs/svelte/internal.js';
 import { getContext } from '/modules/typhonjs/svelte/index.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 
@@ -3851,19 +3851,19 @@ class ARd20SocketHandler {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[13] = list[i];
-	child_ctx[14] = list;
-	child_ctx[15] = i;
+	child_ctx[14] = list[i];
+	child_ctx[15] = list;
+	child_ctx[16] = i;
 	return child_ctx;
 }
 
-// (38:8) {#each Object.values(advancementSetting.variables) as variable}
+// (50:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
-	let t0_value = (console.log({ variable: /*variable*/ ctx[13] }), "") + "";
+	let t0_value = (console.log({ variable: /*variable*/ ctx[14] }), "") + "";
 	let t0;
 	let t1;
 	let label;
-	let t2_value = /*variable*/ ctx[13].longName + "";
+	let t2_value = /*variable*/ ctx[14].longName + "";
 	let t2;
 	let t3;
 	let input0;
@@ -3873,11 +3873,11 @@ function create_each_block(ctx) {
 	let dispose;
 
 	function input0_input_handler() {
-		/*input0_input_handler*/ ctx[7].call(input0, /*each_value*/ ctx[14], /*variable_index*/ ctx[15]);
+		/*input0_input_handler*/ ctx[8].call(input0, /*each_value*/ ctx[15], /*variable_index*/ ctx[16]);
 	}
 
 	function input1_input_handler() {
-		/*input1_input_handler*/ ctx[8].call(input1, /*each_value*/ ctx[14], /*variable_index*/ ctx[15]);
+		/*input1_input_handler*/ ctx[9].call(input1, /*each_value*/ ctx[15], /*variable_index*/ ctx[16]);
 	}
 
 	return {
@@ -3891,6 +3891,7 @@ function create_each_block(ctx) {
 			t4 = space();
 			input1 = element("input");
 			attr(input0, "placeholder", "shortName");
+			attr(input1, "type", "number");
 			attr(input1, "placeholder", "custom value");
 		},
 		m(target, anchor) {
@@ -3900,16 +3901,22 @@ function create_each_block(ctx) {
 			append(label, t2);
 			insert(target, t3, anchor);
 			insert(target, input0, anchor);
-			set_input_value(input0, /*variable*/ ctx[13].shortName);
+			set_input_value(input0, /*variable*/ ctx[14].shortName);
 			insert(target, t4, anchor);
 			insert(target, input1, anchor);
-			set_input_value(input1, /*variable*/ ctx[13].value);
+			set_input_value(input1, /*variable*/ ctx[14].value);
 
 			if (!mounted) {
 				dispose = [
 					listen(input0, "input", input0_input_handler),
+					listen(input0, "input", function () {
+						if (is_function(/*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false))) /*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false).apply(this, arguments);
+					}),
 					listen(input0, "change", /*changeSetting*/ ctx[5]),
 					listen(input1, "input", input1_input_handler),
+					listen(input1, "input", function () {
+						if (is_function(/*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false))) /*changeFormula*/ ctx[6](/*variable*/ ctx[14].shortName, /*variable*/ ctx[14].value, false).apply(this, arguments);
+					}),
 					listen(input1, "change", /*changeSetting*/ ctx[5])
 				];
 
@@ -3918,15 +3925,15 @@ function create_each_block(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, advancementSetting*/ 2 && t0_value !== (t0_value = (console.log({ variable: /*variable*/ ctx[13] }), "") + "")) set_data(t0, t0_value);
-			if (dirty & /*Object, advancementSetting*/ 2 && t2_value !== (t2_value = /*variable*/ ctx[13].longName + "")) set_data(t2, t2_value);
+			if (dirty & /*Object, advancementSetting*/ 2 && t0_value !== (t0_value = (console.log({ variable: /*variable*/ ctx[14] }), "") + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, advancementSetting*/ 2 && t2_value !== (t2_value = /*variable*/ ctx[14].longName + "")) set_data(t2, t2_value);
 
-			if (dirty & /*Object, advancementSetting*/ 2 && input0.value !== /*variable*/ ctx[13].shortName) {
-				set_input_value(input0, /*variable*/ ctx[13].shortName);
+			if (dirty & /*Object, advancementSetting*/ 2 && input0.value !== /*variable*/ ctx[14].shortName) {
+				set_input_value(input0, /*variable*/ ctx[14].shortName);
 			}
 
-			if (dirty & /*Object, advancementSetting*/ 2 && input1.value !== /*variable*/ ctx[13].value) {
-				set_input_value(input1, /*variable*/ ctx[13].value);
+			if (dirty & /*Object, advancementSetting*/ 2 && to_number(input1.value) !== /*variable*/ ctx[14].value) {
+				set_input_value(input1, /*variable*/ ctx[14].value);
 			}
 		},
 		d(detaching) {
@@ -3943,7 +3950,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (33:0) <ApplicationShell bind:elementRoot>
+// (45:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
@@ -4039,13 +4046,14 @@ function create_default_slot(ctx) {
 			append(form_1, t15);
 			append(form_1, footer);
 			append(footer, button);
-			/*form_1_binding*/ ctx[10](form_1);
+			/*form_1_binding*/ ctx[11](form_1);
 
 			if (!mounted) {
 				dispose = [
+					listen(input, "input", /*changeFormula*/ ctx[6]("", null, true)),
 					listen(input, "change", /*changeSetting*/ ctx[5]),
-					listen(input, "input", /*input_input_handler*/ ctx[9]),
-					listen(button, "click", /*requestSubmit*/ ctx[6]),
+					listen(input, "input", /*input_input_handler*/ ctx[10]),
+					listen(button, "click", /*requestSubmit*/ ctx[7]),
 					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[4]), { once: true })
 				];
 
@@ -4053,7 +4061,7 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Object, advancementSetting, changeSetting, console*/ 34) {
+			if (dirty & /*Object, advancementSetting, changeFormula, changeSetting, console*/ 98) {
 				each_value = Object.values(/*advancementSetting*/ ctx[1].variables);
 				let i;
 
@@ -4085,7 +4093,7 @@ function create_default_slot(ctx) {
 		d(detaching) {
 			if (detaching) detach(form_1);
 			destroy_each(each_blocks, detaching);
-			/*form_1_binding*/ ctx[10](null);
+			/*form_1_binding*/ ctx[11](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4098,7 +4106,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[11](value);
+		/*applicationshell_elementRoot_binding*/ ctx[12](value);
 	}
 
 	let applicationshell_props = {
@@ -4124,7 +4132,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 65547) {
+			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 131083) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4173,6 +4181,20 @@ function instance($$self, $$props, $$invalidate) {
 		}
 	}
 
+	function changeFormula(name, val, isFormula) {
+		if (!isFormula) {
+			$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes.replace(name, val));
+		} else {
+			const variables = game.settings.get("ard20", "advancement-rate").variables;
+			const formulas = game.settings.get("ard20", "advancement-rate").formulas;
+			$$invalidate(3, attributeFormula = formulas.attributes);
+
+			for (let variable of Object.values(variables)) {
+				$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
+			}
+		}
+	}
+
 	function requestSubmit() {
 		form.requestSubmit;
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
@@ -4189,7 +4211,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function input1_input_handler(each_value, variable_index) {
-		each_value[variable_index].value = this.value;
+		each_value[variable_index].value = to_number(this.value);
 		$$invalidate(1, advancementSetting);
 	}
 
@@ -4223,6 +4245,7 @@ function instance($$self, $$props, $$invalidate) {
 		attributeFormula,
 		updateSettings,
 		changeSetting,
+		changeFormula,
 		requestSubmit,
 		input0_input_handler,
 		input1_input_handler,

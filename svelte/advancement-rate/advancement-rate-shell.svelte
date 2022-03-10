@@ -20,6 +20,18 @@
       attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
     }
   }
+  function changeFormula(name, val, isFormula) {
+    if (!isFormula) {
+      attributeFormula = advancementSetting.formulas.attributes.replace(name, val);
+    } else {
+      const variables = game.settings.get("ard20", "advancement-rate").variables;
+      const formulas = game.settings.get("ard20", "advancement-rate").formulas;
+      attributeFormula = formulas.attributes;
+      for (let variable of Object.values(variables)) {
+        attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
+      }
+    }
+  }
   function requestSubmit() {
     form.requestSubmit;
     game.settings.set("ard20", "advancement-rate", advancementSetting);
@@ -38,8 +50,19 @@
         {#each Object.values(advancementSetting.variables) as variable}
           {(console.log({ variable }), "")}
           <label>{variable.longName}</label>
-          <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
-          <input bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
+          <input
+            bind:value={variable.shortName}
+            on:input={changeFormula(variable.shortName, variable.value, false)}
+            on:change={changeSetting}
+            placeholder="shortName"
+          />
+          <input
+            type="number"
+            bind:value={variable.value}
+            on:input={changeFormula(variable.shortName, variable.value, false)}
+            on:change={changeSetting}
+            placeholder="custom value"
+          />
         {/each}
         <div>
           <label>Non-custom Values</label>
@@ -52,7 +75,11 @@
     <section>
       <div>
         <label>Attribute Advancement Formula</label>
-        <input on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
+        <input
+          on:input={changeFormula("", null, true)}
+          on:change={changeSetting}
+          bind:value={advancementSetting.formulas.attributes}
+        />
       </div>
       <div>{attributeFormula}</div>
     </section>
