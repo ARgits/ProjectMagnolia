@@ -11,17 +11,18 @@
     application.update(advancementSetting);
     application.close();
   }
-  let attributeFormula = advancementSetting.formulas.attributes;
+  let attributeFormula
   $: {
+    attributeFormula = advancementSetting.formulas.attributes
     for (let variable of Object.values(advancementSetting.variables)) {
       console.log(attributeFormula);
-      attributeFormula = advancementSetting.formulas.attributes.replace(variable.shortName, variable.value);
+      attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
     }
   }
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
     console.log("change");
-    changeFormula();
+    //changeFormula();
   }
   /*function changeFormula() {
     console.log("input");
@@ -44,9 +45,9 @@
   <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
     <section class="grid grid-2col">
       <div class="flexrow">
-        <label>CustomValues</label>
+        <label for="Custom Values">CustomValues</label>
         {#each Object.values(advancementSetting.variables) as variable}
-          <label>{variable.longName}</label>
+          <label for={variable.longName}>{variable.longName}</label>
           <input
             bind:value={variable.shortName}
 
@@ -63,7 +64,7 @@
         {/each}
       </div>
       <div>
-        <label>Non-custom Values</label>
+        <label for="Non-custom Values">Non-custom Values</label>
         <div>AS - Attribute Score</div>
         <div>SS - Skill Score</div>
         <div>SL - Skill level</div>
@@ -71,7 +72,7 @@
     </section>
     <section>
       <div>
-        <label>Attribute Advancement Formula</label>
+        <label for="Attribute Formula">Attribute Advancement Formula</label>
         <input
           type="text"
 

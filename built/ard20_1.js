@@ -3857,11 +3857,12 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (48:8) {#each Object.values(advancementSetting.variables) as variable}
+// (49:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[13].longName + "";
 	let t0;
+	let label_for_value;
 	let t1;
 	let input0;
 	let t2;
@@ -3885,6 +3886,7 @@ function create_each_block(ctx) {
 			input0 = element("input");
 			t2 = space();
 			input1 = element("input");
+			attr(label, "for", label_for_value = /*variable*/ ctx[13].longName);
 			attr(input0, "placeholder", "shortName");
 			attr(input1, "type", "number");
 			attr(input1, "placeholder", "custom value");
@@ -3914,6 +3916,10 @@ function create_each_block(ctx) {
 			ctx = new_ctx;
 			if (dirty & /*Object, advancementSetting*/ 1 && t0_value !== (t0_value = /*variable*/ ctx[13].longName + "")) set_data(t0, t0_value);
 
+			if (dirty & /*Object, advancementSetting*/ 1 && label_for_value !== (label_for_value = /*variable*/ ctx[13].longName)) {
+				attr(label, "for", label_for_value);
+			}
+
 			if (dirty & /*Object, advancementSetting*/ 1 && input0.value !== /*variable*/ ctx[13].shortName) {
 				set_input_value(input0, /*variable*/ ctx[13].shortName);
 			}
@@ -3934,7 +3940,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (43:0) <ApplicationShell bind:elementRoot>
+// (44:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
@@ -3980,7 +3986,7 @@ function create_default_slot(ctx) {
 			t2 = space();
 			div4 = element("div");
 
-			div4.innerHTML = `<label>Non-custom Values</label> 
+			div4.innerHTML = `<label for="Non-custom Values">Non-custom Values</label> 
         <div>AS - Attribute Score</div> 
         <div>SS - Skill Score</div> 
         <div>SL - Skill level</div>`;
@@ -3999,8 +4005,10 @@ function create_default_slot(ctx) {
 			footer = element("footer");
 			button = element("button");
 			button.innerHTML = `<i class="far fa-save"></i>`;
+			attr(label0, "for", "Custom Values");
 			attr(div0, "class", "flexrow");
 			attr(section0, "class", "grid grid-2col");
+			attr(label2, "for", "Attribute Formula");
 			attr(input, "type", "text");
 			attr(button, "type", "button");
 			attr(form_1, "autocomplete", "off");
@@ -4154,13 +4162,12 @@ function instance($$self, $$props, $$invalidate) {
 		application.close();
 	}
 
-	let attributeFormula = advancementSetting.formulas.attributes;
+	let attributeFormula;
 
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
 		console.log("change");
-		changeFormula();
-	}
+	} //changeFormula();
 
 	/*function changeFormula() {
   console.log("input");
@@ -4212,11 +4219,13 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*Object, advancementSetting, attributeFormula*/ 9) {
+		if ($$self.$$.dirty & /*advancementSetting, Object, attributeFormula*/ 9) {
 			{
+				$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes);
+
 				for (let variable of Object.values(advancementSetting.variables)) {
 					console.log(attributeFormula);
-					$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes.replace(variable.shortName, variable.value));
+					$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
 				}
 			}
 		}
