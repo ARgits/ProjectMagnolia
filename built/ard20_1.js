@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, element, space, attr, insert, append, set_input_value, listen, prevent_default, detach, run_all } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, space, attr, insert, append, set_input_value, listen, prevent_default, detach, run_all } from '/modules/typhonjs/svelte/internal.js';
 import { getContext } from '/modules/typhonjs/svelte/index.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 
@@ -3921,6 +3921,8 @@ function create_default_slot(ctx) {
 			footer = element("footer");
 			button = element("button");
 			button.innerHTML = `<i class="far fa-save"></i>`;
+			attr(input0, "type", "number");
+			attr(input1, "type", "number");
 			attr(div3, "class", "flexrow");
 			attr(section0, "class", "grid grid-2col");
 			attr(button, "type", "button");
@@ -3961,11 +3963,11 @@ function create_default_slot(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "input", /*changeSetting*/ ctx[4]),
+					listen(input0, "change", /*changeSetting*/ ctx[4]),
 					listen(input0, "input", /*input0_input_handler*/ ctx[6]),
-					listen(input1, "input", /*changeSetting*/ ctx[4]),
+					listen(input1, "change", /*changeSetting*/ ctx[4]),
 					listen(input1, "input", /*input1_input_handler*/ ctx[7]),
-					listen(input2, "input", /*changeSetting*/ ctx[4]),
+					listen(input2, "change", /*changeSetting*/ ctx[4]),
 					listen(input2, "input", /*input2_input_handler*/ ctx[8]),
 					listen(button, "click", /*requestSubmit*/ ctx[5]),
 					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[3]), { once: true })
@@ -3975,11 +3977,11 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*advancementSetting*/ 2 && input0.value !== /*advancementSetting*/ ctx[1].variables.attributeValue) {
+			if (dirty & /*advancementSetting*/ 2 && to_number(input0.value) !== /*advancementSetting*/ ctx[1].variables.attributeValue) {
 				set_input_value(input0, /*advancementSetting*/ ctx[1].variables.attributeValue);
 			}
 
-			if (dirty & /*advancementSetting*/ 2 && input1.value !== /*advancementSetting*/ ctx[1].variables.skillValue) {
+			if (dirty & /*advancementSetting*/ 2 && to_number(input1.value) !== /*advancementSetting*/ ctx[1].variables.skillValue) {
 				set_input_value(input1, /*advancementSetting*/ ctx[1].variables.skillValue);
 			}
 
@@ -4067,13 +4069,12 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function changeSetting() {
-		console.log("до обновления", advancementSetting);
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
-		console.log("после обновления", advancementSetting);
 	}
 
 	function requestSubmit() {
 		form.requestSubmit;
+		game.settings.set("ard20", "advancement-rate", advancementSetting);
 	}
 
 	console.log(application);
@@ -4081,12 +4082,12 @@ function instance($$self, $$props, $$invalidate) {
 	console.log(form);
 
 	function input0_input_handler() {
-		advancementSetting.variables.attributeValue = this.value;
+		advancementSetting.variables.attributeValue = to_number(this.value);
 		$$invalidate(1, advancementSetting);
 	}
 
 	function input1_input_handler() {
-		advancementSetting.variables.skillValue = this.value;
+		advancementSetting.variables.skillValue = to_number(this.value);
 		$$invalidate(1, advancementSetting);
 	}
 
