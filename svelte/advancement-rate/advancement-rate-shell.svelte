@@ -10,7 +10,6 @@
     application.update(advancementSetting);
     application.close();
   }
-  let elementRoot
   function requestSubmit() {
     form.requestSubmit;
   }
@@ -19,7 +18,7 @@
   console.log(form)
 </script>
 
-<ApplicationShell bind:elementRoot>
+<form on:submit|once|preventDefault={updateSettings} autocomplete="off">
   <section class="grid grid-2col">
     <div class="flexrow">
       <label>CustomValues</label>
@@ -49,4 +48,4 @@
   <footer>
     <button type="button" on:click={requestSubmit}><i class="far fa-save"></i></button>
 </footer>
-</ApplicationShell>
+</form>
