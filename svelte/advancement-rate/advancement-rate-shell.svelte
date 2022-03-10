@@ -14,7 +14,7 @@
   let attributeFormula = advancementSetting.formulas.attributes;
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
-    changeFormula("",null,true);
+    changeFormula("", null, true);
   }
   function changeFormula(name, val, isFormula) {
     if (!isFormula) {
@@ -32,9 +32,6 @@
     form.requestSubmit;
     game.settings.set("ard20", "advancement-rate", advancementSetting);
   }
-  console.log(application);
-  console.log(advancementSetting);
-  console.log(form);
 </script>
 
 <ApplicationShell bind:elementRoot>
@@ -43,7 +40,6 @@
       <div class="flexrow">
         <label>CustomValues</label>
         {#each Object.values(advancementSetting.variables) as variable}
-          {(console.log({ variable }), "")}
           <label>{variable.longName}</label>
           <input
             bind:value={variable.shortName}
@@ -59,18 +55,19 @@
             placeholder="custom value"
           />
         {/each}
-        <div>
-          <label>Non-custom Values</label>
-          <div>As - Attribute Score</div>
-          <div>SS - Skill Score</div>
-          <div>SL - Skill level</div>
-        </div>
+      </div>
+      <div>
+        <label>Non-custom Values</label>
+        <div>AS - Attribute Score</div>
+        <div>SS - Skill Score</div>
+        <div>SL - Skill level</div>
       </div>
     </section>
     <section>
       <div>
         <label>Attribute Advancement Formula</label>
         <input
+          type="text"
           on:input={changeFormula("", null, true)}
           on:change={changeSetting}
           bind:value={advancementSetting.formulas.attributes}

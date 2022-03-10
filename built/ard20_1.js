@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, text, space, element, attr, insert, append, set_input_value, listen, is_function, set_data, detach, run_all, prevent_default, destroy_each } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, is_function, set_data, detach, run_all, prevent_default, destroy_each } from '/modules/typhonjs/svelte/internal.js';
 import { getContext } from '/modules/typhonjs/svelte/index.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 
@@ -3857,17 +3857,14 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (45:8) {#each Object.values(advancementSetting.variables) as variable}
+// (42:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
-	let t0_value = (console.log({ variable: /*variable*/ ctx[14] }), "") + "";
+	let label;
+	let t0_value = /*variable*/ ctx[14].longName + "";
 	let t0;
 	let t1;
-	let label;
-	let t2_value = /*variable*/ ctx[14].longName + "";
-	let t2;
-	let t3;
 	let input0;
-	let t4;
+	let t2;
 	let input1;
 	let mounted;
 	let dispose;
@@ -3882,27 +3879,23 @@ function create_each_block(ctx) {
 
 	return {
 		c() {
+			label = element("label");
 			t0 = text(t0_value);
 			t1 = space();
-			label = element("label");
-			t2 = text(t2_value);
-			t3 = space();
 			input0 = element("input");
-			t4 = space();
+			t2 = space();
 			input1 = element("input");
 			attr(input0, "placeholder", "shortName");
 			attr(input1, "type", "number");
 			attr(input1, "placeholder", "custom value");
 		},
 		m(target, anchor) {
-			insert(target, t0, anchor);
-			insert(target, t1, anchor);
 			insert(target, label, anchor);
-			append(label, t2);
-			insert(target, t3, anchor);
+			append(label, t0);
+			insert(target, t1, anchor);
 			insert(target, input0, anchor);
 			set_input_value(input0, /*variable*/ ctx[14].shortName);
-			insert(target, t4, anchor);
+			insert(target, t2, anchor);
 			insert(target, input1, anchor);
 			set_input_value(input1, /*variable*/ ctx[14].value);
 
@@ -3925,8 +3918,7 @@ function create_each_block(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, advancementSetting*/ 2 && t0_value !== (t0_value = (console.log({ variable: /*variable*/ ctx[14] }), "") + "")) set_data(t0, t0_value);
-			if (dirty & /*Object, advancementSetting*/ 2 && t2_value !== (t2_value = /*variable*/ ctx[14].longName + "")) set_data(t2, t2_value);
+			if (dirty & /*Object, advancementSetting*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[14].longName + "")) set_data(t0, t0_value);
 
 			if (dirty & /*Object, advancementSetting*/ 2 && input0.value !== /*variable*/ ctx[14].shortName) {
 				set_input_value(input0, /*variable*/ ctx[14].shortName);
@@ -3937,12 +3929,10 @@ function create_each_block(ctx) {
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(t0);
-			if (detaching) detach(t1);
 			if (detaching) detach(label);
-			if (detaching) detach(t3);
+			if (detaching) detach(t1);
 			if (detaching) detach(input0);
-			if (detaching) detach(t4);
+			if (detaching) detach(t2);
 			if (detaching) detach(input1);
 			mounted = false;
 			run_all(dispose);
@@ -3950,15 +3940,15 @@ function create_each_block(ctx) {
 	};
 }
 
-// (40:0) <ApplicationShell bind:elementRoot>
+// (37:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
-	let div4;
+	let div0;
 	let label0;
 	let t1;
 	let t2;
-	let div3;
+	let div4;
 	let t10;
 	let section1;
 	let div5;
@@ -3984,7 +3974,7 @@ function create_default_slot(ctx) {
 		c() {
 			form_1 = element("form");
 			section0 = element("section");
-			div4 = element("div");
+			div0 = element("div");
 			label0 = element("label");
 			label0.textContent = "CustomValues";
 			t1 = space();
@@ -3994,12 +3984,12 @@ function create_default_slot(ctx) {
 			}
 
 			t2 = space();
-			div3 = element("div");
+			div4 = element("div");
 
-			div3.innerHTML = `<label>Non-custom Values</label> 
-          <div>As - Attribute Score</div> 
-          <div>SS - Skill Score</div> 
-          <div>SL - Skill level</div>`;
+			div4.innerHTML = `<label>Non-custom Values</label> 
+        <div>AS - Attribute Score</div> 
+        <div>SS - Skill Score</div> 
+        <div>SL - Skill level</div>`;
 
 			t10 = space();
 			section1 = element("section");
@@ -4015,24 +4005,25 @@ function create_default_slot(ctx) {
 			footer = element("footer");
 			button = element("button");
 			button.innerHTML = `<i class="far fa-save"></i>`;
-			attr(div4, "class", "flexrow");
+			attr(div0, "class", "flexrow");
 			attr(section0, "class", "grid grid-2col");
+			attr(input, "type", "text");
 			attr(button, "type", "button");
 			attr(form_1, "autocomplete", "off");
 		},
 		m(target, anchor) {
 			insert(target, form_1, anchor);
 			append(form_1, section0);
-			append(section0, div4);
-			append(div4, label0);
-			append(div4, t1);
+			append(section0, div0);
+			append(div0, label0);
+			append(div0, t1);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div4, null);
+				each_blocks[i].m(div0, null);
 			}
 
-			append(div4, t2);
-			append(div4, div3);
+			append(section0, t2);
+			append(section0, div4);
 			append(form_1, t10);
 			append(form_1, section1);
 			append(section1, div5);
@@ -4061,7 +4052,7 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Object, advancementSetting, changeFormula, changeSetting, console*/ 98) {
+			if (dirty & /*Object, advancementSetting, changeFormula, changeSetting*/ 98) {
 				each_value = Object.values(/*advancementSetting*/ ctx[1].variables);
 				let i;
 
@@ -4073,7 +4064,7 @@ function create_default_slot(ctx) {
 					} else {
 						each_blocks[i] = create_each_block(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(div4, t2);
+						each_blocks[i].m(div0, null);
 					}
 				}
 
@@ -4195,10 +4186,6 @@ function instance($$self, $$props, $$invalidate) {
 		form.requestSubmit;
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
 	}
-
-	console.log(application);
-	console.log(advancementSetting);
-	console.log(form);
 
 	function input0_input_handler(each_value, variable_index) {
 		each_value[variable_index].shortName = this.value;
