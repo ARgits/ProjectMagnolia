@@ -6,6 +6,7 @@
   const { application } = getContext("external");
   export let elementRoot;
   export let advancementSetting;
+  export let form
   async function updateSettings() {
     application.update(advancementSetting);
     application.close();

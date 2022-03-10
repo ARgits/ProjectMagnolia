@@ -3956,10 +3956,10 @@ function create_default_slot(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "input", /*input0_input_handler*/ ctx[2]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[3]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[4]),
-					listen(button, "click", requestSubmit)
+					listen(input0, "input", /*input0_input_handler*/ ctx[4]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[5]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[6]),
+					listen(button, "click", /*requestSubmit*/ ctx[2])
 				];
 
 				mounted = true;
@@ -3996,7 +3996,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[5](value);
+		/*applicationshell_elementRoot_binding*/ ctx[7](value);
 	}
 
 	let applicationshell_props = {
@@ -4022,7 +4022,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, advancementSetting*/ 258) {
+			if (dirty & /*$$scope, advancementSetting*/ 1026) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4049,14 +4049,15 @@ function create_fragment(ctx) {
 	};
 }
 
-function requestSubmit() {
-	form.requestSubmit;
-}
-
 function instance($$self, $$props, $$invalidate) {
 	const { application } = getContext("external");
 	let { elementRoot } = $$props;
 	let { advancementSetting } = $$props;
+	let { form } = $$props;
+
+	function requestSubmit() {
+		form.requestSubmit;
+	}
 
 	console.log(application);
 	console.log(advancementSetting);
@@ -4085,11 +4086,14 @@ function instance($$self, $$props, $$invalidate) {
 	$$self.$$set = $$props => {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 		if ('advancementSetting' in $$props) $$invalidate(1, advancementSetting = $$props.advancementSetting);
+		if ('form' in $$props) $$invalidate(3, form = $$props.form);
 	};
 
 	return [
 		elementRoot,
 		advancementSetting,
+		requestSubmit,
+		form,
 		input0_input_handler,
 		input1_input_handler,
 		input2_input_handler,
@@ -4100,7 +4104,12 @@ function instance($$self, $$props, $$invalidate) {
 class Advancement_rate_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, advancementSetting: 1 });
+
+		init(this, options, instance, create_fragment, safe_not_equal, {
+			elementRoot: 0,
+			advancementSetting: 1,
+			form: 3
+		});
 	}
 
 	get elementRoot() {
@@ -4118,6 +4127,15 @@ class Advancement_rate_shell extends SvelteComponent {
 
 	set advancementSetting(advancementSetting) {
 		this.$$set({ advancementSetting });
+		flush();
+	}
+
+	get form() {
+		return this.$$.ctx[3];
+	}
+
+	set form(form) {
+		this.$$set({ form });
 		flush();
 	}
 }
