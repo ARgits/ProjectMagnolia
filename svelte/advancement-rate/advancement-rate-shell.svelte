@@ -17,13 +17,15 @@
   }
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
+    console.log('change')
     changeFormula();
   }
   function changeFormula() {
+    console.log('input')
     const variables = advancementSetting.variables;
     const formulas = advancementSetting.formulas;
     for (let variable of Object.values(variables)) {
-      attributeFormula = formulas.replace(variable.shortName, variable.value);
+      attributeFormula = formulas.attributes.replace(variable.shortName, variable.value);
     }
   }
   function requestSubmit() {
