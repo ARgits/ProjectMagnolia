@@ -17,9 +17,6 @@
     const variables = advancementSetting.variables;
     const formulas = advancementSetting.formulas;
     attributeFormula = formulas.attributes;
-    for (let variable of Object.values(variables)) {
-      attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
-    }
   }
   function changeFormula(name, val, isFormula) {
     if (!isFormula) {
