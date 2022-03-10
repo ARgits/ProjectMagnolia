@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, element, space, attr, insert, append, set_input_value, listen, prevent_default, noop, detach, run_all, binding_callbacks } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, element, space, attr, insert, append, set_input_value, listen, prevent_default, noop, detach, run_all } from '/modules/typhonjs/svelte/internal.js';
 import { getContext } from '/modules/typhonjs/svelte/index.js';
 
 function ownKeys(object, enumerableOnly) {
@@ -3956,15 +3956,14 @@ function create_fragment(ctx) {
 			append(form_1, t20);
 			append(form_1, footer);
 			append(footer, button);
-			/*form_1_binding*/ ctx[7](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "input", /*input0_input_handler*/ ctx[4]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[5]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[6]),
-					listen(button, "click", /*requestSubmit*/ ctx[3]),
-					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[2]), { once: true })
+					listen(input0, "input", /*input0_input_handler*/ ctx[3]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[4]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[5]),
+					listen(button, "click", /*requestSubmit*/ ctx[2]),
+					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[1]), { once: true })
 				];
 
 				mounted = true;
@@ -3987,7 +3986,6 @@ function create_fragment(ctx) {
 		o: noop,
 		d(detaching) {
 			if (detaching) detach(form_1);
-			/*form_1_binding*/ ctx[7](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4027,26 +4025,17 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(0, advancementSetting);
 	}
 
-	function form_1_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			form = $$value;
-			$$invalidate(1, form);
-		});
-	}
-
 	$$self.$$set = $$props => {
 		if ('advancementSetting' in $$props) $$invalidate(0, advancementSetting = $$props.advancementSetting);
 	};
 
 	return [
 		advancementSetting,
-		form,
 		updateSettings,
 		requestSubmit,
 		input0_input_handler,
 		input1_input_handler,
-		input2_input_handler,
-		form_1_binding
+		input2_input_handler
 	];
 }
 

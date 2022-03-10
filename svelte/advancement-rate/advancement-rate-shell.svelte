@@ -17,7 +17,7 @@
   console.log(form)
 </script>
 
-<form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
+<form on:submit|once|preventDefault={updateSettings} autocomplete="off">
   <section class="grid grid-2col">
     <div class="flexrow">
       <label>CustomValues</label>
