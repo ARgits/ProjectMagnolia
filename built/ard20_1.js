@@ -4165,15 +4165,15 @@ function instance($$self, $$props, $$invalidate) {
 
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
+		changeFormula();
 	}
 
 	function changeFormula() {
 		const variables = advancementSetting.variables;
 		const formulas = advancementSetting.formulas;
-		$$invalidate(3, attributeFormula = formulas.attributes);
 
 		for (let variable of Object.values(variables)) {
-			$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
+			$$invalidate(3, attributeFormula = formulas.replace(variable.shortName, variable.value));
 		}
 	}
 
