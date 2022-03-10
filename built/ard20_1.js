@@ -3957,14 +3957,17 @@ function create_default_slot(ctx) {
 			append(form_1, t20);
 			append(form_1, footer);
 			append(footer, button);
-			/*form_1_binding*/ ctx[8](form_1);
+			/*form_1_binding*/ ctx[9](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "input", /*input0_input_handler*/ ctx[5]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[6]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[7]),
-					listen(button, "click", /*requestSubmit*/ ctx[4]),
+					listen(input0, "input", /*changeSetting*/ ctx[4]),
+					listen(input0, "input", /*input0_input_handler*/ ctx[6]),
+					listen(input1, "input", /*changeSetting*/ ctx[4]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[7]),
+					listen(input2, "input", /*changeSetting*/ ctx[4]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[8]),
+					listen(button, "click", /*requestSubmit*/ ctx[5]),
 					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[3]), { once: true })
 				];
 
@@ -3986,7 +3989,7 @@ function create_default_slot(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(form_1);
-			/*form_1_binding*/ ctx[8](null);
+			/*form_1_binding*/ ctx[9](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -3999,7 +4002,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[9](value);
+		/*applicationshell_elementRoot_binding*/ ctx[10](value);
 	}
 
 	let applicationshell_props = {
@@ -4025,7 +4028,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, advancementSetting*/ 2051) {
+			if (dirty & /*$$scope, form, advancementSetting*/ 4099) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4061,6 +4064,12 @@ function instance($$self, $$props, $$invalidate) {
 	async function updateSettings() {
 		application.update(advancementSetting);
 		application.close();
+	}
+
+	function changeSetting() {
+		console.log("до обновления", advancementSetting);
+		game.settings.set("ard20", "advancement-rate", advancementSetting);
+		console.log("после обновления", advancementSetting);
 	}
 
 	function requestSubmit() {
@@ -4109,6 +4118,7 @@ function instance($$self, $$props, $$invalidate) {
 		advancementSetting,
 		elementRoot,
 		updateSettings,
+		changeSetting,
 		requestSubmit,
 		input0_input_handler,
 		input1_input_handler,

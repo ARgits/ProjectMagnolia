@@ -11,6 +11,11 @@
     application.update(advancementSetting);
     application.close();
   }
+  function changeSetting() {
+    console.log("до обновления", advancementSetting);
+    game.settings.set("ard20", "advancement-rate", advancementSetting);
+    console.log("после обновления", advancementSetting);
+  }
   function requestSubmit() {
     form.requestSubmit;
   }
@@ -26,11 +31,11 @@
         <label>CustomValues</label>
         <div>
           <label>AV - Attribute Value</label>
-          <input bind:value={advancementSetting.variables.attributeValue} />
+          <input on:input={changeSetting} bind:value={advancementSetting.variables.attributeValue} />
         </div>
         <div>
           <label>SV - Skill Value</label>
-          <input bind:value={advancementSetting.variables.skillValue} />
+          <input on:input={changeSetting} bind:value={advancementSetting.variables.skillValue} />
         </div>
         <div>SL - Skill level</div>
       </div>
@@ -44,7 +49,7 @@
     <section>
       <div>
         <label>Attribute Advancement Formula</label>
-        <input bind:value={advancementSetting.formulas.attributes} />
+        <input on:input={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
     </section>
     <footer>
