@@ -11,7 +11,7 @@
     application.update(advancementSetting);
     application.close();
   }
-  let attributeFormula = advancementSetting.formulas.attributes;
+  let attributeFormula=advancementSetting.formulas.attributes;
   for (let variable of Object.values(advancementSetting.variables)) {
     console.log(attributeFormula);
     attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
@@ -24,6 +24,8 @@
     console.log("input");
     console.log(attributeFormula);
     const variables = advancementSetting.variables;
+    const formulas = advancementSetting.formulas;
+    attributeFormula = formulas.attributes
     for (let variable of Object.values(variables)) {
       attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
     }

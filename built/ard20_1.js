@@ -3857,7 +3857,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (43:8) {#each Object.values(advancementSetting.variables) as variable}
+// (45:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[14].longName + "";
@@ -3936,7 +3936,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (38:0) <ApplicationShell bind:elementRoot>
+// (40:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
@@ -4173,6 +4173,8 @@ function instance($$self, $$props, $$invalidate) {
 		console.log("input");
 		console.log(attributeFormula);
 		const variables = advancementSetting.variables;
+		const formulas = advancementSetting.formulas;
+		$$invalidate(3, attributeFormula = formulas.attributes);
 
 		for (let variable of Object.values(variables)) {
 			$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
