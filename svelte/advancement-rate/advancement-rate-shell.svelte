@@ -2,9 +2,9 @@
 
 <script>
   import { getContext } from "svelte";
-  import { ApplicationShell }   from '@typhonjs-fvtt/runtime/svelte/component/core'
+  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   const { application } = getContext("external");
-  let form;
+  export let elementRoot;
   export let advancementSetting;
   async function updateSettings() {
     application.update(advancementSetting);
@@ -13,12 +13,12 @@
   function requestSubmit() {
     form.requestSubmit;
   }
-  console.log(application)
-  console.log(advancementSetting)
-  console.log(form)
+  console.log(application);
+  console.log(advancementSetting);
+  console.log(form);
 </script>
 
-<form on:submit|once|preventDefault={updateSettings} autocomplete="off">
+<ApplicationShell bind:elementRoot>
   <section class="grid grid-2col">
     <div class="flexrow">
       <label>CustomValues</label>
@@ -46,6 +46,6 @@
     </div>
   </section>
   <footer>
-    <button type="button" on:click={requestSubmit}><i class="far fa-save"></i></button>
-</footer>
-</form>
+    <button type="button" on:click={requestSubmit}><i class="far fa-save" /></button>
+  </footer>
+</ApplicationShell>

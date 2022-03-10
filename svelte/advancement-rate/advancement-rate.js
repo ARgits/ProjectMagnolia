@@ -20,7 +20,8 @@ class AdvancementRateFormApp extends SvelteApplication {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "Advancement Rate",
-      id: "advancement-rate-setting",
+      minimizable:true,
+      resizable:true,
       width: 600,
       height: 300,
       svelte: {
