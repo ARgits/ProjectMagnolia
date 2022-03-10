@@ -60,11 +60,31 @@ export const registerSystemSettings = function () {
         config: false,
         default: {
             variables: {
-                skillCount: 5,
-                featureCount: 5,
-                skillValue: 5,
-                featureLevel: 5,
-                attributeValue: 5,
+                skillCount: {
+                    value:5,
+                    shortName:'SC',
+                    longName:'Skill Count',
+                },
+                featureCount: {
+                    value:5,
+                    shortName:'FC',
+                    longName:'featureCount'
+                },
+                skillValue: {
+                    value:5,
+                    shortName:'SV',
+                    longName:'skillValue'
+                },
+                featureLevel: {
+                    value:5,
+                    shortName:'FL',
+                    longName:'Feature Level'
+                },
+                attributeValue:{
+                    value:5,
+                    shortName:'AV',
+                    longName:'Attribute Value'
+                },
             },
             formulas: {
                 skills: "",

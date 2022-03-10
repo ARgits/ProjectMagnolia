@@ -3,6 +3,8 @@
 <script>
   import { getContext } from "svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+import { each } from "svelte/internal";
+import { arr_entries } from "../../typescript/ard20";
   const { application } = getContext("external");
   export let form;
   export let advancementSetting;
@@ -13,11 +15,18 @@
   }
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
+    const variables = game.settings.get("ard20","advancement-rate").variables
+    const formulas = game.settings.get("ard20","advancement-rate").formulas
+    attributeFormula = formulas.attributes
+    for (let variable of Object.values(variables)){
+      attributeFormula = attributeFormula.replace(variable.shortName,variable.value)
+    }
   }
   function requestSubmit() {
     form.requestSubmit;
     game.settings.set("ard20", "advancement-rate", advancementSetting);
   }
+  let attributeFormula
   console.log(application);
   console.log(advancementSetting);
   console.log(form);
@@ -28,16 +37,11 @@
     <section class="grid grid-2col">
       <div class="flexrow">
         <label>CustomValues</label>
-        <div>
-          <label>AV - Attribute Value</label>
-          <input type="number" on:change={changeSetting} bind:value={advancementSetting.variables.attributeValue} />
-        </div>
-        <div>
-          <label>SV - Skill Value</label>
-          <input type="number" on:change={changeSetting} bind:value={advancementSetting.variables.skillValue} />
-        </div>
-        <div>SL - Skill level</div>
-      </div>
+        {#each Object.values(advancementSetting.variables) as variable}
+          <label>{variable.longName}</label>
+          <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName">
+          <input bind:value={variable.value} on:change={changeSetting} placeholder="custom value">
+        {/each}
       <div>
         <label>Non-custom Values</label>
         <div>As - Attribute Score</div>
@@ -50,6 +54,7 @@
         <label>Attribute Advancement Formula</label>
         <input on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
+      <div>{attributeFormula}</div>
     </section>
     <footer>
       <button type="button" on:click={requestSubmit}><i class="far fa-save" /></button>

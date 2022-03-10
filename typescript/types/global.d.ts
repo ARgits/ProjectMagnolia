@@ -1,35 +1,34 @@
 import { rollItemMacro } from "../ard20.js";
 import { ARd20Actor } from "../documents/actor";
 import { ARd20Item } from "../documents/item";
-import * as dice from "../dice/dice"
+import * as dice from "../dice/dice";
 
 export {};
 declare global {
   interface LenientGlobalVariableTypes {
     game: never;
-  } 
-  interface Game{
-    ard20:{
-      documents:{
-        ARd20Actor:typeof ARd20Actor;
-        ARd20Item:typeof ARd20Item
-      }
-      rollItemMacro:typeof rollItemMacro
-      config:CONFIG["ARd20"];
-      dice:typeof dice
-
-    }
   }
-  interface RollOptions{
-    parts?:Array<string>
-    speaker?:string
-    event?:Event
+  interface Game {
+    ard20: {
+      documents: {
+        ARd20Actor: typeof ARd20Actor;
+        ARd20Item: typeof ARd20Item;
+      };
+      rollItemMacro: typeof rollItemMacro;
+      config: CONFIG["ARd20"];
+      dice: typeof dice;
+    };
   }
-  interface Macro{
-    command:string
+  interface RollOptions {
+    parts?: Array<string>;
+    speaker?: string;
+    event?: Event;
   }
-  interface rollItemMacroType{
-    (itemName:string):ARd20Item["roll"]
+  interface Macro {
+    command: string;
+  }
+  interface rollItemMacroType {
+    (itemName: string): ARd20Item["roll"];
   }
   namespace ClientSettings {
     interface Values {
@@ -47,24 +46,43 @@ declare global {
         packs: string[];
         folders: string[];
       };
-      "ard20.advancement-rate":{
+      "ard20.advancement-rate": {
         variables: {
-          skillCount: number;
-          featureCount: number;
-          skillValue: number;
-          featureLevel: number;
-          attributeValue: number;
+          skillCount: {
+            value: number;
+            shortName: string;
+            longName: string;
+          };
+          featureCount: {
+            value: number;
+            shortName: string;
+            longName: string;
+          };
+          skillValue: {
+            value: number;
+            shortName: string;
+            longName: string;
+          };
+          featureLevel: {
+            value: number;
+            shortName: string;
+            longName: string;
+          };
+          attributeValue: {
+            value: number;
+            shortName: string;
+            longName: string;
+          };
         };
         formulas: {
           skills: string;
           features: string;
           attributes: string;
         };
-      }
+      };
     }
   }
 
-  
   interface WeaponProficienciesSetting {
     name: string;
     type: string;

@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, space, attr, insert, append, set_input_value, listen, prevent_default, detach, run_all } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, space, text, attr, insert, append, set_input_value, listen, prevent_default, set_data, detach, run_all } from '/modules/typhonjs/svelte/internal.js';
 import { getContext } from '/modules/typhonjs/svelte/index.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 
@@ -3875,6 +3875,9 @@ function create_default_slot(ctx) {
 	let t19;
 	let input2;
 	let t20;
+	let div9;
+	let t21;
+	let t22;
 	let footer;
 	let button;
 	let mounted;
@@ -3918,6 +3921,9 @@ function create_default_slot(ctx) {
 			t19 = space();
 			input2 = element("input");
 			t20 = space();
+			div9 = element("div");
+			t21 = text(/*attributeFormula*/ ctx[3]);
+			t22 = space();
 			footer = element("footer");
 			button = element("button");
 			button.innerHTML = `<i class="far fa-save"></i>`;
@@ -3956,21 +3962,24 @@ function create_default_slot(ctx) {
 			append(div8, t19);
 			append(div8, input2);
 			set_input_value(input2, /*advancementSetting*/ ctx[1].formulas.attributes);
-			append(form_1, t20);
+			append(section1, t20);
+			append(section1, div9);
+			append(div9, t21);
+			append(form_1, t22);
 			append(form_1, footer);
 			append(footer, button);
-			/*form_1_binding*/ ctx[9](form_1);
+			/*form_1_binding*/ ctx[10](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "change", /*changeSetting*/ ctx[4]),
-					listen(input0, "input", /*input0_input_handler*/ ctx[6]),
-					listen(input1, "change", /*changeSetting*/ ctx[4]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[7]),
-					listen(input2, "change", /*changeSetting*/ ctx[4]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[8]),
-					listen(button, "click", /*requestSubmit*/ ctx[5]),
-					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[3]), { once: true })
+					listen(input0, "change", /*changeSetting*/ ctx[5]),
+					listen(input0, "input", /*input0_input_handler*/ ctx[7]),
+					listen(input1, "change", /*changeSetting*/ ctx[5]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[8]),
+					listen(input2, "change", /*changeSetting*/ ctx[5]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[9]),
+					listen(button, "click", /*requestSubmit*/ ctx[6]),
+					listen(form_1, "submit", prevent_default(/*updateSettings*/ ctx[4]), { once: true })
 				];
 
 				mounted = true;
@@ -3988,10 +3997,12 @@ function create_default_slot(ctx) {
 			if (dirty & /*advancementSetting*/ 2 && input2.value !== /*advancementSetting*/ ctx[1].formulas.attributes) {
 				set_input_value(input2, /*advancementSetting*/ ctx[1].formulas.attributes);
 			}
+
+			if (dirty & /*attributeFormula*/ 8) set_data(t21, /*attributeFormula*/ ctx[3]);
 		},
 		d(detaching) {
 			if (detaching) detach(form_1);
-			/*form_1_binding*/ ctx[9](null);
+			/*form_1_binding*/ ctx[10](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4004,7 +4015,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[10](value);
+		/*applicationshell_elementRoot_binding*/ ctx[11](value);
 	}
 
 	let applicationshell_props = {
@@ -4030,7 +4041,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, advancementSetting*/ 4099) {
+			if (dirty & /*$$scope, form, attributeFormula, advancementSetting*/ 8203) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4070,6 +4081,12 @@ function instance($$self, $$props, $$invalidate) {
 
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
+		const variables = game.settings.get("ard20", "advancement-rate").variables;
+		const formulas = game.settings.get("ard20", "advancement-rate").formulas;
+
+		for (let [key, value] in variables) {
+			$$invalidate(3, attributeFormula = formulas.attributes.replace('AV', variables.attributeValue));
+		}
 	}
 
 	function requestSubmit() {
@@ -4077,6 +4094,7 @@ function instance($$self, $$props, $$invalidate) {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
 	}
 
+	let attributeFormula;
 	console.log(application);
 	console.log(advancementSetting);
 	console.log(form);
@@ -4118,6 +4136,7 @@ function instance($$self, $$props, $$invalidate) {
 		form,
 		advancementSetting,
 		elementRoot,
+		attributeFormula,
 		updateSettings,
 		changeSetting,
 		requestSubmit,
@@ -4302,11 +4321,31 @@ const registerSystemSettings = function registerSystemSettings() {
     config: false,
     default: {
       variables: {
-        skillCount: 5,
-        featureCount: 5,
-        skillValue: 5,
-        featureLevel: 5,
-        attributeValue: 5
+        skillCount: {
+          value: 5,
+          shortName: 'SC',
+          longName: 'Skill Count'
+        },
+        featureCount: {
+          value: 5,
+          shortName: 'FC',
+          longName: 'featureCount'
+        },
+        skillValue: {
+          value: 5,
+          shortName: 'SV',
+          longName: 'skillValue'
+        },
+        featureLevel: {
+          value: 5,
+          shortName: 'FL',
+          longName: 'Feature Level'
+        },
+        attributeValue: {
+          value: 5,
+          shortName: 'AV',
+          longName: 'Attribute Value'
+        }
       },
       formulas: {
         skills: "",
