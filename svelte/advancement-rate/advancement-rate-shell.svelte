@@ -11,9 +11,9 @@
     application.update(advancementSetting);
     application.close();
   }
-  let attributeFormula
+  let attributeFormula;
   $: {
-    attributeFormula = advancementSetting.formulas.attributes
+    attributeFormula = advancementSetting.formulas.attributes;
     for (let variable of Object.values(advancementSetting.variables)) {
       console.log(attributeFormula);
       attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
@@ -22,19 +22,7 @@
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
     console.log("change");
-    //changeFormula();
   }
-  /*function changeFormula() {
-    console.log("input");
-    console.log(attributeFormula);
-    const variables = advancementSetting.variables;
-    const formulas = advancementSetting.formulas;
-    attributeFormula = formulas.attributes
-    for (let variable of Object.values(variables)) {
-      attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
-    }
-    console.log(attributeFormula);
-  }*/
   function requestSubmit() {
     form.requestSubmit;
     game.settings.set("ard20", "advancement-rate", advancementSetting);
@@ -44,23 +32,12 @@
 <ApplicationShell bind:elementRoot>
   <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
     <section class="grid grid-2col">
+      <label for="Custom Values">CustomValues</label>
       <div class="flexrow">
-        <label for="Custom Values">CustomValues</label>
         {#each Object.values(advancementSetting.variables) as variable}
           <label for={variable.longName}>{variable.longName}</label>
-          <input
-            bind:value={variable.shortName}
-
-            on:change={changeSetting}
-            placeholder="shortName"
-          />
-          <input
-            type="number"
-            bind:value={variable.value}
-
-            on:change={changeSetting}
-            placeholder="custom value"
-          />
+          <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
+          <input type="number" bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
         {/each}
       </div>
       <div>
@@ -73,12 +50,7 @@
     <section>
       <div>
         <label for="Attribute Formula">Attribute Advancement Formula</label>
-        <input
-          type="text"
-
-          on:change={changeSetting}
-          bind:value={advancementSetting.formulas.attributes}
-        />
+        <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
       <div>{attributeFormula}</div>
     </section>

@@ -3857,7 +3857,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (49:8) {#each Object.values(advancementSetting.variables) as variable}
+// (37:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[13].longName + "";
@@ -3940,13 +3940,13 @@ function create_each_block(ctx) {
 	};
 }
 
-// (44:0) <ApplicationShell bind:elementRoot>
+// (32:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
-	let div0;
 	let label0;
 	let t1;
+	let div0;
 	let t2;
 	let div4;
 	let t10;
@@ -3974,10 +3974,10 @@ function create_default_slot(ctx) {
 		c() {
 			form_1 = element("form");
 			section0 = element("section");
-			div0 = element("div");
 			label0 = element("label");
 			label0.textContent = "CustomValues";
 			t1 = space();
+			div0 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -4016,9 +4016,9 @@ function create_default_slot(ctx) {
 		m(target, anchor) {
 			insert(target, form_1, anchor);
 			append(form_1, section0);
+			append(section0, label0);
+			append(section0, t1);
 			append(section0, div0);
-			append(div0, label0);
-			append(div0, t1);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div0, null);
@@ -4167,19 +4167,8 @@ function instance($$self, $$props, $$invalidate) {
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
 		console.log("change");
-	} //changeFormula();
+	}
 
-	/*function changeFormula() {
-  console.log("input");
-  console.log(attributeFormula);
-  const variables = advancementSetting.variables;
-  const formulas = advancementSetting.formulas;
-  attributeFormula = formulas.attributes
-  for (let variable of Object.values(variables)) {
-    attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
-  }
-  console.log(attributeFormula);
-}*/
 	function requestSubmit() {
 		form.requestSubmit;
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
