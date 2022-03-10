@@ -31,12 +31,4 @@ class AdvancementRateFormApp extends SvelteApplication {
       },
     });
   }
-  getData() {
-    const sheetData = game.settings.get("ard20", "advancement-rate");
-    return sheetData;
-  }
-  activateListeners(html) {
-    super.activateListeners(html);
-  }
-  async _updateObject(event, formData) {}
 }
