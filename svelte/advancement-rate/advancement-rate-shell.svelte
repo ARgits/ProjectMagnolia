@@ -2,10 +2,11 @@
 
 <script>
   import { getContext } from "svelte";
-  import { ApplicationShell }   from '@typhonjs-fvtt/runtime/svelte/component/core'
+  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   const { application } = getContext("external");
   export let form;
   export let advancementSetting;
+  export let elementRoot;
   async function updateSettings() {
     application.update(advancementSetting);
     application.close();
@@ -13,39 +14,41 @@
   function requestSubmit() {
     form.requestSubmit;
   }
-  console.log(application)
-  console.log(advancementSetting)
-  console.log(form)
+  console.log(application);
+  console.log(advancementSetting);
+  console.log(form);
 </script>
 
-<form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
-  <section class="grid grid-2col">
-    <div class="flexrow">
-      <label>CustomValues</label>
-      <div>
-        <label>AV - Attribute Value</label>
-        <input bind:value={advancementSetting.variables.attributeValue} />
+<ApplicationShell bind:elementRoot>
+  <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
+    <section class="grid grid-2col">
+      <div class="flexrow">
+        <label>CustomValues</label>
+        <div>
+          <label>AV - Attribute Value</label>
+          <input bind:value={advancementSetting.variables.attributeValue} />
+        </div>
+        <div>
+          <label>SV - Skill Value</label>
+          <input bind:value={advancementSetting.variables.skillValue} />
+        </div>
+        <div>SL - Skill level</div>
       </div>
       <div>
-        <label>SV - Skill Value</label>
-        <input bind:value={advancementSetting.variables.skillValue} />
+        <label>Non-custom Values</label>
+        <div>As - Attribute Score</div>
+        <div>SS - Skill Score</div>
+        <div>SL - Skill level</div>
       </div>
-      <div>SL - Skill level</div>
-    </div>
-    <div>
-      <label>Non-custom Values</label>
-      <div>As - Attribute Score</div>
-      <div>SS - Skill Score</div>
-      <div>SL - Skill level</div>
-    </div>
-  </section>
-  <section>
-    <div>
-      <label>Attribute Advancement Formula</label>
-      <input bind:value={advancementSetting.formulas.attributes} />
-    </div>
-  </section>
-  <footer>
-    <button type="button" on:click={requestSubmit}><i class="far fa-save"></i></button>
-</footer>
-</form>
+    </section>
+    <section>
+      <div>
+        <label>Attribute Advancement Formula</label>
+        <input bind:value={advancementSetting.formulas.attributes} />
+      </div>
+    </section>
+    <footer>
+      <button type="button" on:click={requestSubmit}><i class="far fa-save" /></button>
+    </footer>
+  </form>
+</ApplicationShell>
