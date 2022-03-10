@@ -3857,7 +3857,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (37:8) {#each Object.values(advancementSetting.variables) as variable}
+// (38:10) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[13].longName + "";
@@ -3944,19 +3944,20 @@ function create_each_block(ctx) {
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
+	let div1;
 	let label0;
 	let t1;
 	let div0;
 	let t2;
-	let div4;
+	let div5;
 	let t10;
 	let section1;
-	let div5;
+	let div6;
 	let label2;
 	let t12;
 	let input;
 	let t13;
-	let div6;
+	let div7;
 	let t14;
 	let t15;
 	let footer;
@@ -3974,6 +3975,7 @@ function create_default_slot(ctx) {
 		c() {
 			form_1 = element("form");
 			section0 = element("section");
+			div1 = element("div");
 			label0 = element("label");
 			label0.textContent = "CustomValues";
 			t1 = space();
@@ -3984,22 +3986,22 @@ function create_default_slot(ctx) {
 			}
 
 			t2 = space();
-			div4 = element("div");
+			div5 = element("div");
 
-			div4.innerHTML = `<label for="Non-custom Values">Non-custom Values</label> 
+			div5.innerHTML = `<label for="Non-custom Values">Non-custom Values</label> 
         <div>AS - Attribute Score</div> 
         <div>SS - Skill Score</div> 
         <div>SL - Skill level</div>`;
 
 			t10 = space();
 			section1 = element("section");
-			div5 = element("div");
+			div6 = element("div");
 			label2 = element("label");
 			label2.textContent = "Attribute Advancement Formula";
 			t12 = space();
 			input = element("input");
 			t13 = space();
-			div6 = element("div");
+			div7 = element("div");
 			t14 = text(/*attributeFormula*/ ctx[3]);
 			t15 = space();
 			footer = element("footer");
@@ -4016,26 +4018,27 @@ function create_default_slot(ctx) {
 		m(target, anchor) {
 			insert(target, form_1, anchor);
 			append(form_1, section0);
-			append(section0, label0);
-			append(section0, t1);
-			append(section0, div0);
+			append(section0, div1);
+			append(div1, label0);
+			append(div1, t1);
+			append(div1, div0);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div0, null);
 			}
 
 			append(section0, t2);
-			append(section0, div4);
+			append(section0, div5);
 			append(form_1, t10);
 			append(form_1, section1);
-			append(section1, div5);
-			append(div5, label2);
-			append(div5, t12);
-			append(div5, input);
+			append(section1, div6);
+			append(div6, label2);
+			append(div6, t12);
+			append(div6, input);
 			set_input_value(input, /*advancementSetting*/ ctx[0].formulas.attributes);
 			append(section1, t13);
-			append(section1, div6);
-			append(div6, t14);
+			append(section1, div7);
+			append(div7, t14);
 			append(form_1, t15);
 			append(form_1, footer);
 			append(footer, button);

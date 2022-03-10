@@ -32,13 +32,15 @@
 <ApplicationShell bind:elementRoot>
   <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
     <section class="grid grid-2col">
-      <label for="Custom Values">CustomValues</label>
-      <div class="flexrow">
-        {#each Object.values(advancementSetting.variables) as variable}
-          <label for={variable.longName}>{variable.longName}</label>
-          <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
-          <input type="number" bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
-        {/each}
+      <div>
+        <label for="Custom Values"> CustomValues </label>
+        <div class="flexrow">
+          {#each Object.values(advancementSetting.variables) as variable}
+            <label for={variable.longName}>{variable.longName}</label>
+            <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
+            <input type="number" bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
+          {/each}
+        </div>
       </div>
       <div>
         <label for="Non-custom Values">Non-custom Values</label>
