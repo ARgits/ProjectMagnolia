@@ -3857,7 +3857,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (47:8) {#each Object.values(advancementSetting.variables) as variable}
+// (45:8) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block(ctx) {
 	let t0_value = (console.log({ variable: /*variable*/ ctx[14] }), "") + "";
 	let t0;
@@ -3950,7 +3950,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (42:0) <ApplicationShell bind:elementRoot>
+// (40:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section0;
@@ -4174,9 +4174,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	function changeSetting() {
 		game.settings.set("ard20", "advancement-rate", advancementSetting);
-		advancementSetting.variables;
-		const formulas = advancementSetting.formulas;
-		$$invalidate(3, attributeFormula = formulas.attributes);
+		changeFormula("", null, true);
 	}
 
 	function changeFormula(name, val, isFormula) {

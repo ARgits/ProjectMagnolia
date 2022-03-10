@@ -14,9 +14,7 @@
   let attributeFormula = advancementSetting.formulas.attributes;
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
-    const variables = advancementSetting.variables;
-    const formulas = advancementSetting.formulas;
-    attributeFormula = formulas.attributes;
+    changeFormula("",null,true);
   }
   function changeFormula(name, val, isFormula) {
     if (!isFormula) {
