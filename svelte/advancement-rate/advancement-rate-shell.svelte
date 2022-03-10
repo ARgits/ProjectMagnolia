@@ -11,6 +11,7 @@
     application.update(advancementSetting);
     application.close();
   }
+  let attributeFormula = advancementSetting.formulas.attributes;
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
     const variables = game.settings.get("ard20", "advancement-rate").variables;
@@ -36,7 +37,6 @@
     form.requestSubmit;
     game.settings.set("ard20", "advancement-rate", advancementSetting);
   }
-  let attributeFormula = advancementSetting.formulas.attributes;
   console.log(application);
   console.log(advancementSetting);
   console.log(form);
