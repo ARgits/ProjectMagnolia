@@ -14,8 +14,8 @@
   let attributeFormula = advancementSetting.formulas.attributes;
   function changeSetting() {
     game.settings.set("ard20", "advancement-rate", advancementSetting);
-    const variables = game.settings.get("ard20", "advancement-rate").variables;
-    const formulas = game.settings.get("ard20", "advancement-rate").formulas;
+    const variables = advancementSetting.variables;
+    const formulas = advancementSetting.formulas;
     attributeFormula = formulas.attributes;
     for (let variable of Object.values(variables)) {
       attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
@@ -25,8 +25,8 @@
     if (!isFormula) {
       attributeFormula = advancementSetting.formulas.attributes.replace(name, val);
     } else {
-      const variables = game.settings.get("ard20", "advancement-rate").variables;
-      const formulas = game.settings.get("ard20", "advancement-rate").formulas;
+      const variables = advancementSetting.variables;
+      const formulas = advancementSetting.formulas;
       attributeFormula = formulas.attributes;
       for (let variable of Object.values(variables)) {
         attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
