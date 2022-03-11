@@ -1,16 +1,10 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { getContext } from "svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  const { application } = getContext("external");
   export let form;
-  export let advancementSetting;
+  let advancementSetting = game.settings.get("ard20", "advancement-rate");
   export let elementRoot;
-  async function updateSettings() {
-    application.update(advancementSetting);
-    application.close();
-  }
   let attributeFormula;
   $: {
     attributeFormula = advancementSetting.formulas.attributes;
@@ -25,14 +19,10 @@
     game.settings.set("ard20", "advancement-rate", advancementSetting);
     console.log("change");
   }
-  function requestSubmit() {
-    form.requestSubmit;
-    game.settings.set("ard20", "advancement-rate", advancementSetting);
-  }
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <form bind:this={form} on:submit|once|preventDefault={updateSettings} autocomplete="off">
+  <form bind:this={form} autocomplete="off">
     <section class="grid grid-2col">
       <div>
         <label for="Custom Values"> CustomValues </label>
@@ -56,10 +46,9 @@
         <label for="Attribute Formula">Attribute Advancement Formula</label>
         <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
+      <br />
       <div>{attributeFormula}</div>
+      <br />
     </section>
-    <footer>
-      <button type="button" on:click={requestSubmit}><i class="far fa-save" /></button>
-    </footer>
   </form>
 </ApplicationShell>
