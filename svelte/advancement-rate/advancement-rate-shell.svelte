@@ -29,8 +29,15 @@
         <div class="grid grid-3col">
           {#each Object.values(advancementSetting.variables) as variable}
             <label for={variable.longName}>{variable.longName}</label>
-            <input class="max-dig-6" bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
-            <input class="max-dig-4" min="-999" max="999" type="number" bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
+            <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
+            <input
+              min="-999"
+              max="999"
+              type="number"
+              bind:value={variable.value}
+              on:change={changeSetting}
+              placeholder="custom value"
+            />
           {/each}
         </div>
       </div>
@@ -47,7 +54,7 @@
         <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
       <br />
-      <div> {attributeFormula} </div>
+      <div>{attributeFormula}</div>
       <br />
     </section>
   </form>

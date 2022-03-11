@@ -3886,9 +3886,7 @@ function create_each_block(ctx) {
 			t2 = space();
 			input1 = element("input");
 			attr(label, "for", label_for_value = /*variable*/ ctx[10].longName);
-			attr(input0, "class", "max-dig-6");
 			attr(input0, "placeholder", "shortName");
-			attr(input1, "class", "max-dig-4");
 			attr(input1, "min", "-999");
 			attr(input1, "max", "999");
 			attr(input1, "type", "number");
