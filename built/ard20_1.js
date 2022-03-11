@@ -3886,7 +3886,9 @@ function create_each_block(ctx) {
 			t2 = space();
 			input1 = element("input");
 			attr(label, "for", label_for_value = /*variable*/ ctx[10].longName);
+			attr(input0, "class", "max-dig-5");
 			attr(input0, "placeholder", "shortName");
+			attr(input1, "class", "max-dig-3");
 			attr(input1, "type", "number");
 			attr(input1, "placeholder", "custom value");
 		},
@@ -4203,7 +4205,7 @@ function instance($$self, $$props, $$invalidate) {
 				for (let variable of Object.values(advancementSetting.variables)) {
 					if (variable.value) {
 						console.log(attributeFormula);
-						$$invalidate(3, attributeFormula = attributeFormula.replace(variable.shortName, variable.value));
+						$$invalidate(3, attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value));
 					}
 				}
 			}

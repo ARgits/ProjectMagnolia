@@ -11,7 +11,7 @@
     for (let variable of Object.values(advancementSetting.variables)) {
       if (variable.value) {
         console.log(attributeFormula);
-        attributeFormula = attributeFormula.replace(variable.shortName, variable.value);
+        attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value);
       }
     }
   }
@@ -29,8 +29,8 @@
         <div class="flexrow">
           {#each Object.values(advancementSetting.variables) as variable}
             <label for={variable.longName}>{variable.longName}</label>
-            <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
-            <input type="number" bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
+            <input class="max-dig-5" bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
+            <input class="max-dig-3" type="number" bind:value={variable.value} on:change={changeSetting} placeholder="custom value" />
           {/each}
         </div>
       </div>
