@@ -29,8 +29,8 @@ input {
     box-shadow: none;
     border: #d5d3c7;
     cursor: default;
-    @include digits();
   }
+  @include digits();
 }
 
 button {
