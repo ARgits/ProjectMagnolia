@@ -4012,7 +4012,7 @@ function create_default_slot(ctx) {
 			t16 = space();
 			br1 = element("br");
 			attr(label0, "for", "Custom Values");
-			attr(div0, "class", "flexrow");
+			attr(div0, "class", "grid grid-3col");
 			attr(section0, "class", "grid grid-2col");
 			attr(label2, "for", "Attribute Formula");
 			attr(input, "type", "text");

@@ -26,7 +26,7 @@
     <section class="grid grid-2col">
       <div>
         <label for="Custom Values"> CustomValues </label>
-        <div class="flexrow">
+        <div class="grid grid-3col">
           {#each Object.values(advancementSetting.variables) as variable}
             <label for={variable.longName}>{variable.longName}</label>
             <input class="max-dig-6" bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
@@ -47,7 +47,7 @@
         <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
       <br />
-      <div>{attributeFormula}</div>
+      <div> {attributeFormula} </div>
       <br />
     </section>
   </form>
