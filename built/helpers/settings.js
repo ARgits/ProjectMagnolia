@@ -1,4 +1,5 @@
 import {AdvRateSettingsShim} from '../../svelte/advancement-rate/advancement-rate.js'
+import {FeatSettingsShim} from '../../svelte/FeatSetting/featSetting.js'
 export const registerSystemSettings = function () {
     game.settings.register("ard20", "proficiencies", {
         scope: "world",
@@ -52,7 +53,7 @@ export const registerSystemSettings = function () {
     game.settings.registerMenu("ard20", "featManage", {
         name: "SETTINGS.FeatureManage",
         label: "SETTINGS.FeatureManage",
-        type: FeatFormApp,
+        type: FeatSettingsShim,
         restricted: false,
     });
     game.settings.register("ard20", "advancement-rate", {
