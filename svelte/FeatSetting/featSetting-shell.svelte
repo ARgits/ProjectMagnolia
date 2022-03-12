@@ -4,13 +4,13 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   export let elementRoot;
   let setting = game.settings.get("ard20", "feat");
-  async function Delete(type, index) {
-    setting[type].splice(index, 1);
-    await game.settings.set("ard20", "feat", setting);
+  function Delete(type, index) {
+    setting[type] = setting[type].splice(index, 1);
+    game.settings.set("ard20", "feat", setting);
   }
-  async function Add(type) {
-    setting[type].push(`new ${type}`);
-    await game.settings.set("ard20", "feat", setting);
+  function Add(type) {
+    setting[type] = setting[type].push(`new ${type}`);
+    game.settings.set("ard20", "feat", setting);
   }
 </script>
 

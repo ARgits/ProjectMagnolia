@@ -19,7 +19,7 @@ export class FeatSettingsShim extends FormApplication {
     static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["ard20"],
-        title: "Advancement Rate",
+        title: "Folders and Packs with Features",
         minimizable:true,
         resizable:true,
         width: 600,

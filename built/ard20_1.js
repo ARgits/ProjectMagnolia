@@ -4620,14 +4620,14 @@ function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let setting = game.settings.get("ard20", "feat");
 
-	async function Delete(type, index) {
-		setting[type].splice(index, 1);
-		await game.settings.set("ard20", "feat", setting);
+	function Delete(type, index) {
+		$$invalidate(1, setting[type] = setting[type].splice(index, 1), setting);
+		game.settings.set("ard20", "feat", setting);
 	}
 
-	async function Add(type) {
-		setting[type].push(`new ${type}`);
-		await game.settings.set("ard20", "feat", setting);
+	function Add(type) {
+		$$invalidate(1, setting[type] = setting[type].push(`new ${type}`), setting);
+		game.settings.set("ard20", "feat", setting);
 	}
 
 	function input_input_handler(each_value_1, i) {
@@ -4699,7 +4699,7 @@ class FeatSetting extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
-      title: "Advancement Rate",
+      title: "Folders and Packs with Features",
       minimizable: true,
       resizable: true,
       width: 600,
