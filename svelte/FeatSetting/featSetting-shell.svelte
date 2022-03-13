@@ -7,19 +7,19 @@
   let featSetting = game.settings.get("ard20", "feat");
   console.log(featSetting);
 
-  function AddNew(type) {
+  async function AddNew(type) {
     console.log(type);
     featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length }];
     featSetting = featSetting;
     console.log(featSetting);
-    game.settings.set("ard20", "feat", featSetting);
+    await game.settings.set("ard20", "feat", featSetting);
   }
-  function Delete(type, index) {
+  async function Delete(type, index) {
     console.log(type);
     featSetting[type].splice(index, 1);
     featSetting = featSetting;
     console.log(featSetting[type]);
-    game.settings.set("ard20", "feat", featSetting);
+    await game.settings.set("ard20", "feat", featSetting);
   }
 </script>
 

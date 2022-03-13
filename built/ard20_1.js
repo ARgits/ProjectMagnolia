@@ -4621,7 +4621,7 @@ function instance($$self, $$props, $$invalidate) {
 	let featSetting = game.settings.get("ard20", "feat");
 	console.log(featSetting);
 
-	function AddNew(type) {
+	async function AddNew(type) {
 		console.log(type);
 
 		$$invalidate(
@@ -4638,15 +4638,15 @@ function instance($$self, $$props, $$invalidate) {
 
 		$$invalidate(2, featSetting);
 		console.log(featSetting);
-		game.settings.set("ard20", "feat", featSetting);
+		await game.settings.set("ard20", "feat", featSetting);
 	}
 
-	function Delete(type, index) {
+	async function Delete(type, index) {
 		console.log(type);
 		featSetting[type].splice(index, 1);
 		$$invalidate(2, featSetting);
 		console.log(featSetting[type]);
-		game.settings.set("ard20", "feat", featSetting);
+		await game.settings.set("ard20", "feat", featSetting);
 	}
 
 	function input_input_handler(each_value_1, pack_index) {
