@@ -4306,7 +4306,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (29:8) {#each setting.packs as pack (pack.id)}
+// (31:8) {#each featSetting.packs as pack (pack.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -4353,7 +4353,7 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*setting*/ 4 && input.value !== /*pack*/ ctx[12].name) {
+			if (dirty & /*featSetting*/ 4 && input.value !== /*pack*/ ctx[12].name) {
 				set_input_value(input, /*pack*/ ctx[12].name);
 			}
 		},
@@ -4365,7 +4365,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (38:8) {#each setting.folders as folder (folder.id)}
+// (40:8) {#each featSetting.folders as folder (folder.id)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let input;
@@ -4412,7 +4412,7 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*setting*/ 4 && input.value !== /*folder*/ ctx[9].name) {
+			if (dirty & /*featSetting*/ 4 && input.value !== /*folder*/ ctx[9].name) {
 				set_input_value(input, /*folder*/ ctx[9].name);
 			}
 		},
@@ -4424,7 +4424,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (24:0) <ApplicationShell bind:elementRoot>
+// (26:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let form_1;
 	let section;
@@ -4443,7 +4443,7 @@ function create_default_slot(ctx) {
 	let button1;
 	let mounted;
 	let dispose;
-	let each_value_1 = /*setting*/ ctx[2].packs;
+	let each_value_1 = /*featSetting*/ ctx[2].packs;
 	const get_key = ctx => /*pack*/ ctx[12].id;
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -4452,7 +4452,7 @@ function create_default_slot(ctx) {
 		each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
 	}
 
-	let each_value = /*setting*/ ctx[2].folders;
+	let each_value = /*featSetting*/ ctx[2].folders;
 	const get_key_1 = ctx => /*folder*/ ctx[9].id;
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -4524,13 +4524,13 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Delete, setting*/ 20) {
-				each_value_1 = /*setting*/ ctx[2].packs;
+			if (dirty & /*Delete, featSetting*/ 20) {
+				each_value_1 = /*featSetting*/ ctx[2].packs;
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1, t1, get_each_context_1);
 			}
 
-			if (dirty & /*Delete, setting*/ 20) {
-				each_value = /*setting*/ ctx[2].folders;
+			if (dirty & /*Delete, featSetting*/ 20) {
+				each_value = /*featSetting*/ ctx[2].folders;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block, t4, get_each_context);
 			}
 		},
@@ -4584,7 +4584,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, setting*/ 32774) {
+			if (dirty & /*$$scope, form, featSetting*/ 32774) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4614,43 +4614,45 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let { form } = $$props;
-	let setting = game.settings.get("ard20", "feat");
-	console.log(setting);
+	let featSetting = game.settings.get("ard20", "feat");
+	console.log(featSetting);
 
 	function Add(type) {
 		console.log(type);
 
 		$$invalidate(
 			2,
-			setting[type] = [
-				...setting[type],
+			featSetting[type] = [
+				...featSetting[type],
 				{
 					name: `new ${type}`,
-					id: setting[type].length
+					id: featSetting[type].length
 				}
 			],
-			setting
+			featSetting
 		);
 
-		console.log(setting[type]);
-		game.settings.set("ard20", "feat", setting);
+		$$invalidate(2, featSetting);
+		console.log(featSetting);
+		game.settings.set("ard20", "feat", featSetting);
 	}
 
 	function Delete(type, index) {
 		console.log(type);
-		$$invalidate(2, setting[type] = setting[type].splice(index, 1), setting);
-		console.log(setting[type]);
-		game.settings.set("ard20", "feat", setting);
+		featSetting[type].splice(index, 1);
+		$$invalidate(2, featSetting);
+		console.log(featSetting[type]);
+		game.settings.set("ard20", "feat", featSetting);
 	}
 
 	function input_input_handler(each_value_1, pack_index) {
 		each_value_1[pack_index].name = this.value;
-		$$invalidate(2, setting);
+		$$invalidate(2, featSetting);
 	}
 
 	function input_input_handler_1(each_value, folder_index) {
 		each_value[folder_index].name = this.value;
-		$$invalidate(2, setting);
+		$$invalidate(2, featSetting);
 	}
 
 	function form_1_binding($$value) {
@@ -4673,7 +4675,7 @@ function instance($$self, $$props, $$invalidate) {
 	return [
 		elementRoot,
 		form,
-		setting,
+		featSetting,
 		Add,
 		Delete,
 		input_input_handler,
