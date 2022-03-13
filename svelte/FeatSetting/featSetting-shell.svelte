@@ -3,7 +3,7 @@
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   export let elementRoot;
-  export let form;
+  //export let form;
   let featSetting = game.settings.get("ard20", "feat");
   console.log(featSetting);
 
@@ -24,7 +24,6 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <form bind:this={form} autocomplete="off">
     <section class="sheet-body">
       <div class="flexcol">
         packs
@@ -46,5 +45,4 @@
         <button on:click={() => AddNew("folders")} class="add far fa-plus-square" />
       </div>
     </section>
-  </form>
 </ApplicationShell>

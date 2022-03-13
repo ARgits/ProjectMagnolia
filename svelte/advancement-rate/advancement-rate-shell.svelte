@@ -15,8 +15,8 @@
       }
     }
   }
-  function changeSetting() {
-    game.settings.set("ard20", "advancement-rate", advancementSetting);
+  async function changeSetting() {
+    await game.settings.set("ard20", "advancement-rate", advancementSetting);
     console.log("change");
   }
 </script>
