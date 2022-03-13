@@ -4625,7 +4625,7 @@ function instance($$self, $$props, $$invalidate) {
 				...featSetting[type],
 				{
 					name: `new ${type}`,
-					id: featSetting[type].length - 1
+					id: featSetting[type].length
 				}
 			],
 			featSetting
@@ -4638,7 +4638,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function Delete(type, index) {
 		console.log(type);
-		featSetting[type].splice(index, 1);
+		featSetting[type].splice(index - 1, 1);
 		$$invalidate(1, featSetting);
 		console.log(featSetting[type]);
 		await game.settings.set("ard20", "feat", featSetting);

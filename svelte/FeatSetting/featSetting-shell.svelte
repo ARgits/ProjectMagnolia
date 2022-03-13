@@ -8,14 +8,14 @@
 
   async function AddNew(type) {
     console.log(type);
-    featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length-1 }];
+    featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length }];
     featSetting = featSetting;
     console.log(featSetting);
     await game.settings.set("ard20", "feat", featSetting);
   }
   async function Delete(type, index) {
     console.log(type);
-    featSetting[type].splice(index, 1);
+    featSetting[type].splice(index-1, 1);
     featSetting = featSetting;
     console.log(featSetting[type]);
     await game.settings.set("ard20", "feat", featSetting);
