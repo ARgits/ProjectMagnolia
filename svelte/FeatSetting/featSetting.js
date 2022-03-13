@@ -22,7 +22,7 @@ export class FeatSettingsShim extends FormApplication {
         title: "Folders and Packs with Features",
         minimizable:true,
         resizable:true,
-        width: 600,
+        width: "auto",
         height: "auto",
         svelte: {
           class: FeatSettingShell,

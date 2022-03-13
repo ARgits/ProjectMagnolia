@@ -4614,7 +4614,7 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let { form } = $$props;
-	let { setting = game.settings.get("ard20", "feat") } = $$props;
+	let setting = game.settings.get("ard20", "feat");
 	console.log(setting);
 
 	function Add(type) {
@@ -4668,7 +4668,6 @@ function instance($$self, $$props, $$invalidate) {
 	$$self.$$set = $$props => {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 		if ('form' in $$props) $$invalidate(1, form = $$props.form);
-		if ('setting' in $$props) $$invalidate(2, setting = $$props.setting);
 	};
 
 	return [
@@ -4687,7 +4686,7 @@ function instance($$self, $$props, $$invalidate) {
 class FeatSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, form: 1, setting: 2 });
+		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, form: 1 });
 	}
 
 	get elementRoot() {
@@ -4705,15 +4704,6 @@ class FeatSetting_shell extends SvelteComponent {
 
 	set form(form) {
 		this.$$set({ form });
-		flush();
-	}
-
-	get setting() {
-		return this.$$.ctx[2];
-	}
-
-	set setting(setting) {
-		this.$$set({ setting });
 		flush();
 	}
 }
@@ -4744,7 +4734,7 @@ class FeatSetting extends SvelteApplication {
       title: "Folders and Packs with Features",
       minimizable: true,
       resizable: true,
-      width: 600,
+      width: "auto",
       height: "auto",
       svelte: {
         class: FeatSetting_shell,

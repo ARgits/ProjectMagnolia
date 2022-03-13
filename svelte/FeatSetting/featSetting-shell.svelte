@@ -4,7 +4,7 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   export let elementRoot;
   export let form;
-  export let setting = game.settings.get("ard20", "feat");
+  let setting = game.settings.get("ard20", "feat");
   console.log(setting);
 
   function Add(type) {
