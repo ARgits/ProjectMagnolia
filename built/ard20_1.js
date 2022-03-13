@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, set_data, detach, run_all, destroy_each, is_function, update_keyed_each, destroy_block } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, set_data, detach, run_all, destroy_each, is_function } from '/modules/typhonjs/svelte/internal.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 
 function ownKeys(object, enumerableOnly) {
@@ -4306,8 +4306,8 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (26:6) {#each setting.packs as pack (pack.id)}
-function create_each_block_1(key_1, ctx) {
+// (28:6) {#each setting.packs as pack}
+function create_each_block_1(ctx) {
 	let div;
 	let input;
 	let t;
@@ -4320,8 +4320,6 @@ function create_each_block_1(key_1, ctx) {
 	}
 
 	return {
-		key: key_1,
-		first: null,
 		c() {
 			div = element("div");
 			input = element("input");
@@ -4330,7 +4328,6 @@ function create_each_block_1(key_1, ctx) {
 			attr(input, "type", "text");
 			attr(button, "class", "minus far fa-minus-square");
 			attr(div, "class", "grid grid-2col");
-			this.first = div;
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4365,8 +4362,8 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (35:6) {#each setting.folders as folder (folder.id)}
-function create_each_block(key_1, ctx) {
+// (37:6) {#each setting.folders as folder}
+function create_each_block(ctx) {
 	let div;
 	let input;
 	let t;
@@ -4379,8 +4376,6 @@ function create_each_block(key_1, ctx) {
 	}
 
 	return {
-		key: key_1,
-		first: null,
 		c() {
 			div = element("div");
 			input = element("input");
@@ -4389,7 +4384,6 @@ function create_each_block(key_1, ctx) {
 			attr(input, "type", "text");
 			attr(button, "class", "minus far fa-minus-square");
 			attr(div, "class", "grid grid-2col");
-			this.first = div;
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4402,7 +4396,7 @@ function create_each_block(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler_1),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[3]("packs", /*folder*/ ctx[7].id))) /*Delete*/ ctx[3]("packs", /*folder*/ ctx[7].id).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[3]("folders", /*folder*/ ctx[7].id))) /*Delete*/ ctx[3]("folders", /*folder*/ ctx[7].id).apply(this, arguments);
 					})
 				];
 
@@ -4424,40 +4418,32 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (22:0) <ApplicationShell bind:elementRoot>
+// (24:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let section;
 	let div;
 	let t0;
-	let each_blocks_1 = [];
-	let each0_lookup = new Map();
 	let t1;
 	let button0;
 	let t2;
 	let hr;
 	let t3;
-	let each_blocks = [];
-	let each1_lookup = new Map();
 	let t4;
 	let button1;
 	let mounted;
 	let dispose;
 	let each_value_1 = /*setting*/ ctx[1].packs;
-	const get_key = ctx => /*pack*/ ctx[10].id;
+	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		let child_ctx = get_each_context_1(ctx, each_value_1, i);
-		let key = get_key(child_ctx);
-		each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
+		each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
 	}
 
 	let each_value = /*setting*/ ctx[1].folders;
-	const get_key_1 = ctx => /*folder*/ ctx[7].id;
+	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
-		let child_ctx = get_each_context(ctx, each_value, i);
-		let key = get_key_1(child_ctx);
-		each1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
+		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
 	}
 
 	return {
@@ -4521,25 +4507,54 @@ function create_default_slot(ctx) {
 		p(ctx, dirty) {
 			if (dirty & /*Delete, setting*/ 10) {
 				each_value_1 = /*setting*/ ctx[1].packs;
-				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1, t1, get_each_context_1);
+				let i;
+
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(child_ctx, dirty);
+					} else {
+						each_blocks_1[i] = create_each_block_1(child_ctx);
+						each_blocks_1[i].c();
+						each_blocks_1[i].m(div, t1);
+					}
+				}
+
+				for (; i < each_blocks_1.length; i += 1) {
+					each_blocks_1[i].d(1);
+				}
+
+				each_blocks_1.length = each_value_1.length;
 			}
 
 			if (dirty & /*Delete, setting*/ 10) {
 				each_value = /*setting*/ ctx[1].folders;
-				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block, t4, get_each_context);
+				let i;
+
+				for (i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+					} else {
+						each_blocks[i] = create_each_block(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(div, t4);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+
+				each_blocks.length = each_value.length;
 			}
 		},
 		d(detaching) {
 			if (detaching) detach(section);
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].d();
-			}
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].d();
-			}
-
+			destroy_each(each_blocks_1, detaching);
+			destroy_each(each_blocks, detaching);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4619,7 +4634,7 @@ function instance($$self, $$props, $$invalidate) {
 				...setting[type],
 				{
 					name: `new ${type}`,
-					id: setting[type].length + 1
+					id: setting[type].length
 				}
 			],
 			setting
@@ -4630,7 +4645,9 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function Delete(type, index) {
+		console.log(type);
 		$$invalidate(1, setting[type] = setting[type].splice(index, 1), setting);
+		console.log(setting[type]);
 		game.settings.set("ard20", "feat", setting);
 	}
 

@@ -9,12 +9,14 @@
 
   function Add(type) {
     console.log(type);
-    setting[type] = [...setting[type], { name: `new ${type}`, id: setting[type].length + 1 }];
+    setting[type] = [...setting[type], { name: `new ${type}`, id: setting[type].length }];
     console.log(setting[type]);
     game.settings.set("ard20", "feat", setting);
   }
   function Delete(type, index) {
+    console.log(type);
     setting[type] = setting[type].splice(index, 1);
+    console.log(setting[type]);
     game.settings.set("ard20", "feat", setting);
   }
 </script>
@@ -23,7 +25,7 @@
   <section class="sheet-body">
     <div class="flexcol">
       packs
-      {#each setting.packs as pack (pack.id)}
+      {#each setting.packs as pack}
         <div class="grid grid-2col">
           <input type="text" bind:value={pack.name} />
           <button on:click={Delete("packs", pack.id)} class="minus far fa-minus-square" />
@@ -32,10 +34,10 @@
       <button on:click={Add("packs")} class="add far fa-plus-square" />
       <hr />
       folders
-      {#each setting.folders as folder (folder.id)}
+      {#each setting.folders as folder}
         <div class="grid grid-2col">
           <input type="text" bind:value={folder.name} />
-          <button on:click={Delete("packs", folder.id)} class="minus far fa-minus-square" />
+          <button on:click={Delete("folders", folder.id)} class="minus far fa-minus-square" />
         </div>
       {/each}
       <button on:click={Add("folders")} class="add far fa-plus-square" />
