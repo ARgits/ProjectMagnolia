@@ -1,11 +1,6 @@
 <script>
   export let feat
-  import setting from "./featSetting-shell.svelte";
-  console.log(setting)
-  async function Delete(type, index) {
-    setting[type] = setting[type].splice(index, 1);
-    await game.settings.set("ard20", "feat", setting);
-  }
+
 </script>
 
 <div class="grid grid-2col">
