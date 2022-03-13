@@ -4292,21 +4292,21 @@ class AdvancementRateFormApp extends SvelteApplication {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
-	child_ctx[10] = list;
-	child_ctx[11] = i;
+	child_ctx[7] = list[i];
+	child_ctx[8] = list;
+	child_ctx[9] = i;
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[12] = list[i];
-	child_ctx[13] = list;
-	child_ctx[14] = i;
+	child_ctx[10] = list[i];
+	child_ctx[11] = list;
+	child_ctx[12] = i;
 	return child_ctx;
 }
 
-// (27:8) {#each setting.packs as pack (pack.id)}
+// (26:6) {#each setting.packs as pack (pack.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -4316,7 +4316,7 @@ function create_each_block_1(key_1, ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[5].call(input, /*each_value_1*/ ctx[13], /*pack_index*/ ctx[14]);
+		/*input_input_handler*/ ctx[4].call(input, /*each_value_1*/ ctx[11], /*pack_index*/ ctx[12]);
 	}
 
 	return {
@@ -4335,7 +4335,7 @@ function create_each_block_1(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*pack*/ ctx[12].name);
+			set_input_value(input, /*pack*/ ctx[10].name);
 			append(div, t);
 			append(div, button);
 
@@ -4343,7 +4343,7 @@ function create_each_block_1(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[4]("packs", /*pack*/ ctx[12].id))) /*Delete*/ ctx[4]("packs", /*pack*/ ctx[12].id).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[3]("packs", /*pack*/ ctx[10].id))) /*Delete*/ ctx[3]("packs", /*pack*/ ctx[10].id).apply(this, arguments);
 					})
 				];
 
@@ -4353,8 +4353,8 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*setting*/ 4 && input.value !== /*pack*/ ctx[12].name) {
-				set_input_value(input, /*pack*/ ctx[12].name);
+			if (dirty & /*setting*/ 2 && input.value !== /*pack*/ ctx[10].name) {
+				set_input_value(input, /*pack*/ ctx[10].name);
 			}
 		},
 		d(detaching) {
@@ -4365,7 +4365,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (36:8) {#each setting.folders as folder (folder.id)}
+// (35:6) {#each setting.folders as folder (folder.id)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let input;
@@ -4375,7 +4375,7 @@ function create_each_block(key_1, ctx) {
 	let dispose;
 
 	function input_input_handler_1() {
-		/*input_input_handler_1*/ ctx[6].call(input, /*each_value*/ ctx[10], /*folder_index*/ ctx[11]);
+		/*input_input_handler_1*/ ctx[5].call(input, /*each_value*/ ctx[8], /*folder_index*/ ctx[9]);
 	}
 
 	return {
@@ -4394,7 +4394,7 @@ function create_each_block(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*folder*/ ctx[9].name);
+			set_input_value(input, /*folder*/ ctx[7].name);
 			append(div, t);
 			append(div, button);
 
@@ -4402,7 +4402,7 @@ function create_each_block(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler_1),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[4]("packs", /*folder*/ ctx[9].id))) /*Delete*/ ctx[4]("packs", /*folder*/ ctx[9].id).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[3]("packs", /*folder*/ ctx[7].id))) /*Delete*/ ctx[3]("packs", /*folder*/ ctx[7].id).apply(this, arguments);
 					})
 				];
 
@@ -4412,8 +4412,8 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*setting*/ 4 && input.value !== /*folder*/ ctx[9].name) {
-				set_input_value(input, /*folder*/ ctx[9].name);
+			if (dirty & /*setting*/ 2 && input.value !== /*folder*/ ctx[7].name) {
+				set_input_value(input, /*folder*/ ctx[7].name);
 			}
 		},
 		d(detaching) {
@@ -4426,7 +4426,6 @@ function create_each_block(key_1, ctx) {
 
 // (22:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
-	let form_1;
 	let section;
 	let div;
 	let t0;
@@ -4443,8 +4442,8 @@ function create_default_slot(ctx) {
 	let button1;
 	let mounted;
 	let dispose;
-	let each_value_1 = /*setting*/ ctx[2].packs;
-	const get_key = ctx => /*pack*/ ctx[12].id;
+	let each_value_1 = /*setting*/ ctx[1].packs;
+	const get_key = ctx => /*pack*/ ctx[10].id;
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		let child_ctx = get_each_context_1(ctx, each_value_1, i);
@@ -4452,8 +4451,8 @@ function create_default_slot(ctx) {
 		each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
 	}
 
-	let each_value = /*setting*/ ctx[2].folders;
-	const get_key_1 = ctx => /*folder*/ ctx[9].id;
+	let each_value = /*setting*/ ctx[1].folders;
+	const get_key_1 = ctx => /*folder*/ ctx[7].id;
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
@@ -4463,10 +4462,9 @@ function create_default_slot(ctx) {
 
 	return {
 		c() {
-			form_1 = element("form");
 			section = element("section");
 			div = element("div");
-			t0 = text("packs\r\n        ");
+			t0 = text("packs\r\n      ");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].c();
@@ -4476,7 +4474,7 @@ function create_default_slot(ctx) {
 			button0 = element("button");
 			t2 = space();
 			hr = element("hr");
-			t3 = text("\r\n        folders\r\n        ");
+			t3 = text("\r\n      folders\r\n      ");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -4488,11 +4486,9 @@ function create_default_slot(ctx) {
 			attr(button1, "class", "add far fa-plus-square");
 			attr(div, "class", "flexcol");
 			attr(section, "class", "sheet-body");
-			attr(form_1, "autocomplete", "off");
 		},
 		m(target, anchor) {
-			insert(target, form_1, anchor);
-			append(form_1, section);
+			insert(target, section, anchor);
 			append(section, div);
 			append(div, t0);
 
@@ -4512,30 +4508,29 @@ function create_default_slot(ctx) {
 
 			append(div, t4);
 			append(div, button1);
-			/*form_1_binding*/ ctx[7](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(button0, "click", /*Add*/ ctx[3]("packs")),
-					listen(button1, "click", /*Add*/ ctx[3]("folders"))
+					listen(button0, "click", /*Add*/ ctx[2]("packs")),
+					listen(button1, "click", /*Add*/ ctx[2]("folders"))
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Delete, setting*/ 20) {
-				each_value_1 = /*setting*/ ctx[2].packs;
+			if (dirty & /*Delete, setting*/ 10) {
+				each_value_1 = /*setting*/ ctx[1].packs;
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1, t1, get_each_context_1);
 			}
 
-			if (dirty & /*Delete, setting*/ 20) {
-				each_value = /*setting*/ ctx[2].folders;
+			if (dirty & /*Delete, setting*/ 10) {
+				each_value = /*setting*/ ctx[1].folders;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block, t4, get_each_context);
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(form_1);
+			if (detaching) detach(section);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].d();
@@ -4545,7 +4540,6 @@ function create_default_slot(ctx) {
 				each_blocks[i].d();
 			}
 
-			/*form_1_binding*/ ctx[7](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4558,7 +4552,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[8](value);
+		/*applicationshell_elementRoot_binding*/ ctx[6](value);
 	}
 
 	let applicationshell_props = {
@@ -4584,7 +4578,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, setting*/ 32774) {
+			if (dirty & /*$$scope, setting*/ 8194) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4613,7 +4607,6 @@ function create_fragment(ctx) {
 
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
-	let { form } = $$props;
 	let { setting = game.settings.get("ard20", "feat") } = $$props;
 	console.log(setting);
 
@@ -4621,7 +4614,7 @@ function instance($$self, $$props, $$invalidate) {
 		console.log(type);
 
 		$$invalidate(
-			2,
+			1,
 			setting[type] = [
 				...setting[type],
 				{
@@ -4637,25 +4630,18 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function Delete(type, index) {
-		$$invalidate(2, setting[type] = setting[type].splice(index, 1), setting);
+		$$invalidate(1, setting[type] = setting[type].splice(index, 1), setting);
 		game.settings.set("ard20", "feat", setting);
 	}
 
 	function input_input_handler(each_value_1, pack_index) {
 		each_value_1[pack_index].name = this.value;
-		$$invalidate(2, setting);
+		$$invalidate(1, setting);
 	}
 
 	function input_input_handler_1(each_value, folder_index) {
 		each_value[folder_index].name = this.value;
-		$$invalidate(2, setting);
-	}
-
-	function form_1_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			form = $$value;
-			$$invalidate(1, form);
-		});
+		$$invalidate(1, setting);
 	}
 
 	function applicationshell_elementRoot_binding(value) {
@@ -4665,19 +4651,16 @@ function instance($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
-		if ('form' in $$props) $$invalidate(1, form = $$props.form);
-		if ('setting' in $$props) $$invalidate(2, setting = $$props.setting);
+		if ('setting' in $$props) $$invalidate(1, setting = $$props.setting);
 	};
 
 	return [
 		elementRoot,
-		form,
 		setting,
 		Add,
 		Delete,
 		input_input_handler,
 		input_input_handler_1,
-		form_1_binding,
 		applicationshell_elementRoot_binding
 	];
 }
@@ -4685,7 +4668,7 @@ function instance($$self, $$props, $$invalidate) {
 class FeatSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, form: 1, setting: 2 });
+		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, setting: 1 });
 	}
 
 	get elementRoot() {
@@ -4697,17 +4680,8 @@ class FeatSetting_shell extends SvelteComponent {
 		flush();
 	}
 
-	get form() {
-		return this.$$.ctx[1];
-	}
-
-	set form(form) {
-		this.$$set({ form });
-		flush();
-	}
-
 	get setting() {
-		return this.$$.ctx[2];
+		return this.$$.ctx[1];
 	}
 
 	set setting(setting) {
