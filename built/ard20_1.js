@@ -4292,14 +4292,22 @@ class AdvancementRateFormApp extends SvelteApplication {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[8] = list[i];
-	child_ctx[9] = list;
-	child_ctx[10] = i;
+	child_ctx[9] = list[i];
+	child_ctx[10] = list;
+	child_ctx[11] = i;
+	return child_ctx;
+}
+
+function get_each_context_1(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[12] = list[i];
+	child_ctx[13] = list;
+	child_ctx[14] = i;
 	return child_ctx;
 }
 
 // (31:8) {#each featSetting.packs as pack (pack.id)}
-function create_each_block(key_1, ctx) {
+function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
 	let t;
@@ -4308,7 +4316,7 @@ function create_each_block(key_1, ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[9], /*pack_index*/ ctx[10]);
+		/*input_input_handler*/ ctx[5].call(input, /*each_value_1*/ ctx[13], /*pack_index*/ ctx[14]);
 	}
 
 	return {
@@ -4327,7 +4335,7 @@ function create_each_block(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*pack*/ ctx[8].name);
+			set_input_value(input, /*pack*/ ctx[12].name);
 			append(div, t);
 			append(div, button);
 
@@ -4335,7 +4343,7 @@ function create_each_block(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[4]("packs", /*pack*/ ctx[8].id))) /*Delete*/ ctx[4]("packs", /*pack*/ ctx[8].id).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[4]("packs", /*pack*/ ctx[12].id))) /*Delete*/ ctx[4]("packs", /*pack*/ ctx[12].id).apply(this, arguments);
 					})
 				];
 
@@ -4345,8 +4353,67 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*featSetting*/ 4 && input.value !== /*pack*/ ctx[8].name) {
-				set_input_value(input, /*pack*/ ctx[8].name);
+			if (dirty & /*featSetting*/ 4 && input.value !== /*pack*/ ctx[12].name) {
+				set_input_value(input, /*pack*/ ctx[12].name);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(div);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+// (40:8) {#each featSetting.folders as folder (folder.id)}
+function create_each_block(key_1, ctx) {
+	let div;
+	let input;
+	let t;
+	let button;
+	let mounted;
+	let dispose;
+
+	function input_input_handler_1() {
+		/*input_input_handler_1*/ ctx[6].call(input, /*each_value*/ ctx[10], /*folder_index*/ ctx[11]);
+	}
+
+	return {
+		key: key_1,
+		first: null,
+		c() {
+			div = element("div");
+			input = element("input");
+			t = space();
+			button = element("button");
+			attr(input, "type", "text");
+			attr(button, "class", "minus far fa-minus-square");
+			attr(div, "class", "grid grid-2col");
+			this.first = div;
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			append(div, input);
+			set_input_value(input, /*folder*/ ctx[9].name);
+			append(div, t);
+			append(div, button);
+
+			if (!mounted) {
+				dispose = [
+					listen(input, "input", input_input_handler_1),
+					listen(button, "click", function () {
+						if (is_function(/*Delete*/ ctx[4]("folders", /*folder*/ ctx[9].id))) /*Delete*/ ctx[4]("folders", /*folder*/ ctx[9].id).apply(this, arguments);
+					})
+				];
+
+				mounted = true;
+			}
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+
+			if (dirty & /*featSetting*/ 4 && input.value !== /*folder*/ ctx[9].name) {
+				set_input_value(input, /*folder*/ ctx[9].name);
 			}
 		},
 		d(detaching) {
@@ -4363,22 +4430,35 @@ function create_default_slot(ctx) {
 	let section;
 	let div;
 	let t0;
-	let each_blocks = [];
-	let each_1_lookup = new Map();
+	let each_blocks_1 = [];
+	let each0_lookup = new Map();
 	let t1;
-	let button;
+	let button0;
 	let t2;
 	let hr;
 	let t3;
+	let each_blocks = [];
+	let each1_lookup = new Map();
+	let t4;
+	let button1;
 	let mounted;
 	let dispose;
-	let each_value = /*featSetting*/ ctx[2].packs;
-	const get_key = ctx => /*pack*/ ctx[8].id;
+	let each_value_1 = /*featSetting*/ ctx[2].packs;
+	const get_key = ctx => /*pack*/ ctx[12].id;
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		let child_ctx = get_each_context_1(ctx, each_value_1, i);
+		let key = get_key(child_ctx);
+		each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
+	}
+
+	let each_value = /*featSetting*/ ctx[2].folders;
+	const get_key_1 = ctx => /*folder*/ ctx[9].id;
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
-		let key = get_key(child_ctx);
-		each_1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
+		let key = get_key_1(child_ctx);
+		each1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
 	}
 
 	return {
@@ -4388,16 +4468,24 @@ function create_default_slot(ctx) {
 			div = element("div");
 			t0 = text("packs\r\n        ");
 
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t1 = space();
+			button0 = element("button");
+			t2 = space();
+			hr = element("hr");
+			t3 = text("\r\n        folders\r\n        ");
+
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t1 = space();
-			button = element("button");
-			t2 = space();
-			hr = element("hr");
-			t3 = text("\r\n        folders");
-			attr(button, "class", "add far fa-plus-square");
+			t4 = space();
+			button1 = element("button");
+			attr(button0, "class", "add far fa-plus-square");
+			attr(button1, "class", "add far fa-plus-square");
 			attr(div, "class", "flexcol");
 			attr(section, "class", "sheet-body");
 			attr(form_1, "autocomplete", "off");
@@ -4408,38 +4496,58 @@ function create_default_slot(ctx) {
 			append(section, div);
 			append(div, t0);
 
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].m(div, null);
+			}
+
+			append(div, t1);
+			append(div, button0);
+			append(div, t2);
+			append(div, hr);
+			append(div, t3);
+
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div, null);
 			}
 
-			append(div, t1);
-			append(div, button);
-			append(div, t2);
-			append(div, hr);
-			append(div, t3);
-			/*form_1_binding*/ ctx[6](form_1);
+			append(div, t4);
+			append(div, button1);
+			/*form_1_binding*/ ctx[7](form_1);
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*Add*/ ctx[3]("packs"));
+				dispose = [
+					listen(button0, "click", /*Add*/ ctx[3]("packs")),
+					listen(button1, "click", /*Add*/ ctx[3]("folders"))
+				];
+
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
 			if (dirty & /*Delete, featSetting*/ 20) {
-				each_value = /*featSetting*/ ctx[2].packs;
-				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div, destroy_block, create_each_block, t1, get_each_context);
+				each_value_1 = /*featSetting*/ ctx[2].packs;
+				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1, t1, get_each_context_1);
+			}
+
+			if (dirty & /*Delete, featSetting*/ 20) {
+				each_value = /*featSetting*/ ctx[2].folders;
+				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block, t4, get_each_context);
 			}
 		},
 		d(detaching) {
 			if (detaching) detach(form_1);
 
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].d();
+			}
+
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].d();
 			}
 
-			/*form_1_binding*/ ctx[6](null);
+			/*form_1_binding*/ ctx[7](null);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
@@ -4450,7 +4558,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[7](value);
+		/*applicationshell_elementRoot_binding*/ ctx[8](value);
 	}
 
 	let applicationshell_props = {
@@ -4476,7 +4584,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, featSetting*/ 2054) {
+			if (dirty & /*$$scope, form, featSetting*/ 32774) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4537,8 +4645,13 @@ function instance($$self, $$props, $$invalidate) {
 		game.settings.set("ard20", "feat", featSetting);
 	}
 
-	function input_input_handler(each_value, pack_index) {
-		each_value[pack_index].name = this.value;
+	function input_input_handler(each_value_1, pack_index) {
+		each_value_1[pack_index].name = this.value;
+		$$invalidate(2, featSetting);
+	}
+
+	function input_input_handler_1(each_value, folder_index) {
+		each_value[folder_index].name = this.value;
 		$$invalidate(2, featSetting);
 	}
 
@@ -4566,6 +4679,7 @@ function instance($$self, $$props, $$invalidate) {
 		Add,
 		Delete,
 		input_input_handler,
+		input_input_handler_1,
 		form_1_binding,
 		applicationshell_elementRoot_binding
 	];
