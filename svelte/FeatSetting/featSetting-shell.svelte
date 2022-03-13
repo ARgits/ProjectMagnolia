@@ -31,19 +31,19 @@
         {#each featSetting.packs as pack (pack.id)}
           <div class="grid grid-2col">
             <input type="text" bind:value={pack.name} />
-            <button on:click={Delete("packs", pack.id)} class="minus far fa-minus-square" />
+            <button on:click={() => Delete("packs", pack.id)} class="minus far fa-minus-square" />
           </div>
         {/each}
-        <button on:click={AddNew("packs")} class="add far fa-plus-square" />
+        <button on:click={() => AddNew("packs")} class="add far fa-plus-square" />
         <hr />
         folders
         {#each featSetting.folders as folder (folder.id)}
           <div class="grid grid-2col">
             <input type="text" bind:value={folder.name} />
-            <button on:click={Delete("folders", folder.id)} class="minus far fa-minus-square" />
+            <button on:click={() => Delete("folders", folder.id)} class="minus far fa-minus-square" />
           </div>
         {/each}
-        <button on:click={AddNew("folders")} class="add far fa-plus-square" />
+        <button on:click={() => AddNew("folders")} class="add far fa-plus-square" />
       </div>
     </section>
   </form>
