@@ -1,9 +1,10 @@
 <script>
   export let feat
   import setting from "./featSetting-shell.svelte";
-  function Delete(type, index) {
+  console.log(setting)
+  async function Delete(type, index) {
     setting[type] = setting[type].splice(index, 1);
-    game.settings.set("ard20", "feat", setting);
+    await game.settings.set("ard20", "feat", setting);
   }
 </script>
 

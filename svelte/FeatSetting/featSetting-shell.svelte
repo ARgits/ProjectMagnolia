@@ -7,9 +7,11 @@
   export let setting = game.settings.get("ard20", "feat");
   console.log(setting);
 
-  function Add(type) {
+  async function Add(type) {
+    console.log(type)
     setting[type] = setting[type].push({ name: `new ${type}`, id: setting[type].length });
-    game.settings.set("ard20", "feat", setting);
+    console.log(setting[type])
+    await game.settings.set("ard20", "feat", setting);
   }
 </script>
 

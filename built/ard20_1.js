@@ -4345,10 +4345,11 @@ function create_fragment$1(ctx) {
 
 function instance$1($$self, $$props, $$invalidate) {
 	let { feat } = $$props;
+	console.log(FeatSetting_shell);
 
-	function Delete(type, index) {
+	async function Delete(type, index) {
 		FeatSetting_shell[type] = FeatSetting_shell[type].splice(index, 1);
-		game.settings.set("ard20", "feat", FeatSetting_shell);
+		await game.settings.set("ard20", "feat", FeatSetting_shell);
 	}
 
 	function input_input_handler() {
@@ -4384,7 +4385,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (20:6) {#each setting.packs as pack (pack.id)}
+// (22:6) {#each setting.packs as pack (pack.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let packfolder;
@@ -4426,7 +4427,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (26:6) {#each setting.folders as folder (folder.id)}
+// (28:6) {#each setting.folders as folder (folder.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let packfolder;
@@ -4468,7 +4469,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (16:0) <ApplicationShell bind:elementRoot>
+// (18:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let section;
 	let div;
@@ -4684,7 +4685,9 @@ function instance($$self, $$props, $$invalidate) {
 	let { setting = game.settings.get("ard20", "feat") } = $$props;
 	console.log(setting);
 
-	function Add(type) {
+	async function Add(type) {
+		console.log(type);
+
 		$$invalidate(
 			1,
 			setting[type] = setting[type].push({
@@ -4694,7 +4697,8 @@ function instance($$self, $$props, $$invalidate) {
 			setting
 		);
 
-		game.settings.set("ard20", "feat", setting);
+		console.log(setting[type]);
+		await game.settings.set("ard20", "feat", setting);
 	}
 
 	function applicationshell_elementRoot_binding(value) {
