@@ -18,13 +18,13 @@
     <div class="flexcol">
       packs
       {#each setting.packs as pack (pack.id)}
-        <PackFolder name={pack.name} id={pack.id} />
+        <PackFolder {pack} />
       {/each}
       <button on:click={Add("packs")} class="add far fa-plus-square" />
       <hr />
       folders
       {#each setting.folders as folder (folder.id)}
-        <PackFolder name={folder.name} id={ffolder.id} />
+        <PackFolder {folder} />
       {/each}
       <button on:click={Add("folders")} class="add far fa-plus-square" />
     </div>

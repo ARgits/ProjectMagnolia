@@ -4311,15 +4311,15 @@ function create_fragment$1(ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*name*/ ctx[0]);
+			set_input_value(input, /*feat*/ ctx[0].name);
 			append(div, t);
 			append(div, button);
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*input_input_handler*/ ctx[3]),
+					listen(input, "input", /*input_input_handler*/ ctx[2]),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[2]("packs", /*id*/ ctx[1]))) /*Delete*/ ctx[2]("packs", /*id*/ ctx[1]).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[1]("packs", /*feat*/ ctx[0].id))) /*Delete*/ ctx[1]("packs", /*feat*/ ctx[0].id).apply(this, arguments);
 					})
 				];
 
@@ -4329,8 +4329,8 @@ function create_fragment$1(ctx) {
 		p(new_ctx, [dirty]) {
 			ctx = new_ctx;
 
-			if (dirty & /*name*/ 1 && input.value !== /*name*/ ctx[0]) {
-				set_input_value(input, /*name*/ ctx[0]);
+			if (dirty & /*feat*/ 1 && input.value !== /*feat*/ ctx[0].name) {
+				set_input_value(input, /*feat*/ ctx[0].name);
 			}
 		},
 		i: noop,
@@ -4344,8 +4344,7 @@ function create_fragment$1(ctx) {
 }
 
 function instance$1($$self, $$props, $$invalidate) {
-	let { name } = $$props;
-	let { id } = $$props;
+	let { feat } = $$props;
 
 	function Delete(type, index) {
 		FeatSetting_shell[type] = FeatSetting_shell[type].splice(index, 1);
@@ -4353,22 +4352,21 @@ function instance$1($$self, $$props, $$invalidate) {
 	}
 
 	function input_input_handler() {
-		name = this.value;
-		$$invalidate(0, name);
+		feat.name = this.value;
+		$$invalidate(0, feat);
 	}
 
 	$$self.$$set = $$props => {
-		if ('name' in $$props) $$invalidate(0, name = $$props.name);
-		if ('id' in $$props) $$invalidate(1, id = $$props.id);
+		if ('feat' in $$props) $$invalidate(0, feat = $$props.feat);
 	};
 
-	return [name, id, Delete, input_input_handler];
+	return [feat, Delete, input_input_handler];
 }
 
 class PackFolder extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$1, create_fragment$1, safe_not_equal, { name: 0, id: 1 });
+		init(this, options, instance$1, create_fragment$1, safe_not_equal, { feat: 0 });
 	}
 }
 
@@ -4391,13 +4389,7 @@ function create_each_block_1(key_1, ctx) {
 	let first;
 	let packfolder;
 	let current;
-
-	packfolder = new PackFolder({
-			props: {
-				name: /*pack*/ ctx[7].name,
-				id: /*pack*/ ctx[7].id
-			}
-		});
+	packfolder = new PackFolder({ props: { pack: /*pack*/ ctx[7] } });
 
 	return {
 		key: key_1,
@@ -4415,8 +4407,7 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const packfolder_changes = {};
-			if (dirty & /*setting*/ 2) packfolder_changes.name = /*pack*/ ctx[7].name;
-			if (dirty & /*setting*/ 2) packfolder_changes.id = /*pack*/ ctx[7].id;
+			if (dirty & /*setting*/ 2) packfolder_changes.pack = /*pack*/ ctx[7];
 			packfolder.$set(packfolder_changes);
 		},
 		i(local) {
@@ -4440,13 +4431,7 @@ function create_each_block(key_1, ctx) {
 	let first;
 	let packfolder;
 	let current;
-
-	packfolder = new PackFolder({
-			props: {
-				name: /*folder*/ ctx[4].name,
-				id: ffolder.id
-			}
-		});
+	packfolder = new PackFolder({ props: { folder: /*folder*/ ctx[4] } });
 
 	return {
 		key: key_1,
@@ -4464,7 +4449,7 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const packfolder_changes = {};
-			if (dirty & /*setting*/ 2) packfolder_changes.name = /*folder*/ ctx[4].name;
+			if (dirty & /*setting*/ 2) packfolder_changes.folder = /*folder*/ ctx[4];
 			packfolder.$set(packfolder_changes);
 		},
 		i(local) {
@@ -4587,7 +4572,7 @@ function create_default_slot(ctx) {
 				check_outros();
 			}
 
-			if (dirty & /*setting, ffolder*/ 2) {
+			if (dirty & /*setting*/ 2) {
 				each_value = /*setting*/ ctx[1].folders;
 				group_outros();
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, outro_and_destroy_block, create_each_block, t4, get_each_context);
