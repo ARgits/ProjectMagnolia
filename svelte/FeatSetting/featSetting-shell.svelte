@@ -7,7 +7,7 @@
   let featSetting = game.settings.get("ard20", "feat");
   console.log(featSetting);
 
-  function Add(type) {
+  function AddNew(type) {
     console.log(type);
     featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length }];
     featSetting = featSetting;
@@ -34,7 +34,7 @@
             <button on:click={Delete("packs", pack.id)} class="minus far fa-minus-square" />
           </div>
         {/each}
-        <button on:click={Add("packs")} class="add far fa-plus-square" />
+        <button on:click={AddNew("packs")} class="add far fa-plus-square" />
         <hr />
         folders
         {#each featSetting.folders as folder (folder.id)}
@@ -43,7 +43,7 @@
             <button on:click={Delete("folders", folder.id)} class="minus far fa-minus-square" />
           </div>
         {/each}
-        <button on:click={Add("folders")} class="add far fa-plus-square" />
+        <button on:click={AddNew("folders")} class="add far fa-plus-square" />
       </div>
     </section>
   </form>

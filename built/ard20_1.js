@@ -4516,8 +4516,8 @@ function create_default_slot(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(button0, "click", /*Add*/ ctx[3]("packs")),
-					listen(button1, "click", /*Add*/ ctx[3]("folders"))
+					listen(button0, "click", /*AddNew*/ ctx[3]("packs")),
+					listen(button1, "click", /*AddNew*/ ctx[3]("folders"))
 				];
 
 				mounted = true;
@@ -4617,7 +4617,7 @@ function instance($$self, $$props, $$invalidate) {
 	let featSetting = game.settings.get("ard20", "feat");
 	console.log(featSetting);
 
-	function Add(type) {
+	function AddNew(type) {
 		console.log(type);
 
 		$$invalidate(
@@ -4676,7 +4676,7 @@ function instance($$self, $$props, $$invalidate) {
 		elementRoot,
 		form,
 		featSetting,
-		Add,
+		AddNew,
 		Delete,
 		input_input_handler,
 		input_input_handler_1,
