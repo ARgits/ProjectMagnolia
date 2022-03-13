@@ -4,7 +4,7 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import PackFolder from "./PackFolder.svelte";
   export let elementRoot;
-  $: setting = game.settings.get("ard20", "feat");
+  export let setting = game.settings.get("ard20", "feat");
   console.log(setting);
 
   function Add(type) {
@@ -18,13 +18,13 @@
     <div class="flexcol">
       packs
       {#each setting.packs as pack (pack.id)}
-        <PackFolder name={pack.name} />
+        <PackFolder name={pack.name} id={pack.id} />
       {/each}
       <button on:click={Add("packs")} class="add far fa-plus-square" />
       <hr />
       folders
       {#each setting.folders as folder (folder.id)}
-        <PackFolder name={folder.name} />
+        <PackFolder name={folder.name} id={ffolder.id} />
       {/each}
       <button on:click={Add("folders")} class="add far fa-plus-square" />
     </div>

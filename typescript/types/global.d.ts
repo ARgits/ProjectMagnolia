@@ -43,8 +43,8 @@ declare global {
         }[];
       };
       "ard20.feat": {
-        packs: string[];
-        folders: string[];
+        packs: { name: string; id: number }[];
+        folders: { name: string; id: number }[];
       };
       "ard20.advancement-rate": {
         variables: {

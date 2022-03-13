@@ -4317,9 +4317,9 @@ function create_fragment$1(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*input_input_handler*/ ctx[2]),
+					listen(input, "input", /*input_input_handler*/ ctx[3]),
 					listen(button, "click", function () {
-						if (is_function(Delete("packs", /*id*/ ctx[1]))) Delete("packs", /*id*/ ctx[1]).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[2]("packs", /*id*/ ctx[1]))) /*Delete*/ ctx[2]("packs", /*id*/ ctx[1]).apply(this, arguments);
 					})
 				];
 
@@ -4343,14 +4343,14 @@ function create_fragment$1(ctx) {
 	};
 }
 
-function Delete(type, index) {
-	setting[type] = setting[type].splice(index, 1);
-	game.settings.set("ard20", "feat", setting);
-}
-
 function instance$1($$self, $$props, $$invalidate) {
 	let { name } = $$props;
 	let { id } = $$props;
+
+	function Delete(type, index) {
+		FeatSetting_shell[type] = FeatSetting_shell[type].splice(index, 1);
+		game.settings.set("ard20", "feat", FeatSetting_shell);
+	}
 
 	function input_input_handler() {
 		name = this.value;
@@ -4362,7 +4362,7 @@ function instance$1($$self, $$props, $$invalidate) {
 		if ('id' in $$props) $$invalidate(1, id = $$props.id);
 	};
 
-	return [name, id, input_input_handler];
+	return [name, id, Delete, input_input_handler];
 }
 
 class PackFolder extends SvelteComponent {
@@ -4391,7 +4391,13 @@ function create_each_block_1(key_1, ctx) {
 	let first;
 	let packfolder;
 	let current;
-	packfolder = new PackFolder({ props: { name: /*pack*/ ctx[7].name } });
+
+	packfolder = new PackFolder({
+			props: {
+				name: /*pack*/ ctx[7].name,
+				id: /*pack*/ ctx[7].id
+			}
+		});
 
 	return {
 		key: key_1,
@@ -4410,6 +4416,7 @@ function create_each_block_1(key_1, ctx) {
 			ctx = new_ctx;
 			const packfolder_changes = {};
 			if (dirty & /*setting*/ 2) packfolder_changes.name = /*pack*/ ctx[7].name;
+			if (dirty & /*setting*/ 2) packfolder_changes.id = /*pack*/ ctx[7].id;
 			packfolder.$set(packfolder_changes);
 		},
 		i(local) {
@@ -4433,7 +4440,13 @@ function create_each_block(key_1, ctx) {
 	let first;
 	let packfolder;
 	let current;
-	packfolder = new PackFolder({ props: { name: /*folder*/ ctx[4].name } });
+
+	packfolder = new PackFolder({
+			props: {
+				name: /*folder*/ ctx[4].name,
+				id: ffolder.id
+			}
+		});
 
 	return {
 		key: key_1,
@@ -4574,7 +4587,7 @@ function create_default_slot(ctx) {
 				check_outros();
 			}
 
-			if (dirty & /*setting*/ 2) {
+			if (dirty & /*setting, ffolder*/ 2) {
 				each_value = /*setting*/ ctx[1].folders;
 				group_outros();
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, outro_and_destroy_block, create_each_block, t4, get_each_context);
@@ -4682,8 +4695,8 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
-	let setting;
 	let { elementRoot } = $$props;
+	let { setting = game.settings.get("ard20", "feat") } = $$props;
 	console.log(setting);
 
 	function Add(type) {
@@ -4706,16 +4719,16 @@ function instance($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
+		if ('setting' in $$props) $$invalidate(1, setting = $$props.setting);
 	};
 
-	$$invalidate(1, setting = game.settings.get("ard20", "feat"));
 	return [elementRoot, setting, Add, applicationshell_elementRoot_binding];
 }
 
 class FeatSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0 });
+		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, setting: 1 });
 	}
 
 	get elementRoot() {
@@ -4724,6 +4737,15 @@ class FeatSetting_shell extends SvelteComponent {
 
 	set elementRoot(elementRoot) {
 		this.$$set({ elementRoot });
+		flush();
+	}
+
+	get setting() {
+		return this.$$.ctx[1];
+	}
+
+	set setting(setting) {
+		this.$$set({ setting });
 		flush();
 	}
 }
