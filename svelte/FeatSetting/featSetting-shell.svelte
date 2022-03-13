@@ -9,7 +9,7 @@
 
   async function AddNew(type) {
     console.log(type);
-    featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length }];
+    featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length-1 }];
     featSetting = featSetting;
     console.log(featSetting);
     await game.settings.set("ard20", "feat", featSetting);

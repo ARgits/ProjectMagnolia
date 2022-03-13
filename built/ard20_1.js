@@ -4626,7 +4626,7 @@ function instance($$self, $$props, $$invalidate) {
 				...featSetting[type],
 				{
 					name: `new ${type}`,
-					id: featSetting[type].length
+					id: featSetting[type].length - 1
 				}
 			],
 			featSetting
