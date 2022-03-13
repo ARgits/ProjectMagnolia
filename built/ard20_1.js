@@ -4306,7 +4306,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (33:8) {#each featSetting.packs as pack (pack.id)}
+// (32:6) {#each featSetting.packs as pack (pack.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -4368,7 +4368,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (42:8) {#each featSetting.folders as folder (folder.id)}
+// (41:6) {#each featSetting.folders as folder (folder.id)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let input;
@@ -4430,7 +4430,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (29:0) <ApplicationShell bind:elementRoot>
+// (28:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let section;
 	let div;
@@ -4470,7 +4470,7 @@ function create_default_slot(ctx) {
 		c() {
 			section = element("section");
 			div = element("div");
-			t0 = text("packs\r\n        ");
+			t0 = text("packs\r\n      ");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].c();
@@ -4480,7 +4480,7 @@ function create_default_slot(ctx) {
 			button0 = element("button");
 			t2 = space();
 			hr = element("hr");
-			t3 = text("\r\n        folders\r\n        ");
+			t3 = text("\r\n      folders\r\n      ");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -4638,14 +4638,13 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function Delete(type, index) {
 		console.log(type);
-		featSetting[type].splice(index - 1, 1);
-		$$invalidate(1, featSetting);
+		$$invalidate(1, featSetting[type] = featSetting[type].filter(item => item.id !== index), featSetting);
 		console.log(featSetting[type]);
 		await game.settings.set("ard20", "feat", featSetting);
 	}
 
 	async function changeSetting() {
-		await game.settings.set('ard20', 'feat', featSetting);
+		await game.settings.set("ard20", "feat", featSetting);
 		console.log(featSetting);
 	}
 
