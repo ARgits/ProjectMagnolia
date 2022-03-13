@@ -37,13 +37,6 @@
         <button on:click={Add("packs")} class="add far fa-plus-square" />
         <hr />
         folders
-        {#each featSetting.folders as folder (folder.id)}
-          <div class="grid grid-2col">
-            <input type="text" bind:value={folder.name} />
-            <button on:click={Delete("folders", folder.id)} class="minus far fa-minus-square" />
-          </div>
-        {/each}
-        <button on:click={Add("folders")} class="add far fa-plus-square" />
       </div>
     </section>
   </form>
