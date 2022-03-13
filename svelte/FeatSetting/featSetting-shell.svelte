@@ -8,14 +8,14 @@
 
   async function AddNew(type) {
     console.log(type);
-    featSetting[type] = [...featSetting[type], { name: `new ${type}`, id: featSetting[type].length }];
+    featSetting[type] = [...featSetting[type], `new ${type}`.slice(0, -1)];
     featSetting = featSetting;
     console.log(featSetting);
     await game.settings.set("ard20", "feat", featSetting);
   }
-  async function Delete(type, index) {
+  async function Delete(type, name) {
     console.log(type);
-    featSetting[type] = featSetting[type].filter((item) => item.id !== index);
+    featSetting[type] = featSetting[type].filter((item) => item !== name);
     console.log(featSetting[type]);
     await game.settings.set("ard20", "feat", featSetting);
   }
@@ -29,19 +29,19 @@
   <section class="sheet-body">
     <div class="flexcol">
       packs
-      {#each featSetting.packs as pack (pack.id)}
+      {#each featSetting.packs as pack (pack)}
         <div class="grid grid-2col">
-          <input type="text" bind:value={pack.name} on:change={changeSetting} />
-          <button on:click={() => Delete("packs", pack.id)} class="minus far fa-minus-square" />
+          <input type="text" bind:value={pack} on:change={changeSetting} />
+          <button on:click={() => Delete("packs", pack)} class="minus far fa-minus-square" />
         </div>
       {/each}
       <button on:click={() => AddNew("packs")} class="add far fa-plus-square" />
       <hr />
       folders
-      {#each featSetting.folders as folder (folder.id)}
+      {#each featSetting.folders as folder (folder)}
         <div class="grid grid-2col">
-          <input type="text" bind:value={folder.name} on:change={changeSetting} />
-          <button on:click={() => Delete("folders", folder.id)} class="minus far fa-minus-square" />
+          <input type="text" bind:value={folder} on:change={changeSetting} />
+          <button on:click={() => Delete("folders", folder)} class="minus far fa-minus-square" />
         </div>
       {/each}
       <button on:click={() => AddNew("folders")} class="add far fa-plus-square" />

@@ -4306,7 +4306,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (32:6) {#each featSetting.packs as pack (pack.id)}
+// (32:6) {#each featSetting.packs as pack (pack)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -4339,7 +4339,7 @@ function create_each_block_1(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*pack*/ ctx[15].name);
+			set_input_value(input, /*pack*/ ctx[15]);
 			append(div, t);
 			append(div, button);
 
@@ -4356,8 +4356,8 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*featSetting*/ 2 && input.value !== /*pack*/ ctx[15].name) {
-				set_input_value(input, /*pack*/ ctx[15].name);
+			if (dirty & /*featSetting*/ 2 && input.value !== /*pack*/ ctx[15]) {
+				set_input_value(input, /*pack*/ ctx[15]);
 			}
 		},
 		d(detaching) {
@@ -4368,7 +4368,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (41:6) {#each featSetting.folders as folder (folder.id)}
+// (41:6) {#each featSetting.folders as folder (folder)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let input;
@@ -4401,7 +4401,7 @@ function create_each_block(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*folder*/ ctx[12].name);
+			set_input_value(input, /*folder*/ ctx[12]);
 			append(div, t);
 			append(div, button);
 
@@ -4418,8 +4418,8 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*featSetting*/ 2 && input.value !== /*folder*/ ctx[12].name) {
-				set_input_value(input, /*folder*/ ctx[12].name);
+			if (dirty & /*featSetting*/ 2 && input.value !== /*folder*/ ctx[12]) {
+				set_input_value(input, /*folder*/ ctx[12]);
 			}
 		},
 		d(detaching) {
@@ -4449,7 +4449,7 @@ function create_default_slot(ctx) {
 	let mounted;
 	let dispose;
 	let each_value_1 = /*featSetting*/ ctx[1].packs;
-	const get_key = ctx => /*pack*/ ctx[15].id;
+	const get_key = ctx => /*pack*/ ctx[15];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		let child_ctx = get_each_context_1(ctx, each_value_1, i);
@@ -4458,7 +4458,7 @@ function create_default_slot(ctx) {
 	}
 
 	let each_value = /*featSetting*/ ctx[1].folders;
-	const get_key_1 = ctx => /*folder*/ ctx[12].id;
+	const get_key_1 = ctx => /*folder*/ ctx[12];
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
@@ -4618,27 +4618,15 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function AddNew(type) {
 		console.log(type);
-
-		$$invalidate(
-			1,
-			featSetting[type] = [
-				...featSetting[type],
-				{
-					name: `new ${type}`,
-					id: featSetting[type].length
-				}
-			],
-			featSetting
-		);
-
+		$$invalidate(1, featSetting[type] = [...featSetting[type], `new ${type}`.slice(0, -1)], featSetting);
 		$$invalidate(1, featSetting);
 		console.log(featSetting);
 		await game.settings.set("ard20", "feat", featSetting);
 	}
 
-	async function Delete(type, index) {
+	async function Delete(type, name) {
 		console.log(type);
-		$$invalidate(1, featSetting[type] = featSetting[type].filter(item => item.id !== index), featSetting);
+		$$invalidate(1, featSetting[type] = featSetting[type].filter(item => item !== name), featSetting);
 		console.log(featSetting[type]);
 		await game.settings.set("ard20", "feat", featSetting);
 	}
@@ -4649,19 +4637,19 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function input_input_handler(each_value_1, pack_index) {
-		each_value_1[pack_index].name = this.value;
+		each_value_1[pack_index] = this.value;
 		$$invalidate(1, featSetting);
 	}
 
-	const click_handler = pack => Delete("packs", pack.id);
+	const click_handler = pack => Delete("packs", pack);
 	const click_handler_1 = () => AddNew("packs");
 
 	function input_input_handler_1(each_value, folder_index) {
-		each_value[folder_index].name = this.value;
+		each_value[folder_index] = this.value;
 		$$invalidate(1, featSetting);
 	}
 
-	const click_handler_2 = folder => Delete("folders", folder.id);
+	const click_handler_2 = folder => Delete("folders", folder);
 	const click_handler_3 = () => AddNew("folders");
 
 	function applicationshell_elementRoot_binding(value) {
@@ -4954,99 +4942,6 @@ class ProfFormApp extends FormApplication {
 
       if (dirty) {
         await game.settings.set("ard20", "proficiencies", proficiencies);
-      }
-    }
-  }
-
-} //@ts-expect-error
-
-
-class FeatFormApp extends FormApplication {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      title: "Features Management",
-      template: "systems/ard20/templates/app/feat-settings.html",
-      id: "feat-settings",
-      width: 600,
-      height: "auto",
-      submitOnChange: true,
-      closeOnSubmit: false
-    });
-  }
-
-  getData() {
-    const sheetData = {
-      feat: game.settings.get("ard20", "feat")
-    };
-    return sheetData;
-  } //@ts-expect-error
-
-
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".add").click(this._onAdd.bind(this));
-    html.find(".minus").click(this._Delete.bind(this));
-  } //@ts-expect-error
-
-
-  async _onAdd(event) {
-    event.preventDefault();
-    const feat = game.settings.get("ard20", "feat");
-    const button = event.currentTarget;
-
-    switch (button.dataset.type) {
-      case "pack":
-        feat.packs.push("new compendium");
-        await game.settings.set("ard20", "feat", feat);
-        break;
-
-      case "folder":
-        feat.folders.push("new folder");
-        await game.settings.set("ard20", "feat", feat);
-    }
-
-    this.render();
-  } //@ts-expect-error
-
-
-  async _Delete(event) {
-    event.preventDefault();
-    const feat = game.settings.get("ard20", "feat");
-    const button = event.currentTarget;
-
-    switch (button.dataset.type) {
-      case "pack":
-        feat.packs.splice(button.dataset.key, 1);
-        await game.settings.set("ard20", "feat", feat);
-        break;
-
-      case "folder":
-        feat.folders.splice(button.dataset.key, 1);
-        await game.settings.set("ard20", "feat", feat);
-        break;
-    }
-
-    this.render();
-  }
-
-  async _updateObject(event, formData) {
-    const feat = game.settings.get("ard20", "feat");
-    console.log(formData);
-    let dirty = false; //@ts-expect-error
-
-    for (let [fieldName, value] of Object.entries(foundry.utils.flattenObject(formData))) {
-      const [type, index] = fieldName.split("."); //@ts-expect-error
-
-      if (feat[type][index] !== value) {
-        //log({index, propertyName, value});
-        //@ts-expect-error
-        feat[type][index] = value;
-        dirty = dirty || true;
-      }
-
-      if (dirty) {
-        await game.settings.set("ard20", "feat", feat);
       }
     }
   }
