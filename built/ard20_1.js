@@ -4690,7 +4690,7 @@ function instance($$self, $$props, $$invalidate) {
 
 		$$invalidate(
 			1,
-			setting[type] = setting[type].push({
+			setting[type] = setting[type].concat({
 				name: `new ${type}`,
 				id: setting[type].length
 			}),

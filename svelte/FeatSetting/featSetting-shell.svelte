@@ -9,7 +9,7 @@
 
   async function Add(type) {
     console.log(type)
-    setting[type] = setting[type].push({ name: `new ${type}`, id: setting[type].length });
+    setting[type] = setting[type].concat({ name: `new ${type}`, id: setting[type].length });
     console.log(setting[type])
     await game.settings.set("ard20", "feat", setting);
   }
