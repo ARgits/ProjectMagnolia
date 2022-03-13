@@ -3,7 +3,6 @@
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   export let elementRoot;
-  //export let form;
   let featSetting = game.settings.get("ard20", "feat");
   console.log(featSetting);
 
@@ -21,6 +20,10 @@
     console.log(featSetting[type]);
     await game.settings.set("ard20", "feat", featSetting);
   }
+  async function changeSetting(){
+    await game.settings.set('ard20','feat',featSetting)
+    console.log(featSetting)
+  }
 </script>
 
 <ApplicationShell bind:elementRoot>
@@ -29,7 +32,7 @@
         packs
         {#each featSetting.packs as pack (pack.id)}
           <div class="grid grid-2col">
-            <input type="text" bind:value={pack.name} />
+            <input type="text" bind:value={pack.name} on:change={changeSetting} />
             <button on:click={() => Delete("packs", pack.id)} class="minus far fa-minus-square" />
           </div>
         {/each}
@@ -38,7 +41,7 @@
         folders
         {#each featSetting.folders as folder (folder.id)}
           <div class="grid grid-2col">
-            <input type="text" bind:value={folder.name} />
+            <input type="text" bind:value={folder.name} on:change={changeSetting} />
             <button on:click={() => Delete("folders", folder.id)} class="minus far fa-minus-square" />
           </div>
         {/each}
