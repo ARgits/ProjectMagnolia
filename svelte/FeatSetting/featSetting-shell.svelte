@@ -7,15 +7,15 @@
   export let setting = game.settings.get("ard20", "feat");
   console.log(setting);
 
-  async function Add(type) {
+  function Add(type) {
     console.log(type);
     setting[type] = [...setting[type], { name: `new ${type}`, id: setting[type].length + 1 }];
     console.log(setting[type]);
-    await game.settings.set("ard20", "feat", setting);
+    game.settings.set("ard20", "feat", setting);
   }
-  export async function Delete(type, index) {
+  function Delete(type, index) {
     setting[type] = setting[type].splice(index, 1);
-    await game.settings.set("ard20", "feat", setting);
+    game.settings.set("ard20", "feat", setting);
   }
 </script>
 

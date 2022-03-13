@@ -4343,7 +4343,7 @@ function create_each_block_1(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[3]("packs", /*pack*/ ctx[12].id))) /*Delete*/ ctx[3]("packs", /*pack*/ ctx[12].id).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[4]("packs", /*pack*/ ctx[12].id))) /*Delete*/ ctx[4]("packs", /*pack*/ ctx[12].id).apply(this, arguments);
 					})
 				];
 
@@ -4402,7 +4402,7 @@ function create_each_block(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler_1),
 					listen(button, "click", function () {
-						if (is_function(/*Delete*/ ctx[3]("packs", /*folder*/ ctx[9].id))) /*Delete*/ ctx[3]("packs", /*folder*/ ctx[9].id).apply(this, arguments);
+						if (is_function(/*Delete*/ ctx[4]("packs", /*folder*/ ctx[9].id))) /*Delete*/ ctx[4]("packs", /*folder*/ ctx[9].id).apply(this, arguments);
 					})
 				];
 
@@ -4516,20 +4516,20 @@ function create_default_slot(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(button0, "click", /*Add*/ ctx[4]("packs")),
-					listen(button1, "click", /*Add*/ ctx[4]("folders"))
+					listen(button0, "click", /*Add*/ ctx[3]("packs")),
+					listen(button1, "click", /*Add*/ ctx[3]("folders"))
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Delete, setting*/ 12) {
+			if (dirty & /*Delete, setting*/ 20) {
 				each_value_1 = /*setting*/ ctx[2].packs;
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1, t1, get_each_context_1);
 			}
 
-			if (dirty & /*Delete, setting*/ 12) {
+			if (dirty & /*Delete, setting*/ 20) {
 				each_value = /*setting*/ ctx[2].folders;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block, t4, get_each_context);
 			}
@@ -4617,7 +4617,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { setting = game.settings.get("ard20", "feat") } = $$props;
 	console.log(setting);
 
-	async function Add(type) {
+	function Add(type) {
 		console.log(type);
 
 		$$invalidate(
@@ -4633,12 +4633,12 @@ function instance($$self, $$props, $$invalidate) {
 		);
 
 		console.log(setting[type]);
-		await game.settings.set("ard20", "feat", setting);
+		game.settings.set("ard20", "feat", setting);
 	}
 
-	async function Delete(type, index) {
+	function Delete(type, index) {
 		$$invalidate(2, setting[type] = setting[type].splice(index, 1), setting);
-		await game.settings.set("ard20", "feat", setting);
+		game.settings.set("ard20", "feat", setting);
 	}
 
 	function input_input_handler(each_value_1, pack_index) {
@@ -4673,8 +4673,8 @@ function instance($$self, $$props, $$invalidate) {
 		elementRoot,
 		form,
 		setting,
-		Delete,
 		Add,
+		Delete,
 		input_input_handler,
 		input_input_handler_1,
 		form_1_binding,
@@ -4685,13 +4685,7 @@ function instance($$self, $$props, $$invalidate) {
 class FeatSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-
-		init(this, options, instance, create_fragment, safe_not_equal, {
-			elementRoot: 0,
-			form: 1,
-			setting: 2,
-			Delete: 3
-		});
+		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, form: 1, setting: 2 });
 	}
 
 	get elementRoot() {
@@ -4719,10 +4713,6 @@ class FeatSetting_shell extends SvelteComponent {
 	set setting(setting) {
 		this.$$set({ setting });
 		flush();
-	}
-
-	get Delete() {
-		return this.$$.ctx[3];
 	}
 }
 
