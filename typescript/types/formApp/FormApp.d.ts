@@ -1,8 +1,8 @@
 export {};
 declare global {
   interface FeatFormAppData {
-    feat: string[];
-    folders: string[];
+    packs: {name:string,id:string}[];
+    folders: {name:string,id:string}[];
   }
 
   type FeatFormAppDataType = FeatFormAppData;
