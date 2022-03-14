@@ -1,6 +1,7 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, set_data, detach, run_all, destroy_each, update_keyed_each, destroy_block } from '/modules/typhonjs/svelte/internal.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
+import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -4306,7 +4307,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (32:6) {#each featSetting.packs as pack (pack)}
+// (38:6) {#each featSetting.packs as pack (pack)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -4368,7 +4369,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (41:6) {#each featSetting.folders as folder (folder)}
+// (47:6) {#each featSetting.folders as folder (folder)}
 function create_each_block(key_1, ctx) {
 	let div;
 	let input;
@@ -4430,7 +4431,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (28:0) <ApplicationShell bind:elementRoot>
+// (34:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let section;
 	let div;
@@ -4525,12 +4526,12 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Delete, featSetting, changeSetting*/ 26) {
+			if (dirty & /*deleteEntry, featSetting, changeSetting*/ 26) {
 				each_value_1 = /*featSetting*/ ctx[1].packs;
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1, t1, get_each_context_1);
 			}
 
-			if (dirty & /*Delete, featSetting, changeSetting*/ 26) {
+			if (dirty & /*deleteEntry, featSetting, changeSetting*/ 26) {
 				each_value = /*featSetting*/ ctx[1].folders;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block, t4, get_each_context);
 			}
@@ -4616,19 +4617,25 @@ function instance($$self, $$props, $$invalidate) {
 	let featSetting = game.settings.get("ard20", "feat");
 	console.log(featSetting);
 
-	async function AddNew(type) {
-		console.log(type);
-		$$invalidate(1, featSetting[type] = [...featSetting[type], `new ${type}`.slice(0, -1)], featSetting);
-		$$invalidate(1, featSetting);
+	async function addEntry(type) {
+		const name = `New ${type}`.slice(0, -1);
+		const id = uuidv4();
+		$$invalidate(1, featSetting[type] = [...featSetting[type], { name, id }], featSetting);
 		console.log(featSetting);
 		await game.settings.set("ard20", "feat", featSetting);
+		$$invalidate(1, featSetting);
 	}
 
-	async function Delete(type, name) {
+	async function deleteEntry(type, id) {
 		console.log(type);
-		$$invalidate(1, featSetting[type] = featSetting[type].filter(item => item !== name), featSetting);
-		console.log(featSetting[type]);
-		await game.settings.set("ard20", "feat", featSetting);
+		const index = featSetting[type].findIndex(entry => entry.id === id);
+
+		if (index >= 0) {
+			console.log(featSetting[type]);
+			featSetting[type].splice(index, 1);
+			await game.settings.set("ard20", "feat", featSetting);
+			$$invalidate(1, featSetting);
+		}
 	}
 
 	async function changeSetting() {
@@ -4641,16 +4648,16 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(1, featSetting);
 	}
 
-	const click_handler = pack => Delete("packs", pack);
-	const click_handler_1 = () => AddNew("packs");
+	const click_handler = pack => deleteEntry("packs", pack);
+	const click_handler_1 = () => addEntry("packs");
 
 	function input_input_handler_1(each_value, folder_index) {
 		each_value[folder_index] = this.value;
 		$$invalidate(1, featSetting);
 	}
 
-	const click_handler_2 = folder => Delete("folders", folder);
-	const click_handler_3 = () => AddNew("folders");
+	const click_handler_2 = folder => deleteEntry("folders", folder);
+	const click_handler_3 = () => addEntry("folders");
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -4664,8 +4671,8 @@ function instance($$self, $$props, $$invalidate) {
 	return [
 		elementRoot,
 		featSetting,
-		AddNew,
-		Delete,
+		addEntry,
+		deleteEntry,
 		changeSetting,
 		input_input_handler,
 		click_handler,
