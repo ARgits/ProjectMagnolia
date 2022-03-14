@@ -1,0 +1,46 @@
+import { writable } from "svelte/store";
+import {game} from '../../built/ard20.js'
+
+let cntr = 0;
+let id
+const store = writable(game.settings.get('ard20',"proficiencies"));
+
+store.add = (type) => {
+  store.update((st) => {
+		  cntr++
+			id = cntr+'New '+type
+    if (type === "weapon") {
+      st[type].value.push({ id:id, name: "New weapon", type: "amb" });
+    } else if (type === "armor") {
+      st[type].value.push({ id:id, name: "New armor", type: "light" });
+    } else if (type === "tool") {
+      st[type].value.push({ id:id, name: "New Tool" });
+    }
+    return st;
+  });
+};
+
+store.remove = (id, type) => {
+  store.update((array) => {
+    const index = array[type].value.findIndex((entry) => entry.id === id);
+    if (index >= 0) {
+      array[type].value.splice(index, 1);
+    }
+    return array;
+  });
+};
+
+store.remove3 = (type) => {
+  store.update((array) => {
+    array[type].value.splice(0, 3);
+    return array;
+  });
+};
+store.removeAll = (type)=>{
+	store.update((st) => {st[type].value =[];return st;})
+}
+store.removeAllAll = () => {
+  store.set({ weapon: {label:'weapon',value:[], id:"weapon"}, armor: {label:'armor',value:[],id:"armor"}, tool: {label:'tool',value:[],id:"tool"} });
+};
+
+export { store };
