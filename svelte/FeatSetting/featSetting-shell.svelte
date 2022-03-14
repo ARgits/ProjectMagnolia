@@ -1,7 +1,6 @@
 <svelte:options accessors={true} />
 
 <script context="module">
-  let featSetting = game.settings.get("ard20", "feat");
   export async function deleteEntry(type, id) {
     console.log(type);
     const index = featSetting[type].findIndex((entry) => entry.id === id);
@@ -23,7 +22,7 @@
   import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
   import FeatPack from "./FeatPack.svelte";
   export let elementRoot;
-
+  let featSetting = game.settings.get("ard20", "feat");
   async function addEntry(type) {
     const name = `New ${type}`.slice(0, -1);
     const id = uuidv4();

@@ -4365,24 +4365,24 @@ class FeatPack extends SvelteComponent {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[5] = list[i];
+	child_ctx[6] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[8] = list[i];
+	child_ctx[9] = list[i];
 	return child_ctx;
 }
 
-// (41:6) {#each featSetting.packs as pack (pack.id)}
+// (40:6) {#each featSetting.packs as pack (pack.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let featpack;
 	let current;
 
 	featpack = new FeatPack({
-			props: { pack: /*pack*/ ctx[8], type: "packs" }
+			props: { pack: /*pack*/ ctx[9], type: "packs" }
 		});
 
 	return {
@@ -4401,7 +4401,7 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const featpack_changes = {};
-			if (dirty & /*featSetting*/ 0) featpack_changes.pack = /*pack*/ ctx[8];
+			if (dirty & /*featSetting*/ 2) featpack_changes.pack = /*pack*/ ctx[9];
 			featpack.$set(featpack_changes);
 		},
 		i(local) {
@@ -4420,7 +4420,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (47:6) {#each featSetting.folders as folder (folder.id)}
+// (46:6) {#each featSetting.folders as folder (folder.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let featpack;
@@ -4428,7 +4428,7 @@ function create_each_block(key_1, ctx) {
 
 	featpack = new FeatPack({
 			props: {
-				folder: /*folder*/ ctx[5],
+				folder: /*folder*/ ctx[6],
 				type: "folders"
 			}
 		});
@@ -4449,7 +4449,7 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const featpack_changes = {};
-			if (dirty & /*featSetting*/ 0) featpack_changes.folder = /*folder*/ ctx[5];
+			if (dirty & /*featSetting*/ 2) featpack_changes.folder = /*folder*/ ctx[6];
 			featpack.$set(featpack_changes);
 		},
 		i(local) {
@@ -4468,7 +4468,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (37:0) <ApplicationShell bind:elementRoot>
+// (36:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let section;
 	let div;
@@ -4487,8 +4487,8 @@ function create_default_slot(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let each_value_1 = featSetting.packs;
-	const get_key = ctx => /*pack*/ ctx[8].id;
+	let each_value_1 = /*featSetting*/ ctx[1].packs;
+	const get_key = ctx => /*pack*/ ctx[9].id;
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		let child_ctx = get_each_context_1(ctx, each_value_1, i);
@@ -4496,8 +4496,8 @@ function create_default_slot(ctx) {
 		each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
 	}
 
-	let each_value = featSetting.folders;
-	const get_key_1 = ctx => /*folder*/ ctx[5].id;
+	let each_value = /*featSetting*/ ctx[1].folders;
+	const get_key_1 = ctx => /*folder*/ ctx[6].id;
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
@@ -4557,23 +4557,23 @@ function create_default_slot(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(button0, "click", /*click_handler*/ ctx[2]),
-					listen(button1, "click", /*click_handler_1*/ ctx[3])
+					listen(button0, "click", /*click_handler*/ ctx[3]),
+					listen(button1, "click", /*click_handler_1*/ ctx[4])
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*featSetting*/ 0) {
-				each_value_1 = featSetting.packs;
+			if (dirty & /*featSetting*/ 2) {
+				each_value_1 = /*featSetting*/ ctx[1].packs;
 				group_outros();
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, outro_and_destroy_block, create_each_block_1, t1, get_each_context_1);
 				check_outros();
 			}
 
-			if (dirty & /*featSetting*/ 0) {
-				each_value = featSetting.folders;
+			if (dirty & /*featSetting*/ 2) {
+				each_value = /*featSetting*/ ctx[1].folders;
 				group_outros();
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, outro_and_destroy_block, create_each_block, t4, get_each_context);
 				check_outros();
@@ -4626,7 +4626,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[4](value);
+		/*applicationshell_elementRoot_binding*/ ctx[5](value);
 	}
 
 	let applicationshell_props = {
@@ -4652,7 +4652,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, featSetting*/ 2048) {
+			if (dirty & /*$$scope, featSetting*/ 4098) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -4679,8 +4679,6 @@ function create_fragment(ctx) {
 	};
 }
 
-let featSetting = game.settings.get("ard20", "feat");
-
 async function deleteEntry(type, id) {
 	console.log(type);
 	const index = featSetting[type].findIndex(entry => entry.id === id);
@@ -4700,14 +4698,15 @@ async function changeSetting() {
 
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
+	let featSetting = game.settings.get("ard20", "feat");
 
 	async function addEntry(type) {
 		const name = `New ${type}`.slice(0, -1);
 		const id = uuidv4();
-		featSetting[type] = [...featSetting[type], { name, id }];
+		$$invalidate(1, featSetting[type] = [...featSetting[type], { name, id }], featSetting);
 		console.log(featSetting);
 		await game.settings.set("ard20", "feat", featSetting);
-		featSetting = featSetting;
+		$$invalidate(1, featSetting);
 	}
 
 	const click_handler = () => addEntry("packs");
@@ -4724,6 +4723,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	return [
 		elementRoot,
+		featSetting,
 		addEntry,
 		click_handler,
 		click_handler_1,
