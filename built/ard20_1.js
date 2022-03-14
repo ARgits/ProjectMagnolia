@@ -4342,8 +4342,8 @@ function create_fragment$1(ctx) {
 }
 
 function instance$1($$self, $$props, $$invalidate) {
-	let pack;
-	let type;
+	let { pack } = $$props;
+	let { type } = $$props;
 
 	function input_input_handler() {
 		pack.name = this.value;
@@ -4351,13 +4351,19 @@ function instance$1($$self, $$props, $$invalidate) {
 	}
 
 	const click_handler = () => deleteEntry(type, pack.id);
+
+	$$self.$$set = $$props => {
+		if ('pack' in $$props) $$invalidate(0, pack = $$props.pack);
+		if ('type' in $$props) $$invalidate(1, type = $$props.type);
+	};
+
 	return [pack, type, input_input_handler, click_handler];
 }
 
 class FeatPack extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$1, create_fragment$1, safe_not_equal, {});
+		init(this, options, instance$1, create_fragment$1, safe_not_equal, { pack: 0, type: 1 });
 	}
 }
 

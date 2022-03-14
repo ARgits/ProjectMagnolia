@@ -1,7 +1,7 @@
 <script>
   import { deleteEntry, changeSetting } from "./featSetting-shell.svelte";
-  let pack
-  let type
+  export let pack
+  export let type
 </script>
 
 <div class="grid grid-2col">
