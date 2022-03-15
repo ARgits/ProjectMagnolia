@@ -51,6 +51,9 @@
 </ApplicationShell>
 
 <style>
+  button{
+   max-height: 2em;
+  }
   .box {
     margin-bottom: 10px;
     padding: 40px;
