@@ -16,8 +16,6 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <h1>Basic Store example</h1>
-  <h5>(Click entries in list below to remove individually)</h5>
   <button on:click={() => store.removeAllAll()}>Remove All</button>
   <ul>
     {#each Object.values($store) as item}

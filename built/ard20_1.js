@@ -4858,7 +4858,7 @@ function get_each_context_3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (23:4) {#each Object.values($store) as item}
+// (21:4) {#each Object.values($store) as item}
 function create_each_block_3(ctx) {
 	let li;
 	let span;
@@ -4913,7 +4913,7 @@ function create_each_block_3(ctx) {
 	};
 }
 
-// (32:6) {#if activeTabValue === item.id}
+// (30:6) {#if activeTabValue === item.id}
 function create_if_block(ctx) {
 	let div0;
 	let button;
@@ -5008,7 +5008,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (42:16) {#each selectArr[item.id] as opt, key}
+// (40:16) {#each selectArr[item.id] as opt, key}
 function create_each_block_2(ctx) {
 	let option;
 	let t_value = localize(/*opt*/ ctx[17]) + "";
@@ -5035,7 +5035,7 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (38:10) {#each item.value as entry (entry.id)}
+// (36:10) {#each item.value as entry (entry.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -5153,7 +5153,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (31:4) {#each Object.values($store) as item (item)}
+// (29:4) {#each Object.values($store) as item (item)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -5199,14 +5199,10 @@ function create_each_block(key_1, ctx) {
 
 // (18:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
-	let h1;
-	let t1;
-	let h5;
-	let t3;
 	let button;
-	let t5;
+	let t1;
 	let ul;
-	let t6;
+	let t2;
 	let div;
 	let each_blocks = [];
 	let each1_lookup = new Map();
@@ -5230,22 +5226,16 @@ function create_default_slot(ctx) {
 
 	return {
 		c() {
-			h1 = element("h1");
-			h1.textContent = "Basic Store example";
-			t1 = space();
-			h5 = element("h5");
-			h5.textContent = "(Click entries in list below to remove individually)";
-			t3 = space();
 			button = element("button");
 			button.textContent = "Remove All";
-			t5 = space();
+			t1 = space();
 			ul = element("ul");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].c();
 			}
 
-			t6 = space();
+			t2 = space();
 			div = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -5256,19 +5246,15 @@ function create_default_slot(ctx) {
 			attr(div, "class", "box svelte-6hef0q");
 		},
 		m(target, anchor) {
-			insert(target, h1, anchor);
-			insert(target, t1, anchor);
-			insert(target, h5, anchor);
-			insert(target, t3, anchor);
 			insert(target, button, anchor);
-			insert(target, t5, anchor);
+			insert(target, t1, anchor);
 			insert(target, ul, anchor);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].m(ul, null);
 			}
 
-			insert(target, t6, anchor);
+			insert(target, t2, anchor);
 			insert(target, div, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -5310,15 +5296,11 @@ function create_default_slot(ctx) {
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(h1);
-			if (detaching) detach(t1);
-			if (detaching) detach(h5);
-			if (detaching) detach(t3);
 			if (detaching) detach(button);
-			if (detaching) detach(t5);
+			if (detaching) detach(t1);
 			if (detaching) detach(ul);
 			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t6);
+			if (detaching) detach(t2);
 			if (detaching) detach(div);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
