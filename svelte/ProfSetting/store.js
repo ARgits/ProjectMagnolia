@@ -1,11 +1,11 @@
-
-  import { writable } from "svelte/store";
-  import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
-
+import { writable } from "svelte/store";
+import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
+let store;
+Hooks.once("ready", async function () {
   let cntr = 0;
   let id;
-  const set = game.settings.get("ard20", "proficiencies")
-  const store = writable(set);
+  const set = game.settings.get("ard20", "proficiencies");
+  store = writable(set);
 
   store.add = (type) => {
     store.update((st) => {
@@ -51,6 +51,5 @@
       tool: { label: "tool", value: [], id: "tool" },
     });
   };
-
-  export { store };
-
+});
+export { store };
