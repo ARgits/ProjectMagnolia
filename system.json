@@ -2,12 +2,12 @@
   "name": "ard20",
   "title": "Project Magnolia (test)",
   "description": "Попытки сделать свою систему",
-  "version": "0.0.1.13.151",
+  "version": "0.0.1.13.152",
   "minimumCoreVersion": "0.8.3",
   "compatibleCoreVersion": "Version 9",
   "author": "ARgits",
   "esmodules": ["built/ard20_1.js"],
-  "styles": ["build/template-svelte-esm.css", "css/ard20.css"],
+  "styles": ["built/template-svelte-esm.css", "css/ard20.css"],
   "dependencies": [
     {
       "name": "typhonjs",
