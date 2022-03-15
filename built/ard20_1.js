@@ -5502,61 +5502,72 @@ const registerSystemSettings = function registerSystemSettings() {
     scope: "world",
     config: false,
     default: {
-      weapon: [{
-        name: "Punch Dagger",
-        type: "amb"
-      }, {
-        name: "Whip Dagger",
-        type: "amb"
-      }, {
-        name: "Gauntlet",
-        type: "amb"
-      }, {
-        name: "Hidden Blade",
-        type: "amb"
-      }, {
-        name: "Knucke Axe",
-        type: "amb"
-      }, {
-        name: "Side Baton",
-        type: "amb"
-      }, {
-        name: "Unarmed strike",
-        type: "amb"
-      }, {
-        name: "Battle Axe",
-        type: "axe"
-      }, {
-        name: "Great Axe",
-        type: "axe"
-      }, {
-        name: "Handaxe",
-        type: "axe"
-      }, {
-        name: "Hook Sword",
-        type: "axe"
-      }, {
-        name: "Khopesh",
-        type: "axe"
-      }, {
-        name: "Poleaxe",
-        type: "axe"
-      }, {
-        name: "Tomahawk",
-        type: "axe"
-      }, {
-        name: "Great club",
-        type: "blu"
-      }, {
-        name: "Heavy club",
-        type: "blu"
-      }, {
-        name: "Light Club",
-        type: "blu"
-      }],
-      armor: [],
-      tools: [],
-      skills: []
+      weapon: {
+        label: "weapon",
+        id: "weapon",
+        value: [{
+          name: "Punch Dagger",
+          type: "amb"
+        }, {
+          name: "Whip Dagger",
+          type: "amb"
+        }, {
+          name: "Gauntlet",
+          type: "amb"
+        }, {
+          name: "Hidden Blade",
+          type: "amb"
+        }, {
+          name: "Knucke Axe",
+          type: "amb"
+        }, {
+          name: "Side Baton",
+          type: "amb"
+        }, {
+          name: "Unarmed strike",
+          type: "amb"
+        }, {
+          name: "Battle Axe",
+          type: "axe"
+        }, {
+          name: "Great Axe",
+          type: "axe"
+        }, {
+          name: "Handaxe",
+          type: "axe"
+        }, {
+          name: "Hook Sword",
+          type: "axe"
+        }, {
+          name: "Khopesh",
+          type: "axe"
+        }, {
+          name: "Poleaxe",
+          type: "axe"
+        }, {
+          name: "Tomahawk",
+          type: "axe"
+        }, {
+          name: "Great club",
+          type: "blu"
+        }, {
+          name: "Heavy club",
+          type: "blu"
+        }, {
+          name: "Light Club",
+          type: "blu"
+        }]
+      },
+      armor: {
+        label: 'armor',
+        id: 'armor',
+        value: []
+      },
+      tool: {
+        label: 'tool',
+        id: 'tool',
+        value: []
+      }
     },
     onChange: value => {
       console.log("Настройка изменилась ", value);
@@ -5593,28 +5604,28 @@ const registerSystemSettings = function registerSystemSettings() {
       variables: {
         skillCount: {
           value: 5,
-          shortName: 'SC',
-          longName: 'Skill Count'
+          shortName: "SC",
+          longName: "Skill Count"
         },
         featureCount: {
           value: 5,
-          shortName: 'FC',
-          longName: 'featureCount'
+          shortName: "FC",
+          longName: "featureCount"
         },
         skillValue: {
           value: 5,
-          shortName: 'SV',
-          longName: 'skillValue'
+          shortName: "SV",
+          longName: "skillValue"
         },
         featureLevel: {
           value: 5,
-          shortName: 'FL',
-          longName: 'Feature Level'
+          shortName: "FL",
+          longName: "Feature Level"
         },
         attributeValue: {
           value: 5,
-          shortName: 'AV',
-          longName: 'Attribute Value'
+          shortName: "AV",
+          longName: "Attribute Value"
         }
       },
       formulas: {
