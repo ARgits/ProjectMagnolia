@@ -4848,7 +4848,6 @@ function get_each_context_1(ctx, list, i) {
 function get_each_context_2(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[17] = list[i];
-	child_ctx[19] = i;
 	return child_ctx;
 }
 
@@ -4899,7 +4898,7 @@ function create_each_block_3(ctx) {
 			ctx = new_ctx;
 			if (dirty & /*$store*/ 4 && t0_value !== (t0_value = /*item*/ ctx[11].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*activeTabValue, $store*/ 6 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
+			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
 			: "") + " svelte-6hef0q"))) {
 				attr(li, "class", li_class_value);
@@ -5008,10 +5007,10 @@ function create_if_block(ctx) {
 	};
 }
 
-// (40:16) {#each selectArr[item.id] as opt, key}
+// (40:16) {#each Object.entries(selectArr[item.id]) as opt}
 function create_each_block_2(ctx) {
 	let option;
-	let t_value = localize(/*opt*/ ctx[17]) + "";
+	let t_value = localize(/*opt*/ ctx[17][1]) + "";
 	let t;
 	let option_value_value;
 
@@ -5019,7 +5018,7 @@ function create_each_block_2(ctx) {
 		c() {
 			option = element("option");
 			t = text(t_value);
-			option.__value = option_value_value = /*key*/ ctx[19];
+			option.__value = option_value_value = /*opt*/ ctx[17][0];
 			option.value = option.__value;
 		},
 		m(target, anchor) {
@@ -5027,7 +5026,12 @@ function create_each_block_2(ctx) {
 			append(option, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$store*/ 4 && t_value !== (t_value = localize(/*opt*/ ctx[17]) + "")) set_data(t, t_value);
+			if (dirty & /*$store*/ 4 && t_value !== (t_value = localize(/*opt*/ ctx[17][1]) + "")) set_data(t, t_value);
+
+			if (dirty & /*$store, Object, selectArr*/ 20 && option_value_value !== (option_value_value = /*opt*/ ctx[17][0])) {
+				option.__value = option_value_value;
+				option.value = option.__value;
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(option);
@@ -5050,7 +5054,7 @@ function create_each_block_1(key_1, ctx) {
 		/*input_input_handler*/ ctx[7].call(input, /*each_value_1*/ ctx[15], /*entry_index*/ ctx[16]);
 	}
 
-	let each_value_2 = /*selectArr*/ ctx[4][/*item*/ ctx[11].id];
+	let each_value_2 = Object.entries(/*selectArr*/ ctx[4][/*item*/ ctx[11].id]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_2.length; i += 1) {
@@ -5113,12 +5117,12 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*Object, $store*/ 4 && input.value !== /*entry*/ ctx[14].name) {
+			if (dirty & /*Object, $store, selectArr*/ 20 && input.value !== /*entry*/ ctx[14].name) {
 				set_input_value(input, /*entry*/ ctx[14].name);
 			}
 
-			if (dirty & /*localize, selectArr, Object, $store*/ 20) {
-				each_value_2 = /*selectArr*/ ctx[4][/*item*/ ctx[11].id];
+			if (dirty & /*Object, selectArr, $store, localize*/ 20) {
+				each_value_2 = Object.entries(/*selectArr*/ ctx[4][/*item*/ ctx[11].id]);
 				let i;
 
 				for (i = 0; i < each_value_2.length; i += 1) {
@@ -5140,7 +5144,7 @@ function create_each_block_1(key_1, ctx) {
 				each_blocks.length = each_value_2.length;
 			}
 
-			if (dirty & /*Object, $store*/ 4) {
+			if (dirty & /*Object, $store, selectArr*/ 20) {
 				select_option(select, /*entry*/ ctx[14].type);
 			}
 		},
@@ -5394,10 +5398,12 @@ function instance($$self, $$props, $$invalidate) {
 
 	function input_input_handler(each_value_1, entry_index) {
 		each_value_1[entry_index].name = this.value;
+		$$invalidate(4, selectArr);
 	}
 
 	function select_change_handler(each_value_1, entry_index) {
 		each_value_1[entry_index].type = select_value(this);
+		$$invalidate(4, selectArr);
 	}
 
 	const click_handler_2 = (entry, item) => store.remove(entry.id, item.id);

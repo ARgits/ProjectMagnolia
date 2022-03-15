@@ -37,8 +37,8 @@
             <div class="flexrow">
               <input bind:value={entry.name} />
               <select bind:value={entry.type}>
-                {#each selectArr[item.id] as opt, key}
-                  <option value={key}>{localize(opt)}</option>
+                {#each Object.entries(selectArr[item.id]) as opt}
+                  <option value={opt[0]}>{localize(opt[1])}</option>
                 {/each}
               </select>
               <button on:click={() => store.remove(entry.id, item.id)} class="minus far fa-minus-square" />
