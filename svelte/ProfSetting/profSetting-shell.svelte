@@ -2,13 +2,17 @@
 
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-    import {ARd20} from "../../built/helpers/config"
+  import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
+  import { ARd20 } from "../../built/helpers/config";
   import { store } from "./store";
   export let elementRoot;
   let activeTabValue = "weapon";
   const handleClick = (tabValue) => () => (activeTabValue = tabValue);
-  $:selectArr=activeTabValue === "weapon"? ARd20.WeaponType:activeTabValue==='armor'?
-
+  let selectArr = {
+    weapon: ARd20.WeaponType,
+    armor: { light: "light", medium: "medium", heavy: "heavy" },
+    tool: {},
+  };
 </script>
 
 <ApplicationShell bind:elementRoot>
@@ -35,9 +39,11 @@
             <div class="flexrow">
               <input bind:value={entry.name} />
               <select bind:value={entry.type}>
-                {#each }
-                </select>
-              <button on:click={()=> store.remove(entry.id,item.id)} class="minus far fa-minus-square" />
+                {#each selectArr[item.id] as opt, key}
+                  <option value={key}>{localize(opt)}</option>
+                {/each}
+              </select>
+              <button on:click={() => store.remove(entry.id, item.id)} class="minus far fa-minus-square" />
             </div>
           {/each}
         </div>
