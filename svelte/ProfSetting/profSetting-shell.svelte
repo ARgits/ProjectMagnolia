@@ -17,7 +17,7 @@
 
 <ApplicationShell bind:elementRoot>
   <button on:click={() => store.removeAllAll()}>Remove All</button>
-  <ul class="newTab">
+  <ul>
     {#each Object.values($store) as item}
       <li class={activeTabValue === item.id ? "active" : ""}>
         <span on:click={handleClick(item.id)}>{item.label}</span>
@@ -58,7 +58,7 @@
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
   }
-  .newTab {
+  ul {
     display: flex;
     flex-wrap: wrap;
     padding-left: 0;
