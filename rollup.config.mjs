@@ -19,7 +19,7 @@ const s_TYPHONJS_MODULE_LIB = true;
 
 // Creates a standard configuration for PostCSS with autoprefixer & postcss-preset-env.
 const postcssMain = postcssConfig({
-   extract: 'template-svelte-esm.css',
+   extract: 'ard20_1.css',
    compress: s_COMPRESS,
    sourceMap: s_SOURCEMAPS
 });
