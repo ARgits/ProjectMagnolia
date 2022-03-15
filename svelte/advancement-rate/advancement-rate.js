@@ -23,7 +23,7 @@ class AdvancementRateFormApp extends SvelteApplication {
       minimizable:true,
       resizable:true,
       width: 600,
-      height: "auto",
+      height: 600,
       svelte: {
         class: AdvancementRateShell,
         target: document.body,

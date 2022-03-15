@@ -22,8 +22,8 @@ export class ProfSettingsShim extends FormApplication {
         title: "Sub-types for Proficiencies",
         minimizable:true,
         resizable:true,
-        width: "auto",
-        height: "auto",
+        width: 600,
+        height: 800,
         svelte: {
           class: ProfSettingShell,
           target: document.body,

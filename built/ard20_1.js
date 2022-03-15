@@ -4281,7 +4281,7 @@ class AdvancementRateFormApp extends SvelteApplication {
       minimizable: true,
       resizable: true,
       width: 600,
-      height: "auto",
+      height: 600,
       svelte: {
         class: Advancement_rate_shell,
         target: document.body
@@ -4738,8 +4738,8 @@ class FeatSetting extends SvelteApplication {
       title: "Folders and Packs with Features",
       minimizable: true,
       resizable: true,
-      width: "auto",
-      height: "auto",
+      width: 400,
+      height: 600,
       svelte: {
         class: FeatSetting_shell,
         target: document.body
@@ -5474,8 +5474,8 @@ class ProfSetting extends SvelteApplication {
       title: "Sub-types for Proficiencies",
       minimizable: true,
       resizable: true,
-      width: "auto",
-      height: "auto",
+      width: 600,
+      height: 800,
       svelte: {
         class: ProfSetting_shell,
         target: document.body
