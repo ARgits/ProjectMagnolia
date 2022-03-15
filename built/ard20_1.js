@@ -1,5 +1,5 @@
 import { SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, set_data, detach, run_all, destroy_each, update_keyed_each, destroy_block, component_subscribe, select_value, null_to_empty, is_function, empty, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, create_component, mount_component, add_flush_callback, transition_in, transition_out, destroy_component, to_number, element, text, space, attr, insert, append, set_input_value, listen, set_data, detach, run_all, destroy_each, update_keyed_each, destroy_block, component_subscribe, select_value, is_function, empty, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
 import { localize } from '/modules/typhonjs/svelte/helper.js';
@@ -4874,11 +4874,10 @@ function create_each_block_3(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-1dazm72");
 
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
+			attr(li, "class", li_class_value = /*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
-			: "") + " svelte-1dazm72"));
+			: "");
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -4898,9 +4897,9 @@ function create_each_block_3(ctx) {
 			ctx = new_ctx;
 			if (dirty & /*$store*/ 4 && t0_value !== (t0_value = /*item*/ ctx[11].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
+			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = /*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
-			: "") + " svelte-1dazm72"))) {
+			: "")) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -5246,8 +5245,7 @@ function create_default_slot(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "newTab svelte-1dazm72");
-			attr(div, "class", "box svelte-1dazm72");
+			attr(div, "class", "box");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
