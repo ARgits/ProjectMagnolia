@@ -4874,11 +4874,11 @@ function create_each_block_3(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-6hef0q");
+			attr(span, "class", "svelte-1dxxkb7");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
-			: "") + " svelte-6hef0q"));
+			: "") + " svelte-1dxxkb7"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -4900,7 +4900,7 @@ function create_each_block_3(ctx) {
 
 			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
-			: "") + " svelte-6hef0q"))) {
+			: "") + " svelte-1dxxkb7"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -5246,8 +5246,8 @@ function create_default_slot(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-6hef0q");
-			attr(div, "class", "box svelte-6hef0q");
+			attr(ul, "class", "svelte-1dxxkb7");
+			attr(div, "class", "box svelte-1dxxkb7");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -5495,55 +5495,72 @@ const registerSystemSettings = function registerSystemSettings() {
         id: "weapon",
         value: [{
           name: "Punch Dagger",
-          type: "amb"
+          type: "amb",
+          id: "Punch Dagger"
         }, {
           name: "Whip Dagger",
-          type: "amb"
+          type: "amb",
+          id: "Whip Dagger"
         }, {
           name: "Gauntlet",
-          type: "amb"
+          type: "amb",
+          id: "Gauntlet"
         }, {
           name: "Hidden Blade",
-          type: "amb"
+          type: "amb",
+          id: "Hidden Blade"
         }, {
           name: "Knucke Axe",
-          type: "amb"
+          type: "amb",
+          id: "Knucke Axe"
         }, {
           name: "Side Baton",
-          type: "amb"
+          type: "amb",
+          id: "Side Baton"
         }, {
           name: "Unarmed strike",
-          type: "amb"
+          type: "amb",
+          id: "Unarmed strike"
         }, {
           name: "Battle Axe",
-          type: "axe"
+          type: "axe",
+          id: "Battle Axe"
         }, {
           name: "Great Axe",
-          type: "axe"
+          type: "axe",
+          id: "Great Axe"
         }, {
           name: "Handaxe",
-          type: "axe"
+          type: "axe",
+          id: "Handaxe"
         }, {
           name: "Hook Sword",
-          type: "axe"
+          type: "axe",
+          id: "Hook Sword"
         }, {
           name: "Khopesh",
-          type: "axe"
+          type: "axe",
+          id: "Khopesh"
         }, {
           name: "Poleaxe",
-          type: "axe"
+          type: "axe",
+          id: "Poleaxe"
         }, {
           name: "Tomahawk",
-          type: "axe"
+          type: "axe",
+          id: "Tomahawk"
         }, {
           name: "Great club",
-          type: "blu"
+          type: "blu",
+          id: "Great club"
         }, {
           name: "Heavy club",
-          type: "blu"
+          type: "blu",
+          id: "Heavy club"
         }, {
           name: "Light Club",
-          type: "blu"
+          type: "blu",
+          id: "Light Club"
         }]
       },
       armor: {

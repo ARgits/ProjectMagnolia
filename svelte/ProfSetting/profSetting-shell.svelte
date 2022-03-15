@@ -65,6 +65,8 @@
     margin-bottom: 0;
     list-style: none;
     border-bottom: 1px solid #dee2e6;
+    justify-content: space-evenly;
+    align-content: space-around;
   }
   li {
     margin-bottom: -1px;
