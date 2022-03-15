@@ -4874,11 +4874,11 @@ function create_each_block_3(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-6hef0q");
+			attr(span, "class", "svelte-1dazm72");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
-			: "") + " svelte-6hef0q"));
+			: "") + " svelte-1dazm72"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -4900,7 +4900,7 @@ function create_each_block_3(ctx) {
 
 			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[11].id
 			? "active"
-			: "") + " svelte-6hef0q"))) {
+			: "") + " svelte-1dazm72"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -5246,8 +5246,8 @@ function create_default_slot(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-6hef0q");
-			attr(div, "class", "box svelte-6hef0q");
+			attr(ul, "class", "newTab svelte-1dazm72");
+			attr(div, "class", "box svelte-1dazm72");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
