@@ -1,5 +1,5 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
-import ProfSettingShell from './featSetting-shell.svelte'
+import ProfSettingShell from './profSetting-shell.svelte'
 export class ProfSettingsShim extends FormApplication {
     /**
      * @inheritDoc

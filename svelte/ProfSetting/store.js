@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import {game} from '../../built/ard20.js'
+import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 
 let cntr = 0;
 let id
@@ -8,7 +8,7 @@ const store = writable(game.settings.get('ard20',"proficiencies"));
 store.add = (type) => {
   store.update((st) => {
 		  cntr++
-			id = cntr+'New '+type
+			id = uuidv4()
     if (type === "weapon") {
       st[type].value.push({ id:id, name: "New weapon", type: "amb" });
     } else if (type === "armor") {
