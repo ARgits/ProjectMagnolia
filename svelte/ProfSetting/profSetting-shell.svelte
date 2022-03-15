@@ -4,7 +4,7 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
   import { ARd20 } from "../../built/helpers/config";
-  import { store } from "./store";
+  import { store } from "./store.js";
   export let elementRoot;
   let activeTabValue = "weapon";
   const handleClick = (tabValue) => () => (activeTabValue = tabValue);

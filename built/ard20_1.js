@@ -4750,7 +4750,8 @@ class FeatSetting extends SvelteApplication {
 }
 
 let id;
-const store = writable(game.settings.get('ard20', "proficiencies"));
+const set = game.settings.get("ard20", "proficiencies");
+const store = writable(set);
 
 store.add = type => {
   store.update(st => {
@@ -4808,17 +4809,17 @@ store.removeAll = type => {
 store.removeAllAll = () => {
   store.set({
     weapon: {
-      label: 'weapon',
+      label: "weapon",
       value: [],
       id: "weapon"
     },
     armor: {
-      label: 'armor',
+      label: "armor",
       value: [],
       id: "armor"
     },
     tool: {
-      label: 'tool',
+      label: "tool",
       value: [],
       id: "tool"
     }
