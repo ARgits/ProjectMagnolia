@@ -56,7 +56,7 @@
   }
   .box {
     margin-bottom: 10px;
-    padding: 40px;
+    padding: 10px;
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
@@ -70,6 +70,7 @@
     border-bottom: 1px solid #dee2e6;
     justify-content: space-evenly;
     align-content: space-around;
+    max-height: 3em;
   }
   li {
     margin-bottom: -1px;
