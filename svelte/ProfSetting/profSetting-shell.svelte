@@ -50,7 +50,7 @@
   </div>
 </ApplicationShell>
 
-<style>
+<style lang="scss">
   button{
    max-height: 2em;
   }
