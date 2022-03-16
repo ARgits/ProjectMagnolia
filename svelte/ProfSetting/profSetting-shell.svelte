@@ -57,7 +57,7 @@
   .box {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #dee2e6;
+    border: 2px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
   }
@@ -92,6 +92,9 @@
   li.active > span {
     color: #495057;
     background-color: #fff;
+    border-left: 2px solid;
+    border-top:  2px solid;
+    border-right: 2px solid;
     border-color: #dee2e6 #dee2e6 #fff;
   }
 </style>
