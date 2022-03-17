@@ -74,7 +74,7 @@
     max-height: 3em;
   }
   li {
-    margin-bottom: -1px;
+    margin-bottom: -0.5em;
   }
 
   span {
@@ -88,11 +88,12 @@
 
   span:hover {
     border-color: #b5b3a4 #b5b3a4 #dee2e6;
+    background-color: #c9c7b8;
   }
 
   li.active > span {
-    color: #495057;
-    background-color: #fff;
+    color: rgb(0, 0, 0);
+    background-color: #c9c7b8;
     border-left: 2px solid;
     border-top:  2px solid;
     border-right: 2px solid;
