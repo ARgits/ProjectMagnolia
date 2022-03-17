@@ -55,6 +55,7 @@
    max-height: 2em;
   }
   .box {
+    background-color: #c9c7b8;
     margin-bottom: 10px;
     padding: 10px;
     border: 2px solid #dee2e6;
@@ -86,7 +87,7 @@
   }
 
   span:hover {
-    border-color: #e9ecef #e9ecef #dee2e6;
+    border-color: #b5b3a4 #b5b3a4 #dee2e6;
   }
 
   li.active > span {
@@ -95,6 +96,6 @@
     border-left: 2px solid;
     border-top:  2px solid;
     border-right: 2px solid;
-    border-color: #dee2e6 #dee2e6 #fff;
+    border-color: #dee2e6 #dee2e6 #c9c7b8;
   }
 </style>
