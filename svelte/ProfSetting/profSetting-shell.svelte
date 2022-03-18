@@ -30,6 +30,7 @@
       {#if activeTabValue === item.id}
         <div class="flexrow">
           <button on:click={() => store.add(item.id)}>Add {item.label}</button>
+          <button on:click={() => store.removeAll(item.id)}>Remove All {item.label}</button>
         </div>
         <hr />
         <div>
@@ -51,8 +52,8 @@
 </ApplicationShell>
 
 <style lang="scss">
-  button{
-   max-height: 2em;
+  button {
+    max-height: 2em;
   }
   .box {
     background-color: #c9c7b8;
@@ -95,7 +96,7 @@
     color: rgb(0, 0, 0);
     background-color: #c9c7b8;
     border-left: 2px solid;
-    border-top:  2px solid;
+    border-top: 2px solid;
     border-right: 2px solid;
     border-color: #dee2e6 #dee2e6 #c9c7b8;
   }
