@@ -33,6 +33,7 @@
       {#if activeTabValue === item.id}
         <div class="flexrow">
           <button on:click={() => store.add(item.id)}>Add {item.label}</button>
+          <button on:click={() => store.setDefaultGroup(item.id)}>Reset to default</button>
           <button on:click={() => store.removeAll(item.id)}>Remove All {item.label}</button>
         </div>
         <hr />

@@ -4844,27 +4844,27 @@ Hooks.once("ready", async function () {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[13] = list[i];
+	child_ctx[14] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i];
-	child_ctx[17] = list;
-	child_ctx[18] = i;
+	child_ctx[17] = list[i];
+	child_ctx[18] = list;
+	child_ctx[19] = i;
 	return child_ctx;
 }
 
 function get_each_context_2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[19] = list[i];
+	child_ctx[20] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[13] = list[i];
+	child_ctx[14] = list[i];
 	return child_ctx;
 }
 
@@ -4872,7 +4872,7 @@ function get_each_context_3(ctx, list, i) {
 function create_each_block_3(ctx) {
 	let li;
 	let span;
-	let t0_value = /*item*/ ctx[13].label + "";
+	let t0_value = /*item*/ ctx[14].label + "";
 	let t0;
 	let t1;
 	let li_class_value;
@@ -4887,7 +4887,7 @@ function create_each_block_3(ctx) {
 			t1 = space();
 			attr(span, "class", "svelte-1v3311j");
 
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[13].id
+			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[14].id
 			? "active"
 			: "") + " svelte-1v3311j"));
 		},
@@ -4899,7 +4899,7 @@ function create_each_block_3(ctx) {
 
 			if (!mounted) {
 				dispose = listen(span, "click", function () {
-					if (is_function(/*handleClick*/ ctx[3](/*item*/ ctx[13].id))) /*handleClick*/ ctx[3](/*item*/ ctx[13].id).apply(this, arguments);
+					if (is_function(/*handleClick*/ ctx[3](/*item*/ ctx[14].id))) /*handleClick*/ ctx[3](/*item*/ ctx[14].id).apply(this, arguments);
 				});
 
 				mounted = true;
@@ -4907,9 +4907,9 @@ function create_each_block_3(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*$store*/ 4 && t0_value !== (t0_value = /*item*/ ctx[13].label + "")) set_data(t0, t0_value);
+			if (dirty & /*$store*/ 4 && t0_value !== (t0_value = /*item*/ ctx[14].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[13].id
+			if (dirty & /*activeTabValue, $store, Object, selectArr*/ 22 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[1] === /*item*/ ctx[14].id
 			? "active"
 			: "") + " svelte-1v3311j"))) {
 				attr(li, "class", li_class_value);
@@ -4928,33 +4928,39 @@ function create_if_block(ctx) {
 	let div0;
 	let button0;
 	let t0;
-	let t1_value = /*item*/ ctx[13].label + "";
+	let t1_value = /*item*/ ctx[14].label + "";
 	let t1;
 	let t2;
 	let button1;
-	let t3;
-	let t4_value = /*item*/ ctx[13].label + "";
 	let t4;
+	let button2;
 	let t5;
-	let hr;
+	let t6_value = /*item*/ ctx[14].label + "";
 	let t6;
+	let t7;
+	let hr;
+	let t8;
 	let div1;
 	let each_blocks = [];
 	let each_1_lookup = new Map();
-	let t7;
+	let t9;
 	let mounted;
 	let dispose;
 
 	function click_handler_2() {
-		return /*click_handler_2*/ ctx[7](/*item*/ ctx[13]);
+		return /*click_handler_2*/ ctx[7](/*item*/ ctx[14]);
 	}
 
 	function click_handler_3() {
-		return /*click_handler_3*/ ctx[8](/*item*/ ctx[13]);
+		return /*click_handler_3*/ ctx[8](/*item*/ ctx[14]);
 	}
 
-	let each_value_1 = /*item*/ ctx[13].value;
-	const get_key = ctx => /*entry*/ ctx[16].id;
+	function click_handler_4() {
+		return /*click_handler_4*/ ctx[9](/*item*/ ctx[14]);
+	}
+
+	let each_value_1 = /*item*/ ctx[14].value;
+	const get_key = ctx => /*entry*/ ctx[17].id;
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		let child_ctx = get_each_context_1(ctx, each_value_1, i);
@@ -4970,20 +4976,24 @@ function create_if_block(ctx) {
 			t1 = text(t1_value);
 			t2 = space();
 			button1 = element("button");
-			t3 = text("Remove All ");
-			t4 = text(t4_value);
-			t5 = space();
+			button1.textContent = "Reset to default";
+			t4 = space();
+			button2 = element("button");
+			t5 = text("Remove All ");
+			t6 = text(t6_value);
+			t7 = space();
 			hr = element("hr");
-			t6 = space();
+			t8 = space();
 			div1 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t7 = space();
+			t9 = space();
 			attr(button0, "class", "svelte-1v3311j");
 			attr(button1, "class", "svelte-1v3311j");
+			attr(button2, "class", "svelte-1v3311j");
 			attr(div0, "class", "flexrow");
 		},
 		m(target, anchor) {
@@ -4993,23 +5003,26 @@ function create_if_block(ctx) {
 			append(button0, t1);
 			append(div0, t2);
 			append(div0, button1);
-			append(button1, t3);
-			append(button1, t4);
-			insert(target, t5, anchor);
+			append(div0, t4);
+			append(div0, button2);
+			append(button2, t5);
+			append(button2, t6);
+			insert(target, t7, anchor);
 			insert(target, hr, anchor);
-			insert(target, t6, anchor);
+			insert(target, t8, anchor);
 			insert(target, div1, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div1, null);
 			}
 
-			append(div1, t7);
+			append(div1, t9);
 
 			if (!mounted) {
 				dispose = [
 					listen(button0, "click", click_handler_2),
-					listen(button1, "click", click_handler_3)
+					listen(button1, "click", click_handler_3),
+					listen(button2, "click", click_handler_4)
 				];
 
 				mounted = true;
@@ -5017,19 +5030,19 @@ function create_if_block(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*$store*/ 4 && t1_value !== (t1_value = /*item*/ ctx[13].label + "")) set_data(t1, t1_value);
-			if (dirty & /*$store*/ 4 && t4_value !== (t4_value = /*item*/ ctx[13].label + "")) set_data(t4, t4_value);
+			if (dirty & /*$store*/ 4 && t1_value !== (t1_value = /*item*/ ctx[14].label + "")) set_data(t1, t1_value);
+			if (dirty & /*$store*/ 4 && t6_value !== (t6_value = /*item*/ ctx[14].label + "")) set_data(t6, t6_value);
 
 			if (dirty & /*store, Object, $store, selectArr, localize*/ 20) {
-				each_value_1 = /*item*/ ctx[13].value;
-				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, div1, destroy_block, create_each_block_1, t7, get_each_context_1);
+				each_value_1 = /*item*/ ctx[14].value;
+				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, div1, destroy_block, create_each_block_1, t9, get_each_context_1);
 			}
 		},
 		d(detaching) {
 			if (detaching) detach(div0);
-			if (detaching) detach(t5);
+			if (detaching) detach(t7);
 			if (detaching) detach(hr);
-			if (detaching) detach(t6);
+			if (detaching) detach(t8);
 			if (detaching) detach(div1);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -5042,10 +5055,10 @@ function create_if_block(ctx) {
 	};
 }
 
-// (44:16) {#each Object.entries(selectArr[item.id]) as opt}
+// (45:16) {#each Object.entries(selectArr[item.id]) as opt}
 function create_each_block_2(ctx) {
 	let option;
-	let t_value = localize(/*opt*/ ctx[19][1]) + "";
+	let t_value = localize(/*opt*/ ctx[20][1]) + "";
 	let t;
 	let option_value_value;
 
@@ -5053,7 +5066,7 @@ function create_each_block_2(ctx) {
 		c() {
 			option = element("option");
 			t = text(t_value);
-			option.__value = option_value_value = /*opt*/ ctx[19][0];
+			option.__value = option_value_value = /*opt*/ ctx[20][0];
 			option.value = option.__value;
 		},
 		m(target, anchor) {
@@ -5061,9 +5074,9 @@ function create_each_block_2(ctx) {
 			append(option, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$store*/ 4 && t_value !== (t_value = localize(/*opt*/ ctx[19][1]) + "")) set_data(t, t_value);
+			if (dirty & /*$store*/ 4 && t_value !== (t_value = localize(/*opt*/ ctx[20][1]) + "")) set_data(t, t_value);
 
-			if (dirty & /*$store, Object, selectArr*/ 20 && option_value_value !== (option_value_value = /*opt*/ ctx[19][0])) {
+			if (dirty & /*$store, Object, selectArr*/ 20 && option_value_value !== (option_value_value = /*opt*/ ctx[20][0])) {
 				option.__value = option_value_value;
 				option.value = option.__value;
 			}
@@ -5074,7 +5087,7 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (40:10) {#each item.value as entry (entry.id)}
+// (41:10) {#each item.value as entry (entry.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -5086,10 +5099,10 @@ function create_each_block_1(key_1, ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[9].call(input, /*each_value_1*/ ctx[17], /*entry_index*/ ctx[18]);
+		/*input_input_handler*/ ctx[10].call(input, /*each_value_1*/ ctx[18], /*entry_index*/ ctx[19]);
 	}
 
-	let each_value_2 = Object.entries(/*selectArr*/ ctx[4][/*item*/ ctx[13].id]);
+	let each_value_2 = Object.entries(/*selectArr*/ ctx[4][/*item*/ ctx[14].id]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_2.length; i += 1) {
@@ -5097,11 +5110,11 @@ function create_each_block_1(key_1, ctx) {
 	}
 
 	function select_change_handler() {
-		/*select_change_handler*/ ctx[10].call(select, /*each_value_1*/ ctx[17], /*entry_index*/ ctx[18]);
+		/*select_change_handler*/ ctx[11].call(select, /*each_value_1*/ ctx[18], /*entry_index*/ ctx[19]);
 	}
 
-	function click_handler_4() {
-		return /*click_handler_4*/ ctx[11](/*entry*/ ctx[16], /*item*/ ctx[13]);
+	function click_handler_5() {
+		return /*click_handler_5*/ ctx[12](/*entry*/ ctx[17], /*item*/ ctx[14]);
 	}
 
 	return {
@@ -5119,7 +5132,7 @@ function create_each_block_1(key_1, ctx) {
 
 			t1 = space();
 			button = element("button");
-			if (/*entry*/ ctx[16].type === void 0) add_render_callback(select_change_handler);
+			if (/*entry*/ ctx[17].type === void 0) add_render_callback(select_change_handler);
 			attr(button, "class", "minus far fa-minus-square svelte-1v3311j");
 			attr(div, "class", "flexrow");
 			this.first = div;
@@ -5127,7 +5140,7 @@ function create_each_block_1(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*entry*/ ctx[16].name);
+			set_input_value(input, /*entry*/ ctx[17].name);
 			append(div, t0);
 			append(div, select);
 
@@ -5135,7 +5148,7 @@ function create_each_block_1(key_1, ctx) {
 				each_blocks[i].m(select, null);
 			}
 
-			select_option(select, /*entry*/ ctx[16].type);
+			select_option(select, /*entry*/ ctx[17].type);
 			append(div, t1);
 			append(div, button);
 
@@ -5143,7 +5156,7 @@ function create_each_block_1(key_1, ctx) {
 				dispose = [
 					listen(input, "input", input_input_handler),
 					listen(select, "change", select_change_handler),
-					listen(button, "click", click_handler_4)
+					listen(button, "click", click_handler_5)
 				];
 
 				mounted = true;
@@ -5152,12 +5165,12 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*Object, $store, selectArr*/ 20 && input.value !== /*entry*/ ctx[16].name) {
-				set_input_value(input, /*entry*/ ctx[16].name);
+			if (dirty & /*Object, $store, selectArr*/ 20 && input.value !== /*entry*/ ctx[17].name) {
+				set_input_value(input, /*entry*/ ctx[17].name);
 			}
 
 			if (dirty & /*Object, selectArr, $store, localize*/ 20) {
-				each_value_2 = Object.entries(/*selectArr*/ ctx[4][/*item*/ ctx[13].id]);
+				each_value_2 = Object.entries(/*selectArr*/ ctx[4][/*item*/ ctx[14].id]);
 				let i;
 
 				for (i = 0; i < each_value_2.length; i += 1) {
@@ -5180,7 +5193,7 @@ function create_each_block_1(key_1, ctx) {
 			}
 
 			if (dirty & /*Object, $store, selectArr*/ 20) {
-				select_option(select, /*entry*/ ctx[16].type);
+				select_option(select, /*entry*/ ctx[17].type);
 			}
 		},
 		d(detaching) {
@@ -5196,7 +5209,7 @@ function create_each_block_1(key_1, ctx) {
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
-	let if_block = /*activeTabValue*/ ctx[1] === /*item*/ ctx[13].id && create_if_block(ctx);
+	let if_block = /*activeTabValue*/ ctx[1] === /*item*/ ctx[14].id && create_if_block(ctx);
 
 	return {
 		key: key_1,
@@ -5215,7 +5228,7 @@ function create_each_block(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (/*activeTabValue*/ ctx[1] === /*item*/ ctx[13].id) {
+			if (/*activeTabValue*/ ctx[1] === /*item*/ ctx[14].id) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 				} else {
@@ -5258,7 +5271,7 @@ function create_default_slot(ctx) {
 	}
 
 	let each_value = Object.values(/*$store*/ ctx[2]);
-	const get_key = ctx => /*item*/ ctx[13];
+	const get_key = ctx => /*item*/ ctx[14];
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context(ctx, each_value, i);
@@ -5375,7 +5388,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[12](value);
+		/*applicationshell_elementRoot_binding*/ ctx[13](value);
 	}
 
 	let applicationshell_props = {
@@ -5401,7 +5414,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, $store, activeTabValue*/ 16777222) {
+			if (dirty & /*$$scope, $store, activeTabValue*/ 33554438) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5448,7 +5461,8 @@ function instance($$self, $$props, $$invalidate) {
 	const click_handler = () => store.removeAllAll();
 	const click_handler_1 = () => store.setDefaultAll();
 	const click_handler_2 = item => store.add(item.id);
-	const click_handler_3 = item => store.removeAll(item.id);
+	const click_handler_3 = item => store.setDefaultGroup(item.id);
+	const click_handler_4 = item => store.removeAll(item.id);
 
 	function input_input_handler(each_value_1, entry_index) {
 		each_value_1[entry_index].name = this.value;
@@ -5460,7 +5474,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(4, selectArr);
 	}
 
-	const click_handler_4 = (entry, item) => store.remove(entry.id, item.id);
+	const click_handler_5 = (entry, item) => store.remove(entry.id, item.id);
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -5481,9 +5495,10 @@ function instance($$self, $$props, $$invalidate) {
 		click_handler_1,
 		click_handler_2,
 		click_handler_3,
+		click_handler_4,
 		input_input_handler,
 		select_change_handler,
-		click_handler_4,
+		click_handler_5,
 		applicationshell_elementRoot_binding
 	];
 }
