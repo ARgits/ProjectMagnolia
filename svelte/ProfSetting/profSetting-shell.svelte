@@ -16,7 +16,10 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <button on:click={() => store.removeAllAll()}>Remove All</button>
+  <div class="flexrow">
+    <button on:click={() => store.removeAllAll()}>Remove All</button>
+    <button on:click={() => store.setDefaultAll()}>Reset All</button>
+  </div>
   <ul>
     {#each Object.values($store) as item}
       <li class={activeTabValue === item.id ? "active" : ""}>

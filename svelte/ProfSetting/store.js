@@ -6,6 +6,7 @@ Hooks.once("ready", async function () {
   let id;
   const set = game.settings.get("ard20", "proficiencies");
   store = writable(set);
+  const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default;
 
   store.add = (type) => {
     store.update((st) => {
@@ -49,6 +50,14 @@ Hooks.once("ready", async function () {
       weapon: { label: "weapon", value: [], id: "weapon" },
       armor: { label: "armor", value: [], id: "armor" },
       tool: { label: "tool", value: [], id: "tool" },
+    });
+  };
+  store.setDefaultAll = () => {
+    store.set(defaultValue);
+  };
+  store.setDefaultGroup = (type) => {
+    store.update((st) => {
+      st[type] = defaultValue[type];
     });
   };
 });
