@@ -4755,6 +4755,7 @@ Hooks.once("ready", async function () {
   const set = game.settings.get("ard20", "proficiencies");
   store = writable(set);
   const defaultValue = [...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default;
+  console.log(defaultValue);
 
   store.add = type => {
     store.update(st => {
