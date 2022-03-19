@@ -61,6 +61,7 @@ Hooks.once("ready", async function () {
       const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default;
       console.log(defaultValue);
       st[type] = defaultValue[type];
+      return st
     });
   };
 });
