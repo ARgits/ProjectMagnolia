@@ -4754,8 +4754,6 @@ Hooks.once("ready", async function () {
   let id;
   const set = game.settings.get("ard20", "proficiencies");
   store = writable(set);
-  const defaultValue = [...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default;
-  console.log(defaultValue);
 
   store.add = type => {
     store.update(st => {
@@ -4831,11 +4829,15 @@ Hooks.once("ready", async function () {
   };
 
   store.setDefaultAll = () => {
+    const defaultValue = [...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default;
+    console.log(defaultValue);
     store.set(defaultValue);
   };
 
   store.setDefaultGroup = type => {
     store.update(st => {
+      const defaultValue = [...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default;
+      console.log(defaultValue);
       st[type] = defaultValue[type];
     });
   };
