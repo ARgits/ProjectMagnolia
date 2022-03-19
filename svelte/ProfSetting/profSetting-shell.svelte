@@ -6,19 +6,21 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
   import { ARd20 } from "../../built/helpers/config";
-  $:setting = game.settings.get("ard20", "proficiencies");
-  const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default;
-  console.log(defaultValue)
-  console.log(setting)
+  let setting = game.settings.get("ard20", "proficiencies");
+  const defaultValue = duplicate([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
+  console.log(defaultValue);
+  console.log(setting);
   async function removeAllAll() {
     for (const item of Object.values(setting)) {
       item.value = [];
     }
+    console.log (setting)
+    setting = setting
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function removeAll(type) {
     setting[type].value = [];
-    setting = setting
+    setting = setting;
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function add(type) {
@@ -26,11 +28,13 @@
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function setDefaultGroup(type) {
-    setting[type].value = defaultValue[type].value;
-    setting = setting
+    console.log(defaultValue);
+    setting[type].value = [...defaultValue[type].value];
+    setting = setting;
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function setDefaultAll() {
+    console.log(defaultValue);
     setting = defaultValue;
     await game.settings.set("ard20", "proficiencies", setting);
   }
