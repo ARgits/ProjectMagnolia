@@ -18,7 +18,7 @@
   }
   async function removeAll(type) {
     setting[type].value = [];
-    await game.settings.set("ard20", "profociencies", setting);
+    await game.settings.set("ard20", "proficiencies", setting);
   }
   async function add(type) {
     setting[type].value = [...setting[type].value, { id: uuidv4(), name: `New ${type}`, type: Object.keys(selectArr[type])[0] }];
