@@ -3,7 +3,7 @@ import { SvelteComponent, init, safe_not_equal, flush, binding_callbacks, bind, 
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
 import { localize } from '/modules/typhonjs/svelte/helper.js';
-import { readable } from '/modules/typhonjs/svelte/store.js';
+import { writable } from '/modules/typhonjs/svelte/store.js';
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -4752,8 +4752,8 @@ class FeatSetting extends SvelteApplication {
 let store;
 Hooks.once("ready", async function () {
   let id;
-  const set = game.settings.get("ard20", "proficiencies");
-  store = readable(set);
+  const set = duplicate(game.settings.get("ard20", "proficiencies"));
+  store = writable(set);
 
   store.add = type => {
     store.update(st => {

@@ -1,11 +1,11 @@
-import { readable } from "svelte/store";
+import { writable } from "svelte/store";
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 let store;
 Hooks.once("ready", async function () {
   let cntr = 0;
   let id;
-  const set = game.settings.get("ard20", "proficiencies");
-  store = readable(set)
+  const set = duplicate(game.settings.get("ard20", "proficiencies"));
+  store = writable(set)
 
   store.add = (type) => {
     store.update((st) => {
