@@ -33,9 +33,9 @@ declare global {
   namespace ClientSettings {
     interface Values {
       "ard20.proficiencies": {
-        weapon: Array<WeaponProficienciesSetting>;
-        armor: Array<ArmorProficienciesSetting>;
-        tools: Array<ToolProficienciesSetting>;
+        weapon: { id: string; value: Array<WeaponProficienciesSetting>; label: string };
+        armor: { id: string; label: string; value: Array<ArmorProficienciesSetting> };
+        tools: { id: string; label: string; value: Array<ToolProficienciesSetting> };
         skills: {
           name: string;
           untrain: boolean;
@@ -43,8 +43,8 @@ declare global {
         }[];
       };
       "ard20.feat": {
-        packs: {name:string,id:string}[];
-        folders: {name:string,id:string}[];
+        packs: { name: string; id: string }[];
+        folders: { name: string; id: string }[];
       };
       "ard20.advancement-rate": {
         variables: {

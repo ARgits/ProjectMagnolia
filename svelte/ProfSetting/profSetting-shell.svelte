@@ -1,10 +1,43 @@
 <svelte:options accessors={true} />
 
 <script>
+  import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
+
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
   import { ARd20 } from "../../built/helpers/config";
-  import { store } from "./store.js";
+  let setting = game.settings.get("ard20", "proficiencies");
+  const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default;
+  async function removeAllAll() {
+    for (const item of Object.values(setting)) {
+      item.value = [];
+    }
+    await game.settings.set("ard20", "proficiencies", setting);
+  }
+  async function removeAll(type) {
+    setting[type].value = [];
+    await game.settings.set("ard20", "profociencies", setting);
+  }
+  async function add(type) {
+    setting[type].value = [...setting[type].value, { id: uuidv4(), name: `New ${type}`, type: Object.keys(selectArr[type])[0] }];
+    await game.settings.set("ard20", "proficiencies", setting);
+  }
+  async function setDefaultGroup(type) {
+    setting[type].value = defaultValue[type].value;
+    await game.settings.set("ard20", "proficiencies", setting);
+  }
+  async function setDefaultAll() {
+    setting = defaultValue;
+    await game.settings.set("ard20", "proficiencies", setting);
+  }
+  async function remove(key, type) {
+    const index = setting[type].value.findIndex((entry) => entry.id === key);
+    if (index >= 0) {
+      setting[type].value.splice(index, 1);
+      setting = setting;
+      await game.settings.set("ard20", "proficiencies", setting);
+    }
+  }
   export let elementRoot;
   let activeTabValue = "weapon";
   const handleClick = (tabValue) => () => (activeTabValue = tabValue);
@@ -17,11 +50,11 @@
 
 <ApplicationShell bind:elementRoot>
   <div class="flexrow">
-    <button on:click={() => store.removeAllAll()}>Remove All</button>
-    <button on:click={() => store.setDefaultAll()}>Reset All</button>
+    <button on:click={() => removeAllAll()}>Remove All</button>
+    <button on:click={() => setDefaultAll()}>Reset All</button>
   </div>
   <ul>
-    {#each Object.values($store) as item}
+    {#each Object.values(setting) as item}
       <li class={activeTabValue === item.id ? "active" : ""}>
         <span on:click={handleClick(item.id)}>{item.label}</span>
       </li>
@@ -29,12 +62,12 @@
   </ul>
 
   <div class="box">
-    {#each Object.values($store) as item (item)}
+    {#each Object.values(setting) as item (item)}
       {#if activeTabValue === item.id}
         <div class="flexrow">
-          <button on:click={() => store.add(item.id)}>Add {item.label}</button>
-          <button on:click={() => store.setDefaultGroup(item.id)}>Reset to default</button>
-          <button on:click={() => store.removeAll(item.id)}>Remove All {item.label}</button>
+          <button on:click={() => add(item.id)}>Add {item.label}</button>
+          <button on:click={() => setDefaultGroup(item.id)}>Reset to default</button>
+          <button on:click={() => removeAll(item.id)}>Remove All {item.label}</button>
         </div>
         <hr />
         <div>
@@ -46,7 +79,7 @@
                   <option value={opt[0]}>{localize(opt[1])}</option>
                 {/each}
               </select>
-              <button on:click={() => store.remove(entry.id, item.id)} class="minus far fa-minus-square" />
+              <button on:click={() => remove(entry.id, item.id)} class="minus far fa-minus-square" />
             </div>
           {/each}
         </div>
