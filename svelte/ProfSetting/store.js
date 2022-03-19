@@ -1,11 +1,11 @@
-import { writable } from "svelte/store";
+import { readable } from "svelte/store";
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 let store;
 Hooks.once("ready", async function () {
   let cntr = 0;
   let id;
   const set = game.settings.get("ard20", "proficiencies");
-  store = writable(set);
+  store = readable(set)
 
   store.add = (type) => {
     store.update((st) => {
@@ -58,9 +58,9 @@ Hooks.once("ready", async function () {
   };
   store.setDefaultGroup = (type) => {
     store.update((st) => {
-      const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default;
+      const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default[type];
       console.log(defaultValue);
-      st[type] = defaultValue[type];
+      st[type] = defaultValue;
       return st
     });
   };
