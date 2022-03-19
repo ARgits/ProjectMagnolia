@@ -5405,11 +5405,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function setDefaultAll() {
 		console.log([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default);
-
-		$$invalidate(1, setting = [
-			...[...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default
-		]);
-
+		$$invalidate(1, setting = duplicate([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default));
 		await game.settings.set("ard20", "proficiencies", setting);
 	}
 

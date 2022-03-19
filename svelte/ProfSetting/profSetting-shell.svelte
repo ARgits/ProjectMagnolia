@@ -35,7 +35,7 @@
   }
   async function setDefaultAll() {
     console.log([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
-    setting = [...[...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default];
+    setting = duplicate([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function remove(key, type) {
