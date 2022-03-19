@@ -5351,7 +5351,7 @@ function create_fragment(ctx) {
 
 function instance($$self, $$props, $$invalidate) {
 	let setting = game.settings.get("ard20", "proficiencies");
-	const defaultValue = duplicate([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default);
+	const defaultValue = [...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default;
 	console.log(defaultValue);
 	console.log(setting);
 
@@ -5389,15 +5389,27 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	async function setDefaultGroup(type) {
-		console.log(defaultValue);
-		$$invalidate(1, setting[type].value = [...defaultValue[type].value], setting);
+		console.log([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default);
+
+		$$invalidate(
+			1,
+			setting[type].value = [
+				...[...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default[type].value
+			],
+			setting
+		);
+
 		$$invalidate(1, setting);
 		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
 	async function setDefaultAll() {
-		console.log(defaultValue);
-		$$invalidate(1, setting = defaultValue);
+		console.log([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default);
+
+		$$invalidate(1, setting = [
+			...[...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default
+		]);
+
 		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
