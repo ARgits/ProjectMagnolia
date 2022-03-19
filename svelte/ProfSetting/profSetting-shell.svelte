@@ -18,6 +18,7 @@
   }
   async function removeAll(type) {
     setting[type].value = [];
+    setting = setting
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function add(type) {
@@ -26,6 +27,7 @@
   }
   async function setDefaultGroup(type) {
     setting[type].value = defaultValue[type].value;
+    setting = setting
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function setDefaultAll() {

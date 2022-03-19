@@ -4776,7 +4776,7 @@ function get_each_context_3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (59:4) {#each Object.values(setting) as item}
+// (61:4) {#each Object.values(setting) as item}
 function create_each_block_3(ctx) {
 	let li;
 	let span;
@@ -4831,7 +4831,7 @@ function create_each_block_3(ctx) {
 	};
 }
 
-// (68:6) {#if activeTabValue === item.id}
+// (70:6) {#if activeTabValue === item.id}
 function create_if_block(ctx) {
 	let div0;
 	let button0;
@@ -4963,7 +4963,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (80:16) {#each Object.entries(selectArr[item.id]) as opt}
+// (82:16) {#each Object.entries(selectArr[item.id]) as opt}
 function create_each_block_2(ctx) {
 	let option;
 	let t_value = localize(/*opt*/ ctx[27][1]) + "";
@@ -4995,7 +4995,7 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (76:10) {#each item.value as entry (entry.id)}
+// (78:10) {#each item.value as entry (entry.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -5113,7 +5113,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (67:4) {#each Object.values(setting) as item (item)}
+// (69:4) {#each Object.values(setting) as item (item)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -5157,7 +5157,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (53:0) <ApplicationShell bind:elementRoot>
+// (55:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let div0;
 	let button0;
@@ -5365,6 +5365,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function removeAll(type) {
 		$$invalidate(2, setting[type].value = [], setting);
+		$$invalidate(2, setting);
 		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
@@ -5387,6 +5388,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	async function setDefaultGroup(type) {
 		$$invalidate(2, setting[type].value = defaultValue[type].value, setting);
+		$$invalidate(2, setting);
 		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
