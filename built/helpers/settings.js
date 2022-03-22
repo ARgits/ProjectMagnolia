@@ -1,6 +1,6 @@
-import { AdvRateSettingsShim } from "../../svelte/advancement-rate/advancement-rate.js";
-import { FeatSettingsShim } from "../../svelte/FeatSetting/featSetting.js";
-import { ProfSettingsShim } from "../../svelte/ProfSetting/profSetting.js";
+import { AdvRateSettingsShim } from "../settings/advancement-rate/advancement-rate.js";
+import { FeatSettingsShim } from "../settings/FeatSetting/featSetting.js";
+import { ProfSettingsShim } from "../settings/ProfSetting/profSetting.js";
 export const registerSystemSettings = function () {
   game.settings.register("ard20", "proficiencies", {
     scope: "world",

@@ -2,13 +2,10 @@
 
 <script>
   import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
-
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
-  import { ARd20 } from "../../built/helpers/config";
+  import { ARd20 } from "../../helpers/config.js";
   let setting = game.settings.get("ard20", "proficiencies");
-  const defaultValue = [...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default;
-  console.log(defaultValue);
   console.log(setting);
   async function removeAllAll() {
     for (const item of Object.values(setting)) {
@@ -24,12 +21,17 @@
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function add(type) {
-    setting[type].value = [...setting[type].value, { id: uuidv4(), name: `New ${type}`, type: Object.keys(selectArr[type])[0] }];
+    setting[type].value = [
+      ...setting[type].value,
+      { id: uuidv4(), name: `New ${type}`, type: Object.keys(selectArr[type])[0] },
+    ];
     await game.settings.set("ard20", "proficiencies", setting);
   }
   async function setDefaultGroup(type) {
     console.log([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
-    setting[type].value = [...[...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default[type].value];
+    setting[type].value = [
+      ...[...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default[type].value,
+    ];
     setting = setting;
     await game.settings.set("ard20", "proficiencies", setting);
   }
