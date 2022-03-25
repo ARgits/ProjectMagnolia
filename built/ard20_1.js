@@ -2706,7 +2706,7 @@ class ARd20ActorSheet extends ActorSheet {
 
 
   get template() {
-    return `systems/ard20/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+    return `systems/ard20/templates/actor/actor-${this.actor.system.type}-sheet.html`;
   }
   /* -------------------------------------------- */
 
@@ -2720,10 +2720,10 @@ class ARd20ActorSheet extends ActorSheet {
     // editable, the items array, and the effects array.
     const context = super.getData(); // Use a safe clone of the actor data for further operations.
 
-    const actorData = this.actor.data; // Add the actor's data to context.data for easier access, as well as flags.
+    const actorData = this.actor.system; // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
 
-    context.data = actorData.data; //@ts-expect-error
+    context.data = actorData; //@ts-expect-error
 
     context.flags = actorData.flags; //@ts-expect-error
 
@@ -2765,14 +2765,14 @@ class ARd20ActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of obj_entries$1(context.data.attributes)) {
+    for (let [k, v] of obj_entries$1(context.attributes)) {
       var _game$i18n$localize;
 
       //@ts-expect-error
       v.label = (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
 
-    for (let [k, v] of obj_entries$1(context.data.skills)) {
+    for (let [k, v] of obj_entries$1(context.skills)) {
       var _game$i18n$localize2, _game$i18n$localize3;
 
       //@ts-expect-error
@@ -2820,9 +2820,9 @@ class ARd20ActorSheet extends ActorSheet {
       } // Append to spells.
       else if (i.type === "spell") {
         //@ts-expect-error
-        if (i.data.spellLevel != undefined) {
+        if (i.spellLevel != undefined) {
           //@ts-expect-error
-          spells[i.data.spellLevel].push(i);
+          spells[i.spellLevel].push(i);
         }
       } else if (i.type === "armor" || i.type === "weapon") {
         const isActive = getProperty(i.data, "equipped"); //@ts-expect-error
@@ -2831,7 +2831,7 @@ class ARd20ActorSheet extends ActorSheet {
 
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped"); //@ts-expect-error
 
-        i.data.equipped = !isActive;
+        i.equipped = !isActive;
         if (i.type === "armor") armor.push(i);else weapons.push(i);
       }
     } // Assign and return
@@ -2929,7 +2929,7 @@ class ARd20ActorSheet extends ActorSheet {
 
     const attr = "data.equipped";
     return item.update({
-      [attr]: !getProperty(item.data, attr)
+      [attr]: !getProperty(item.system, attr)
     });
   }
 
@@ -3433,7 +3433,7 @@ class ARd20ItemSheet extends ItemSheet {
 
   get template() {
     const path = "systems/ard20/templates/item";
-    return `${path}/item-${this.item.data.type}-sheet.html`;
+    return `${path}/item-${this.item.system.type}-sheet.html`;
   }
   /* -------------------------------------------- */
 
@@ -3615,8 +3615,8 @@ class ARd20ItemSheet extends ItemSheet {
       var _damage$damType;
 
       //await this._onSubmit(event);
-      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
-      const damage = getProperty(this.item.data, path);
+      let path = a.dataset.type ? "damage" + a.dataset.type : "damage";
+      const damage = getProperty(this.item.system, path);
       damage.damType = damage.damType || [];
       const partsPath = path + ".parts";
       const damTypePath = path + ".damType";
@@ -3629,8 +3629,8 @@ class ARd20ItemSheet extends ItemSheet {
     if (a.classList.contains("delete-damage")) {
       //await this._onSubmit(event);
       const li = a.closest(".damage-part");
-      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
-      const damage = getProperty(this.item.data, path);
+      let path = a.dataset.type ? "damage" + a.dataset.type : "damage";
+      const damage = getProperty(this.item.system, path);
       console.log(damage);
       damage.parts.splice(Number(li.dataset.damagePart), 1);
       damage.damType.splice(Number(li.dataset.damagePart), 1);

@@ -18,7 +18,7 @@ export class ARd20ItemSheet extends ItemSheet {
     /** @override */
     get template() {
         const path = "systems/ard20/templates/item";
-        return `${path}/item-${this.item.data.type}-sheet.html`;
+        return `${path}/item-${this.item.system.type}-sheet.html`;
     }
     /* -------------------------------------------- */
     /** @override */
@@ -178,8 +178,8 @@ export class ARd20ItemSheet extends ItemSheet {
         const a = event.currentTarget;
         if (a.classList.contains("add-damage")) {
             //await this._onSubmit(event);
-            let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
-            const damage = getProperty(this.item.data, path);
+            let path = a.dataset.type ? "damage" + a.dataset.type : "damage";
+            const damage = getProperty(this.item.system, path);
             damage.damType = damage.damType || [];
             const partsPath = path + ".parts";
             const damTypePath = path + ".damType";
@@ -191,8 +191,8 @@ export class ARd20ItemSheet extends ItemSheet {
         if (a.classList.contains("delete-damage")) {
             //await this._onSubmit(event);
             const li = a.closest(".damage-part");
-            let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
-            const damage = getProperty(this.item.data, path);
+            let path = a.dataset.type ? "damage" + a.dataset.type : "damage";
+            const damage = getProperty(this.item.system, path);
             console.log(damage);
             damage.parts.splice(Number(li.dataset.damagePart), 1);
             damage.damType.splice(Number(li.dataset.damagePart), 1);

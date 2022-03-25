@@ -18,7 +18,7 @@ export class ARd20ActorSheet extends ActorSheet {
   }
   /** @override */
   get template() {
-    return `systems/ard20/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+    return `systems/ard20/templates/actor/actor-${this.actor.system.type}-sheet.html`;
   }
   /* -------------------------------------------- */
   /** @override */
@@ -29,10 +29,10 @@ export class ARd20ActorSheet extends ActorSheet {
     // editable, the items array, and the effects array.
     const context = super.getData();
     // Use a safe clone of the actor data for further operations.
-    const actorData = this.actor.data;
+    const actorData = this.actor.system;
     // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
-    context.data = actorData.data;
+    context.data = actorData;
     //@ts-expect-error
     context.flags = actorData.flags;
     //@ts-expect-error
@@ -69,11 +69,11 @@ export class ARd20ActorSheet extends ActorSheet {
   //@ts-expect-error
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of obj_entries(context.data.attributes)) {
+    for (let [k, v] of obj_entries(context.attributes)) {
       //@ts-expect-error
       v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
     }
-    for (let [k, v] of obj_entries(context.data.skills)) {
+    for (let [k, v] of obj_entries(context.skills)) {
       //@ts-expect-error
       v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
       v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
@@ -119,9 +119,9 @@ export class ARd20ActorSheet extends ActorSheet {
       // Append to spells.
       else if (i.type === "spell") {
         //@ts-expect-error
-        if (i.data.spellLevel != undefined) {
+        if (i.spellLevel != undefined) {
           //@ts-expect-error
-          spells[i.data.spellLevel].push(i);
+          spells[i.spellLevel].push(i);
         }
       } else if (i.type === "armor" || i.type === "weapon") {
         const isActive = getProperty(i.data, "equipped");
@@ -130,7 +130,7 @@ export class ARd20ActorSheet extends ActorSheet {
         //@ts-expect-error
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
         //@ts-expect-error
-        i.data.equipped = !isActive;
+        i.equipped = !isActive;
         if (i.type === "armor") armor.push(i);
         else weapons.push(i);
       }
@@ -216,7 +216,7 @@ export class ARd20ActorSheet extends ActorSheet {
     const item = this.actor.items.get(itemid);
     //const attr = item.data.type === "spell" ? "data.preparation.prepared" : "data.equipped";
     const attr = "data.equipped";
-    return item.update({ [attr]: !getProperty(item.data, attr) });
+    return item.update({ [attr]: !getProperty(item.system, attr) });
   }
   _onRollAbilityTest(event) {
     event.preventDefault();
