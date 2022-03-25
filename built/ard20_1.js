@@ -2706,7 +2706,7 @@ class ARd20ActorSheet extends ActorSheet {
 
 
   get template() {
-    return `systems/ard20/templates/actor/actor-${this.actor.system.type}-sheet.html`;
+    return `systems/ard20/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
   /* -------------------------------------------- */
 
@@ -2720,10 +2720,10 @@ class ARd20ActorSheet extends ActorSheet {
     // editable, the items array, and the effects array.
     const context = super.getData(); // Use a safe clone of the actor data for further operations.
 
-    const actorData = this.actor.system; // Add the actor's data to context.data for easier access, as well as flags.
+    const actorData = this.actor; // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
 
-    context.data = actorData; //@ts-expect-error
+    context.data = actorData.system; //@ts-expect-error
 
     context.flags = actorData.flags; //@ts-expect-error
 
