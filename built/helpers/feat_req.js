@@ -43,7 +43,7 @@ export class FeatRequirements extends FormApplication {
             reqValues[index].subtype_list = subtype_list.map((item) => item.name);
             reqValues[index].input = formApp.values[index]?.input ?? (reqValues[index].input || []);
             reqValues[index].value = data.filter((item) => item.name === reqValues[index].name)[0].value;
-            for (let i = 0; i < this.object.data.data.level.max; i++) {
+            for (let i = 0; i < this.object.system.level.max; i++) {
                 let inputElement = reqValues[index].input[i];
                 let previousElement = reqValues[index].input[i - 1] ?? 0;
                 switch (reqValues[index].type) {
@@ -110,11 +110,11 @@ export class FeatRequirements extends FormApplication {
                 values: [],
                 logic: [],
             },
-            req: foundry.utils.deepClone(this.object.data.data.req),
+            req: foundry.utils.deepClone(this.object.system.req),
             type_list: ["attribute", "skill", "feature"],
             feat: {
                 awail: pack_list.concat(folder_list.filter((item) => pack_list.indexOf(item) < 0)),
-                current: this.object.data.data.req.values.filter((item) => item.type === "feature"),
+                current: this.object.system.req.values.filter((item) => item.type === "feature"),
             },
             data: data,
             rank: rank,
@@ -166,7 +166,7 @@ export class FeatRequirements extends FormApplication {
                         if (doc instanceof ARd20Item) {
                             if (doc.data.type === "feature") {
                                 let item = doc.toObject();
-                                item.data = doc.data.data;
+                                item.data = doc.system;
                                 const feature = {
                                     name: item.name,
                                     type: "feature",
@@ -191,7 +191,7 @@ export class FeatRequirements extends FormApplication {
                     if (feat instanceof ARd20Item && feat.data.type === "feature") {
                         console.log("item added from folder ", feat);
                         const item = feat.toObject();
-                        item.data = foundry.utils.deepClone(feat.data.data);
+                        item.data = foundry.utils.deepClone(feat.system);
                         const feature = {
                             name: item.name,
                             type: "feature",
@@ -225,7 +225,7 @@ export class FeatRequirements extends FormApplication {
             sub_list.push(k);
         }
         //create varible for easier access to maximum level of feature
-        const maxLevel = this.object.data.data.level.max;
+        const maxLevel = this.object.system.level.max;
         //create default value object
         const defaultValue = {
             name: "Strength",

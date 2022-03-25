@@ -27,7 +27,7 @@ export class ARd20ItemSheet extends ItemSheet {
         const context = super.getData();
         // Use a safe clone of the item data for further operations.
         //@ts-expect-error
-        const itemData = context.item.data;
+        const itemData = context.item;
         //@ts-expect-error
         context.config = CONFIG.ARd20;
         // Retrieve the roll data for TinyMCE editors.
@@ -40,7 +40,7 @@ export class ARd20ItemSheet extends ItemSheet {
         }
         // Add the actor's data to context.data for easier access, as well as flags.
         //@ts-expect-error
-        context.data = itemData.data;
+        context.data = itemData;
         //@ts-expect-error
         context.flags = itemData.flags;
         //@ts-expect-error
@@ -64,7 +64,7 @@ export class ARd20ItemSheet extends ItemSheet {
             data = expandObject(data);
         // Handle Damage array
         //@ts-expect-error
-        const damage = data.data?.damage;
+        const damage = system?.damage;
         if (damage) {
             if (damage.parts) {
                 damage.damType = Object.values(damage?.damType || {});

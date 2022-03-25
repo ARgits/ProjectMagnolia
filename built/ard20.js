@@ -125,7 +125,7 @@ async function createItemMacro(data, slot) {
         if (!("data" in data) && ui.notifications instanceof Notifications)
             return ui.notifications.warn("You can only create macro buttons for owned Items");
         //@ts-expect-error
-        const item = data.data;
+        const item = system;
         // Create the macro command
         const command = `game.ard20.rollItemMacro("${item.name}");`;
         let macroList = game.macros.contents.filter((m) => m.name === item.name && m?.command === command);

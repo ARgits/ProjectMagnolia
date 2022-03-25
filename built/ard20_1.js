@@ -1088,7 +1088,7 @@ class ARd20Item extends Item {
       const item = game.items.get(id);
 
       if ((item === null || item === void 0 ? void 0 : item.data.type) === "weapon") {
-        data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
+        data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
       }
     }
 
@@ -1224,7 +1224,7 @@ class ARd20Item extends Item {
       var _this$actor, _game$i18n$localize3;
 
       const data = itemData.data;
-      data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.data.data.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
+      data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.system.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
       data.proficiency.levelName = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Rank[data.proficiency.level];
       prof_bonus = data.proficiency.level * 4;
     }
@@ -1272,18 +1272,18 @@ class ARd20Item extends Item {
     // If present, return the actor's roll data.
     if (!this.actor) return null;
     const rollData = this.actor.getRollData();
-    const hasDamage = this.data.data.hasDamage;
-    const hasAttack = this.data.data.hasAttack; //@ts-expect-error
+    const hasDamage = this.system.hasDamage;
+    const hasAttack = this.system.hasAttack; //@ts-expect-error
 
-    rollData.item = foundry.utils.deepClone(this.data.data); //@ts-expect-error
+    rollData.item = foundry.utils.deepClone(this.system); //@ts-expect-error
 
-    rollData.damageDie = hasDamage ? this.data.data.damage.current.parts[0] : null; //@ts-expect-error
+    rollData.damageDie = hasDamage ? this.system.damage.current.parts[0] : null; //@ts-expect-error
 
     rollData.mod = hasAttack ? //@ts-expect-error
-    this.data.data.attack.parts[0] : hasDamage ? //@ts-expect-error
-    this.data.data.damage.current.parts[1] : null; //@ts-expect-error
+    this.system.attack.parts[0] : hasDamage ? //@ts-expect-error
+    this.system.damage.current.parts[1] : null; //@ts-expect-error
 
-    rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
+    rollData.prof = hasAttack ? this.system.attack.parts[1] : null;
     return rollData;
   }
   /**
@@ -1303,10 +1303,10 @@ class ARd20Item extends Item {
   }) {
     let item = this;
     item.id;
-    const iData = this.data.data; //Item data
+    const iData = this.system; //Item data
 
     const actor = this.actor;
-    actor === null || actor === void 0 ? void 0 : actor.data.data;
+    actor === null || actor === void 0 ? void 0 : actor.system;
     hasDamage = iData.hasDamage || hasDamage;
     hasAttack = iData.hasAttack || hasAttack; // Initialize chat data.
 
@@ -1317,7 +1317,7 @@ class ARd20Item extends Item {
 
     const targets = Array.from(game.user.targets); //@ts-expect-error
 
-    const mRoll = this.data.data.mRoll || false; //@ts-expect-error
+    const mRoll = this.system.mRoll || false; //@ts-expect-error
 
     return item.displayCard({
       rollMode,
@@ -1512,7 +1512,7 @@ class ARd20Item extends Item {
     const token = await fromUuid(targetUuid); //@ts-expect-error
 
     const tActor = token === null || token === void 0 ? void 0 : token.actor;
-    const tData = tActor.data.data;
+    const tData = tActor.system;
     let tHealth = tData.health.value;
     console.log(tHealth, "здоровье цели"); // Recover the actor for the chat card
 
@@ -1615,7 +1615,7 @@ class ARd20Item extends Item {
     let dmg = {};
     let dieResultCss = {}; //@ts-expect-error
 
-    const def = (_this$data$data$attac = (_this$data$data$attac2 = this.data.data.attack) === null || _this$data$data$attac2 === void 0 ? void 0 : _this$data$data$attac2.def) !== null && _this$data$data$attac !== void 0 ? _this$data$data$attac : "reflex";
+    const def = (_this$data$data$attac = (_this$data$data$attac2 = this.system.attack) === null || _this$data$data$attac2 === void 0 ? void 0 : _this$data$data$attac2.def) !== null && _this$data$data$attac !== void 0 ? _this$data$data$attac : "reflex";
     const token = this.actor.token;
 
     if (targets.length !== 0) {
@@ -1631,7 +1631,7 @@ class ARd20Item extends Item {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll; //@ts-expect-error
 
-          dc[key] = target.actor.data.data.defences.stats[def].value; //@ts-expect-error
+          dc[key] = target.actor.system.defences.stats[def].value; //@ts-expect-error
 
           atk[key] = hasAttack ? Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll() : null; //@ts-expect-error
 
@@ -1695,7 +1695,7 @@ class ARd20Item extends Item {
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       content: html,
       //@ts-expect-error
-      flavor: this.data.data.chatFlavor || this.name,
+      flavor: this.system.chatFlavor || this.name,
       //@ts-expect-error
       speaker: ChatMessage.getSpeaker({
         actor: this.actor,
@@ -1724,7 +1724,7 @@ class ARd20Item extends Item {
 
 
   getChatData(htmlOptions = {}) {
-    const data = foundry.utils.deepClone(this.data.data); // Rich text description
+    const data = foundry.utils.deepClone(this.system); // Rich text description
 
     /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
       /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
@@ -1768,7 +1768,7 @@ class ARd20Item extends Item {
     var _options$parts;
 
     console.log(canMult);
-    this.data.data; //@ts-expect-error
+    this.system; //@ts-expect-error
 
     this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -1820,8 +1820,8 @@ class ARd20Item extends Item {
     var _ref;
 
     console.log(canMult);
-    const iData = this.data.data;
-    this.actor.data.data; //@ts-expect-error
+    const iData = this.system;
+    this.actor.system; //@ts-expect-error
 
     const parts = iData.damage.current.parts.map(d => d[0]); //@ts-expect-error
 
@@ -1869,7 +1869,7 @@ class ARd20Item extends Item {
 
 
   getAttackToHit() {
-    const itemData = this.data.data;
+    const itemData = this.system;
     const hasAttack = true;
     const hasDamage = false; //if (!this.hasAttack || !itemData) return;
     //@ts-expect-error
@@ -1897,14 +1897,14 @@ class ARd20Item extends Item {
     /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
     if ( !["weapon", "consumable"].includes(this.data.type)) {
       parts.push("@prof");
-      if ( this.data.data.prof?.hasProficiency ) {
-        rollData.prof = this.data.data.prof.term;
+      if ( this.system.prof?.hasProficiency ) {
+        rollData.prof = this.system.prof.term;
       }
     }
     */
 
     /* Actor-level global bonus to attack rolls
-    const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
+    const actorBonus = this.actor.system.bonuses?.[itemData.actionType] || {};
     if (actorBonus.attack) parts.push(actorBonus.attack);
     */
 
@@ -2040,7 +2040,7 @@ class CharacterAdvancement extends FormApplication {
     const folder = this.getFolders();
     const rList = await this.getRacesList(pack, folder);
     const fList = await this.getFeaturesList(pack, folder);
-    const actorData = this.object.data.data;
+    const actorData = this.object.system;
     const startingData = {
       isReady: duplicate(actorData.isReady),
       attributes: duplicate(actorData.attributes),
@@ -2153,7 +2153,7 @@ class CharacterAdvancement extends FormApplication {
 
             if (doc instanceof ARd20Item) {
               const item = doc.toObject();
-              item.data = foundry.utils.deepClone(doc.data.data);
+              item.data = foundry.utils.deepClone(doc.system);
               pack_list.push(item);
               pack_name.push(item.name);
             }
@@ -2185,7 +2185,7 @@ class CharacterAdvancement extends FormApplication {
           if (feat instanceof ARd20Item) {
             console.log("item added from folder ", feat);
             const item = feat.toObject();
-            item.data = foundry.utils.deepClone(feat.data.data);
+            item.data = foundry.utils.deepClone(feat.system);
             folder_list.push(item);
             folder_name.push(item.name);
           }
@@ -2301,7 +2301,7 @@ class CharacterAdvancement extends FormApplication {
       const race_abil = (_raceList$filter$0$da = (_raceList$filter = raceList.filter(race => race.chosen === true)) === null || _raceList$filter === void 0 ? void 0 : (_raceList$filter$ = _raceList$filter[0]) === null || _raceList$filter$ === void 0 ? void 0 : _raceList$filter$.data.bonus.attributes[k].value) !== null && _raceList$filter$0$da !== void 0 ? _raceList$filter$0$da : 0;
       attributes[k].mod = Math.floor((attributes[k].value - 10) / 2);
       attributes[k].xp = CONFIG.ARd20.AbilXP[attributes[k].value - 5];
-      attributes[k].isEq = attributes[k].value === this.object.data.data.attributes[k].value;
+      attributes[k].isEq = attributes[k].value === this.object.system.attributes[k].value;
       attributes[k].isXP = xp.get < attributes[k].xp;
       attributes[k].total = isReady ? attributes[k].value : attributes[k].value + race_abil;
       attributes[k].mod = Math.floor((attributes[k].total - 10) / 2);
@@ -2316,7 +2316,7 @@ class CharacterAdvancement extends FormApplication {
 
       templateData.skills[k].rankName = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank[templateData.skills[k].level];
       templateData.skills[k].xp = templateData.skills[k].level < 2 ? CONFIG.ARd20.SkillXP[templateData.skills[k].level][templateData.count.skills[templateData.skills[k].level + 1]] : false;
-      templateData.skills[k].isEq = templateData.skills[k].level === this.object.data.data.skills[k].level;
+      templateData.skills[k].isEq = templateData.skills[k].level === this.object.system.skills[k].level;
       templateData.skills[k].isXP = templateData.xp.get < templateData.skills[k].xp || templateData.skills[k].level > 1;
     }
 
@@ -2415,7 +2415,7 @@ class CharacterAdvancement extends FormApplication {
     });
     health.max = attributes.con.value + raceHP; // At character creation, check all conditions
 
-    if (!this.object.data.data.isReady) {
+    if (!this.object.system.isReady) {
       let abil_sum = 0;
 
       for (let [key, abil] of obj_entries$1(templateData.attributes)) {
@@ -2959,8 +2959,8 @@ class ARd20ActorSheet extends ActorSheet {
 
     const id = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(id);
-    const hasAttack = item.data.data.hasAttack;
-    const hasDamage = item.data.data.hasDamage; //@ts-expect-error
+    const hasAttack = item.system.hasAttack;
+    const hasDamage = item.system.hasDamage; //@ts-expect-error
 
     if (item) return item.roll({
       hasAttack,
@@ -3124,7 +3124,7 @@ class FeatRequirements extends FormApplication {
       reqValues[index].input = (_formApp$values$index3 = (_formApp$values$index4 = formApp.values[index]) === null || _formApp$values$index4 === void 0 ? void 0 : _formApp$values$index4.input) !== null && _formApp$values$index3 !== void 0 ? _formApp$values$index3 : reqValues[index].input || [];
       reqValues[index].value = data.filter(item => item.name === reqValues[index].name)[0].value;
 
-      for (let i = 0; i < this.object.data.data.level.max; i++) {
+      for (let i = 0; i < this.object.system.level.max; i++) {
         var _reqValues$index$inpu;
 
         let inputElement = reqValues[index].input[i];
@@ -3206,11 +3206,11 @@ class FeatRequirements extends FormApplication {
         values: [],
         logic: []
       },
-      req: foundry.utils.deepClone(this.object.data.data.req),
+      req: foundry.utils.deepClone(this.object.system.req),
       type_list: ["attribute", "skill", "feature"],
       feat: {
         awail: pack_list.concat(folder_list.filter(item => pack_list.indexOf(item) < 0)),
-        current: this.object.data.data.req.values.filter(item => item.type === "feature")
+        current: this.object.system.req.values.filter(item => item.type === "feature")
       },
       data: data,
       rank: rank
@@ -3270,7 +3270,7 @@ class FeatRequirements extends FormApplication {
             if (doc instanceof ARd20Item) {
               if (doc.data.type === "feature") {
                 let item = doc.toObject();
-                item.data = doc.data.data;
+                item.data = doc.system;
                 const feature = {
                   name: item.name,
                   type: "feature",
@@ -3297,7 +3297,7 @@ class FeatRequirements extends FormApplication {
           if (feat instanceof ARd20Item && feat.data.type === "feature") {
             console.log("item added from folder ", feat);
             const item = feat.toObject();
-            item.data = foundry.utils.deepClone(feat.data.data);
+            item.data = foundry.utils.deepClone(feat.system);
             const feature = {
               name: item.name,
               type: "feature",
@@ -3341,7 +3341,7 @@ class FeatRequirements extends FormApplication {
     } //create varible for easier access to maximum level of feature
 
 
-    const maxLevel = this.object.data.data.level.max; //create default value object
+    const maxLevel = this.object.system.level.max; //create default value object
 
     const defaultValue = {
       name: "Strength",
@@ -3489,7 +3489,7 @@ class ARd20ItemSheet extends ItemSheet {
     if (updateData) data = mergeObject(data, updateData);else data = expandObject(data); // Handle Damage array
     //@ts-expect-error
 
-    const damage = (_data$data = data.data) === null || _data$data === void 0 ? void 0 : _data$data.damage;
+    const damage = (_data$data = system) === null || _data$data === void 0 ? void 0 : _data$data.damage;
 
     if (damage) {
       if (damage.parts) {
@@ -6031,7 +6031,7 @@ async function createItemMacro$1(data, slot) {
     if (data.type !== "Item") return;
     if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items"); //@ts-expect-error
 
-    const item = data.data; // Create the macro command
+    const item = system; // Create the macro command
 
     const command = `game.ard20.rollItemMacro("${item.name}");`;
     let macroList = game.macros.contents.filter(m => m.name === item.name && (m === null || m === void 0 ? void 0 : m.command) === command);
@@ -6148,20 +6148,20 @@ class ARd20Actor extends Actor {
     data.mobility.value = 0;
     this.itemTypes.armor.forEach(item => {
       if (item.data.type === "armor") {
-        if (item.data.data.equipped) {
+        if (item.system.equipped) {
           for (let key of obj_keys$1(def_dam.phys)) {
-            let ph = item.data.data.res.phys[key];
+            let ph = item.system.res.phys[key];
             def_dam.phys[key].bonus += ph.type !== "imm" ? ph.value : 0;
             def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
           }
 
           for (let key of obj_keys$1(def_dam.mag)) {
-            let mg = item.data.data.res.mag[key];
+            let mg = item.system.res.mag[key];
             def_dam.mag[key].bonus += mg.type !== "imm" ? mg.value : 0;
             def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
           }
 
-          data.mobility.value += item.data.data.mobility.value;
+          data.mobility.value += item.system.mobility.value;
         }
       }
     });
@@ -6231,7 +6231,7 @@ class ARd20Actor extends Actor {
         value: (_proficiencies$weapon = (_proficiencies$weapon2 = proficiencies.weapon[key]) === null || _proficiencies$weapon2 === void 0 ? void 0 : _proficiencies$weapon2.value) !== null && _proficiencies$weapon !== void 0 ? _proficiencies$weapon : 0
       });
     });
-    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
+    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].system.speed : 0;
     data.speed.value += attributes.dex.mod + data.speed.bonus;
   }
   /**
@@ -6268,7 +6268,7 @@ class ARd20Actor extends Actor {
 
   rollAbilityTest(attributeId, options) {
     const label = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, attributeId));
-    const actorData = this.data.data;
+    const actorData = this.system;
     const attributes = actorData.attributes;
     const attr = getValues$1(attributes, attributeId); // Construct parts
 
@@ -6311,7 +6311,7 @@ class ARd20Actor extends Actor {
 
 
   rollSkill(skillId, options) {
-    const skl = getValues$1(this.data.data.skills, skillId); // Compose roll parts and data
+    const skl = getValues$1(this.system.skills, skillId); // Compose roll parts and data
 
     const parts = ["@proficiency", "@mod"];
     const data = {
@@ -6480,7 +6480,7 @@ async function createItemMacro(data, slot) {
     if (data.type !== "Item") return;
     if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items"); //@ts-expect-error
 
-    const item = data.data; // Create the macro command
+    const item = system; // Create the macro command
 
     const command = `game.ard20.rollItemMacro("${item.name}");`;
     let macroList = game.macros.contents.filter(m => m.name === item.name && (m === null || m === void 0 ? void 0 : m.command) === command);

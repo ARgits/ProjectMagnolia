@@ -26,7 +26,7 @@ export class CharacterAdvancement extends FormApplication {
     const folder = this.getFolders();
     const rList = await this.getRacesList(pack, folder);
     const fList = await this.getFeaturesList(pack, folder);
-    const actorData = this.object.data.data;
+    const actorData = this.object.system;
     const startingData = {
       isReady: duplicate(actorData.isReady),
       attributes: duplicate(actorData.attributes),
@@ -130,7 +130,7 @@ export class CharacterAdvancement extends FormApplication {
             const doc = await game.packs.get(new_key).getDocument(feat.id);
             if (doc instanceof ARd20Item) {
               const item = doc.toObject();
-              item.data = foundry.utils.deepClone(doc.data.data);
+              item.data = foundry.utils.deepClone(doc.system);
               pack_list.push(item);
               pack_name.push(item.name);
             }
@@ -158,7 +158,7 @@ export class CharacterAdvancement extends FormApplication {
           if (feat instanceof ARd20Item) {
             console.log("item added from folder ", feat);
             const item = feat.toObject();
-            item.data = foundry.utils.deepClone(feat.data.data);
+            item.data = foundry.utils.deepClone(feat.system);
             folder_list.push(item);
             folder_name.push(item.name);
           }
@@ -243,7 +243,7 @@ export class CharacterAdvancement extends FormApplication {
       const race_abil = raceList.filter((race) => race.chosen === true)?.[0]?.data.bonus.attributes[k].value ?? 0;
       attributes[k].mod = Math.floor((attributes[k].value - 10) / 2);
       attributes[k].xp = CONFIG.ARd20.AbilXP[attributes[k].value - 5];
-      attributes[k].isEq = attributes[k].value === this.object.data.data.attributes[k].value;
+      attributes[k].isEq = attributes[k].value === this.object.system.attributes[k].value;
       attributes[k].isXP = xp.get < attributes[k].xp;
       attributes[k].total = isReady ? attributes[k].value : attributes[k].value + race_abil;
       attributes[k].mod = Math.floor((attributes[k].total - 10) / 2);
@@ -261,7 +261,7 @@ export class CharacterAdvancement extends FormApplication {
               templateData.count.skills[templateData.skills[k].level + 1]
             ]
           : false;
-      templateData.skills[k].isEq = templateData.skills[k].level === this.object.data.data.skills[k].level;
+      templateData.skills[k].isEq = templateData.skills[k].level === this.object.system.skills[k].level;
       templateData.skills[k].isXP = templateData.xp.get < templateData.skills[k].xp || templateData.skills[k].level > 1;
     }
     for (let v of templateData.profs.weapon) {
@@ -345,7 +345,7 @@ export class CharacterAdvancement extends FormApplication {
     });
     health.max = attributes.con.value + raceHP;
     // At character creation, check all conditions
-    if (!this.object.data.data.isReady) {
+    if (!this.object.system.isReady) {
       let abil_sum = 0;
       for (let [key, abil] of obj_entries(templateData.attributes)) {
         abil_sum += abil.value;

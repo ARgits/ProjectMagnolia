@@ -15,15 +15,15 @@ export class ARd20Item extends Item {
     }
     prepareDerivedData() {
         super.prepareDerivedData();
-        const itemData = this.data;
+        const itemData = this.system;
         this._prepareSpellData(itemData);
         this._prepareWeaponData(itemData);
         this._prepareFeatureData(itemData);
         this._prepareRaceData(itemData);
         this._prepareArmorData(itemData);
-        if (itemData.data.hasAttack)
+        if (itemData.hasAttack)
             this._prepareAttack(itemData);
-        if (itemData.data.hasDamage)
+        if (itemData.hasDamage)
             this._prepareDamage(itemData);
         if (!this.isOwned)
             this.prepareFinalAttributes();
@@ -34,7 +34,7 @@ export class ARd20Item extends Item {
     _prepareSpellData(itemData) {
         if (itemData.type !== "spell")
             return;
-        const data = itemData.data;
+        const data = itemData;
     }
     /**
      *Prepare data for weapons
@@ -42,7 +42,7 @@ export class ARd20Item extends Item {
     _prepareWeaponData(itemData) {
         if (itemData.type !== "weapon")
             return;
-        const data = itemData.data;
+        const data = itemData;
         const flags = itemData.flags;
         data.hasAttack = data.hasAttack || true;
         data.hasDamage = data.hasDamage || true;
@@ -94,7 +94,7 @@ export class ARd20Item extends Item {
             const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
             const item = game.items.get(id);
             if (item?.data.type === "weapon") {
-                data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
+                data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
             }
         }
         data.sub_type =
@@ -114,7 +114,7 @@ export class ARd20Item extends Item {
     _prepareFeatureData(itemData) {
         if (itemData.type !== "feature")
             return;
-        const data = itemData.data;
+        const data = itemData;
         // Handle Source of the feature
         data.source.label = "";
         data.source.value.forEach((value, key) => {
@@ -186,7 +186,7 @@ export class ARd20Item extends Item {
     _prepareArmorData(itemData) {
         if (itemData.type !== "armor")
             return;
-        const data = itemData.data;
+        const data = itemData;
         for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
             if (!(key === "force" || key === "radiant" || key === "psychic")) {
                 data.res.phys[key] = data.res.phys[key] ?? 0;
@@ -200,7 +200,7 @@ export class ARd20Item extends Item {
     Prepare Data that uses actor's data
     */
     prepareFinalAttributes() {
-        const itemData = this.data;
+        const itemData = this.system;
         //@ts-expect-error
         const abil = (itemData.abil = {});
         for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
@@ -208,21 +208,21 @@ export class ARd20Item extends Item {
         }
         let prof_bonus = 0;
         if (itemData.type === "weapon") {
-            const data = itemData.data;
+            const data = itemData;
             data.proficiency.level = this.isOwned
-                ? this.actor?.data.data.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value
+                ? this.actor?.system.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value
                 : 0;
             data.proficiency.levelName =
                 game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level]) ?? CONFIG.ARd20.Rank[data.proficiency.level];
             prof_bonus = data.proficiency.level * 4;
         }
-        if (itemData.data.hasAttack)
+        if (itemData.hasAttack)
             this._prepareAttack(itemData, prof_bonus, abil);
-        if (itemData.data.hasDamage)
+        if (itemData.hasDamage)
             this._prepareDamage(itemData, abil);
     }
     _prepareAttack(itemData, prof_bonus, abil) {
-        const data = itemData.data;
+        const data = itemData;
         if (!data.hasAttack)
             return;
         //@ts-expect-error
@@ -234,7 +234,7 @@ export class ARd20Item extends Item {
         };
     }
     _prepareDamage(itemData, abil) {
-        const data = itemData.data;
+        const data = itemData;
         if (!data.hasDamage)
             return;
         let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
@@ -260,22 +260,22 @@ export class ARd20Item extends Item {
         if (!this.actor)
             return null;
         const rollData = this.actor.getRollData();
-        const hasDamage = this.data.data.hasDamage;
-        const hasAttack = this.data.data.hasAttack;
+        const hasDamage = this.system.hasDamage;
+        const hasAttack = this.system.hasAttack;
         //@ts-expect-error
-        rollData.item = foundry.utils.deepClone(this.data.data);
+        rollData.item = foundry.utils.deepClone(this.system);
         //@ts-expect-error
-        rollData.damageDie = hasDamage ? this.data.data.damage.current.parts[0] : null;
+        rollData.damageDie = hasDamage ? this.system.damage.current.parts[0] : null;
         //@ts-expect-error
         rollData.mod = hasAttack
             ? //@ts-expect-error
-                this.data.data.attack.parts[0]
+                this.system.attack.parts[0]
             : hasDamage
                 ? //@ts-expect-error
-                    this.data.data.damage.current.parts[1]
+                    this.system.damage.current.parts[1]
                 : null;
         //@ts-expect-error
-        rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
+        rollData.prof = hasAttack ? this.system.attack.parts[1] : null;
         return rollData;
     }
     /**
@@ -287,9 +287,9 @@ export class ARd20Item extends Item {
     async roll({ configureDialog = true, rollMode, hasDamage = false, hasAttack = false, createMessage = true }) {
         let item = this;
         const id = item.id;
-        const iData = this.data.data; //Item data
+        const iData = this.system; //Item data
         const actor = this.actor;
-        const aData = actor?.data.data;
+        const aData = actor?.system;
         hasDamage = iData.hasDamage || hasDamage;
         hasAttack = iData.hasAttack || hasAttack;
         // Initialize chat data.
@@ -298,7 +298,7 @@ export class ARd20Item extends Item {
         // Otherwise, create a roll and send a chat message from it.
         const targets = Array.from(game.user.targets);
         //@ts-expect-error
-        const mRoll = this.data.data.mRoll || false;
+        const mRoll = this.system.mRoll || false;
         //@ts-expect-error
         return item.displayCard({ rollMode, createMessage, hasAttack, hasDamage, targets, mRoll });
     }
@@ -449,7 +449,7 @@ export class ARd20Item extends Item {
         const token = await fromUuid(targetUuid);
         //@ts-expect-error
         const tActor = token?.actor;
-        const tData = tActor.data.data;
+        const tData = tActor.system;
         let tHealth = tData.health.value;
         console.log(tHealth, "здоровье цели");
         // Recover the actor for the chat card
@@ -530,7 +530,7 @@ export class ARd20Item extends Item {
         let dmg = {};
         let dieResultCss = {};
         //@ts-expect-error
-        const def = this.data.data.attack?.def ?? "reflex";
+        const def = this.system.attack?.def ?? "reflex";
         const token = this.actor.token;
         if (targets.length !== 0) {
             //@ts-expect-error
@@ -540,7 +540,7 @@ export class ARd20Item extends Item {
                 if (atkRoll) {
                     mRoll = atkRoll.options.mRoll;
                     //@ts-expect-error
-                    dc[key] = target.actor.data.data.defences.stats[def].value;
+                    dc[key] = target.actor.system.defences.stats[def].value;
                     //@ts-expect-error
                     atk[key] = hasAttack ? (Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll()) : null;
                     //@ts-expect-error
@@ -606,7 +606,7 @@ export class ARd20Item extends Item {
             type: CONST.CHAT_MESSAGE_TYPES.OTHER,
             content: html,
             //@ts-expect-error
-            flavor: this.data.data.chatFlavor || this.name,
+            flavor: this.system.chatFlavor || this.name,
             //@ts-expect-error
             speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
             flags: { "core.canPopout": true },
@@ -627,7 +627,7 @@ export class ARd20Item extends Item {
      * @returns {object}              An object of chat data to render.
      */
     getChatData(htmlOptions = {}) {
-        const data = foundry.utils.deepClone(this.data.data);
+        const data = foundry.utils.deepClone(this.system);
         // Rich text description
         //data.description.value = TextEditor.enrichHTML(data.description.value, htmlOptions);
         // Item type specific properties
@@ -668,7 +668,7 @@ export class ARd20Item extends Item {
      */
     async rollAttack(mRoll = Boolean(), canMult = Boolean(), options = {}) {
         console.log(canMult);
-        const itemData = this.data.data;
+        const itemData = this.system;
         //@ts-expect-error
         const flags = this.actor.data.flags.ard20 || {};
         let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -706,8 +706,8 @@ export class ARd20Item extends Item {
     }
     rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean(), } = {}) {
         console.log(canMult);
-        const iData = this.data.data;
-        const aData = this.actor.data.data;
+        const iData = this.system;
+        const aData = this.actor.system;
         //@ts-expect-error
         const parts = iData.damage.current.parts.map((d) => d[0]);
         //@ts-expect-error
@@ -750,7 +750,7 @@ export class ARd20Item extends Item {
      * @returns {{rollData: object, parts: string[]}|null}  Data used in the item's Attack roll.
      */
     getAttackToHit() {
-        const itemData = this.data.data;
+        const itemData = this.system;
         const hasAttack = true;
         const hasDamage = false;
         //if (!this.hasAttack || !itemData) return;
@@ -775,13 +775,13 @@ export class ARd20Item extends Item {
         /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
         if ( !["weapon", "consumable"].includes(this.data.type)) {
           parts.push("@prof");
-          if ( this.data.data.prof?.hasProficiency ) {
-            rollData.prof = this.data.data.prof.term;
+          if ( this.system.prof?.hasProficiency ) {
+            rollData.prof = this.system.prof.term;
           }
         }
         */
         /* Actor-level global bonus to attack rolls
-        const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
+        const actorBonus = this.actor.system.bonuses?.[itemData.actionType] || {};
         if (actorBonus.attack) parts.push(actorBonus.attack);
         */
         /* One-time bonus provided by consumed ammunition
@@ -789,10 +789,10 @@ export class ARd20Item extends Item {
           const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
     
           if (ammoItemData) {
-            const ammoItemQuantity = ammoItemData.data.quantity;
+            const ammoItemQuantity = ammoitemData.quantity;
             const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
-            const ammoItemAttackBonus = ammoItemData.data.attackBonus;
-            const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
+            const ammoItemAttackBonus = ammoitemData.attackBonus;
+            const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoitemData.consumableType === "ammo";
             if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
               parts.push("@ammo");
               rollData.ammo = ammoItemAttackBonus;
