@@ -6118,8 +6118,7 @@ class ARd20Actor extends Actor {
 
 
   prepareDerivedData() {
-    const actorData = this.system;
-    actorData.flags.ard20 || {}; // Make separate methods for each Actor type (character, npc, etc.) to keep
+    const actorData = this.system; // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
 
     this._prepareCharacterData(actorData);

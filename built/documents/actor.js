@@ -26,7 +26,6 @@ export class ARd20Actor extends Actor {
      */
     prepareDerivedData() {
         const actorData = this.system;
-        const flags = actorData.flags.ard20 || {};
         // Make separate methods for each Actor type (character, npc, etc.) to keep
         // things organized.
         this._prepareCharacterData(actorData);
