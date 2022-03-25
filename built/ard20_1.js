@@ -1001,7 +1001,7 @@ class ARd20Item extends Item {
 
   prepareDerivedData() {
     super.prepareDerivedData();
-    const itemData = this.data;
+    const itemData = this.system;
 
     this._prepareSpellData(itemData);
 
@@ -1013,8 +1013,8 @@ class ARd20Item extends Item {
 
     this._prepareArmorData(itemData);
 
-    if (itemData.data.hasAttack) this._prepareAttack(itemData);
-    if (itemData.data.hasDamage) this._prepareDamage(itemData);
+    if (itemData.hasAttack) this._prepareAttack(itemData);
+    if (itemData.hasDamage) this._prepareDamage(itemData);
     if (!this.isOwned) this.prepareFinalAttributes();
   }
   /**
@@ -1024,7 +1024,6 @@ class ARd20Item extends Item {
 
   _prepareSpellData(itemData) {
     if (itemData.type !== "spell") return;
-    itemData.data;
   }
   /**
    *Prepare data for weapons
@@ -1033,7 +1032,7 @@ class ARd20Item extends Item {
 
   _prepareWeaponData(itemData) {
     if (itemData.type !== "weapon") return;
-    const data = itemData.data;
+    const data = itemData;
     const flags = itemData.flags;
     data.hasAttack = data.hasAttack || true;
     data.hasDamage = data.hasDamage || true; //TODO: this._setDeflect(data);
@@ -1103,7 +1102,7 @@ class ARd20Item extends Item {
 
   _prepareFeatureData(itemData) {
     if (itemData.type !== "feature") return;
-    const data = itemData.data; // Handle Source of the feature
+    const data = itemData; // Handle Source of the feature
 
     data.source.label = "";
     data.source.value.forEach((value, key) => {
@@ -1187,7 +1186,7 @@ class ARd20Item extends Item {
     var _data$mobility$value;
 
     if (itemData.type !== "armor") return;
-    const data = itemData.data;
+    const data = itemData;
 
     for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
       var _data$res$mag$key;
@@ -1210,7 +1209,7 @@ class ARd20Item extends Item {
 
 
   prepareFinalAttributes() {
-    const itemData = this.data; //@ts-expect-error
+    const itemData = this.system; //@ts-expect-error
 
     const abil = itemData.abil = {};
 
@@ -1223,18 +1222,18 @@ class ARd20Item extends Item {
     if (itemData.type === "weapon") {
       var _this$actor, _game$i18n$localize3;
 
-      const data = itemData.data;
+      const data = itemData;
       data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.system.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
       data.proficiency.levelName = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Rank[data.proficiency.level];
       prof_bonus = data.proficiency.level * 4;
     }
 
-    if (itemData.data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
-    if (itemData.data.hasDamage) this._prepareDamage(itemData, abil);
+    if (itemData.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
+    if (itemData.hasDamage) this._prepareDamage(itemData, abil);
   }
 
   _prepareAttack(itemData, prof_bonus, abil) {
-    const data = itemData.data;
+    const data = itemData;
     if (!data.hasAttack) return; //@ts-expect-error
 
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod; //@ts-expect-error
@@ -1246,7 +1245,7 @@ class ARd20Item extends Item {
   }
 
   _prepareDamage(itemData, abil) {
-    const data = itemData.data;
+    const data = itemData;
     if (!data.hasDamage) return;
     itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
     const prop = "damage.parts";
@@ -1603,7 +1602,7 @@ class ARd20Item extends Item {
     targets = [],
     mRoll = Boolean()
   } = {}) {
-    var _this$data$data$attac, _this$data$data$attac2;
+    var _this$system$attack$d, _this$system$attack;
 
     // Render the chat card template
     let atk = {};
@@ -1615,7 +1614,7 @@ class ARd20Item extends Item {
     let dmg = {};
     let dieResultCss = {}; //@ts-expect-error
 
-    const def = (_this$data$data$attac = (_this$data$data$attac2 = this.system.attack) === null || _this$data$data$attac2 === void 0 ? void 0 : _this$data$data$attac2.def) !== null && _this$data$data$attac !== void 0 ? _this$data$data$attac : "reflex";
+    const def = (_this$system$attack$d = (_this$system$attack = this.system.attack) === null || _this$system$attack === void 0 ? void 0 : _this$system$attack.def) !== null && _this$system$attack$d !== void 0 ? _this$system$attack$d : "reflex";
     const token = this.actor.token;
 
     if (targets.length !== 0) {
@@ -1912,10 +1911,10 @@ class ARd20Item extends Item {
     if (itemData.consume?.type === "ammo" && this.actor.items) {
       const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
             if (ammoItemData) {
-        const ammoItemQuantity = ammoItemData.data.quantity;
+        const ammoItemQuantity = ammoitemData.quantity;
         const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
-        const ammoItemAttackBonus = ammoItemData.data.attackBonus;
-        const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
+        const ammoItemAttackBonus = ammoitemData.attackBonus;
+        const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoitemData.consumableType === "ammo";
         if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
           parts.push("@ammo");
           rollData.ammo = ammoItemAttackBonus;
@@ -2918,8 +2917,7 @@ class ARd20ActorSheet extends ActorSheet {
     (_app = app) === null || _app === void 0 ? void 0 : _app.render(true);
   }
   /**
-   * Change @param data.equipped
-   * by toggling it on sheet
+   * Change eqquiped item or not by toggling it on sheet
    */
 
 
@@ -2992,7 +2990,7 @@ class ARd20ActorSheet extends ActorSheet {
       data: data
     }; // Remove the type from the dataset since it's in the itemData.type prop.
 
-    delete itemData.data["type"]; // Finally, create the item!
+    delete itemData["type"]; // Finally, create the item!
 
     return await Item.create(itemData, {
       parent: this.actor
@@ -3020,10 +3018,10 @@ class ARd20ActorSheet extends ActorSheet {
         if (item) return item.roll();
       }
       /*else if (dataset.rollType==='weapon'){
-        const itemid = element.closest(".item").dataset.itemId
-        const item = this.actor.items.get(itemid)
-        if (item) return item.DamageRoll()
-      }*/
+              const itemid = element.closest(".item").dataset.itemId
+              const item = this.actor.items.get(itemid)
+              if (item) return item.DamageRoll()
+            }*/
 
     }
   }
@@ -3449,7 +3447,7 @@ class ARd20ItemSheet extends ItemSheet {
     const context = super.getData(); // Use a safe clone of the item data for further operations.
     //@ts-expect-error
 
-    const itemData = context.item.data; //@ts-expect-error
+    const itemData = context.item; //@ts-expect-error
 
     context.config = CONFIG.ARd20; // Retrieve the roll data for TinyMCE editors.
     //@ts-expect-error
@@ -3464,7 +3462,7 @@ class ARd20ItemSheet extends ItemSheet {
     //@ts-expect-error
 
 
-    context.data = itemData.data; //@ts-expect-error
+    context.data = itemData; //@ts-expect-error
 
     context.flags = itemData.flags; //@ts-expect-error
 
@@ -3477,7 +3475,7 @@ class ARd20ItemSheet extends ItemSheet {
   }
 
   _getSubmitData(updateData = {}) {
-    var _data$data;
+    var _system;
 
     // Create the expanded update data object
     if (this.form === null) return; //@ts-expect-error
@@ -3489,7 +3487,7 @@ class ARd20ItemSheet extends ItemSheet {
     if (updateData) data = mergeObject(data, updateData);else data = expandObject(data); // Handle Damage array
     //@ts-expect-error
 
-    const damage = (_data$data = system) === null || _data$data === void 0 ? void 0 : _data$data.damage;
+    const damage = (_system = system) === null || _system === void 0 ? void 0 : _system.damage;
 
     if (damage) {
       if (damage.parts) {
@@ -6120,8 +6118,7 @@ class ARd20Actor extends Actor {
 
 
   prepareDerivedData() {
-    const actorData = this.data;
-    actorData.data;
+    const actorData = this.system;
     actorData.flags.ard20 || {}; // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
 
@@ -6139,7 +6136,7 @@ class ARd20Actor extends Actor {
 
     if (actorData.type !== "character") return; // Make modifications to data here. For example:
 
-    const data = actorData.data;
+    const data = actorData;
     const attributes = data.attributes;
     const advancement = data.advancement;
     const def_stats = data.defences.stats;
