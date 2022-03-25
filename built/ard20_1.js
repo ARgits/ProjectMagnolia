@@ -6029,7 +6029,7 @@ async function createItemMacro$1(data, slot) {
     if (data.type !== "Item") return;
     if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items"); //@ts-expect-error
 
-    const item = system; // Create the macro command
+    const item = data.data; // Create the macro command
 
     const command = `game.ard20.rollItemMacro("${item.name}");`;
     let macroList = game.macros.contents.filter(m => m.name === item.name && (m === null || m === void 0 ? void 0 : m.command) === command);
