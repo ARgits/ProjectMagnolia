@@ -29,7 +29,7 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "https://gitlab.com/ARgits/ard20",
-  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/v10/system.json",
-  "download": "https://gitlab.com/ARgits/ard20/-/archive/v10/ard20-v10.zip",
+  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/V10/system.json",
+  "download": "https://gitlab.com/ARgits/ard20/-/archive/V10/ard20-V10.zip",
   "license": "LICENSE.txt"
 }
