@@ -18,7 +18,7 @@ export class ARd20ItemSheet extends ItemSheet {
     /** @override */
     get template() {
         const path = "systems/ard20/templates/item";
-        return `${path}/item-${this.item.system.type}-sheet.html`;
+        return `${path}/item-${this.item.type}-sheet.html`;
     }
     /* -------------------------------------------- */
     /** @override */
