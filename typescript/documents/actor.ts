@@ -127,7 +127,7 @@ export class ARd20Actor extends Actor {
       skill.rankName =
         game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level)) ?? getValues(CONFIG.ARd20.Rank, skill.level);
     }
-    proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {
+    proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
       return { ...setting, value: proficiencies.weapon[key]?.value ?? 0 };
     });
     data.speed.value = this.itemTypes.race[0]?.data.type === "race" ? this.itemTypes.race[0].data.data.speed : 0;

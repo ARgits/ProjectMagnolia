@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
-    "types": ["@league-of-foundry-developers/foundry-vtt-types"]
-  }
+    "types": ["@league-of-foundry-developers/foundry-vtt-types"],
+    "target": "es6",
+    "checkJs": true
+  },
+  "exclude": ["node_modules"]
 }
