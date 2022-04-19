@@ -4220,14 +4220,14 @@ class ARd20ActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of obj_entries$1(context.attributes)) {
+    for (let [k, v] of Object.entries(context.attributes)) {
       var _game$i18n$localize;
 
       //@ts-expect-error
       v.label = (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
 
-    for (let [k, v] of obj_entries$1(context.skills)) {
+    for (let [k, v] of Object.entries(context.skills)) {
       var _game$i18n$localize2, _game$i18n$localize3;
 
       //@ts-expect-error
