@@ -2901,21 +2901,21 @@ class Skills extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[7] = list[i];
+	child_ctx[8] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[7] = list[i];
+	child_ctx[8] = list[i];
 	return child_ctx;
 }
 
-// (16:2) {#each tabs as tab}
+// (17:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
-	let t0_value = /*tab*/ ctx[7].label + "";
+	let t0_value = /*tab*/ ctx[8].label + "";
 	let t0;
 	let t1;
 	let li_class_value;
@@ -2923,7 +2923,7 @@ function create_each_block_1$2(ctx) {
 	let dispose;
 
 	function click_handler() {
-		return /*click_handler*/ ctx[4](/*tab*/ ctx[7]);
+		return /*click_handler*/ ctx[4](/*tab*/ ctx[8]);
 	}
 
 	return {
@@ -2934,7 +2934,7 @@ function create_each_block_1$2(ctx) {
 			t1 = space();
 			attr(span, "class", "svelte-1eq0yix");
 
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[7].id
+			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[8].id
 			? "active"
 			: "") + " svelte-1eq0yix"));
 		},
@@ -2951,9 +2951,9 @@ function create_each_block_1$2(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[7].label + "")) set_data(t0, t0_value);
+			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[8].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[7].id
+			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[8].id
 			? "active"
 			: "") + " svelte-1eq0yix"))) {
 				attr(li, "class", li_class_value);
@@ -2967,15 +2967,15 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (28:4) {#if tab.id === activeTab}
+// (29:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
-	var switch_value = /*tab*/ ctx[7].component;
+	var switch_value = /*tab*/ ctx[8].component;
 
 	function switch_props(ctx) {
-		return { props: { data: /*tab*/ ctx[7].data } };
+		return { props: { data: /*tab*/ ctx[8].data } };
 	}
 
 	if (switch_value) {
@@ -2997,9 +2997,9 @@ function create_if_block$1(ctx) {
 		},
 		p(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*tabs*/ 2) switch_instance_changes.data = /*tab*/ ctx[7].data;
+			if (dirty & /*tabs*/ 2) switch_instance_changes.data = /*tab*/ ctx[8].data;
 
-			if (switch_value !== (switch_value = /*tab*/ ctx[7].component)) {
+			if (switch_value !== (switch_value = /*tab*/ ctx[8].component)) {
 				if (switch_instance) {
 					group_outros();
 					const old_component = switch_instance;
@@ -3039,11 +3039,11 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (27:2) {#each tabs as tab}
+// (28:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*tab*/ ctx[7].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
+	let if_block = /*tab*/ ctx[8].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -3056,7 +3056,7 @@ function create_each_block$3(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (/*tab*/ ctx[7].id === /*activeTab*/ ctx[0]) {
+			if (/*tab*/ ctx[8].id === /*activeTab*/ ctx[0]) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
@@ -3251,6 +3251,7 @@ function create_fragment$4(ctx) {
 
 function instance$4($$self, $$props, $$invalidate) {
 	let $doc;
+	const { application } = getContext('external');
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
 	const doc = getContext("chaAdvActorData");
@@ -3261,7 +3262,7 @@ function instance$4($$self, $$props, $$invalidate) {
 		console.log($doc);
 		console.log(game.actors.get(id).system);
 		game.actors.get(id).update({ system: $doc });
-		this.close();
+		application.close();
 	}
 
 	const click_handler = tab => {

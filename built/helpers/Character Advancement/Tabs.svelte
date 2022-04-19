@@ -1,5 +1,6 @@
 <script>
   import { getContext } from "svelte";
+  const { application } = getContext('external')
   export let tabs = [];
   export let activeTab;
   const doc = getContext("chaAdvActorData");
@@ -8,7 +9,7 @@
     console.log($doc)
     console.log(game.actors.get(id).system)
     game.actors.get(id).update({ system: $doc });
-    this.close()
+    application.close()
   }
 </script>
 
