@@ -3479,8 +3479,7 @@ class ARd20ActorSheet extends ActorSheet {
 
     const actorData = this.actor; // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
-
-    context.data = actorData.system; //@ts-expect-error
+    //@ts-expect-error
 
     context.flags = actorData.flags; //@ts-expect-error
 
@@ -3493,7 +3492,7 @@ class ARd20ActorSheet extends ActorSheet {
       //@ts-expect-error
       this._prepareItems(context);
 
-      this._prepareCharacterData(context.data);
+      this._prepareCharacterData(context);
     } // Prepare NPC data and items.
     //@ts-expect-error
 
@@ -3509,6 +3508,7 @@ class ARd20ActorSheet extends ActorSheet {
     //@ts-expect-error
 
     context.effects = prepareActiveEffectCategories(this.actor.effects);
+    console.log(context);
     return context;
   }
   /**
@@ -3523,14 +3523,14 @@ class ARd20ActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.attributes)) {
+    for (let [k, v] of Object.entries(context.system.attributes)) {
       var _game$i18n$localize;
 
       //@ts-expect-error
       v.label = (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
 
-    for (let [k, v] of Object.entries(context.skills)) {
+    for (let [k, v] of Object.entries(context.system.skills)) {
       var _game$i18n$localize2, _game$i18n$localize3;
 
       //@ts-expect-error

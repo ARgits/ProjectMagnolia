@@ -34,7 +34,6 @@ export class ARd20ActorSheet extends ActorSheet {
     const actorData = this.actor;
     // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
-    context.data = actorData.system;
     //@ts-expect-error
     context.flags = actorData.flags;
     //@ts-expect-error
@@ -46,7 +45,7 @@ export class ARd20ActorSheet extends ActorSheet {
     if (actorData.type === "character") {
       //@ts-expect-error
       this._prepareItems(context);
-      this._prepareCharacterData(context.data);
+      this._prepareCharacterData(context);
     }
     // Prepare NPC data and items.
     //@ts-expect-error
@@ -60,6 +59,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Prepare active effects
     //@ts-expect-error
     context.effects = prepareActiveEffectCategories(this.actor.effects);
+    console.log(context);
     return context;
   }
   /**
@@ -72,11 +72,11 @@ export class ARd20ActorSheet extends ActorSheet {
   //@ts-expect-error
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.attributes)) {
+    for (let [k, v] of Object.entries(context.system.attributes)) {
       //@ts-expect-error
       v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
     }
-    for (let [k, v] of Object.entries(context.skills)) {
+    for (let [k, v] of Object.entries(context.system.skills)) {
       //@ts-expect-error
       v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
       v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
