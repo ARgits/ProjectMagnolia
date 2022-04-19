@@ -357,8 +357,8 @@ class CharacterAdvancement extends TJSDialog {
   constructor(document) {
     super({
       title: "Character advancement",
+      id:"cha-adv",
       modal: true,
-      height: 640,
       draggable: false,
       content: {
         class: CharacterAdvancementShell,
@@ -366,6 +366,9 @@ class CharacterAdvancement extends TJSDialog {
           document,
         },
       },
+    },{
+      width:640,
+      height:480,
     });
   }
 }

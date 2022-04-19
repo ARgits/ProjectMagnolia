@@ -8,6 +8,7 @@
     console.log($doc)
     console.log(game.actors.get(id).system)
     game.actors.get(id).update({ system: $doc });
+    this.close()
   }
 </script>
 
