@@ -4191,7 +4191,7 @@ class ARd20ActorSheet extends ActorSheet {
       //@ts-expect-error
       this._prepareItems(context);
 
-      this._prepareCharacterData(context);
+      this._prepareCharacterData(context.data);
     } // Prepare NPC data and items.
     //@ts-expect-error
 
