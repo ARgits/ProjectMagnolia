@@ -93,6 +93,7 @@
                     <aside class="attribute grid grid-3col">
                         <div class="attribute flex-group-center grid-span-2">
                             {{#each data.system.attributes as |attribute key|}}
+                                {{log attribute 'attributes'}}
                                 <div class="attribute flexrow" data-attribute="{{key}}">
                                     <label for="data.attributes.{{key}}.value" class="resource-label attribute-name rollable flexlarge align-left"
                                         data-label="{{attribute.label}}">{{attribute.label}}</label>
