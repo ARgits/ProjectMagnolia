@@ -72,11 +72,11 @@ export class ARd20ActorSheet extends ActorSheet {
   //@ts-expect-error
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.system.attributes)) {
+    for (let [k, v] of Object.entries(context.data.system.attributes)) {
       //@ts-expect-error
       v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
     }
-    for (let [k, v] of Object.entries(context.system.skills)) {
+    for (let [k, v] of Object.entries(context.data.system.skills)) {
       //@ts-expect-error
       v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
       v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
