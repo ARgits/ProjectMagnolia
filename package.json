@@ -23,23 +23,23 @@
     "gulp-sourcemaps": "^2.6.5",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.5.2",
-    "postcss": "^8.4.8",
+    "postcss": "^8.4.12",
     "select2": "^4.1.0-rc.0",
-    "svelte": "^3.46.0",
+    "svelte": "^3.46.5",
     "svelte-preprocess": "^4.10.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.7",
+    "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7",
-    "@league-of-foundry-developers/foundry-vtt-types": "^9.249.4",
+    "@league-of-foundry-developers/foundry-vtt-types": "^9.255.3",
     "@rollup/plugin-babel": "^5",
     "@types/gulp-sass": "^5.0.0",
     "@types/sass": "^1.43.1",
     "@typhonjs-config/eslint-config": "^0.3.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
-    "eslint": "^8.11.0",
+    "eslint": "^8.12.0",
     "gulp-sass": "^5.1.0",
     "rollup": "^2.70.1",
-    "sass": "^1.49.9"
+    "sass": "^1.49.10"
   }
 }

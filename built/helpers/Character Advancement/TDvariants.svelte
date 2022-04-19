@@ -1,6 +1,8 @@
 <script>
   import AddButton from "./AddButton.svelte";
   import MinusButton from "./MinusButton.svelte";
+  export let min;
+  export let max;
   export let val;
   export let key;
   export let type;
@@ -13,19 +15,25 @@
 </script>
 
 <tr>
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[0]}</td>
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}
-    ><AddButton type={typeStr} subtype={val[0]} />
+    ><AddButton type={typeStr} subtype={val[0]} {max} />
   </td>
   {#if val[1].rankName}
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[1].rankName}</td>
   {:else}
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[1].value}</td>
   {/if}
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}
-    ><MinusButton type={typeStr} subtype={val[0]} /></td
+    ><MinusButton type={typeStr} subtype={val[0]} {min} /></td
   >
   {#if val[1].mod}
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td
       class={val[1].description}
       on:mouseover={() => {

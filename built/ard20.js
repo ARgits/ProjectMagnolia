@@ -15,97 +15,95 @@ import * as chat from "./helpers/chat.js";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 export function obj_entries(obj) {
-    return Object.entries(obj);
+  return Object.entries(obj);
 }
 export function arr_entries(arr) {
-    return Object.entries(arr);
+  return Object.entries(arr);
 }
 export function getValues(SourceObject, key) {
-    return SourceObject[key];
+  return SourceObject[key];
 }
 export function obj_keys(obj) {
-    return Object.keys(obj);
+  return Object.keys(obj);
 }
 export function array_keys(obj) {
-    return Object.keys(obj);
+  return Object.keys(obj);
 }
 Hooks.once("init", async function () {
-    // Add utility classes to the global game object so that they're more easily
-    // accessible in global contexts.
-    if (game instanceof Game) {
-        game.ard20 = {
-            documents: {
-                ARd20Actor,
-                ARd20Item,
-            },
-            rollItemMacro,
-            config: ARd20,
-            dice: dice,
-        };
-        // Add custom constants for configuration.
-        CONFIG.ARd20 = ARd20;
-        //@ts-expect-error
-        CONFIG.Dice.DamageRoll = dice.DamageRoll;
-        //@ts-expect-error
-        CONFIG.Dice.D20Roll = dice.D20Roll;
-        CONFIG.Dice.rolls.push(dice.D20Roll);
-        CONFIG.Dice.rolls.push(dice.DamageRoll);
-        if (game.socket instanceof io.Socket) {
-            game.socket.on("system.ard20", (data) => {
-                if (data.operation === "updateActorData")
-                    ARd20SocketHandler.updateActorData(data);
-            });
-        }
-        /**
-         * Set an initiative formula for the system
-         * @type {String}
-         */
-        CONFIG.Combat.initiative = {
-            formula: "1d20 + @abilities.dex.mod",
-            decimals: 2,
-        };
-        // Define custom Document classes
-        CONFIG.Actor.documentClass = ARd20Actor;
-        CONFIG.Item.documentClass = ARd20Item;
-        // Register sheet application classes
-        Actors.unregisterSheet("core", ActorSheet);
-        Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
-        Items.unregisterSheet("core", ItemSheet);
-        //@ts-expect-error
-        Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
-        registerSystemSettings();
-        // Preload Handlebars templates.
-        return preloadHandlebarsTemplates();
+  // Add utility classes to the global game object so that they're more easily
+  // accessible in global contexts.
+  if (game instanceof Game) {
+    game.ard20 = {
+      documents: {
+        ARd20Actor,
+        ARd20Item,
+      },
+      rollItemMacro,
+      config: ARd20,
+      dice: dice,
+    };
+    // Add custom constants for configuration.
+    CONFIG.ARd20 = ARd20;
+    //@ts-expect-error
+    CONFIG.Dice.DamageRoll = dice.DamageRoll;
+    //@ts-expect-error
+    CONFIG.Dice.D20Roll = dice.D20Roll;
+    CONFIG.Dice.rolls.push(dice.D20Roll);
+    CONFIG.Dice.rolls.push(dice.DamageRoll);
+    if (game.socket instanceof io.Socket) {
+      game.socket.on("system.ard20", (data) => {
+        if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
+      });
     }
-    else {
-        throw new Error("game not initialized yet!");
-    }
+    /**
+     * Set an initiative formula for the system
+     * @type {String}
+     */
+    CONFIG.Combat.initiative = {
+      formula: "1d20 + @abilities.dex.mod",
+      decimals: 2,
+    };
+    // Define custom Document classes
+    CONFIG.Actor.documentClass = ARd20Actor;
+    CONFIG.Item.documentClass = ARd20Item;
+    // Register sheet application classes
+    Actors.unregisterSheet("core", ActorSheet);
+    Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
+    Items.unregisterSheet("core", ItemSheet);
+    //@ts-expect-error
+    Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
+    registerSystemSettings();
+    // Preload Handlebars templates.
+    return preloadHandlebarsTemplates();
+  } else {
+    throw new Error("game not initialized yet!");
+  }
 });
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
 /* -------------------------------------------- */
 // If you need to add Handlebars helpers, here are a few useful examples:
 Handlebars.registerHelper("concat", function () {
-    var outStr = "";
-    for (var arg in arguments) {
-        if (typeof arguments[arg] != "object") {
-            outStr += arguments[arg];
-        }
+  var outStr = "";
+  for (var arg in arguments) {
+    if (typeof arguments[arg] != "object") {
+      outStr += arguments[arg];
     }
-    return outStr;
+  }
+  return outStr;
 });
 Handlebars.registerHelper("toLowerCase", function (str) {
-    return str.toLowerCase();
+  return str.toLowerCase();
 });
 Handlebars.registerHelper("add", function (value1, value2) {
-    return Number(value1) + Number(value2);
+  return Number(value1) + Number(value2);
 });
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
-    // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-    Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
+  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
@@ -118,32 +116,31 @@ Hooks.once("ready", async function () {
  * @returns {Promise}
  */
 async function createItemMacro(data, slot) {
-    if (game instanceof Game) {
-        //@ts-expect-error
-        if (data.type !== "Item")
-            return;
-        if (!("data" in data) && ui.notifications instanceof Notifications)
-            return ui.notifications.warn("You can only create macro buttons for owned Items");
-        //@ts-expect-error
-        const item = data.data;
-        // Create the macro command
-        const command = `game.ard20.rollItemMacro("${item.name}");`;
-        let macroList = game.macros.contents.filter((m) => m.name === item.name && m?.command === command);
-        let macroCheck = macroList.length !== 0 ? macroList[0] : null;
-        if (macroCheck !== null) {
-            let macro = await Macro.create({
-                name: item.name,
-                type: "script",
-                img: item.img,
-                command: command,
-                flags: { "ard20.itemMacro": true },
-            });
-            if (macro instanceof Macro) {
-                game.user?.assignHotbarMacro(macro, slot);
-            }
-        }
-        return false;
+  if (game instanceof Game) {
+    //@ts-expect-error
+    if (data.type !== "Item") return;
+    if (!("data" in data) && ui.notifications instanceof Notifications)
+      return ui.notifications.warn("You can only create macro buttons for owned Items");
+    //@ts-expect-error
+    const item = data.data;
+    // Create the macro command
+    const command = `game.ard20.rollItemMacro("${item.name}");`;
+    let macroList = game.macros.contents.filter((m) => m.name === item.name && m?.command === command);
+    let macroCheck = macroList.length !== 0 ? macroList[0] : null;
+    if (macroCheck !== null) {
+      let macro = await Macro.create({
+        name: item.name,
+        type: "script",
+        img: item.img,
+        command: command,
+        flags: { "ard20.itemMacro": true },
+      });
+      if (macro instanceof Macro) {
+        game.user?.assignHotbarMacro(macro, slot);
+      }
     }
+    return false;
+  }
 }
 /**
  * Create a Macro from an Item drop.
@@ -152,27 +149,24 @@ async function createItemMacro(data, slot) {
  * @return {Promise}
  */
 export function rollItemMacro(itemName) {
-    if (game instanceof Game) {
-        const speaker = ChatMessage.getSpeaker();
-        let actor;
-        if (speaker.token)
-            actor = game.actors.tokens[speaker.token];
-        if (!actor && typeof speaker.actor === "string")
-            actor = game.actors.get(speaker.actor);
-        const item = actor ? actor.items.find((i) => i.name === itemName) : null;
-        if (!item)
-            return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
-        // Trigger the item roll
-        //@ts-expect-error
-        return item.roll();
-    }
+  if (game instanceof Game) {
+    const speaker = ChatMessage.getSpeaker();
+    let actor;
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    if (!actor && typeof speaker.actor === "string") actor = game.actors.get(speaker.actor);
+    const item = actor ? actor.items.find((i) => i.name === itemName) : null;
+    if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+    // Trigger the item roll
+    //@ts-expect-error
+    return item.roll();
+  }
 }
 Hooks.on("renderChatMessage", (app, html, data) => {
-    // Display action buttons
-    chat.displayChatActionButtons(app, html, data);
-    // Highlight critical success or failure die
-    chat.highlightCriticalSuccessFailure(app, html, data);
-    // Optionally collapse the content
+  // Display action buttons
+  chat.displayChatActionButtons(app, html, data);
+  // Highlight critical success or failure die
+  chat.highlightCriticalSuccessFailure(app, html, data);
+  // Optionally collapse the content
 });
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 //@ts-expect-error

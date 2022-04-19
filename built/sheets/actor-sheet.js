@@ -1,3 +1,5 @@
+import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
+import CharacterAdvancementShell from "../helpers/Character Advancement/cha-adv-shell.svelte";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
 import { CharacterAdvancement } from "../helpers/Character Advancement/cha-adv";
 import { getValues, obj_entries } from "../ard20.js";
@@ -201,10 +203,22 @@ export class ARd20ActorSheet extends ActorSheet {
     //@ts-ignore
     switch (button.dataset?.action) {
       case "adv":
-        app = new CharacterAdvancement(this.object);
+        const dialogOptions = {
+          title: "ard20.characterAdvancement",
+          modal: true,
+          draggable: false,
+          content: {
+            class: CharacterAdvancementShell,
+            props: {
+              document: this.object,
+            },
+          },
+        };
+        new TJSDialog(dialogOptions).render(true, { focus: true });
+        //app = new CharacterAdvancement(this.object);
         break;
     }
-    app?.render(true);
+    //app?.render(true);
   }
   /**
    * Change eqquiped item or not by toggling it on sheet

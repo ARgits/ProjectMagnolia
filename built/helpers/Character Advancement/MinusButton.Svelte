@@ -1,15 +1,19 @@
 <script>
-	import {data} from './store.js'
+	import {getContext} from 'svelte'
+	export let min
 	export let type
 	export let subtype
+	let doc = getContext('data')
+	let disabled
+	$: disabled = $doc[`${type}`][`${subtype}`].value===min;
+
 	function decrease(type, subtype){
-		data.update((obj)=>{
-			obj[type][subtype].value = obj[type][subtype].value-1
-			return obj
-		})
+		doc.update((store)=>{
+			store[`${type}`][`${subtype}`].value-=1
+			return store})
 	}
 </script>
-<button on:click={()=>decrease(type,subtype)}>-
+<button {disabled} on:click={()=>decrease(type,subtype)}>-
 </button>
 <style>
 	button:active {

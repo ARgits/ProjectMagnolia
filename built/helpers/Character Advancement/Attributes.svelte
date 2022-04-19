@@ -1,18 +1,13 @@
 <script>
-  import AddButton from "./AddButton.svelte";
-  import MinusButton from "./MinusButton.svelte";
+  import {getContext} from 'svelte'
   import TDvariants from "./TDvariants.svelte";
-  import { data } from "./store.js";
-  let attributes;
-  data.subscribe((value) => {
-    attributes = value.attributes;
-  });
+  let data = getContext('data')
+  let typeStr = 'attributes'
   $: {
-    for (let [key, attr] of Object.entries(attributes)) {
+    for (let [key, attr] of Object.entries($data.attributes)) {
       attr.mod = Math.floor((attr.value - 10) / 2);
     }
   }
-  let descArr = ["be strong", "be flexible", ""];
   let description = "";
 </script>
 
@@ -25,8 +20,8 @@
     <th>Mod</th>
     <th>Description</th>
   </tr>
-  {#each Object.entries(attributes) as attr, key}
-    <TDvariants type={attributes} typeStr={Object.keys({ attributes })[0]} val={attr} {key} bind:description />
+  {#each Object.entries($data.attributes) as attr, key}
+    <TDvariants type={$data.attributes} {typeStr} val={attr} min={1} max={30} {key} bind:description />
   {/each}
 </table>
 
