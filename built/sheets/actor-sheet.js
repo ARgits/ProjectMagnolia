@@ -211,6 +211,7 @@ export class ARd20ActorSheet extends ActorSheet {
           draggable: false,
           zIndex:101,
           height:480,
+          width:640,
           id:"cha-adv",
           content: {
             class: CharacterAdvancementShell,

@@ -2146,7 +2146,7 @@ function create_else_block(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2180,7 +2180,7 @@ function create_if_block_2(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2214,7 +2214,7 @@ function create_if_block_1(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*strMod*/ ctx[7]);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2246,7 +2246,7 @@ function create_if_block$2(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*description*/ ctx[0]);
-			attr(td, "class", "description svelte-9x66g2");
+			attr(td, "class", "description svelte-5mzk3w");
 			attr(td, "rowspan", td_rowspan_value = Object.values(/*type*/ ctx[5]).length);
 		},
 		m(target, anchor) {
@@ -2328,10 +2328,10 @@ function create_fragment$7(ctx) {
 			if (if_block1) if_block1.c();
 			t5 = space();
 			if (if_block2) if_block2.c();
-			attr(td0, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
-			attr(td1, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
-			attr(td2, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
-			attr(tr, "class", "svelte-9x66g2");
+			attr(td0, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-5mzk3w"));
+			attr(td1, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-5mzk3w"));
+			attr(td2, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-5mzk3w"));
+			attr(tr, "class", "svelte-5mzk3w");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -4309,6 +4309,7 @@ class ARd20ActorSheet extends ActorSheet {
           draggable: false,
           zIndex: 101,
           height: 480,
+          width: 640,
           id: "cha-adv",
           content: {
             class: Cha_adv_shell,

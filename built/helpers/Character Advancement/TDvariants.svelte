@@ -43,7 +43,7 @@
 
 <style>
   .last {
-    border-bottom: 1px, solid, black;
+    border-bottom: 1px solid black;
   }
   .description {
     max-width: 1em;
