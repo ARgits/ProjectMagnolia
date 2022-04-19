@@ -3475,7 +3475,8 @@ class ARd20ActorSheet extends ActorSheet {
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
-    const context = super.getData(); // Use a safe clone of the actor data for further operations.
+    const context = super.getData();
+    console.log(context, 'firstDAta'); // Use a safe clone of the actor data for further operations.
 
     const actorData = this.actor; // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
@@ -3486,7 +3487,7 @@ class ARd20ActorSheet extends ActorSheet {
     context.config = CONFIG.ARd20; //@ts-expect-error
 
     context.isGM = game.user.isGM;
-    console.log(context); // Prepare character data and items.
+    console.log(context, 'before character data'); // Prepare character data and items.
 
     if (actorData.type === "character") {
       //@ts-expect-error
@@ -3508,7 +3509,7 @@ class ARd20ActorSheet extends ActorSheet {
     //@ts-expect-error
 
     context.effects = prepareActiveEffectCategories(this.actor.effects);
-    console.log(context);
+    console.log(context, 'initialization is finished');
     return context;
   }
   /**
