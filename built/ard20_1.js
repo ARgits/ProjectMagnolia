@@ -2139,7 +2139,6 @@ function create_else_block(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].value + "";
 	let t;
-	let td_class_value;
 	let mounted;
 	let dispose;
 
@@ -2147,23 +2146,19 @@ function create_else_block(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[12]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[13]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
 			if (dirty & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].value + "")) set_data(t, t_value);
-
-			if (dirty & /*val*/ 8 && td_class_value !== (td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
-				attr(td, "class", td_class_value);
-			}
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2173,12 +2168,11 @@ function create_else_block(ctx) {
 	};
 }
 
-// (27:2) {#if val[1].rankName}
+// (26:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].rankName + "";
 	let t;
-	let td_class_value;
 	let mounted;
 	let dispose;
 
@@ -2186,23 +2180,19 @@ function create_if_block_2(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[11]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[12]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
 			if (dirty & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].rankName + "")) set_data(t, t_value);
-
-			if (dirty & /*val*/ 8 && td_class_value !== (td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
-				attr(td, "class", td_class_value);
-			}
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2212,7 +2202,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (38:2) {#if val[1].mod!==undefined}
+// (35:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2224,23 +2214,19 @@ function create_if_block_1(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*strMod*/ ctx[7]);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[14]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[15]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
 			if (dirty & /*strMod*/ 128) set_data(t, /*strMod*/ ctx[7]);
-
-			if (dirty & /*val*/ 8 && td_class_value !== (td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
-				attr(td, "class", td_class_value);
-			}
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2250,7 +2236,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (47:2) {#if key === 0}
+// (39:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2260,7 +2246,7 @@ function create_if_block$2(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*description*/ ctx[0]);
-			attr(td, "class", "description svelte-3cj78q");
+			attr(td, "class", "description svelte-9x66g2");
 			attr(td, "rowspan", td_rowspan_value = Object.values(/*type*/ ctx[5]).length);
 		},
 		m(target, anchor) {
@@ -2285,16 +2271,13 @@ function create_fragment$7(ctx) {
 	let td0;
 	let t0_value = /*val*/ ctx[3][0] + "";
 	let t0;
-	let td0_class_value;
 	let t1;
 	let td1;
 	let changebutton0;
-	let td1_class_value;
 	let t2;
 	let t3;
 	let td2;
 	let changebutton1;
-	let td2_class_value;
 	let t4;
 	let t5;
 	let current;
@@ -2345,10 +2328,10 @@ function create_fragment$7(ctx) {
 			if (if_block1) if_block1.c();
 			t5 = space();
 			if (if_block2) if_block2.c();
-			attr(td0, "class", td0_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
-			attr(td1, "class", td1_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
-			attr(td2, "class", td2_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
-			attr(tr, "class", "svelte-3cj78q");
+			attr(td0, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
+			attr(td1, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
+			attr(td2, "class", "" + (null_to_empty(/*last*/ ctx[9]) + " svelte-9x66g2"));
+			attr(tr, "class", "svelte-9x66g2");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -2370,9 +2353,9 @@ function create_fragment$7(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(td0, "mouseover", /*mouseover_handler*/ ctx[9]),
-					listen(td1, "mouseover", /*mouseover_handler_1*/ ctx[10]),
-					listen(td2, "mouseover", /*mouseover_handler_4*/ ctx[13])
+					listen(td0, "mouseover", /*mouseover_handler*/ ctx[10]),
+					listen(td1, "mouseover", /*mouseover_handler_1*/ ctx[11]),
+					listen(td2, "mouseover", /*mouseover_handler_4*/ ctx[14])
 				];
 
 				mounted = true;
@@ -2380,20 +2363,11 @@ function create_fragment$7(ctx) {
 		},
 		p(ctx, [dirty]) {
 			if ((!current || dirty & /*val*/ 8) && t0_value !== (t0_value = /*val*/ ctx[3][0] + "")) set_data(t0, t0_value);
-
-			if (!current || dirty & /*val*/ 8 && td0_class_value !== (td0_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
-				attr(td0, "class", td0_class_value);
-			}
-
 			const changebutton0_changes = {};
 			if (dirty & /*typeStr*/ 64) changebutton0_changes.type = /*typeStr*/ ctx[6];
 			if (dirty & /*val*/ 8) changebutton0_changes.subtype = /*val*/ ctx[3][0];
 			if (dirty & /*max*/ 4) changebutton0_changes.max = /*max*/ ctx[2];
 			changebutton0.$set(changebutton0_changes);
-
-			if (!current || dirty & /*val*/ 8 && td1_class_value !== (td1_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
-				attr(td1, "class", td1_class_value);
-			}
 
 			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
 				if_block0.p(ctx, dirty);
@@ -2412,10 +2386,6 @@ function create_fragment$7(ctx) {
 			if (dirty & /*val*/ 8) changebutton1_changes.subtype = /*val*/ ctx[3][0];
 			if (dirty & /*min*/ 2) changebutton1_changes.min = /*min*/ ctx[1];
 			changebutton1.$set(changebutton1_changes);
-
-			if (!current || dirty & /*val*/ 8 && td2_class_value !== (td2_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
-				attr(td2, "class", td2_class_value);
-			}
 
 			if (/*val*/ ctx[3][1].mod !== undefined) {
 				if (if_block1) {
@@ -2482,15 +2452,13 @@ function instance$7($$self, $$props, $$invalidate) {
 	}
 
 	let strMod;
+	let last = key === Object.values(type).length - 1 ? "last" : "";
 	const mouseover_handler = () => changeDesc(val);
 	const mouseover_handler_1 = () => changeDesc(val);
 	const mouseover_handler_2 = () => changeDesc(val);
 	const mouseover_handler_3 = () => changeDesc(val);
 	const mouseover_handler_4 = () => changeDesc(val);
-
-	const mouseover_handler_5 = () => {
-		$$invalidate(0, description = val[1].description);
-	};
+	const mouseover_handler_5 = () => changeDesc(val);
 
 	$$self.$$set = $$props => {
 		if ('min' in $$props) $$invalidate(1, min = $$props.min);
@@ -2520,6 +2488,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		typeStr,
 		strMod,
 		changeDesc,
+		last,
 		mouseover_handler,
 		mouseover_handler_1,
 		mouseover_handler_2,
@@ -4339,6 +4308,7 @@ class ARd20ActorSheet extends ActorSheet {
           modal: true,
           draggable: false,
           zIndex: 101,
+          height: 480,
           id: "cha-adv",
           content: {
             class: Cha_adv_shell,

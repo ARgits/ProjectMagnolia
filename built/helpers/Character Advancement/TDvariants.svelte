@@ -11,38 +11,30 @@
     if (!val[1].description) return "";
     description = val[1].description;
   }
-  let strMod
-  $: if(val[1].mod!==undefined){
-    strMod = val[1].mod<0?`${val[1].mod}`:`+${val[1].mod}`
+  let strMod;
+  $: if (val[1].mod !== undefined) {
+    strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`;
   }
+  let last = key === Object.values(type).length - 1 ? "last" : "";
 </script>
 
 <tr>
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-  <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[0]}</td>
+  <td class={last} on:mouseover={() => changeDesc(val)}>{val[0]}</td>
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-  <td class={val[1].description} on:mouseover={() => changeDesc(val)}
-    ><ChangeButton type={typeStr} subtype={val[0]} {max} />
-  </td>
+  <td class={last} on:mouseover={() => changeDesc(val)}><ChangeButton type={typeStr} subtype={val[0]} {max} /> </td>
   {#if val[1].rankName}
-  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[1].rankName}</td>
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <td class={last} on:mouseover={() => changeDesc(val)}>{val[1].rankName}</td>
   {:else}
-  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[1].value}</td>
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <td class={last} on:mouseover={() => changeDesc(val)}>{val[1].value}</td>
   {/if}
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-  <td class={val[1].description} on:mouseover={() => changeDesc(val)}
-    ><ChangeButton type={typeStr} subtype={val[0]} {min} /></td
-  >
-  {#if val[1].mod!==undefined}
-  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td
-      class={val[1].description}
-      on:mouseover={() => {
-        description = val[1].description;
-      }}>{strMod}</td
-    >
+  <td class={last} on:mouseover={() => changeDesc(val)}><ChangeButton type={typeStr} subtype={val[0]} {min} /></td>
+  {#if val[1].mod !== undefined}
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <td class={last} on:mouseover={() => changeDesc(val)}>{strMod}</td>
   {/if}
   {#if key === 0}
     <td class="description" rowspan={Object.values(type).length}>{description}</td>
@@ -50,12 +42,16 @@
 </tr>
 
 <style>
+  .last {
+    border-bottom: 1px, solid, black;
+  }
   .description {
     max-width: 1em;
   }
   td {
     text-align: center;
     border-right: 1px solid black;
+    border-left: 1px solid black;
   }
   tr {
     border: 1px solid black;
