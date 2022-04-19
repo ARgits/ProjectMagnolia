@@ -2077,7 +2077,7 @@ function instance$8($$self, $$props, $$invalidate) {
 	let { min } = $$props;
 	let { type } = $$props;
 	let { subtype } = $$props;
-	let doc = getContext("data");
+	let doc = getContext('chaAdvActorData');
 	component_subscribe($$self, doc, value => $$invalidate(8, $doc = value));
 	let disabled;
 

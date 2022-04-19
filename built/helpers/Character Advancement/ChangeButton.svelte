@@ -4,7 +4,7 @@
   export let min;
   export let type;
   export let subtype;
-  let doc = getContext("data");
+  let doc = getContext('chaAdvActorData');
   let disabled;
   $: disabled = $doc[`${type}`][`${subtype}`].value === max || $doc[`${type}`][`${subtype}`].value === min;
   function increase(type, subtype) {
