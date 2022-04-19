@@ -1,10 +1,13 @@
 <script>
-  import {getContext} from 'svelte'
+  import { getContext } from "svelte";
   export let tabs = [];
   export let activeTab;
-  let doc = getContext('data')
-  function submitData(){
+  const doc = getContext("chaAdvActorData");
+  const id = getContext("chaAdvActorID");
+  function submitData() {
     console.log($doc)
+    console.log(game.actors.get(id).system)
+    game.actors.get(id).update({ system: $doc });
   }
 </script>
 

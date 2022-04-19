@@ -1,7 +1,7 @@
 <script>
   import {getContext} from 'svelte'
   import TDvariants from "./TDvariants.svelte";
-  let data = getContext('data')
+  let data = getContext('chaAdvActorData')
   let typeStr = 'attributes'
   $: {
     for (let [key, attr] of Object.entries($data.attributes)) {

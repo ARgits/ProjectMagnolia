@@ -1,7 +1,7 @@
 <script>
 	import {getContext} from 'svelte'
 	import TDvariants from './TDvariants.svelte'
-	let doc = getContext('data')
+	let doc = getContext('chaAdvActorData')
 	const typeStr='skills'
 	const rankName = ['untrained','trained','expert','master','legend']
 	$: for( let[key,skill] of Object.entries($doc.skills)){

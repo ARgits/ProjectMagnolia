@@ -8,8 +8,9 @@
   import FeatureComp from "./FeatureComp.svelte";
   import Tabs from "./Tabs.svelte";
   export let document
+  setContext('chaAdvActorID',document.id)
   let data = writable(document.system)
-  setContext('data',data)
+  setContext('chaAdvActorData',data)
   let tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp},
     { label: "skills", id: "skills", component: SkillComp},
