@@ -4369,7 +4369,7 @@ class ARd20ActorSheet extends ActorSheet {
         const dialogOptions = {
           title: "Character Advancement",
           modal: true,
-          draggable: false,
+          draggable: true,
           content: {
             class: Cha_adv_shell,
             props: {
