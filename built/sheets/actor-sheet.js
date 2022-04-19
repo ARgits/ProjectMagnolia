@@ -205,22 +205,6 @@ export class ARd20ActorSheet extends ActorSheet {
     //@ts-ignore
     switch (button.dataset?.action) {
       case "adv":
-        /*const dialogOptions = {
-          title: "Character Advancement",
-          modal: true,
-          draggable: false,
-          zIndex:101,
-          height:480,
-          width:640,
-          id:"cha-adv",
-          content: {
-            class: CharacterAdvancementShell,
-            props: {
-              document: this.object,
-            },
-          },
-        };
-        new TJSDialog(dialogOptions).render(true, { focus: true });*/
         app = new CharacterAdvancement(this.object);
         break;
     }

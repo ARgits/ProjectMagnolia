@@ -25,7 +25,7 @@
   {/each}
 </table>
 
-<style global>
+<style>
   table {
     border-collapse: collapse;
   }

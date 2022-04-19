@@ -21,10 +21,10 @@
   }
 </script>
 
-{#if max}
+{#if max!==undefined}
   <button class="change" {disabled} on:click={() => increase(type, subtype)}>+ </button>
 {/if}
-{#if min}
+{#if min!==undefined}
   <button class="change" {disabled} on:click={() => decrease(type, subtype)}>- </button>
 {/if}
 

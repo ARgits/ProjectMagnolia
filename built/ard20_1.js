@@ -1978,7 +1978,7 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (27:0) {#if min}
+// (27:0) {#if min!==undefined}
 function create_if_block$3(ctx) {
 	let button;
 	let t;
@@ -2017,8 +2017,8 @@ function create_if_block$3(ctx) {
 function create_fragment$8(ctx) {
 	let t;
 	let if_block1_anchor;
-	let if_block0 = /*max*/ ctx[0] && create_if_block_1$1(ctx);
-	let if_block1 = /*min*/ ctx[1] && create_if_block$3(ctx);
+	let if_block0 = /*max*/ ctx[0] !== undefined && create_if_block_1$1(ctx);
+	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$3(ctx);
 
 	return {
 		c() {
@@ -2034,7 +2034,7 @@ function create_fragment$8(ctx) {
 			insert(target, if_block1_anchor, anchor);
 		},
 		p(ctx, [dirty]) {
-			if (/*max*/ ctx[0]) {
+			if (/*max*/ ctx[0] !== undefined) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
@@ -2047,7 +2047,7 @@ function create_fragment$8(ctx) {
 				if_block0 = null;
 			}
 
-			if (/*min*/ ctx[1]) {
+			if (/*min*/ ctx[1] !== undefined) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
@@ -2606,18 +2606,21 @@ function create_fragment$6(ctx) {
 			table = element("table");
 			tr = element("tr");
 
-			tr.innerHTML = `<th>Name</th> 
-    <th>Increase</th> 
-    <th>Value</th> 
-    <th>Decrease</th> 
-    <th>Mod</th> 
-    <th>Description</th>`;
+			tr.innerHTML = `<th class="svelte-h7j8ib">Name</th> 
+    <th class="svelte-h7j8ib">Increase</th> 
+    <th class="svelte-h7j8ib">Value</th> 
+    <th class="svelte-h7j8ib">Decrease</th> 
+    <th class="svelte-h7j8ib">Mod</th> 
+    <th class="svelte-h7j8ib">Description</th>`;
 
 			t11 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
+
+			attr(tr, "class", "svelte-h7j8ib");
+			attr(table, "class", "svelte-h7j8ib");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -2792,11 +2795,11 @@ function create_fragment$5(ctx) {
 			table = element("table");
 			tr = element("tr");
 
-			tr.innerHTML = `<th class="svelte-n104bt">Name</th> 
-		<th class="svelte-n104bt">Increase</th> 
-		<th class="svelte-n104bt">Rank</th> 
-		<th class="svelte-n104bt">Decrease</th> 
-		<th class="svelte-n104bt">Description</th>`;
+			tr.innerHTML = `<th class="svelte-vg40np">Name</th> 
+		<th class="svelte-vg40np">Increase</th> 
+		<th class="svelte-vg40np">Rank</th> 
+		<th class="svelte-vg40np">Decrease</th> 
+		<th class="svelte-vg40np">Description</th>`;
 
 			t9 = space();
 
@@ -2804,8 +2807,8 @@ function create_fragment$5(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-n104bt");
-			attr(table, "class", "svelte-n104bt");
+			attr(tr, "class", "svelte-vg40np");
+			attr(table, "class", "svelte-vg40np");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -3666,22 +3669,6 @@ class ARd20ActorSheet extends ActorSheet {
 
     switch ((_button$dataset = button.dataset) === null || _button$dataset === void 0 ? void 0 : _button$dataset.action) {
       case "adv":
-        /*const dialogOptions = {
-          title: "Character Advancement",
-          modal: true,
-          draggable: false,
-          zIndex:101,
-          height:480,
-          width:640,
-          id:"cha-adv",
-          content: {
-            class: CharacterAdvancementShell,
-            props: {
-              document: this.object,
-            },
-          },
-        };
-        new TJSDialog(dialogOptions).render(true, { focus: true });*/
         app = new CharacterAdvancement(this.object);
         break;
     }

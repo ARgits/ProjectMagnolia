@@ -22,7 +22,7 @@
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <td class={last} on:mouseover={() => changeDesc(val)}>{val[0]}</td>
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-  <td class={last} on:mouseover={() => changeDesc(val)}><ChangeButton type={typeStr} subtype={val[0]} {max} /> </td>
+  <td class={last} on:mouseover={() => changeDesc(val)}><ChangeButton type={typeStr} subtype={val[0]} {max} /></td>
   {#if val[1].rankName}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={last} on:mouseover={() => changeDesc(val)}>{val[1].rankName}</td>

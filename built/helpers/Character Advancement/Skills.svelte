@@ -22,6 +22,7 @@
 </table>
 <style>
 	table{
+    background-color: inherit;
 		border-collapse:collapse
 	}
 	tr{
