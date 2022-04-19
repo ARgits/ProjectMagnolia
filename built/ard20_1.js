@@ -2901,21 +2901,21 @@ class Skills extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[6] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[6] = list[i];
 	return child_ctx;
 }
 
-// (6:2) {#each tabs as tab}
+// (12:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
-	let t0_value = /*tab*/ ctx[3].label + "";
+	let t0_value = /*tab*/ ctx[6].label + "";
 	let t0;
 	let t1;
 	let li_class_value;
@@ -2923,7 +2923,7 @@ function create_each_block_1$2(ctx) {
 	let dispose;
 
 	function click_handler() {
-		return /*click_handler*/ ctx[2](/*tab*/ ctx[3]);
+		return /*click_handler*/ ctx[4](/*tab*/ ctx[6]);
 	}
 
 	return {
@@ -2934,7 +2934,7 @@ function create_each_block_1$2(ctx) {
 			t1 = space();
 			attr(span, "class", "svelte-1eq0yix");
 
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
+			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[6].id
 			? "active"
 			: "") + " svelte-1eq0yix"));
 		},
@@ -2951,9 +2951,9 @@ function create_each_block_1$2(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[3].label + "")) set_data(t0, t0_value);
+			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[6].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
+			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[6].id
 			? "active"
 			: "") + " svelte-1eq0yix"))) {
 				attr(li, "class", li_class_value);
@@ -2967,15 +2967,15 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (18:4) {#if tab.id === activeTab}
+// (24:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
-	var switch_value = /*tab*/ ctx[3].component;
+	var switch_value = /*tab*/ ctx[6].component;
 
 	function switch_props(ctx) {
-		return { props: { data: /*tab*/ ctx[3].data } };
+		return { props: { data: /*tab*/ ctx[6].data } };
 	}
 
 	if (switch_value) {
@@ -2997,9 +2997,9 @@ function create_if_block$1(ctx) {
 		},
 		p(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*tabs*/ 2) switch_instance_changes.data = /*tab*/ ctx[3].data;
+			if (dirty & /*tabs*/ 2) switch_instance_changes.data = /*tab*/ ctx[6].data;
 
-			if (switch_value !== (switch_value = /*tab*/ ctx[3].component)) {
+			if (switch_value !== (switch_value = /*tab*/ ctx[6].component)) {
 				if (switch_instance) {
 					group_outros();
 					const old_component = switch_instance;
@@ -3039,11 +3039,11 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (17:2) {#each tabs as tab}
+// (23:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*tab*/ ctx[3].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
+	let if_block = /*tab*/ ctx[6].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -3056,7 +3056,7 @@ function create_each_block$3(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (/*tab*/ ctx[3].id === /*activeTab*/ ctx[0]) {
+			if (/*tab*/ ctx[6].id === /*activeTab*/ ctx[0]) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
@@ -3097,9 +3097,13 @@ function create_each_block$3(ctx) {
 
 function create_fragment$4(ctx) {
 	let ul;
-	let t;
+	let t0;
 	let div;
+	let t1;
+	let button;
 	let current;
+	let mounted;
+	let dispose;
 	let each_value_1 = /*tabs*/ ctx[1];
 	let each_blocks_1 = [];
 
@@ -3126,13 +3130,16 @@ function create_fragment$4(ctx) {
 				each_blocks_1[i].c();
 			}
 
-			t = space();
+			t0 = space();
 			div = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
+			t1 = space();
+			button = element("button");
+			button.textContent = "SubmitData";
 			attr(ul, "class", "svelte-1eq0yix");
 			attr(div, "class", "box svelte-1eq0yix");
 		},
@@ -3143,14 +3150,21 @@ function create_fragment$4(ctx) {
 				each_blocks_1[i].m(ul, null);
 			}
 
-			insert(target, t, anchor);
+			insert(target, t0, anchor);
 			insert(target, div, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div, null);
 			}
 
+			insert(target, t1, anchor);
+			insert(target, button, anchor);
 			current = true;
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*submitData*/ ctx[3]);
+				mounted = true;
+			}
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*activeTab, tabs*/ 3) {
@@ -3224,16 +3238,27 @@ function create_fragment$4(ctx) {
 		d(detaching) {
 			if (detaching) detach(ul);
 			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t);
+			if (detaching) detach(t0);
 			if (detaching) detach(div);
 			destroy_each(each_blocks, detaching);
+			if (detaching) detach(t1);
+			if (detaching) detach(button);
+			mounted = false;
+			dispose();
 		}
 	};
 }
 
 function instance$4($$self, $$props, $$invalidate) {
+	let $doc;
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
+	let doc = getContext('data');
+	component_subscribe($$self, doc, value => $$invalidate(5, $doc = value));
+
+	function submitData() {
+		console.log($doc);
+	}
 
 	const click_handler = tab => {
 		$$invalidate(0, activeTab = tab.id);
@@ -3244,7 +3269,7 @@ function instance$4($$self, $$props, $$invalidate) {
 		if ('activeTab' in $$props) $$invalidate(0, activeTab = $$props.activeTab);
 	};
 
-	return [activeTab, tabs, click_handler];
+	return [activeTab, tabs, doc, submitData, click_handler];
 }
 
 class Tabs extends SvelteComponent {
@@ -3403,675 +3428,6 @@ function prepareActiveEffectCategories(effects) {
   }
 
   return categories;
-}
-
-class CharacterAdvancement extends FormApplication {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      title: "Character Advancement",
-      template: "systems/ard20/templates/actor/parts/actor-adv.html",
-      id: "actor-adv",
-      width: 1000,
-      height: "auto",
-      tabs: [{
-        navSelector: ".sheet-tabs",
-        contentSelector: ".sheet-body",
-        initial: "stats"
-      }],
-      closeOnSubmit: false
-    });
-  }
-
-  async InitilizeData() {
-    var _startingData$feats$a;
-
-    if (this.form) return;
-    const pack = await this.getPacks();
-    const folder = this.getFolders();
-    const rList = await this.getRacesList(pack, folder);
-    const fList = await this.getFeaturesList(pack, folder);
-    const actorData = this.object.system;
-    const startingData = {
-      isReady: duplicate(actorData.isReady),
-      attributes: duplicate(actorData.attributes),
-      skills: duplicate(actorData.skills),
-      xp: duplicate(actorData.advancement.xp),
-      profs: duplicate(actorData.proficiencies),
-      health: duplicate(actorData.health),
-      races: {
-        list: rList,
-        chosen: ""
-      },
-      count: {
-        // counter for skills and feats
-        skills: {
-          // count skills by their level
-          0: 0,
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 0
-        },
-        feats: {
-          // count feats by their source
-          mar: 0,
-          mag: 0,
-          div: 0,
-          pri: 0,
-          psy: 0
-        }
-      },
-      content: {
-        // descriptions for skills and feats
-        skills: {},
-        feats: {}
-      },
-      feats: {
-        learned: fList.learnedFeatures,
-        awail: fList.temp_feat_list // array of feats that are available to learn
-
-      },
-      allow: {
-        attribute: actorData.isReady,
-        race: actorData.isReady,
-        final: actorData.isReady
-      },
-      hover: {
-        attribute: "",
-        skill: "",
-        race: "",
-        feat: ""
-      }
-    };
-    startingData.xp.get = startingData.isReady || startingData.xp.used !== 0 ? startingData.xp.get : 10000;
-    let awailFeats = startingData.feats.awail;
-    let name_array = [];
-
-    for (let i of startingData.feats.learned) {
-      name_array.push(i.name);
-    }
-
-    awailFeats.forEach((v, k) => {
-      if (name_array.includes(v.name)) {
-        console.log("this item is already learned", awailFeats[k]);
-        awailFeats[k] = foundry.utils.deepClone(startingData.feats.learned.filter(item => item.name === v.name)[0]);
-      }
-    });
-    awailFeats = awailFeats.filter(item => {
-      if (item.type === "feature") return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
-    });
-    startingData.feats.awail = awailFeats; // count skills by rank
-
-    for (let [k, v] of obj_entries$1(CONFIG.ARd20.Skills)) {
-      if (startingData.skills[k].level === 0) {
-        startingData.count.skills[0] += 1;
-      } else if (startingData.skills[k].level === 1) {
-        startingData.count.skills[1] += 1;
-      } else if (startingData.skills[k].level === 2) {
-        startingData.count.skills[2] += 1;
-      }
-    } // count feats by source
-
-
-    for (let v of startingData.feats.learned) {
-      console.log(v);
-      if (v.type === "feature") v.data.source.value.forEach(val => {
-        console.log(val);
-        startingData.count.feats[val] += 1;
-      });
-    }
-
-    startingData.hover.feat = TextEditor.enrichHTML((_startingData$feats$a = startingData.feats.awail[0]) === null || _startingData$feats$a === void 0 ? void 0 : _startingData$feats$a.data.description);
-    return startingData;
-  }
-
-  async getPacks() {
-    let pack_list = []; // array of feats from Compendium
-
-    let pack_name = [];
-
-    for (const key of game.settings.get("ard20", "feat").packs) {
-      if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
-        let feat_list = [];
-        feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.documentName === "Item")[0].index));
-        feat_list = feat_list.flat();
-
-        for (const feat of feat_list) {
-          if (feat instanceof ARd20Item) {
-            const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
-            const doc = await game.packs.get(new_key).getDocument(feat.id);
-
-            if (doc instanceof ARd20Item) {
-              const item = doc.toObject();
-              item.data = foundry.utils.deepClone(doc.system);
-              pack_list.push(item);
-              pack_name.push(item.name);
-            }
-          }
-        }
-
-        pack_list = pack_list.flat();
-      }
-    }
-
-    return {
-      pack_list,
-      pack_name
-    };
-  }
-
-  getFolders() {
-    let folder_list = []; // array of feats from game folders
-
-    let folder_name = [];
-
-    for (let key of game.settings.get("ard20", "feat").folders) {
-      if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
-        let feat_list = [];
-        feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === "Item")[0].contents);
-        feat_list = feat_list.flat();
-
-        for (let feat of feat_list) {
-          if (feat instanceof ARd20Item) {
-            console.log("item added from folder ", feat);
-            const item = feat.toObject();
-            item.data = foundry.utils.deepClone(feat.system);
-            folder_list.push(item);
-            folder_name.push(item.name);
-          }
-        }
-
-        folder_list = folder_list.flat();
-      }
-    }
-
-    return {
-      folder_list,
-      folder_name
-    };
-  }
-
-  async getRacesList(pack, folder) {
-    const pack_list = pack.pack_list;
-    const pack_name = pack.pack_name;
-    const folder_list = folder.folder_list;
-    let race_pack_list = [];
-    let race_folder_list = [];
-    pack_list.forEach(item => {
-      if (item.type === "race") {
-        let raceItem = _objectSpread2(_objectSpread2({}, item), {}, {
-          chosen: false
-        });
-
-        race_pack_list.push(raceItem);
-      }
-    });
-    folder_list.forEach(item => {
-      if (item.type === "race") {
-        let raceItem = _objectSpread2(_objectSpread2({}, item), {}, {
-          chosen: false
-        });
-
-        race_folder_list.push(raceItem);
-      }
-    });
-    return race_pack_list.concat(race_folder_list.filter(item => !pack_name.includes(item.name)));
-  }
-
-  async getFeaturesList(pack, folder) {
-    const pack_list = pack.pack_list;
-    const pack_name = pack.pack_name;
-    const folder_list = folder.folder_list;
-    let feat_pack_list = [];
-    pack_list.forEach(item => {
-      if (item.type === "feature") {
-        let FeatureItem = _objectSpread2(_objectSpread2({}, item), {}, {
-          currentXP: 0,
-          isEq: false,
-          isXP: false
-        });
-
-        feat_pack_list.push(FeatureItem);
-      }
-    });
-    let feat_folder_list = [];
-    folder_list.forEach(item => {
-      if (item.type === "feature") {
-        let FeatureItem = _objectSpread2(_objectSpread2({}, item), {}, {
-          currentXP: 0,
-          isEq: false,
-          isXP: false
-        });
-
-        feat_folder_list.push(FeatureItem);
-      }
-    });
-    let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter(item => !pack_name.includes(item.name)));
-    let learnedFeatures = [];
-    this.object.itemTypes.feature.forEach(item => {
-      if (item.data.type === "feature") {
-        let FeatureItem = _objectSpread2(_objectSpread2({}, item.data), {}, {
-          currentXP: 0,
-          isEq: false
-        });
-
-        learnedFeatures.push(FeatureItem);
-      }
-    });
-    return {
-      temp_feat_list,
-      learnedFeatures
-    };
-  }
-
-  async getData() {
-    this.options.data = !this.form ? await this.InitilizeData() : this.options.data;
-    const templateData = this.options.data;
-    const count = templateData.count;
-    const attributes = templateData.attributes;
-    const xp = templateData.xp;
-    const raceList = templateData.races.list;
-    const raceChosen = templateData.races.chosen;
-    const isReady = templateData.isReady;
-    const skills = templateData.skills;
-    const featsAwail = templateData.feats.awail;
-    const featsLearned = templateData.feats.learned;
-    const health = templateData.health;
-    count.feats.all = 0;
-    count.feats.all = Object.values(count.feats).reduce(function (a, b) {
-      return a + b;
-    }, 0);
-    /*
-     * Calculate attributes' modifiers and xp cost
-     */
-
-    for (let [k, v] of obj_entries$1(CONFIG.ARd20.Attributes)) {
-      var _raceList$filter$0$da, _raceList$filter, _raceList$filter$;
-
-      const race_abil = (_raceList$filter$0$da = (_raceList$filter = raceList.filter(race => race.chosen === true)) === null || _raceList$filter === void 0 ? void 0 : (_raceList$filter$ = _raceList$filter[0]) === null || _raceList$filter$ === void 0 ? void 0 : _raceList$filter$.data.bonus.attributes[k].value) !== null && _raceList$filter$0$da !== void 0 ? _raceList$filter$0$da : 0;
-      attributes[k].mod = Math.floor((attributes[k].value - 10) / 2);
-      attributes[k].xp = CONFIG.ARd20.AbilXP[attributes[k].value - 5];
-      attributes[k].isEq = attributes[k].value === this.object.system.attributes[k].value;
-      attributes[k].isXP = xp.get < attributes[k].xp;
-      attributes[k].total = isReady ? attributes[k].value : attributes[k].value + race_abil;
-      attributes[k].mod = Math.floor((attributes[k].total - 10) / 2);
-    }
-    /*
-     * Calculate skills' xp cost
-     */
-
-
-    for (let [k, v] of obj_entries$1(CONFIG.ARd20.Skills)) {
-      var _game$i18n$localize;
-
-      templateData.skills[k].rankName = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank[templateData.skills[k].level];
-      templateData.skills[k].xp = templateData.skills[k].level < 2 ? CONFIG.ARd20.SkillXP[templateData.skills[k].level][templateData.count.skills[templateData.skills[k].level + 1]] : false;
-      templateData.skills[k].isEq = templateData.skills[k].level === this.object.system.skills[k].level;
-      templateData.skills[k].isXP = templateData.xp.get < templateData.skills[k].xp || templateData.skills[k].level > 1;
-    }
-
-    for (let v of templateData.profs.weapon) {
-      var _game$i18n$localize2;
-
-      //@ts-expect-error
-      v.value_hover = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Rank[v.value])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.Rank[v.value];
-    }
-    /*
-     * Calculate features cost and their availattribute
-     */
-
-
-    featsAwail.forEach(object => {
-      if (object.type === "feature") {
-        let pass = [];
-        object.pass = [];
-        let allCount = templateData.count.feats.all;
-        let featCount = 0;
-        object.data.source.value.forEach(val => featCount += templateData.count.feats[val]);
-
-        for (let i = object.data.level.initial; i < object.data.level.max; i++) {
-          object.data.xp.AdvancedCost[i] = object.data.xp.basicCost[i] ? Math.ceil(object.data.xp.basicCost[i] * (1 + 0.01 * (allCount - featCount)) / 5) * 5 : 0;
-        }
-
-        object.currentXP = object.data.xp.AdvancedCost[object.data.level.initial];
-        object.isEq = object.data.level.initial === object.data.level.current || object.data.level.initial === 0;
-        object.isXP = object.data.level.initial === object.data.level.max || object.data.xp.AdvancedCost[object.data.level.initial] > templateData.xp.get;
-        object.data.req.values.forEach(r => {
-          var _featsAwail$filter, _featsLearned$filter;
-
-          switch (r.type) {
-            case "attribute":
-              //check if character's attribute is equal or higher than value entered in feature requirements
-              //@ts-expect-error
-              r.pass.forEach((_item, index) => r.pass[index] = r.input[index] <= attributes[r.value].total);
-              break;
-
-            case "skill":
-              //check if character's skill rank is equal or higher than value entered in feature requirements
-              //@ts-expect-error
-              r.pass.forEach((_item, index) => r.pass[index] = r.input[index] <= skills[r.value].level);
-              break;
-
-            case "feat":
-              //check if character has features (and their level is equal or higher) that listed in feature requirements
-              if (((_featsAwail$filter = featsAwail.filter(item => item.name === r.name)) === null || _featsAwail$filter === void 0 ? void 0 : _featsAwail$filter[0]) !== undefined) {
-                const featLevel = featsAwail.filter(item => item.name === r.name)[0].data.level.initial;
-                r.pass.forEach((_item, index) => r.pass[index] = r.input[index] <= featLevel);
-              } else if (((_featsLearned$filter = featsLearned.filter(item => item.name === r.name)) === null || _featsLearned$filter === void 0 ? void 0 : _featsLearned$filter[0]) !== undefined) {
-                const featLevel = featsLearned.filter(item => item.name === r.name)[0].data.level.initial;
-                r.pass.forEach((_item, index) => r.pass[index] = r.input[index] <= featLevel);
-              }
-
-              break;
-          }
-
-          pass.push(r.pass);
-        });
-        object.pass = [];
-        /*
-         * Check the custom logic in feature requirements. For example "Strength 15 OR Arcana Basic"
-         */
-
-        for (let i = 0; i <= object.data.level.initial; i++) {
-          if (i === object.data.level.max || pass.length === 0) break;
-          let exp = object.data.req.logic[i];
-          let lev_array = exp.match(/\d*/g).filter(item => item !== "");
-          console.log(lev_array);
-          let f = {};
-          lev_array.forEach(item => {
-            exp = exp.replace(item, `c${item}`);
-            f["c" + item] = pass[parseInt(item) - 1][i];
-          }); //@ts-expect-error
-
-          let filter = filtrex.compileExpression(exp);
-          object.pass[i] = Boolean(filter(f));
-        }
-
-        object.isXP = object.pass[object.data.level.initial] || object.pass.length === 0 ? object.isXP : true;
-      }
-    });
-    /*
-     * Calculate starting HP based on character's CON and race
-     */
-
-    raceList.forEach(race => {
-      race.chosen = raceChosen === race._id ? true : false;
-    });
-    let raceHP = 0;
-    raceList.forEach(race => {
-      if (race._id === raceChosen) {
-        raceHP = race.data.health;
-      }
-    });
-    health.max = attributes.con.value + raceHP; // At character creation, check all conditions
-
-    if (!this.object.system.isReady) {
-      let abil_sum = 0;
-
-      for (let [key, abil] of obj_entries$1(templateData.attributes)) {
-        abil_sum += abil.value;
-      }
-
-      templateData.allow.attribute = abil_sum >= 60 && abil_sum <= 80 ? true : false;
-      templateData.allow.race = Boolean(templateData.races.chosen) ? true : false;
-      let allow_list = [];
-
-      for (let [key, item] of obj_entries$1(templateData.allow)) {
-        if (key === "final") {
-          continue;
-        }
-
-        allow_list.push(item);
-      }
-
-      templateData.allow.final = !allow_list.includes(false) || templateData.isReady ? true : false;
-    }
-    /*
-     * Final Template Data
-     */
-
-
-    console.log(this.form);
-    console.log(templateData);
-    return templateData;
-  }
-
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".change").on("click", this._onChange.bind(this));
-    html.find("td:not(.description)").on("mouseover", this._onHover.bind(this));
-  } //@ts-expect-error
-
-
-  _onChange(event) {
-    var _CONFIG$ARd20$AbilXP, _CONFIG$ARd20$AbilXP2;
-
-    const button = event.currentTarget;
-    const data = this.options.data;
-
-    switch (button.dataset.type) {
-      case "attribute":
-        switch (button.dataset.action) {
-          case "plus":
-            //@ts-expect-error
-            data.attributes[button.dataset.key].value += 1; //@ts-expect-error
-
-            data.xp.get -= data.attributes[button.dataset.key].xp; //@ts-expect-error
-
-            data.xp.used += data.attributes[button.dataset.key].xp;
-            break;
-
-          case "minus":
-            //@ts-expect-error
-            data.attributes[button.dataset.key].value -= 1;
-            data.xp.get += //@ts-expect-error
-            (_CONFIG$ARd20$AbilXP = CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5]) !== null && _CONFIG$ARd20$AbilXP !== void 0 ? _CONFIG$ARd20$AbilXP : //@ts-expect-error
-            CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5];
-            data.xp.used -= //@ts-expect-error
-            (_CONFIG$ARd20$AbilXP2 = CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5]) !== null && _CONFIG$ARd20$AbilXP2 !== void 0 ? _CONFIG$ARd20$AbilXP2 : //@ts-expect-error
-            CONFIG.ARd20.AbilXP[data.attributes[button.dataset.key].value - 5];
-            break;
-        }
-
-        break;
-
-      case "skill":
-        switch (button.dataset.action) {
-          case "plus":
-            //@ts-expect-error
-            data.skills[button.dataset.key].level += 1; //@ts-expect-error
-
-            data.xp.get -= data.skills[button.dataset.key].xp; //@ts-expect-error
-
-            data.xp.used += data.skills[button.dataset.key].xp; //@ts-expect-error
-
-            data.count.skills[data.skills[button.dataset.key].level] += 1;
-            break;
-
-          case "minus":
-            //@ts-expect-error
-            data.skills[button.dataset.key].level -= 1; //@ts-expect-error
-
-            data.count.skills[data.skills[button.dataset.key].level + 1] -= 1;
-            data.xp.get += //@ts-expect-error
-            CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].level][//@ts-expect-error
-            data.count.skills[data.skills[button.dataset.key].level + 1]];
-            data.xp.used -= //@ts-expect-error
-            CONFIG.ARd20.SkillXP[data.skills[button.dataset.key].level][//@ts-expect-error
-            data.count.skills[data.skills[button.dataset.key].level + 1]];
-            break;
-        }
-
-        break;
-
-      case "prof":
-        switch (button.dataset.action) {
-          case "plus":
-            data.profs.weapon[button.dataset.key].value += 1;
-            data.count.feats.mar += 1;
-            break;
-
-          case "minus":
-            data.profs.weapon[button.dataset.key].value -= 1;
-            data.count.feats.mar -= 1;
-            break;
-        }
-
-        break;
-
-      case "feat":
-        switch (button.dataset.action) {
-          case "plus":
-            data.feats.awail[button.dataset.key].data.source.value.forEach(val => data.count.feats[val] += data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0);
-            data.xp.get -= data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
-            data.xp.used += data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
-            data.feats.awail[button.dataset.key].data.level.initial += 1;
-            break;
-
-          case "minus":
-            data.feats.awail[button.dataset.key].data.level.initial -= 1;
-            data.feats.awail[button.dataset.key].data.source.value.forEach(val => data.count.feats[val] -= data.feats.awail[button.dataset.key].data.level.initial === 0 ? 1 : 0);
-            data.xp.get += data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
-            data.xp.used -= data.feats.awail[button.dataset.key].data.xp.AdvancedCost[data.feats.awail[button.dataset.key].data.level.initial];
-            break;
-        }
-
-        break;
-    }
-
-    this.render();
-  } //@ts-expect-error
-
-
-  _onChangeInput(event) {
-    super._onChangeInput(event);
-
-    const data = this.options.data;
-    const k = parseInt(event.currentTarget.dataset.key);
-    data.races.list.forEach((race, key) => {
-      data.races.list[key].chosen = key === k ? true : false;
-      data.races.chosen = data.races.list[key].chosen ? race._id : data.races.chosen;
-    });
-    this.render();
-  } //@ts-expect-error
-
-
-  _onHover(event) {
-    var _tr$nextElementSiblin, _tr$previousElementSi, _tr$previousElementSi2;
-
-    event.preventDefault();
-    const data = this.options.data;
-    const element = event.currentTarget;
-    const table = element.closest("div.tab");
-    const tr = element.closest("tr");
-    const trDOM = tr.querySelectorAll("td:not(.description)");
-    const tdDesc = table.querySelector("td.description");
-    const bColor = window.getComputedStyle(element).getPropertyValue("background-color");
-    tdDesc.style["background-color"] = bColor; //@ts-expect-error
-
-    trDOM === null || trDOM === void 0 ? void 0 : trDOM.forEach(td => {
-      td.classList.toggle("chosen", event.type == "mouseenter");
-
-      if (td.nextElementSibling === null || td.nextElementSibling.classList[0] === "description") {
-        td.classList.toggle("last", event.type == "mouseenter");
-      }
-    });
-    (_tr$nextElementSiblin = tr.nextElementSibling) === null || _tr$nextElementSiblin === void 0 ? void 0 : _tr$nextElementSiblin.querySelectorAll("td:not(.description)") //@ts-expect-error
-    .forEach(td => td.classList.toggle("under-chosen", event.type == "mouseenter"));
-    (_tr$previousElementSi = tr.previousElementSibling) === null || _tr$previousElementSi === void 0 ? void 0 : _tr$previousElementSi.querySelectorAll("th:not(.description)") //@ts-expect-error
-    .forEach(th => th.classList.toggle("over-chosen", event.type == "mouseenter"));
-    (_tr$previousElementSi2 = tr.previousElementSibling) === null || _tr$previousElementSi2 === void 0 ? void 0 : _tr$previousElementSi2.querySelectorAll("td:not(.description)") //@ts-expect-error
-    .forEach(td => td.classList.toggle("over-chosen", event.type == "mouseenter"));
-    const type = table.dataset.tab;
-    if (type !== "feats") return;
-    const key = tr.dataset.key;
-    const hover_desc = TextEditor.enrichHTML(data.feats.awail[key].data.description);
-    if (hover_desc === data.hover.feat) return;
-    data.hover.feat = hover_desc;
-    this.render();
-  }
-
-  async _updateObject(_event, formData) {
-    let updateData = expandObject(formData);
-    const actor = this.object;
-    const data = this.options.data;
-    this.render();
-    const obj = {};
-
-    for (let [key, abil] of obj_entries$1(data.attributes)) {
-      obj[`data.attributes.${key}.value`] = data.attributes[key].total;
-    }
-
-    obj["data.health.max"] = data.health.max;
-
-    if (data.isReady) {
-      obj["data.advancement.xp"] = updateData.xp;
-    }
-
-    obj["data.skills"] = updateData.skills;
-    obj["data.profs"] = updateData.profs;
-    obj["data.isReady"] = data.allow.final;
-    console.log(obj);
-    const feats_data = {
-      new: [],
-      exist: []
-    };
-    const feats = data.feats.awail.filter(item => item.data.level.initial > item.data.level.current);
-    feats.forEach((awItem, _index) => {
-      if (data.feats.learned.length > 0) {
-        data.feats.learned.forEach((learnedItem, _index) => {
-          if (awItem._id === learnedItem._id) {
-            feats_data.exist.push(awItem);
-          } else {
-            feats_data.new.push(awItem);
-          }
-        });
-      } else {
-        feats_data.new.push(awItem);
-      }
-    });
-    let pass = [];
-    feats_data.exist.forEach(item => {
-      //@ts-expect-error
-      pass.push(item.pass.slice(0, item.pass.length - 1));
-    });
-    feats_data.new.forEach(item => {
-      //@ts-expect-error
-      pass.push(item.pass.slice(0, item.pass.length - 1));
-    });
-    pass = pass.flat();
-    console.log(pass);
-
-    if (!data.isReady && !data.allow.final) {
-      ui.notifications.error(`Something not ready for your character to be created. Check the list`);
-    } else if (pass.includes(false)) {
-      ui.notifications.error(`Some changes in your features do not comply with the requirements`);
-    } else {
-      await actor.update(obj);
-
-      if (actor.itemTypes.race.length === 0) {
-        let race_list = this.options.data.races.list.filter(race => race.chosen === true); //@ts-expect-error
-
-        await actor.createEmbeddedDocuments("Item", race_list);
-      }
-
-      if (feats_data.exist.length > 0) {
-        await actor.updateEmbeddedDocuments("Item", feats_data.exist.map(item => ({
-          _id: item._id,
-          "data.level.initial": item.data.level.initial
-        })));
-      }
-
-      if (feats_data.new.length > 0) {
-        //@ts-expect-error
-        await actor.createEmbeddedDocuments("Item", feats_data.new);
-      }
-
-      this.close();
-    }
-  }
-
 }
 
 /**
@@ -4303,25 +3659,23 @@ class ARd20ActorSheet extends ActorSheet {
 
     switch ((_button$dataset = button.dataset) === null || _button$dataset === void 0 ? void 0 : _button$dataset.action) {
       case "adv":
-        const dialogOptions = {
+        /*const dialogOptions = {
           title: "Character Advancement",
           modal: true,
           draggable: false,
-          zIndex: 101,
-          height: 480,
-          width: 640,
-          id: "cha-adv",
+          zIndex:101,
+          height:480,
+          width:640,
+          id:"cha-adv",
           content: {
-            class: Cha_adv_shell,
+            class: CharacterAdvancementShell,
             props: {
-              document: this.object
-            }
-          }
+              document: this.object,
+            },
+          },
         };
-        new TJSDialog(dialogOptions).render(true, {
-          focus: true
-        }); //app = new CharacterAdvancement(this.object);
-
+        new TJSDialog(dialogOptions).render(true, { focus: true });*/
+        new CharacterAdvancement(this.object);
         break;
     } //app?.render(true);
 
@@ -4481,6 +3835,24 @@ class ARd20ActorSheet extends ActorSheet {
       case "Folder":
         return this._onDropFolder(event, data);
     }
+  }
+
+}
+
+class CharacterAdvancement extends TJSDialog {
+  constructor(document) {
+    super({
+      title: "Character advancement",
+      modal: true,
+      height: 640,
+      draggable: false,
+      content: {
+        class: Cha_adv_shell,
+        props: {
+          document
+        }
+      }
+    });
   }
 
 }

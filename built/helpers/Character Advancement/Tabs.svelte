@@ -1,7 +1,13 @@
 <script>
+  import {getContext} from 'svelte'
   export let tabs = [];
   export let activeTab;
+  let doc = getContext('data')
+  function submitData(){
+    console.log($doc)
+  }
 </script>
+
 <ul>
   {#each tabs as tab}
     <li class={activeTab === tab.id ? "active" : ""}>
@@ -20,6 +26,7 @@
     {/if}
   {/each}
 </div>
+<button on:click={submitData}>SubmitData</button>
 
 <style>
   .box {

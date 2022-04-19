@@ -1,7 +1,7 @@
 import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
 import CharacterAdvancementShell from "../helpers/Character Advancement/cha-adv-shell.svelte";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
-import { CharacterAdvancement } from "../helpers/Character Advancement/cha-adv";
+//import { CharacterAdvancement } from "../helpers/Character Advancement/cha-adv";
 import { getValues, obj_entries } from "../ard20.js";
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -41,7 +41,7 @@ export class ARd20ActorSheet extends ActorSheet {
     context.config = CONFIG.ARd20;
     //@ts-expect-error
     context.isGM = game.user.isGM;
-    console.log(context)
+    console.log(context);
     // Prepare character data and items.
     if (actorData.type === "character") {
       //@ts-expect-error
@@ -201,11 +201,11 @@ export class ARd20ActorSheet extends ActorSheet {
     event.preventDefault();
     const button = event.currentTarget;
     let app;
-    console.log(this.object)
+    console.log(this.object);
     //@ts-ignore
     switch (button.dataset?.action) {
       case "adv":
-        const dialogOptions = {
+        /*const dialogOptions = {
           title: "Character Advancement",
           modal: true,
           draggable: false,
@@ -220,8 +220,8 @@ export class ARd20ActorSheet extends ActorSheet {
             },
           },
         };
-        new TJSDialog(dialogOptions).render(true, { focus: true });
-        //app = new CharacterAdvancement(this.object);
+        new TJSDialog(dialogOptions).render(true, { focus: true });*/
+        app = new CharacterAdvancement(this.object);
         break;
     }
     //app?.render(true);
@@ -351,5 +351,21 @@ export class ARd20ActorSheet extends ActorSheet {
       case "Folder":
         return this._onDropFolder(event, data);
     }
+  }
+}
+class CharacterAdvancement extends TJSDialog {
+  constructor(document) {
+    super({
+      title: "Character advancement",
+      modal: true,
+      height: 640,
+      draggable: false,
+      content: {
+        class: CharacterAdvancementShell,
+        props: {
+          document,
+        },
+      },
+    });
   }
 }
