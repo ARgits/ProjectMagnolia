@@ -209,6 +209,8 @@ export class ARd20ActorSheet extends ActorSheet {
           title: "Character Advancement",
           modal: true,
           draggable: true,
+          zIndex:101,
+          id:"cha-adv",
           content: {
             class: CharacterAdvancementShell,
             props: {
