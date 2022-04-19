@@ -1,6 +1,5 @@
 <script>
-  import AddButton from "./AddButton.svelte";
-  import MinusButton from "./MinusButton.svelte";
+  import ChangeButton from "./ChangeButton.svelte";
   export let min;
   export let max;
   export let val;
@@ -19,7 +18,7 @@
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}>{val[0]}</td>
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}
-    ><AddButton type={typeStr} subtype={val[0]} {max} />
+    ><ChangeButton type={typeStr} subtype={val[0]} {max} />
   </td>
   {#if val[1].rankName}
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -30,7 +29,7 @@
   {/if}
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}
-    ><MinusButton type={typeStr} subtype={val[0]} {min} /></td
+    ><ChangeButton type={typeStr} subtype={val[0]} {min} /></td
   >
   {#if val[1].mod}
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
