@@ -208,7 +208,7 @@ export class ARd20ActorSheet extends ActorSheet {
         const dialogOptions = {
           title: "Character Advancement",
           modal: true,
-          draggable: true,
+          draggable: false,
           zIndex:101,
           id:"cha-adv",
           content: {
