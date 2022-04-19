@@ -4184,7 +4184,8 @@ class ARd20ActorSheet extends ActorSheet {
 
     context.config = CONFIG.ARd20; //@ts-expect-error
 
-    context.isGM = game.user.isGM; // Prepare character data and items.
+    context.isGM = game.user.isGM;
+    console.log(context); // Prepare character data and items.
 
     if (actorData.type === "character") {
       //@ts-expect-error
