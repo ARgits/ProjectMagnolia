@@ -6969,11 +6969,11 @@ class ARd20Actor extends Actor {
 
     advancement.xp.bar_max = advancement.xp.level - advancement.xp.level_min;
     advancement.xp.bar_min = advancement.xp.used - advancement.xp.level_min;
-    def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
+    def_stats.reflex.total = 10 + 4 * def_stats.reflex.value + dexMod + attributes.int.mod + def_stats.reflex.bonus;
     def_stats.reflex.label = "Reflex";
-    def_stats.fortitude.value = 10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
+    def_stats.fortitude.total = 10 + 4 * def_stats.fortitude.value + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
     def_stats.fortitude.label = "Fortitude";
-    def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
+    def_stats.will.total = 10 + 4 * def_stats.will.value + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
 
     for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
@@ -6994,10 +6994,10 @@ class ARd20Actor extends Actor {
     for (let [key, skill] of obj_entries$1(data.skills)) {
       var _game$i18n$localize3, _game$i18n$localize4;
 
-      skill.level = skill.level < 4 ? skill.level : 4;
-      skill.value = skill.level * 4 + skill.bonus;
+      skill.value = skill.value < 4 ? skill.value : 4;
+      skill.total = skill.total * 4 + skill.bonus;
       skill.name = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Skills[key];
-      skill.rankName = (_game$i18n$localize4 = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, skill.level))) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : getValues$1(CONFIG.ARd20.Rank, skill.level);
+      skill.rankName = (_game$i18n$localize4 = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, skill.value))) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : getValues$1(CONFIG.ARd20.Rank, skill.value);
     }
 
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {

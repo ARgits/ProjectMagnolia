@@ -88,13 +88,13 @@ export class ARd20Actor extends Actor {
         }
         advancement.xp.bar_max = advancement.xp.level - advancement.xp.level_min;
         advancement.xp.bar_min = advancement.xp.used - advancement.xp.level_min;
-        def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
+        def_stats.reflex.total = 10 + 4 * def_stats.reflex.value + dexMod + attributes.int.mod + def_stats.reflex.bonus;
         def_stats.reflex.label = "Reflex";
-        def_stats.fortitude.value =
-            10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
+        def_stats.fortitude.total =
+            10 + 4 * def_stats.fortitude.value + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
         def_stats.fortitude.label = "Fortitude";
-        def_stats.will.value =
-            10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
+        def_stats.will.total =
+            10 + 4 * def_stats.will.value + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
         def_stats.will.label = "Will";
         for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
             if (!(key === "force" || key === "radiant" || key === "psychic")) {
@@ -113,11 +113,11 @@ export class ARd20Actor extends Actor {
         }
         //calculate rolls for character's skills
         for (let [key, skill] of obj_entries(data.skills)) {
-            skill.level = skill.level < 4 ? skill.level : 4;
-            skill.value = skill.level * 4 + skill.bonus;
+            skill.value = skill.value < 4 ? skill.value : 4;
+            skill.total = skill.total * 4 + skill.bonus;
             skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
             skill.rankName =
-                game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level)) ?? getValues(CONFIG.ARd20.Rank, skill.level);
+                game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.value)) ?? getValues(CONFIG.ARd20.Rank, skill.value);
         }
         proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {
             return { ...setting, value: proficiencies.weapon[key]?.value ?? 0 };

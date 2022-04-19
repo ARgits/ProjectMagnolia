@@ -55,75 +55,75 @@
       },
       "skills": {
         "acr": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "ath": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "ani": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "arc": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "dec": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "his": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "ins": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "itm": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "inv": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "med": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "nat": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "prc": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "prf": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "per": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "rel": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "slt": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "ste": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         },
         "sur": {
-          "level": 0,
+          "value": 0,
           "bonus": 0
         }
       },
@@ -131,15 +131,15 @@
         "stats": {
           "reflex": {
             "bonus": 0,
-            "level": 0
+            "value": 0
           },
           "fortitude": {
             "bonus": 0,
-            "level": 0
+            "value": 0
           },
           "will": {
             "bonus": 0,
-            "level": 0
+            "value": 0
           }
         },
         "damage": {
