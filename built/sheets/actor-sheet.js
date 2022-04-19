@@ -201,11 +201,12 @@ export class ARd20ActorSheet extends ActorSheet {
     event.preventDefault();
     const button = event.currentTarget;
     let app;
+    console.log(this.object)
     //@ts-ignore
     switch (button.dataset?.action) {
       case "adv":
         const dialogOptions = {
-          title: "ard20.characterAdvancement",
+          title: "Character Advancement",
           modal: true,
           draggable: false,
           content: {
