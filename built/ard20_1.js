@@ -3471,10 +3471,6 @@ class ARd20ActorSheet extends ActorSheet {
 
 
   getData() {
-    // Retrieve the data structure from the base sheet. You can inspect or log
-    // the context variable to see the structure, but some key properties for
-    // sheets are the actor object, the data object, whether or not it's
-    // editable, the items array, and the effects array.
     const context = super.getData();
     console.log(context, 'firstDAta'); // Use a safe clone of the actor data for further operations.
 
