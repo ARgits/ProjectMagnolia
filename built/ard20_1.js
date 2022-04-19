@@ -3651,10 +3651,11 @@ class ARd20ActorSheet extends ActorSheet {
 
 
   _OnAdvanceMenu(event) {
-    var _button$dataset;
+    var _button$dataset, _app;
 
     event.preventDefault();
     const button = event.currentTarget;
+    let app;
     console.log(this.object); //@ts-ignore
 
     switch ((_button$dataset = button.dataset) === null || _button$dataset === void 0 ? void 0 : _button$dataset.action) {
@@ -3675,10 +3676,11 @@ class ARd20ActorSheet extends ActorSheet {
           },
         };
         new TJSDialog(dialogOptions).render(true, { focus: true });*/
-        new CharacterAdvancement(this.object);
+        app = new CharacterAdvancement(this.object);
         break;
-    } //app?.render(true);
+    }
 
+    (_app = app) === null || _app === void 0 ? void 0 : _app.render(true);
   }
   /**
    * Change eqquiped item or not by toggling it on sheet

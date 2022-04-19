@@ -224,7 +224,7 @@ export class ARd20ActorSheet extends ActorSheet {
         app = new CharacterAdvancement(this.object);
         break;
     }
-    //app?.render(true);
+    app?.render(true);
   }
   /**
    * Change eqquiped item or not by toggling it on sheet
