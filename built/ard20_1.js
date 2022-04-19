@@ -1953,8 +1953,8 @@ function create_if_block_1$1(ctx) {
 		c() {
 			button = element("button");
 			t = text("+");
+			attr(button, "class", "change svelte-k3tpp9");
 			button.disabled = /*disabled*/ ctx[4];
-			attr(button, "class", "svelte-k3tpp9");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -1988,9 +1988,9 @@ function create_if_block$3(ctx) {
 	return {
 		c() {
 			button = element("button");
-			t = text("+");
+			t = text("-");
+			attr(button, "class", "change svelte-k3tpp9");
 			button.disabled = /*disabled*/ ctx[4];
-			attr(button, "class", "svelte-k3tpp9");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -2154,7 +2154,7 @@ function create_else_block(ctx) {
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[11]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[12]);
 				mounted = true;
 			}
 		},
@@ -2173,7 +2173,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (23:2) {#if val[1].rankName}
+// (27:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].rankName + "";
@@ -2193,7 +2193,7 @@ function create_if_block_2(ctx) {
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[10]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[11]);
 				mounted = true;
 			}
 		},
@@ -2212,10 +2212,9 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (34:2) {#if val[1].mod}
+// (38:2) {#if val[1].mod!==undefined}
 function create_if_block_1(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].mod + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2224,7 +2223,7 @@ function create_if_block_1(ctx) {
 	return {
 		c() {
 			td = element("td");
-			t = text(t_value);
+			t = text(/*strMod*/ ctx[7]);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"));
 		},
 		m(target, anchor) {
@@ -2232,12 +2231,12 @@ function create_if_block_1(ctx) {
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[13]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[14]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].mod + "")) set_data(t, t_value);
+			if (dirty & /*strMod*/ 128) set_data(t, /*strMod*/ ctx[7]);
 
 			if (dirty & /*val*/ 8 && td_class_value !== (td_class_value = "" + (null_to_empty(/*val*/ ctx[3][1].description) + " svelte-3cj78q"))) {
 				attr(td, "class", td_class_value);
@@ -2251,7 +2250,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (43:2) {#if key === 0}
+// (47:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2326,7 +2325,7 @@ function create_fragment$7(ctx) {
 			}
 		});
 
-	let if_block1 = /*val*/ ctx[3][1].mod && create_if_block_1(ctx);
+	let if_block1 = /*val*/ ctx[3][1].mod !== undefined && create_if_block_1(ctx);
 	let if_block2 = /*key*/ ctx[4] === 0 && create_if_block$2(ctx);
 
 	return {
@@ -2371,9 +2370,9 @@ function create_fragment$7(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(td0, "mouseover", /*mouseover_handler*/ ctx[8]),
-					listen(td1, "mouseover", /*mouseover_handler_1*/ ctx[9]),
-					listen(td2, "mouseover", /*mouseover_handler_4*/ ctx[12])
+					listen(td0, "mouseover", /*mouseover_handler*/ ctx[9]),
+					listen(td1, "mouseover", /*mouseover_handler_1*/ ctx[10]),
+					listen(td2, "mouseover", /*mouseover_handler_4*/ ctx[13])
 				];
 
 				mounted = true;
@@ -2418,7 +2417,7 @@ function create_fragment$7(ctx) {
 				attr(td2, "class", td2_class_value);
 			}
 
-			if (/*val*/ ctx[3][1].mod) {
+			if (/*val*/ ctx[3][1].mod !== undefined) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
@@ -2482,6 +2481,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		$$invalidate(0, description = val[1].description);
 	}
 
+	let strMod;
 	const mouseover_handler = () => changeDesc(val);
 	const mouseover_handler_1 = () => changeDesc(val);
 	const mouseover_handler_2 = () => changeDesc(val);
@@ -2502,6 +2502,14 @@ function instance$7($$self, $$props, $$invalidate) {
 		if ('typeStr' in $$props) $$invalidate(6, typeStr = $$props.typeStr);
 	};
 
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*val*/ 8) {
+			if (val[1].mod !== undefined) {
+				$$invalidate(7, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
+			}
+		}
+	};
+
 	return [
 		description,
 		min,
@@ -2510,6 +2518,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		key,
 		type,
 		typeStr,
+		strMod,
 		changeDesc,
 		mouseover_handler,
 		mouseover_handler_1,

@@ -22,10 +22,10 @@
 </script>
 
 {#if max}
-  <button {disabled} on:click={() => increase(type, subtype)}>+ </button>
+  <button class="change" {disabled} on:click={() => increase(type, subtype)}>+ </button>
 {/if}
 {#if min}
-  <button {disabled} on:click={() => decrease(type, subtype)}>+ </button>
+  <button class="change" {disabled} on:click={() => decrease(type, subtype)}>- </button>
 {/if}
 
 <style>

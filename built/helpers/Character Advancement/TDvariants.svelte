@@ -11,6 +11,10 @@
     if (!val[1].description) return "";
     description = val[1].description;
   }
+  let strMod
+  $: if(val[1].mod!==undefined){
+    strMod = val[1].mod<0?`${val[1].mod}`:`+${val[1].mod}`
+  }
 </script>
 
 <tr>
@@ -31,13 +35,13 @@
   <td class={val[1].description} on:mouseover={() => changeDesc(val)}
     ><ChangeButton type={typeStr} subtype={val[0]} {min} /></td
   >
-  {#if val[1].mod}
+  {#if val[1].mod!==undefined}
   <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td
       class={val[1].description}
       on:mouseover={() => {
         description = val[1].description;
-      }}>{val[1].mod}</td
+      }}>{strMod}</td
     >
   {/if}
   {#if key === 0}
