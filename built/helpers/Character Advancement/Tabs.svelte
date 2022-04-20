@@ -1,7 +1,18 @@
 <script>
+  import { getContext } from "svelte";
+  const { application } = getContext("external");
   export let tabs = [];
   export let activeTab;
+  const doc = getContext("chaAdvActorData");
+  const id = getContext("chaAdvActorID");
+  function submitData() {
+    console.log($doc);
+    console.log(game.actors.get(id).system);
+    game.actors.get(id).update({ data: $doc });
+    application.close();
+  }
 </script>
+
 <ul>
   {#each tabs as tab}
     <li class={activeTab === tab.id ? "active" : ""}>
@@ -16,15 +27,15 @@
 <div class="box">
   {#each tabs as tab}
     {#if tab.id === activeTab}
-      <svelte:component this={tab.component} />
+      <svelte:component this={tab.component}/>
     {/if}
   {/each}
 </div>
+<button on:click={submitData}>SubmitData</button>
 
 <style>
   .box {
     margin-bottom: 10px;
-    padding: 1em;
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;

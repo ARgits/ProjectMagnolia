@@ -1,18 +1,22 @@
 <svelte:options accessors={true} />
+
 <script>
-  import AttributeComp from './Attributes.svelte'
-	import SkillComp from './Skills.svelte'
-	import FeatureComp from './FeatureComp.svelte'
-	import Tabs from './Tabs.svelte'
-  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  export let elementRoot
-	let tabs = [
-			{label:'attributes', id:'attributes',component:AttributeComp},
-			{label:'skills',id:'skills', component:SkillComp},
-			{label:'features',id:'features',component:FeatureComp}
-		]
-    let activeTab='attributes'
+  import {setContext} from 'svelte'
+  import {writable} from 'svelte/store'
+  import AttributeComp from "./Attributes.svelte";
+  import SkillComp from "./Skills.svelte";
+  import FeatureComp from "./FeatureComp.svelte";
+  import Tabs from "./Tabs.svelte";
+  export let document
+  setContext('chaAdvActorID',document.id)
+  let data = writable(document.data.data)
+  setContext('chaAdvActorData',data)
+  let tabs = [
+    { label: "attributes", id: "attributes", component: AttributeComp},
+    { label: "skills", id: "skills", component: SkillComp},
+  ];
+  let activeTab = "attributes";
+  
 </script>
-<ApplicationShell bind:elementRoot>
-  <Tabs {tabs} {activeTab}/>
-</ApplicationShell>
+
+<Tabs {tabs} {activeTab} />
