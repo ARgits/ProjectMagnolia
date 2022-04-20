@@ -10,7 +10,7 @@
   export let document;
   setContext("chaAdvActorID", document.id);
   const data = writable(document.data.data);
-  const unsubscribe = data.subscribe(()=>{
+  const unsubscribe = data.subscribe(async()=>{
 	  unsubscribe()
   })
   console.log($data);

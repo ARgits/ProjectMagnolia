@@ -3286,7 +3286,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	const data = writable(document.data.data);
 	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
 
-	const unsubscribe = data.subscribe(() => {
+	const unsubscribe = data.subscribe(async () => {
 		unsubscribe();
 	});
 
