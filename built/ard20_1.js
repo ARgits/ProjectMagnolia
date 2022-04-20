@@ -3302,10 +3302,12 @@ function instance$3($$self, $$props, $$invalidate) {
 	];
 
 	onDestroy(() => {
+		const id = getContext('chAdvActorID');
+		const actorData = game.actors.get(id).data.data;
 		console.log('app is closing');
 		console.log($data, '$data before');
-		console.log(document.data.data, 'document itself');
-		set_store_value(data, $data = document.data.data, $data);
+		console.log(game.actors.get(actorData), 'document itself');
+		set_store_value(data, $data = actorData, $data);
 		console.log($data, '$data after');
 	});
 
