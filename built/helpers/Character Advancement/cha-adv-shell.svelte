@@ -10,6 +10,8 @@
   export let document;
   setContext("chaAdvActorID", document.id);
   const data = writable(document.data.data);
+  const id = getContext('chAdvActorID')
+  const actorData = game.actors.get(id).data.data
   console.log($data);
   setContext("chaAdvActorData", data);
   const tabs = [
@@ -18,11 +20,9 @@
   ];
   const activeTab = "attributes";
   onDestroy(() => {
-	const id = getContext('chAdvActorID')
-	const actorData = game.actors.get(id).data.data
 	console.log('app is closing')
 	console.log($data,'$data before')
-	console.log(game.actors.get(actorData),'document itself')
+	console.log(actorData,'document itself')
     $data = actorData;
 	console.log($data,'$data after')
   });
