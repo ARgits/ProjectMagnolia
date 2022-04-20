@@ -6,47 +6,6 @@ import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
 import { localize } from '/modules/typhonjs/svelte/helper.js';
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly && (symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    })), keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {};
-    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
-      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-    });
-  }
-
-  return target;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
 /**
  * A type of Roll specific to a d20-based check, save, or attack roll in the 5e system.
  * @param {string} formula                       The string formula to parse
@@ -978,12 +937,12 @@ function _determineCriticalMode({
 }
 
 var dice = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  simplifyRollFormula: simplifyRollFormula,
-  d20Roll: d20Roll,
-  damageRoll: damageRoll,
-  D20Roll: D20Roll,
-  DamageRoll: DamageRoll
+    __proto__: null,
+    simplifyRollFormula: simplifyRollFormula,
+    d20Roll: d20Roll,
+    damageRoll: damageRoll,
+    D20Roll: D20Roll,
+    DamageRoll: DamageRoll
 });
 
 /**
@@ -2724,36 +2683,27 @@ class Attributes extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[4] = list[i];
-	child_ctx[6] = i;
+	child_ctx[3] = list[i];
+	child_ctx[5] = i;
 	return child_ctx;
 }
 
-// (23:2) {#each Object.entries($data.attributes) as attr, key}
+// (19:1) {#each Object.entries($doc.skills) as skill,key}
 function create_each_block$4(ctx) {
 	let tdvariants;
-	let updating_description;
 	let current;
 
-	function tdvariants_description_binding(value) {
-		/*tdvariants_description_binding*/ ctx[3](value);
-	}
-
-	let tdvariants_props = {
-		type: /*$data*/ ctx[0].attributes,
-		typeStr,
-		val: /*attr*/ ctx[4],
-		min: 1,
-		max: 30,
-		key: /*key*/ ctx[6]
-	};
-
-	if (/*description*/ ctx[1] !== void 0) {
-		tdvariants_props.description = /*description*/ ctx[1];
-	}
-
-	tdvariants = new TDvariants({ props: tdvariants_props });
-	binding_callbacks.push(() => bind(tdvariants, 'description', tdvariants_description_binding));
+	tdvariants = new TDvariants({
+			props: {
+				type: /*$doc*/ ctx[0].skills,
+				typeStr,
+				val: /*skill*/ ctx[3],
+				min: 0,
+				max: 4,
+				key: /*key*/ ctx[5],
+				description: ''
+			}
+		});
 
 	return {
 		c() {
@@ -2765,15 +2715,8 @@ function create_each_block$4(ctx) {
 		},
 		p(ctx, dirty) {
 			const tdvariants_changes = {};
-			if (dirty & /*$data*/ 1) tdvariants_changes.type = /*$data*/ ctx[0].attributes;
-			if (dirty & /*$data*/ 1) tdvariants_changes.val = /*attr*/ ctx[4];
-
-			if (!updating_description && dirty & /*description*/ 2) {
-				updating_description = true;
-				tdvariants_changes.description = /*description*/ ctx[1];
-				add_flush_callback(() => updating_description = false);
-			}
-
+			if (dirty & /*$doc*/ 1) tdvariants_changes.type = /*$doc*/ ctx[0].skills;
+			if (dirty & /*$doc*/ 1) tdvariants_changes.val = /*skill*/ ctx[3];
 			tdvariants.$set(tdvariants_changes);
 		},
 		i(local) {
@@ -2794,9 +2737,9 @@ function create_each_block$4(ctx) {
 function create_fragment$5(ctx) {
 	let table;
 	let tr;
-	let t11;
+	let t9;
 	let current;
-	let each_value = Object.entries(/*$data*/ ctx[0].attributes);
+	let each_value = Object.entries(/*$doc*/ ctx[0].skills);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -2812,26 +2755,25 @@ function create_fragment$5(ctx) {
 			table = element("table");
 			tr = element("tr");
 
-			tr.innerHTML = `<th class="svelte-h7j8ib">Name</th> 
-    <th class="svelte-h7j8ib">Increase</th> 
-    <th class="svelte-h7j8ib">Value</th> 
-    <th class="svelte-h7j8ib">Decrease</th> 
-    <th class="svelte-h7j8ib">Mod</th> 
-    <th class="svelte-h7j8ib">Description</th>`;
+			tr.innerHTML = `<th class="svelte-vg40np">Name</th> 
+		<th class="svelte-vg40np">Increase</th> 
+		<th class="svelte-vg40np">Rank</th> 
+		<th class="svelte-vg40np">Decrease</th> 
+		<th class="svelte-vg40np">Description</th>`;
 
-			t11 = space();
+			t9 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-h7j8ib");
-			attr(table, "class", "svelte-h7j8ib");
+			attr(tr, "class", "svelte-vg40np");
+			attr(table, "class", "svelte-vg40np");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
 			append(table, tr);
-			append(table, t11);
+			append(table, t9);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(table, null);
@@ -2840,8 +2782,8 @@ function create_fragment$5(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$data, typeStr, Object, description*/ 3) {
-				each_value = Object.entries(/*$data*/ ctx[0].attributes);
+			if (dirty & /*$doc, typeStr, Object*/ 1) {
+				each_value = Object.entries(/*$doc*/ ctx[0].skills);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -2892,30 +2834,23 @@ function create_fragment$5(ctx) {
 	};
 }
 
-let typeStr = 'attributes';
+const typeStr = 'skills';
 
 function instance$5($$self, $$props, $$invalidate) {
-	let $data;
-	let data = getContext('chaAdvActorData');
-	component_subscribe($$self, data, value => $$invalidate(0, $data = value));
-	let description = "";
-
-	function tdvariants_description_binding(value) {
-		description = value;
-		$$invalidate(1, description);
-	}
+	let $doc;
+	let doc = getContext('chaAdvActorData');
+	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
+	const rankName = ['untrained', 'trained', 'expert', 'master', 'legend'];
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data*/ 1) {
-			{
-				for (let [key, attr] of Object.entries($data.attributes)) {
-					attr.mod = Math.floor((attr.value - 10) / 2);
-				}
+		if ($$self.$$.dirty & /*$doc*/ 1) {
+			for (let [key, skill] of Object.entries($doc.skills)) {
+				skill.rankName = rankName[skill.value];
 			}
 		}
 	};
 
-	return [$data, description, data, tdvariants_description_binding];
+	return [$doc, doc];
 }
 
 class Skills extends SvelteComponent {
@@ -7022,12 +6957,14 @@ class ARd20Actor extends Actor {
       skill.rankName = (_game$i18n$localize4 = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, skill.level))) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : getValues$1(CONFIG.ARd20.Rank, skill.level);
     }
 
-    proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {
+    proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
       var _proficiencies$weapon, _proficiencies$weapon2;
 
-      return _objectSpread2(_objectSpread2({}, setting), {}, {
+      return {
+        name: setting.name,
+        type: setting.type,
         value: (_proficiencies$weapon = (_proficiencies$weapon2 = proficiencies.weapon[key]) === null || _proficiencies$weapon2 === void 0 ? void 0 : _proficiencies$weapon2.value) !== null && _proficiencies$weapon !== void 0 ? _proficiencies$weapon : 0
-      });
+      };
     });
     data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
     data.speed.value += attributes.dex.mod + data.speed.bonus;
