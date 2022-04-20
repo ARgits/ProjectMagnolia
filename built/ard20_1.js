@@ -3282,11 +3282,11 @@ const activeTab = "attributes";
 function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let { document } = $$props;
-	setContext('chaAdvActorID', document.id);
+	setContext("chaAdvActorID", document.id);
 	const data = writable(document.data.data);
 	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
 	console.log($data);
-	setContext('chaAdvActorData', data);
+	setContext("chaAdvActorData", data);
 
 	const tabs = [
 		{
@@ -3301,7 +3301,9 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
-	onDestroy(console.log($data));
+	onDestroy(() => {
+		console.log($data);
+	});
 
 	$$self.$$set = $$props => {
 		if ('document' in $$props) $$invalidate(2, document = $$props.document);
