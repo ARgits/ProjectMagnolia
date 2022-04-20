@@ -1,6 +1,6 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
     {{log this}}
-    {{#unless document.system.system.isReady}}
+    {{#unless document.system.isReady}}
         Your Character is not fully created, please start or continue creation
         <button type="button" class="config-button" data-action="adv">Create Character</button>
 
@@ -14,35 +14,35 @@
                     <div class="resource grid-span-2">
                         <label for="data.health.value" class="resource-label">Health</label>
                         <div class="resource-content flexrow flex-center">
-                            <input type="text" name="data.health.value" value="{{data.system.health.value}}" min="-{{data.system.health.max}}"
-                                max="{{data.system.health.max}}" data-dtype="Number" />
+                            <input type="text" name="data.health.value" value="{{data.health.value}}" min="-{{data.health.max}}"
+                                max="{{data.health.max}}" data-dtype="Number" />
                             <span>/</span>
-                            <input type="text" name="data.health.max" value="{{data.system.health.max}}" data-dtype="Number" />
+                            <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number" />
                         </div>
                     </div>
                     <div class="resource flexcol">
                         <label for="data.speed.value" class="resource-label">speed</label>
-                        <span data-label="data.speed.value">{{numberFormat document.system.system.speed.value decimals=0 sign=false}}</span>
+                        <span data-label="data.speed.value">{{numberFormat document.system.speed.value decimals=0 sign=false}}</span>
                     </div>
                     <div class="resource flexcol grid-span-2">
                         <label for="data.advancement.xp.used" class="resource-label">xp</label>
                         <div class="resource-content flexrow flex-center">
-                            <input type="text" data-dtype="Number" name="data.advancement.xp.get" value="{{data.system.advancement.xp.get}}" />
+                            <input type="text" data-dtype="Number" name="data.advancement.xp.get" value="{{data.advancement.xp.get}}" />
                             <span>/</span>
                             <input type="text" data-dtype="Number" {{#unless isGM}} readonly{{/unless}} name="data.advancement.xp.used"
-                                value="{{data.system.advancement.xp.used}}" />
+                                value="{{data.advancement.xp.used}}" />
                         </div>
                     </div>
                     <div class="resource flexcol grid-span-3">
                         <div>
-                            <progress max="{{data.system.advancement.xp.bar_max}}" value="{{data.system.advancement.xp.bar_min}}"></progress>
+                            <progress max="{{data.advancement.xp.bar_max}}" value="{{data.advancement.xp.bar_min}}"></progress>
                             <span data-label="data.advancement.xp.level">
-                                {{numberFormat document.system.system.advancement.xp.level decimals=0 sign=false}}
+                                {{numberFormat document.system.advancement.xp.level decimals=0 sign=false}}
                             </span>
                             <div class="resource-content flexrow flex-center flex-between">
                                 <label for="data.advancement.level" class="resource-label">Level </label>
                                 <span class="resource-content"
-                                    data-label="data.advancement.level">{{numberFormat document.system.system.advancement.level decimals=0 sign=false}}
+                                    data-label="data.advancement.level">{{numberFormat document.system.advancement.level decimals=0 sign=false}}
                                 </span>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                     Bonus
                                 </label>
                                 <span class="resource-content flex-center" data-label="data.advancement.prof_bonus">
-                                    {{numberFormat document.system.system.advancement.prof_bonus decimals=0 sign=false}}
+                                    {{numberFormat document.system.advancement.prof_bonus decimals=0 sign=false}}
                                 </span>
                             </div>
                             <div class="resource-content flexrow flex-center flex-between grid-span-2">
@@ -61,7 +61,7 @@
                                 </label>
                                 <span class="resource-content rollable flex-center" data-roll="@advancement.prof_die"
                                     data-label="data.advancement.prof_die">
-                                    {{data.system.advancement.prof_die}}
+                                    {{data.advancement.prof_die}}
                                 </span>
                             </div>
                             <button type="button" class="config-button" data-action="adv">
@@ -92,7 +92,7 @@
                 <section class="grid grid-6col flexcol">
                     <aside class="attribute grid grid-3col">
                         <div class="attribute flex-group-center grid-span-2">
-                            {{#each document.system.system.attributes as |attribute key|}}
+                            {{#each document.system.attributes as |attribute key|}}
                                 {{log attribute 'attributes'}}
                                 <div class="attribute flexrow" data-attribute="{{key}}">
                                     <label for="data.attributes.{{key}}.value" class="resource-label attribute-name rollable flexlarge align-left"
@@ -104,7 +104,7 @@
                             {{/each}}
                         </div>
                         <div>
-                            {{#each document.system.system.defences.stats as |defence key|}}
+                            {{#each document.system.defences.stats as |defence key|}}
                                 <div class="attribute flexrow">
                                     <label for="data.defences.stats.{{key}}.value" class="resource-label flexlarge align-left rollable"
                                         data-roll="1d20+{{numberFormat defence.value decimals=0 sign=false}}-10" data-label="{{defence.label}}">
@@ -117,7 +117,7 @@
                             {{/each}}
                         </div>
                         <div class="grid-span-2">
-                            {{#each document.system.system.skills as |skill key|}}
+                            {{#each document.system.skills as |skill key|}}
                                 <div class="flexrow" data-skill="{{key}}">
                                     <div data-skill="{{key}}">
                                         <label for="data.skills.{{key}}.rank" class="flex0 resource-label skill-name rollable flexlarge align-left">
