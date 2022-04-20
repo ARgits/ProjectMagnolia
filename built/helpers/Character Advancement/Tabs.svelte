@@ -4,12 +4,15 @@
   console.log(application)
   export let tabs = [];
   export let activeTab;
-  const doc = getContext("chaAdvActorData");
+  const data = getContext("chaAdvActorData");
   const id = getContext("chaAdvActorID");
   function submitData() {
-    console.log($doc);
+    const updateObj={}
+    updateObj['data.attributes'] = $data.attributes
+    updateObj['data.skills']=$data.skills
+    console.log($data);
     console.log(game.actors.get(id).system);
-    game.actors.get(id).update({ data: $doc });
+    game.actors.get(id).update(updateObj);
     application.close();
   }
 </script>

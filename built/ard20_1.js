@@ -1,6 +1,6 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, run_all, add_flush_callback, group_outros, check_outros, destroy_each, binding_callbacks, bind, flush, set_store_value, to_number, set_input_value, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
-import { getContext, setContext, onDestroy } from '/modules/typhonjs/svelte/index.js';
+import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, run_all, add_flush_callback, group_outros, check_outros, destroy_each, binding_callbacks, bind, flush, to_number, set_input_value, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
+import { getContext, setContext } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
@@ -2874,7 +2874,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (18:2) {#each tabs as tab}
+// (21:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
@@ -2930,7 +2930,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (30:4) {#if tab.id === activeTab}
+// (33:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
@@ -2997,7 +2997,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (29:2) {#each tabs as tab}
+// (32:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
@@ -3208,19 +3208,22 @@ function create_fragment$4(ctx) {
 }
 
 function instance$4($$self, $$props, $$invalidate) {
-	let $doc;
+	let $data;
 	const { application } = getContext("external");
 	console.log(application);
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
-	const doc = getContext("chaAdvActorData");
-	component_subscribe($$self, doc, value => $$invalidate(5, $doc = value));
+	const data = getContext("chaAdvActorData");
+	component_subscribe($$self, data, value => $$invalidate(5, $data = value));
 	const id = getContext("chaAdvActorID");
 
 	function submitData() {
-		console.log($doc);
+		const updateObj = {};
+		updateObj['data.attributes'] = $data.attributes;
+		updateObj['data.skills'] = $data.skills;
+		console.log($data);
 		console.log(game.actors.get(id).system);
-		game.actors.get(id).update({ data: $doc });
+		game.actors.get(id).update(updateObj);
 		application.close();
 	}
 
@@ -3233,7 +3236,7 @@ function instance$4($$self, $$props, $$invalidate) {
 		if ('activeTab' in $$props) $$invalidate(0, activeTab = $$props.activeTab);
 	};
 
-	return [activeTab, tabs, doc, submitData, click_handler];
+	return [activeTab, tabs, data, submitData, click_handler];
 }
 
 class Tabs extends SvelteComponent {
@@ -3283,11 +3286,13 @@ function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let { document } = $$props;
 	setContext("chaAdvActorID", document.id);
-	const data = writable(document.data.data);
+
+	const data = writable({
+		attributes: duplicate(document.data.data.attributes),
+		skills: duplicate(document.data.data.skills)
+	});
+
 	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
-	const id = getContext('chaAdvActorID');
-	console.log(id, 'id');
-	const actorData = game.actors.get(id).data.data;
 	console.log($data);
 	setContext("chaAdvActorData", data);
 
@@ -3303,14 +3308,6 @@ function instance$3($$self, $$props, $$invalidate) {
 			component: Skills
 		}
 	];
-
-	onDestroy(() => {
-		console.log('app is closing');
-		console.log($data, '$data before');
-		console.log(actorData, 'document itself');
-		set_store_value(data, $data = actorData, $data);
-		console.log($data, '$data after');
-	});
 
 	$$self.$$set = $$props => {
 		if ('document' in $$props) $$invalidate(2, document = $$props.document);

@@ -9,10 +9,10 @@
   import Tabs from "./Tabs.svelte";
   export let document;
   setContext("chaAdvActorID", document.id);
-  const data = writable(document.data.data);
-  const id = getContext('chaAdvActorID')
-  console.log(id, 'id')
-  const actorData = game.actors.get(id).data.data
+  const data = writable({
+	  attributes:duplicate(document.data.data.attributes),
+	  skills:duplicate(document.data.data.skills)
+  });
   console.log($data);
   setContext("chaAdvActorData", data);
   const tabs = [
@@ -20,13 +20,13 @@
     { label: "skills", id: "skills", component: SkillComp },
   ];
   const activeTab = "attributes";
-  onDestroy(() => {
+  /*onDestroy(() => {
 	console.log('app is closing')
 	console.log($data,'$data before')
 	console.log(actorData,'document itself')
     $data = actorData;
 	console.log($data,'$data after')
-  });
+  });*/
 </script>
 
 <Tabs {tabs} {activeTab} />
