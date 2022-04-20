@@ -2874,7 +2874,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (21:2) {#each tabs as tab}
+// (23:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
@@ -2930,7 +2930,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (33:4) {#if tab.id === activeTab}
+// (35:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
@@ -2997,7 +2997,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (32:2) {#each tabs as tab}
+// (34:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
@@ -3219,9 +3219,13 @@ function instance$4($$self, $$props, $$invalidate) {
 
 	function submitData() {
 		const updateObj = {};
-		updateObj['data.attributes'] = $data.attributes;
-		updateObj['data.skills'] = $data.skills;
-		console.log($data);
+
+		for (let [key, prop] of Object.entries($data)) {
+			console.log(key, prop);
+			updateObj[`data.${key}`] = prop;
+		}
+
+		console.log(updateObj);
 		console.log(game.actors.get(id).system);
 		game.actors.get(id).update(updateObj);
 		application.close();
