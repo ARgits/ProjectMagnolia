@@ -10,6 +10,9 @@
   export let document;
   setContext("chaAdvActorID", document.id);
   const data = writable(document.data.data);
+  const unsubscribe = data.subscribe(()=>{
+	  unsubscribe()
+  })
   console.log($data);
   setContext("chaAdvActorData", data);
   const tabs = [
@@ -17,9 +20,7 @@
     { label: "skills", id: "skills", component: SkillComp },
   ];
   const activeTab = "attributes";
-  onDestroy(() => {
-    console.log($data);
-  });
+  onDestroy(unsubscribe);
 </script>
 
 <Tabs {tabs} {activeTab} />

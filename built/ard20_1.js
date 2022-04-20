@@ -3285,6 +3285,11 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvActorID", document.id);
 	const data = writable(document.data.data);
 	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
+
+	const unsubscribe = data.subscribe(() => {
+		unsubscribe();
+	});
+
 	console.log($data);
 	setContext("chaAdvActorData", data);
 
@@ -3301,9 +3306,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
-	onDestroy(() => {
-		console.log($data);
-	});
+	onDestroy(unsubscribe);
 
 	$$self.$$set = $$props => {
 		if ('document' in $$props) $$invalidate(2, document = $$props.document);
