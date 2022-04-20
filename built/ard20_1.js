@@ -3285,7 +3285,8 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvActorID", document.id);
 	const data = writable(document.data.data);
 	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
-	const id = getContext('chAdvActorID');
+	const id = getContext('chaAdvActorID');
+	console.log(id, 'id');
 	const actorData = game.actors.get(id).data.data;
 	console.log($data);
 	setContext("chaAdvActorData", data);

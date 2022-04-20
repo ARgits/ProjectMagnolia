@@ -10,7 +10,8 @@
   export let document;
   setContext("chaAdvActorID", document.id);
   const data = writable(document.data.data);
-  const id = getContext('chAdvActorID')
+  const id = getContext('chaAdvActorID')
+  console.log(id, 'id')
   const actorData = game.actors.get(id).data.data
   console.log($data);
   setContext("chaAdvActorData", data);
