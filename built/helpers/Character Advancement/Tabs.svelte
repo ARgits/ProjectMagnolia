@@ -1,4 +1,5 @@
 <script>
+  import { onDestroy } from 'svelte';
   import { getContext } from "svelte";
   const { application } = getContext("external");
   export let tabs = [];

@@ -3,20 +3,22 @@
 <script>
   import {setContext} from 'svelte'
   import {writable} from 'svelte/store'
+  import { onDestroy } from 'svelte';
   import AttributeComp from "./Attributes.svelte";
   import SkillComp from "./Skills.svelte";
-  import FeatureComp from "./FeatureComp.svelte";
   import Tabs from "./Tabs.svelte";
   export let document
   setContext('chaAdvActorID',document.id)
-  let data = writable(document.data.data)
+  const data = writable(document.data.data)
+  console.log($data)
+  const unsub = data.subscribe(value=>{})
   setContext('chaAdvActorData',data)
-  let tabs = [
+  const tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp},
     { label: "skills", id: "skills", component: SkillComp},
   ];
-  let activeTab = "attributes";
-  
+  const activeTab = "attributes";
+  onDestroy(unsub())
 </script>
 
 <Tabs {tabs} {activeTab} />

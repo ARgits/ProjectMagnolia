@@ -1,6 +1,6 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, run_all, add_flush_callback, group_outros, check_outros, destroy_each, binding_callbacks, bind, flush, to_number, set_input_value, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
-import { getContext, setContext } from '/modules/typhonjs/svelte/index.js';
+import { getContext, setContext, onDestroy } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
@@ -2874,7 +2874,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (17:2) {#each tabs as tab}
+// (18:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
@@ -2930,7 +2930,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (29:4) {#if tab.id === activeTab}
+// (30:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
@@ -2997,7 +2997,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (28:2) {#each tabs as tab}
+// (29:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
@@ -3249,7 +3249,7 @@ function create_fragment$3(ctx) {
 	let current;
 
 	tabs_1 = new Tabs({
-			props: { tabs: /*tabs*/ ctx[0], activeTab }
+			props: { tabs: /*tabs*/ ctx[1], activeTab }
 		});
 
 	return {
@@ -3276,15 +3276,23 @@ function create_fragment$3(ctx) {
 	};
 }
 
-let activeTab = "attributes";
+const activeTab = "attributes";
 
 function instance$3($$self, $$props, $$invalidate) {
+	let $data;
 	let { document } = $$props;
 	setContext('chaAdvActorID', document.id);
-	let data = writable(document.data.data);
+	const data = writable(document.data.data);
+	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
+	console.log($data);
+
+	const unsub = data.subscribe(value => {
+		
+	});
+
 	setContext('chaAdvActorData', data);
 
-	let tabs = [
+	const tabs = [
 		{
 			label: "attributes",
 			id: "attributes",
@@ -3297,21 +3305,23 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
+	onDestroy(unsub());
+
 	$$self.$$set = $$props => {
-		if ('document' in $$props) $$invalidate(1, document = $$props.document);
+		if ('document' in $$props) $$invalidate(2, document = $$props.document);
 	};
 
-	return [tabs, document];
+	return [data, tabs, document];
 }
 
 class Cha_adv_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 1 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 2 });
 	}
 
 	get document() {
-		return this.$$.ctx[1];
+		return this.$$.ctx[2];
 	}
 
 	set document(document) {
