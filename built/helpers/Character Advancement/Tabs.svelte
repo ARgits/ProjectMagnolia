@@ -1,7 +1,7 @@
 <script>
-  import { onDestroy } from 'svelte';
   import { getContext } from "svelte";
   const { application } = getContext("external");
+  console.log(application)
   export let tabs = [];
   export let activeTab;
   const doc = getContext("chaAdvActorData");

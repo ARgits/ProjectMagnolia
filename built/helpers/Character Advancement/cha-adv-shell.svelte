@@ -17,6 +17,7 @@
     { label: "skills", id: "skills", component: SkillComp},
   ];
   const activeTab = "attributes";
+  onDestroy(console.log($data))
 </script>
 
 <Tabs {tabs} {activeTab} />
