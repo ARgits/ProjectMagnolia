@@ -31,7 +31,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Use a safe clone of the actor data for further operations.
     const actorData = this.actor;
     // Add the actor's data to context.data for easier access, as well as flags.
-    //@ts-expect-error
+    context.data = actorData.system
     //@ts-expect-error
     context.flags = actorData.flags;
     //@ts-expect-error
@@ -70,11 +70,11 @@ export class ARd20ActorSheet extends ActorSheet {
   //@ts-expect-error
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.data.system.attributes)) {
+    for (let [k, v] of Object.entries(context.data.attributes)) {
       //@ts-expect-error
       v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
     }
-    for (let [k, v] of Object.entries(context.data.system.skills)) {
+    for (let [k, v] of Object.entries(context.data.skills)) {
       //@ts-expect-error
       v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
       v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
