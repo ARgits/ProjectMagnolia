@@ -1,5 +1,5 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, run_all, add_flush_callback, group_outros, check_outros, destroy_each, binding_callbacks, bind, flush, to_number, set_input_value, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, run_all, add_flush_callback, group_outros, check_outros, destroy_each, binding_callbacks, bind, flush, set_store_value, to_number, set_input_value, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
 import { getContext, setContext, onDestroy } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
@@ -3285,11 +3285,6 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvActorID", document.id);
 	const data = writable(document.data.data);
 	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
-
-	const unsubscribe = data.subscribe(async () => {
-		unsubscribe();
-	});
-
 	console.log($data);
 	setContext("chaAdvActorData", data);
 
@@ -3306,7 +3301,13 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
-	onDestroy(unsubscribe);
+	onDestroy(() => {
+		console.log('app is closing');
+		console.log($data, '$data before');
+		console.log(document.data.data, 'document itself');
+		set_store_value(data, $data = document.data.data, $data);
+		console.log($data, '$data after');
+	});
 
 	$$self.$$set = $$props => {
 		if ('document' in $$props) $$invalidate(2, document = $$props.document);
