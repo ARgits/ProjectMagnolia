@@ -11,14 +11,12 @@
   setContext('chaAdvActorID',document.id)
   const data = writable(document.data.data)
   console.log($data)
-  const unsub = data.subscribe(value=>{})
   setContext('chaAdvActorData',data)
   const tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp},
     { label: "skills", id: "skills", component: SkillComp},
   ];
   const activeTab = "attributes";
-  onDestroy(unsub())
 </script>
 
 <Tabs {tabs} {activeTab} />
