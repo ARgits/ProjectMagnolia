@@ -2181,14 +2181,14 @@ function create_else_block(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[17]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[16]);
 				mounted = true;
 			}
 		},
@@ -2203,7 +2203,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (52:2) {#if val[1].rankName}
+// (48:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].rankName + "";
@@ -2215,14 +2215,14 @@ function create_if_block_2(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[16]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[15]);
 				mounted = true;
 			}
 		},
@@ -2237,7 +2237,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (61:2) {#if val[1].mod !== undefined}
+// (57:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2249,14 +2249,14 @@ function create_if_block_1(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*strMod*/ ctx[7]);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[19]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[18]);
 				mounted = true;
 			}
 		},
@@ -2271,7 +2271,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (67:2) {#if key === 0}
+// (63:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2343,7 +2343,7 @@ function create_fragment$7(ctx) {
 			props: {
 				type: /*typeStr*/ ctx[5],
 				subtype: /*val*/ ctx[2][0],
-				min: /*min*/ ctx[9]
+				min
 			}
 		});
 
@@ -2370,10 +2370,10 @@ function create_fragment$7(ctx) {
 			t6 = text(/*cost*/ ctx[6]);
 			t7 = space();
 			if (if_block2) if_block2.c();
-			attr(td0, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
-			attr(td1, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
-			attr(td2, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
-			attr(td3, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
+			attr(td0, "class", "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
+			attr(td1, "class", "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
+			attr(td2, "class", "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
+			attr(td3, "class", "" + (null_to_empty(/*last*/ ctx[10]) + " svelte-5mzk3w"));
 			attr(tr, "class", "svelte-5mzk3w");
 		},
 		m(target, anchor) {
@@ -2399,10 +2399,10 @@ function create_fragment$7(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(td0, "mouseover", /*mouseover_handler*/ ctx[14]),
-					listen(td1, "mouseover", /*mouseover_handler_1*/ ctx[15]),
-					listen(td2, "mouseover", /*mouseover_handler_4*/ ctx[18]),
-					listen(td3, "mouseover", /*mouseover_handler_6*/ ctx[20])
+					listen(td0, "mouseover", /*mouseover_handler*/ ctx[13]),
+					listen(td1, "mouseover", /*mouseover_handler_1*/ ctx[14]),
+					listen(td2, "mouseover", /*mouseover_handler_4*/ ctx[17]),
+					listen(td3, "mouseover", /*mouseover_handler_6*/ ctx[19])
 				];
 
 				mounted = true;
@@ -2495,11 +2495,19 @@ function instance$7($$self, $$props, $$invalidate) {
 	let { description } = $$props;
 	let { typeStr } = $$props;
 	const data = getContext("chaAdvActorData");
-	component_subscribe($$self, data, value => $$invalidate(13, $data = value));
+	component_subscribe($$self, data, value => $$invalidate(12, $data = value));
 	const formulas = getContext("chaAdvXpFormulas").formulas;
 	let variables = {};
 	let cost;
-	let min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].value || getContext("chaAdvActorOriginalData")[typeStr][val[0]].level; //TODO: redo this for not only attributes and skills
+
+	switch (typeStr) {
+		case "attributes":
+			min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].value;
+			break;
+		case "skills":
+			getContext("chaAdvActorOriginalData")[typeStr][val[0]].level;
+			break;
+	}
 
 	function changeDesc(val) {
 		if (!val[1].description) return "";
@@ -2526,22 +2534,11 @@ function instance$7($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*typeStr, val*/ 36) {
-			switch (typeStr) {
-				case "attributes":
-					val[1].value;
-					break;
-				case "skills":
-					val[1].level;
-					break;
-			}
-		}
-
-		if ($$self.$$.dirty & /*typeStr, $data, val, variables*/ 12324) {
+		if ($$self.$$.dirty & /*typeStr, $data, val, variables*/ 6180) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					$$invalidate(
-						12,
+						11,
 						variables[variable.shortName] = typeStr === key
 						? $data[typeStr][val[0]].level ?? $data[typeStr][val[0]].value
 						: 0,
@@ -2571,7 +2568,6 @@ function instance$7($$self, $$props, $$invalidate) {
 		cost,
 		strMod,
 		data,
-		min,
 		changeDesc,
 		last,
 		variables,

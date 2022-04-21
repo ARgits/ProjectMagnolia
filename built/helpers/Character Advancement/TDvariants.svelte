@@ -11,18 +11,14 @@
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;
-  let value;
-  $: switch (typeStr) {
+  switch (typeStr) {
     case "attributes":
-      value = val[1].value;
+      min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].value;
       break;
     case "skills":
-      value = val[1].level;
+      getContext("chaAdvActorOriginalData")[typeStr][val[0]].level;
       break;
   }
-  let min =
-    getContext("chaAdvActorOriginalData")[typeStr][val[0]].value ||
-    getContext("chaAdvActorOriginalData")[typeStr][val[0]].level; //TODO: redo this for not only attributes and skills
   $: {
     for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
       variables[variable.shortName] =
