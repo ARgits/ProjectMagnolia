@@ -2537,14 +2537,14 @@ function instance$7($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*$data, typeStr, variables*/ 12320) {
+		if ($$self.$$.dirty & /*typeStr, $data, val, variables*/ 12324) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					$$invalidate(
 						12,
-						variables[variable.shortName] = variable.shortName === key
-						? $data[key][typeStr].level ?? $data[key][typeStr].value
-						: 1,
+						variables[variable.shortName] = typeStr === key
+						? $data[typeStr][val[0]].level ?? $data[typeStr][val[0]].value
+						: 0,
 						variables
 					); //TODO: change "1" to variable, that will represent "count" and other things
 				}
