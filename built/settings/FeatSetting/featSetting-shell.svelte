@@ -1,6 +1,5 @@
 <svelte:options accessors={true} />
 
-
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";

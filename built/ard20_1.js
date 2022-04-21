@@ -2196,7 +2196,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (41:2) {#if val[1].rankName}
+// (40:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].rankName + "";
@@ -2230,7 +2230,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (50:2) {#if val[1].mod !== undefined}
+// (49:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2264,7 +2264,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (56:2) {#if key === 0}
+// (55:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2800,7 +2800,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (20:1) {#each Object.entries($doc.skills) as skill,key}
+// (21:2) {#each Object.entries($doc.skills) as skill, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let current;
@@ -2813,7 +2813,7 @@ function create_each_block$4(ctx) {
 				min: 0,
 				max: 4,
 				key: /*key*/ ctx[5],
-				description: ''
+				description: ""
 			}
 		});
 
@@ -2867,12 +2867,12 @@ function create_fragment$5(ctx) {
 			table = element("table");
 			tr = element("tr");
 
-			tr.innerHTML = `<th class="svelte-kfb343">Name</th> 
-		<th class="svelte-kfb343">Increase</th> 
-		<th class="svelte-kfb343">Rank</th> 
-		<th class="svelte-kfb343">Decrease</th> 
-		<th class="svelte-kfb343">Cost</th> 
-		<th class="svelte-kfb343">Description</th>`;
+			tr.innerHTML = `<th class="svelte-1x5gwo0">Name</th> 
+    <th class="svelte-1x5gwo0">Increase</th> 
+    <th class="svelte-1x5gwo0">Rank</th> 
+    <th class="svelte-1x5gwo0">Decrease</th> 
+    <th class="svelte-1x5gwo0">Cost</th> 
+    <th class="svelte-1x5gwo0">Description</th>`;
 
 			t11 = space();
 
@@ -2880,8 +2880,8 @@ function create_fragment$5(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-kfb343");
-			attr(table, "class", "svelte-kfb343");
+			attr(tr, "class", "svelte-1x5gwo0");
+			attr(table, "class", "svelte-1x5gwo0");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -2947,13 +2947,13 @@ function create_fragment$5(ctx) {
 	};
 }
 
-const typeStr = 'skills';
+const typeStr = "skills";
 
 function instance$5($$self, $$props, $$invalidate) {
 	let $doc;
-	let doc = getContext('chaAdvActorData');
+	let doc = getContext("chaAdvActorData");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
-	const rankName = ['untrained', 'trained', 'expert', 'master', 'legend'];
+	const rankName = ["untrained", "trained", "expert", "master", "legend"];
 
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$doc*/ 1) {
@@ -5168,7 +5168,7 @@ function get_each_context_1$1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (39:6) {#each featSetting.packs as pack (pack.id)}
+// (38:6) {#each featSetting.packs as pack (pack.id)}
 function create_each_block_1$1(key_1, ctx) {
 	let div;
 	let input;
@@ -5230,7 +5230,7 @@ function create_each_block_1$1(key_1, ctx) {
 	};
 }
 
-// (48:6) {#each featSetting.folders as folder (folder.id)}
+// (47:6) {#each featSetting.folders as folder (folder.id)}
 function create_each_block$1(key_1, ctx) {
 	let div;
 	let input;
@@ -5292,7 +5292,7 @@ function create_each_block$1(key_1, ctx) {
 	};
 }
 
-// (35:0) <ApplicationShell bind:elementRoot>
+// (34:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$1(ctx) {
 	let section;
 	let div;

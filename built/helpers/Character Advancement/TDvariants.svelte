@@ -1,6 +1,5 @@
 <script>
   import { getContext } from "svelte";
-
   import ChangeButton from "./ChangeButton.svelte";
   export let min;
   export let max;
