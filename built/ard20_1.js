@@ -2543,7 +2543,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					$$invalidate(
 						12,
 						variables[variable.shortName] = variable.shortName === key
-						? $data[key][typeStr].value ?? $data[key][typeStr].level
+						? $data[key][typeStr].level ?? $data[key][typeStr].value
 						: 1,
 						variables
 					); //TODO: change "1" to variable, that will represent "count" and other things

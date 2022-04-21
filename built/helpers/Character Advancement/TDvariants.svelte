@@ -26,7 +26,7 @@
   $: {
     for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
       variables[variable.shortName] =
-        variable.shortName === key ? $data[key][typeStr].value ?? $data[key][typeStr].level : 1; //TODO: change "1" to variable, that will represent "count" and other things
+        variable.shortName === key ? $data[key][typeStr].level ?? $data[key][typeStr].value : 1; //TODO: change "1" to variable, that will represent "count" and other things
     }
     cost = math.evaluate(formulas[typeStr], variables);
   }
