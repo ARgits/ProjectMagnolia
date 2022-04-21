@@ -3471,9 +3471,10 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
+	const id = getContext("chaAdvActorID");
+
 	//update actor and do other stuff when click 'submit' button
 	function submitData() {
-		const id = getContext("chaAdvActorID");
 		const updateObj = {};
 		updateObj["data.attributes"] = $data.attributes;
 		updateObj["data.skills"] = $data.skills;

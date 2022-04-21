@@ -7,6 +7,7 @@
   import SkillComp from "./Skills.svelte";
   import Tabs from "./Tabs.svelte";
   export let document;
+
   const { application } = getContext("external");
   //create list of changes and context for it
   const changes = writable([]);
@@ -14,7 +15,7 @@
   //create context for formulas from setting, CONFIG data, Actor's ID
   setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
   setContext("chaAdvCONFIG", CONFIG);
-  setContext("chaAdvActorOriginalData", document.data.data)
+  setContext("chaAdvActorOriginalData", document.data.data);
   setContext("chaAdvActorID", document.id);
 
   //create store and context for data
@@ -34,10 +35,10 @@
   ];
   //select first tab when app initialized
   const activeTab = "attributes";
-  $: console.log($data, $changes)
+  $: console.log($data, $changes);
+  const id = getContext("chaAdvActorID");
   //update actor and do other stuff when click 'submit' button
   function submitData() {
-    const id = getContext("chaAdvActorID");
     const updateObj = {};
     updateObj["data.attributes"] = $data.attributes;
     updateObj["data.skills"] = $data.skills;
