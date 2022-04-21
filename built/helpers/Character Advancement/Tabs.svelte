@@ -17,7 +17,7 @@
 <div class="box">
   {#each tabs as tab}
     {#if tab.id === activeTab}
-      <svelte:component this={tab.component} />
+      <svelte:component this={tab.component} tabData={tab.id} />
     {/if}
   {/each}
 </div>

@@ -31,7 +31,7 @@
   //TODO: create features, races and other tabs
   const tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp },
-    { label: "skills", id: "skills", component: SkillComp },
+    { label: "skills", id: "skills", component: AttributeComp },
   ];
   //select first tab when app initialized
   const activeTab = "attributes";
