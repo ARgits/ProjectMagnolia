@@ -2861,7 +2861,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-1qpu72c");
+			attr(th, "class", "svelte-1n97lz5");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -2984,9 +2984,9 @@ function create_fragment$5(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-1qpu72c");
-			attr(thead_1, "class", "svelte-1qpu72c");
-			attr(table, "class", "svelte-1qpu72c");
+			attr(tr, "class", "svelte-1n97lz5");
+			attr(thead_1, "class", "svelte-1n97lz5");
+			attr(table, "class", "svelte-1n97lz5");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);

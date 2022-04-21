@@ -52,6 +52,7 @@
   table thead {
     position: sticky;
     inset-block-start: 0;
+    border-bottom: 2px solid #ccc
   }
   table {
     border-collapse: collapse;
