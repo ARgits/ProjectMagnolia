@@ -18,7 +18,7 @@
       min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].value;
       break;
     case "skills":
-      getContext("chaAdvActorOriginalData")[typeStr][val[0]].level;
+      min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].level;
       break;
   }
   $: {
