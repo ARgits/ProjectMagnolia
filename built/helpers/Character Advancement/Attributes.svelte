@@ -60,7 +60,7 @@
     border: 1px solid black;
   }
   th {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgb(100,100,100);
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;
