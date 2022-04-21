@@ -34,7 +34,7 @@
   ];
   //select first tab when app initialized
   const activeTab = "attributes";
-
+  $: console.log($data)
   //update actor and do other stuff when click 'submit' button
   function submitData() {
     const id = getContext("chaAdvActorID");

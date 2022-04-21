@@ -18,8 +18,10 @@
     for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
       variables[variable.shortName] =
         variable.shortName === key ? $data[key][typeStr].value ?? $data[key][typeStr].level : 1; //TODO: change "1" to variable, that will represent "count" and other things
+      console.log(variables[variable.shortName]);
     }
     cost = math.evaluate(formulas[typeStr], variables);
+    console.log(cost)
   }
   function changeDesc(val) {
     if (!val[1].description) return "";
