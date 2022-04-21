@@ -1,6 +1,4 @@
 <script>
-  import { getContext } from "svelte";
-
   export let tabs = [];
   export let activeTab;
 </script>
@@ -30,6 +28,8 @@
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
+    max-height: 270px;
+    overflow-y: auto;
   }
   ul {
     display: flex;

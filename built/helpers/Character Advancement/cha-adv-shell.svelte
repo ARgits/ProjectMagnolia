@@ -7,6 +7,7 @@
   import SkillComp from "./Skills.svelte";
   import Tabs from "./Tabs.svelte";
   export let document;
+  const { application } = getContext("external");
   //create list of changes and context for it
   const changes = writable([]);
   setContext("chaAdvXpChanges", changes);
@@ -35,7 +36,6 @@
 
   //update actor and do other stuff when click 'submit' button
   function submitData() {
-    const { application } = getContext("external");
     const id = getContext("chaAdvActorID");
     const updateObj = {};
     updateObj["data.attributes"] = $data.attributes;

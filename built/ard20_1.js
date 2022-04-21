@@ -2677,13 +2677,13 @@ function create_fragment$6(ctx) {
 			table = element("table");
 			tr = element("tr");
 
-			tr.innerHTML = `<th class="svelte-h7j8ib">Name</th> 
-    <th class="svelte-h7j8ib">Increase</th> 
-    <th class="svelte-h7j8ib">Value</th> 
-    <th class="svelte-h7j8ib">Decrease</th> 
-    <th class="svelte-h7j8ib">Mod</th> 
-    <th class="svelte-h7j8ib">Cost</th> 
-    <th class="svelte-h7j8ib">Description</th>`;
+			tr.innerHTML = `<th class="svelte-1aak0m8">Name</th> 
+    <th class="svelte-1aak0m8">Increase</th> 
+    <th class="svelte-1aak0m8">Value</th> 
+    <th class="svelte-1aak0m8">Decrease</th> 
+    <th class="svelte-1aak0m8">Mod</th> 
+    <th class="svelte-1aak0m8">Cost</th> 
+    <th class="svelte-1aak0m8">Description</th>`;
 
 			t13 = space();
 
@@ -2691,8 +2691,8 @@ function create_fragment$6(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-h7j8ib");
-			attr(table, "class", "svelte-h7j8ib");
+			attr(tr, "class", "svelte-1aak0m8");
+			attr(table, "class", "svelte-1aak0m8");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -2867,12 +2867,12 @@ function create_fragment$5(ctx) {
 			table = element("table");
 			tr = element("tr");
 
-			tr.innerHTML = `<th class="svelte-vg40np">Name</th> 
-		<th class="svelte-vg40np">Increase</th> 
-		<th class="svelte-vg40np">Rank</th> 
-		<th class="svelte-vg40np">Decrease</th> 
-		<th class="svelte-vg40np">Cost</th> 
-		<th class="svelte-vg40np">Description</th>`;
+			tr.innerHTML = `<th class="svelte-kfb343">Name</th> 
+		<th class="svelte-kfb343">Increase</th> 
+		<th class="svelte-kfb343">Rank</th> 
+		<th class="svelte-kfb343">Decrease</th> 
+		<th class="svelte-kfb343">Cost</th> 
+		<th class="svelte-kfb343">Description</th>`;
 
 			t11 = space();
 
@@ -2880,8 +2880,8 @@ function create_fragment$5(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-vg40np");
-			attr(table, "class", "svelte-vg40np");
+			attr(tr, "class", "svelte-kfb343");
+			attr(table, "class", "svelte-kfb343");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -2987,7 +2987,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (9:2) {#each tabs as tab}
+// (7:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
@@ -3008,11 +3008,11 @@ function create_each_block_1$2(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-1eq0yix");
+			attr(span, "class", "svelte-j45f73");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-1eq0yix"));
+			: "") + " svelte-j45f73"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -3031,7 +3031,7 @@ function create_each_block_1$2(ctx) {
 
 			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-1eq0yix"))) {
+			: "") + " svelte-j45f73"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -3043,7 +3043,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (21:4) {#if tab.id === activeTab}
+// (19:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
@@ -3110,7 +3110,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (20:2) {#each tabs as tab}
+// (18:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
@@ -3204,8 +3204,8 @@ function create_fragment$4(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-1eq0yix");
-			attr(div, "class", "box svelte-1eq0yix");
+			attr(ul, "class", "svelte-j45f73");
+			attr(div, "class", "box svelte-j45f73");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
@@ -3415,6 +3415,7 @@ const activeTab = "attributes";
 function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let { document } = $$props;
+	const { application } = getContext("external");
 
 	//create list of changes and context for it
 	const changes = writable([]);
@@ -3455,7 +3456,6 @@ function instance$3($$self, $$props, $$invalidate) {
 
 	//update actor and do other stuff when click 'submit' button
 	function submitData() {
-		const { application } = getContext("external");
 		const id = getContext("chaAdvActorID");
 		const updateObj = {};
 		updateObj["data.attributes"] = $data.attributes;
