@@ -3344,7 +3344,7 @@ function create_fragment$3(ctx) {
 	let dispose;
 
 	tabs_1 = new Tabs({
-			props: { tabs: /*tabs*/ ctx[2], activeTab }
+			props: { tabs: /*tabs*/ ctx[3], activeTab }
 		});
 
 	return {
@@ -3377,7 +3377,7 @@ function create_fragment$3(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*submitData*/ ctx[3]);
+				dispose = listen(button, "click", /*submitData*/ ctx[4]);
 				mounted = true;
 			}
 		},
@@ -3412,12 +3412,14 @@ const activeTab = "attributes";
 
 function instance$3($$self, $$props, $$invalidate) {
 	let $data;
+	let $changes;
 	let { document } = $$props;
 	const { application } = getContext("external");
 
 	//create list of changes and context for it
 	const changes = writable([]);
 
+	component_subscribe($$self, changes, value => $$invalidate(6, $changes = value));
 	setContext("chaAdvXpChanges", changes);
 
 	//create context for formulas from setting, CONFIG data, Actor's ID
@@ -3466,26 +3468,26 @@ function instance$3($$self, $$props, $$invalidate) {
 	}
 
 	$$self.$$set = $$props => {
-		if ('document' in $$props) $$invalidate(4, document = $$props.document);
+		if ('document' in $$props) $$invalidate(5, document = $$props.document);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data*/ 1) {
-			console.log($data);
+		if ($$self.$$.dirty & /*$data, $changes*/ 65) {
+			console.log($data, $changes);
 		}
 	};
 
-	return [$data, data, tabs, submitData, document];
+	return [$data, changes, data, tabs, submitData, document, $changes];
 }
 
 class Cha_adv_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 4 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 5 });
 	}
 
 	get document() {
-		return this.$$.ctx[4];
+		return this.$$.ctx[5];
 	}
 
 	set document(document) {
@@ -4799,7 +4801,7 @@ function create_each_block$2(ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(input, "input", input_input_handler),
-					listen(input, "change", /*changeSetting*/ ctx[4])
+					listen(input, "change", /*changeSetting*/ ctx[3])
 				];
 
 				mounted = true;
@@ -4842,22 +4844,19 @@ function create_default_slot$2(ctx) {
 	let t4;
 	let input0;
 	let t5;
+	let br0;
+	let t6;
 	let div3;
 	let label2;
-	let t7;
-	let input1;
 	let t8;
+	let input1;
+	let t9;
+	let br1;
+	let t10;
 	let div4;
 	let label3;
-	let t10;
-	let input2;
-	let t11;
-	let br0;
 	let t12;
-	let div5;
-	let t13;
-	let t14;
-	let br1;
+	let input2;
 	let mounted;
 	let dispose;
 	let each_value = Object.values(/*advancementSetting*/ ctx[2].variables);
@@ -4889,24 +4888,21 @@ function create_default_slot$2(ctx) {
 			t4 = space();
 			input0 = element("input");
 			t5 = space();
+			br0 = element("br");
+			t6 = space();
 			div3 = element("div");
 			label2 = element("label");
-			label2.textContent = "Attribute Advancement Formula";
-			t7 = space();
-			input1 = element("input");
+			label2.textContent = "Skill Advancement Formula";
 			t8 = space();
+			input1 = element("input");
+			t9 = space();
+			br1 = element("br");
+			t10 = space();
 			div4 = element("div");
 			label3 = element("label");
-			label3.textContent = "Attribute Advancement Formula";
-			t10 = space();
-			input2 = element("input");
-			t11 = space();
-			br0 = element("br");
+			label3.textContent = "Feature Advancement Formula";
 			t12 = space();
-			div5 = element("div");
-			t13 = text(/*attributeFormula*/ ctx[3]);
-			t14 = space();
-			br1 = element("br");
+			input2 = element("input");
 			attr(label0, "for", "Custom Values");
 			attr(div0, "class", "grid grid-2col");
 			attr(label1, "for", "Attribute Formula");
@@ -4937,33 +4933,30 @@ function create_default_slot$2(ctx) {
 			append(div2, input0);
 			set_input_value(input0, /*advancementSetting*/ ctx[2].formulas.attributes);
 			append(section1, t5);
+			append(section1, br0);
+			append(section1, t6);
 			append(section1, div3);
 			append(div3, label2);
-			append(div3, t7);
+			append(div3, t8);
 			append(div3, input1);
 			set_input_value(input1, /*advancementSetting*/ ctx[2].formulas.skills);
-			append(section1, t8);
+			append(section1, t9);
+			append(section1, br1);
+			append(section1, t10);
 			append(section1, div4);
 			append(div4, label3);
-			append(div4, t10);
+			append(div4, t12);
 			append(div4, input2);
 			set_input_value(input2, /*advancementSetting*/ ctx[2].formulas.features);
-			append(section1, t11);
-			append(section1, br0);
-			append(section1, t12);
-			append(section1, div5);
-			append(div5, t13);
-			append(section1, t14);
-			append(section1, br1);
 			/*form_1_binding*/ ctx[9](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "change", /*changeSetting*/ ctx[4]),
+					listen(input0, "change", /*changeSetting*/ ctx[3]),
 					listen(input0, "input", /*input0_input_handler*/ ctx[6]),
-					listen(input1, "change", /*changeSetting*/ ctx[4]),
+					listen(input1, "change", /*changeSetting*/ ctx[3]),
 					listen(input1, "input", /*input1_input_handler*/ ctx[7]),
-					listen(input2, "change", /*changeSetting*/ ctx[4]),
+					listen(input2, "change", /*changeSetting*/ ctx[3]),
 					listen(input2, "input", /*input2_input_handler*/ ctx[8])
 				];
 
@@ -4971,7 +4964,7 @@ function create_default_slot$2(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Object, advancementSetting, changeSetting*/ 20) {
+			if (dirty & /*Object, advancementSetting, changeSetting*/ 12) {
 				each_value = Object.values(/*advancementSetting*/ ctx[2].variables);
 				let i;
 
@@ -5005,8 +4998,6 @@ function create_default_slot$2(ctx) {
 			if (dirty & /*advancementSetting*/ 4 && input2.value !== /*advancementSetting*/ ctx[2].formulas.features) {
 				set_input_value(input2, /*advancementSetting*/ ctx[2].formulas.features);
 			}
-
-			if (dirty & /*attributeFormula*/ 8) set_data(t13, /*attributeFormula*/ ctx[3]);
 		},
 		d(detaching) {
 			if (detaching) detach(form_1);
@@ -5050,7 +5041,7 @@ function create_fragment$2(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 16397) {
+			if (dirty & /*$$scope, form, advancementSetting, Object*/ 16389) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5126,14 +5117,14 @@ function instance$2($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*advancementSetting, Object, attributeFormula*/ 12) {
+		if ($$self.$$.dirty & /*advancementSetting, Object, attributeFormula*/ 20) {
 			{
-				$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes);
+				$$invalidate(4, attributeFormula = advancementSetting.formulas.attributes);
 
 				for (let variable of Object.values(advancementSetting.variables)) {
 					if (variable.value) {
 						console.log(attributeFormula);
-						$$invalidate(3, attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value));
+						$$invalidate(4, attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value));
 					}
 				}
 			}
@@ -5144,8 +5135,8 @@ function instance$2($$self, $$props, $$invalidate) {
 		form,
 		elementRoot,
 		advancementSetting,
-		attributeFormula,
 		changeSetting,
+		attributeFormula,
 		input_input_handler,
 		input0_input_handler,
 		input1_input_handler,
