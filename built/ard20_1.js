@@ -4759,16 +4759,16 @@ class ARd20SocketHandler {
 
 function get_each_context$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
-	child_ctx[10] = list;
-	child_ctx[11] = i;
+	child_ctx[11] = list[i];
+	child_ctx[12] = list;
+	child_ctx[13] = i;
 	return child_ctx;
 }
 
 // (30:10) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block$2(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[9].longName + "";
+	let t0_value = /*variable*/ ctx[11].longName + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -4777,7 +4777,7 @@ function create_each_block$2(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[10], /*variable_index*/ ctx[11]);
+		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[12], /*variable_index*/ ctx[13]);
 	}
 
 	return {
@@ -4786,7 +4786,7 @@ function create_each_block$2(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			input = element("input");
-			attr(label, "for", label_for_value = /*variable*/ ctx[9].longName);
+			attr(label, "for", label_for_value = /*variable*/ ctx[11].longName);
 			attr(input, "placeholder", "shortName");
 		},
 		m(target, anchor) {
@@ -4794,7 +4794,7 @@ function create_each_block$2(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*variable*/ ctx[9].shortName);
+			set_input_value(input, /*variable*/ ctx[11].shortName);
 
 			if (!mounted) {
 				dispose = [
@@ -4807,14 +4807,14 @@ function create_each_block$2(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, advancementSetting*/ 4 && t0_value !== (t0_value = /*variable*/ ctx[9].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, advancementSetting*/ 4 && t0_value !== (t0_value = /*variable*/ ctx[11].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, advancementSetting*/ 4 && label_for_value !== (label_for_value = /*variable*/ ctx[9].longName)) {
+			if (dirty & /*Object, advancementSetting*/ 4 && label_for_value !== (label_for_value = /*variable*/ ctx[11].longName)) {
 				attr(label, "for", label_for_value);
 			}
 
-			if (dirty & /*Object, advancementSetting*/ 4 && input.value !== /*variable*/ ctx[9].shortName) {
-				set_input_value(input, /*variable*/ ctx[9].shortName);
+			if (dirty & /*Object, advancementSetting*/ 4 && input.value !== /*variable*/ ctx[11].shortName) {
+				set_input_value(input, /*variable*/ ctx[11].shortName);
 			}
 		},
 		d(detaching) {
@@ -4840,13 +4840,23 @@ function create_default_slot$2(ctx) {
 	let div2;
 	let label1;
 	let t4;
-	let input;
+	let input0;
 	let t5;
-	let br0;
-	let t6;
 	let div3;
+	let label2;
 	let t7;
+	let input1;
 	let t8;
+	let div4;
+	let label3;
+	let t10;
+	let input2;
+	let t11;
+	let br0;
+	let t12;
+	let div5;
+	let t13;
+	let t14;
 	let br1;
 	let mounted;
 	let dispose;
@@ -4877,18 +4887,34 @@ function create_default_slot$2(ctx) {
 			label1 = element("label");
 			label1.textContent = "Attribute Advancement Formula";
 			t4 = space();
-			input = element("input");
+			input0 = element("input");
 			t5 = space();
-			br0 = element("br");
-			t6 = space();
 			div3 = element("div");
-			t7 = text(/*attributeFormula*/ ctx[3]);
+			label2 = element("label");
+			label2.textContent = "Attribute Advancement Formula";
+			t7 = space();
+			input1 = element("input");
 			t8 = space();
+			div4 = element("div");
+			label3 = element("label");
+			label3.textContent = "Attribute Advancement Formula";
+			t10 = space();
+			input2 = element("input");
+			t11 = space();
+			br0 = element("br");
+			t12 = space();
+			div5 = element("div");
+			t13 = text(/*attributeFormula*/ ctx[3]);
+			t14 = space();
 			br1 = element("br");
 			attr(label0, "for", "Custom Values");
 			attr(div0, "class", "grid grid-2col");
 			attr(label1, "for", "Attribute Formula");
-			attr(input, "type", "text");
+			attr(input0, "type", "text");
+			attr(label2, "for", "Skill Formula");
+			attr(input1, "type", "text");
+			attr(label3, "for", "Feature Formula");
+			attr(input2, "type", "text");
 			attr(form_1, "autocomplete", "off");
 		},
 		m(target, anchor) {
@@ -4908,21 +4934,37 @@ function create_default_slot$2(ctx) {
 			append(section1, div2);
 			append(div2, label1);
 			append(div2, t4);
-			append(div2, input);
-			set_input_value(input, /*advancementSetting*/ ctx[2].formulas.attributes);
+			append(div2, input0);
+			set_input_value(input0, /*advancementSetting*/ ctx[2].formulas.attributes);
 			append(section1, t5);
-			append(section1, br0);
-			append(section1, t6);
 			append(section1, div3);
+			append(div3, label2);
 			append(div3, t7);
+			append(div3, input1);
+			set_input_value(input1, /*advancementSetting*/ ctx[2].formulas.skills);
 			append(section1, t8);
+			append(section1, div4);
+			append(div4, label3);
+			append(div4, t10);
+			append(div4, input2);
+			set_input_value(input2, /*advancementSetting*/ ctx[2].formulas.features);
+			append(section1, t11);
+			append(section1, br0);
+			append(section1, t12);
+			append(section1, div5);
+			append(div5, t13);
+			append(section1, t14);
 			append(section1, br1);
-			/*form_1_binding*/ ctx[7](form_1);
+			/*form_1_binding*/ ctx[9](form_1);
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "change", /*changeSetting*/ ctx[4]),
-					listen(input, "input", /*input_input_handler_1*/ ctx[6])
+					listen(input0, "change", /*changeSetting*/ ctx[4]),
+					listen(input0, "input", /*input0_input_handler*/ ctx[6]),
+					listen(input1, "change", /*changeSetting*/ ctx[4]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[7]),
+					listen(input2, "change", /*changeSetting*/ ctx[4]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[8])
 				];
 
 				mounted = true;
@@ -4952,16 +4994,24 @@ function create_default_slot$2(ctx) {
 				each_blocks.length = each_value.length;
 			}
 
-			if (dirty & /*advancementSetting*/ 4 && input.value !== /*advancementSetting*/ ctx[2].formulas.attributes) {
-				set_input_value(input, /*advancementSetting*/ ctx[2].formulas.attributes);
+			if (dirty & /*advancementSetting*/ 4 && input0.value !== /*advancementSetting*/ ctx[2].formulas.attributes) {
+				set_input_value(input0, /*advancementSetting*/ ctx[2].formulas.attributes);
 			}
 
-			if (dirty & /*attributeFormula*/ 8) set_data(t7, /*attributeFormula*/ ctx[3]);
+			if (dirty & /*advancementSetting*/ 4 && input1.value !== /*advancementSetting*/ ctx[2].formulas.skills) {
+				set_input_value(input1, /*advancementSetting*/ ctx[2].formulas.skills);
+			}
+
+			if (dirty & /*advancementSetting*/ 4 && input2.value !== /*advancementSetting*/ ctx[2].formulas.features) {
+				set_input_value(input2, /*advancementSetting*/ ctx[2].formulas.features);
+			}
+
+			if (dirty & /*attributeFormula*/ 8) set_data(t13, /*attributeFormula*/ ctx[3]);
 		},
 		d(detaching) {
 			if (detaching) detach(form_1);
 			destroy_each(each_blocks, detaching);
-			/*form_1_binding*/ ctx[7](null);
+			/*form_1_binding*/ ctx[9](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4974,7 +5024,7 @@ function create_fragment$2(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[8](value);
+		/*applicationshell_elementRoot_binding*/ ctx[10](value);
 	}
 
 	let applicationshell_props = {
@@ -5000,7 +5050,7 @@ function create_fragment$2(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 4109) {
+			if (dirty & /*$$scope, form, attributeFormula, advancementSetting, Object*/ 16397) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5043,8 +5093,18 @@ function instance$2($$self, $$props, $$invalidate) {
 		$$invalidate(2, advancementSetting);
 	}
 
-	function input_input_handler_1() {
+	function input0_input_handler() {
 		advancementSetting.formulas.attributes = this.value;
+		$$invalidate(2, advancementSetting);
+	}
+
+	function input1_input_handler() {
+		advancementSetting.formulas.skills = this.value;
+		$$invalidate(2, advancementSetting);
+	}
+
+	function input2_input_handler() {
+		advancementSetting.formulas.features = this.value;
 		$$invalidate(2, advancementSetting);
 	}
 
@@ -5087,7 +5147,9 @@ function instance$2($$self, $$props, $$invalidate) {
 		attributeFormula,
 		changeSetting,
 		input_input_handler,
-		input_input_handler_1,
+		input0_input_handler,
+		input1_input_handler,
+		input2_input_handler,
 		form_1_binding,
 		applicationshell_elementRoot_binding
 	];
@@ -6530,11 +6592,11 @@ const registerSystemSettings = function registerSystemSettings() {
         },
         featuresCount: {
           shortName: "FC",
-          longName: "featureCount"
+          longName: "feature Count"
         },
         skills: {
           shortName: "SV",
-          longName: "skillValue"
+          longName: "skill Value"
         },
         features: {
           shortName: "FL",
@@ -6546,8 +6608,8 @@ const registerSystemSettings = function registerSystemSettings() {
         }
       },
       formulas: {
-        skills: "",
-        features: "n",
+        skills: "SV",
+        features: "FL",
         attributes: "max(floor((AS-10)/2)+2,1)"
       }
     },

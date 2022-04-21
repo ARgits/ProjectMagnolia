@@ -39,6 +39,14 @@
         <label for="Attribute Formula">Attribute Advancement Formula</label>
         <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.attributes} />
       </div>
+      <div>
+        <label for="Skill Formula">Attribute Advancement Formula</label>
+        <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.skills} />
+      </div>
+      <div>
+        <label for="Feature Formula">Attribute Advancement Formula</label>
+        <input type="text" on:change={changeSetting} bind:value={advancementSetting.formulas.features} />
+      </div>
       <br />
       <div>{attributeFormula}</div>
       <br />

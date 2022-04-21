@@ -71,11 +71,11 @@ export const registerSystemSettings = function () {
         },
         featuresCount: {
           shortName: "FC",
-          longName: "featureCount",
+          longName: "feature Count",
         },
         skills: {
           shortName: "SV",
-          longName: "skillValue",
+          longName: "skill Value",
         },
         features: {
           shortName: "FL",
@@ -87,8 +87,8 @@ export const registerSystemSettings = function () {
         },
       },
       formulas: {
-        skills: "",
-        features: "n",
+        skills: "SV",
+        features: "FL",
         attributes: "max(floor((AS-10)/2)+2,1)",
       },
     },
