@@ -2203,7 +2203,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (51:2) {#if val[1].rankName}
+// (52:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].rankName + "";
@@ -2237,7 +2237,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (60:2) {#if val[1].mod !== undefined}
+// (61:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2271,7 +2271,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (66:2) {#if key === 0}
+// (67:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2549,6 +2549,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					); //TODO: change "1" to variable, that will represent "count" and other things
 				}
 
+				console.log(variables, formulas[typeStr]);
 				$$invalidate(6, cost = math.evaluate(formulas[typeStr], variables));
 			}
 		}

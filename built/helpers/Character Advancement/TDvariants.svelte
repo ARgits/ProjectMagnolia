@@ -28,6 +28,7 @@
       variables[variable.shortName] =
         variable.shortName === key ? $data[key][typeStr].level ?? $data[key][typeStr].value : 1; //TODO: change "1" to variable, that will represent "count" and other things
     }
+    console.log(variables, formulas[typeStr]);
     cost = math.evaluate(formulas[typeStr], variables);
   }
   function changeDesc(val) {
