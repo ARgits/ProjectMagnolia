@@ -2196,7 +2196,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (44:2) {#if val[1].rankName}
+// (42:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].rankName + "";
@@ -2230,7 +2230,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (53:2) {#if val[1].mod !== undefined}
+// (51:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2264,7 +2264,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (59:2) {#if key === 0}
+// (57:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2519,7 +2519,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data, typeStr, variables, cost*/ 12384) {
+		if ($$self.$$.dirty & /*$data, typeStr, variables*/ 12320) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					$$invalidate(
@@ -2529,12 +2529,9 @@ function instance$7($$self, $$props, $$invalidate) {
 						: 1,
 						variables
 					); //TODO: change "1" to variable, that will represent "count" and other things
-
-					console.log(variables[variable.shortName]);
 				}
 
 				$$invalidate(6, cost = math.evaluate(formulas[typeStr], variables));
-				console.log(cost);
 			}
 		}
 
