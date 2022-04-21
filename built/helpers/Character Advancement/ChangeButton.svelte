@@ -21,8 +21,8 @@
           store.skills[subtype].level += 1;
           break;
       }
-      store.advancement.xp.used += $changes[index].value;
-      store.advancement.xp.get -= $changes[index].value;
+      store.advancement.xp.used += cost;
+      store.advancement.xp.get -= cost;
       return store;
     });
     changes.update((changeArr) => {

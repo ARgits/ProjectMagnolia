@@ -2056,8 +2056,8 @@ function instance$8($$self, $$props, $$invalidate) {
 					break;
 			}
 
-			store.advancement.xp.used += $changes[index].value;
-			store.advancement.xp.get -= $changes[index].value;
+			store.advancement.xp.used += cost;
+			store.advancement.xp.get -= cost;
 			return store;
 		});
 
@@ -4881,7 +4881,7 @@ function create_default_slot$2(ctx) {
 			t8 = space();
 			br1 = element("br");
 			attr(label0, "for", "Custom Values");
-			attr(div0, "class", "grid grid-3col");
+			attr(div0, "class", "grid grid-2col");
 			attr(label1, "for", "Attribute Formula");
 			attr(input, "type", "text");
 			attr(form_1, "autocomplete", "off");

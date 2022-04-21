@@ -26,7 +26,7 @@
     <section>
       <div>
         <label for="Custom Values"> CustomValues </label>
-        <div class="grid grid-3col">
+        <div class="grid grid-2col">
           {#each Object.values(advancementSetting.variables) as variable}
             <label for={variable.longName}>{variable.longName}</label>
             <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
