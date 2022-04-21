@@ -14,6 +14,7 @@
 		<th>Increase</th>
 		<th>Rank</th>
 		<th>Decrease</th>
+		<th>Cost</th>
 		<th>Description</th>
 	</tr>
 	{#each Object.entries($doc.skills) as skill,key}

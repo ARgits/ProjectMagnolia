@@ -18,6 +18,7 @@
     <th>Value</th>
     <th>Decrease</th>
     <th>Mod</th>
+    <th>Cost</th>
     <th>Description</th>
   </tr>
   {#each Object.entries($data.attributes) as attr, key}

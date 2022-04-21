@@ -2594,7 +2594,7 @@ function get_each_context$5(ctx, list, i) {
 	return child_ctx;
 }
 
-// (23:2) {#each Object.entries($data.attributes) as attr, key}
+// (24:2) {#each Object.entries($data.attributes) as attr, key}
 function create_each_block$5(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -2659,7 +2659,7 @@ function create_each_block$5(ctx) {
 function create_fragment$6(ctx) {
 	let table;
 	let tr;
-	let t11;
+	let t13;
 	let current;
 	let each_value = Object.entries(/*$data*/ ctx[0].attributes);
 	let each_blocks = [];
@@ -2682,9 +2682,10 @@ function create_fragment$6(ctx) {
     <th class="svelte-h7j8ib">Value</th> 
     <th class="svelte-h7j8ib">Decrease</th> 
     <th class="svelte-h7j8ib">Mod</th> 
+    <th class="svelte-h7j8ib">Cost</th> 
     <th class="svelte-h7j8ib">Description</th>`;
 
-			t11 = space();
+			t13 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -2696,7 +2697,7 @@ function create_fragment$6(ctx) {
 		m(target, anchor) {
 			insert(target, table, anchor);
 			append(table, tr);
-			append(table, t11);
+			append(table, t13);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(table, null);
@@ -2799,7 +2800,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (19:1) {#each Object.entries($doc.skills) as skill,key}
+// (20:1) {#each Object.entries($doc.skills) as skill,key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let current;
@@ -2848,7 +2849,7 @@ function create_each_block$4(ctx) {
 function create_fragment$5(ctx) {
 	let table;
 	let tr;
-	let t9;
+	let t11;
 	let current;
 	let each_value = Object.entries(/*$doc*/ ctx[0].skills);
 	let each_blocks = [];
@@ -2870,9 +2871,10 @@ function create_fragment$5(ctx) {
 		<th class="svelte-vg40np">Increase</th> 
 		<th class="svelte-vg40np">Rank</th> 
 		<th class="svelte-vg40np">Decrease</th> 
+		<th class="svelte-vg40np">Cost</th> 
 		<th class="svelte-vg40np">Description</th>`;
 
-			t9 = space();
+			t11 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -2884,7 +2886,7 @@ function create_fragment$5(ctx) {
 		m(target, anchor) {
 			insert(target, table, anchor);
 			append(table, tr);
-			append(table, t9);
+			append(table, t11);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(table, null);
