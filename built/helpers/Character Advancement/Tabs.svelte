@@ -30,6 +30,7 @@
     border-top: 0;
     max-height: 270px;
     overflow-y: auto;
+    background: rgba(0, 0, 0, 0.08);
   }
   ul {
     display: flex;
@@ -58,8 +59,8 @@
   }
 
   li.active > span {
-    color: #495057;
-    background-color: #fff;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.08);
     border-color: #dee2e6 #dee2e6 #fff;
   }
 </style>
