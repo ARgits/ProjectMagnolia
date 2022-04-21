@@ -52,6 +52,7 @@
     border: 1px solid black;
   }
   th {
+    top: 0;
     text-align: center;
     border-right: 1px solid black;
     padding: 0.2em;
