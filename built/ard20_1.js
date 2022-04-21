@@ -1938,7 +1938,7 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (70:0) {#if min !== undefined}
+// (79:0) {#if min !== undefined}
 function create_if_block$3(ctx) {
 	let button;
 	let t;
@@ -2123,9 +2123,16 @@ function instance$8($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$doc, type, subtype, max, min, cost*/ 1551) {
+		if ($$self.$$.dirty & /*type, $doc, subtype, max, min, cost*/ 1551) {
 			{
-				$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
+				switch (type) {
+					case "attributes":
+						$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
+						break;
+					case "skills":
+						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
+						break;
+				}
 			}
 		}
 	};
@@ -2196,7 +2203,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (42:2) {#if val[1].rankName}
+// (51:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].rankName + "";
@@ -2230,7 +2237,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (51:2) {#if val[1].mod !== undefined}
+// (60:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2264,7 +2271,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (57:2) {#if key === 0}
+// (66:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2519,6 +2526,17 @@ function instance$7($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*typeStr, val*/ 36) {
+			switch (typeStr) {
+				case "attributes":
+					val[1].value;
+					break;
+				case "skills":
+					val[1].level;
+					break;
+			}
+		}
+
 		if ($$self.$$.dirty & /*$data, typeStr, variables*/ 12320) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
@@ -2953,7 +2971,7 @@ function instance$5($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$doc*/ 1) {
 			for (let [key, skill] of Object.entries($doc.skills)) {
-				skill.rankName = rankName[skill.value];
+				skill.rankName = rankName[skill.level];
 			}
 		}
 	};

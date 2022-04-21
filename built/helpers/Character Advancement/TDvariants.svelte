@@ -11,6 +11,15 @@
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;
+  let value;
+  $: switch (typeStr) {
+    case "attributes":
+      value = val[1].value;
+      break;
+    case "skills":
+      value = val[1].level;
+      break;
+  }
   let min =
     getContext("chaAdvActorOriginalData")[typeStr][val[0]].value ||
     getContext("chaAdvActorOriginalData")[typeStr][val[0]].level; //TODO: redo this for not only attributes and skills
