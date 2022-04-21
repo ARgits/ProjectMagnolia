@@ -10,27 +10,27 @@ export const registerSystemSettings = function () {
         label: "weapon",
         id: "weapon",
         value: [
-          { name: "Punch Dagger", type: "amb",id:"Punch Dagger" },
-          { name: "Whip Dagger", type: "amb",id:"Whip Dagger" },
-          { name: "Gauntlet", type: "amb",id:"Gauntlet" },
-          { name: "Hidden Blade", type: "amb",id: "Hidden Blade" },
+          { name: "Punch Dagger", type: "amb", id: "Punch Dagger" },
+          { name: "Whip Dagger", type: "amb", id: "Whip Dagger" },
+          { name: "Gauntlet", type: "amb", id: "Gauntlet" },
+          { name: "Hidden Blade", type: "amb", id: "Hidden Blade" },
           { name: "Knucke Axe", type: "amb", id: "Knucke Axe" },
-          { name: "Side Baton", type: "amb",id: "Side Baton" },
-          { name: "Unarmed strike", type: "amb",id: "Unarmed strike" },
-          { name: "Battle Axe", type: "axe",id: "Battle Axe" },
-          { name: "Great Axe", type: "axe",id: "Great Axe" },
-          { name: "Handaxe", type: "axe",id: "Handaxe" },
-          { name: "Hook Sword", type: "axe",id: "Hook Sword" },
-          { name: "Khopesh", type: "axe",id: "Khopesh" },
-          { name: "Poleaxe", type: "axe",id: "Poleaxe" },
-          { name: "Tomahawk", type: "axe",id: "Tomahawk" },
-          { name: "Great club", type: "blu",id: "Great club" },
+          { name: "Side Baton", type: "amb", id: "Side Baton" },
+          { name: "Unarmed strike", type: "amb", id: "Unarmed strike" },
+          { name: "Battle Axe", type: "axe", id: "Battle Axe" },
+          { name: "Great Axe", type: "axe", id: "Great Axe" },
+          { name: "Handaxe", type: "axe", id: "Handaxe" },
+          { name: "Hook Sword", type: "axe", id: "Hook Sword" },
+          { name: "Khopesh", type: "axe", id: "Khopesh" },
+          { name: "Poleaxe", type: "axe", id: "Poleaxe" },
+          { name: "Tomahawk", type: "axe", id: "Tomahawk" },
+          { name: "Great club", type: "blu", id: "Great club" },
           { name: "Heavy club", type: "blu", id: "Heavy club" },
-          { name: "Light Club", type: "blu",id: "Light Club" },
+          { name: "Light Club", type: "blu", id: "Light Club" },
         ],
       },
-      armor: {label:'armor',id:'armor',value:[]},
-      tool: {label:'tool',id:'tool',value:[]},
+      armor: { label: "armor", id: "armor", value: [] },
+      tool: { label: "tool", id: "tool", value: [] },
     },
     onChange: (value) => {
       console.log("Настройка изменилась ", value);
@@ -65,28 +65,23 @@ export const registerSystemSettings = function () {
     config: false,
     default: {
       variables: {
-        skillCount: {
-          value: 5,
+        skillsCount: {
           shortName: "SC",
           longName: "Skill Count",
         },
-        featureCount: {
-          value: 5,
+        featuresCount: {
           shortName: "FC",
           longName: "featureCount",
         },
-        skillValue: {
-          value: 5,
+        skills: {
           shortName: "SV",
           longName: "skillValue",
         },
-        featureLevel: {
-          value: 5,
+        features: {
           shortName: "FL",
           longName: "Feature Level",
         },
-        attributeValue: {
-          value: 5,
+        attributes: {
           shortName: "AV",
           longName: "Attribute Value",
         },

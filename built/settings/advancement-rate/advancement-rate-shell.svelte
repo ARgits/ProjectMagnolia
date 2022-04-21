@@ -23,29 +23,15 @@
 
 <ApplicationShell bind:elementRoot>
   <form bind:this={form} autocomplete="off">
-    <section class="grid grid-2col">
+    <section>
       <div>
         <label for="Custom Values"> CustomValues </label>
         <div class="grid grid-3col">
           {#each Object.values(advancementSetting.variables) as variable}
             <label for={variable.longName}>{variable.longName}</label>
             <input bind:value={variable.shortName} on:change={changeSetting} placeholder="shortName" />
-            <input
-              min="-999"
-              max="999"
-              type="number"
-              bind:value={variable.value}
-              on:change={changeSetting}
-              placeholder="custom value"
-            />
           {/each}
         </div>
-      </div>
-      <div>
-        <label for="Non-custom Values">Non-custom Values</label>
-        <div>AS - Attribute Score</div>
-        <div>SS - Skill Score</div>
-        <div>SL - Skill level</div>
       </div>
     </section>
     <section>

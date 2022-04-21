@@ -4,33 +4,62 @@
   export let min;
   export let type;
   export let subtype;
-  const formulas = getContext("chaAdvXpFormulas").formulas;
-  let variables = {};
-  Object.values(getContext("chaAdvXpFormulas").variables).forEach((val) => {
-    variables[`${val.shortName}`] = val.value;
-  });
+  export let cost;
   const doc = getContext("chaAdvActorData");
+  const changes = getContext("chaAdvXpChanges");
   let disabled;
-  $: disabled = $doc[`${type}`][`${subtype}`].value === max || $doc[`${type}`][`${subtype}`].value === min;
+  $: {
+    disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min;
+  }
   function increase(type, subtype) {
     doc.update((store) => {
       switch (type) {
         case "attributes":
-          variables.AS = store.attributes[`${subtype}`].value + 1;
-          store.attributes[`${subtype}`].value += 1;
-          store.advancement.xp.get += math.evaluate(formulas[type], variables);
+          store.attributes[subtype].value += 1;
           break;
         case "skills":
-          store.skills[`${subtype}`].level += 1;
+          store.skills[subtype].level += 1;
           break;
       }
+      store.advancement.xp.used += $changes[index].value;
+      store.advancement.xp.get -= $changes[index].value;
       return store;
+    });
+    changes.update((changeArr) => {
+      changeArr.push({ type: type, subtype: subtype, value: cost });
+      return changeArr;
     });
   }
   function decrease(type, subtype) {
     doc.update((store) => {
-      store[`${type}`][`${subtype}`].value -= 1;
-      return store;
+      switch (type) {
+        case "attributes":
+          store.attributes[subtype].value -= 1;
+          break;
+        case "skills":
+          store.skills[subtype].level -= 1;
+          break;
+      }
+      let index = -1;
+      $changes.forEach((change, key) => {
+        index = change.type === type && change.subtype === subtype && key > index ? key : index;
+      });
+      if (index >= 0) {
+        store.advancement.xp.used -= $changes[index].value;
+        store.advancement.xp.get += $changes[index].value;
+        return store;
+      }
+    });
+    changes.update((changeArr) => {
+      let index = -1;
+      changeArr.forEach((change, key) => {
+        index = change.type === type && change.subtype === subtype && key > index ? key : index;
+      });
+      if (index >= 0) {
+        changeArr.splice(index, 1);
+        changeArr = changeArr;
+      }
+      return changeArr;
     });
   }
 </script>

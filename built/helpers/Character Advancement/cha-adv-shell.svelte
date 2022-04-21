@@ -7,24 +7,36 @@
   import SkillComp from "./Skills.svelte";
   import Tabs from "./Tabs.svelte";
   export let document;
-  setContext('chaAdvXpFormulas',game.settings.get("ard20", "advancement-rate"))
-  setContext('chaAdvCONFIG',CONFIG)
+  //create list of changes and context for it
+  const changes = writable([]);
+  setContext("chaAdvXpChanges", changes);
+  //create context for formulas from setting, CONFIG data, Actor's ID
+  setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
+  setContext("chaAdvCONFIG", CONFIG);
   setContext("chaAdvActorID", document.id);
+
+  //create store and context for data
+  //TODO: add features and other stuff
   const data = writable({
     attributes: duplicate(document.data.data.attributes),
     skills: duplicate(document.data.data.skills),
     advancement: duplicate(document.data.data.advancement),
   });
-  console.log($data);
   setContext("chaAdvActorData", data);
-  const id = getContext("chaAdvActorID");
+
+  //create tabs
+  //TODO: create features, races and other tabs
   const tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp },
     { label: "skills", id: "skills", component: SkillComp },
   ];
+  //select first tab when app initialized
   const activeTab = "attributes";
-  const { application } = getContext("external");
+
+  //update actor and do other stuff when click 'submit' button
   function submitData() {
+    const { application } = getContext("external");
+    const id = getContext("chaAdvActorID");
     const updateObj = {};
     updateObj["data.attributes"] = $data.attributes;
     updateObj["data.skills"] = $data.skills;
