@@ -1,22 +1,8 @@
 <script>
   import { getContext } from "svelte";
-  const { application } = getContext("external");
-  console.log(application);
+
   export let tabs = [];
   export let activeTab;
-  const data = getContext("chaAdvActorData");
-  const id = getContext("chaAdvActorID");
-  function submitData() {
-    const updateObj = {};
-    for (let [key, prop] of Object.entries($data)) {
-      console.log(key, prop);
-      updateObj[`data.${key}`] = prop;
-    }
-    console.log(updateObj);
-    console.log(game.actors.get(id).system);
-    game.actors.get(id).update(updateObj);
-    application.close();
-  }
 </script>
 
 <ul>
@@ -37,7 +23,6 @@
     {/if}
   {/each}
 </div>
-<button on:click={submitData}>SubmitData</button>
 
 <style>
   .box {

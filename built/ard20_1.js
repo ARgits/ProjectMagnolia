@@ -2864,21 +2864,21 @@ class Skills extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[8] = list[i];
+	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[8] = list[i];
+	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
-// (23:2) {#each tabs as tab}
+// (9:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
-	let t0_value = /*tab*/ ctx[8].label + "";
+	let t0_value = /*tab*/ ctx[3].label + "";
 	let t0;
 	let t1;
 	let li_class_value;
@@ -2886,7 +2886,7 @@ function create_each_block_1$2(ctx) {
 	let dispose;
 
 	function click_handler() {
-		return /*click_handler*/ ctx[4](/*tab*/ ctx[8]);
+		return /*click_handler*/ ctx[2](/*tab*/ ctx[3]);
 	}
 
 	return {
@@ -2897,7 +2897,7 @@ function create_each_block_1$2(ctx) {
 			t1 = space();
 			attr(span, "class", "svelte-1eq0yix");
 
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[8].id
+			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
 			: "") + " svelte-1eq0yix"));
 		},
@@ -2914,9 +2914,9 @@ function create_each_block_1$2(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[8].label + "")) set_data(t0, t0_value);
+			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[3].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[8].id
+			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
 			: "") + " svelte-1eq0yix"))) {
 				attr(li, "class", li_class_value);
@@ -2930,12 +2930,12 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (35:4) {#if tab.id === activeTab}
+// (21:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
-	var switch_value = /*tab*/ ctx[8].component;
+	var switch_value = /*tab*/ ctx[3].component;
 
 	function switch_props(ctx) {
 		return {};
@@ -2959,7 +2959,7 @@ function create_if_block$1(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (switch_value !== (switch_value = /*tab*/ ctx[8].component)) {
+			if (switch_value !== (switch_value = /*tab*/ ctx[3].component)) {
 				if (switch_instance) {
 					group_outros();
 					const old_component = switch_instance;
@@ -2997,11 +2997,11 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (34:2) {#each tabs as tab}
+// (20:2) {#each tabs as tab}
 function create_each_block$3(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*tab*/ ctx[8].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
+	let if_block = /*tab*/ ctx[3].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -3014,7 +3014,7 @@ function create_each_block$3(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (/*tab*/ ctx[8].id === /*activeTab*/ ctx[0]) {
+			if (/*tab*/ ctx[3].id === /*activeTab*/ ctx[0]) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
@@ -3055,13 +3055,9 @@ function create_each_block$3(ctx) {
 
 function create_fragment$4(ctx) {
 	let ul;
-	let t0;
+	let t;
 	let div;
-	let t1;
-	let button;
 	let current;
-	let mounted;
-	let dispose;
 	let each_value_1 = /*tabs*/ ctx[1];
 	let each_blocks_1 = [];
 
@@ -3088,16 +3084,13 @@ function create_fragment$4(ctx) {
 				each_blocks_1[i].c();
 			}
 
-			t0 = space();
+			t = space();
 			div = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t1 = space();
-			button = element("button");
-			button.textContent = "SubmitData";
 			attr(ul, "class", "svelte-1eq0yix");
 			attr(div, "class", "box svelte-1eq0yix");
 		},
@@ -3108,21 +3101,14 @@ function create_fragment$4(ctx) {
 				each_blocks_1[i].m(ul, null);
 			}
 
-			insert(target, t0, anchor);
+			insert(target, t, anchor);
 			insert(target, div, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div, null);
 			}
 
-			insert(target, t1, anchor);
-			insert(target, button, anchor);
 			current = true;
-
-			if (!mounted) {
-				dispose = listen(button, "click", /*submitData*/ ctx[3]);
-				mounted = true;
-			}
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*activeTab, tabs*/ 3) {
@@ -3196,40 +3182,16 @@ function create_fragment$4(ctx) {
 		d(detaching) {
 			if (detaching) detach(ul);
 			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t0);
+			if (detaching) detach(t);
 			if (detaching) detach(div);
 			destroy_each(each_blocks, detaching);
-			if (detaching) detach(t1);
-			if (detaching) detach(button);
-			mounted = false;
-			dispose();
 		}
 	};
 }
 
 function instance$4($$self, $$props, $$invalidate) {
-	let $data;
-	const { application } = getContext("external");
-	console.log(application);
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
-	const data = getContext("chaAdvActorData");
-	component_subscribe($$self, data, value => $$invalidate(5, $data = value));
-	const id = getContext("chaAdvActorID");
-
-	function submitData() {
-		const updateObj = {};
-
-		for (let [key, prop] of Object.entries($data)) {
-			console.log(key, prop);
-			updateObj[`data.${key}`] = prop;
-		}
-
-		console.log(updateObj);
-		console.log(game.actors.get(id).system);
-		game.actors.get(id).update(updateObj);
-		application.close();
-	}
 
 	const click_handler = tab => {
 		$$invalidate(0, activeTab = tab.id);
@@ -3240,7 +3202,7 @@ function instance$4($$self, $$props, $$invalidate) {
 		if ('activeTab' in $$props) $$invalidate(0, activeTab = $$props.activeTab);
 	};
 
-	return [activeTab, tabs, data, submitData, click_handler];
+	return [activeTab, tabs, click_handler];
 }
 
 class Tabs extends SvelteComponent {
@@ -3253,22 +3215,65 @@ class Tabs extends SvelteComponent {
 /* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.46.5 */
 
 function create_fragment$3(ctx) {
+	let div0;
+	let t0;
+	let t1_value = /*$data*/ ctx[0].advancement.xp.get + "";
+	let t1;
+	let t2;
+	let div1;
+	let t3;
+	let t4_value = /*$data*/ ctx[0].advancement.xp.used + "";
+	let t4;
+	let t5;
 	let tabs_1;
+	let t6;
+	let button;
 	let current;
+	let mounted;
+	let dispose;
 
 	tabs_1 = new Tabs({
-			props: { tabs: /*tabs*/ ctx[1], activeTab }
+			props: { tabs: /*tabs*/ ctx[2], activeTab }
 		});
 
 	return {
 		c() {
+			div0 = element("div");
+			t0 = text("XP get: ");
+			t1 = text(t1_value);
+			t2 = space();
+			div1 = element("div");
+			t3 = text("XP used: ");
+			t4 = text(t4_value);
+			t5 = space();
 			create_component(tabs_1.$$.fragment);
+			t6 = space();
+			button = element("button");
+			button.textContent = "SubmitData";
 		},
 		m(target, anchor) {
+			insert(target, div0, anchor);
+			append(div0, t0);
+			append(div0, t1);
+			insert(target, t2, anchor);
+			insert(target, div1, anchor);
+			append(div1, t3);
+			append(div1, t4);
+			insert(target, t5, anchor);
 			mount_component(tabs_1, target, anchor);
+			insert(target, t6, anchor);
+			insert(target, button, anchor);
 			current = true;
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*submitData*/ ctx[3]);
+				mounted = true;
+			}
 		},
-		p: noop,
+		p(ctx, [dirty]) {
+			if ((!current || dirty & /*$data*/ 1) && t1_value !== (t1_value = /*$data*/ ctx[0].advancement.xp.get + "")) set_data(t1, t1_value);
+			if ((!current || dirty & /*$data*/ 1) && t4_value !== (t4_value = /*$data*/ ctx[0].advancement.xp.used + "")) set_data(t4, t4_value);
+		},
 		i(local) {
 			if (current) return;
 			transition_in(tabs_1.$$.fragment, local);
@@ -3279,7 +3284,15 @@ function create_fragment$3(ctx) {
 			current = false;
 		},
 		d(detaching) {
+			if (detaching) detach(div0);
+			if (detaching) detach(t2);
+			if (detaching) detach(div1);
+			if (detaching) detach(t5);
 			destroy_component(tabs_1, detaching);
+			if (detaching) detach(t6);
+			if (detaching) detach(button);
+			mounted = false;
+			dispose();
 		}
 	};
 }
@@ -3289,16 +3302,19 @@ const activeTab = "attributes";
 function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let { document } = $$props;
+	setContext('chaAdvCONFIG', CONFIG);
 	setContext("chaAdvActorID", document.id);
 
 	const data = writable({
 		attributes: duplicate(document.data.data.attributes),
-		skills: duplicate(document.data.data.skills)
+		skills: duplicate(document.data.data.skills),
+		advancement: duplicate(document.data.data.advancement)
 	});
 
-	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
+	component_subscribe($$self, data, value => $$invalidate(0, $data = value));
 	console.log($data);
 	setContext("chaAdvActorData", data);
+	const id = getContext("chaAdvActorID");
 
 	const tabs = [
 		{
@@ -3313,21 +3329,33 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
+	const { application } = getContext("external");
+
+	function submitData() {
+		const updateObj = {};
+		updateObj["data.attributes"] = $data.attributes;
+		updateObj["data.skills"] = $data.skills;
+		updateObj["data.advancement.xp"] = $data.advancement.xp;
+		updateObj["data.isReady"] = true;
+		game.actors.get(id).update(updateObj);
+		application.close();
+	}
+
 	$$self.$$set = $$props => {
-		if ('document' in $$props) $$invalidate(2, document = $$props.document);
+		if ('document' in $$props) $$invalidate(4, document = $$props.document);
 	};
 
-	return [data, tabs, document];
+	return [$data, data, tabs, submitData, document];
 }
 
 class Cha_adv_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 2 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 4 });
 	}
 
 	get document() {
-		return this.$$.ctx[2];
+		return this.$$.ctx[4];
 	}
 
 	set document(document) {
