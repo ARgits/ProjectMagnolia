@@ -34,32 +34,35 @@
 </script>
 
 <table>
-  <tr>
-    {#each thead as th}
-      <th> {th} </th>
+  <thead>
+    <tr>
+      {#each thead as th}
+        <th> {th} </th>
+      {/each}
+    </tr>
+  </thead>
+  <tbody>
+    {#each Object.entries($data[tabData]) as attr, key}
+      <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
     {/each}
-  </tr>
-  {#each Object.entries($data[tabData]) as attr, key}
-    <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
-  {/each}
+  </tbody>
 </table>
 
 <style>
+  table thead {
+    position: sticky;
+    inset-block-start: 0;
+  }
   table {
     border-collapse: collapse;
   }
   tr {
     border: 1px solid black;
   }
-  tr th {
+  th {
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid black;
-  }
-  th {
-    top: 0;
     text-align: center;
-    border-right: 1px solid black;
     padding: 0.2em;
-    position: sticky;
   }
 </style>

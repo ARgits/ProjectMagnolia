@@ -2849,7 +2849,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (38:4) {#each thead as th}
+// (39:6) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[12] + "";
@@ -2861,7 +2861,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-24ti2f");
+			attr(th, "class", "svelte-1n95ip7");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -2877,7 +2877,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (42:2) {#each Object.entries($data[tabData]) as attr, key}
+// (45:4) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -2944,8 +2944,10 @@ function create_each_block$4(ctx) {
 
 function create_fragment$5(ctx) {
 	let table;
+	let thead_1;
 	let tr;
 	let t;
+	let tbody;
 	let current;
 	let each_value_1 = /*thead*/ ctx[3];
 	let each_blocks_1 = [];
@@ -2968,6 +2970,7 @@ function create_fragment$5(ctx) {
 	return {
 		c() {
 			table = element("table");
+			thead_1 = element("thead");
 			tr = element("tr");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
@@ -2975,26 +2978,30 @@ function create_fragment$5(ctx) {
 			}
 
 			t = space();
+			tbody = element("tbody");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-24ti2f");
-			attr(table, "class", "svelte-24ti2f");
+			attr(tr, "class", "svelte-1n95ip7");
+			attr(thead_1, "class", "svelte-1n95ip7");
+			attr(table, "class", "svelte-1n95ip7");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
-			append(table, tr);
+			append(table, thead_1);
+			append(thead_1, tr);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].m(tr, null);
 			}
 
 			append(table, t);
+			append(table, tbody);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(table, null);
+				each_blocks[i].m(tbody, null);
 			}
 
 			current = true;
@@ -3037,7 +3044,7 @@ function create_fragment$5(ctx) {
 						each_blocks[i] = create_each_block$4(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(table, null);
+						each_blocks[i].m(tbody, null);
 					}
 				}
 
