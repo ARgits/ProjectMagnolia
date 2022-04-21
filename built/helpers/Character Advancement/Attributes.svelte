@@ -51,6 +51,10 @@
   tr {
     border: 1px solid black;
   }
+  tr th {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid black;
+  }
   th {
     top: 0;
     text-align: center;
