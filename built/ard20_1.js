@@ -3190,11 +3190,11 @@ function create_each_block_1$2(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-j45f73");
+			attr(span, "class", "svelte-wgr1bw");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-j45f73"));
+			: "") + " svelte-wgr1bw"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -3213,7 +3213,7 @@ function create_each_block_1$2(ctx) {
 
 			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-j45f73"))) {
+			: "") + " svelte-wgr1bw"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -3391,8 +3391,8 @@ function create_fragment$4(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-j45f73");
-			attr(div, "class", "box svelte-j45f73");
+			attr(ul, "class", "svelte-wgr1bw");
+			attr(div, "class", "box svelte-wgr1bw");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);

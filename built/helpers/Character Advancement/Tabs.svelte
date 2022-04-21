@@ -39,10 +39,8 @@
     list-style: none;
     border-bottom: 1px solid #dee2e6;
   }
-  li {
-    margin-bottom: -0.1em;
-  }
   li:active {
+    margin-bottom: -0.1em;
     transform: translateY(0.1em);
   }
 
