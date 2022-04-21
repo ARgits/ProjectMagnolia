@@ -9,7 +9,7 @@
   const changes = getContext("chaAdvXpChanges");
   let disabled;
   $: {
-    disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min;
+    disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost;
   }
   function increase(type, subtype) {
     doc.update((store) => {

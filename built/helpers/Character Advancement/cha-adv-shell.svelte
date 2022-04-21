@@ -14,6 +14,7 @@
   //create context for formulas from setting, CONFIG data, Actor's ID
   setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
   setContext("chaAdvCONFIG", CONFIG);
+  setContext("chaAdvActorOriginalData", document.data.data)
   setContext("chaAdvActorID", document.id);
 
   //create store and context for data

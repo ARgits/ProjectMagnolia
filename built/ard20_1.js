@@ -2123,9 +2123,9 @@ function instance$8($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$doc, type, subtype, max, min*/ 1039) {
+		if ($$self.$$.dirty & /*$doc, type, subtype, max, min, cost*/ 1551) {
 			{
-				$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min);
+				$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
 			}
 		}
 	};
@@ -2165,7 +2165,7 @@ class ChangeButton extends SvelteComponent {
 
 function create_else_block(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].value + "";
+	let t_value = /*val*/ ctx[2][1].value + "";
 	let t;
 	let mounted;
 	let dispose;
@@ -2186,7 +2186,7 @@ function create_else_block(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].value + "")) set_data(t, t_value);
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].value + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2196,10 +2196,10 @@ function create_else_block(ctx) {
 	};
 }
 
-// (40:2) {#if val[1].rankName}
+// (42:2) {#if val[1].rankName}
 function create_if_block_2(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].rankName + "";
+	let t_value = /*val*/ ctx[2][1].rankName + "";
 	let t;
 	let mounted;
 	let dispose;
@@ -2220,7 +2220,7 @@ function create_if_block_2(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].rankName + "")) set_data(t, t_value);
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].rankName + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2230,7 +2230,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (49:2) {#if val[1].mod !== undefined}
+// (51:2) {#if val[1].mod !== undefined}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2241,7 +2241,7 @@ function create_if_block_1(ctx) {
 	return {
 		c() {
 			td = element("td");
-			t = text(/*strMod*/ ctx[8]);
+			t = text(/*strMod*/ ctx[7]);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
 		},
 		m(target, anchor) {
@@ -2254,7 +2254,7 @@ function create_if_block_1(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*strMod*/ 256) set_data(t, /*strMod*/ ctx[8]);
+			if (dirty & /*strMod*/ 128) set_data(t, /*strMod*/ ctx[7]);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2264,7 +2264,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (55:2) {#if key === 0}
+// (57:2) {#if key === 0}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2275,7 +2275,7 @@ function create_if_block$2(ctx) {
 			td = element("td");
 			t = text(/*description*/ ctx[0]);
 			attr(td, "class", "description svelte-5mzk3w");
-			attr(td, "rowspan", td_rowspan_value = Object.values(/*type*/ ctx[5]).length);
+			attr(td, "rowspan", td_rowspan_value = Object.values(/*type*/ ctx[4]).length);
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2284,7 +2284,7 @@ function create_if_block$2(ctx) {
 		p(ctx, dirty) {
 			if (dirty & /*description*/ 1) set_data(t, /*description*/ ctx[0]);
 
-			if (dirty & /*type*/ 32 && td_rowspan_value !== (td_rowspan_value = Object.values(/*type*/ ctx[5]).length)) {
+			if (dirty & /*type*/ 16 && td_rowspan_value !== (td_rowspan_value = Object.values(/*type*/ ctx[4]).length)) {
 				attr(td, "rowspan", td_rowspan_value);
 			}
 		},
@@ -2297,7 +2297,7 @@ function create_if_block$2(ctx) {
 function create_fragment$7(ctx) {
 	let tr;
 	let td0;
-	let t0_value = /*val*/ ctx[3][0] + "";
+	let t0_value = /*val*/ ctx[2][0] + "";
 	let t0;
 	let t1;
 	let td1;
@@ -2317,15 +2317,15 @@ function create_fragment$7(ctx) {
 
 	changebutton0 = new ChangeButton({
 			props: {
-				type: /*typeStr*/ ctx[6],
-				subtype: /*val*/ ctx[3][0],
-				max: /*max*/ ctx[2],
-				cost: /*cost*/ ctx[7]
+				type: /*typeStr*/ ctx[5],
+				subtype: /*val*/ ctx[2][0],
+				max: /*max*/ ctx[1],
+				cost: /*cost*/ ctx[6]
 			}
 		});
 
 	function select_block_type(ctx, dirty) {
-		if (/*val*/ ctx[3][1].rankName) return create_if_block_2;
+		if (/*val*/ ctx[2][1].rankName) return create_if_block_2;
 		return create_else_block;
 	}
 
@@ -2334,14 +2334,14 @@ function create_fragment$7(ctx) {
 
 	changebutton1 = new ChangeButton({
 			props: {
-				type: /*typeStr*/ ctx[6],
-				subtype: /*val*/ ctx[3][0],
-				min: /*min*/ ctx[1]
+				type: /*typeStr*/ ctx[5],
+				subtype: /*val*/ ctx[2][0],
+				min: /*min*/ ctx[9]
 			}
 		});
 
-	let if_block1 = /*val*/ ctx[3][1].mod !== undefined && create_if_block_1(ctx);
-	let if_block2 = /*key*/ ctx[4] === 0 && create_if_block$2(ctx);
+	let if_block1 = /*val*/ ctx[2][1].mod !== undefined && create_if_block_1(ctx);
+	let if_block2 = /*key*/ ctx[3] === 0 && create_if_block$2(ctx);
 
 	return {
 		c() {
@@ -2360,7 +2360,7 @@ function create_fragment$7(ctx) {
 			if (if_block1) if_block1.c();
 			t5 = space();
 			td3 = element("td");
-			t6 = text(/*cost*/ ctx[7]);
+			t6 = text(/*cost*/ ctx[6]);
 			t7 = space();
 			if (if_block2) if_block2.c();
 			attr(td0, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-5mzk3w"));
@@ -2402,12 +2402,12 @@ function create_fragment$7(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*val*/ 8) && t0_value !== (t0_value = /*val*/ ctx[3][0] + "")) set_data(t0, t0_value);
+			if ((!current || dirty & /*val*/ 4) && t0_value !== (t0_value = /*val*/ ctx[2][0] + "")) set_data(t0, t0_value);
 			const changebutton0_changes = {};
-			if (dirty & /*typeStr*/ 64) changebutton0_changes.type = /*typeStr*/ ctx[6];
-			if (dirty & /*val*/ 8) changebutton0_changes.subtype = /*val*/ ctx[3][0];
-			if (dirty & /*max*/ 4) changebutton0_changes.max = /*max*/ ctx[2];
-			if (dirty & /*cost*/ 128) changebutton0_changes.cost = /*cost*/ ctx[7];
+			if (dirty & /*typeStr*/ 32) changebutton0_changes.type = /*typeStr*/ ctx[5];
+			if (dirty & /*val*/ 4) changebutton0_changes.subtype = /*val*/ ctx[2][0];
+			if (dirty & /*max*/ 2) changebutton0_changes.max = /*max*/ ctx[1];
+			if (dirty & /*cost*/ 64) changebutton0_changes.cost = /*cost*/ ctx[6];
 			changebutton0.$set(changebutton0_changes);
 
 			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
@@ -2423,12 +2423,11 @@ function create_fragment$7(ctx) {
 			}
 
 			const changebutton1_changes = {};
-			if (dirty & /*typeStr*/ 64) changebutton1_changes.type = /*typeStr*/ ctx[6];
-			if (dirty & /*val*/ 8) changebutton1_changes.subtype = /*val*/ ctx[3][0];
-			if (dirty & /*min*/ 2) changebutton1_changes.min = /*min*/ ctx[1];
+			if (dirty & /*typeStr*/ 32) changebutton1_changes.type = /*typeStr*/ ctx[5];
+			if (dirty & /*val*/ 4) changebutton1_changes.subtype = /*val*/ ctx[2][0];
 			changebutton1.$set(changebutton1_changes);
 
-			if (/*val*/ ctx[3][1].mod !== undefined) {
+			if (/*val*/ ctx[2][1].mod !== undefined) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
@@ -2441,9 +2440,9 @@ function create_fragment$7(ctx) {
 				if_block1 = null;
 			}
 
-			if (!current || dirty & /*cost*/ 128) set_data(t6, /*cost*/ ctx[7]);
+			if (!current || dirty & /*cost*/ 64) set_data(t6, /*cost*/ ctx[6]);
 
-			if (/*key*/ ctx[4] === 0) {
+			if (/*key*/ ctx[3] === 0) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 				} else {
@@ -2482,7 +2481,6 @@ function create_fragment$7(ctx) {
 
 function instance$7($$self, $$props, $$invalidate) {
 	let $data;
-	let { min } = $$props;
 	let { max } = $$props;
 	let { val } = $$props;
 	let { key } = $$props;
@@ -2494,6 +2492,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	const formulas = getContext("chaAdvXpFormulas").formulas;
 	let variables = {};
 	let cost;
+	let min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].value || getContext("chaAdvActorOriginalData")[typeStr][val[0]].level; //TODO: redo this for not only attributes and skills
 
 	function changeDesc(val) {
 		if (!val[1].description) return "";
@@ -2511,17 +2510,16 @@ function instance$7($$self, $$props, $$invalidate) {
 	const mouseover_handler_6 = () => changeDesc(val);
 
 	$$self.$$set = $$props => {
-		if ('min' in $$props) $$invalidate(1, min = $$props.min);
-		if ('max' in $$props) $$invalidate(2, max = $$props.max);
-		if ('val' in $$props) $$invalidate(3, val = $$props.val);
-		if ('key' in $$props) $$invalidate(4, key = $$props.key);
-		if ('type' in $$props) $$invalidate(5, type = $$props.type);
+		if ('max' in $$props) $$invalidate(1, max = $$props.max);
+		if ('val' in $$props) $$invalidate(2, val = $$props.val);
+		if ('key' in $$props) $$invalidate(3, key = $$props.key);
+		if ('type' in $$props) $$invalidate(4, type = $$props.type);
 		if ('description' in $$props) $$invalidate(0, description = $$props.description);
-		if ('typeStr' in $$props) $$invalidate(6, typeStr = $$props.typeStr);
+		if ('typeStr' in $$props) $$invalidate(5, typeStr = $$props.typeStr);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data, typeStr, variables*/ 12352) {
+		if ($$self.$$.dirty & /*$data, typeStr, variables*/ 12320) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					$$invalidate(
@@ -2533,20 +2531,19 @@ function instance$7($$self, $$props, $$invalidate) {
 					); //TODO: change "1" to variable, that will represent "count" and other things
 				}
 
-				$$invalidate(7, cost = math.evaluate(formulas[typeStr], variables));
+				$$invalidate(6, cost = math.evaluate(formulas[typeStr], variables));
 			}
 		}
 
-		if ($$self.$$.dirty & /*val*/ 8) {
+		if ($$self.$$.dirty & /*val*/ 4) {
 			if (val[1].mod !== undefined) {
-				$$invalidate(8, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
+				$$invalidate(7, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
 			}
 		}
 	};
 
 	return [
 		description,
-		min,
 		max,
 		val,
 		key,
@@ -2555,6 +2552,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		cost,
 		strMod,
 		data,
+		min,
 		changeDesc,
 		last,
 		variables,
@@ -2574,13 +2572,12 @@ class TDvariants extends SvelteComponent {
 		super();
 
 		init(this, options, instance$7, create_fragment$7, safe_not_equal, {
-			min: 1,
-			max: 2,
-			val: 3,
-			key: 4,
-			type: 5,
+			max: 1,
+			val: 2,
+			key: 3,
+			type: 4,
 			description: 0,
-			typeStr: 6
+			typeStr: 5
 		});
 	}
 }
@@ -2608,7 +2605,6 @@ function create_each_block$5(ctx) {
 		type: /*$data*/ ctx[0].attributes,
 		typeStr: typeStr$1,
 		val: /*attr*/ ctx[4],
-		min: 1,
 		max: 30,
 		key: /*key*/ ctx[6]
 	};
@@ -2810,7 +2806,6 @@ function create_each_block$4(ctx) {
 				type: /*$doc*/ ctx[0].skills,
 				typeStr,
 				val: /*skill*/ ctx[3],
-				min: 0,
 				max: 4,
 				key: /*key*/ ctx[5],
 				description: ""
@@ -3426,6 +3421,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
 
 	setContext("chaAdvCONFIG", CONFIG);
+	setContext("chaAdvActorOriginalData", document.data.data);
 	setContext("chaAdvActorID", document.id);
 
 	//create store and context for data

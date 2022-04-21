@@ -19,7 +19,7 @@
     <th>Description</th>
   </tr>
   {#each Object.entries($doc.skills) as skill, key}
-    <TDvariants type={$doc.skills} {typeStr} val={skill} min={0} max={4} {key} description={""} />
+    <TDvariants type={$doc.skills} {typeStr} val={skill} max={4} {key} description={""} />
   {/each}
 </table>
 

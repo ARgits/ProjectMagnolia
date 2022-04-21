@@ -22,7 +22,7 @@
     <th>Description</th>
   </tr>
   {#each Object.entries($data.attributes) as attr, key}
-    <TDvariants type={$data.attributes} {typeStr} val={attr} min={1} max={30} {key} bind:description />
+    <TDvariants type={$data.attributes} {typeStr} val={attr} max={30} {key} bind:description />
   {/each}
 </table>
 
