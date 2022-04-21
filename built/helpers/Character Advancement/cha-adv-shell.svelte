@@ -7,6 +7,7 @@
   import SkillComp from "./Skills.svelte";
   import Tabs from "./Tabs.svelte";
   export let document;
+  setContext('chaAdvXpFormulas',game.settings.get("ard20", "advancement-rate"))
   setContext('chaAdvCONFIG',CONFIG)
   setContext("chaAdvActorID", document.id);
   const data = writable({

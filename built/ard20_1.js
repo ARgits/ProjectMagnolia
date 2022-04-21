@@ -1913,7 +1913,7 @@ function create_if_block_1$1(ctx) {
 		c() {
 			button = element("button");
 			t = text("+");
-			attr(button, "class", "change svelte-121qccm");
+			attr(button, "class", "change svelte-k3tpp9");
 			button.disabled = /*disabled*/ ctx[4];
 		},
 		m(target, anchor) {
@@ -1938,7 +1938,7 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (27:2) {#if min!==undefined}
+// (41:0) {#if min !== undefined}
 function create_if_block$3(ctx) {
 	let button;
 	let t;
@@ -1949,7 +1949,7 @@ function create_if_block$3(ctx) {
 		c() {
 			button = element("button");
 			t = text("-");
-			attr(button, "class", "change svelte-121qccm");
+			attr(button, "class", "change svelte-k3tpp9");
 			button.disabled = /*disabled*/ ctx[4];
 		},
 		m(target, anchor) {
@@ -2037,13 +2037,30 @@ function instance$8($$self, $$props, $$invalidate) {
 	let { min } = $$props;
 	let { type } = $$props;
 	let { subtype } = $$props;
-	let doc = getContext('chaAdvActorData');
+	const formulas = getContext("chaAdvXpFormulas").formulas;
+	let variables = {};
+
+	Object.values(getContext("chaAdvXpFormulas").variables).forEach(val => {
+		variables[`${val.shortName}`] = val.value;
+	});
+
+	const doc = getContext("chaAdvActorData");
 	component_subscribe($$self, doc, value => $$invalidate(8, $doc = value));
 	let disabled;
 
 	function increase(type, subtype) {
 		doc.update(store => {
-			store[`${type}`][`${subtype}`].value += 1;
+			switch (type) {
+				case "attributes":
+					variables.AS = store.attributes[`${subtype}`].value + 1;
+					store.attributes[`${subtype}`].value += 1;
+					store.advancement.xp.get += math.evaluate(formulas[type], variables);
+					break;
+				case "skills":
+					store.skills[`${subtype}`].level += 1;
+					break;
+			}
+
 			return store;
 		});
 	}
@@ -3302,6 +3319,7 @@ const activeTab = "attributes";
 function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let { document } = $$props;
+	setContext('chaAdvXpFormulas', game.settings.get("ard20", "advancement-rate"));
 	setContext('chaAdvCONFIG', CONFIG);
 	setContext("chaAdvActorID", document.id);
 
