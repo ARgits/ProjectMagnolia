@@ -51,7 +51,7 @@
 <style>
   table thead {
     position: sticky;
-    inset-block-start: 0;
+    inset-block-start: -0.05em;
     border-bottom: 2px solid #ccc
   }
   table {

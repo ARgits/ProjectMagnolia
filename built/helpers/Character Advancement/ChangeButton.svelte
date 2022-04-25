@@ -12,11 +12,11 @@
     switch (type) {
       case "attributes":
         disabled =
-          $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost;
+          $doc.actorData[type][subtype].value === max || $doc.actorData[type][subtype].value === min || $doc.actorData.advancement.xp.get < cost;
         break;
       case "skills":
         disabled =
-          $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost;
+          $doc.actorData[type][subtype].level === max || $doc.actorData[type][subtype].level === min || $doc.actorData.advancement.xp.get < cost;
         break;
     }
   }
@@ -24,14 +24,14 @@
     doc.update((store) => {
       switch (type) {
         case "attributes":
-          store.attributes[subtype].value += 1;
+          store.actorData.attributes[subtype].value += 1;
           break;
         case "skills":
-          store.skills[subtype].level += 1;
+          store.actorData.skills[subtype].level += 1;
           break;
       }
-      store.advancement.xp.used += cost;
-      store.advancement.xp.get -= cost;
+      store.actorData.advancement.xp.used += cost;
+      store.actorData.advancement.xp.get -= cost;
       return store;
     });
     changes.update((changeArr) => {
@@ -43,10 +43,10 @@
     doc.update((store) => {
       switch (type) {
         case "attributes":
-          store.attributes[subtype].value -= 1;
+          store.actorData.attributes[subtype].value -= 1;
           break;
         case "skills":
-          store.skills[subtype].level -= 1;
+          store.actorData.skills[subtype].level -= 1;
           break;
       }
       let index = -1;
@@ -54,8 +54,8 @@
         index = change.type === type && change.subtype === subtype && key > index ? key : index;
       });
       if (index >= 0) {
-        store.advancement.xp.used -= $changes[index].value;
-        store.advancement.xp.get += $changes[index].value;
+        store.actorData.advancement.xp.used -= $changes[index].value;
+        store.actorData.advancement.xp.get += $changes[index].value;
         return store;
       }
     });

@@ -950,7 +950,7 @@ var dice = /*#__PURE__*/Object.freeze({
  * @extends {Item}
  */
 
-class ARd20Item extends Item {
+class ARd20Item$1 extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -2049,15 +2049,15 @@ function instance$7($$self, $$props, $$invalidate) {
 		doc.update(store => {
 			switch (type) {
 				case "attributes":
-					store.attributes[subtype].value += 1;
+					store.actorData.attributes[subtype].value += 1;
 					break;
 				case "skills":
-					store.skills[subtype].level += 1;
+					store.actorData.skills[subtype].level += 1;
 					break;
 			}
 
-			store.advancement.xp.used += cost;
-			store.advancement.xp.get -= cost;
+			store.actorData.advancement.xp.used += cost;
+			store.actorData.advancement.xp.get -= cost;
 			return store;
 		});
 
@@ -2071,10 +2071,10 @@ function instance$7($$self, $$props, $$invalidate) {
 		doc.update(store => {
 			switch (type) {
 				case "attributes":
-					store.attributes[subtype].value -= 1;
+					store.actorData.attributes[subtype].value -= 1;
 					break;
 				case "skills":
-					store.skills[subtype].level -= 1;
+					store.actorData.skills[subtype].level -= 1;
 					break;
 			}
 
@@ -2087,8 +2087,8 @@ function instance$7($$self, $$props, $$invalidate) {
 			});
 
 			if (index >= 0) {
-				store.advancement.xp.used -= $changes[index].value;
-				store.advancement.xp.get += $changes[index].value;
+				store.actorData.advancement.xp.used -= $changes[index].value;
+				store.actorData.advancement.xp.get += $changes[index].value;
 				return store;
 			}
 		});
@@ -2127,10 +2127,10 @@ function instance$7($$self, $$props, $$invalidate) {
 			{
 				switch (type) {
 					case "attributes":
-						$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc.actorData[type][subtype].value === max || $doc.actorData[type][subtype].value === min || $doc.actorData.advancement.xp.get < cost);
 						break;
 					case "skills":
-						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc.actorData[type][subtype].level === max || $doc.actorData[type][subtype].level === min || $doc.actorData.advancement.xp.get < cost);
 						break;
 				}
 			}
@@ -2775,7 +2775,7 @@ function instance$6($$self, $$props, $$invalidate) {
 					$$invalidate(
 						13,
 						variables[variable.shortName] = typeStr === key
-						? $data[typeStr][val[0]].level ?? $data[typeStr][val[0]].value
+						? $data.actorData[typeStr][val[0]].level ?? $data.actorData[typeStr][val[0]].value
 						: 0,
 						variables
 					); //TODO: change "1" to variable, that will represent "count" and other things
@@ -2861,7 +2861,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-1n97lz5");
+			attr(th, "class", "svelte-p65z7d");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -2984,9 +2984,9 @@ function create_fragment$5(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-1n97lz5");
-			attr(thead_1, "class", "svelte-1n97lz5");
-			attr(table, "class", "svelte-1n97lz5");
+			attr(tr, "class", "svelte-p65z7d");
+			attr(thead_1, "class", "svelte-p65z7d");
+			attr(table, "class", "svelte-p65z7d");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -3517,12 +3517,12 @@ class Tabs extends SvelteComponent {
 function create_fragment$3(ctx) {
 	let div0;
 	let t0;
-	let t1_value = /*$data*/ ctx[0].advancement.xp.get + "";
+	let t1_value = /*$data*/ ctx[0].actorData.advancement.xp.get + "";
 	let t1;
 	let t2;
 	let div1;
 	let t3;
-	let t4_value = /*$data*/ ctx[0].advancement.xp.used + "";
+	let t4_value = /*$data*/ ctx[0].actorData.advancement.xp.used + "";
 	let t4;
 	let t5;
 	let tabs_1;
@@ -3571,8 +3571,8 @@ function create_fragment$3(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*$data*/ 1) && t1_value !== (t1_value = /*$data*/ ctx[0].advancement.xp.get + "")) set_data(t1, t1_value);
-			if ((!current || dirty & /*$data*/ 1) && t4_value !== (t4_value = /*$data*/ ctx[0].advancement.xp.used + "")) set_data(t4, t4_value);
+			if ((!current || dirty & /*$data*/ 1) && t1_value !== (t1_value = /*$data*/ ctx[0].actorData.advancement.xp.get + "")) set_data(t1, t1_value);
+			if ((!current || dirty & /*$data*/ 1) && t4_value !== (t4_value = /*$data*/ ctx[0].actorData.advancement.xp.used + "")) set_data(t4, t4_value);
 		},
 		i(local) {
 			if (current) return;
@@ -3599,6 +3599,135 @@ function create_fragment$3(ctx) {
 
 const activeTab = "attributes";
 
+async function getPacks() {
+	let pack_list = []; // array of feats from Compendium
+	let pack_name = [];
+
+	for (const key of game.settings.get("ard20", "feat").packs) {
+		if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
+			let feat_list = [];
+			feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.documentName === "Item")[0].index));
+			feat_list = feat_list.flat();
+
+			for (const feat of feat_list) {
+				if (feat instanceof ARd20Item) {
+					const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
+					const doc = await game.packs.get(new_key).getDocument(feat.id);
+
+					if (doc instanceof ARd20Item) {
+						const item = doc.toObject();
+						item.data = foundry.utils.deepClone(doc.data.data);
+						pack_list.push(item);
+						pack_name.push(item.name);
+					}
+				}
+			}
+
+			pack_list = pack_list.flat();
+		}
+	}
+
+	return { pack_list, pack_name };
+}
+
+function getFolders() {
+	let folder_list = []; // array of feats from game folders
+	let folder_name = [];
+
+	for (let key of game.settings.get("ard20", "feat").folders) {
+		if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
+			let feat_list = [];
+			feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === "Item")[0].contents);
+			feat_list = feat_list.flat();
+
+			for (let feat of feat_list) {
+				if (feat instanceof ARd20Item) {
+					console.log("item added from folder ", feat);
+					const item = feat.toObject();
+					item.data = foundry.utils.deepClone(feat.data.data);
+					folder_list.push(item);
+					folder_name.push(item.name);
+				}
+			}
+
+			folder_list = folder_list.flat();
+		}
+	}
+
+	return { folder_list, folder_name };
+}
+
+async function getRacesList(pack, folder) {
+	const pack_list = pack.pack_list;
+	const pack_name = pack.pack_name;
+	const folder_list = folder.folder_list;
+	let race_pack_list = [];
+	let race_folder_list = [];
+
+	pack_list.forEach(item => {
+		if (item.type === "race") {
+			let raceItem = { ...item, chosen: false };
+			race_pack_list.push(raceItem);
+		}
+	});
+
+	folder_list.forEach(item => {
+		if (item.type === "race") {
+			let raceItem = { ...item, chosen: false };
+			race_folder_list.push(raceItem);
+		}
+	});
+
+	return race_pack_list.concat(race_folder_list.filter(item => !pack_name.includes(item.name)));
+}
+
+async function getFeaturesList(pack, folder) {
+	const pack_list = pack.pack_list;
+	const pack_name = pack.pack_name;
+	const folder_list = folder.folder_list;
+	let feat_pack_list = [];
+
+	pack_list.forEach(item => {
+		if (item.type === "feature") {
+			let FeatureItem = {
+				...item,
+				currentXP: 0,
+				isEq: false,
+				isXP: false
+			};
+
+			feat_pack_list.push(FeatureItem);
+		}
+	});
+
+	let feat_folder_list = [];
+
+	folder_list.forEach(item => {
+		if (item.type === "feature") {
+			let FeatureItem = {
+				...item,
+				currentXP: 0,
+				isEq: false,
+				isXP: false
+			};
+
+			feat_folder_list.push(FeatureItem);
+		}
+	});
+
+	let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter(item => !pack_name.includes(item.name)));
+	let learnedFeatures = [];
+
+	this.object.itemTypes.feature.forEach(item => {
+		if (item.data.type === "feature") {
+			let FeatureItem = { ...item.data, currentXP: 0, isEq: false };
+			learnedFeatures.push(FeatureItem);
+		}
+	});
+
+	return { temp_feat_list, learnedFeatures };
+}
+
 function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let $changes;
@@ -3617,13 +3746,37 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvCONFIG", CONFIG);
 	setContext("chaAdvActorOriginalData", document.data.data);
 	setContext("chaAdvActorID", document.id);
+	const pack = getPacks();
+	const folder = getFolders();
+	const raceList = getRacesList(pack, folder);
+	const featList = getFeaturesList(pack, folder);
 
 	//create store and context for data
 	//TODO: add features and other stuff
 	const data = writable({
-		attributes: duplicate(document.data.data.attributes),
-		skills: duplicate(document.data.data.skills),
-		advancement: duplicate(document.data.data.advancement)
+		actorData: {
+			attributes: duplicate(document.data.data.attributes),
+			skills: duplicate(document.data.data.skills),
+			advancement: duplicate(document.data.data.advancement),
+			proficiencies: duplicate(document.data.data.proficiencies),
+			health: duplicate(document.data.data.health),
+			isReady: duplicate(document.data.data.isReady)
+		},
+		races: { list: raceList, chosen: "" },
+		count: {
+			//TODO: rework this for future where you can have more/less ranks
+			skills: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 },
+			feats: { mar: 0, mag: 0, div: 0, pri: 0, psy: 0 }
+		},
+		feats: {
+			learned: featList.learnedFeatures,
+			awail: featList.temp_feat_list
+		},
+		allow: {
+			attribute: duplicate(document.data.data.isReady),
+			race: duplicate(document.data.data.isReady),
+			final: duplicate(document.data.data.isReady)
+		}
 	});
 
 	component_subscribe($$self, data, value => $$invalidate(0, $data = value));
@@ -3649,9 +3802,9 @@ function instance$3($$self, $$props, $$invalidate) {
 	//update actor and do other stuff when click 'submit' button
 	function submitData() {
 		const updateObj = {};
-		updateObj["data.attributes"] = $data.attributes;
-		updateObj["data.skills"] = $data.skills;
-		updateObj["data.advancement.xp"] = $data.advancement.xp;
+		updateObj["data.attributes"] = $data.actorData.attributes;
+		updateObj["data.skills"] = $data.actorData.skills;
+		updateObj["data.advancement.xp"] = $data.actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
 		game.actors.get(id).update(updateObj);
 		application.close();
@@ -4362,11 +4515,11 @@ class FeatRequirements extends FormApplication {
         feat_list = feat_list.flat();
 
         for (let feat of feat_list) {
-          if (feat instanceof ARd20Item) {
+          if (feat instanceof ARd20Item$1) {
             const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
             const doc = await game.packs.get(new_key).getDocument(feat.id);
 
-            if (doc instanceof ARd20Item) {
+            if (doc instanceof ARd20Item$1) {
               if (doc.data.type === "feature") {
                 let item = doc.toObject();
                 item.data = doc.data.data;
@@ -4393,7 +4546,7 @@ class FeatRequirements extends FormApplication {
         feat_list = feat_list.flat();
 
         for (let feat of feat_list) {
-          if (feat instanceof ARd20Item && feat.data.type === "feature") {
+          if (feat instanceof ARd20Item$1 && feat.data.type === "feature") {
             console.log("item added from folder ", feat);
             const item = feat.toObject();
             item.data = foundry.utils.deepClone(feat.data.data);
@@ -7030,7 +7183,7 @@ Hooks.once("init", async function () {
     game.ard20 = {
       documents: {
         ARd20Actor,
-        ARd20Item
+        ARd20Item: ARd20Item$1
       },
       rollItemMacro: rollItemMacro$1,
       config: ARd20,
@@ -7062,7 +7215,7 @@ Hooks.once("init", async function () {
     }; // Define custom Document classes
 
     CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
+    CONFIG.Item.documentClass = ARd20Item$1; // Register sheet application classes
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, {
@@ -7190,9 +7343,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 });
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions); //@ts-expect-error
 
-Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); //@ts-expect-error
+Hooks.on("renderChatLog", (app, html, data) => ARd20Item$1.chatListeners(html)); //@ts-expect-error
 
-Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
+Hooks.on("renderChatPopout", (app, html, data) => ARd20Item$1.chatListeners(html));
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -7481,7 +7634,7 @@ Hooks.once("init", async function () {
     game.ard20 = {
       documents: {
         ARd20Actor,
-        ARd20Item
+        ARd20Item: ARd20Item$1
       },
       rollItemMacro,
       config: ARd20,
@@ -7513,7 +7666,7 @@ Hooks.once("init", async function () {
     }; // Define custom Document classes
 
     CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
+    CONFIG.Item.documentClass = ARd20Item$1; // Register sheet application classes
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, {
@@ -7641,9 +7794,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 });
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions); //@ts-expect-error
 
-Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); //@ts-expect-error
+Hooks.on("renderChatLog", (app, html, data) => ARd20Item$1.chatListeners(html)); //@ts-expect-error
 
-Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
+Hooks.on("renderChatPopout", (app, html, data) => ARd20Item$1.chatListeners(html));
 
 export { arr_entries, array_keys, getValues, obj_entries, obj_keys, rollItemMacro };
 //# sourceMappingURL=ard20_1.js.map
