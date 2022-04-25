@@ -37,7 +37,7 @@
           store.skills[subtype].level += 1;
           break;
         case "features":
-          store.features[subtype].data.leve.initial += 1;
+          store.features[subtype].data.level.initial += 1;
           break;
       }
       store.advancement.xp.used += cost;
@@ -59,7 +59,7 @@
           store.skills[subtype].level -= 1;
           break;
         case "features":
-          store.feature[subtype].data.level.initial -= 1;
+          store.features[subtype].data.level.initial -= 1;
           break;
       }
       let index = -1;

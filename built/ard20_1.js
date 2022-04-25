@@ -2096,7 +2096,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					store.skills[subtype].level += 1;
 					break;
 				case "features":
-					store.features[subtype].data.leve.initial += 1;
+					store.features[subtype].data.level.initial += 1;
 					break;
 			}
 
@@ -2121,7 +2121,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					store.skills[subtype].level -= 1;
 					break;
 				case "features":
-					store.feature[subtype].data.level.initial -= 1;
+					store.features[subtype].data.level.initial -= 1;
 					break;
 			}
 
