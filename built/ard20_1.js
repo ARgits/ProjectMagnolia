@@ -1,6 +1,6 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
-import { getContext, setContext as setContext$1 } from '/modules/typhonjs/svelte/index.js';
+import { getContext, setContext } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
@@ -3654,14 +3654,14 @@ function instance$3($$self, $$props, $$invalidate) {
 	const changes = writable([]);
 
 	component_subscribe($$self, changes, value => $$invalidate(6, $changes = value));
-	setContext$1("chaAdvXpChanges", changes);
+	setContext("chaAdvXpChanges", changes);
 
 	//create context for formulas from setting, CONFIG data, Actor's ID
-	setContext$1("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
+	setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
 
-	setContext$1("chaAdvCONFIG", CONFIG);
-	setContext$1("chaAdvActorOriginalData", actor.data.data);
-	setContext$1("chaAdvActorID", document.id);
+	setContext("chaAdvCONFIG", CONFIG);
+	setContext("chaAdvActorOriginalData", actor.data.data);
+	setContext("chaAdvActorID", document.id);
 
 	//create store and context for data
 	//TODO: add features and other stuff
@@ -3675,7 +3675,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	});
 
 	component_subscribe($$self, actorData, value => $$invalidate(0, $actorData = value));
-	setContext$1("chaAdvActorData", actorData);
+	setContext("chaAdvActorData", actorData);
 
 	//create tabs
 	//TODO: create features, races and other tabs
@@ -4186,7 +4186,7 @@ class ARd20ActorSheet extends ActorSheet {
             };
           }
 
-          setContext("chaAdvAdditionalData", {
+          const obj = {
             races: {
               list: raceList,
               chosen: ""
@@ -4217,7 +4217,8 @@ class ARd20ActorSheet extends ActorSheet {
               race: duplicate(actor.data.data.isReady),
               final: duplicate(actor.data.data.isReady)
             }
-          });
+          };
+          return obj;
         }
 
         const document = {

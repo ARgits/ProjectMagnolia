@@ -220,7 +220,8 @@ export class ARd20ActorSheet extends ActorSheet {
                 feat_list = feat_list.flat();
                 for (const feat of feat_list) {
                   if (feat instanceof ARd20Item) {
-                    const new_key = game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
+                    const new_key =
+                      game.packs.filter((pack) => pack.metadata.label === key)[0].metadata.package + "." + key;
                     const doc = await game.packs.get(new_key).getDocument(feat.id);
                     if (doc instanceof ARd20Item) {
                       const item = doc.toObject();
@@ -267,7 +268,7 @@ export class ARd20ActorSheet extends ActorSheet {
           }
           let raceList = await getRacesList();
           let featList = await getFeaturesList();
-      
+
           async function getRacesList() {
             const pack = await getPacks();
             const folder = getFolders();
@@ -310,7 +311,9 @@ export class ARd20ActorSheet extends ActorSheet {
                 feat_folder_list.push(FeatureItem);
               }
             });
-            let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
+            let temp_feat_list = feat_pack_list.concat(
+              feat_folder_list.filter((item) => !pack_name.includes(item.name))
+            );
             let learnedFeatures = [];
             actor.itemTypes.feature.forEach((item) => {
               if (item.data.type === "feature") {
@@ -320,7 +323,7 @@ export class ARd20ActorSheet extends ActorSheet {
             });
             return { temp_feat_list, learnedFeatures };
           }
-          setContext("chaAdvAdditionalData", {
+          const obj = {
             races: { list: raceList, chosen: "" },
             count: {
               //TODO: rework this for future where you can have more/less ranks
@@ -336,12 +339,13 @@ export class ARd20ActorSheet extends ActorSheet {
               race: duplicate(actor.data.data.isReady),
               final: duplicate(actor.data.data.isReady),
             },
-          });
+          };
+          return obj;
         }
         const document = {
-          id:actor.id,
-          aditionalData: await createAdditionalData()
-        }
+          id: actor.id,
+          aditionalData: await createAdditionalData(),
+        };
         app = new CharacterAdvancement(document);
         break;
     }
