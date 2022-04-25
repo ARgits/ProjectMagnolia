@@ -11,7 +11,7 @@
   const data = getContext("chaAdvActorData");
   const originalData = getContext("chaAdvActorOriginalData")
   const aditionalData = getContext("chaAdvAditionalData")
-  console.log(aditionalData)
+
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;
@@ -24,6 +24,7 @@
       min = originalData[typeStr][val[0]].level;
       break;
     case "features":
+      console.log(aditionalData, val[0])
       min = aditionalData.feats.awail[val[0]].level.current;
       max = aditionalData.feats.awail[val[0]].level.max
       break
