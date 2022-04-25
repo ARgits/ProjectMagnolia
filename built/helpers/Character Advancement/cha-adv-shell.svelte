@@ -178,9 +178,9 @@
   //update actor and do other stuff when click 'submit' button
   function submitData() {
     const updateObj = {};
-    updateObj["data.attributes"] = $actorData.actorData.attributes;
-    updateObj["data.skills"] = $actorData.actorData.skills;
-    updateObj["data.advancement.xp"] = $actorData.actorData.advancement.xp;
+    updateObj["data.attributes"] = $actorData.attributes;
+    updateObj["data.skills"] = $actorData.skills;
+    updateObj["data.advancement.xp"] = $actorData.advancement.xp;
     updateObj["data.isReady"] = true;
     game.actors.get(id).update(updateObj);
     application.close();
@@ -189,10 +189,10 @@
 
 {#await createAdditionalData()}
   <div>
-    XP get: {$actorData.actorData.advancement.xp.get}
+    XP get: {$actorData.advancement.xp.get}
   </div>
   <div>
-    XP used: {$actorData.actorData.advancement.xp.used}
+    XP used: {$actorData.advancement.xp.used}
   </div>
   <Tabs {tabs} {activeTab} />
   <button on:click={submitData}>SubmitData</button>

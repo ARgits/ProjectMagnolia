@@ -3537,16 +3537,16 @@ function create_then_block(ctx) {
 	};
 }
 
-// (190:31)     <div>      XP get: {$actorData.actorData.advancement.xp.get}
+// (190:31)     <div>      XP get: {$actorData.advancement.xp.get}
 function create_pending_block(ctx) {
 	let div0;
 	let t0;
-	let t1_value = /*$actorData*/ ctx[0].actorData.advancement.xp.get + "";
+	let t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "";
 	let t1;
 	let t2;
 	let div1;
 	let t3;
-	let t4_value = /*$actorData*/ ctx[0].actorData.advancement.xp.used + "";
+	let t4_value = /*$actorData*/ ctx[0].advancement.xp.used + "";
 	let t4;
 	let t5;
 	let tabs_1;
@@ -3595,8 +3595,8 @@ function create_pending_block(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*$actorData*/ 1) && t1_value !== (t1_value = /*$actorData*/ ctx[0].actorData.advancement.xp.get + "")) set_data(t1, t1_value);
-			if ((!current || dirty & /*$actorData*/ 1) && t4_value !== (t4_value = /*$actorData*/ ctx[0].actorData.advancement.xp.used + "")) set_data(t4, t4_value);
+			if ((!current || dirty & /*$actorData*/ 1) && t1_value !== (t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "")) set_data(t1, t1_value);
+			if ((!current || dirty & /*$actorData*/ 1) && t4_value !== (t4_value = /*$actorData*/ ctx[0].advancement.xp.used + "")) set_data(t4, t4_value);
 		},
 		i(local) {
 			if (current) return;
@@ -3890,9 +3890,9 @@ function instance$3($$self, $$props, $$invalidate) {
 	//update actor and do other stuff when click 'submit' button
 	function submitData() {
 		const updateObj = {};
-		updateObj["data.attributes"] = $actorData.actorData.attributes;
-		updateObj["data.skills"] = $actorData.actorData.skills;
-		updateObj["data.advancement.xp"] = $actorData.actorData.advancement.xp;
+		updateObj["data.attributes"] = $actorData.attributes;
+		updateObj["data.skills"] = $actorData.skills;
+		updateObj["data.advancement.xp"] = $actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
 		game.actors.get(id).update(updateObj);
 		application.close();
