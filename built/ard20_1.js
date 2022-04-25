@@ -3537,7 +3537,7 @@ function create_then_block(ctx) {
 	};
 }
 
-// (191:31)     <div>      XP get: {$actorData.actorData.advancement.xp.get}
+// (190:31)     <div>      XP get: {$actorData.actorData.advancement.xp.get}
 function create_pending_block(ctx) {
 	let div0;
 	let t0;
@@ -3855,7 +3855,6 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvCONFIG", CONFIG);
 	setContext("chaAdvActorOriginalData", document.data.data);
 	setContext("chaAdvActorID", document.id);
-	console.log(raceList, featList);
 
 	//create store and context for data
 	//TODO: add features and other stuff

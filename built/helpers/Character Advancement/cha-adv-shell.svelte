@@ -153,7 +153,6 @@
   setContext("chaAdvActorOriginalData", document.data.data);
   setContext("chaAdvActorID", document.id);
 
-  console.log(raceList, featList);
   //create store and context for data
   //TODO: add features and other stuff
   const actorData = writable({
