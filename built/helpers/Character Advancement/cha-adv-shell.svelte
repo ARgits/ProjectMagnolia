@@ -66,8 +66,16 @@
       folder_name,
     };
   }
-  async function getRacesList(pack, folder) {
+  let raceList
+  let featList
+  async function getRacesAndFeatures(){
+    raceList = await getRacesList()
+    featList = await getFeaturesList()
+  }
+  async function getRacesList() {
     console.log(pack, folder);
+    const pack = await getPacks();
+    const folder = getFolders();
     const pack_list = pack.pack_list;
     const pack_name = pack.pack_name;
     const folder_list = folder.folder_list;
@@ -87,10 +95,11 @@
     });
     return race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
   }
-  async function getFeaturesList(pack, folder) {
-    console.log(pack, folder);
+  async function getFeaturesList() {
+    const pack = await getPacks()
     const pack_list = pack.pack_list;
     const pack_name = pack.pack_name;
+    const folder = getFolders();
     const folder_list = folder.folder_list;
     let feat_pack_list = [];
     pack_list.forEach((item) => {
@@ -108,7 +117,7 @@
     });
     let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
     let learnedFeatures = [];
-    this.object.itemTypes.feature.forEach((item) => {
+    document.itemTypes.feature.forEach((item) => {
       if (item.data.type === "feature") {
         let FeatureItem = { ...item.data, currentXP: 0, isEq: false };
         learnedFeatures.push(FeatureItem);
@@ -116,6 +125,7 @@
     });
     return { temp_feat_list, learnedFeatures };
   }
+  getRacesAndFeatures()
   //
 
   const { application } = getContext("external");
@@ -127,24 +137,8 @@
   setContext("chaAdvCONFIG", CONFIG);
   setContext("chaAdvActorOriginalData", document.data.data);
   setContext("chaAdvActorID", document.id);
-  let pack = getPacks().then((result) => {
-    console.log(result, "getPacks result");
-    pack = result;
-    console.log(pack);
-  });
-  let folder = getFolders();
-  let raceList = getRacesList(pack, folder).then((result) => {
-    console.log(result, "getRacesList result");
-    raceList = result;
-    console.log(raceList);
-  });
-  let featList = getFeaturesList(pack, folder).then((result) => {
-    console.log(result, "getFeaturesList result");
-    featList = result;
-    console.log(featList);
-  });
 
-  console.log(pack, folder, raceList, featList);
+  console.log(raceList, featList);
   //create store and context for data
   //TODO: add features and other stuff
   const data = writable({
