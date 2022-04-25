@@ -2245,7 +2245,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (54:2) {#if thead.includes("Source")}
+// (55:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].data.source.label + "";
@@ -2280,7 +2280,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (58:2) {#if thead.includes("Increase")}
+// (59:2) {#if thead.includes("Increase")}
 function create_if_block_8(ctx) {
 	let td;
 	let changebutton;
@@ -2339,7 +2339,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (64:2) {#if thead.includes("Level")}
+// (65:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].data.level.current + "";
@@ -2374,7 +2374,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (68:2) {#if thead.includes("Max Level")}
+// (69:2) {#if thead.includes("Max Level")}
 function create_if_block_6(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].data.level.max + "";
@@ -2409,7 +2409,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (72:2) {#if thead.includes("Rank")}
+// (73:2) {#if thead.includes("Rank")}
 function create_if_block_5(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].rankName + "";
@@ -2444,7 +2444,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (76:2) {#if thead.includes("Value")}
+// (77:2) {#if thead.includes("Value")}
 function create_if_block_4(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[2][1].value + "";
@@ -2479,7 +2479,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (80:2) {#if thead.includes("Decrease")}
+// (81:2) {#if thead.includes("Decrease")}
 function create_if_block_3(ctx) {
 	let td;
 	let changebutton;
@@ -2536,7 +2536,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (84:2) {#if thead.includes("Mod")}
+// (85:2) {#if thead.includes("Mod")}
 function create_if_block_2(ctx) {
 	let td;
 	let t;
@@ -2569,7 +2569,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (88:2) {#if thead.includes("Cost")}
+// (89:2) {#if thead.includes("Cost")}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2602,7 +2602,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (92:2) {#if key === 0 && thead.includes("Description")}
+// (93:2) {#if key === 0 && thead.includes("Description")}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2946,6 +2946,7 @@ function instance$6($$self, $$props, $$invalidate) {
 	component_subscribe($$self, data, value => $$invalidate(14, $data = value));
 	const originalData = getContext("chaAdvActorOriginalData");
 	const aditionalData = getContext("chaAdvAditionalData");
+	console.log(aditionalData);
 	const formulas = getContext("chaAdvXpFormulas").formulas;
 	let variables = {};
 	let cost;
