@@ -3525,20 +3525,8 @@ function create_catch_block(ctx) {
 	};
 }
 
-// (1:0) <svelte:options accessors={true}
+// (190:37)     <div>      XP get: {$actorData.advancement.xp.get}
 function create_then_block(ctx) {
-	return {
-		c: noop,
-		m: noop,
-		p: noop,
-		i: noop,
-		o: noop,
-		d: noop
-	};
-}
-
-// (190:31)     <div>      XP get: {$actorData.advancement.xp.get}
-function create_pending_block(ctx) {
 	let div0;
 	let t0;
 	let t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "";
@@ -3618,6 +3606,18 @@ function create_pending_block(ctx) {
 			mounted = false;
 			dispose();
 		}
+	};
+}
+
+// (1:0) <svelte:options accessors={true}
+function create_pending_block(ctx) {
+	return {
+		c: noop,
+		m: noop,
+		p: noop,
+		i: noop,
+		o: noop,
+		d: noop
 	};
 }
 

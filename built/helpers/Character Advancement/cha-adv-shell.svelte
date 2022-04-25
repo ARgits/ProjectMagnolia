@@ -187,7 +187,7 @@
   }
 </script>
 
-{#await createAdditionalData()}
+{#await createAdditionalData() then }
   <div>
     XP get: {$actorData.advancement.xp.get}
   </div>
