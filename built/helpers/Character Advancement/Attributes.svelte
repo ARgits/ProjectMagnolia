@@ -23,12 +23,12 @@
       break;
   }
   $: {
-    for (let [key, attr] of Object.entries($data.actorData.attributes)) {
+    for (let [key, attr] of Object.entries($data.attributes)) {
       attr.mod = Math.floor((attr.value - 10) / 2);
     }
   }
   const rankName = ["untrained", "trained", "expert", "master", "legend"];
-  $: for (let [key, skill] of Object.entries($data.actorData.skills)) {
+  $: for (let [key, skill] of Object.entries($data.skills)) {
     skill.rankName = rankName[skill.level];
   }
 </script>
@@ -42,8 +42,8 @@
     </tr>
   </thead>
   <tbody>
-    {#each Object.entries($data.actorData[tabData]) as attr, key}
-      <TDvariants type={$data.actorData[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
+    {#each Object.entries($data[tabData]) as attr, key}
+      <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
     {/each}
   </tbody>
 </table>

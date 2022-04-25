@@ -1,5 +1,5 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, handle_promise, update_await_block_branch, set_input_value, run_all, update_keyed_each, destroy_block, select_value, is_function, add_render_callback, select_option } from '/modules/typhonjs/svelte/internal.js';
 import { getContext, setContext } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
@@ -2049,15 +2049,15 @@ function instance$7($$self, $$props, $$invalidate) {
 		doc.update(store => {
 			switch (type) {
 				case "attributes":
-					store.actorData.attributes[subtype].value += 1;
+					store.attributes[subtype].value += 1;
 					break;
 				case "skills":
-					store.actorData.skills[subtype].level += 1;
+					store.skills[subtype].level += 1;
 					break;
 			}
 
-			store.actorData.advancement.xp.used += cost;
-			store.actorData.advancement.xp.get -= cost;
+			store.advancement.xp.used += cost;
+			store.advancement.xp.get -= cost;
 			return store;
 		});
 
@@ -2071,10 +2071,10 @@ function instance$7($$self, $$props, $$invalidate) {
 		doc.update(store => {
 			switch (type) {
 				case "attributes":
-					store.actorData.attributes[subtype].value -= 1;
+					store.attributes[subtype].value -= 1;
 					break;
 				case "skills":
-					store.actorData.skills[subtype].level -= 1;
+					store.skills[subtype].level -= 1;
 					break;
 			}
 
@@ -2087,8 +2087,8 @@ function instance$7($$self, $$props, $$invalidate) {
 			});
 
 			if (index >= 0) {
-				store.actorData.advancement.xp.used -= $changes[index].value;
-				store.actorData.advancement.xp.get += $changes[index].value;
+				store.advancement.xp.used -= $changes[index].value;
+				store.advancement.xp.get += $changes[index].value;
 				return store;
 			}
 		});
@@ -2127,10 +2127,10 @@ function instance$7($$self, $$props, $$invalidate) {
 			{
 				switch (type) {
 					case "attributes":
-						$$invalidate(4, disabled = $doc.actorData[type][subtype].value === max || $doc.actorData[type][subtype].value === min || $doc.actorData.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
 						break;
 					case "skills":
-						$$invalidate(4, disabled = $doc.actorData[type][subtype].level === max || $doc.actorData[type][subtype].level === min || $doc.actorData.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
 						break;
 				}
 			}
@@ -2775,7 +2775,7 @@ function instance$6($$self, $$props, $$invalidate) {
 					$$invalidate(
 						13,
 						variables[variable.shortName] = typeStr === key
-						? $data.actorData[typeStr][val[0]].level ?? $data.actorData[typeStr][val[0]].value
+						? $data[typeStr][val[0]].level ?? $data[typeStr][val[0]].value
 						: 0,
 						variables
 					); //TODO: change "1" to variable, that will represent "count" and other things
@@ -2877,7 +2877,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (45:4) {#each Object.entries($data.actorData[tabData]) as attr, key}
+// (45:4) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -2888,7 +2888,7 @@ function create_each_block$4(ctx) {
 	}
 
 	let tdvariants_props = {
-		type: /*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]],
+		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
 		thead: /*thead*/ ctx[3],
 		typeStr: /*typeStr*/ ctx[2],
 		val: /*attr*/ ctx[9],
@@ -2913,7 +2913,7 @@ function create_each_block$4(ctx) {
 		},
 		p(ctx, dirty) {
 			const tdvariants_changes = {};
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]];
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
 			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
 			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
 			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[9];
@@ -2956,7 +2956,7 @@ function create_fragment$5(ctx) {
 		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
 	}
 
-	let each_value = Object.entries(/*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]]);
+	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -3031,7 +3031,7 @@ function create_fragment$5(ctx) {
 			}
 
 			if (dirty & /*$data, tabData, thead, typeStr, Object, max, description*/ 63) {
-				each_value = Object.entries(/*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]]);
+				each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -3123,14 +3123,14 @@ function instance$5($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$data*/ 2) {
 			{
-				for (let [key, attr] of Object.entries($data.actorData.attributes)) {
+				for (let [key, attr] of Object.entries($data.attributes)) {
 					attr.mod = Math.floor((attr.value - 10) / 2);
 				}
 			}
 		}
 
 		if ($$self.$$.dirty & /*$data*/ 2) {
-			for (let [key, skill] of Object.entries($data.actorData.skills)) {
+			for (let [key, skill] of Object.entries($data.skills)) {
 				skill.rankName = rankName[skill.level];
 			}
 		}
@@ -3514,15 +3514,39 @@ class Tabs extends SvelteComponent {
 
 /* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.46.5 */
 
-function create_fragment$3(ctx) {
+function create_catch_block(ctx) {
+	return {
+		c: noop,
+		m: noop,
+		p: noop,
+		i: noop,
+		o: noop,
+		d: noop
+	};
+}
+
+// (1:0) <svelte:options accessors={true}
+function create_then_block(ctx) {
+	return {
+		c: noop,
+		m: noop,
+		p: noop,
+		i: noop,
+		o: noop,
+		d: noop
+	};
+}
+
+// (191:31)     <div>      XP get: {$actorData.actorData.advancement.xp.get}
+function create_pending_block(ctx) {
 	let div0;
 	let t0;
-	let t1_value = /*$data*/ ctx[0].actorData.advancement.xp.get + "";
+	let t1_value = /*$actorData*/ ctx[0].actorData.advancement.xp.get + "";
 	let t1;
 	let t2;
 	let div1;
 	let t3;
-	let t4_value = /*$data*/ ctx[0].actorData.advancement.xp.used + "";
+	let t4_value = /*$actorData*/ ctx[0].actorData.advancement.xp.used + "";
 	let t4;
 	let t5;
 	let tabs_1;
@@ -3533,7 +3557,7 @@ function create_fragment$3(ctx) {
 	let dispose;
 
 	tabs_1 = new Tabs({
-			props: { tabs: /*tabs*/ ctx[3], activeTab }
+			props: { tabs: /*tabs*/ ctx[4], activeTab }
 		});
 
 	return {
@@ -3566,13 +3590,13 @@ function create_fragment$3(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*submitData*/ ctx[4]);
+				dispose = listen(button, "click", /*submitData*/ ctx[5]);
 				mounted = true;
 			}
 		},
-		p(ctx, [dirty]) {
-			if ((!current || dirty & /*$data*/ 1) && t1_value !== (t1_value = /*$data*/ ctx[0].actorData.advancement.xp.get + "")) set_data(t1, t1_value);
-			if ((!current || dirty & /*$data*/ 1) && t4_value !== (t4_value = /*$data*/ ctx[0].actorData.advancement.xp.used + "")) set_data(t4, t4_value);
+		p(ctx, dirty) {
+			if ((!current || dirty & /*$actorData*/ 1) && t1_value !== (t1_value = /*$actorData*/ ctx[0].actorData.advancement.xp.get + "")) set_data(t1, t1_value);
+			if ((!current || dirty & /*$actorData*/ 1) && t4_value !== (t4_value = /*$actorData*/ ctx[0].actorData.advancement.xp.used + "")) set_data(t4, t4_value);
 		},
 		i(local) {
 			if (current) return;
@@ -3597,155 +3621,224 @@ function create_fragment$3(ctx) {
 	};
 }
 
+function create_fragment$3(ctx) {
+	let await_block_anchor;
+	let current;
+
+	let info = {
+		ctx,
+		current: null,
+		token: null,
+		hasCatch: false,
+		pending: create_pending_block,
+		then: create_then_block,
+		catch: create_catch_block,
+		blocks: [,,,]
+	};
+
+	handle_promise(/*createAdditionalData*/ ctx[1](), info);
+
+	return {
+		c() {
+			await_block_anchor = empty();
+			info.block.c();
+		},
+		m(target, anchor) {
+			insert(target, await_block_anchor, anchor);
+			info.block.m(target, info.anchor = anchor);
+			info.mount = () => await_block_anchor.parentNode;
+			info.anchor = await_block_anchor;
+			current = true;
+		},
+		p(new_ctx, [dirty]) {
+			ctx = new_ctx;
+			update_await_block_branch(info, ctx, dirty);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(info.block);
+			current = true;
+		},
+		o(local) {
+			for (let i = 0; i < 3; i += 1) {
+				const block = info.blocks[i];
+				transition_out(block);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(await_block_anchor);
+			info.block.d(detaching);
+			info.token = null;
+			info = null;
+		}
+	};
+}
+
 const activeTab = "attributes";
 
-//functions to get lists of available features and lists
-async function getPacks() {
-	let pack_list = []; // array of feats from Compendium
-	let pack_name = [];
-
-	for (const key of game.settings.get("ard20", "feat").packs) {
-		if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
-			let feat_list = [];
-			feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.documentName === "Item")[0].index));
-			feat_list = feat_list.flat();
-
-			for (const feat of feat_list) {
-				if (feat instanceof ARd20Item) {
-					const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
-					const doc = await game.packs.get(new_key).getDocument(feat.id);
-
-					if (doc instanceof ARd20Item) {
-						const item = doc.toObject();
-						item.data = foundry.utils.deepClone(doc.data.data);
-						pack_list.push(item);
-						pack_name.push(item.name);
-					}
-				}
-			}
-
-			pack_list = pack_list.flat();
-		}
-	}
-
-	return { pack_list, pack_name };
-}
-
-function getFolders() {
-	let folder_list = []; // array of feats from game folders
-	let folder_name = [];
-
-	for (let key of game.settings.get("ard20", "feat").folders) {
-		if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
-			let feat_list = [];
-			feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === "Item")[0].contents);
-			feat_list = feat_list.flat();
-
-			for (let feat of feat_list) {
-				if (feat instanceof ARd20Item) {
-					console.log("item added from folder ", feat);
-					const item = feat.toObject();
-					item.data = foundry.utils.deepClone(feat.data.data);
-					folder_list.push(item);
-					folder_name.push(item.name);
-				}
-			}
-
-			folder_list = folder_list.flat();
-		}
-	}
-
-	return { folder_list, folder_name };
-}
-
-async function getRacesList() {
-	const pack = await getPacks();
-	const folder = getFolders();
-	const pack_list = pack.pack_list;
-	const pack_name = pack.pack_name;
-	const folder_list = folder.folder_list;
-	let race_pack_list = [];
-	let race_folder_list = [];
-
-	pack_list.forEach(item => {
-		if (item.type === "race") {
-			let raceItem = { ...item, chosen: false };
-			race_pack_list.push(raceItem);
-		}
-	});
-
-	folder_list.forEach(item => {
-		if (item.type === "race") {
-			let raceItem = { ...item, chosen: false };
-			race_folder_list.push(raceItem);
-		}
-	});
-
-	return race_pack_list.concat(race_folder_list.filter(item => !pack_name.includes(item.name)));
-}
-
 function instance$3($$self, $$props, $$invalidate) {
-	let $data;
+	let $actorData;
 	let $changes;
 	let { document } = $$props;
-	let raceList;
-	let featList;
 
-	async function getRacesAndFeatures() {
-		raceList = await getRacesList();
-		featList = await getFeaturesList();
+	async function createAdditionalData() {
+		//functions to get lists of available features and lists
+		async function getPacks() {
+			let pack_list = []; // array of feats from Compendium
+			let pack_name = [];
+
+			for (const key of game.settings.get("ard20", "feat").packs) {
+				if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
+					let feat_list = [];
+					feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.documentName === "Item")[0].index));
+					feat_list = feat_list.flat();
+
+					for (const feat of feat_list) {
+						if (feat instanceof ARd20Item) {
+							const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
+							const doc = await game.packs.get(new_key).getDocument(feat.id);
+
+							if (doc instanceof ARd20Item) {
+								const item = doc.toObject();
+								item.data = foundry.utils.deepClone(doc.data.data);
+								pack_list.push(item);
+								pack_name.push(item.name);
+							}
+						}
+					}
+
+					pack_list = pack_list.flat();
+				}
+			}
+
+			return { pack_list, pack_name };
+		}
+
+		function getFolders() {
+			let folder_list = []; // array of feats from game folders
+			let folder_name = [];
+
+			for (let key of game.settings.get("ard20", "feat").folders) {
+				if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
+					let feat_list = [];
+					feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === "Item")[0].contents);
+					feat_list = feat_list.flat();
+
+					for (let feat of feat_list) {
+						if (feat instanceof ARd20Item) {
+							console.log("item added from folder ", feat);
+							const item = feat.toObject();
+							item.data = foundry.utils.deepClone(feat.data.data);
+							folder_list.push(item);
+							folder_name.push(item.name);
+						}
+					}
+
+					folder_list = folder_list.flat();
+				}
+			}
+
+			return { folder_list, folder_name };
+		}
+
+		let raceList = await getRacesList();
+		let featList = await getFeaturesList();
+
+		async function getRacesList() {
+			const pack = await getPacks();
+			const folder = getFolders();
+			const pack_list = pack.pack_list;
+			const pack_name = pack.pack_name;
+			const folder_list = folder.folder_list;
+			let race_pack_list = [];
+			let race_folder_list = [];
+
+			pack_list.forEach(item => {
+				if (item.type === "race") {
+					let raceItem = { ...item, chosen: false };
+					race_pack_list.push(raceItem);
+				}
+			});
+
+			folder_list.forEach(item => {
+				if (item.type === "race") {
+					let raceItem = { ...item, chosen: false };
+					race_folder_list.push(raceItem);
+				}
+			});
+
+			return race_pack_list.concat(race_folder_list.filter(item => !pack_name.includes(item.name)));
+		}
+
+		async function getFeaturesList() {
+			const pack = await getPacks();
+			const pack_list = pack.pack_list;
+			const pack_name = pack.pack_name;
+			const folder = getFolders();
+			const folder_list = folder.folder_list;
+			let feat_pack_list = [];
+
+			pack_list.forEach(item => {
+				if (item.type === "feature") {
+					let FeatureItem = {
+						...item,
+						currentXP: 0,
+						isEq: false,
+						isXP: false
+					};
+
+					feat_pack_list.push(FeatureItem);
+				}
+			});
+
+			let feat_folder_list = [];
+
+			folder_list.forEach(item => {
+				if (item.type === "feature") {
+					let FeatureItem = {
+						...item,
+						currentXP: 0,
+						isEq: false,
+						isXP: false
+					};
+
+					feat_folder_list.push(FeatureItem);
+				}
+			});
+
+			let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter(item => !pack_name.includes(item.name)));
+			let learnedFeatures = [];
+
+			document.itemTypes.feature.forEach(item => {
+				if (item.data.type === "feature") {
+					let FeatureItem = { ...item.data, currentXP: 0, isEq: false };
+					learnedFeatures.push(FeatureItem);
+				}
+			});
+
+			return { temp_feat_list, learnedFeatures };
+		}
+
+		return {
+			races: { list: raceList, chosen: "" },
+			count: {
+				//TODO: rework this for future where you can have more/less ranks
+				skills: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 },
+				feats: { mar: 0, mag: 0, div: 0, pri: 0, psy: 0 }
+			},
+			feats: {
+				learned: featList.learnedFeatures,
+				awail: featList.temp_feat_list
+			},
+			allow: {
+				attribute: duplicate(document.data.data.isReady),
+				race: duplicate(document.data.data.isReady),
+				final: duplicate(document.data.data.isReady)
+			}
+		};
 	}
-
-	async function getFeaturesList() {
-		const pack = await getPacks();
-		const pack_list = pack.pack_list;
-		const pack_name = pack.pack_name;
-		const folder = getFolders();
-		const folder_list = folder.folder_list;
-		let feat_pack_list = [];
-
-		pack_list.forEach(item => {
-			if (item.type === "feature") {
-				let FeatureItem = {
-					...item,
-					currentXP: 0,
-					isEq: false,
-					isXP: false
-				};
-
-				feat_pack_list.push(FeatureItem);
-			}
-		});
-
-		let feat_folder_list = [];
-
-		folder_list.forEach(item => {
-			if (item.type === "feature") {
-				let FeatureItem = {
-					...item,
-					currentXP: 0,
-					isEq: false,
-					isXP: false
-				};
-
-				feat_folder_list.push(FeatureItem);
-			}
-		});
-
-		let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter(item => !pack_name.includes(item.name)));
-		let learnedFeatures = [];
-
-		document.itemTypes.feature.forEach(item => {
-			if (item.data.type === "feature") {
-				let FeatureItem = { ...item.data, currentXP: 0, isEq: false };
-				learnedFeatures.push(FeatureItem);
-			}
-		});
-
-		return { temp_feat_list, learnedFeatures };
-	}
-
-	getRacesAndFeatures();
 
 	//
 	const { application } = getContext("external");
@@ -3753,7 +3846,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	//create list of changes and context for it
 	const changes = writable([]);
 
-	component_subscribe($$self, changes, value => $$invalidate(6, $changes = value));
+	component_subscribe($$self, changes, value => $$invalidate(7, $changes = value));
 	setContext("chaAdvXpChanges", changes);
 
 	//create context for formulas from setting, CONFIG data, Actor's ID
@@ -3766,34 +3859,17 @@ function instance$3($$self, $$props, $$invalidate) {
 
 	//create store and context for data
 	//TODO: add features and other stuff
-	const data = writable({
-		actorData: {
-			attributes: duplicate(document.data.data.attributes),
-			skills: duplicate(document.data.data.skills),
-			advancement: duplicate(document.data.data.advancement),
-			proficiencies: duplicate(document.data.data.proficiencies),
-			health: duplicate(document.data.data.health),
-			isReady: duplicate(document.data.data.isReady)
-		},
-		races: { list: raceList, chosen: "" },
-		count: {
-			//TODO: rework this for future where you can have more/less ranks
-			skills: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 },
-			feats: { mar: 0, mag: 0, div: 0, pri: 0, psy: 0 }
-		},
-		feats: {
-			learned: featList.learnedFeatures,
-			awail: featList.temp_feat_list
-		},
-		allow: {
-			attribute: duplicate(document.data.data.isReady),
-			race: duplicate(document.data.data.isReady),
-			final: duplicate(document.data.data.isReady)
-		}
+	const actorData = writable({
+		attributes: duplicate(document.data.data.attributes),
+		skills: duplicate(document.data.data.skills),
+		advancement: duplicate(document.data.data.advancement),
+		proficiencies: duplicate(document.data.data.proficiencies),
+		health: duplicate(document.data.data.health),
+		isReady: duplicate(document.data.data.isReady)
 	});
 
-	component_subscribe($$self, data, value => $$invalidate(0, $data = value));
-	setContext("chaAdvActorData", data);
+	component_subscribe($$self, actorData, value => $$invalidate(0, $actorData = value));
+	setContext("chaAdvActorData", actorData);
 
 	//create tabs
 	//TODO: create features, races and other tabs
@@ -3815,35 +3891,44 @@ function instance$3($$self, $$props, $$invalidate) {
 	//update actor and do other stuff when click 'submit' button
 	function submitData() {
 		const updateObj = {};
-		updateObj["data.attributes"] = $data.actorData.attributes;
-		updateObj["data.skills"] = $data.actorData.skills;
-		updateObj["data.advancement.xp"] = $data.actorData.advancement.xp;
+		updateObj["data.attributes"] = $actorData.actorData.attributes;
+		updateObj["data.skills"] = $actorData.actorData.skills;
+		updateObj["data.advancement.xp"] = $actorData.actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
 		game.actors.get(id).update(updateObj);
 		application.close();
 	}
 
 	$$self.$$set = $$props => {
-		if ('document' in $$props) $$invalidate(5, document = $$props.document);
+		if ('document' in $$props) $$invalidate(6, document = $$props.document);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data, $changes*/ 65) {
-			console.log($data, $changes);
+		if ($$self.$$.dirty & /*$actorData, $changes*/ 129) {
+			console.log($actorData, $changes);
 		}
 	};
 
-	return [$data, changes, data, tabs, submitData, document, $changes];
+	return [
+		$actorData,
+		createAdditionalData,
+		changes,
+		actorData,
+		tabs,
+		submitData,
+		document,
+		$changes
+	];
 }
 
 class Cha_adv_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 5 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { document: 6 });
 	}
 
 	get document() {
-		return this.$$.ctx[5];
+		return this.$$.ctx[6];
 	}
 
 	set document(document) {
