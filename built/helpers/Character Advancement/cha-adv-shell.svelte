@@ -51,6 +51,7 @@
     updateObj["data.skills"] = $actorData.skills;
     updateObj["data.advancement.xp"] = $actorData.advancement.xp;
     updateObj["data.isReady"] = true;
+    console.log($actorData.features)
     let feats = $actorData.features.filter((feat) => {
       feat.data.level.initial > feat.data.level.current;
     });

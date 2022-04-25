@@ -2181,7 +2181,7 @@ function instance$7($$self, $$props, $$invalidate) {
 						break;
 					case "features":
 						console.log(max, min);
-						$$invalidate(4, disabled = $doc[type][subtype].data.level.initial === max || $doc[type][subtype].data.level.max === min || $doc.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc[type][subtype].data.level.initial === max || $doc[type][subtype].data.level.initial === min || $doc.advancement.xp.get < cost);
 						break;
 				}
 			}
@@ -3926,6 +3926,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		updateObj["data.skills"] = $actorData.skills;
 		updateObj["data.advancement.xp"] = $actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
+		console.log($actorData.features);
 
 		let feats = $actorData.features.filter(feat => {
 			feat.data.level.initial > feat.data.level.current;

@@ -22,7 +22,7 @@
         console.log(max,min)
         disabled =
           $doc[type][subtype].data.level.initial === max ||
-          $doc[type][subtype].data.level.max === min ||
+          $doc[type][subtype].data.level.initial === min ||
           $doc.advancement.xp.get < cost;
         break;
     }
