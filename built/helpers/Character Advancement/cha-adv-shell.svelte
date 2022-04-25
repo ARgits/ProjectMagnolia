@@ -187,7 +187,9 @@
   }
 </script>
 
-{#await createAdditionalData() then }
+{#await createAdditionalData()}
+  ...loading Races and Features
+{:then}
   <div>
     XP get: {$actorData.advancement.xp.get}
   </div>

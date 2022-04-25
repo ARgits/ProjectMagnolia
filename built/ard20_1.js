@@ -3525,7 +3525,7 @@ function create_catch_block(ctx) {
 	};
 }
 
-// (190:37)     <div>      XP get: {$actorData.advancement.xp.get}
+// (192:0) {:then}
 function create_then_block(ctx) {
 	let div0;
 	let t0;
@@ -3609,15 +3609,23 @@ function create_then_block(ctx) {
 	};
 }
 
-// (1:0) <svelte:options accessors={true}
+// (190:31)     ...loading Races and Features  {:then}
 function create_pending_block(ctx) {
+	let t;
+
 	return {
-		c: noop,
-		m: noop,
+		c() {
+			t = text("...loading Races and Features");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
 		p: noop,
 		i: noop,
 		o: noop,
-		d: noop
+		d(detaching) {
+			if (detaching) detach(t);
+		}
 	};
 }
 
