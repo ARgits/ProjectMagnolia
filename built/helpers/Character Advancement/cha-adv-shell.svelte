@@ -73,7 +73,6 @@
     featList = await getFeaturesList()
   }
   async function getRacesList() {
-    console.log(pack, folder);
     const pack = await getPacks();
     const folder = getFolders();
     const pack_list = pack.pack_list;
