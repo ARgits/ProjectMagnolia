@@ -3757,15 +3757,21 @@ function instance$3($$self, $$props, $$invalidate) {
 	let featList = [];
 
 	getPacks().then(result => {
+		console.log(result, 'getPacks result');
 		pack = result;
+		console.log(pack);
 	});
 
 	getRacesList(pack, folder).then(result => {
+		console.log(result, 'getRacesList result');
 		raceList = result;
+		console.log(raceList);
 	});
 
 	getFeaturesList(pack, folder).then(result => {
+		console.log(result, 'getFeaturesList result');
 		featList = result;
+		console.log(featList);
 	});
 
 	console.log(pack, folder, raceList, featList);
