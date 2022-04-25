@@ -127,25 +127,23 @@
   setContext("chaAdvCONFIG", CONFIG);
   setContext("chaAdvActorOriginalData", document.data.data);
   setContext("chaAdvActorID", document.id);
-  let pack = {};
-  let folder = getFolders();
-  let raceList = [];
-  let featList = [];
-  getPacks().then((result) => {
-    console.log(result,'getPacks result');
+  let pack = getPacks().then((result) => {
+    console.log(result, "getPacks result");
     pack = result;
-    console.log(pack)
+    console.log(pack);
   });
-  getRacesList(pack, folder).then((result) => {
-    console.log(result,'getRacesList result');
+  let folder = getFolders();
+  let raceList = getRacesList(pack, folder).then((result) => {
+    console.log(result, "getRacesList result");
     raceList = result;
-    console.log(raceList)
+    console.log(raceList);
   });
-  getFeaturesList(pack, folder).then((result) => {
-    console.log(result,'getFeaturesList result');
+  let featList = getFeaturesList(pack, folder).then((result) => {
+    console.log(result, "getFeaturesList result");
     featList = result;
-    console.log(featList)
+    console.log(featList);
   });
+
   console.log(pack, folder, raceList, featList);
   //create store and context for data
   //TODO: add features and other stuff
