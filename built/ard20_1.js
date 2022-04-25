@@ -950,7 +950,7 @@ var dice = /*#__PURE__*/Object.freeze({
  * @extends {Item}
  */
 
-class ARd20Item$1 extends Item {
+class ARd20Item extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -4054,17 +4054,12 @@ class ARd20ActorSheet extends ActorSheet {
                 feat_list = feat_list.flat();
 
                 for (const feat of feat_list) {
-                  if (feat instanceof ARd20Item) {
-                    const new_key = game.packs.filter(pack => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
-                    const doc = await game.packs.get(new_key).getDocument(feat.id);
-
-                    if (doc instanceof ARd20Item) {
-                      const item = doc.toObject();
-                      item.data = foundry.utils.deepClone(doc.data.data);
-                      pack_list.push(item);
-                      pack_name.push(item.name);
-                    }
-                  }
+                  const new_key = game.packs.filter(pack => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
+                  const doc = await game.packs.get(new_key).getDocument(feat.id);
+                  const item = doc.toObject();
+                  item.data = foundry.utils.deepClone(doc.data.data);
+                  pack_list.push(item);
+                  pack_name.push(item.name);
                 }
 
                 pack_list = pack_list.flat();
@@ -4089,13 +4084,11 @@ class ARd20ActorSheet extends ActorSheet {
                 feat_list = feat_list.flat();
 
                 for (let feat of feat_list) {
-                  if (feat instanceof ARd20Item) {
-                    console.log("item added from folder ", feat);
-                    const item = feat.toObject();
-                    item.data = foundry.utils.deepClone(feat.data.data);
-                    folder_list.push(item);
-                    folder_name.push(item.name);
-                  }
+                  console.log("item added from folder ", feat);
+                  const item = feat.toObject();
+                  item.data = foundry.utils.deepClone(feat.data.data);
+                  folder_list.push(item);
+                  folder_name.push(item.name);
                 }
 
                 folder_list = folder_list.flat();
@@ -4600,11 +4593,11 @@ class FeatRequirements extends FormApplication {
         feat_list = feat_list.flat();
 
         for (let feat of feat_list) {
-          if (feat instanceof ARd20Item$1) {
+          if (feat instanceof ARd20Item) {
             const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
             const doc = await game.packs.get(new_key).getDocument(feat.id);
 
-            if (doc instanceof ARd20Item$1) {
+            if (doc instanceof ARd20Item) {
               if (doc.data.type === "feature") {
                 let item = doc.toObject();
                 item.data = doc.data.data;
@@ -4631,7 +4624,7 @@ class FeatRequirements extends FormApplication {
         feat_list = feat_list.flat();
 
         for (let feat of feat_list) {
-          if (feat instanceof ARd20Item$1 && feat.data.type === "feature") {
+          if (feat instanceof ARd20Item && feat.data.type === "feature") {
             console.log("item added from folder ", feat);
             const item = feat.toObject();
             item.data = foundry.utils.deepClone(feat.data.data);
@@ -7268,7 +7261,7 @@ Hooks.once("init", async function () {
     game.ard20 = {
       documents: {
         ARd20Actor,
-        ARd20Item: ARd20Item$1
+        ARd20Item
       },
       rollItemMacro: rollItemMacro$1,
       config: ARd20,
@@ -7300,7 +7293,7 @@ Hooks.once("init", async function () {
     }; // Define custom Document classes
 
     CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item$1; // Register sheet application classes
+    CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, {
@@ -7428,9 +7421,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 });
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions); //@ts-expect-error
 
-Hooks.on("renderChatLog", (app, html, data) => ARd20Item$1.chatListeners(html)); //@ts-expect-error
+Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); //@ts-expect-error
 
-Hooks.on("renderChatPopout", (app, html, data) => ARd20Item$1.chatListeners(html));
+Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -7719,7 +7712,7 @@ Hooks.once("init", async function () {
     game.ard20 = {
       documents: {
         ARd20Actor,
-        ARd20Item: ARd20Item$1
+        ARd20Item
       },
       rollItemMacro,
       config: ARd20,
@@ -7751,7 +7744,7 @@ Hooks.once("init", async function () {
     }; // Define custom Document classes
 
     CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item$1; // Register sheet application classes
+    CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, {
@@ -7879,9 +7872,9 @@ Hooks.on("renderChatMessage", (app, html, data) => {
 });
 Hooks.on("getChatLogEntryContext", addChatMessageContextOptions); //@ts-expect-error
 
-Hooks.on("renderChatLog", (app, html, data) => ARd20Item$1.chatListeners(html)); //@ts-expect-error
+Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); //@ts-expect-error
 
-Hooks.on("renderChatPopout", (app, html, data) => ARd20Item$1.chatListeners(html));
+Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
 
 export { arr_entries, array_keys, getValues, obj_entries, obj_keys, rollItemMacro };
 //# sourceMappingURL=ard20_1.js.map

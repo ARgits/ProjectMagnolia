@@ -214,22 +214,19 @@ export class ARd20ActorSheet extends ActorSheet {
                 let feat_list = [];
                 feat_list.push(
                   Array.from(
-                    game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0].index
+                    game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0]
+                      .index
                   )
                 );
                 feat_list = feat_list.flat();
                 for (const feat of feat_list) {
-                  if (feat instanceof ARd20Item) {
-                    const new_key =
-                      game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
-                    const doc = await game.packs.get(new_key).getDocument(feat.id);
-                    if (doc instanceof ARd20Item) {
-                      const item = doc.toObject();
-                      item.data = foundry.utils.deepClone(doc.data.data);
-                      pack_list.push(item);
-                      pack_name.push(item.name);
-                    }
-                  }
+                  const new_key =
+                    game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
+                  const doc = await game.packs.get(new_key).getDocument(feat.id);
+                  const item = doc.toObject();
+                  item.data = foundry.utils.deepClone(doc.data.data);
+                  pack_list.push(item);
+                  pack_name.push(item.name);
                 }
                 pack_list = pack_list.flat();
               }
@@ -246,17 +243,16 @@ export class ARd20ActorSheet extends ActorSheet {
               if (game.folders.filter((folder) => folder.data.name === val.name).length !== 0) {
                 let feat_list = [];
                 feat_list.push(
-                  game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents
+                  game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0]
+                    .contents
                 );
                 feat_list = feat_list.flat();
                 for (let feat of feat_list) {
-                  if (feat instanceof ARd20Item) {
-                    console.log("item added from folder ", feat);
-                    const item = feat.toObject();
-                    item.data = foundry.utils.deepClone(feat.data.data);
-                    folder_list.push(item);
-                    folder_name.push(item.name);
-                  }
+                  console.log("item added from folder ", feat);
+                  const item = feat.toObject();
+                  item.data = foundry.utils.deepClone(feat.data.data);
+                  folder_list.push(item);
+                  folder_name.push(item.name);
                 }
                 folder_list = folder_list.flat();
               }
