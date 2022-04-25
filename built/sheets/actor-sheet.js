@@ -296,14 +296,14 @@ export class ARd20ActorSheet extends ActorSheet {
             let feat_pack_list = [];
             pack_list.forEach((item) => {
               if (item.type === "feature") {
-                let FeatureItem = { ...item, currentXP: 0, isEq: false, isXP: false };
+                let FeatureItem = { ...item, };
                 feat_pack_list.push(FeatureItem);
               }
             });
             let feat_folder_list = [];
             folder_list.forEach((item) => {
               if (item.type === "feature") {
-                let FeatureItem = { ...item, currentXP: 0, isEq: false, isXP: false };
+                let FeatureItem = { ...item, };
                 feat_folder_list.push(FeatureItem);
               }
             });
@@ -313,7 +313,7 @@ export class ARd20ActorSheet extends ActorSheet {
             let learnedFeatures = [];
             actor.itemTypes.feature.forEach((item) => {
               if (item.data.type === "feature") {
-                let FeatureItem = { ...item.data, currentXP: 0, isEq: false };
+                let FeatureItem = { ...item.data,};
                 learnedFeatures.push(FeatureItem);
               }
             });

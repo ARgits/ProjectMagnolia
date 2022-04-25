@@ -29,7 +29,7 @@
     proficiencies: duplicate(actor.data.data.proficiencies),
     health: duplicate(actor.data.data.health),
     isReady: duplicate(actor.data.data.isReady),
-    features: duplicate(document.aditionalData)
+    features: duplicate(document.aditionalData.feats.awail)
   });
   setContext("chaAdvActorData", actorData);
 
@@ -38,7 +38,7 @@
   const tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp },
     { label: "skills", id: "skills", component: AttributeComp },
-    //{ label: "Features", id: "feats", component: AttributeComp },
+    { label: "Features", id: "features", component: AttributeComp },
   ];
   //select first tab when app initialized
   const activeTab = "attributes";

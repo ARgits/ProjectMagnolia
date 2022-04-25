@@ -22,6 +22,10 @@
       max = 4;
       break;
     case "features":
+      typeStr = "features";
+      thead=["Name","Source","Increase","Level","Max Level","Decrease","Cost","Description"]
+      description=""
+      max = 1
       break;
   }
   $: {

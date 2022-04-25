@@ -9,17 +9,23 @@
   export let typeStr;
   export let thead;
   const data = getContext("chaAdvActorData");
+  const originalData = getContext("chaAdvActorOriginalData")
+  const aditionalData = getContext("chaAdvAditionalData")
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;
   let min;
   switch (typeStr) {
     case "attributes":
-      min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].value;
+      min = originalData[typeStr][val[0]].value;
       break;
     case "skills":
-      min = getContext("chaAdvActorOriginalData")[typeStr][val[0]].level;
+      min = originalData[typeStr][val[0]].level;
       break;
+    case "features":
+      min = aditionalData.feats.awail[val[0]].level.current;
+      max = aditionalData.feats.awail[val[0]].level.max
+      break
   }
   $: {
     for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
@@ -45,13 +51,24 @@
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
   {/if}
+  {#if thead.includes("Source")}
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.source.label} </td>
+  {/if}
   {#if thead.includes("Increase")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={last} on:mouseover={() => changeDesc(val)}>
       <ChangeButton type={typeStr} subtype={val[0]} {max} {cost} />
     </td>
   {/if}
-
+  {#if thead.includes("Level")}
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.current} </td>
+  {/if}
+  {#if thead.includes("Max Level")}
+    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
+  {/if}
   {#if thead.includes("Rank")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].rankName} </td>
