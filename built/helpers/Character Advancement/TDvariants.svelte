@@ -25,7 +25,7 @@
       break;
     case "features":
       console.log(aditionalData, val[0]);
-      min = aditionalData.feats.awail[val[0]].data.level.current;
+      min = aditionalData.feats.awail[val[0]].data.level.initial;
       max = aditionalData.feats.awail[val[0]].data.level.max;
       break;
   }
@@ -39,7 +39,7 @@
           variables[variable.shortName] = typeStr === key ? val[1].level : 0;
           break;
         case "features":
-          variables[variable.shortName] = typeStr === key ? val[1].data.level.current : 0;
+          variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0;
           break;
         case "skillsCount":
           variables[variable.shortName] = 1; //TODO: rewrite
@@ -79,7 +79,7 @@
   {/if}
   {#if thead.includes("Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.current} </td>
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.initial} </td>
   {/if}
   {#if thead.includes("Max Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->

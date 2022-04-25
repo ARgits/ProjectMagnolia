@@ -29,7 +29,7 @@
     proficiencies: duplicate(actor.data.data.proficiencies),
     health: duplicate(actor.data.data.health),
     isReady: duplicate(actor.data.data.isReady),
-    features: duplicate(document.aditionalData.feats.awail)
+    features: duplicate(document.aditionalData.feats.awail),
   });
   setContext("chaAdvActorData", actorData);
 
@@ -51,7 +51,11 @@
     updateObj["data.skills"] = $actorData.skills;
     updateObj["data.advancement.xp"] = $actorData.advancement.xp;
     updateObj["data.isReady"] = true;
-    await game.actors.get(id).update(updateObj);
+    let feats = $actorData.features.filter((feat) => {
+      feat.data.level.initial > feat.data.level.current;
+    });
+    await actor.update(updateObj);
+    await actor.createEmbeddedDocuments("Item", feats);
     application.close();
   }
 </script>

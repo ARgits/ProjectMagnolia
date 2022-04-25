@@ -21,8 +21,8 @@
       case "features":
         console.log(max)
         disabled =
-          $doc[type][subtype].data.level.current === min ||
-          $doc[type][subtype].data.level.max === max ||
+          $doc[type][subtype].data.level.initial === max ||
+          $doc[type][subtype].data.level.max === min ||
           $doc.advancement.xp.get < cost;
         break;
     }
@@ -37,7 +37,7 @@
           store.skills[subtype].level += 1;
           break;
         case "features":
-          store.features[subtype].data.leve.current += 1;
+          store.features[subtype].data.leve.initial += 1;
           break;
       }
       store.advancement.xp.used += cost;
@@ -59,7 +59,7 @@
           store.skills[subtype].level -= 1;
           break;
         case "features":
-          store.feature[subtype].data.level.current -= 1;
+          store.feature[subtype].data.level.initial -= 1;
           break;
       }
       let index = -1;

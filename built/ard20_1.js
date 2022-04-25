@@ -2096,7 +2096,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					store.skills[subtype].level += 1;
 					break;
 				case "features":
-					store.features[subtype].data.leve.current += 1;
+					store.features[subtype].data.leve.initial += 1;
 					break;
 			}
 
@@ -2121,7 +2121,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					store.skills[subtype].level -= 1;
 					break;
 				case "features":
-					store.feature[subtype].data.level.current -= 1;
+					store.feature[subtype].data.level.initial -= 1;
 					break;
 			}
 
@@ -2181,7 +2181,7 @@ function instance$7($$self, $$props, $$invalidate) {
 						break;
 					case "features":
 						console.log(max);
-						$$invalidate(4, disabled = $doc[type][subtype].data.level.current === min || $doc[type][subtype].data.level.max === max || $doc.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc[type][subtype].data.level.initial === max || $doc[type][subtype].data.level.max === min || $doc.advancement.xp.get < cost);
 						break;
 				}
 			}
@@ -2352,7 +2352,7 @@ function create_if_block_8(ctx) {
 // (80:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[2][1].data.level.current + "";
+	let t_value = /*val*/ ctx[2][1].data.level.initial + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2374,7 +2374,7 @@ function create_if_block_7(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].data.level.current + "")) set_data(t, t_value);
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].data.level.initial + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2968,7 +2968,7 @@ function instance$6($$self, $$props, $$invalidate) {
 			break;
 		case "features":
 			console.log(aditionalData, val[0]);
-			min = aditionalData.feats.awail[val[0]].data.level.current;
+			min = aditionalData.feats.awail[val[0]].data.level.initial;
 			max = aditionalData.feats.awail[val[0]].data.level.max;
 			break;
 	}
@@ -3013,7 +3013,7 @@ function instance$6($$self, $$props, $$invalidate) {
 							$$invalidate(12, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
 							break;
 						case "features":
-							$$invalidate(12, variables[variable.shortName] = typeStr === key ? val[1].data.level.current : 0, variables);
+							$$invalidate(12, variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0, variables);
 							break;
 						case "skillsCount":
 							$$invalidate(12, variables[variable.shortName] = 1, variables);
@@ -3917,7 +3917,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	];
 
-	const id = getContext("chaAdvActorID");
+	getContext("chaAdvActorID");
 
 	//update actor and do other stuff when click 'submit' button
 	async function submitData() {
@@ -3926,7 +3926,13 @@ function instance$3($$self, $$props, $$invalidate) {
 		updateObj["data.skills"] = $actorData.skills;
 		updateObj["data.advancement.xp"] = $actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
-		await game.actors.get(id).update(updateObj);
+
+		let feats = $actorData.features.filter(feat => {
+			feat.data.level.initial > feat.data.level.current;
+		});
+
+		await actor.update(updateObj);
+		await actor.createEmbeddedDocuments("Item", feats);
 		application.close();
 	}
 
