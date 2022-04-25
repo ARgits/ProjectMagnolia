@@ -123,7 +123,7 @@
       });
       return { temp_feat_list, learnedFeatures };
     }
-    return {
+    setContext("chaAdvAdditionalData", {
       races: { list: raceList, chosen: "" },
       count: {
         //TODO: rework this for future where you can have more/less ranks
@@ -139,7 +139,7 @@
         race: duplicate(document.data.data.isReady),
         final: duplicate(document.data.data.isReady),
       },
-    };
+    });
   }
   //
 

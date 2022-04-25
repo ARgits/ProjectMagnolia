@@ -3829,7 +3829,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			return { temp_feat_list, learnedFeatures };
 		}
 
-		return {
+		setContext("chaAdvAdditionalData", {
 			races: { list: raceList, chosen: "" },
 			count: {
 				//TODO: rework this for future where you can have more/less ranks
@@ -3845,7 +3845,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				race: duplicate(document.data.data.isReady),
 				final: duplicate(document.data.data.isReady)
 			}
-		};
+		});
 	}
 
 	//
