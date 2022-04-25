@@ -19,6 +19,7 @@
           $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost;
         break;
       case "features":
+        console.log(max)
         disabled =
           $doc[type][subtype].data.level.current === min ||
           $doc[type][subtype].data.level.max === max ||

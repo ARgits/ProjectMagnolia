@@ -1979,7 +1979,7 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (91:0) {#if min !== undefined}
+// (92:0) {#if min !== undefined}
 function create_if_block$3(ctx) {
 	let button;
 	let t;
@@ -2180,6 +2180,7 @@ function instance$7($$self, $$props, $$invalidate) {
 						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
 						break;
 					case "features":
+						console.log(max);
 						$$invalidate(4, disabled = $doc[type][subtype].data.level.current === min || $doc[type][subtype].data.level.max === max || $doc.advancement.xp.get < cost);
 						break;
 				}
