@@ -4033,7 +4033,8 @@ class ARd20ActorSheet extends ActorSheet {
     event.preventDefault();
     const button = event.currentTarget;
     let app;
-    console.log(this.object); //@ts-ignore
+    console.log(this.object);
+    const actor = this.object; //@ts-ignore
 
     switch ((_button$dataset = button.dataset) === null || _button$dataset === void 0 ? void 0 : _button$dataset.action) {
       case "adv":
@@ -4169,7 +4170,7 @@ class ARd20ActorSheet extends ActorSheet {
             });
             let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter(item => !pack_name.includes(item.name)));
             let learnedFeatures = [];
-            this.object.itemTypes.feature.forEach(item => {
+            actor.itemTypes.feature.forEach(item => {
               if (item.data.type === "feature") {
                 let FeatureItem = _objectSpread2(_objectSpread2({}, item.data), {}, {
                   currentXP: 0,
@@ -4212,15 +4213,15 @@ class ARd20ActorSheet extends ActorSheet {
               awail: featList.temp_feat_list
             },
             allow: {
-              attribute: duplicate(this.object.data.data.isReady),
-              race: duplicate(this.object.data.data.isReady),
-              final: duplicate(this.object.data.data.isReady)
+              attribute: duplicate(actor.data.data.isReady),
+              race: duplicate(actor.data.data.isReady),
+              final: duplicate(actor.data.data.isReady)
             }
           });
         }
 
         const document = {
-          id: this.object.id,
+          id: actor.id,
           aditionalData: await createAdditionalData()
         };
         app = new CharacterAdvancement(document);
