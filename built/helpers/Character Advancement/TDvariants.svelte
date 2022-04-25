@@ -33,13 +33,13 @@
     for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
       switch (key) {
         case "attributes":
-          variables[variable.shortName] = typeStr === key ? va[1].value : 0;
+          variables[variable.shortName] = typeStr === key ? val[1].value : 0;
           break;
         case "skills":
-          variables[variable.shortName] = typeStr === key ? va[1].level : 0;
+          variables[variable.shortName] = typeStr === key ? val[1].level : 0;
           break;
         case "features":
-          variables[variable.shortName] = typeStr === key ? va[1].data.level.current : 0;
+          variables[variable.shortName] = typeStr === key ? val[1].data.level.current : 0;
           break;
         case "skillsCount":
           variables[variable.shortName] = 1; //TODO: rewrite

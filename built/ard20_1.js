@@ -3001,18 +3001,18 @@ function instance$6($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*typeStr, variables*/ 4128) {
+		if ($$self.$$.dirty & /*typeStr, val, variables*/ 4132) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					switch (key) {
 						case "attributes":
-							$$invalidate(12, variables[variable.shortName] = typeStr === key ? va[1].value : 0, variables);
+							$$invalidate(12, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
 							break;
 						case "skills":
-							$$invalidate(12, variables[variable.shortName] = typeStr === key ? va[1].level : 0, variables);
+							$$invalidate(12, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
 							break;
 						case "features":
-							$$invalidate(12, variables[variable.shortName] = typeStr === key ? va[1].data.level.current : 0, variables);
+							$$invalidate(12, variables[variable.shortName] = typeStr === key ? val[1].data.level.current : 0, variables);
 							break;
 						case "skillsCount":
 							$$invalidate(12, variables[variable.shortName] = 1, variables);
