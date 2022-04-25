@@ -23,12 +23,12 @@
       break;
   }
   $: {
-    for (let [key, attr] of Object.entries($data.attributes)) {
+    for (let [key, attr] of Object.entries($data.actorData.attributes)) {
       attr.mod = Math.floor((attr.value - 10) / 2);
     }
   }
   const rankName = ["untrained", "trained", "expert", "master", "legend"];
-  $: for (let [key, skill] of Object.entries($data.skills)) {
+  $: for (let [key, skill] of Object.entries($data.actorData.skills)) {
     skill.rankName = rankName[skill.level];
   }
 </script>

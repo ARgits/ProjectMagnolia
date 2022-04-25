@@ -128,6 +128,7 @@
     };
   }
   async function getRacesList(pack, folder) {
+    console.log(pack, folder);
     const pack_list = pack.pack_list;
     const pack_name = pack.pack_name;
     const folder_list = folder.folder_list;
@@ -148,6 +149,7 @@
     return race_pack_list.concat(race_folder_list.filter((item) => !pack_name.includes(item.name)));
   }
   async function getFeaturesList(pack, folder) {
+    console.log(pack, folder);
     const pack_list = pack.pack_list;
     const pack_name = pack.pack_name;
     const folder_list = folder.folder_list;

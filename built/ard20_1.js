@@ -3123,14 +3123,14 @@ function instance$5($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$data*/ 2) {
 			{
-				for (let [key, attr] of Object.entries($data.attributes)) {
+				for (let [key, attr] of Object.entries($data.actorData.attributes)) {
 					attr.mod = Math.floor((attr.value - 10) / 2);
 				}
 			}
 		}
 
 		if ($$self.$$.dirty & /*$data*/ 2) {
-			for (let [key, skill] of Object.entries($data.skills)) {
+			for (let [key, skill] of Object.entries($data.actorData.skills)) {
 				skill.rankName = rankName[skill.level];
 			}
 		}
@@ -3658,6 +3658,7 @@ function getFolders() {
 }
 
 async function getRacesList(pack, folder) {
+	console.log(pack, folder);
 	const pack_list = pack.pack_list;
 	const pack_name = pack.pack_name;
 	const folder_list = folder.folder_list;
@@ -3682,6 +3683,7 @@ async function getRacesList(pack, folder) {
 }
 
 async function getFeaturesList(pack, folder) {
+	console.log(pack, folder);
 	const pack_list = pack.pack_list;
 	const pack_name = pack.pack_name;
 	const folder_list = folder.folder_list;
