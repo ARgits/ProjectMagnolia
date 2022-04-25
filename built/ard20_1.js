@@ -3927,12 +3927,18 @@ function instance$3($$self, $$props, $$invalidate) {
 		updateObj["data.advancement.xp"] = $actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
 		console.log($actorData.features);
+		let feats = [];
 
-		let feats = $actorData.features.filter(feat => {
-			feat.data.level.initial > feat.data.level.current;
+		$actorData.features.forEach(element => {
+			const initLevel = element.data.level.initial;
+			const currentLevel = element.data.level.current;
+
+			if (initLevel > currentLevel) {
+				feats = [...feats, element];
+			}
 		});
 
-		console.log(feats, 'feats on update');
+		console.log(feats, "feats on update");
 		await actor.update(updateObj);
 		await actor.createEmbeddedDocuments("Item", feats);
 		application.close();
