@@ -204,7 +204,7 @@ export class ARd20ActorSheet extends ActorSheet {
     //@ts-ignore
     switch (button.dataset?.action) {
       case "adv":
-        async function createAdditionalData() {
+        async function createAditionalData() {
           //functions to get lists of available features and lists
           async function getPacks() {
             let pack_list = []; // array of feats from Compendium
@@ -344,7 +344,7 @@ export class ARd20ActorSheet extends ActorSheet {
         }
         const document = {
           id: actor.id,
-          aditionalData: await createAdditionalData(),
+          aditionalData: await createAditionalData(),
         };
         app = new CharacterAdvancement(document);
         break;

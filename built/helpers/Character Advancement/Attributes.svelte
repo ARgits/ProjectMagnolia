@@ -21,6 +21,8 @@
       description = "";
       max = 4;
       break;
+    case "features":
+      break;
   }
   $: {
     for (let [key, attr] of Object.entries($data.attributes)) {
@@ -52,7 +54,7 @@
   table thead {
     position: sticky;
     inset-block-start: -0.05em;
-    border-bottom: 2px solid #ccc
+    border-bottom: 2px solid #ccc;
   }
   table {
     border-collapse: collapse;
@@ -61,7 +63,7 @@
     border: 1px solid black;
   }
   th {
-    background: rgb(100,100,100);
+    background: rgb(100, 100, 100);
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;

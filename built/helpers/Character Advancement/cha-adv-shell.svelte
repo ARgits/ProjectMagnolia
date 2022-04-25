@@ -18,6 +18,7 @@
   setContext("chaAdvCONFIG", CONFIG);
   setContext("chaAdvActorOriginalData", actor.data.data);
   setContext("chaAdvActorID", document.id);
+  setContext("chaAdvAditionalData", document.aditionalData);
 
   //create store and context for data
   //TODO: add features and other stuff
@@ -28,6 +29,7 @@
     proficiencies: duplicate(actor.data.data.proficiencies),
     health: duplicate(actor.data.data.health),
     isReady: duplicate(actor.data.data.isReady),
+    features: duplicate(document.aditionalData)
   });
   setContext("chaAdvActorData", actorData);
 
@@ -36,6 +38,7 @@
   const tabs = [
     { label: "attributes", id: "attributes", component: AttributeComp },
     { label: "skills", id: "skills", component: AttributeComp },
+    //{ label: "Features", id: "feats", component: AttributeComp },
   ];
   //select first tab when app initialized
   const activeTab = "attributes";

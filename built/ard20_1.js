@@ -2890,7 +2890,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (39:6) {#each thead as th}
+// (41:6) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[12] + "";
@@ -2902,7 +2902,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-p65z7d");
+			attr(th, "class", "svelte-aulmrq");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -2918,7 +2918,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (45:4) {#each Object.entries($data[tabData]) as attr, key}
+// (47:4) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -3025,9 +3025,9 @@ function create_fragment$5(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-p65z7d");
-			attr(thead_1, "class", "svelte-p65z7d");
-			attr(table, "class", "svelte-p65z7d");
+			attr(tr, "class", "svelte-aulmrq");
+			attr(thead_1, "class", "svelte-aulmrq");
+			attr(table, "class", "svelte-aulmrq");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -3662,6 +3662,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvCONFIG", CONFIG);
 	setContext("chaAdvActorOriginalData", actor.data.data);
 	setContext("chaAdvActorID", document.id);
+	setContext("chaAdvAditionalData", document.aditionalData);
 
 	//create store and context for data
 	//TODO: add features and other stuff
@@ -3671,7 +3672,8 @@ function instance$3($$self, $$props, $$invalidate) {
 		advancement: duplicate(actor.data.data.advancement),
 		proficiencies: duplicate(actor.data.data.proficiencies),
 		health: duplicate(actor.data.data.health),
-		isReady: duplicate(actor.data.data.isReady)
+		isReady: duplicate(actor.data.data.isReady),
+		features: duplicate(document.aditionalData)
 	});
 
 	component_subscribe($$self, actorData, value => $$invalidate(0, $actorData = value));
@@ -3690,7 +3692,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			id: "skills",
 			component: Attributes
 		}
-	];
+	]; //{ label: "Features", id: "feats", component: AttributeComp },
 
 	const id = getContext("chaAdvActorID");
 
@@ -4038,7 +4040,7 @@ class ARd20ActorSheet extends ActorSheet {
 
     switch ((_button$dataset = button.dataset) === null || _button$dataset === void 0 ? void 0 : _button$dataset.action) {
       case "adv":
-        async function createAdditionalData() {
+        async function createAditionalData() {
           //functions to get lists of available features and lists
           async function getPacks() {
             let pack_list = []; // array of feats from Compendium
@@ -4223,7 +4225,7 @@ class ARd20ActorSheet extends ActorSheet {
 
         const document = {
           id: actor.id,
-          aditionalData: await createAdditionalData()
+          aditionalData: await createAditionalData()
         };
         app = new CharacterAdvancement(document);
         break;
