@@ -4047,15 +4047,15 @@ class ARd20ActorSheet extends ActorSheet {
 
             let pack_name = [];
 
-            for (const key of game.settings.get("ard20", "feat").packs) {
-              if (game.packs.filter(pack => pack.metadata.label === key).length !== 0) {
+            for (const val of game.settings.get("ard20", "feat").packs) {
+              if (game.packs.filter(pack => pack.metadata.label === val.name).length !== 0) {
                 let feat_list = [];
-                feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === key && pack.documentName === "Item")[0].index));
+                feat_list.push(Array.from(game.packs.filter(pack => pack.metadata.label === val.name && pack.documentName === "Item")[0].index));
                 feat_list = feat_list.flat();
 
                 for (const feat of feat_list) {
                   if (feat instanceof ARd20Item) {
-                    const new_key = game.packs.filter(pack => pack.metadata.label === key)[0].metadata.package + "." + key;
+                    const new_key = game.packs.filter(pack => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
                     const doc = await game.packs.get(new_key).getDocument(feat.id);
 
                     if (doc instanceof ARd20Item) {
@@ -4082,10 +4082,10 @@ class ARd20ActorSheet extends ActorSheet {
 
             let folder_name = [];
 
-            for (let key of game.settings.get("ard20", "feat").folders) {
-              if (game.folders.filter(folder => folder.data.name === key).length !== 0) {
+            for (let val of game.settings.get("ard20", "feat").folders) {
+              if (game.folders.filter(folder => folder.data.name === val.name).length !== 0) {
                 let feat_list = [];
-                feat_list.push(game.folders.filter(folder => folder.data.name === key && folder.data.type === "Item")[0].contents);
+                feat_list.push(game.folders.filter(folder => folder.data.name === val.name && folder.data.type === "Item")[0].contents);
                 feat_list = feat_list.flat();
 
                 for (let feat of feat_list) {
