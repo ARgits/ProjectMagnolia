@@ -2180,7 +2180,7 @@ function instance$7($$self, $$props, $$invalidate) {
 						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
 						break;
 					case "features":
-						console.log(max);
+						console.log(max, min);
 						$$invalidate(4, disabled = $doc[type][subtype].data.level.initial === max || $doc[type][subtype].data.level.max === min || $doc.advancement.xp.get < cost);
 						break;
 				}
@@ -2968,7 +2968,7 @@ function instance$6($$self, $$props, $$invalidate) {
 			break;
 		case "features":
 			console.log(aditionalData, val[0]);
-			min = aditionalData.feats.awail[val[0]].data.level.initial;
+			min = aditionalData.feats.awail[val[0]].data.level.current;
 			max = aditionalData.feats.awail[val[0]].data.level.max;
 			break;
 	}
@@ -3931,6 +3931,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			feat.data.level.initial > feat.data.level.current;
 		});
 
+		console.log(feats, 'feats on update');
 		await actor.update(updateObj);
 		await actor.createEmbeddedDocuments("Item", feats);
 		application.close();

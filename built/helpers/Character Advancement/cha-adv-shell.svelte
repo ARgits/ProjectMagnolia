@@ -54,6 +54,7 @@
     let feats = $actorData.features.filter((feat) => {
       feat.data.level.initial > feat.data.level.current;
     });
+    console.log(feats,'feats on update')
     await actor.update(updateObj);
     await actor.createEmbeddedDocuments("Item", feats);
     application.close();

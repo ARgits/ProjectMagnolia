@@ -25,7 +25,7 @@
       break;
     case "features":
       console.log(aditionalData, val[0]);
-      min = aditionalData.feats.awail[val[0]].data.level.initial;
+      min = aditionalData.feats.awail[val[0]].data.level.current;
       max = aditionalData.feats.awail[val[0]].data.level.max;
       break;
   }
