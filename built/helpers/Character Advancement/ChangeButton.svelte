@@ -18,6 +18,12 @@
         disabled =
           $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost;
         break;
+      case "features":
+        disabled =
+          $doc[type][subtype].data.level.current === min ||
+          $doc[type][subtype].data.level.max === max ||
+          $doc.advancement.xp.get < cost;
+        break;
     }
   }
   function increase(type, subtype) {
@@ -28,6 +34,9 @@
           break;
         case "skills":
           store.skills[subtype].level += 1;
+          break;
+        case "features":
+          store.features[subtype].data.leve.current += 1;
           break;
       }
       store.advancement.xp.used += cost;
@@ -47,6 +56,9 @@
           break;
         case "skills":
           store.skills[subtype].level -= 1;
+          break;
+        case "features":
+          store.feature[subtype].data.level.current -= 1;
           break;
       }
       let index = -1;

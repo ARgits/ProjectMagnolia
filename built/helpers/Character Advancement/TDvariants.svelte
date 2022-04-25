@@ -9,8 +9,8 @@
   export let typeStr;
   export let thead;
   const data = getContext("chaAdvActorData");
-  const originalData = getContext("chaAdvActorOriginalData")
-  const aditionalData = getContext("chaAdvAditionalData")
+  const originalData = getContext("chaAdvActorOriginalData");
+  const aditionalData = getContext("chaAdvAditionalData");
 
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
@@ -24,15 +24,29 @@
       min = originalData[typeStr][val[0]].level;
       break;
     case "features":
-      console.log(aditionalData, val[0])
+      console.log(aditionalData, val[0]);
       min = aditionalData.feats.awail[val[0]].data.level.current;
-      max = aditionalData.feats.awail[val[0]].data.level.max
-      break
+      max = aditionalData.feats.awail[val[0]].data.level.max;
+      break;
   }
   $: {
     for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
-      variables[variable.shortName] =
-        typeStr === key ? $data[typeStr][val[0]].level ?? $data[typeStr][val[0]].value : 0; //TODO: change "1" to variable, that will represent "count" and other things
+      switch (key) {
+        case "attributes":
+          variables[variable.shortName] = typeStr === key ? va[1].value : 0;
+          break;
+        case "skills":
+          variables[variable.shortName] = typeStr === key ? va[1].level : 0;
+          break;
+        case "features":
+          variables[variable.shortName] = typeStr === key ? va[1].data.level.current : 0;
+          break;
+        case "skillsCount":
+          variables[variable.shortName] = 1; //TODO: rewrite
+          break;
+        case "featuresCount":
+          variables[variable.shortName] = 1; //TODO: rewrite
+      }
     }
     cost = math.evaluate(formulas[typeStr], variables);
   }
