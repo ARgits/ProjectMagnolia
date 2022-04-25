@@ -2877,7 +2877,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (45:4) {#each Object.entries($data[tabData]) as attr, key}
+// (45:4) {#each Object.entries($data.actorData[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -2888,7 +2888,7 @@ function create_each_block$4(ctx) {
 	}
 
 	let tdvariants_props = {
-		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
+		type: /*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]],
 		thead: /*thead*/ ctx[3],
 		typeStr: /*typeStr*/ ctx[2],
 		val: /*attr*/ ctx[9],
@@ -2913,7 +2913,7 @@ function create_each_block$4(ctx) {
 		},
 		p(ctx, dirty) {
 			const tdvariants_changes = {};
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]];
 			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
 			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
 			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[9];
@@ -2956,7 +2956,7 @@ function create_fragment$5(ctx) {
 		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
 	}
 
-	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
+	let each_value = Object.entries(/*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -3031,7 +3031,7 @@ function create_fragment$5(ctx) {
 			}
 
 			if (dirty & /*$data, tabData, thead, typeStr, Object, max, description*/ 63) {
-				each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
+				each_value = Object.entries(/*$data*/ ctx[1].actorData[/*tabData*/ ctx[0]]);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -3599,6 +3599,7 @@ function create_fragment$3(ctx) {
 
 const activeTab = "attributes";
 
+//functions to get lists of available features and lists
 async function getPacks() {
 	let pack_list = []; // array of feats from Compendium
 	let pack_name = [];
@@ -3734,6 +3735,8 @@ function instance$3($$self, $$props, $$invalidate) {
 	let $data;
 	let $changes;
 	let { document } = $$props;
+
+	//
 	const { application } = getContext("external");
 
 	//create list of changes and context for it
@@ -3748,10 +3751,24 @@ function instance$3($$self, $$props, $$invalidate) {
 	setContext("chaAdvCONFIG", CONFIG);
 	setContext("chaAdvActorOriginalData", document.data.data);
 	setContext("chaAdvActorID", document.id);
-	const pack = getPacks();
-	const folder = getFolders();
-	const raceList = getRacesList(pack, folder);
-	const featList = getFeaturesList(pack, folder);
+	let pack = {};
+	let folder = getFolders();
+	let raceList = [];
+	let featList = [];
+
+	getPacks().then(result => {
+		pack = result;
+	});
+
+	getRacesList(pack, folder).then(result => {
+		raceList = result;
+	});
+
+	getFeaturesList(pack, folder).then(result => {
+		featList = result;
+	});
+
+	console.log(pack, folder, raceList, featList);
 
 	//create store and context for data
 	//TODO: add features and other stuff

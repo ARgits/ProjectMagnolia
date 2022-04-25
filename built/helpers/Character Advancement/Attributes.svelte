@@ -42,8 +42,8 @@
     </tr>
   </thead>
   <tbody>
-    {#each Object.entries($data[tabData]) as attr, key}
-      <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
+    {#each Object.entries($data.actorData[tabData]) as attr, key}
+      <TDvariants type={$data.actorData[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
     {/each}
   </tbody>
 </table>

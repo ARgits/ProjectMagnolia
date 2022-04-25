@@ -8,68 +8,7 @@
   import Tabs from "./Tabs.svelte";
   export let document;
 
-  const { application } = getContext("external");
-  //create list of changes and context for it
-  const changes = writable([]);
-  setContext("chaAdvXpChanges", changes);
-  //create context for formulas from setting, CONFIG data, Actor's ID
-  setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
-  setContext("chaAdvCONFIG", CONFIG);
-  setContext("chaAdvActorOriginalData", document.data.data);
-  setContext("chaAdvActorID", document.id);
-  const pack = getPacks();
-  const folder = getFolders();
-  const raceList = getRacesList(pack, folder);
-  const featList = getFeaturesList(pack, folder);
-  //create store and context for data
-  //TODO: add features and other stuff
-  const data = writable({
-    actorData: {
-      attributes: duplicate(document.data.data.attributes),
-      skills: duplicate(document.data.data.skills),
-      advancement: duplicate(document.data.data.advancement),
-      proficiencies: duplicate(document.data.data.proficiencies),
-      health: duplicate(document.data.data.health),
-      isReady: duplicate(document.data.data.isReady),
-    },
-    races: { list: raceList, chosen: "" },
-    count: {
-      //TODO: rework this for future where you can have more/less ranks
-      skills: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 },
-      feats: { mar: 0, mag: 0, div: 0, pri: 0, psy: 0 },
-    },
-    feats: {
-      learned: featList.learnedFeatures,
-      awail: featList.temp_feat_list,
-    },
-    allow: {
-      attribute: duplicate(document.data.data.isReady),
-      race: duplicate(document.data.data.isReady),
-      final: duplicate(document.data.data.isReady),
-    },
-  });
-  setContext("chaAdvActorData", data);
-
-  //create tabs
-  //TODO: create features, races and other tabs
-  const tabs = [
-    { label: "attributes", id: "attributes", component: AttributeComp },
-    { label: "skills", id: "skills", component: AttributeComp },
-  ];
-  //select first tab when app initialized
-  const activeTab = "attributes";
-  $: console.log($data, $changes);
-  const id = getContext("chaAdvActorID");
-  //update actor and do other stuff when click 'submit' button
-  function submitData() {
-    const updateObj = {};
-    updateObj["data.attributes"] = $data.actorData.attributes;
-    updateObj["data.skills"] = $data.actorData.skills;
-    updateObj["data.advancement.xp"] = $data.actorData.advancement.xp;
-    updateObj["data.isReady"] = true;
-    game.actors.get(id).update(updateObj);
-    application.close();
-  }
+  //functions to get lists of available features and lists
   async function getPacks() {
     let pack_list = []; // array of feats from Compendium
     let pack_name = [];
@@ -176,6 +115,80 @@
       }
     });
     return { temp_feat_list, learnedFeatures };
+  }
+  //
+
+  const { application } = getContext("external");
+  //create list of changes and context for it
+  const changes = writable([]);
+  setContext("chaAdvXpChanges", changes);
+  //create context for formulas from setting, CONFIG data, Actor's ID
+  setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
+  setContext("chaAdvCONFIG", CONFIG);
+  setContext("chaAdvActorOriginalData", document.data.data);
+  setContext("chaAdvActorID", document.id);
+  let pack = {};
+  let folder = getFolders();
+  let raceList = [];
+  let featList = [];
+  getPacks().then((result) => {
+    pack = result;
+  });
+  getRacesList(pack, folder).then((result) => {
+    raceList = result;
+  });
+  getFeaturesList(pack, folder).then((result) => {
+    featList = result;
+  });
+  console.log(pack, folder, raceList, featList);
+  //create store and context for data
+  //TODO: add features and other stuff
+  const data = writable({
+    actorData: {
+      attributes: duplicate(document.data.data.attributes),
+      skills: duplicate(document.data.data.skills),
+      advancement: duplicate(document.data.data.advancement),
+      proficiencies: duplicate(document.data.data.proficiencies),
+      health: duplicate(document.data.data.health),
+      isReady: duplicate(document.data.data.isReady),
+    },
+    races: { list: raceList, chosen: "" },
+    count: {
+      //TODO: rework this for future where you can have more/less ranks
+      skills: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 },
+      feats: { mar: 0, mag: 0, div: 0, pri: 0, psy: 0 },
+    },
+    feats: {
+      learned: featList.learnedFeatures,
+      awail: featList.temp_feat_list,
+    },
+    allow: {
+      attribute: duplicate(document.data.data.isReady),
+      race: duplicate(document.data.data.isReady),
+      final: duplicate(document.data.data.isReady),
+    },
+  });
+  setContext("chaAdvActorData", data);
+
+  //create tabs
+  //TODO: create features, races and other tabs
+  const tabs = [
+    { label: "attributes", id: "attributes", component: AttributeComp },
+    { label: "skills", id: "skills", component: AttributeComp },
+  ];
+  //select first tab when app initialized
+  const activeTab = "attributes";
+  $: console.log($data, $changes);
+  const id = getContext("chaAdvActorID");
+  //update actor and do other stuff when click 'submit' button
+  function submitData() {
+    const updateObj = {};
+    updateObj["data.attributes"] = $data.actorData.attributes;
+    updateObj["data.skills"] = $data.actorData.skills;
+    updateObj["data.advancement.xp"] = $data.actorData.advancement.xp;
+    updateObj["data.isReady"] = true;
+    game.actors.get(id).update(updateObj);
+    application.close();
   }
 </script>
 
