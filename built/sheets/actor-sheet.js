@@ -323,7 +323,8 @@ export class ARd20ActorSheet extends ActorSheet {
           for (let i of featList.learnedFeatures) {
             name_array.push(i.name);
           }
-          for (let [k, v] of featList.temp_feat_list) {
+          console.log(featList.temp_feat_list, "featList.temp_feat_list")
+          featList.temp_feat_list.forEach((v, k) => {
             console.log(k, v);
             if (name_array.includes(v.name)) {
               console.log("this item is already learned", featList.temp_feat_list[k]);
@@ -331,7 +332,7 @@ export class ARd20ActorSheet extends ActorSheet {
                 featList.learnedFeatures.filter((item) => item.name === v.name)[0]
               );
             }
-          }
+          });
           featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
             if (item.type === "feature")
               return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
