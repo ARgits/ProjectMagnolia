@@ -1962,7 +1962,7 @@ function create_if_block_1$1(ctx) {
 			append(button, t);
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*click_handler*/ ctx[11]);
+				dispose = listen(button, "click", /*click_handler*/ ctx[12]);
 				mounted = true;
 			}
 		},
@@ -1979,7 +1979,7 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (92:0) {#if min !== undefined}
+// (94:0) {#if min !== undefined}
 function create_if_block$3(ctx) {
 	let button;
 	let t;
@@ -1998,7 +1998,7 @@ function create_if_block$3(ctx) {
 			append(button, t);
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*click_handler_1*/ ctx[12]);
+				dispose = listen(button, "click", /*click_handler_1*/ ctx[13]);
 				mounted = true;
 			}
 		},
@@ -2081,10 +2081,11 @@ function instance$7($$self, $$props, $$invalidate) {
 	let { subtype } = $$props;
 	let { cost } = $$props;
 	const doc = getContext("chaAdvActorData");
-	component_subscribe($$self, doc, value => $$invalidate(10, $doc = value));
+	component_subscribe($$self, doc, value => $$invalidate(11, $doc = value));
 	const changes = getContext("chaAdvXpChanges");
-	component_subscribe($$self, changes, value => $$invalidate(13, $changes = value));
+	component_subscribe($$self, changes, value => $$invalidate(14, $changes = value));
 	let disabled;
+	let { costLabel } = $$props;
 
 	function increase(type, subtype) {
 		doc.update(store => {
@@ -2166,11 +2167,12 @@ function instance$7($$self, $$props, $$invalidate) {
 		if ('min' in $$props) $$invalidate(1, min = $$props.min);
 		if ('type' in $$props) $$invalidate(2, type = $$props.type);
 		if ('subtype' in $$props) $$invalidate(3, subtype = $$props.subtype);
-		if ('cost' in $$props) $$invalidate(9, cost = $$props.cost);
+		if ('cost' in $$props) $$invalidate(10, cost = $$props.cost);
+		if ('costLabel' in $$props) $$invalidate(9, costLabel = $$props.costLabel);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*type, $doc, subtype, max, min, cost*/ 1551) {
+		if ($$self.$$.dirty & /*type, $doc, subtype, max, min, cost, disabled*/ 3103) {
 			{
 				switch (type) {
 					case "attributes":
@@ -2184,6 +2186,8 @@ function instance$7($$self, $$props, $$invalidate) {
 						$$invalidate(4, disabled = $doc[type][subtype].data.level.initial === max || $doc[type][subtype].data.level.initial === min || $doc.advancement.xp.get < cost);
 						break;
 				}
+
+				$$invalidate(9, costLabel = disabled ? "-" : cost);
 			}
 		}
 	};
@@ -2198,6 +2202,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		changes,
 		increase,
 		decrease,
+		costLabel,
 		cost,
 		$doc,
 		click_handler,
@@ -2214,7 +2219,8 @@ class ChangeButton extends SvelteComponent {
 			min: 1,
 			type: 2,
 			subtype: 3,
-			cost: 9
+			cost: 10,
+			costLabel: 9
 		});
 	}
 }
@@ -3928,6 +3934,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		updateObj["data.isReady"] = true;
 		console.log($actorData.features);
 		let feats = [];
+		getContext('chaAdvAditionalData');
 
 		$actorData.features.forEach(element => {
 			const initLevel = element.data.level.initial;
@@ -4340,6 +4347,7 @@ class ARd20ActorSheet extends ActorSheet {
 
           let raceList = await getRacesList();
           let featList = await getFeaturesList();
+          let name_array = [];
 
           async function getRacesList() {
             const pack = await getPacks();
@@ -4407,6 +4415,22 @@ class ARd20ActorSheet extends ActorSheet {
             };
           }
 
+          for (let i of featList.learnedFeatures) {
+            name_array.push(i.name);
+          }
+
+          for (let [k, v] of featList.temp_feat_list) {
+            console.log(k, v);
+
+            if (name_array.includes(v.name)) {
+              console.log("this item is already learned", featList.temp_feat_list[k]);
+              featList.temp_feat_list[k] = foundry.utils.deepClone(featList.learnedFeatures.filter(item => item.name === v.name)[0]);
+            }
+          }
+
+          featList.temp_feat_list = featList.temp_feat_list.filter(item => {
+            if (item.type === "feature") return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+          });
           const obj = {
             races: {
               list: raceList,

@@ -8,6 +8,7 @@
   const doc = getContext("chaAdvActorData");
   const changes = getContext("chaAdvXpChanges");
   let disabled;
+  export let costLabel
   $: {
     switch (type) {
       case "attributes":
@@ -26,6 +27,7 @@
           $doc.advancement.xp.get < cost;
         break;
     }
+    costLabel = disabled ? "-":cost
   }
   function increase(type, subtype) {
     doc.update((store) => {

@@ -53,6 +53,7 @@
     updateObj["data.isReady"] = true;
     console.log($actorData.features);
     let feats = [];
+    const aditionalData = getContext('chaAdvAditionalData')
     $actorData.features.forEach((element) => {
       const initLevel = element.data.level.initial;
       const currentLevel = element.data.level.current;

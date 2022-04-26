@@ -264,6 +264,7 @@ export class ARd20ActorSheet extends ActorSheet {
           }
           let raceList = await getRacesList();
           let featList = await getFeaturesList();
+          let name_array = [];
 
           async function getRacesList() {
             const pack = await getPacks();
@@ -296,14 +297,14 @@ export class ARd20ActorSheet extends ActorSheet {
             let feat_pack_list = [];
             pack_list.forEach((item) => {
               if (item.type === "feature") {
-                let FeatureItem = { ...item, };
+                let FeatureItem = { ...item };
                 feat_pack_list.push(FeatureItem);
               }
             });
             let feat_folder_list = [];
             folder_list.forEach((item) => {
               if (item.type === "feature") {
-                let FeatureItem = { ...item, };
+                let FeatureItem = { ...item };
                 feat_folder_list.push(FeatureItem);
               }
             });
@@ -313,12 +314,28 @@ export class ARd20ActorSheet extends ActorSheet {
             let learnedFeatures = [];
             actor.itemTypes.feature.forEach((item) => {
               if (item.data.type === "feature") {
-                let FeatureItem = { ...item.data,};
+                let FeatureItem = { ...item.data };
                 learnedFeatures.push(FeatureItem);
               }
             });
             return { temp_feat_list, learnedFeatures };
           }
+          for (let i of featList.learnedFeatures) {
+            name_array.push(i.name);
+          }
+          for (let [k, v] of featList.temp_feat_list) {
+            console.log(k, v);
+            if (name_array.includes(v.name)) {
+              console.log("this item is already learned", featList.temp_feat_list[k]);
+              featList.temp_feat_list[k] = foundry.utils.deepClone(
+                featList.learnedFeatures.filter((item) => item.name === v.name)[0]
+              );
+            }
+          }
+          featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
+            if (item.type === "feature")
+              return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+          });
           const obj = {
             races: { list: raceList, chosen: "" },
             count: {
