@@ -8,6 +8,7 @@
   export let description;
   export let typeStr;
   export let thead;
+  export let cellWidth;
   const data = getContext("chaAdvActorData");
   const originalData = getContext("chaAdvActorOriginalData");
   const aditionalData = getContext("chaAdvAditionalData");
@@ -62,51 +63,55 @@
   //TODO: reconfigure thead for localization
 </script>
 
-<tr>
+<tr style="--cellWidth:calc(100% / {thead.length})">
   {#if thead.includes("Name")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
   {/if}
   {#if thead.includes("Source")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.source.label} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.source.label} </td>
   {/if}
   {#if thead.includes("Increase")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}>
       <ChangeButton type={typeStr} subtype={val[0]} {max} {cost} />
     </td>
   {/if}
   {#if thead.includes("Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.initial} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}>
+      {val[1].data.level.initial}
+    </td>
   {/if}
   {#if thead.includes("Max Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
   {/if}
   {#if thead.includes("Rank")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].rankName} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].rankName} </td>
   {/if}
   {#if thead.includes("Value")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].value} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].value} </td>
   {/if}
   {#if thead.includes("Decrease")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> <ChangeButton type={typeStr} subtype={val[0]} {min} /> </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}>
+      <ChangeButton type={typeStr} subtype={val[0]} {min} />
+    </td>
   {/if}
   {#if thead.includes("Mod")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {strMod} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {strMod} </td>
   {/if}
   {#if thead.includes("Cost")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td class={last} on:mouseover={() => changeDesc(val)}> {cost} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {cost} </td>
   {/if}
   {#if key === 0 && thead.includes("Description")}
-    <td class="description" rowspan={Object.values(type).length}> {description} </td>
+    <td class="description" rowspan={thead.length}> {description} </td>
   {/if}
 </tr>
 
@@ -121,6 +126,7 @@
     text-align: center;
     border-right: 1px solid black;
     border-left: 1px solid black;
+    width: var(--cellWidth);
   }
   tr {
     border: 1px solid black;

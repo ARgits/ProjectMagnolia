@@ -7,6 +7,7 @@
   let thead;
   let description;
   let max;
+  let cellWidth
   //TODO: reconfigure thead for localization
   switch (tabData) {
     case "attributes":
@@ -39,7 +40,7 @@
   }
 </script>
 
-<div class="flex flexrow">
+<div class="flex flexrow" style="--thWitdh={cellWidth}">
   <div class="scrollable">
   <table>
     <thead>
@@ -51,7 +52,7 @@
     </thead>
     <tbody>
       {#each Object.entries($data[tabData]) as attr, key}
-        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
+        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:cellWidth {key} bind:description />
       {/each}
     </tbody>
   </table>
@@ -74,12 +75,20 @@
     overflow-y: auto;
   }
   table thead {
+    display: block;
+    width: 100%;
     position: sticky;
     inset-block-start: -0.05em;
     border-bottom: 2px solid #ccc;
   }
   table {
     border-collapse: collapse;
+  }
+  tbody{
+    display: block;
+    height: 230px;
+    width: 100%;
+    overflow-y: scroll;
   }
   tr {
     border: 1px solid black;
@@ -89,5 +98,7 @@
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;
+    max-width: var(--thWitdh);
+    min-width: var(--thWitdh)
   }
 </style>
