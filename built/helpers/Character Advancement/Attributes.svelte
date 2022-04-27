@@ -8,6 +8,7 @@
   let description;
   let max;
   let cellWidth
+  let thWidth
   let trWidth 
   //TODO: reconfigure thead for localization
   switch (tabData) {
@@ -16,23 +17,21 @@
       thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
       description = "";
       max = 30;
-      trWidth = cellWidth*thead.length
       break;
     case "skills":
       typeStr = "skills";
       thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
       description = "";
       max = 4;
-      trWidth = cellWidth*thead.length
       break;
     case "features":
       typeStr = "features";
       thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
       description = "";
       max = 1;
-      trWidth = cellWidth*thead.length
       break;
   }
+  thWidth = 100 / thead.length
   $: {
     for (let [key, attr] of Object.entries($data.attributes)) {
       attr.mod = Math.floor((attr.value - 10) / 2);
@@ -50,13 +49,13 @@
     <thead>
       <tr style:width="{trWidth}px">
         {#each thead as th}
-          <th style:max-width="{cellWidth}px" style:min-width="{cellWidth}px"> {th} </th>
+          <th style:max-width="{thWidth}%" style:min-width="{thWidth}%"> {th} </th>
         {/each}
       </tr>
     </thead>
     <tbody>
       {#each Object.entries($data[tabData]) as attr, key}
-        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:cellWidth {key} bind:description />
+        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth bind:cellWidth {key} bind:description />
       {/each}
     </tbody>
   </table>

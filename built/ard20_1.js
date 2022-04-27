@@ -2229,7 +2229,7 @@ class ChangeButton extends SvelteComponent {
 
 function create_if_block_10(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][0] + "";
+	let t_value = /*val*/ ctx[4][0] + "";
 	let t;
 	let td_class_value;
 	let td_resize_listener;
@@ -2240,21 +2240,21 @@ function create_if_block_10(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
-			add_render_callback(() => /*td_elementresize_handler*/ ctx[15].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			add_render_callback(() => /*td_elementresize_handler*/ ctx[16].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler*/ ctx[15].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler*/ ctx[16].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler*/ ctx[16]);
+				dispose = listen(td, "mouseover", /*mouseover_handler*/ ctx[17]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][0] + "")) set_data(t, t_value);
+			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][0] + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2265,10 +2265,10 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (72:2) {#if thead.includes("Source")}
+// (73:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].data.source.label + "";
+	let t_value = /*val*/ ctx[4][1].data.source.label + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2278,19 +2278,19 @@ function create_if_block_9(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[17]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[18]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].data.source.label + "")) set_data(t, t_value);
+			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][1].data.source.label + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2300,7 +2300,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (76:2) {#if thead.includes("Increase")}
+// (77:2) {#if thead.includes("Increase")}
 function create_if_block_8(ctx) {
 	let td;
 	let changebutton;
@@ -2310,10 +2310,10 @@ function create_if_block_8(ctx) {
 
 	changebutton = new ChangeButton({
 			props: {
-				type: /*typeStr*/ ctx[5],
-				subtype: /*val*/ ctx[3][0],
+				type: /*typeStr*/ ctx[6],
+				subtype: /*val*/ ctx[4][0],
 				max: /*max*/ ctx[0],
-				cost: /*cost*/ ctx[7]
+				cost: /*cost*/ ctx[8]
 			}
 		});
 
@@ -2321,7 +2321,7 @@ function create_if_block_8(ctx) {
 		c() {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2329,16 +2329,16 @@ function create_if_block_8(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[18]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[19]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
 			const changebutton_changes = {};
-			if (dirty[0] & /*typeStr*/ 32) changebutton_changes.type = /*typeStr*/ ctx[5];
-			if (dirty[0] & /*val*/ 8) changebutton_changes.subtype = /*val*/ ctx[3][0];
+			if (dirty[0] & /*typeStr*/ 64) changebutton_changes.type = /*typeStr*/ ctx[6];
+			if (dirty[0] & /*val*/ 16) changebutton_changes.subtype = /*val*/ ctx[4][0];
 			if (dirty[0] & /*max*/ 1) changebutton_changes.max = /*max*/ ctx[0];
-			if (dirty[0] & /*cost*/ 128) changebutton_changes.cost = /*cost*/ ctx[7];
+			if (dirty[0] & /*cost*/ 256) changebutton_changes.cost = /*cost*/ ctx[8];
 			changebutton.$set(changebutton_changes);
 		},
 		i(local) {
@@ -2359,10 +2359,10 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (82:2) {#if thead.includes("Level")}
+// (83:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].data.level.initial + "";
+	let t_value = /*val*/ ctx[4][1].data.level.initial + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2372,19 +2372,19 @@ function create_if_block_7(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[19]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[20]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].data.level.initial + "")) set_data(t, t_value);
+			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][1].data.level.initial + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2394,10 +2394,10 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (88:2) {#if thead.includes("Max Level")}
+// (89:2) {#if thead.includes("Max Level")}
 function create_if_block_6(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].data.level.max + "";
+	let t_value = /*val*/ ctx[4][1].data.level.max + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2407,19 +2407,19 @@ function create_if_block_6(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[20]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[21]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].data.level.max + "")) set_data(t, t_value);
+			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][1].data.level.max + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2429,10 +2429,10 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (92:2) {#if thead.includes("Rank")}
+// (93:2) {#if thead.includes("Rank")}
 function create_if_block_5(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].rankName + "";
+	let t_value = /*val*/ ctx[4][1].rankName + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2442,19 +2442,19 @@ function create_if_block_5(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[21]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[22]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].rankName + "")) set_data(t, t_value);
+			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][1].rankName + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2464,10 +2464,10 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (96:2) {#if thead.includes("Value")}
+// (97:2) {#if thead.includes("Value")}
 function create_if_block_4(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[3][1].value + "";
+	let t_value = /*val*/ ctx[4][1].value + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2477,19 +2477,19 @@ function create_if_block_4(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[22]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[23]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 8 && t_value !== (t_value = /*val*/ ctx[3][1].value + "")) set_data(t, t_value);
+			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][1].value + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2499,20 +2499,19 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (100:2) {#if thead.includes("Decrease")}
+// (101:2) {#if thead.includes("Decrease")}
 function create_if_block_3(ctx) {
 	let td;
 	let changebutton;
-	let td_resize_listener;
 	let current;
 	let mounted;
 	let dispose;
 
 	changebutton = new ChangeButton({
 			props: {
-				type: /*typeStr*/ ctx[5],
-				subtype: /*val*/ ctx[3][0],
-				min: /*min*/ ctx[8]
+				type: /*typeStr*/ ctx[6],
+				subtype: /*val*/ ctx[4][0],
+				min: /*min*/ ctx[9]
 			}
 		});
 
@@ -2520,13 +2519,11 @@ function create_if_block_3(ctx) {
 		c() {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
-			add_render_callback(() => /*td_elementresize_handler_1*/ ctx[23].call(td));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			mount_component(changebutton, td, null);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_1*/ ctx[23].bind(td));
 			current = true;
 
 			if (!mounted) {
@@ -2536,9 +2533,9 @@ function create_if_block_3(ctx) {
 		},
 		p(ctx, dirty) {
 			const changebutton_changes = {};
-			if (dirty[0] & /*typeStr*/ 32) changebutton_changes.type = /*typeStr*/ ctx[5];
-			if (dirty[0] & /*val*/ 8) changebutton_changes.subtype = /*val*/ ctx[3][0];
-			if (dirty[0] & /*min*/ 256) changebutton_changes.min = /*min*/ ctx[8];
+			if (dirty[0] & /*typeStr*/ 64) changebutton_changes.type = /*typeStr*/ ctx[6];
+			if (dirty[0] & /*val*/ 16) changebutton_changes.subtype = /*val*/ ctx[4][0];
+			if (dirty[0] & /*min*/ 512) changebutton_changes.min = /*min*/ ctx[9];
 			changebutton.$set(changebutton_changes);
 		},
 		i(local) {
@@ -2553,88 +2550,79 @@ function create_if_block_3(ctx) {
 		d(detaching) {
 			if (detaching) detach(td);
 			destroy_component(changebutton);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
 	};
 }
 
-// (106:2) {#if thead.includes("Mod")}
+// (107:2) {#if thead.includes("Mod")}
 function create_if_block_2(ctx) {
 	let td;
 	let t;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
 			td = element("td");
-			t = text(/*strMod*/ ctx[9]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
-			add_render_callback(() => /*td_elementresize_handler_2*/ ctx[25].call(td));
+			t = text(/*strMod*/ ctx[10]);
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_2*/ ctx[25].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[26]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[25]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*strMod*/ 512) set_data(t, /*strMod*/ ctx[9]);
+			if (dirty[0] & /*strMod*/ 1024) set_data(t, /*strMod*/ ctx[10]);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
 	};
 }
 
-// (110:2) {#if thead.includes("Cost")}
+// (111:2) {#if thead.includes("Cost")}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
 			td = element("td");
-			t = text(/*cost*/ ctx[7]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-eqyn0v"));
-			add_render_callback(() => /*td_elementresize_handler_3*/ ctx[27].call(td));
+			t = text(/*cost*/ ctx[8]);
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_3*/ ctx[27].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[28]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[26]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*cost*/ 128) set_data(t, /*cost*/ ctx[7]);
+			if (dirty[0] & /*cost*/ 256) set_data(t, /*cost*/ ctx[8]);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
 	};
 }
 
-// (114:2) {#if key === 0 && thead.includes("Description")}
+// (115:2) {#if key === 0 && thead.includes("Description")}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2645,7 +2633,7 @@ function create_if_block$2(ctx) {
 			td = element("td");
 			t = text(/*description*/ ctx[1]);
 			attr(td, "class", "description svelte-eqyn0v");
-			attr(td, "rowspan", td_rowspan_value = /*thead*/ ctx[6].length);
+			attr(td, "rowspan", td_rowspan_value = /*thead*/ ctx[7].length);
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2654,7 +2642,7 @@ function create_if_block$2(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*description*/ 2) set_data(t, /*description*/ ctx[1]);
 
-			if (dirty[0] & /*thead*/ 64 && td_rowspan_value !== (td_rowspan_value = /*thead*/ ctx[6].length)) {
+			if (dirty[0] & /*thead*/ 128 && td_rowspan_value !== (td_rowspan_value = /*thead*/ ctx[7].length)) {
 				attr(td, "rowspan", td_rowspan_value);
 			}
 		},
@@ -2666,27 +2654,28 @@ function create_if_block$2(ctx) {
 
 function create_fragment$6(ctx) {
 	let tr;
-	let show_if_10 = /*thead*/ ctx[6].includes("Name");
+	let show_if_10 = /*thead*/ ctx[7].includes("Name");
 	let t0;
-	let show_if_9 = /*thead*/ ctx[6].includes("Source");
+	let show_if_9 = /*thead*/ ctx[7].includes("Source");
 	let t1;
-	let show_if_8 = /*thead*/ ctx[6].includes("Increase");
+	let show_if_8 = /*thead*/ ctx[7].includes("Increase");
 	let t2;
-	let show_if_7 = /*thead*/ ctx[6].includes("Level");
+	let show_if_7 = /*thead*/ ctx[7].includes("Level");
 	let t3;
-	let show_if_6 = /*thead*/ ctx[6].includes("Max Level");
+	let show_if_6 = /*thead*/ ctx[7].includes("Max Level");
 	let t4;
-	let show_if_5 = /*thead*/ ctx[6].includes("Rank");
+	let show_if_5 = /*thead*/ ctx[7].includes("Rank");
 	let t5;
-	let show_if_4 = /*thead*/ ctx[6].includes("Value");
+	let show_if_4 = /*thead*/ ctx[7].includes("Value");
 	let t6;
-	let show_if_3 = /*thead*/ ctx[6].includes("Decrease");
+	let show_if_3 = /*thead*/ ctx[7].includes("Decrease");
 	let t7;
-	let show_if_2 = /*thead*/ ctx[6].includes("Mod");
+	let show_if_2 = /*thead*/ ctx[7].includes("Mod");
 	let t8;
-	let show_if_1 = /*thead*/ ctx[6].includes("Cost");
+	let show_if_1 = /*thead*/ ctx[7].includes("Cost");
 	let t9;
-	let show_if = /*key*/ ctx[4] === 0 && /*thead*/ ctx[6].includes("Description");
+	let show_if = /*key*/ ctx[5] === 0 && /*thead*/ ctx[7].includes("Description");
+	let tr_resize_listener;
 	let current;
 	let if_block0 = show_if_10 && create_if_block_10(ctx);
 	let if_block1 = show_if_9 && create_if_block_9(ctx);
@@ -2724,8 +2713,9 @@ function create_fragment$6(ctx) {
 			if (if_block9) if_block9.c();
 			t9 = space();
 			if (if_block10) if_block10.c();
-			set_style(tr, "--cellWidth", /*widthPercent*/ ctx[10] + "%");
+			set_style(tr, "--cellWidth", /*widthPercent*/ ctx[11] + "%");
 			attr(tr, "class", "svelte-eqyn0v");
+			add_render_callback(() => /*tr_elementresize_handler*/ ctx[27].call(tr));
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -2750,10 +2740,11 @@ function create_fragment$6(ctx) {
 			if (if_block9) if_block9.m(tr, null);
 			append(tr, t9);
 			if (if_block10) if_block10.m(tr, null);
+			tr_resize_listener = add_resize_listener(tr, /*tr_elementresize_handler*/ ctx[27].bind(tr));
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*thead*/ 64) show_if_10 = /*thead*/ ctx[6].includes("Name");
+			if (dirty[0] & /*thead*/ 128) show_if_10 = /*thead*/ ctx[7].includes("Name");
 
 			if (show_if_10) {
 				if (if_block0) {
@@ -2768,7 +2759,7 @@ function create_fragment$6(ctx) {
 				if_block0 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_9 = /*thead*/ ctx[6].includes("Source");
+			if (dirty[0] & /*thead*/ 128) show_if_9 = /*thead*/ ctx[7].includes("Source");
 
 			if (show_if_9) {
 				if (if_block1) {
@@ -2783,13 +2774,13 @@ function create_fragment$6(ctx) {
 				if_block1 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_8 = /*thead*/ ctx[6].includes("Increase");
+			if (dirty[0] & /*thead*/ 128) show_if_8 = /*thead*/ ctx[7].includes("Increase");
 
 			if (show_if_8) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 
-					if (dirty[0] & /*thead*/ 64) {
+					if (dirty[0] & /*thead*/ 128) {
 						transition_in(if_block2, 1);
 					}
 				} else {
@@ -2808,7 +2799,7 @@ function create_fragment$6(ctx) {
 				check_outros();
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_7 = /*thead*/ ctx[6].includes("Level");
+			if (dirty[0] & /*thead*/ 128) show_if_7 = /*thead*/ ctx[7].includes("Level");
 
 			if (show_if_7) {
 				if (if_block3) {
@@ -2823,7 +2814,7 @@ function create_fragment$6(ctx) {
 				if_block3 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_6 = /*thead*/ ctx[6].includes("Max Level");
+			if (dirty[0] & /*thead*/ 128) show_if_6 = /*thead*/ ctx[7].includes("Max Level");
 
 			if (show_if_6) {
 				if (if_block4) {
@@ -2838,7 +2829,7 @@ function create_fragment$6(ctx) {
 				if_block4 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_5 = /*thead*/ ctx[6].includes("Rank");
+			if (dirty[0] & /*thead*/ 128) show_if_5 = /*thead*/ ctx[7].includes("Rank");
 
 			if (show_if_5) {
 				if (if_block5) {
@@ -2853,7 +2844,7 @@ function create_fragment$6(ctx) {
 				if_block5 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_4 = /*thead*/ ctx[6].includes("Value");
+			if (dirty[0] & /*thead*/ 128) show_if_4 = /*thead*/ ctx[7].includes("Value");
 
 			if (show_if_4) {
 				if (if_block6) {
@@ -2868,13 +2859,13 @@ function create_fragment$6(ctx) {
 				if_block6 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_3 = /*thead*/ ctx[6].includes("Decrease");
+			if (dirty[0] & /*thead*/ 128) show_if_3 = /*thead*/ ctx[7].includes("Decrease");
 
 			if (show_if_3) {
 				if (if_block7) {
 					if_block7.p(ctx, dirty);
 
-					if (dirty[0] & /*thead*/ 64) {
+					if (dirty[0] & /*thead*/ 128) {
 						transition_in(if_block7, 1);
 					}
 				} else {
@@ -2893,7 +2884,7 @@ function create_fragment$6(ctx) {
 				check_outros();
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_2 = /*thead*/ ctx[6].includes("Mod");
+			if (dirty[0] & /*thead*/ 128) show_if_2 = /*thead*/ ctx[7].includes("Mod");
 
 			if (show_if_2) {
 				if (if_block8) {
@@ -2908,7 +2899,7 @@ function create_fragment$6(ctx) {
 				if_block8 = null;
 			}
 
-			if (dirty[0] & /*thead*/ 64) show_if_1 = /*thead*/ ctx[6].includes("Cost");
+			if (dirty[0] & /*thead*/ 128) show_if_1 = /*thead*/ ctx[7].includes("Cost");
 
 			if (show_if_1) {
 				if (if_block9) {
@@ -2923,7 +2914,7 @@ function create_fragment$6(ctx) {
 				if_block9 = null;
 			}
 
-			if (dirty[0] & /*key, thead*/ 80) show_if = /*key*/ ctx[4] === 0 && /*thead*/ ctx[6].includes("Description");
+			if (dirty[0] & /*key, thead*/ 160) show_if = /*key*/ ctx[5] === 0 && /*thead*/ ctx[7].includes("Description");
 
 			if (show_if) {
 				if (if_block10) {
@@ -2962,6 +2953,7 @@ function create_fragment$6(ctx) {
 			if (if_block8) if_block8.d();
 			if (if_block9) if_block9.d();
 			if (if_block10) if_block10.d();
+			tr_resize_listener();
 		}
 	};
 }
@@ -2975,6 +2967,7 @@ function instance$6($$self, $$props, $$invalidate) {
 	let { typeStr } = $$props;
 	let { thead } = $$props;
 	let { cellWidth } = $$props;
+	let { trWidth } = $$props;
 	getContext("chaAdvActorData");
 	const originalData = getContext("chaAdvActorOriginalData");
 	const aditionalData = getContext("chaAdvAditionalData");
@@ -3018,69 +3011,57 @@ function instance$6($$self, $$props, $$invalidate) {
 	const mouseover_handler_4 = () => changeDesc(val);
 	const mouseover_handler_5 = () => changeDesc(val);
 	const mouseover_handler_6 = () => changeDesc(val);
-
-	function td_elementresize_handler_1() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
 	const mouseover_handler_7 = () => changeDesc(val);
-
-	function td_elementresize_handler_2() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
 	const mouseover_handler_8 = () => changeDesc(val);
-
-	function td_elementresize_handler_3() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
 	const mouseover_handler_9 = () => changeDesc(val);
+
+	function tr_elementresize_handler() {
+		trWidth = this.clientWidth;
+		$$invalidate(3, trWidth);
+	}
 
 	$$self.$$set = $$props => {
 		if ('max' in $$props) $$invalidate(0, max = $$props.max);
-		if ('val' in $$props) $$invalidate(3, val = $$props.val);
-		if ('key' in $$props) $$invalidate(4, key = $$props.key);
-		if ('type' in $$props) $$invalidate(13, type = $$props.type);
+		if ('val' in $$props) $$invalidate(4, val = $$props.val);
+		if ('key' in $$props) $$invalidate(5, key = $$props.key);
+		if ('type' in $$props) $$invalidate(14, type = $$props.type);
 		if ('description' in $$props) $$invalidate(1, description = $$props.description);
-		if ('typeStr' in $$props) $$invalidate(5, typeStr = $$props.typeStr);
-		if ('thead' in $$props) $$invalidate(6, thead = $$props.thead);
+		if ('typeStr' in $$props) $$invalidate(6, typeStr = $$props.typeStr);
+		if ('thead' in $$props) $$invalidate(7, thead = $$props.thead);
 		if ('cellWidth' in $$props) $$invalidate(2, cellWidth = $$props.cellWidth);
+		if ('trWidth' in $$props) $$invalidate(3, trWidth = $$props.trWidth);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[0] & /*typeStr, val, variables*/ 16424) {
+		if ($$self.$$.dirty[0] & /*typeStr, val, variables*/ 32848) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					switch (key) {
 						case "attributes":
-							$$invalidate(14, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
 							break;
 						case "skills":
-							$$invalidate(14, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
 							break;
 						case "features":
-							$$invalidate(14, variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0, variables);
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0, variables);
 							break;
 						case "skillsCount":
-							$$invalidate(14, variables[variable.shortName] = 1, variables);
+							$$invalidate(15, variables[variable.shortName] = 1, variables);
 							break;
 						case "featuresCount":
-							$$invalidate(14, variables[variable.shortName] = 1, variables);
+							$$invalidate(15, variables[variable.shortName] = 1, variables);
 					} //TODO: rewrite
 					//TODO: rewrite
 				}
 
-				$$invalidate(7, cost = math.evaluate(formulas[typeStr], variables));
+				$$invalidate(8, cost = math.evaluate(formulas[typeStr], variables));
 			}
 		}
 
-		if ($$self.$$.dirty[0] & /*val*/ 8) {
+		if ($$self.$$.dirty[0] & /*val*/ 16) {
 			if (val[1].mod !== undefined) {
-				$$invalidate(9, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
+				$$invalidate(10, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
 			}
 		}
 	};
@@ -3089,6 +3070,7 @@ function instance$6($$self, $$props, $$invalidate) {
 		max,
 		description,
 		cellWidth,
+		trWidth,
 		val,
 		key,
 		typeStr,
@@ -3109,12 +3091,10 @@ function instance$6($$self, $$props, $$invalidate) {
 		mouseover_handler_4,
 		mouseover_handler_5,
 		mouseover_handler_6,
-		td_elementresize_handler_1,
 		mouseover_handler_7,
-		td_elementresize_handler_2,
 		mouseover_handler_8,
-		td_elementresize_handler_3,
-		mouseover_handler_9
+		mouseover_handler_9,
+		tr_elementresize_handler
 	];
 }
 
@@ -3130,13 +3110,14 @@ class TDvariants extends SvelteComponent {
 			safe_not_equal,
 			{
 				max: 0,
-				val: 3,
-				key: 4,
-				type: 13,
+				val: 4,
+				key: 5,
+				type: 14,
 				description: 1,
-				typeStr: 5,
-				thead: 6,
-				cellWidth: 2
+				typeStr: 6,
+				thead: 7,
+				cellWidth: 2,
+				trWidth: 3
 			},
 			null,
 			[-1, -1]
@@ -3148,25 +3129,25 @@ class TDvariants extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[12] = list[i];
-	child_ctx[14] = i;
+	child_ctx[14] = list[i];
+	child_ctx[16] = i;
 	return child_ctx;
 }
 
 function get_each_context_1$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[15] = list[i];
+	child_ctx[17] = list[i];
 	return child_ctx;
 }
 
-// (52:8) {#each thead as th}
+// (51:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
-	let t0_value = /*th*/ ctx[15] + "";
+	let t0_value = /*th*/ ctx[17] + "";
 	let t0;
 	let t1;
-	let style_max_width = `${/*cellWidth*/ ctx[6]}px`;
-	let style_min_width = `${/*cellWidth*/ ctx[6]}px`;
+	let style_max_width = `${/*thWidth*/ ctx[7]}%`;
+	let style_min_width = `${/*thWidth*/ ctx[7]}%`;
 
 	return {
 		c() {
@@ -3183,13 +3164,13 @@ function create_each_block_1$3(ctx) {
 			append(th, t1);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[15] + "")) set_data(t0, t0_value);
+			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[17] + "")) set_data(t0, t0_value);
 
-			if (dirty & /*cellWidth*/ 64 && style_max_width !== (style_max_width = `${/*cellWidth*/ ctx[6]}px`)) {
+			if (dirty & /*thWidth*/ 128 && style_max_width !== (style_max_width = `${/*thWidth*/ ctx[7]}%`)) {
 				set_style(th, "max-width", style_max_width, false);
 			}
 
-			if (dirty & /*cellWidth*/ 64 && style_min_width !== (style_min_width = `${/*cellWidth*/ ctx[6]}px`)) {
+			if (dirty & /*thWidth*/ 128 && style_min_width !== (style_min_width = `${/*thWidth*/ ctx[7]}%`)) {
 				set_style(th, "min-width", style_min_width, false);
 			}
 		},
@@ -3199,29 +3180,38 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (58:6) {#each Object.entries($data[tabData]) as attr, key}
+// (57:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
+	let updating_trWidth;
 	let updating_cellWidth;
 	let updating_description;
 	let current;
 
+	function tdvariants_trWidth_binding(value) {
+		/*tdvariants_trWidth_binding*/ ctx[10](value);
+	}
+
 	function tdvariants_cellWidth_binding(value) {
-		/*tdvariants_cellWidth_binding*/ ctx[9](value);
+		/*tdvariants_cellWidth_binding*/ ctx[11](value);
 	}
 
 	function tdvariants_description_binding(value) {
-		/*tdvariants_description_binding*/ ctx[10](value);
+		/*tdvariants_description_binding*/ ctx[12](value);
 	}
 
 	let tdvariants_props = {
 		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
 		thead: /*thead*/ ctx[3],
 		typeStr: /*typeStr*/ ctx[2],
-		val: /*attr*/ ctx[12],
+		val: /*attr*/ ctx[14],
 		max: /*max*/ ctx[5],
-		key: /*key*/ ctx[14]
+		key: /*key*/ ctx[16]
 	};
+
+	if (/*trWidth*/ ctx[8] !== void 0) {
+		tdvariants_props.trWidth = /*trWidth*/ ctx[8];
+	}
 
 	if (/*cellWidth*/ ctx[6] !== void 0) {
 		tdvariants_props.cellWidth = /*cellWidth*/ ctx[6];
@@ -3232,6 +3222,7 @@ function create_each_block$4(ctx) {
 	}
 
 	tdvariants = new TDvariants({ props: tdvariants_props });
+	binding_callbacks.push(() => bind(tdvariants, 'trWidth', tdvariants_trWidth_binding));
 	binding_callbacks.push(() => bind(tdvariants, 'cellWidth', tdvariants_cellWidth_binding));
 	binding_callbacks.push(() => bind(tdvariants, 'description', tdvariants_description_binding));
 
@@ -3248,8 +3239,14 @@ function create_each_block$4(ctx) {
 			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
 			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
 			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[12];
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[14];
 			if (dirty & /*max*/ 32) tdvariants_changes.max = /*max*/ ctx[5];
+
+			if (!updating_trWidth && dirty & /*trWidth*/ 256) {
+				updating_trWidth = true;
+				tdvariants_changes.trWidth = /*trWidth*/ ctx[8];
+				add_flush_callback(() => updating_trWidth = false);
+			}
 
 			if (!updating_cellWidth && dirty & /*cellWidth*/ 64) {
 				updating_cellWidth = true;
@@ -3286,7 +3283,7 @@ function create_fragment$5(ctx) {
 	let table;
 	let thead_1;
 	let tr;
-	let style_width = `${/*trWidth*/ ctx[7]}px`;
+	let style_width = `${/*trWidth*/ ctx[8]}px`;
 	let t0;
 	let tbody;
 	let t1;
@@ -3377,7 +3374,7 @@ function create_fragment$5(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*cellWidth, thead*/ 72) {
+			if (dirty & /*thWidth, thead*/ 136) {
 				each_value_1 = /*thead*/ ctx[3];
 				let i;
 
@@ -3400,11 +3397,11 @@ function create_fragment$5(ctx) {
 				each_blocks_1.length = each_value_1.length;
 			}
 
-			if (dirty & /*trWidth*/ 128 && style_width !== (style_width = `${/*trWidth*/ ctx[7]}px`)) {
+			if (dirty & /*trWidth*/ 256 && style_width !== (style_width = `${/*trWidth*/ ctx[8]}px`)) {
 				set_style(tr, "width", style_width, false);
 			}
 
-			if (dirty & /*$data, tabData, thead, typeStr, Object, max, cellWidth, description*/ 127) {
+			if (dirty & /*$data, tabData, thead, typeStr, Object, max, trWidth, cellWidth, description*/ 383) {
 				each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
 				let i;
 
@@ -3469,6 +3466,7 @@ function instance$5($$self, $$props, $$invalidate) {
 	let description;
 	let max;
 	let cellWidth;
+	let thWidth;
 	let trWidth;
 
 	//TODO: reconfigure thead for localization
@@ -3478,25 +3476,28 @@ function instance$5($$self, $$props, $$invalidate) {
 			thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
 			description = "";
 			max = 30;
-			trWidth = cellWidth * thead.length;
 			break;
 		case "skills":
 			typeStr = "skills";
 			thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
 			description = "";
 			max = 4;
-			trWidth = cellWidth * thead.length;
 			break;
 		case "features":
 			typeStr = "features";
 			thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
 			description = "";
 			max = 1;
-			trWidth = cellWidth * thead.length;
 			break;
 	}
 
+	thWidth = 100 / thead.length;
 	const rankName = ["untrained", "trained", "expert", "master", "legend"];
+
+	function tdvariants_trWidth_binding(value) {
+		trWidth = value;
+		$$invalidate(8, trWidth);
+	}
 
 	function tdvariants_cellWidth_binding(value) {
 		cellWidth = value;
@@ -3536,8 +3537,10 @@ function instance$5($$self, $$props, $$invalidate) {
 		description,
 		max,
 		cellWidth,
+		thWidth,
 		trWidth,
 		data,
+		tdvariants_trWidth_binding,
 		tdvariants_cellWidth_binding,
 		tdvariants_description_binding
 	];
