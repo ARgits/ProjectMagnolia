@@ -40,6 +40,7 @@
 </script>
 
 <div class="flex flexrow">
+  <div class="scrollable">
   <table>
     <thead>
       <tr>
@@ -54,15 +55,23 @@
       {/each}
     </tbody>
   </table>
+</div>
   <div class="description">
-    Description
+    <label for="description">Description</label>
     <div>{description}</div>
   </div>
 </div>
 
 <style>
   .description{
-    height: 260px;
+    height: 270px;
+    padding-left: 2px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .scrollable{
+    max-height: 270px;
+    overflow-y: auto;
   }
   table thead {
     position: sticky;

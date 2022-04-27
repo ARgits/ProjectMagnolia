@@ -3099,7 +3099,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (46:8) {#each thead as th}
+// (47:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[12] + "";
@@ -3111,7 +3111,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-68f6v0");
+			attr(th, "class", "svelte-l2w1jg");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -3127,7 +3127,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (52:6) {#each Object.entries($data[tabData]) as attr, key}
+// (53:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -3193,17 +3193,19 @@ function create_each_block$4(ctx) {
 }
 
 function create_fragment$5(ctx) {
-	let div2;
+	let div3;
+	let div0;
 	let table;
 	let thead_1;
 	let tr;
 	let t0;
 	let tbody;
 	let t1;
-	let div1;
-	let t2;
-	let div0;
+	let div2;
+	let label;
 	let t3;
+	let div1;
+	let t4;
 	let current;
 	let each_value_1 = /*thead*/ ctx[3];
 	let each_blocks_1 = [];
@@ -3225,7 +3227,8 @@ function create_fragment$5(ctx) {
 
 	return {
 		c() {
-			div2 = element("div");
+			div3 = element("div");
+			div0 = element("div");
 			table = element("table");
 			thead_1 = element("thead");
 			tr = element("tr");
@@ -3242,19 +3245,24 @@ function create_fragment$5(ctx) {
 			}
 
 			t1 = space();
+			div2 = element("div");
+			label = element("label");
+			label.textContent = "Description";
+			t3 = space();
 			div1 = element("div");
-			t2 = text("Description\r\n    ");
-			div0 = element("div");
-			t3 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-68f6v0");
-			attr(thead_1, "class", "svelte-68f6v0");
-			attr(table, "class", "svelte-68f6v0");
-			attr(div1, "class", "description svelte-68f6v0");
-			attr(div2, "class", "flex flexrow");
+			t4 = text(/*description*/ ctx[4]);
+			attr(tr, "class", "svelte-l2w1jg");
+			attr(thead_1, "class", "svelte-l2w1jg");
+			attr(table, "class", "svelte-l2w1jg");
+			attr(div0, "class", "scrollable svelte-l2w1jg");
+			attr(label, "for", "description");
+			attr(div2, "class", "description svelte-l2w1jg");
+			attr(div3, "class", "flex flexrow");
 		},
 		m(target, anchor) {
-			insert(target, div2, anchor);
-			append(div2, table);
+			insert(target, div3, anchor);
+			append(div3, div0);
+			append(div0, table);
 			append(table, thead_1);
 			append(thead_1, tr);
 
@@ -3269,11 +3277,12 @@ function create_fragment$5(ctx) {
 				each_blocks[i].m(tbody, null);
 			}
 
-			append(div2, t1);
+			append(div3, t1);
+			append(div3, div2);
+			append(div2, label);
+			append(div2, t3);
 			append(div2, div1);
-			append(div1, t2);
-			append(div1, div0);
-			append(div0, t3);
+			append(div1, t4);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -3327,7 +3336,7 @@ function create_fragment$5(ctx) {
 				check_outros();
 			}
 
-			if (!current || dirty & /*description*/ 16) set_data(t3, /*description*/ ctx[4]);
+			if (!current || dirty & /*description*/ 16) set_data(t4, /*description*/ ctx[4]);
 		},
 		i(local) {
 			if (current) return;
@@ -3348,7 +3357,7 @@ function create_fragment$5(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div2);
+			if (detaching) detach(div3);
 			destroy_each(each_blocks_1, detaching);
 			destroy_each(each_blocks, detaching);
 		}
@@ -3468,11 +3477,11 @@ function create_each_block_1$2(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-lichkw");
+			attr(span, "class", "svelte-1ieoo20");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-lichkw"));
+			: "") + " svelte-1ieoo20"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -3491,7 +3500,7 @@ function create_each_block_1$2(ctx) {
 
 			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-lichkw"))) {
+			: "") + " svelte-1ieoo20"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -3669,8 +3678,8 @@ function create_fragment$4(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-lichkw");
-			attr(div, "class", "box svelte-lichkw");
+			attr(ul, "class", "svelte-1ieoo20");
+			attr(div, "class", "box svelte-1ieoo20");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
