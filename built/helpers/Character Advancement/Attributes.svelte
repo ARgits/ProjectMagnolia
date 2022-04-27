@@ -70,16 +70,16 @@
 <style>
   .description{
     height: 270px;
-    /*padding-left: 2px;
+    padding-left: 2px;
     border-left: 1px solid black;
-    border-bottom: 1px solid black;*/
+    border-bottom: 1px solid black;
   }
   table thead {
     display: block;
     width: 100%;
     position: sticky;
     inset-block-start: -0.05em;
-    /*border-bottom: 2px solid #ccc;*/
+    border-bottom: 2px solid #ccc;
   }
   table {
     border-collapse: collapse;
@@ -91,13 +91,13 @@
     overflow-y: auto;
   }
   tr {
-    /*border: 1px solid black;*/
+    border: 1px solid black;
     display: table;
   }
   th {
     background: rgb(100, 100, 100);
-    /*border: 1px solid black;*/
+    border: 1px solid black;
     text-align: center;
-    /*padding: 0.2em;*/
+    padding: 0.2em;
   }
 </style>
