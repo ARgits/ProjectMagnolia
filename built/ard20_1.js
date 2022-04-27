@@ -3153,7 +3153,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-5lx");
+			attr(th, "class", "last svelte-5juqd0");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3331,14 +3331,14 @@ function create_fragment$5(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-5lx");
+			attr(tr, "class", "svelte-5juqd0");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-5lx");
-			attr(tbody, "class", "svelte-5lx");
-			attr(table, "class", "svelte-5lx");
+			attr(thead_1, "class", "svelte-5juqd0");
+			attr(tbody, "class", "svelte-5juqd0");
+			attr(table, "class", "svelte-5juqd0");
 			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-5lx");
+			attr(div2, "class", "description svelte-5juqd0");
 			attr(div3, "class", "flex flexrow");
 		},
 		m(target, anchor) {

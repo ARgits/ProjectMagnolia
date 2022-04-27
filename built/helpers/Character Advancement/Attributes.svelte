@@ -49,7 +49,7 @@
     <thead>
       <tr style:width="{trWidth}px">
         {#each thead as th}
-          <th style:width="{thWidth}%"> {th} </th>
+          <th style:width="{thWidth}%" class="last"> {th} </th>
         {/each}
       </tr>
     </thead>
@@ -98,5 +98,8 @@
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;
+  }
+  th:last-child{
+    border-right: 0px;
   }
 </style>
