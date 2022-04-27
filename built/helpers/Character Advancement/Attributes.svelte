@@ -40,13 +40,13 @@
   }
 </script>
 
-<div class="flex flexrow" style="--thWitdh:{cellWidth}px">
+<div class="flex flexrow">
   <div class="scrollable">
   <table>
     <thead>
       <tr>
         {#each thead as th}
-          <th> {th} </th>
+          <th style:width="{cellWidth}px"> {th} </th>
         {/each}
       </tr>
     </thead>
@@ -84,7 +84,7 @@
     display: block;
     height: 234px;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   tr {
     border: 1px solid black;
@@ -94,7 +94,5 @@
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;
-    max-width: var(--thWitdh);
-    min-width: var(--thWitdh)
   }
 </style>

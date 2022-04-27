@@ -3165,13 +3165,15 @@ function create_each_block_1$3(ctx) {
 	let t0_value = /*th*/ ctx[14] + "";
 	let t0;
 	let t1;
+	let style_width = `${/*cellWidth*/ ctx[6]}px`;
 
 	return {
 		c() {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-1orfbmn");
+			attr(th, "class", "svelte-jyp9ym");
+			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -3180,6 +3182,10 @@ function create_each_block_1$3(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[14] + "")) set_data(t0, t0_value);
+
+			if (dirty & /*cellWidth*/ 64 && style_width !== (style_width = `${/*cellWidth*/ ctx[6]}px`)) {
+				set_style(th, "width", style_width, false);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(th);
@@ -3327,15 +3333,14 @@ function create_fragment$5(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-1orfbmn");
-			attr(thead_1, "class", "svelte-1orfbmn");
-			attr(tbody, "class", "svelte-1orfbmn");
-			attr(table, "class", "svelte-1orfbmn");
+			attr(tr, "class", "svelte-jyp9ym");
+			attr(thead_1, "class", "svelte-jyp9ym");
+			attr(tbody, "class", "svelte-jyp9ym");
+			attr(table, "class", "svelte-jyp9ym");
 			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-1orfbmn");
+			attr(div2, "class", "description svelte-jyp9ym");
 			attr(div3, "class", "flex flexrow");
-			set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6] + "px");
 		},
 		m(target, anchor) {
 			insert(target, div3, anchor);
@@ -3364,7 +3369,7 @@ function create_fragment$5(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*thead*/ 8) {
+			if (dirty & /*cellWidth, thead*/ 72) {
 				each_value_1 = /*thead*/ ctx[3];
 				let i;
 
@@ -3415,10 +3420,6 @@ function create_fragment$5(ctx) {
 			}
 
 			if (!current || dirty & /*description*/ 16) set_data(t4, /*description*/ ctx[4]);
-
-			if (!current || dirty & /*cellWidth*/ 64) {
-				set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6] + "px");
-			}
 		},
 		i(local) {
 			if (current) return;
