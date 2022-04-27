@@ -40,7 +40,7 @@
   }
 </script>
 
-<div class="flex flexrow" style="--thWitdh:{cellWidth}">
+<div class="flex flexrow" style="--thWitdh:{cellWidth}px">
   <div class="scrollable">
   <table>
     <thead>
@@ -70,10 +70,6 @@
     border-left: 1px solid black;
     border-bottom: 1px solid black;
   }
-  .scrollable{
-    max-height: 270px;
-    overflow-y: auto;
-  }
   table thead {
     display: block;
     width: 100%;
@@ -86,7 +82,7 @@
   }
   tbody{
     display: block;
-    height: 230px;
+    height: 234px;
     width: 100%;
     overflow-y: scroll;
   }

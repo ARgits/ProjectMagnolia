@@ -3237,7 +3237,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-10md690");
+			attr(th, "class", "svelte-1orfbmn");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -3393,15 +3393,15 @@ function create_fragment$5(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-10md690");
-			attr(thead_1, "class", "svelte-10md690");
-			attr(tbody, "class", "svelte-10md690");
-			attr(table, "class", "svelte-10md690");
-			attr(div0, "class", "scrollable svelte-10md690");
+			attr(tr, "class", "svelte-1orfbmn");
+			attr(thead_1, "class", "svelte-1orfbmn");
+			attr(tbody, "class", "svelte-1orfbmn");
+			attr(table, "class", "svelte-1orfbmn");
+			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-10md690");
+			attr(div2, "class", "description svelte-1orfbmn");
 			attr(div3, "class", "flex flexrow");
-			set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6]);
+			set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6] + "px");
 		},
 		m(target, anchor) {
 			insert(target, div3, anchor);
@@ -3483,7 +3483,7 @@ function create_fragment$5(ctx) {
 			if (!current || dirty & /*description*/ 16) set_data(t4, /*description*/ ctx[4]);
 
 			if (!current || dirty & /*cellWidth*/ 64) {
-				set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6]);
+				set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6] + "px");
 			}
 		},
 		i(local) {
