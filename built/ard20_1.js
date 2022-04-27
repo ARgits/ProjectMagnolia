@@ -3099,7 +3099,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (45:6) {#each thead as th}
+// (46:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[12] + "";
@@ -3111,7 +3111,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-aulmrq");
+			attr(th, "class", "svelte-68f6v0");
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -3127,7 +3127,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (51:4) {#each Object.entries($data[tabData]) as attr, key}
+// (52:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_description;
@@ -3193,11 +3193,17 @@ function create_each_block$4(ctx) {
 }
 
 function create_fragment$5(ctx) {
+	let div2;
 	let table;
 	let thead_1;
 	let tr;
-	let t;
+	let t0;
 	let tbody;
+	let t1;
+	let div1;
+	let t2;
+	let div0;
+	let t3;
 	let current;
 	let each_value_1 = /*thead*/ ctx[3];
 	let each_blocks_1 = [];
@@ -3219,6 +3225,7 @@ function create_fragment$5(ctx) {
 
 	return {
 		c() {
+			div2 = element("div");
 			table = element("table");
 			thead_1 = element("thead");
 			tr = element("tr");
@@ -3227,19 +3234,27 @@ function create_fragment$5(ctx) {
 				each_blocks_1[i].c();
 			}
 
-			t = space();
+			t0 = space();
 			tbody = element("tbody");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(tr, "class", "svelte-aulmrq");
-			attr(thead_1, "class", "svelte-aulmrq");
-			attr(table, "class", "svelte-aulmrq");
+			t1 = space();
+			div1 = element("div");
+			t2 = text("Description\r\n    ");
+			div0 = element("div");
+			t3 = text(/*description*/ ctx[4]);
+			attr(tr, "class", "svelte-68f6v0");
+			attr(thead_1, "class", "svelte-68f6v0");
+			attr(table, "class", "svelte-68f6v0");
+			attr(div1, "class", "description svelte-68f6v0");
+			attr(div2, "class", "flex flexrow");
 		},
 		m(target, anchor) {
-			insert(target, table, anchor);
+			insert(target, div2, anchor);
+			append(div2, table);
 			append(table, thead_1);
 			append(thead_1, tr);
 
@@ -3247,13 +3262,18 @@ function create_fragment$5(ctx) {
 				each_blocks_1[i].m(tr, null);
 			}
 
-			append(table, t);
+			append(table, t0);
 			append(table, tbody);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(tbody, null);
 			}
 
+			append(div2, t1);
+			append(div2, div1);
+			append(div1, t2);
+			append(div1, div0);
+			append(div0, t3);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -3306,6 +3326,8 @@ function create_fragment$5(ctx) {
 
 				check_outros();
 			}
+
+			if (!current || dirty & /*description*/ 16) set_data(t3, /*description*/ ctx[4]);
 		},
 		i(local) {
 			if (current) return;
@@ -3326,7 +3348,7 @@ function create_fragment$5(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(table);
+			if (detaching) detach(div2);
 			destroy_each(each_blocks_1, detaching);
 			destroy_each(each_blocks, detaching);
 		}
@@ -3347,28 +3369,19 @@ function instance$5($$self, $$props, $$invalidate) {
 	switch (tabData) {
 		case "attributes":
 			typeStr = "attributes";
-			thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost", "Description"];
+			thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
 			description = "";
 			max = 30;
 			break;
 		case "skills":
 			typeStr = "skills";
-			thead = ["Name", "Increase", "Rank", "Decrease", "Cost", "Description"];
+			thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
 			description = "";
 			max = 4;
 			break;
 		case "features":
 			typeStr = "features";
-			thead = [
-				"Name",
-				"Source",
-				"Increase",
-				"Level",
-				"Max Level",
-				"Decrease",
-				"Cost",
-				"Description"
-			];
+			thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
 			description = "";
 			max = 1;
 			break;

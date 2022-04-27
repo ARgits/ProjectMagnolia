@@ -11,21 +11,21 @@
   switch (tabData) {
     case "attributes":
       typeStr = "attributes";
-      thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost", "Description"];
+      thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
       description = "";
       max = 30;
       break;
     case "skills":
       typeStr = "skills";
-      thead = ["Name", "Increase", "Rank", "Decrease", "Cost", "Description"];
+      thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
       description = "";
       max = 4;
       break;
     case "features":
       typeStr = "features";
-      thead=["Name","Source","Increase","Level","Max Level","Decrease","Cost","Description"]
-      description=""
-      max = 1
+      thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
+      description = "";
+      max = 1;
       break;
   }
   $: {
@@ -39,22 +39,31 @@
   }
 </script>
 
-<table>
-  <thead>
-    <tr>
-      {#each thead as th}
-        <th> {th} </th>
+<div class="flex flexrow">
+  <table>
+    <thead>
+      <tr>
+        {#each thead as th}
+          <th> {th} </th>
+        {/each}
+      </tr>
+    </thead>
+    <tbody>
+      {#each Object.entries($data[tabData]) as attr, key}
+        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
       {/each}
-    </tr>
-  </thead>
-  <tbody>
-    {#each Object.entries($data[tabData]) as attr, key}
-      <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} {key} bind:description />
-    {/each}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+  <div class="description">
+    Description
+    <div>{description}</div>
+  </div>
+</div>
 
 <style>
+  .description{
+    height: 260px;
+  }
   table thead {
     position: sticky;
     inset-block-start: -0.05em;
