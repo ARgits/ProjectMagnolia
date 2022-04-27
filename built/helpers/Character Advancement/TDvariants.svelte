@@ -67,35 +67,35 @@
 <tr style="--cellWidth:{widthPercent}%">
   {#if thead.includes("Name")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
+    <td bind:offsetWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
   {/if}
   {#if thead.includes("Source")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.source.label} </td>
+    <td  class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.source.label} </td>
   {/if}
   {#if thead.includes("Increase")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}>
+    <td  class={last} on:mouseover={() => changeDesc(val)}>
       <ChangeButton type={typeStr} subtype={val[0]} {max} {cost} />
     </td>
   {/if}
   {#if thead.includes("Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}>
+    <td  class={last} on:mouseover={() => changeDesc(val)}>
       {val[1].data.level.initial}
     </td>
   {/if}
   {#if thead.includes("Max Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
+    <td  class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
   {/if}
   {#if thead.includes("Rank")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].rankName} </td>
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].rankName} </td>
   {/if}
   {#if thead.includes("Value")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[1].value} </td>
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].value} </td>
   {/if}
   {#if thead.includes("Decrease")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->

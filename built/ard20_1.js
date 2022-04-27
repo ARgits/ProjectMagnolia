@@ -2271,7 +2271,6 @@ function create_if_block_9(ctx) {
 	let t_value = /*val*/ ctx[3][1].data.source.label + "";
 	let t;
 	let td_class_value;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
@@ -2280,15 +2279,13 @@ function create_if_block_9(ctx) {
 			td = element("td");
 			t = text(t_value);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_1*/ ctx[17].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_1*/ ctx[17].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[18]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[17]);
 				mounted = true;
 			}
 		},
@@ -2297,7 +2294,6 @@ function create_if_block_9(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
@@ -2308,7 +2304,6 @@ function create_if_block_9(ctx) {
 function create_if_block_8(ctx) {
 	let td;
 	let changebutton;
-	let td_resize_listener;
 	let current;
 	let mounted;
 	let dispose;
@@ -2327,16 +2322,14 @@ function create_if_block_8(ctx) {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
 			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_2*/ ctx[19].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			mount_component(changebutton, td, null);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_2*/ ctx[19].bind(td));
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[20]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[18]);
 				mounted = true;
 			}
 		},
@@ -2360,7 +2353,6 @@ function create_if_block_8(ctx) {
 		d(detaching) {
 			if (detaching) detach(td);
 			destroy_component(changebutton);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
@@ -2373,7 +2365,6 @@ function create_if_block_7(ctx) {
 	let t_value = /*val*/ ctx[3][1].data.level.initial + "";
 	let t;
 	let td_class_value;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
@@ -2382,15 +2373,13 @@ function create_if_block_7(ctx) {
 			td = element("td");
 			t = text(t_value);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_3*/ ctx[21].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_3*/ ctx[21].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[22]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[19]);
 				mounted = true;
 			}
 		},
@@ -2399,7 +2388,6 @@ function create_if_block_7(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
@@ -2412,7 +2400,6 @@ function create_if_block_6(ctx) {
 	let t_value = /*val*/ ctx[3][1].data.level.max + "";
 	let t;
 	let td_class_value;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
@@ -2421,15 +2408,13 @@ function create_if_block_6(ctx) {
 			td = element("td");
 			t = text(t_value);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_4*/ ctx[23].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_4*/ ctx[23].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[24]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[20]);
 				mounted = true;
 			}
 		},
@@ -2438,7 +2423,6 @@ function create_if_block_6(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
@@ -2451,7 +2435,6 @@ function create_if_block_5(ctx) {
 	let t_value = /*val*/ ctx[3][1].rankName + "";
 	let t;
 	let td_class_value;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
@@ -2460,15 +2443,13 @@ function create_if_block_5(ctx) {
 			td = element("td");
 			t = text(t_value);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_5*/ ctx[25].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_5*/ ctx[25].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[26]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[21]);
 				mounted = true;
 			}
 		},
@@ -2477,7 +2458,6 @@ function create_if_block_5(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
@@ -2490,7 +2470,6 @@ function create_if_block_4(ctx) {
 	let t_value = /*val*/ ctx[3][1].value + "";
 	let t;
 	let td_class_value;
-	let td_resize_listener;
 	let mounted;
 	let dispose;
 
@@ -2499,15 +2478,13 @@ function create_if_block_4(ctx) {
 			td = element("td");
 			t = text(t_value);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_6*/ ctx[27].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_6*/ ctx[27].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[28]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[22]);
 				mounted = true;
 			}
 		},
@@ -2516,7 +2493,6 @@ function create_if_block_4(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(td);
-			td_resize_listener();
 			mounted = false;
 			dispose();
 		}
@@ -2545,16 +2521,16 @@ function create_if_block_3(ctx) {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
 			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_7*/ ctx[29].call(td));
+			add_render_callback(() => /*td_elementresize_handler_1*/ ctx[23].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			mount_component(changebutton, td, null);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_7*/ ctx[29].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_1*/ ctx[23].bind(td));
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_7*/ ctx[30]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_7*/ ctx[24]);
 				mounted = true;
 			}
 		},
@@ -2597,15 +2573,15 @@ function create_if_block_2(ctx) {
 			td = element("td");
 			t = text(/*strMod*/ ctx[9]);
 			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_8*/ ctx[31].call(td));
+			add_render_callback(() => /*td_elementresize_handler_2*/ ctx[25].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_8*/ ctx[31].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_2*/ ctx[25].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[32]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[26]);
 				mounted = true;
 			}
 		},
@@ -2634,15 +2610,15 @@ function create_if_block_1(ctx) {
 			td = element("td");
 			t = text(/*cost*/ ctx[7]);
 			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_9*/ ctx[33].call(td));
+			add_render_callback(() => /*td_elementresize_handler_3*/ ctx[27].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_9*/ ctx[33].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_3*/ ctx[27].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[34]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[28]);
 				mounted = true;
 			}
 		},
@@ -3031,69 +3007,33 @@ function instance$6($$self, $$props, $$invalidate) {
 	let last = key === Object.values(type).length - 1 ? "last" : "";
 
 	function td_elementresize_handler() {
-		cellWidth = this.clientWidth;
+		cellWidth = this.offsetWidth;
 		$$invalidate(2, cellWidth);
 	}
 
 	const mouseover_handler = () => changeDesc(val);
+	const mouseover_handler_1 = () => changeDesc(val);
+	const mouseover_handler_2 = () => changeDesc(val);
+	const mouseover_handler_3 = () => changeDesc(val);
+	const mouseover_handler_4 = () => changeDesc(val);
+	const mouseover_handler_5 = () => changeDesc(val);
+	const mouseover_handler_6 = () => changeDesc(val);
 
 	function td_elementresize_handler_1() {
 		cellWidth = this.clientWidth;
 		$$invalidate(2, cellWidth);
 	}
 
-	const mouseover_handler_1 = () => changeDesc(val);
+	const mouseover_handler_7 = () => changeDesc(val);
 
 	function td_elementresize_handler_2() {
 		cellWidth = this.clientWidth;
 		$$invalidate(2, cellWidth);
 	}
 
-	const mouseover_handler_2 = () => changeDesc(val);
-
-	function td_elementresize_handler_3() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
-	const mouseover_handler_3 = () => changeDesc(val);
-
-	function td_elementresize_handler_4() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
-	const mouseover_handler_4 = () => changeDesc(val);
-
-	function td_elementresize_handler_5() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
-	const mouseover_handler_5 = () => changeDesc(val);
-
-	function td_elementresize_handler_6() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
-	const mouseover_handler_6 = () => changeDesc(val);
-
-	function td_elementresize_handler_7() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
-	const mouseover_handler_7 = () => changeDesc(val);
-
-	function td_elementresize_handler_8() {
-		cellWidth = this.clientWidth;
-		$$invalidate(2, cellWidth);
-	}
-
 	const mouseover_handler_8 = () => changeDesc(val);
 
-	function td_elementresize_handler_9() {
+	function td_elementresize_handler_3() {
 		cellWidth = this.clientWidth;
 		$$invalidate(2, cellWidth);
 	}
@@ -3163,23 +3103,17 @@ function instance$6($$self, $$props, $$invalidate) {
 		variables,
 		td_elementresize_handler,
 		mouseover_handler,
-		td_elementresize_handler_1,
 		mouseover_handler_1,
-		td_elementresize_handler_2,
 		mouseover_handler_2,
-		td_elementresize_handler_3,
 		mouseover_handler_3,
-		td_elementresize_handler_4,
 		mouseover_handler_4,
-		td_elementresize_handler_5,
 		mouseover_handler_5,
-		td_elementresize_handler_6,
 		mouseover_handler_6,
-		td_elementresize_handler_7,
+		td_elementresize_handler_1,
 		mouseover_handler_7,
-		td_elementresize_handler_8,
+		td_elementresize_handler_2,
 		mouseover_handler_8,
-		td_elementresize_handler_9,
+		td_elementresize_handler_3,
 		mouseover_handler_9
 	];
 }
