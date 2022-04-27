@@ -4774,8 +4774,8 @@ class CharacterAdvancement extends TJSDialog {
         }
       }
     }, {
-      width: 640,
-      height: 480
+      width: 800,
+      height: 600
     });
   }
 
