@@ -40,7 +40,7 @@
   }
 </script>
 
-<div class="flex flexrow" style="--thWitdh={cellWidth}">
+<div class="flex flexrow" style="--thWitdh:{cellWidth}">
   <div class="scrollable">
   <table>
     <thead>

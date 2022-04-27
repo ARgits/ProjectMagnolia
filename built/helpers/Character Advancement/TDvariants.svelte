@@ -17,6 +17,7 @@
   let variables = {};
   let cost;
   let min;
+  let widthPercent = 100/thead.length
   switch (typeStr) {
     case "attributes":
       min = originalData[typeStr][val[0]].value;
@@ -63,7 +64,7 @@
   //TODO: reconfigure thead for localization
 </script>
 
-<tr style="--cellWidth:calc(100% / {thead.length})">
+<tr style="--cellWidth:{widthPercent}%">
   {#if thead.includes("Name")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>

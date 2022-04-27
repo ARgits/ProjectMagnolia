@@ -2240,16 +2240,16 @@ function create_if_block_10(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler*/ ctx[14].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler*/ ctx[15].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler*/ ctx[14].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler*/ ctx[15].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler*/ ctx[15]);
+				dispose = listen(td, "mouseover", /*mouseover_handler*/ ctx[16]);
 				mounted = true;
 			}
 		},
@@ -2265,7 +2265,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (71:2) {#if thead.includes("Source")}
+// (72:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].data.source.label + "";
@@ -2279,16 +2279,16 @@ function create_if_block_9(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_1*/ ctx[16].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_1*/ ctx[17].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_1*/ ctx[16].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_1*/ ctx[17].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[17]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[18]);
 				mounted = true;
 			}
 		},
@@ -2304,7 +2304,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (75:2) {#if thead.includes("Increase")}
+// (76:2) {#if thead.includes("Increase")}
 function create_if_block_8(ctx) {
 	let td;
 	let changebutton;
@@ -2326,17 +2326,17 @@ function create_if_block_8(ctx) {
 		c() {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_2*/ ctx[18].call(td));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_2*/ ctx[19].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			mount_component(changebutton, td, null);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_2*/ ctx[18].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_2*/ ctx[19].bind(td));
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[19]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[20]);
 				mounted = true;
 			}
 		},
@@ -2367,7 +2367,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (81:2) {#if thead.includes("Level")}
+// (82:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].data.level.initial + "";
@@ -2381,16 +2381,16 @@ function create_if_block_7(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_3*/ ctx[20].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_3*/ ctx[21].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_3*/ ctx[20].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_3*/ ctx[21].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[21]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[22]);
 				mounted = true;
 			}
 		},
@@ -2406,7 +2406,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (87:2) {#if thead.includes("Max Level")}
+// (88:2) {#if thead.includes("Max Level")}
 function create_if_block_6(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].data.level.max + "";
@@ -2420,16 +2420,16 @@ function create_if_block_6(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_4*/ ctx[22].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_4*/ ctx[23].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_4*/ ctx[22].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_4*/ ctx[23].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[23]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[24]);
 				mounted = true;
 			}
 		},
@@ -2445,7 +2445,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (91:2) {#if thead.includes("Rank")}
+// (92:2) {#if thead.includes("Rank")}
 function create_if_block_5(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].rankName + "";
@@ -2459,16 +2459,16 @@ function create_if_block_5(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_5*/ ctx[24].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_5*/ ctx[25].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_5*/ ctx[24].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_5*/ ctx[25].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[25]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[26]);
 				mounted = true;
 			}
 		},
@@ -2484,7 +2484,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (95:2) {#if thead.includes("Value")}
+// (96:2) {#if thead.includes("Value")}
 function create_if_block_4(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[3][1].value + "";
@@ -2498,16 +2498,16 @@ function create_if_block_4(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_6*/ ctx[26].call(td));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_6*/ ctx[27].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_6*/ ctx[26].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_6*/ ctx[27].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[27]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[28]);
 				mounted = true;
 			}
 		},
@@ -2523,7 +2523,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (99:2) {#if thead.includes("Decrease")}
+// (100:2) {#if thead.includes("Decrease")}
 function create_if_block_3(ctx) {
 	let td;
 	let changebutton;
@@ -2544,17 +2544,17 @@ function create_if_block_3(ctx) {
 		c() {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_7*/ ctx[28].call(td));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_7*/ ctx[29].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			mount_component(changebutton, td, null);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_7*/ ctx[28].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_7*/ ctx[29].bind(td));
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_7*/ ctx[29]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_7*/ ctx[30]);
 				mounted = true;
 			}
 		},
@@ -2584,7 +2584,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (105:2) {#if thead.includes("Mod")}
+// (106:2) {#if thead.includes("Mod")}
 function create_if_block_2(ctx) {
 	let td;
 	let t;
@@ -2596,16 +2596,16 @@ function create_if_block_2(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*strMod*/ ctx[9]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_8*/ ctx[30].call(td));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_8*/ ctx[31].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_8*/ ctx[30].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_8*/ ctx[31].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[31]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[32]);
 				mounted = true;
 			}
 		},
@@ -2621,7 +2621,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (109:2) {#if thead.includes("Cost")}
+// (110:2) {#if thead.includes("Cost")}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2633,16 +2633,16 @@ function create_if_block_1(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*cost*/ ctx[7]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[11]) + " svelte-dof5fv"));
-			add_render_callback(() => /*td_elementresize_handler_9*/ ctx[32].call(td));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[12]) + " svelte-dof5fv"));
+			add_render_callback(() => /*td_elementresize_handler_9*/ ctx[33].call(td));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
 			append(td, t);
-			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_9*/ ctx[32].bind(td));
+			td_resize_listener = add_resize_listener(td, /*td_elementresize_handler_9*/ ctx[33].bind(td));
 
 			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[33]);
+				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[34]);
 				mounted = true;
 			}
 		},
@@ -2658,7 +2658,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (113:2) {#if key === 0 && thead.includes("Description")}
+// (114:2) {#if key === 0 && thead.includes("Description")}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2748,7 +2748,7 @@ function create_fragment$6(ctx) {
 			if (if_block9) if_block9.c();
 			t9 = space();
 			if (if_block10) if_block10.c();
-			set_style(tr, "--cellWidth", "calc(100% / " + /*thead*/ ctx[6].length + ")");
+			set_style(tr, "--cellWidth", /*widthPercent*/ ctx[10] + "%");
 			attr(tr, "class", "svelte-dof5fv");
 		},
 		m(target, anchor) {
@@ -2961,10 +2961,6 @@ function create_fragment$6(ctx) {
 				if_block10.d(1);
 				if_block10 = null;
 			}
-
-			if (!current || dirty[0] & /*thead*/ 64) {
-				set_style(tr, "--cellWidth", "calc(100% / " + /*thead*/ ctx[6].length + ")");
-			}
 		},
 		i(local) {
 			if (current) return;
@@ -3010,6 +3006,7 @@ function instance$6($$self, $$props, $$invalidate) {
 	let variables = {};
 	let cost;
 	let min;
+	let widthPercent = 100 / thead.length;
 
 	switch (typeStr) {
 		case "attributes":
@@ -3107,7 +3104,7 @@ function instance$6($$self, $$props, $$invalidate) {
 		if ('max' in $$props) $$invalidate(0, max = $$props.max);
 		if ('val' in $$props) $$invalidate(3, val = $$props.val);
 		if ('key' in $$props) $$invalidate(4, key = $$props.key);
-		if ('type' in $$props) $$invalidate(12, type = $$props.type);
+		if ('type' in $$props) $$invalidate(13, type = $$props.type);
 		if ('description' in $$props) $$invalidate(1, description = $$props.description);
 		if ('typeStr' in $$props) $$invalidate(5, typeStr = $$props.typeStr);
 		if ('thead' in $$props) $$invalidate(6, thead = $$props.thead);
@@ -3115,24 +3112,24 @@ function instance$6($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[0] & /*typeStr, val, variables*/ 8232) {
+		if ($$self.$$.dirty[0] & /*typeStr, val, variables*/ 16424) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					switch (key) {
 						case "attributes":
-							$$invalidate(13, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
+							$$invalidate(14, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
 							break;
 						case "skills":
-							$$invalidate(13, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
+							$$invalidate(14, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
 							break;
 						case "features":
-							$$invalidate(13, variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0, variables);
+							$$invalidate(14, variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0, variables);
 							break;
 						case "skillsCount":
-							$$invalidate(13, variables[variable.shortName] = 1, variables);
+							$$invalidate(14, variables[variable.shortName] = 1, variables);
 							break;
 						case "featuresCount":
-							$$invalidate(13, variables[variable.shortName] = 1, variables);
+							$$invalidate(14, variables[variable.shortName] = 1, variables);
 					} //TODO: rewrite
 					//TODO: rewrite
 				}
@@ -3159,6 +3156,7 @@ function instance$6($$self, $$props, $$invalidate) {
 		cost,
 		min,
 		strMod,
+		widthPercent,
 		changeDesc,
 		last,
 		type,
@@ -3200,7 +3198,7 @@ class TDvariants extends SvelteComponent {
 				max: 0,
 				val: 3,
 				key: 4,
-				type: 12,
+				type: 13,
 				description: 1,
 				typeStr: 5,
 				thead: 6,
@@ -3350,7 +3348,6 @@ function create_fragment$5(ctx) {
 	let t3;
 	let div1;
 	let t4;
-	let div3_style_value;
 	let current;
 	let each_value_1 = /*thead*/ ctx[3];
 	let each_blocks_1 = [];
@@ -3404,7 +3401,7 @@ function create_fragment$5(ctx) {
 			attr(label, "for", "description");
 			attr(div2, "class", "description svelte-10md690");
 			attr(div3, "class", "flex flexrow");
-			attr(div3, "style", div3_style_value = "--thWitdh=" + /*cellWidth*/ ctx[6]);
+			set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6]);
 		},
 		m(target, anchor) {
 			insert(target, div3, anchor);
@@ -3485,8 +3482,8 @@ function create_fragment$5(ctx) {
 
 			if (!current || dirty & /*description*/ 16) set_data(t4, /*description*/ ctx[4]);
 
-			if (!current || dirty & /*cellWidth*/ 64 && div3_style_value !== (div3_style_value = "--thWitdh=" + /*cellWidth*/ ctx[6])) {
-				attr(div3, "style", div3_style_value);
+			if (!current || dirty & /*cellWidth*/ 64) {
+				set_style(div3, "--thWitdh", /*cellWidth*/ ctx[6]);
 			}
 		},
 		i(local) {
