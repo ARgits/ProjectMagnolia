@@ -3924,6 +3924,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	];
 
 	getContext("chaAdvActorID");
+	getContext("chaAdvAditionalData");
 
 	//update actor and do other stuff when click 'submit' button
 	async function submitData() {
@@ -3933,21 +3934,25 @@ function instance$3($$self, $$props, $$invalidate) {
 		updateObj["data.advancement.xp"] = $actorData.advancement.xp;
 		updateObj["data.isReady"] = true;
 		console.log($actorData.features);
-		let feats = [];
-		getContext('chaAdvAditionalData');
+		let feats = { new: [], exist: [] };
 
 		$actorData.features.forEach(element => {
 			const initLevel = element.data.level.initial;
 			const currentLevel = element.data.level.current;
 
 			if (initLevel > currentLevel) {
-				feats = [...feats, element];
+				if (currentLevel > 0) {
+					feats.exist = [...feats.exist, element];
+				} else {
+					feats.new = [...feats.new, element];
+				}
 			}
 		});
 
 		console.log(feats, "feats on update");
 		await actor.update(updateObj);
-		await actor.createEmbeddedDocuments("Item", feats);
+		if (feats.exist.length !== 0) await actor.updateEmbeddedDocuments("Item", feats.exist);
+		if (feats.new.length !== 0) await actor.createEmbeddedDocuments("Item", feats.new);
 		application.close();
 	}
 
