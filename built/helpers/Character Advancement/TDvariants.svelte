@@ -118,18 +118,20 @@
 
 <style>
   .last {
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
   }
   .description {
     max-width: 1em;
   }
   td {
     text-align: center;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+    /*border-right: 1px solid black;
+    border-left: 1px solid black;*/
     width: var(--cellWidth);
   }
   tr {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
+    width: 100%;
+    display: table;
   }
 </style>
