@@ -3165,15 +3165,17 @@ function create_each_block_1$3(ctx) {
 	let t0_value = /*th*/ ctx[14] + "";
 	let t0;
 	let t1;
-	let style_width = `${/*cellWidth*/ ctx[6]}px`;
+	let style_max_width = `${/*cellWidth*/ ctx[6]}px`;
+	let style_min_width = `${/*cellWidth*/ ctx[6]}px`;
 
 	return {
 		c() {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-jyp9ym");
-			set_style(th, "width", style_width, false);
+			attr(th, "class", "svelte-rcm9ao");
+			set_style(th, "max-width", style_max_width, false);
+			set_style(th, "min-width", style_min_width, false);
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -3183,8 +3185,12 @@ function create_each_block_1$3(ctx) {
 		p(ctx, dirty) {
 			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[14] + "")) set_data(t0, t0_value);
 
-			if (dirty & /*cellWidth*/ 64 && style_width !== (style_width = `${/*cellWidth*/ ctx[6]}px`)) {
-				set_style(th, "width", style_width, false);
+			if (dirty & /*cellWidth*/ 64 && style_max_width !== (style_max_width = `${/*cellWidth*/ ctx[6]}px`)) {
+				set_style(th, "max-width", style_max_width, false);
+			}
+
+			if (dirty & /*cellWidth*/ 64 && style_min_width !== (style_min_width = `${/*cellWidth*/ ctx[6]}px`)) {
+				set_style(th, "min-width", style_min_width, false);
 			}
 		},
 		d(detaching) {
@@ -3333,13 +3339,13 @@ function create_fragment$5(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-jyp9ym");
-			attr(thead_1, "class", "svelte-jyp9ym");
-			attr(tbody, "class", "svelte-jyp9ym");
-			attr(table, "class", "svelte-jyp9ym");
+			attr(tr, "class", "svelte-rcm9ao");
+			attr(thead_1, "class", "svelte-rcm9ao");
+			attr(tbody, "class", "svelte-rcm9ao");
+			attr(table, "class", "svelte-rcm9ao");
 			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-jyp9ym");
+			attr(div2, "class", "description svelte-rcm9ao");
 			attr(div3, "class", "flex flexrow");
 		},
 		m(target, anchor) {

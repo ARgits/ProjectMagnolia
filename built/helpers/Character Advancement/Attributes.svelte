@@ -46,7 +46,7 @@
     <thead>
       <tr>
         {#each thead as th}
-          <th style:width="{cellWidth}px"> {th} </th>
+          <th style:max-width="{cellWidth}px" style:min-width="{cellWidth}px"> {th} </th>
         {/each}
       </tr>
     </thead>
@@ -88,6 +88,8 @@
   }
   tr {
     border: 1px solid black;
+    width: 100%;
+    display: table;
   }
   th {
     background: rgb(100, 100, 100);
