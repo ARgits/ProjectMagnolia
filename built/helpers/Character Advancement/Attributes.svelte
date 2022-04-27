@@ -92,7 +92,6 @@
   }
   tr {
     /*border: 1px solid black;*/
-    width: 100%;
     display: table;
   }
   th {

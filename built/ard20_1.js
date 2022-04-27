@@ -3173,7 +3173,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-1a65d5w");
+			attr(th, "class", "svelte-ooz2ex");
 			set_style(th, "max-width", style_max_width, false);
 			set_style(th, "min-width", style_min_width, false);
 		},
@@ -3340,14 +3340,14 @@ function create_fragment$5(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-1a65d5w");
+			attr(tr, "class", "svelte-ooz2ex");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-1a65d5w");
-			attr(tbody, "class", "svelte-1a65d5w");
-			attr(table, "class", "svelte-1a65d5w");
+			attr(thead_1, "class", "svelte-ooz2ex");
+			attr(tbody, "class", "svelte-ooz2ex");
+			attr(table, "class", "svelte-ooz2ex");
 			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-1a65d5w");
+			attr(div2, "class", "description svelte-ooz2ex");
 			attr(div3, "class", "flex flexrow");
 		},
 		m(target, anchor) {
