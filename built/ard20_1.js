@@ -3146,8 +3146,7 @@ function create_each_block_1$3(ctx) {
 	let t0_value = /*th*/ ctx[17] + "";
 	let t0;
 	let t1;
-	let style_max_width = `${/*thWidth*/ ctx[7]}%`;
-	let style_min_width = `${/*thWidth*/ ctx[7]}%`;
+	let style_width = `${/*thWidth*/ ctx[7]}%`;
 
 	return {
 		c() {
@@ -3155,8 +3154,7 @@ function create_each_block_1$3(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			attr(th, "class", "svelte-5lx");
-			set_style(th, "max-width", style_max_width, false);
-			set_style(th, "min-width", style_min_width, false);
+			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
 			insert(target, th, anchor);
@@ -3166,12 +3164,8 @@ function create_each_block_1$3(ctx) {
 		p(ctx, dirty) {
 			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[17] + "")) set_data(t0, t0_value);
 
-			if (dirty & /*thWidth*/ 128 && style_max_width !== (style_max_width = `${/*thWidth*/ ctx[7]}%`)) {
-				set_style(th, "max-width", style_max_width, false);
-			}
-
-			if (dirty & /*thWidth*/ 128 && style_min_width !== (style_min_width = `${/*thWidth*/ ctx[7]}%`)) {
-				set_style(th, "min-width", style_min_width, false);
+			if (dirty & /*thWidth*/ 128 && style_width !== (style_width = `${/*thWidth*/ ctx[7]}%`)) {
+				set_style(th, "width", style_width, false);
 			}
 		},
 		d(detaching) {

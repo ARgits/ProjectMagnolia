@@ -49,7 +49,7 @@
     <thead>
       <tr style:width="{trWidth}px">
         {#each thead as th}
-          <th style:max-width="{thWidth}%" style:min-width="{thWidth}%"> {th} </th>
+          <th style:width="{thWidth}%"> {th} </th>
         {/each}
       </tr>
     </thead>
