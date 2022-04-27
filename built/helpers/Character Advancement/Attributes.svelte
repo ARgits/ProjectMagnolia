@@ -8,6 +8,7 @@
   let description;
   let max;
   let cellWidth
+  let trWidth 
   //TODO: reconfigure thead for localization
   switch (tabData) {
     case "attributes":
@@ -15,18 +16,21 @@
       thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
       description = "";
       max = 30;
+      trWidth = cellWidth*thead.length
       break;
     case "skills":
       typeStr = "skills";
       thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
       description = "";
       max = 4;
+      trWidth = cellWidth*thead.length
       break;
     case "features":
       typeStr = "features";
       thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
       description = "";
       max = 1;
+      trWidth = cellWidth*thead.length
       break;
   }
   $: {
@@ -44,7 +48,7 @@
   <div class="scrollable">
   <table>
     <thead>
-      <tr>
+      <tr style:width="{trWidth}px">
         {#each thead as th}
           <th style:max-width="{cellWidth}px" style:min-width="{cellWidth}px"> {th} </th>
         {/each}
@@ -93,7 +97,7 @@
   }
   th {
     background: rgb(100, 100, 100);
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     text-align: center;
     /*padding: 0.2em;*/
   }

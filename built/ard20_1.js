@@ -3148,21 +3148,21 @@ class TDvariants extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[11] = list[i];
-	child_ctx[13] = i;
+	child_ctx[12] = list[i];
+	child_ctx[14] = i;
 	return child_ctx;
 }
 
 function get_each_context_1$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[14] = list[i];
+	child_ctx[15] = list[i];
 	return child_ctx;
 }
 
-// (48:8) {#each thead as th}
+// (52:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
-	let t0_value = /*th*/ ctx[14] + "";
+	let t0_value = /*th*/ ctx[15] + "";
 	let t0;
 	let t1;
 	let style_max_width = `${/*cellWidth*/ ctx[6]}px`;
@@ -3173,7 +3173,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "svelte-15gjqfe");
+			attr(th, "class", "svelte-1a65d5w");
 			set_style(th, "max-width", style_max_width, false);
 			set_style(th, "min-width", style_min_width, false);
 		},
@@ -3183,7 +3183,7 @@ function create_each_block_1$3(ctx) {
 			append(th, t1);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[14] + "")) set_data(t0, t0_value);
+			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[15] + "")) set_data(t0, t0_value);
 
 			if (dirty & /*cellWidth*/ 64 && style_max_width !== (style_max_width = `${/*cellWidth*/ ctx[6]}px`)) {
 				set_style(th, "max-width", style_max_width, false);
@@ -3199,7 +3199,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (54:6) {#each Object.entries($data[tabData]) as attr, key}
+// (58:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$4(ctx) {
 	let tdvariants;
 	let updating_cellWidth;
@@ -3207,20 +3207,20 @@ function create_each_block$4(ctx) {
 	let current;
 
 	function tdvariants_cellWidth_binding(value) {
-		/*tdvariants_cellWidth_binding*/ ctx[8](value);
+		/*tdvariants_cellWidth_binding*/ ctx[9](value);
 	}
 
 	function tdvariants_description_binding(value) {
-		/*tdvariants_description_binding*/ ctx[9](value);
+		/*tdvariants_description_binding*/ ctx[10](value);
 	}
 
 	let tdvariants_props = {
 		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
 		thead: /*thead*/ ctx[3],
 		typeStr: /*typeStr*/ ctx[2],
-		val: /*attr*/ ctx[11],
+		val: /*attr*/ ctx[12],
 		max: /*max*/ ctx[5],
-		key: /*key*/ ctx[13]
+		key: /*key*/ ctx[14]
 	};
 
 	if (/*cellWidth*/ ctx[6] !== void 0) {
@@ -3248,7 +3248,7 @@ function create_each_block$4(ctx) {
 			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
 			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
 			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[11];
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[12];
 			if (dirty & /*max*/ 32) tdvariants_changes.max = /*max*/ ctx[5];
 
 			if (!updating_cellWidth && dirty & /*cellWidth*/ 64) {
@@ -3286,6 +3286,7 @@ function create_fragment$5(ctx) {
 	let table;
 	let thead_1;
 	let tr;
+	let style_width = `${/*trWidth*/ ctx[7]}px`;
 	let t0;
 	let tbody;
 	let t1;
@@ -3339,13 +3340,14 @@ function create_fragment$5(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-15gjqfe");
-			attr(thead_1, "class", "svelte-15gjqfe");
-			attr(tbody, "class", "svelte-15gjqfe");
-			attr(table, "class", "svelte-15gjqfe");
+			attr(tr, "class", "svelte-1a65d5w");
+			set_style(tr, "width", style_width, false);
+			attr(thead_1, "class", "svelte-1a65d5w");
+			attr(tbody, "class", "svelte-1a65d5w");
+			attr(table, "class", "svelte-1a65d5w");
 			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-15gjqfe");
+			attr(div2, "class", "description svelte-1a65d5w");
 			attr(div3, "class", "flex flexrow");
 		},
 		m(target, anchor) {
@@ -3396,6 +3398,10 @@ function create_fragment$5(ctx) {
 				}
 
 				each_blocks_1.length = each_value_1.length;
+			}
+
+			if (dirty & /*trWidth*/ 128 && style_width !== (style_width = `${/*trWidth*/ ctx[7]}px`)) {
+				set_style(tr, "width", style_width, false);
 			}
 
 			if (dirty & /*$data, tabData, thead, typeStr, Object, max, cellWidth, description*/ 127) {
@@ -3463,6 +3469,7 @@ function instance$5($$self, $$props, $$invalidate) {
 	let description;
 	let max;
 	let cellWidth;
+	let trWidth;
 
 	//TODO: reconfigure thead for localization
 	switch (tabData) {
@@ -3471,18 +3478,21 @@ function instance$5($$self, $$props, $$invalidate) {
 			thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
 			description = "";
 			max = 30;
+			trWidth = cellWidth * thead.length;
 			break;
 		case "skills":
 			typeStr = "skills";
 			thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
 			description = "";
 			max = 4;
+			trWidth = cellWidth * thead.length;
 			break;
 		case "features":
 			typeStr = "features";
 			thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
 			description = "";
 			max = 1;
+			trWidth = cellWidth * thead.length;
 			break;
 	}
 
@@ -3526,6 +3536,7 @@ function instance$5($$self, $$props, $$invalidate) {
 		description,
 		max,
 		cellWidth,
+		trWidth,
 		data,
 		tdvariants_cellWidth_binding,
 		tdvariants_description_binding
