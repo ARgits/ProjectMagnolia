@@ -67,7 +67,7 @@
 <tr style="--cellWidth:{widthPercent}%">
   {#if thead.includes("Name")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td bind:offsetWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
+    <td bind:clientWidth={cellWidth} class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>
   {/if}
   {#if thead.includes("Source")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->

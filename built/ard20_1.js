@@ -3007,7 +3007,7 @@ function instance$6($$self, $$props, $$invalidate) {
 	let last = key === Object.values(type).length - 1 ? "last" : "";
 
 	function td_elementresize_handler() {
-		cellWidth = this.offsetWidth;
+		cellWidth = this.clientWidth;
 		$$invalidate(2, cellWidth);
 	}
 
