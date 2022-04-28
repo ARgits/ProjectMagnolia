@@ -7314,7 +7314,7 @@ function create_each_block(ctx) {
 			attr(label1, "for", "setting.label");
 			attr(input1, "type", "text");
 			attr(button, "class", "minus far fa-minus-square");
-			attr(div, "class", "grid grid-4col");
+			attr(div, "class", "grid grid-5col");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -7504,7 +7504,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(1, settings);
 	}
 
-	async function deleteEntry(key) {
+	async function deleteEntry(id) {
 		const index = settings.findIndex(entry => entry.id === id);
 
 		if (index >= 0) {

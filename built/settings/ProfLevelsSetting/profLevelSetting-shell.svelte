@@ -14,7 +14,7 @@
     await game.settings.set("ard20", "profLevel", settings);
     settings = settings;
   }
-  async function deleteEntry(key) {
+  async function deleteEntry(id) {
     const index = settings.findIndex((entry) => entry.id === id);
     if (index >= 0) {
       settings.splice(index, 1);
@@ -30,7 +30,7 @@
 
 <ApplicationShell bind:elementRoot>
   {#each settings as setting}
-    <div class="grid grid-4col">
+    <div class="grid grid-5col">
       <label for="setting.key">Key:</label>
       <input bind:value={setting.key} on:change={changeSetting} type="text" />
       <label for="setting.label">Name</label>
