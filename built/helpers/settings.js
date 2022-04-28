@@ -1,7 +1,7 @@
 import { AdvRateSettingsShim } from "../settings/advancement-rate/advancement-rate.js";
 import { FeatSettingsShim } from "../settings/FeatSetting/featSetting.js";
 import { ProfSettingsShim } from "../settings/ProfSetting/profSetting.js";
-import {ProfLevelSettingShim} from '../settings/ProfLevelsSetting/profLevelSetting.js'
+import { ProfLevelSettingShim } from "../settings/ProfLevelsSetting/profLevelSetting.js";
 export const registerSystemSettings = function () {
   game.settings.register("ard20", "proficiencies", {
     scope: "world",
@@ -103,23 +103,23 @@ export const registerSystemSettings = function () {
     type: AdvRateSettingsShim,
     restricted: false,
   });
-  game.settings.register('ard20','profLevel',{
-    scope:'world',
-    config:false,
-    default:[
-      {key:'untrained',label:'Untrained',id:"untrained"},
-      {key:'trained',label:'Trained',id:"trained"},
-      {key:'expert',label:'Expert',id:"expert"},
-      {key:'master',label:'Master',id:"master"},
-      {key:'legend',label:'Legend',id:"legend"}
-    ]
+  game.settings.register("ard20", "profLevel", {
+    scope: "world",
+    config: false,
+    default: [
+      { key: "untrained", label: "Untrained", id: "untrained" },
+      { key: "trained", label: "Trained", id: "trained" },
+      { key: "expert", label: "Expert", id: "expert" },
+      { key: "master", label: "Master", id: "master" },
+      { key: "legend", label: "Legend", id: "legend" },
+    ],
   });
-  game.setting.registerMenu('ard20','profLevel',{
-    name:'SETTINGS.profLevel',
-    label:'SETTINGS.profLevel',
-    type:ProfLevelSettingShim,
-    restricted:false
-  })
+  game.setting.registerMenu("ard20", "profLevel", {
+    name: "SETTINGS.profLevel",
+    label: "SETTINGS.profLevel",
+    type: ProfLevelSettingShim,
+    restricted: false,
+  });
 };
 class ProfFormApp extends FormApplication {
   static get defaultOptions() {
