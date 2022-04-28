@@ -7796,7 +7796,7 @@ const registerSystemSettings = function registerSystemSettings() {
       id: "legend"
     }]
   });
-  game.setting.registerMenu("ard20", "profLevel", {
+  game.setting.registerMenu("ard20", "profLevelMenu", {
     name: "SETTINGS.profLevel",
     label: "SETTINGS.profLevel",
     type: ProfLevelSettingShim,
