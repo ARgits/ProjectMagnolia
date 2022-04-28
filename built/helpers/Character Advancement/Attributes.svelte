@@ -23,7 +23,7 @@
       typeStr = "skills";
       thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
       description = "";
-      max = settings.length;
+      max = settings.length-1;
       break;
     case "features":
       typeStr = "features";
