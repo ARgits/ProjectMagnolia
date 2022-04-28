@@ -1042,7 +1042,7 @@ class ARd20Item extends Item {
   _setTypeAndSubtype(data, flags) {
     var _flags$core, _game$i18n$localize, _game$i18n$localize2;
 
-    data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.filter(prof => prof.type === data.type.value);
+    data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.value.filter(prof => prof.type === data.type.value);
 
     if ((_flags$core = flags.core) !== null && _flags$core !== void 0 && _flags$core.sourceId) {
       const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
