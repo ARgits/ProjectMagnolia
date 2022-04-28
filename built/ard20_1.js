@@ -4279,14 +4279,12 @@ class ARd20ActorSheet extends ActorSheet {
       //@ts-expect-error
       v.label = (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
-
-    for (let [k, v] of obj_entries$1(context.data.skills)) {
-      var _game$i18n$localize2, _game$i18n$localize3;
-
+    /*for (let [k, v] of obj_entries(context.data.skills)) {
       //@ts-expect-error
-      v.name = (_game$i18n$localize2 = game.i18n.localize(getValues$1(CONFIG.ARd20.Skills, k))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k;
-      v.rank_name = (_game$i18n$localize3 = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, v.rank))) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : v.rank;
-    }
+      v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
+      v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
+    }*/
+
   }
   /**
    * Organize and classify Items for Character sheets.
@@ -8313,16 +8311,18 @@ class ARd20Actor extends Actor {
 
       def_dam.mag[key].value = (_def_dam$mag$key = def_dam.mag[key]) !== null && _def_dam$mag$key !== void 0 && _def_dam$mag$key.value || ((_def_dam$mag$key2 = def_dam.mag[key]) === null || _def_dam$mag$key2 === void 0 ? void 0 : _def_dam$mag$key2.type) !== "imm" ? Math.max(isNaN((_def_dam$mag$key3 = def_dam.mag[key]) === null || _def_dam$mag$key3 === void 0 ? void 0 : _def_dam$mag$key3.value) ? 0 : def_dam.mag[key].value) + ((_def_dam$mag$key4 = def_dam.mag[key]) === null || _def_dam$mag$key4 === void 0 ? void 0 : _def_dam$mag$key4.bonus) : 0;
       def_dam.mag[key].name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.DamageSubTypes[key];
-    } //calculate rolls for character's skills
+    }
 
+    const profLevelSetting = game.settings.get("ard20", "profLevel");
+    const maxProfLevel = profLevelSetting.length - 1; //calculate rolls for character's skills
 
     for (let [key, skill] of obj_entries$1(data.skills)) {
-      var _game$i18n$localize3, _game$i18n$localize4;
+      var _game$i18n$localize3;
 
-      skill.level = skill.level < 4 ? skill.level : 4;
+      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
       skill.value = skill.level * 4 + skill.bonus;
       skill.name = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Skills[key];
-      skill.rankName = (_game$i18n$localize4 = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, skill.level))) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : getValues$1(CONFIG.ARd20.Rank, skill.level);
+      skill.rankName = profLevelSetting[skill.level].label;
     }
 
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
