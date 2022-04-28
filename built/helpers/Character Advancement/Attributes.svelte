@@ -3,6 +3,7 @@
   import TDvariants from "./TDvariants.svelte";
   export let tabData;
   let data = getContext("chaAdvActorData");
+  const settings = game.settings.get('ard20','profLevel')
   let typeStr;
   let thead;
   let description;
@@ -22,7 +23,7 @@
       typeStr = "skills";
       thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
       description = "";
-      max = 4;
+      max = settings.length;
       break;
     case "features":
       typeStr = "features";
@@ -37,7 +38,7 @@
       attr.mod = Math.floor((attr.value - 10) / 2);
     }
   }
-  const rankName = ["untrained", "trained", "expert", "master", "legend"];
+  const rankName = settings.map((setting)=>{return setting.label})
   $: for (let [key, skill] of Object.entries($data.skills)) {
     skill.rankName = rankName[skill.level];
   }

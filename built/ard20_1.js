@@ -3129,21 +3129,21 @@ class TDvariants extends SvelteComponent {
 
 function get_each_context$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[14] = list[i];
-	child_ctx[16] = i;
+	child_ctx[15] = list[i];
+	child_ctx[17] = i;
 	return child_ctx;
 }
 
 function get_each_context_1$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[17] = list[i];
+	child_ctx[18] = list[i];
 	return child_ctx;
 }
 
-// (51:8) {#each thead as th}
+// (52:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
-	let t0_value = /*th*/ ctx[17] + "";
+	let t0_value = /*th*/ ctx[18] + "";
 	let t0;
 	let t1;
 	let style_width = `${/*thWidth*/ ctx[7]}%`;
@@ -3162,7 +3162,7 @@ function create_each_block_1$3(ctx) {
 			append(th, t1);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[17] + "")) set_data(t0, t0_value);
+			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[18] + "")) set_data(t0, t0_value);
 
 			if (dirty & /*thWidth*/ 128 && style_width !== (style_width = `${/*thWidth*/ ctx[7]}%`)) {
 				set_style(th, "width", style_width, false);
@@ -3174,7 +3174,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (57:6) {#each Object.entries($data[tabData]) as attr, key}
+// (58:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$5(ctx) {
 	let tdvariants;
 	let updating_trWidth;
@@ -3198,9 +3198,9 @@ function create_each_block$5(ctx) {
 		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
 		thead: /*thead*/ ctx[3],
 		typeStr: /*typeStr*/ ctx[2],
-		val: /*attr*/ ctx[14],
+		val: /*attr*/ ctx[15],
 		max: /*max*/ ctx[5],
-		key: /*key*/ ctx[16]
+		key: /*key*/ ctx[17]
 	};
 
 	if (/*trWidth*/ ctx[8] !== void 0) {
@@ -3233,7 +3233,7 @@ function create_each_block$5(ctx) {
 			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
 			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
 			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[14];
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[15];
 			if (dirty & /*max*/ 32) tdvariants_changes.max = /*max*/ ctx[5];
 
 			if (!updating_trWidth && dirty & /*trWidth*/ 256) {
@@ -3455,6 +3455,7 @@ function instance$6($$self, $$props, $$invalidate) {
 	let { tabData } = $$props;
 	let data = getContext("chaAdvActorData");
 	component_subscribe($$self, data, value => $$invalidate(1, $data = value));
+	const settings = game.settings.get('ard20', 'profLevel');
 	let typeStr;
 	let thead;
 	let description;
@@ -3475,7 +3476,7 @@ function instance$6($$self, $$props, $$invalidate) {
 			typeStr = "skills";
 			thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
 			description = "";
-			max = 4;
+			max = settings.length;
 			break;
 		case "features":
 			typeStr = "features";
@@ -3486,7 +3487,10 @@ function instance$6($$self, $$props, $$invalidate) {
 	}
 
 	thWidth = 100 / thead.length;
-	const rankName = ["untrained", "trained", "expert", "master", "legend"];
+
+	const rankName = settings.map(setting => {
+		return setting.label;
+	});
 
 	function tdvariants_trWidth_binding(value) {
 		trWidth = value;
