@@ -24,6 +24,7 @@
   }
   async function changeSetting() {
     await game.settings.set("ard20", "profLevel", settings);
+    
     console.log(settings);
   }
 </script>

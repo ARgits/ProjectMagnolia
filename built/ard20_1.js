@@ -7270,7 +7270,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (32:2) {#each settings as setting}
+// (33:2) {#each settings as setting}
 function create_each_block(ctx) {
 	let div;
 	let label0;
@@ -7363,7 +7363,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (31:0) <ApplicationShell bind:elementRoot>
+// (32:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let t;
 	let button;
