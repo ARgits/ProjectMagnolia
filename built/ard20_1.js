@@ -2240,7 +2240,7 @@ function create_if_block_10(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 			add_render_callback(() => /*td_elementresize_handler*/ ctx[16].call(td));
 		},
 		m(target, anchor) {
@@ -2278,7 +2278,7 @@ function create_if_block_9(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2321,7 +2321,7 @@ function create_if_block_8(ctx) {
 		c() {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2372,7 +2372,7 @@ function create_if_block_7(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2407,7 +2407,7 @@ function create_if_block_6(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2442,7 +2442,7 @@ function create_if_block_5(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2477,7 +2477,7 @@ function create_if_block_4(ctx) {
 		c() {
 			td = element("td");
 			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2519,7 +2519,7 @@ function create_if_block_3(ctx) {
 		c() {
 			td = element("td");
 			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2567,7 +2567,7 @@ function create_if_block_2(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*strMod*/ ctx[10]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2600,7 +2600,7 @@ function create_if_block_1(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*cost*/ ctx[8]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-eqyn0v"));
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
@@ -2632,7 +2632,7 @@ function create_if_block$2(ctx) {
 		c() {
 			td = element("td");
 			t = text(/*description*/ ctx[1]);
-			attr(td, "class", "description svelte-eqyn0v");
+			attr(td, "class", "description svelte-1qwk71v");
 			attr(td, "rowspan", td_rowspan_value = /*thead*/ ctx[7].length);
 		},
 		m(target, anchor) {
@@ -2714,7 +2714,7 @@ function create_fragment$7(ctx) {
 			t9 = space();
 			if (if_block10) if_block10.c();
 			set_style(tr, "--cellWidth", /*widthPercent*/ ctx[11] + "%");
-			attr(tr, "class", "svelte-eqyn0v");
+			attr(tr, "class", "svelte-1qwk71v");
 			add_render_callback(() => /*tr_elementresize_handler*/ ctx[27].call(tr));
 		},
 		m(target, anchor) {
@@ -3153,7 +3153,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "last svelte-5juqd0");
+			attr(th, "class", "last svelte-1wrfyja");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3331,14 +3331,14 @@ function create_fragment$6(ctx) {
 			t3 = space();
 			div1 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-5juqd0");
+			attr(tr, "class", "svelte-1wrfyja");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-5juqd0");
-			attr(tbody, "class", "svelte-5juqd0");
-			attr(table, "class", "svelte-5juqd0");
+			attr(thead_1, "class", "svelte-1wrfyja");
+			attr(tbody, "class", "svelte-1wrfyja");
+			attr(table, "class", "svelte-1wrfyja");
 			attr(div0, "class", "scrollable");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-5juqd0");
+			attr(div2, "class", "description svelte-1wrfyja");
 			attr(div3, "class", "flex flexrow");
 		},
 		m(target, anchor) {

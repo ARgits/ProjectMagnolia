@@ -99,6 +99,7 @@
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;
+    word-break: break-all;
   }
   th:last-child{
     border-right: 0px;

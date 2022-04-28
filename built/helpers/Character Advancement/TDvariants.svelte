@@ -129,6 +129,7 @@
     border-right: 1px solid black;
     border-left: 1px solid black;
     width: var(--cellWidth);
+    word-break: break-all;
   }
   tr {
     border: 1px solid black;
