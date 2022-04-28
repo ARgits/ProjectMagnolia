@@ -30,16 +30,18 @@
 
 <ApplicationShell bind:elementRoot>
   {#each settings as setting}
-    <label for="setting.key">Key:</label>
-    <input bind:value={setting.key} on:change={changeSetting} type="text" />
-    <label for="setting.label">Name</label>
-    <input bind:value={setting.label} on:change={changeSetting} type="text" />
-    <button
-      class="minus far fa-minus-square"
-      on:click={() => {
-        deleteEntry(setting.id);
-      }}
-    />
+    <div class="grid grid-4col">
+      <label for="setting.key">Key:</label>
+      <input bind:value={setting.key} on:change={changeSetting} type="text" />
+      <label for="setting.label">Name</label>
+      <input bind:value={setting.label} on:change={changeSetting} type="text" />
+      <button
+        class="minus far fa-minus-square"
+        on:click={() => {
+          deleteEntry(setting.id);
+        }}
+      />
+    </div>
   {/each}
   <button on:click={addEntry} class="add far fa-plus-square" />
 </ApplicationShell>

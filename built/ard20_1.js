@@ -7270,6 +7270,7 @@ function get_each_context(ctx, list, i) {
 
 // (32:2) {#each settings as setting}
 function create_each_block(ctx) {
+	let div;
 	let label0;
 	let t1;
 	let input0;
@@ -7296,6 +7297,7 @@ function create_each_block(ctx) {
 
 	return {
 		c() {
+			div = element("div");
 			label0 = element("label");
 			label0.textContent = "Key:";
 			t1 = space();
@@ -7312,19 +7314,21 @@ function create_each_block(ctx) {
 			attr(label1, "for", "setting.label");
 			attr(input1, "type", "text");
 			attr(button, "class", "minus far fa-minus-square");
+			attr(div, "class", "grid grid-4col");
 		},
 		m(target, anchor) {
-			insert(target, label0, anchor);
-			insert(target, t1, anchor);
-			insert(target, input0, anchor);
+			insert(target, div, anchor);
+			append(div, label0);
+			append(div, t1);
+			append(div, input0);
 			set_input_value(input0, /*setting*/ ctx[9].key);
-			insert(target, t2, anchor);
-			insert(target, label1, anchor);
-			insert(target, t4, anchor);
-			insert(target, input1, anchor);
+			append(div, t2);
+			append(div, label1);
+			append(div, t4);
+			append(div, input1);
 			set_input_value(input1, /*setting*/ ctx[9].label);
-			insert(target, t5, anchor);
-			insert(target, button, anchor);
+			append(div, t5);
+			append(div, button);
 
 			if (!mounted) {
 				dispose = [
@@ -7350,15 +7354,7 @@ function create_each_block(ctx) {
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(label0);
-			if (detaching) detach(t1);
-			if (detaching) detach(input0);
-			if (detaching) detach(t2);
-			if (detaching) detach(label1);
-			if (detaching) detach(t4);
-			if (detaching) detach(input1);
-			if (detaching) detach(t5);
-			if (detaching) detach(button);
+			if (detaching) detach(div);
 			mounted = false;
 			run_all(dispose);
 		}
