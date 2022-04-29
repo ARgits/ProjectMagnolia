@@ -7264,13 +7264,13 @@ class ProfSetting extends SvelteApplication {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
-	child_ctx[10] = list;
-	child_ctx[11] = i;
+	child_ctx[10] = list[i];
+	child_ctx[11] = list;
+	child_ctx[12] = i;
 	return child_ctx;
 }
 
-// (33:2) {#each settings as setting}
+// (40:2) {#each settings as setting}
 function create_each_block(ctx) {
 	let div;
 	let label0;
@@ -7286,15 +7286,15 @@ function create_each_block(ctx) {
 	let dispose;
 
 	function input0_input_handler() {
-		/*input0_input_handler*/ ctx[5].call(input0, /*each_value*/ ctx[10], /*setting_index*/ ctx[11]);
+		/*input0_input_handler*/ ctx[5].call(input0, /*each_value*/ ctx[11], /*setting_index*/ ctx[12]);
 	}
 
 	function input1_input_handler() {
-		/*input1_input_handler*/ ctx[6].call(input1, /*each_value*/ ctx[10], /*setting_index*/ ctx[11]);
+		/*input1_input_handler*/ ctx[6].call(input1, /*each_value*/ ctx[11], /*setting_index*/ ctx[12]);
 	}
 
 	function click_handler() {
-		return /*click_handler*/ ctx[7](/*setting*/ ctx[9]);
+		return /*click_handler*/ ctx[7](/*setting*/ ctx[10]);
 	}
 
 	return {
@@ -7323,21 +7323,19 @@ function create_each_block(ctx) {
 			append(div, label0);
 			append(div, t1);
 			append(div, input0);
-			set_input_value(input0, /*setting*/ ctx[9].key);
+			set_input_value(input0, /*setting*/ ctx[10].key);
 			append(div, t2);
 			append(div, label1);
 			append(div, t4);
 			append(div, input1);
-			set_input_value(input1, /*setting*/ ctx[9].label);
+			set_input_value(input1, /*setting*/ ctx[10].label);
 			append(div, t5);
 			append(div, button);
 
 			if (!mounted) {
 				dispose = [
 					listen(input0, "input", input0_input_handler),
-					listen(input0, "change", /*changeSetting*/ ctx[4]),
 					listen(input1, "input", input1_input_handler),
-					listen(input1, "change", /*changeSetting*/ ctx[4]),
 					listen(button, "click", click_handler)
 				];
 
@@ -7347,12 +7345,12 @@ function create_each_block(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*settings*/ 2 && input0.value !== /*setting*/ ctx[9].key) {
-				set_input_value(input0, /*setting*/ ctx[9].key);
+			if (dirty & /*settings*/ 2 && input0.value !== /*setting*/ ctx[10].key) {
+				set_input_value(input0, /*setting*/ ctx[10].key);
 			}
 
-			if (dirty & /*settings*/ 2 && input1.value !== /*setting*/ ctx[9].label) {
-				set_input_value(input1, /*setting*/ ctx[9].label);
+			if (dirty & /*settings*/ 2 && input1.value !== /*setting*/ ctx[10].label) {
+				set_input_value(input1, /*setting*/ ctx[10].label);
 			}
 		},
 		d(detaching) {
@@ -7363,10 +7361,12 @@ function create_each_block(ctx) {
 	};
 }
 
-// (32:0) <ApplicationShell bind:elementRoot>
+// (38:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
-	let t;
-	let button;
+	let button0;
+	let t1;
+	let t2;
+	let button1;
 	let mounted;
 	let dispose;
 	let each_value = /*settings*/ ctx[1];
@@ -7378,29 +7378,40 @@ function create_default_slot(ctx) {
 
 	return {
 		c() {
+			button0 = element("button");
+			button0.textContent = "Add level";
+			t1 = space();
+
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t = space();
-			button = element("button");
-			attr(button, "class", "add far fa-plus-square");
+			t2 = space();
+			button1 = element("button");
+			button1.textContent = "Submit";
 		},
 		m(target, anchor) {
+			insert(target, button0, anchor);
+			insert(target, t1, anchor);
+
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(target, anchor);
 			}
 
-			insert(target, t, anchor);
-			insert(target, button, anchor);
+			insert(target, t2, anchor);
+			insert(target, button1, anchor);
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*addEntry*/ ctx[2]);
+				dispose = [
+					listen(button0, "click", /*addEntry*/ ctx[2]),
+					listen(button1, "click", /*Submit*/ ctx[4])
+				];
+
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*deleteEntry, settings, changeSetting*/ 26) {
+			if (dirty & /*deleteEntry, settings*/ 10) {
 				each_value = /*settings*/ ctx[1];
 				let i;
 
@@ -7412,7 +7423,7 @@ function create_default_slot(ctx) {
 					} else {
 						each_blocks[i] = create_each_block(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(t.parentNode, t);
+						each_blocks[i].m(t2.parentNode, t2);
 					}
 				}
 
@@ -7424,11 +7435,13 @@ function create_default_slot(ctx) {
 			}
 		},
 		d(detaching) {
+			if (detaching) detach(button0);
+			if (detaching) detach(t1);
 			destroy_each(each_blocks, detaching);
-			if (detaching) detach(t);
-			if (detaching) detach(button);
+			if (detaching) detach(t2);
+			if (detaching) detach(button1);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
@@ -7465,7 +7478,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, settings*/ 4098) {
+			if (dirty & /*$$scope, settings*/ 8194) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -7496,29 +7509,35 @@ function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let settings = game.settings.get("ard20", "profLevel");
 
-	async function addEntry() {
+	function addEntry() {
 		const key = "newKey";
 		const label = `New level`;
 		const id = uuidv4();
 		$$invalidate(1, settings = [...settings, { key, label, id }]);
 		console.log(settings);
-		await game.settings.set("ard20", "profLevel", settings);
+
+		//await game.settings.set("ard20", "profLevel", settings);
 		$$invalidate(1, settings);
 	}
 
-	async function deleteEntry(id) {
+	function deleteEntry(id) {
 		const index = settings.findIndex(entry => entry.id === id);
 
 		if (index >= 0) {
 			settings.splice(index, 1);
-			await game.settings.set("ard20", "profLevel", settings);
+
+			//await game.settings.set("ard20", "profLevel", settings);
 			$$invalidate(1, settings);
 		}
 	}
 
-	async function changeSetting() {
+	async function Submit() {
 		await game.settings.set("ard20", "profLevel", settings);
-		console.log(settings);
+
+		game.actors.forEach(actor => {
+			actor.prepareData();
+			actor._sheet.render(true);
+		});
 	}
 
 	function input0_input_handler(each_value, setting_index) {
@@ -7549,7 +7568,7 @@ function instance($$self, $$props, $$invalidate) {
 		settings,
 		addEntry,
 		deleteEntry,
-		changeSetting,
+		Submit,
 		input0_input_handler,
 		input1_input_handler,
 		click_handler,
