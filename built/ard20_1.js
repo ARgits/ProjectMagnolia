@@ -5566,16 +5566,16 @@ class ARd20SocketHandler {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[11] = list[i];
-	child_ctx[12] = list;
-	child_ctx[13] = i;
+	child_ctx[9] = list[i];
+	child_ctx[10] = list;
+	child_ctx[11] = i;
 	return child_ctx;
 }
 
-// (30:10) {#each Object.values(advancementSetting.variables) as variable}
+// (27:10) {#each Object.values(advancementSetting.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[11].longName + "";
+	let t0_value = /*variable*/ ctx[9].longName + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -5584,7 +5584,7 @@ function create_each_block$3(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[12], /*variable_index*/ ctx[13]);
+		/*input_input_handler*/ ctx[4].call(input, /*each_value*/ ctx[10], /*variable_index*/ ctx[11]);
 	}
 
 	return {
@@ -5593,7 +5593,7 @@ function create_each_block$3(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			input = element("input");
-			attr(label, "for", label_for_value = /*variable*/ ctx[11].longName);
+			attr(label, "for", label_for_value = /*variable*/ ctx[9].longName);
 			attr(input, "placeholder", "shortName");
 		},
 		m(target, anchor) {
@@ -5601,27 +5601,23 @@ function create_each_block$3(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*variable*/ ctx[11].shortName);
+			set_input_value(input, /*variable*/ ctx[9].shortName);
 
 			if (!mounted) {
-				dispose = [
-					listen(input, "input", input_input_handler),
-					listen(input, "change", /*changeSetting*/ ctx[3])
-				];
-
+				dispose = listen(input, "input", input_input_handler);
 				mounted = true;
 			}
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, advancementSetting*/ 4 && t0_value !== (t0_value = /*variable*/ ctx[11].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, advancementSetting*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[9].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, advancementSetting*/ 4 && label_for_value !== (label_for_value = /*variable*/ ctx[11].longName)) {
+			if (dirty & /*Object, advancementSetting*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[9].longName)) {
 				attr(label, "for", label_for_value);
 			}
 
-			if (dirty & /*Object, advancementSetting*/ 4 && input.value !== /*variable*/ ctx[11].shortName) {
-				set_input_value(input, /*variable*/ ctx[11].shortName);
+			if (dirty & /*Object, advancementSetting*/ 2 && input.value !== /*variable*/ ctx[9].shortName) {
+				set_input_value(input, /*variable*/ ctx[9].shortName);
 			}
 		},
 		d(detaching) {
@@ -5629,14 +5625,13 @@ function create_each_block$3(ctx) {
 			if (detaching) detach(t1);
 			if (detaching) detach(input);
 			mounted = false;
-			run_all(dispose);
+			dispose();
 		}
 	};
 }
 
-// (24:0) <ApplicationShell bind:elementRoot>
+// (22:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
-	let form_1;
 	let section0;
 	let div1;
 	let label0;
@@ -5662,9 +5657,11 @@ function create_default_slot$3(ctx) {
 	let label3;
 	let t12;
 	let input2;
+	let t13;
+	let button;
 	let mounted;
 	let dispose;
-	let each_value = Object.values(/*advancementSetting*/ ctx[2].variables);
+	let each_value = Object.values(/*advancementSetting*/ ctx[1].variables);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -5673,7 +5670,6 @@ function create_default_slot$3(ctx) {
 
 	return {
 		c() {
-			form_1 = element("form");
 			section0 = element("section");
 			div1 = element("div");
 			label0 = element("label");
@@ -5708,6 +5704,9 @@ function create_default_slot$3(ctx) {
 			label3.textContent = "Feature Advancement Formula";
 			t12 = space();
 			input2 = element("input");
+			t13 = space();
+			button = element("button");
+			button.textContent = "Submit";
 			attr(label0, "for", "Custom Values");
 			attr(div0, "class", "grid grid-2col");
 			attr(label1, "for", "Attribute Formula");
@@ -5716,11 +5715,9 @@ function create_default_slot$3(ctx) {
 			attr(input1, "type", "text");
 			attr(label3, "for", "Feature Formula");
 			attr(input2, "type", "text");
-			attr(form_1, "autocomplete", "off");
 		},
 		m(target, anchor) {
-			insert(target, form_1, anchor);
-			append(form_1, section0);
+			insert(target, section0, anchor);
 			append(section0, div1);
 			append(div1, label0);
 			append(div1, t1);
@@ -5730,13 +5727,13 @@ function create_default_slot$3(ctx) {
 				each_blocks[i].m(div0, null);
 			}
 
-			append(form_1, t2);
-			append(form_1, section1);
+			insert(target, t2, anchor);
+			insert(target, section1, anchor);
 			append(section1, div2);
 			append(div2, label1);
 			append(div2, t4);
 			append(div2, input0);
-			set_input_value(input0, /*advancementSetting*/ ctx[2].formulas.attributes);
+			set_input_value(input0, /*advancementSetting*/ ctx[1].formulas.attributes);
 			append(section1, t5);
 			append(section1, br0);
 			append(section1, t6);
@@ -5744,7 +5741,7 @@ function create_default_slot$3(ctx) {
 			append(div3, label2);
 			append(div3, t8);
 			append(div3, input1);
-			set_input_value(input1, /*advancementSetting*/ ctx[2].formulas.skills);
+			set_input_value(input1, /*advancementSetting*/ ctx[1].formulas.skills);
 			append(section1, t9);
 			append(section1, br1);
 			append(section1, t10);
@@ -5752,25 +5749,24 @@ function create_default_slot$3(ctx) {
 			append(div4, label3);
 			append(div4, t12);
 			append(div4, input2);
-			set_input_value(input2, /*advancementSetting*/ ctx[2].formulas.features);
-			/*form_1_binding*/ ctx[9](form_1);
+			set_input_value(input2, /*advancementSetting*/ ctx[1].formulas.features);
+			insert(target, t13, anchor);
+			insert(target, button, anchor);
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "change", /*changeSetting*/ ctx[3]),
-					listen(input0, "input", /*input0_input_handler*/ ctx[6]),
-					listen(input1, "change", /*changeSetting*/ ctx[3]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[7]),
-					listen(input2, "change", /*changeSetting*/ ctx[3]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[8])
+					listen(input0, "input", /*input0_input_handler*/ ctx[5]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[6]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[7]),
+					listen(button, "click", /*Submit*/ ctx[2])
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*Object, advancementSetting, changeSetting*/ 12) {
-				each_value = Object.values(/*advancementSetting*/ ctx[2].variables);
+			if (dirty & /*Object, advancementSetting*/ 2) {
+				each_value = Object.values(/*advancementSetting*/ ctx[1].variables);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -5792,22 +5788,25 @@ function create_default_slot$3(ctx) {
 				each_blocks.length = each_value.length;
 			}
 
-			if (dirty & /*advancementSetting*/ 4 && input0.value !== /*advancementSetting*/ ctx[2].formulas.attributes) {
-				set_input_value(input0, /*advancementSetting*/ ctx[2].formulas.attributes);
+			if (dirty & /*advancementSetting*/ 2 && input0.value !== /*advancementSetting*/ ctx[1].formulas.attributes) {
+				set_input_value(input0, /*advancementSetting*/ ctx[1].formulas.attributes);
 			}
 
-			if (dirty & /*advancementSetting*/ 4 && input1.value !== /*advancementSetting*/ ctx[2].formulas.skills) {
-				set_input_value(input1, /*advancementSetting*/ ctx[2].formulas.skills);
+			if (dirty & /*advancementSetting*/ 2 && input1.value !== /*advancementSetting*/ ctx[1].formulas.skills) {
+				set_input_value(input1, /*advancementSetting*/ ctx[1].formulas.skills);
 			}
 
-			if (dirty & /*advancementSetting*/ 4 && input2.value !== /*advancementSetting*/ ctx[2].formulas.features) {
-				set_input_value(input2, /*advancementSetting*/ ctx[2].formulas.features);
+			if (dirty & /*advancementSetting*/ 2 && input2.value !== /*advancementSetting*/ ctx[1].formulas.features) {
+				set_input_value(input2, /*advancementSetting*/ ctx[1].formulas.features);
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(form_1);
+			if (detaching) detach(section0);
 			destroy_each(each_blocks, detaching);
-			/*form_1_binding*/ ctx[9](null);
+			if (detaching) detach(t2);
+			if (detaching) detach(section1);
+			if (detaching) detach(t13);
+			if (detaching) detach(button);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -5820,7 +5819,7 @@ function create_fragment$3(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[10](value);
+		/*applicationshell_elementRoot_binding*/ ctx[8](value);
 	}
 
 	let applicationshell_props = {
@@ -5828,8 +5827,8 @@ function create_fragment$3(ctx) {
 		$$scope: { ctx }
 	};
 
-	if (/*elementRoot*/ ctx[1] !== void 0) {
-		applicationshell_props.elementRoot = /*elementRoot*/ ctx[1];
+	if (/*elementRoot*/ ctx[0] !== void 0) {
+		applicationshell_props.elementRoot = /*elementRoot*/ ctx[0];
 	}
 
 	applicationshell = new ApplicationShell({ props: applicationshell_props });
@@ -5846,13 +5845,13 @@ function create_fragment$3(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, form, advancementSetting, Object*/ 16389) {
+			if (dirty & /*$$scope, advancementSetting, Object*/ 4098) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
-			if (!updating_elementRoot && dirty & /*elementRoot*/ 2) {
+			if (!updating_elementRoot && dirty & /*elementRoot*/ 1) {
 				updating_elementRoot = true;
-				applicationshell_changes.elementRoot = /*elementRoot*/ ctx[1];
+				applicationshell_changes.elementRoot = /*elementRoot*/ ctx[0];
 				add_flush_callback(() => updating_elementRoot = false);
 			}
 
@@ -5874,62 +5873,52 @@ function create_fragment$3(ctx) {
 }
 
 function instance$3($$self, $$props, $$invalidate) {
-	let { form } = $$props;
 	let advancementSetting = game.settings.get("ard20", "advancement-rate");
 	let { elementRoot } = $$props;
 	let attributeFormula;
 
-	async function changeSetting() {
+	async function Submit() {
 		await game.settings.set("ard20", "advancement-rate", advancementSetting);
-		console.log("change");
 	}
 
 	function input_input_handler(each_value, variable_index) {
 		each_value[variable_index].shortName = this.value;
-		$$invalidate(2, advancementSetting);
+		$$invalidate(1, advancementSetting);
 	}
 
 	function input0_input_handler() {
 		advancementSetting.formulas.attributes = this.value;
-		$$invalidate(2, advancementSetting);
+		$$invalidate(1, advancementSetting);
 	}
 
 	function input1_input_handler() {
 		advancementSetting.formulas.skills = this.value;
-		$$invalidate(2, advancementSetting);
+		$$invalidate(1, advancementSetting);
 	}
 
 	function input2_input_handler() {
 		advancementSetting.formulas.features = this.value;
-		$$invalidate(2, advancementSetting);
-	}
-
-	function form_1_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			form = $$value;
-			$$invalidate(0, form);
-		});
+		$$invalidate(1, advancementSetting);
 	}
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
-		$$invalidate(1, elementRoot);
+		$$invalidate(0, elementRoot);
 	}
 
 	$$self.$$set = $$props => {
-		if ('form' in $$props) $$invalidate(0, form = $$props.form);
-		if ('elementRoot' in $$props) $$invalidate(1, elementRoot = $$props.elementRoot);
+		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*advancementSetting, Object, attributeFormula*/ 20) {
+		if ($$self.$$.dirty & /*advancementSetting, Object, attributeFormula*/ 10) {
 			{
-				$$invalidate(4, attributeFormula = advancementSetting.formulas.attributes);
+				$$invalidate(3, attributeFormula = advancementSetting.formulas.attributes);
 
 				for (let variable of Object.values(advancementSetting.variables)) {
 					if (variable.value) {
 						console.log(attributeFormula);
-						$$invalidate(4, attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value));
+						$$invalidate(3, attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value));
 					}
 				}
 			}
@@ -5937,16 +5926,14 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	return [
-		form,
 		elementRoot,
 		advancementSetting,
-		changeSetting,
+		Submit,
 		attributeFormula,
 		input_input_handler,
 		input0_input_handler,
 		input1_input_handler,
 		input2_input_handler,
-		form_1_binding,
 		applicationshell_elementRoot_binding
 	];
 }
@@ -5954,20 +5941,11 @@ function instance$3($$self, $$props, $$invalidate) {
 class Advancement_rate_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { form: 0, elementRoot: 1 });
-	}
-
-	get form() {
-		return this.$$.ctx[0];
-	}
-
-	set form(form) {
-		this.$$set({ form });
-		flush();
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { elementRoot: 0 });
 	}
 
 	get elementRoot() {
-		return this.$$.ctx[1];
+		return this.$$.ctx[0];
 	}
 
 	set elementRoot(elementRoot) {
@@ -6031,7 +6009,7 @@ function get_each_context_1$1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (38:6) {#each featSetting.packs as pack (pack.id)}
+// (36:6) {#each featSetting.packs as pack (pack.id)}
 function create_each_block_1$1(key_1, ctx) {
 	let div;
 	let input;
@@ -6071,7 +6049,6 @@ function create_each_block_1$1(key_1, ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(input, "input", input_input_handler),
-					listen(input, "change", /*changeSetting*/ ctx[4]),
 					listen(button, "click", click_handler)
 				];
 
@@ -6093,7 +6070,7 @@ function create_each_block_1$1(key_1, ctx) {
 	};
 }
 
-// (47:6) {#each featSetting.folders as folder (folder.id)}
+// (45:6) {#each featSetting.folders as folder (folder.id)}
 function create_each_block$2(key_1, ctx) {
 	let div;
 	let input;
@@ -6133,7 +6110,6 @@ function create_each_block$2(key_1, ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(input, "input", input_input_handler_1),
-					listen(input, "change", /*changeSetting*/ ctx[4]),
 					listen(button, "click", click_handler_2)
 				];
 
@@ -6155,7 +6131,7 @@ function create_each_block$2(key_1, ctx) {
 	};
 }
 
-// (34:0) <ApplicationShell bind:elementRoot>
+// (32:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$2(ctx) {
 	let section;
 	let div;
@@ -6171,6 +6147,8 @@ function create_default_slot$2(ctx) {
 	let each1_lookup = new Map();
 	let t4;
 	let button1;
+	let t5;
+	let button2;
 	let mounted;
 	let dispose;
 	let each_value_1 = /*featSetting*/ ctx[1].packs;
@@ -6213,6 +6191,9 @@ function create_default_slot$2(ctx) {
 
 			t4 = space();
 			button1 = element("button");
+			t5 = space();
+			button2 = element("button");
+			button2.textContent = "Submit";
 			attr(button0, "class", "add far fa-plus-square");
 			attr(button1, "class", "add far fa-plus-square");
 			attr(div, "class", "flexcol");
@@ -6239,23 +6220,26 @@ function create_default_slot$2(ctx) {
 
 			append(div, t4);
 			append(div, button1);
+			insert(target, t5, anchor);
+			insert(target, button2, anchor);
 
 			if (!mounted) {
 				dispose = [
 					listen(button0, "click", /*click_handler_1*/ ctx[7]),
-					listen(button1, "click", /*click_handler_3*/ ctx[10])
+					listen(button1, "click", /*click_handler_3*/ ctx[10]),
+					listen(button2, "click", /*Submit*/ ctx[4])
 				];
 
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*deleteEntry, featSetting, changeSetting*/ 26) {
+			if (dirty & /*deleteEntry, featSetting*/ 10) {
 				each_value_1 = /*featSetting*/ ctx[1].packs;
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div, destroy_block, create_each_block_1$1, t1, get_each_context_1$1);
 			}
 
-			if (dirty & /*deleteEntry, featSetting, changeSetting*/ 26) {
+			if (dirty & /*deleteEntry, featSetting*/ 10) {
 				each_value = /*featSetting*/ ctx[1].folders;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div, destroy_block, create_each_block$2, t4, get_each_context$2);
 			}
@@ -6271,6 +6255,8 @@ function create_default_slot$2(ctx) {
 				each_blocks[i].d();
 			}
 
+			if (detaching) detach(t5);
+			if (detaching) detach(button2);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -6341,30 +6327,27 @@ function instance$2($$self, $$props, $$invalidate) {
 	let { featSetting = game.settings.get("ard20", "feat") } = $$props;
 	console.log(featSetting);
 
-	async function addEntry(type) {
+	function addEntry(type) {
 		const name = `New ${type}`.slice(0, -1);
 		const id = uuidv4();
 		$$invalidate(1, featSetting[type] = [...featSetting[type], { name, id }], featSetting);
 		console.log(featSetting);
-		await game.settings.set("ard20", "feat", featSetting);
 		$$invalidate(1, featSetting);
 	}
 
-	async function deleteEntry(type, id) {
+	function deleteEntry(type, id) {
 		console.log(type);
 		const index = featSetting[type].findIndex(entry => entry.id === id);
 
 		if (index >= 0) {
 			console.log(featSetting[type]);
 			featSetting[type].splice(index, 1);
-			await game.settings.set("ard20", "feat", featSetting);
 			$$invalidate(1, featSetting);
 		}
 	}
 
-	async function changeSetting() {
+	async function Submit() {
 		await game.settings.set("ard20", "feat", featSetting);
-		console.log(featSetting);
 	}
 
 	function input_input_handler(each_value_1, pack_index) {
@@ -6398,7 +6381,7 @@ function instance$2($$self, $$props, $$invalidate) {
 		featSetting,
 		addEntry,
 		deleteEntry,
-		changeSetting,
+		Submit,
 		input_input_handler,
 		click_handler,
 		click_handler_1,
@@ -6475,35 +6458,35 @@ class FeatSetting extends SvelteApplication {
 
 function get_each_context$1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[20] = list[i];
+	child_ctx[21] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[23] = list[i];
-	child_ctx[24] = list;
-	child_ctx[25] = i;
+	child_ctx[24] = list[i];
+	child_ctx[25] = list;
+	child_ctx[26] = i;
 	return child_ctx;
 }
 
 function get_each_context_2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[26] = list[i];
+	child_ctx[27] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[20] = list[i];
+	child_ctx[21] = list[i];
 	return child_ctx;
 }
 
-// (67:4) {#each Object.values(setting) as item}
+// (65:4) {#each Object.values(setting) as item}
 function create_each_block_3(ctx) {
 	let li;
 	let span;
-	let t0_value = /*item*/ ctx[20].label + "";
+	let t0_value = /*item*/ ctx[21].label + "";
 	let t0;
 	let t1;
 	let li_class_value;
@@ -6518,7 +6501,7 @@ function create_each_block_3(ctx) {
 			t1 = space();
 			attr(span, "class", "svelte-11ce50k");
 
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[2] === /*item*/ ctx[20].id
+			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[2] === /*item*/ ctx[21].id
 			? "active"
 			: "") + " svelte-11ce50k"));
 		},
@@ -6530,7 +6513,7 @@ function create_each_block_3(ctx) {
 
 			if (!mounted) {
 				dispose = listen(span, "click", function () {
-					if (is_function(/*handleClick*/ ctx[9](/*item*/ ctx[20].id))) /*handleClick*/ ctx[9](/*item*/ ctx[20].id).apply(this, arguments);
+					if (is_function(/*handleClick*/ ctx[9](/*item*/ ctx[21].id))) /*handleClick*/ ctx[9](/*item*/ ctx[21].id).apply(this, arguments);
 				});
 
 				mounted = true;
@@ -6538,9 +6521,9 @@ function create_each_block_3(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty[0] & /*setting*/ 2 && t0_value !== (t0_value = /*item*/ ctx[20].label + "")) set_data(t0, t0_value);
+			if (dirty[0] & /*setting*/ 2 && t0_value !== (t0_value = /*item*/ ctx[21].label + "")) set_data(t0, t0_value);
 
-			if (dirty[0] & /*activeTabValue, setting, selectArr*/ 1030 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[2] === /*item*/ ctx[20].id
+			if (dirty[0] & /*activeTabValue, setting, selectArr*/ 1030 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[2] === /*item*/ ctx[21].id
 			? "active"
 			: "") + " svelte-11ce50k"))) {
 				attr(li, "class", li_class_value);
@@ -6554,19 +6537,19 @@ function create_each_block_3(ctx) {
 	};
 }
 
-// (76:6) {#if activeTabValue === item.id}
+// (74:6) {#if activeTabValue === item.id}
 function create_if_block(ctx) {
 	let div0;
 	let button0;
 	let t0;
-	let t1_value = /*item*/ ctx[20].label + "";
+	let t1_value = /*item*/ ctx[21].label + "";
 	let t1;
 	let t2;
 	let button1;
 	let t4;
 	let button2;
 	let t5;
-	let t6_value = /*item*/ ctx[20].label + "";
+	let t6_value = /*item*/ ctx[21].label + "";
 	let t6;
 	let t7;
 	let hr;
@@ -6579,19 +6562,19 @@ function create_if_block(ctx) {
 	let dispose;
 
 	function click_handler_2() {
-		return /*click_handler_2*/ ctx[13](/*item*/ ctx[20]);
+		return /*click_handler_2*/ ctx[14](/*item*/ ctx[21]);
 	}
 
 	function click_handler_3() {
-		return /*click_handler_3*/ ctx[14](/*item*/ ctx[20]);
+		return /*click_handler_3*/ ctx[15](/*item*/ ctx[21]);
 	}
 
 	function click_handler_4() {
-		return /*click_handler_4*/ ctx[15](/*item*/ ctx[20]);
+		return /*click_handler_4*/ ctx[16](/*item*/ ctx[21]);
 	}
 
-	let each_value_1 = /*item*/ ctx[20].value;
-	const get_key = ctx => /*entry*/ ctx[23].id;
+	let each_value_1 = /*item*/ ctx[21].value;
+	const get_key = ctx => /*entry*/ ctx[24].id;
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		let child_ctx = get_each_context_1(ctx, each_value_1, i);
@@ -6661,11 +6644,11 @@ function create_if_block(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty[0] & /*setting*/ 2 && t1_value !== (t1_value = /*item*/ ctx[20].label + "")) set_data(t1, t1_value);
-			if (dirty[0] & /*setting*/ 2 && t6_value !== (t6_value = /*item*/ ctx[20].label + "")) set_data(t6, t6_value);
+			if (dirty[0] & /*setting*/ 2 && t1_value !== (t1_value = /*item*/ ctx[21].label + "")) set_data(t1, t1_value);
+			if (dirty[0] & /*setting*/ 2 && t6_value !== (t6_value = /*item*/ ctx[21].label + "")) set_data(t6, t6_value);
 
 			if (dirty[0] & /*remove, setting, selectArr*/ 1282) {
-				each_value_1 = /*item*/ ctx[20].value;
+				each_value_1 = /*item*/ ctx[21].value;
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, div1, destroy_block, create_each_block_1, t9, get_each_context_1);
 			}
 		},
@@ -6686,10 +6669,10 @@ function create_if_block(ctx) {
 	};
 }
 
-// (88:16) {#each Object.entries(selectArr[item.id]) as opt}
+// (86:16) {#each Object.entries(selectArr[item.id]) as opt}
 function create_each_block_2(ctx) {
 	let option;
-	let t_value = localize(/*opt*/ ctx[26][1]) + "";
+	let t_value = localize(/*opt*/ ctx[27][1]) + "";
 	let t;
 	let option_value_value;
 
@@ -6697,7 +6680,7 @@ function create_each_block_2(ctx) {
 		c() {
 			option = element("option");
 			t = text(t_value);
-			option.__value = option_value_value = /*opt*/ ctx[26][0];
+			option.__value = option_value_value = /*opt*/ ctx[27][0];
 			option.value = option.__value;
 		},
 		m(target, anchor) {
@@ -6705,9 +6688,9 @@ function create_each_block_2(ctx) {
 			append(option, t);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*setting*/ 2 && t_value !== (t_value = localize(/*opt*/ ctx[26][1]) + "")) set_data(t, t_value);
+			if (dirty[0] & /*setting*/ 2 && t_value !== (t_value = localize(/*opt*/ ctx[27][1]) + "")) set_data(t, t_value);
 
-			if (dirty[0] & /*setting, selectArr*/ 1026 && option_value_value !== (option_value_value = /*opt*/ ctx[26][0])) {
+			if (dirty[0] & /*setting, selectArr*/ 1026 && option_value_value !== (option_value_value = /*opt*/ ctx[27][0])) {
 				option.__value = option_value_value;
 				option.value = option.__value;
 			}
@@ -6718,7 +6701,7 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (84:10) {#each item.value as entry (entry.id)}
+// (82:10) {#each item.value as entry (entry.id)}
 function create_each_block_1(key_1, ctx) {
 	let div;
 	let input;
@@ -6730,10 +6713,10 @@ function create_each_block_1(key_1, ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[16].call(input, /*each_value_1*/ ctx[24], /*entry_index*/ ctx[25]);
+		/*input_input_handler*/ ctx[17].call(input, /*each_value_1*/ ctx[25], /*entry_index*/ ctx[26]);
 	}
 
-	let each_value_2 = Object.entries(/*selectArr*/ ctx[10][/*item*/ ctx[20].id]);
+	let each_value_2 = Object.entries(/*selectArr*/ ctx[10][/*item*/ ctx[21].id]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_2.length; i += 1) {
@@ -6741,11 +6724,11 @@ function create_each_block_1(key_1, ctx) {
 	}
 
 	function select_change_handler() {
-		/*select_change_handler*/ ctx[17].call(select, /*each_value_1*/ ctx[24], /*entry_index*/ ctx[25]);
+		/*select_change_handler*/ ctx[18].call(select, /*each_value_1*/ ctx[25], /*entry_index*/ ctx[26]);
 	}
 
 	function click_handler_5() {
-		return /*click_handler_5*/ ctx[18](/*entry*/ ctx[23], /*item*/ ctx[20]);
+		return /*click_handler_5*/ ctx[19](/*entry*/ ctx[24], /*item*/ ctx[21]);
 	}
 
 	return {
@@ -6763,7 +6746,7 @@ function create_each_block_1(key_1, ctx) {
 
 			t1 = space();
 			button = element("button");
-			if (/*entry*/ ctx[23].type === void 0) add_render_callback(select_change_handler);
+			if (/*entry*/ ctx[24].type === void 0) add_render_callback(select_change_handler);
 			attr(button, "class", "minus far fa-minus-square svelte-11ce50k");
 			attr(div, "class", "flexrow");
 			this.first = div;
@@ -6771,7 +6754,7 @@ function create_each_block_1(key_1, ctx) {
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, input);
-			set_input_value(input, /*entry*/ ctx[23].name);
+			set_input_value(input, /*entry*/ ctx[24].name);
 			append(div, t0);
 			append(div, select);
 
@@ -6779,7 +6762,7 @@ function create_each_block_1(key_1, ctx) {
 				each_blocks[i].m(select, null);
 			}
 
-			select_option(select, /*entry*/ ctx[23].type);
+			select_option(select, /*entry*/ ctx[24].type);
 			append(div, t1);
 			append(div, button);
 
@@ -6796,12 +6779,12 @@ function create_each_block_1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty[0] & /*setting, selectArr*/ 1026 && input.value !== /*entry*/ ctx[23].name) {
-				set_input_value(input, /*entry*/ ctx[23].name);
+			if (dirty[0] & /*setting, selectArr*/ 1026 && input.value !== /*entry*/ ctx[24].name) {
+				set_input_value(input, /*entry*/ ctx[24].name);
 			}
 
 			if (dirty[0] & /*selectArr, setting*/ 1026) {
-				each_value_2 = Object.entries(/*selectArr*/ ctx[10][/*item*/ ctx[20].id]);
+				each_value_2 = Object.entries(/*selectArr*/ ctx[10][/*item*/ ctx[21].id]);
 				let i;
 
 				for (i = 0; i < each_value_2.length; i += 1) {
@@ -6824,7 +6807,7 @@ function create_each_block_1(key_1, ctx) {
 			}
 
 			if (dirty[0] & /*setting, selectArr*/ 1026) {
-				select_option(select, /*entry*/ ctx[23].type);
+				select_option(select, /*entry*/ ctx[24].type);
 			}
 		},
 		d(detaching) {
@@ -6836,11 +6819,11 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (75:4) {#each Object.values(setting) as item (item)}
+// (73:4) {#each Object.values(setting) as item (item)}
 function create_each_block$1(key_1, ctx) {
 	let first;
 	let if_block_anchor;
-	let if_block = /*activeTabValue*/ ctx[2] === /*item*/ ctx[20].id && create_if_block(ctx);
+	let if_block = /*activeTabValue*/ ctx[2] === /*item*/ ctx[21].id && create_if_block(ctx);
 
 	return {
 		key: key_1,
@@ -6859,7 +6842,7 @@ function create_each_block$1(key_1, ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (/*activeTabValue*/ ctx[2] === /*item*/ ctx[20].id) {
+			if (/*activeTabValue*/ ctx[2] === /*item*/ ctx[21].id) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 				} else {
@@ -6880,7 +6863,7 @@ function create_each_block$1(key_1, ctx) {
 	};
 }
 
-// (61:0) <ApplicationShell bind:elementRoot>
+// (59:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$1(ctx) {
 	let div0;
 	let button0;
@@ -6892,6 +6875,8 @@ function create_default_slot$1(ctx) {
 	let div1;
 	let each_blocks = [];
 	let each1_lookup = new Map();
+	let t5;
+	let button2;
 	let mounted;
 	let dispose;
 	let each_value_3 = Object.values(/*setting*/ ctx[1]);
@@ -6902,7 +6887,7 @@ function create_default_slot$1(ctx) {
 	}
 
 	let each_value = Object.values(/*setting*/ ctx[1]);
-	const get_key = ctx => /*item*/ ctx[20];
+	const get_key = ctx => /*item*/ ctx[21];
 
 	for (let i = 0; i < each_value.length; i += 1) {
 		let child_ctx = get_each_context$1(ctx, each_value, i);
@@ -6932,11 +6917,14 @@ function create_default_slot$1(ctx) {
 				each_blocks[i].c();
 			}
 
+			t5 = space();
+			button2 = element("button");
 			attr(button0, "class", "svelte-11ce50k");
 			attr(button1, "class", "svelte-11ce50k");
 			attr(div0, "class", "flexrow");
 			attr(ul, "class", "svelte-11ce50k");
 			attr(div1, "class", "box svelte-11ce50k");
+			attr(button2, "class", "svelte-11ce50k");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
@@ -6957,10 +6945,14 @@ function create_default_slot$1(ctx) {
 				each_blocks[i].m(div1, null);
 			}
 
+			insert(target, t5, anchor);
+			insert(target, button2, anchor);
+
 			if (!mounted) {
 				dispose = [
-					listen(button0, "click", /*click_handler*/ ctx[11]),
-					listen(button1, "click", /*click_handler_1*/ ctx[12])
+					listen(button0, "click", /*click_handler*/ ctx[12]),
+					listen(button1, "click", /*click_handler_1*/ ctx[13]),
+					listen(button2, "click", /*Submit*/ ctx[11])
 				];
 
 				mounted = true;
@@ -7007,6 +6999,8 @@ function create_default_slot$1(ctx) {
 				each_blocks[i].d();
 			}
 
+			if (detaching) detach(t5);
+			if (detaching) detach(button2);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -7019,7 +7013,7 @@ function create_fragment$1(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[19](value);
+		/*applicationshell_elementRoot_binding*/ ctx[20](value);
 	}
 
 	let applicationshell_props = {
@@ -7045,7 +7039,7 @@ function create_fragment$1(ctx) {
 		p(ctx, dirty) {
 			const applicationshell_changes = {};
 
-			if (dirty[0] & /*setting, activeTabValue*/ 6 | dirty[1] & /*$$scope*/ 1) {
+			if (dirty[0] & /*setting, activeTabValue*/ 6 | dirty[1] & /*$$scope*/ 2) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -7076,23 +7070,21 @@ function instance$1($$self, $$props, $$invalidate) {
 	let setting = game.settings.get("ard20", "proficiencies");
 	console.log(setting);
 
-	async function removeAllAll() {
+	function removeAllAll() {
 		for (const item of Object.values(setting)) {
 			item.value = [];
 		}
 
 		console.log(setting);
 		$$invalidate(1, setting);
-		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
-	async function removeAll(type) {
+	function removeAll(type) {
 		$$invalidate(1, setting[type].value = [], setting);
 		$$invalidate(1, setting);
-		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
-	async function add(type) {
+	function add(type) {
 		$$invalidate(
 			1,
 			setting[type].value = [
@@ -7106,10 +7098,10 @@ function instance$1($$self, $$props, $$invalidate) {
 			setting
 		);
 
-		await game.settings.set("ard20", "proficiencies", setting);
+		$$invalidate(1, setting);
 	}
 
-	async function setDefaultGroup(type) {
+	function setDefaultGroup(type) {
 		console.log([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default);
 
 		$$invalidate(
@@ -7121,22 +7113,19 @@ function instance$1($$self, $$props, $$invalidate) {
 		);
 
 		$$invalidate(1, setting);
-		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
-	async function setDefaultAll() {
+	function setDefaultAll() {
 		console.log([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default);
 		$$invalidate(1, setting = duplicate([...game.settings.settings].filter(set => set[0] === "ard20.proficiencies")[0][1].default));
-		await game.settings.set("ard20", "proficiencies", setting);
 	}
 
-	async function remove(key, type) {
+	function remove(key, type) {
 		const index = setting[type].value.findIndex(entry => entry.id === key);
 
 		if (index >= 0) {
 			setting[type].value.splice(index, 1);
 			$$invalidate(1, setting);
-			await game.settings.set("ard20", "proficiencies", setting);
 		}
 	}
 
@@ -7153,6 +7142,10 @@ function instance$1($$self, $$props, $$invalidate) {
 		},
 		tool: {}
 	};
+
+	async function Submit() {
+		await game.settings.set("ard20", "proficiencies", setting);
+	}
 
 	const click_handler = () => removeAllAll();
 	const click_handler_1 = () => setDefaultAll();
@@ -7195,6 +7188,7 @@ function instance$1($$self, $$props, $$invalidate) {
 		remove,
 		handleClick,
 		selectArr,
+		Submit,
 		click_handler,
 		click_handler_1,
 		click_handler_2,
@@ -7264,13 +7258,13 @@ class ProfSetting extends SvelteApplication {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[10] = list[i];
-	child_ctx[11] = list;
-	child_ctx[12] = i;
+	child_ctx[9] = list[i];
+	child_ctx[10] = list;
+	child_ctx[11] = i;
 	return child_ctx;
 }
 
-// (40:2) {#each settings as setting}
+// (34:2) {#each settings as setting}
 function create_each_block(ctx) {
 	let div;
 	let label0;
@@ -7286,15 +7280,15 @@ function create_each_block(ctx) {
 	let dispose;
 
 	function input0_input_handler() {
-		/*input0_input_handler*/ ctx[5].call(input0, /*each_value*/ ctx[11], /*setting_index*/ ctx[12]);
+		/*input0_input_handler*/ ctx[5].call(input0, /*each_value*/ ctx[10], /*setting_index*/ ctx[11]);
 	}
 
 	function input1_input_handler() {
-		/*input1_input_handler*/ ctx[6].call(input1, /*each_value*/ ctx[11], /*setting_index*/ ctx[12]);
+		/*input1_input_handler*/ ctx[6].call(input1, /*each_value*/ ctx[10], /*setting_index*/ ctx[11]);
 	}
 
 	function click_handler() {
-		return /*click_handler*/ ctx[7](/*setting*/ ctx[10]);
+		return /*click_handler*/ ctx[7](/*setting*/ ctx[9]);
 	}
 
 	return {
@@ -7323,12 +7317,12 @@ function create_each_block(ctx) {
 			append(div, label0);
 			append(div, t1);
 			append(div, input0);
-			set_input_value(input0, /*setting*/ ctx[10].key);
+			set_input_value(input0, /*setting*/ ctx[9].key);
 			append(div, t2);
 			append(div, label1);
 			append(div, t4);
 			append(div, input1);
-			set_input_value(input1, /*setting*/ ctx[10].label);
+			set_input_value(input1, /*setting*/ ctx[9].label);
 			append(div, t5);
 			append(div, button);
 
@@ -7345,12 +7339,12 @@ function create_each_block(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (dirty & /*settings*/ 2 && input0.value !== /*setting*/ ctx[10].key) {
-				set_input_value(input0, /*setting*/ ctx[10].key);
+			if (dirty & /*settings*/ 2 && input0.value !== /*setting*/ ctx[9].key) {
+				set_input_value(input0, /*setting*/ ctx[9].key);
 			}
 
-			if (dirty & /*settings*/ 2 && input1.value !== /*setting*/ ctx[10].label) {
-				set_input_value(input1, /*setting*/ ctx[10].label);
+			if (dirty & /*settings*/ 2 && input1.value !== /*setting*/ ctx[9].label) {
+				set_input_value(input1, /*setting*/ ctx[9].label);
 			}
 		},
 		d(detaching) {
@@ -7361,7 +7355,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (38:0) <ApplicationShell bind:elementRoot>
+// (32:0) <ApplicationShell bind:elementRoot>
 function create_default_slot(ctx) {
 	let button0;
 	let t1;
@@ -7478,7 +7472,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, settings*/ 8194) {
+			if (dirty & /*$$scope, settings*/ 4098) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -7515,8 +7509,6 @@ function instance($$self, $$props, $$invalidate) {
 		const id = uuidv4();
 		$$invalidate(1, settings = [...settings, { key, label, id }]);
 		console.log(settings);
-
-		//await game.settings.set("ard20", "profLevel", settings);
 		$$invalidate(1, settings);
 	}
 
@@ -7525,8 +7517,6 @@ function instance($$self, $$props, $$invalidate) {
 
 		if (index >= 0) {
 			settings.splice(index, 1);
-
-			//await game.settings.set("ard20", "profLevel", settings);
 			$$invalidate(1, settings);
 		}
 	}

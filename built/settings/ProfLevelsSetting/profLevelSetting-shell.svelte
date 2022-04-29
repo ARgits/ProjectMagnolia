@@ -11,20 +11,14 @@
     const id = uuidv4();
     settings = [...settings, { key: key, label: label, id: id }];
     console.log(settings);
-    //await game.settings.set("ard20", "profLevel", settings);
     settings = settings;
   }
   function deleteEntry(id) {
     const index = settings.findIndex((entry) => entry.id === id);
     if (index >= 0) {
       settings.splice(index, 1);
-      //await game.settings.set("ard20", "profLevel", settings);
       settings = settings;
     }
-  }
-  async function changeSetting() {
-    await game.settings.set("ard20", "profLevel", settings);
-    console.log(settings);
   }
   async function Submit() {
     await game.settings.set("ard20", "profLevel", settings);

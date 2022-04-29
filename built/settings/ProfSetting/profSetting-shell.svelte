@@ -7,45 +7,40 @@
   import { ARd20 } from "../../helpers/config.js";
   let setting = game.settings.get("ard20", "proficiencies");
   console.log(setting);
-  async function removeAllAll() {
+  function removeAllAll() {
     for (const item of Object.values(setting)) {
       item.value = [];
     }
     console.log(setting);
     setting = setting;
-    await game.settings.set("ard20", "proficiencies", setting);
   }
-  async function removeAll(type) {
+  function removeAll(type) {
     setting[type].value = [];
     setting = setting;
-    await game.settings.set("ard20", "proficiencies", setting);
   }
-  async function add(type) {
+  function add(type) {
     setting[type].value = [
       ...setting[type].value,
       { id: uuidv4(), name: `New ${type}`, type: Object.keys(selectArr[type])[0] },
     ];
-    await game.settings.set("ard20", "proficiencies", setting);
+    setting = setting;
   }
-  async function setDefaultGroup(type) {
+  function setDefaultGroup(type) {
     console.log([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
     setting[type].value = [
       ...[...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default[type].value,
     ];
     setting = setting;
-    await game.settings.set("ard20", "proficiencies", setting);
   }
-  async function setDefaultAll() {
+  function setDefaultAll() {
     console.log([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
     setting = duplicate([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
-    await game.settings.set("ard20", "proficiencies", setting);
   }
-  async function remove(key, type) {
+  function remove(key, type) {
     const index = setting[type].value.findIndex((entry) => entry.id === key);
     if (index >= 0) {
       setting[type].value.splice(index, 1);
       setting = setting;
-      await game.settings.set("ard20", "proficiencies", setting);
     }
   }
   export let elementRoot;
@@ -56,6 +51,9 @@
     armor: { light: "light", medium: "medium", heavy: "heavy" },
     tool: {},
   };
+  async function Submit() {
+    await game.settings.set("ard20", "proficiencies", setting);
+  }
 </script>
 
 <ApplicationShell bind:elementRoot>
@@ -96,6 +94,7 @@
       {/if}
     {/each}
   </div>
+  <button on:click={Submit} />
 </ApplicationShell>
 
 <style lang="scss">
