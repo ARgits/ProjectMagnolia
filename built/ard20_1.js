@@ -212,7 +212,7 @@ class D20Roll extends Roll {
 
 
   _onDialogSubmit(html, advantageMode) {
-    var _form$ability, _form$mRoll;
+    var _form$attribute, _form$mRoll;
 
     const form = html[0].querySelector("form");
     console.log(this);
@@ -227,16 +227,16 @@ class D20Roll extends Roll {
     } // Customize the modifier
 
 
-    if ((_form$ability = form.ability) !== null && _form$ability !== void 0 && _form$ability.value) {
+    if ((_form$attribute = form.attribute) !== null && _form$attribute !== void 0 && _form$attribute.value) {
       //@ts-expect-error
-      const abl = this.data.attributes[form.ability.value];
+      const abl = this.data.attributes[form.attribute.value];
       console.log(abl); //@ts-expect-error
 
       this.terms.findSplice(t => t.term === "@mod", new NumericTerm({
         number: abl.mod
       })); //@ts-expect-error
 
-      this.options.flavor += ` (${game.i18n.localize(CONFIG.ARd20.Attributes[form.ability.value])})`;
+      this.options.flavor += ` (${game.i18n.localize(CONFIG.ARd20.Attributes[form.attribute.value])})`;
     }
     /* if (form.prof_type?.value) {
        const pr = this.data[form.prof_type.value][form.prof_value.value];
