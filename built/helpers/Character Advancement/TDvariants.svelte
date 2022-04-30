@@ -13,7 +13,6 @@
   const data = getContext("chaAdvActorData");
   const originalData = getContext("chaAdvActorOriginalData");
   const aditionalData = getContext("chaAdvAditionalData");
-
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;

@@ -1217,7 +1217,7 @@ class ARd20Item extends Item {
       formula: "",
       parts: baseDamage
     };
-    baseDamage.forEach(part => {
+    baseDamage === null || baseDamage === void 0 ? void 0 : baseDamage.forEach(part => {
       //@ts-expect-error
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });
@@ -2265,7 +2265,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (73:2) {#if thead.includes("Source")}
+// (72:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].data.source.label + "";
@@ -2300,7 +2300,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (77:2) {#if thead.includes("Increase")}
+// (76:2) {#if thead.includes("Increase")}
 function create_if_block_8(ctx) {
 	let td;
 	let changebutton;
@@ -2359,7 +2359,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (83:2) {#if thead.includes("Level")}
+// (82:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].data.level.initial + "";
@@ -2394,7 +2394,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (89:2) {#if thead.includes("Max Level")}
+// (88:2) {#if thead.includes("Max Level")}
 function create_if_block_6(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].data.level.max + "";
@@ -2429,7 +2429,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (93:2) {#if thead.includes("Rank")}
+// (92:2) {#if thead.includes("Rank")}
 function create_if_block_5(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].rankName + "";
@@ -2464,7 +2464,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (97:2) {#if thead.includes("Value")}
+// (96:2) {#if thead.includes("Value")}
 function create_if_block_4(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].value + "";
@@ -2499,7 +2499,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (101:2) {#if thead.includes("Decrease")}
+// (100:2) {#if thead.includes("Decrease")}
 function create_if_block_3(ctx) {
 	let td;
 	let changebutton;
@@ -2556,7 +2556,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (107:2) {#if thead.includes("Mod")}
+// (106:2) {#if thead.includes("Mod")}
 function create_if_block_2(ctx) {
 	let td;
 	let t;
@@ -2589,7 +2589,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (111:2) {#if thead.includes("Cost")}
+// (110:2) {#if thead.includes("Cost")}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2622,7 +2622,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (115:2) {#if key === 0 && thead.includes("Description")}
+// (114:2) {#if key === 0 && thead.includes("Description")}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
