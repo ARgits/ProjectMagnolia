@@ -193,7 +193,7 @@ export class ARd20Actor extends Actor {
     const parts = ["@proficiency", "@mod"];
     const data = { attributes: this.getRollData().attributes, proficiency: skl.value };
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if (options?.parts.length > 0) {
+    if (options.parts?.length > 0) {
       parts.push(...options.parts);
     }
     // Roll and return

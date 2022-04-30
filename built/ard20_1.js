@@ -8423,6 +8423,8 @@ class ARd20Actor extends Actor {
 
 
   rollSkill(skillId, options) {
+    var _options$parts;
+
     console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
     const skl = getValues$1(this.data.data.skills, skillId); // Compose roll parts and data
 
@@ -8432,7 +8434,7 @@ class ARd20Actor extends Actor {
       proficiency: skl.value
     }; // Add provided extra roll parts now because they will get clobbered by mergeObject below
 
-    if ((options === null || options === void 0 ? void 0 : options.parts.length) > 0) {
+    if (((_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
       parts.push(...options.parts);
     } // Roll and return
 
