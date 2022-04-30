@@ -140,9 +140,9 @@ class D20Roll extends Roll {
 
 
   async configureDialog({
-    title: string,
-    defaultRollMode: number,
-    canMult: boolean,
+    title,
+    defaultRollMode,
+    canMult,
     defaultAction = D20Roll.ADV_MODE.NORMAL,
     mRoll,
     chooseModifier = false,
