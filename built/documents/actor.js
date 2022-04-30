@@ -187,6 +187,7 @@ export class ARd20Actor extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
   rollSkill(skillId, options) {
+    console.log("rollSkill event", skillId, "skillID", options, "options");
     const skl = getValues(this.data.data.skills, skillId);
     // Compose roll parts and data
     const parts = ["@proficiency", "@mod"];
