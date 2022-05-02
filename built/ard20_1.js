@@ -8391,7 +8391,7 @@ class ARd20Actor extends Actor {
       mod: attr
     }; // Add provided extra roll parts now because they will get clobbered by mergeObject below
 
-    if (((_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
+    if ((options === null || options === void 0 ? void 0 : (_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
       parts.push(...options.parts);
     } // Roll and return
 
