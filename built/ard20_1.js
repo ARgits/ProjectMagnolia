@@ -1004,7 +1004,7 @@ class ARd20Item extends Item {
     for (const level of game.settings.get("ard20", "profLevel")) {
       var _data$damage$common$l;
 
-      data.damage.common[level] = (_data$damage$common$l = data.damage.common[level]) !== null && _data$damage$common$l !== void 0 ? _data$damage$common$l : {
+      data.damage.common[level.key] = (_data$damage$common$l = data.damage.common[level.key]) !== null && _data$damage$common$l !== void 0 ? _data$damage$common$l : {
         formula: "1d6 Physical Bludgeoning",
         parts: [["1d6", ["phys", "blud"]]]
       };

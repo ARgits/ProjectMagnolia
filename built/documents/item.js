@@ -44,7 +44,7 @@ export class ARd20Item extends Item {
     //TODO: this._setDeflect(data);
     this._setTypeAndSubtype(data, flags);
     for (const level of game.settings.get("ard20", "profLevel")) {
-      data.damage.common[level] = data.damage.common[level] ?? { formula: "1d6 Physical Bludgeoning", parts: [["1d6", ["phys", "blud"]]] };
+      data.damage.common[level.key] = data.damage.common[level.key] ?? { formula: "1d6 Physical Bludgeoning", parts: [["1d6", ["phys", "blud"]]] };
     }
     /*for (let [key, type] of obj_entries(data.damage)) {
             if (key !== "current") {
