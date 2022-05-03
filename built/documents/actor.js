@@ -166,7 +166,6 @@ export class ARd20Actor extends Actor {
     if (options?.parts?.length > 0) {
       parts.push(...options.parts);
     }
-    console.log('rollAttributeTest       label: ',label,' attr: ',attr,' data: ',data)
     // Roll and return
     const rollData = foundry.utils.mergeObject(options, {
       parts: parts,
