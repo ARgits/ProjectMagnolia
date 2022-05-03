@@ -1001,41 +1001,53 @@ class ARd20Item extends Item {
 
     this._setTypeAndSubtype(data, flags);
 
-    for (let [key, type] of obj_entries$1(data.damage)) {
-      if (key !== "current") {
-        for (let [_key, prof] of obj_entries$1(type)) {
-          prof.formula = "";
-          prof.parts.forEach(part => {
-            if (Array.isArray(part[1])) {
-              prof.formula += `${part[0]}`;
-              part[1].forEach((sub, ind) => {
-                if (ind === 0) {
-                  prof.formula += ` {${sub[0]} ${sub[1]}`;
-                  prof.formula += ind === part[1].length - 1 ? "}" : "";
-                } else {
-                  prof.formula += ` or ${sub[0]} ${sub[1]}`;
-                  prof.formula += ind === part[1].length - 1 ? "}" : "";
-                }
-              });
-            } else prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `;
-          });
-        }
-      }
+    for (const level of game.settings.get("ard20", "profLevel")) {
+      var _data$damage$common$l;
+
+      data.damage.common[level] = (_data$damage$common$l = data.damage.common[level]) !== null && _data$damage$common$l !== void 0 ? _data$damage$common$l : {
+        formula: "1d6 Physical Bludgeoning",
+        parts: [["1d6", ["phys", "blud"]]]
+      };
     }
+    /*for (let [key, type] of obj_entries(data.damage)) {
+            if (key !== "current") {
+                for (let [key, prof] of obj_entries(type)) {
+                    prof.formula = "";
+                    prof.parts.forEach((part) => {
+                        if (Array.isArray(part[1])) {
+                            prof.formula += `${part[0]}`;
+                            part[1].forEach((sub, ind) => {
+                                if (ind === 0) {
+                                    prof.formula += ` {${sub[0]} ${sub[1]}`;
+                                    prof.formula += ind === part[1].length - 1 ? "}" : "";
+                                }
+                                else {
+                                    prof.formula += ` or ${sub[0]} ${sub[1]}`;
+                                    prof.formula += ind === part[1].length - 1 ? "}" : "";
+                                }
+                            });
+                        }
+                        else
+                            prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `;
+                    });
+                }
+            }
+        }*/
+
   }
   /**
    *Set deflect die equal to damage die, if not
    */
 
   /* TODO:
-  _setDeflect(data: object & WeaponDataPropertiesData) {
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Rank)) {
-      v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
-      v = v.toLowerCase();
-      data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
+    _setDeflect(data: object & WeaponDataPropertiesData) {
+      for (let [k, v] of obj_entries(CONFIG.ARd20.Rank)) {
+        v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
+        v = v.toLowerCase();
+        data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
+      }
     }
-  }
-  */
+    */
   //@ts-expect-error
 
 
@@ -1104,15 +1116,15 @@ class ARd20Item extends Item {
 
       switch (req.type) {
         case "ability":
-          for (let [_key2, v] of obj_entries$1(CONFIG.ARd20.Attributes)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[_key2])) req.value = _key2;
+          for (let [_key, v] of obj_entries$1(CONFIG.ARd20.Attributes)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[_key])) req.value = _key;
           }
 
           break;
 
         case "skill":
-          for (let [_key3, v] of obj_entries$1(CONFIG.ARd20.Skills)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[_key3])) req.value = _key3;
+          for (let [_key2, v] of obj_entries$1(CONFIG.ARd20.Skills)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[_key2])) req.value = _key2;
           }
 
           break;
@@ -1166,8 +1178,8 @@ class ARd20Item extends Item {
     data.mobility.value += data.mobility.bonus;
   }
   /**
-  Prepare Data that uses actor's data
-  */
+    Prepare Data that uses actor's data
+    */
 
 
   prepareFinalAttributes() {
@@ -1549,10 +1561,10 @@ class ARd20Item extends Item {
     return targets;
   }
   /*showRollDetail(event){
-    event.preventDefault();
-    const elem = event.currentTarget;
-    const
-  }*/
+      event.preventDefault();
+      const elem = event.currentTarget;
+      const
+    }*/
 
 
   async displayCard({
@@ -1668,9 +1680,9 @@ class ARd20Item extends Item {
     }; // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
 
     /*
-    if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
-      chatData.flags["ard20.itemData"] = this.data;
-    }*/
+        if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
+          chatData.flags["ard20.itemData"] = this.data;
+        }*/
     // Apply the roll mode to adjust message visibility
 
     ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode")); // Create the Chat Message or return its data
@@ -1688,19 +1700,21 @@ class ARd20Item extends Item {
     const data = foundry.utils.deepClone(this.data.data); // Rich text description
 
     /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
-      /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
-        props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
-      }*/
+          /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
+            props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
+          }*/
 
     /*props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
-    }
-          // Ability activation properties
-    if (data.hasOwnProperty("activation")) {
-      props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
-    }
-          // Filter properties and return
-    data.properties = props.filter((p) => !!p);
-    */
+        }
+    
+        // Ability activation properties
+        if (data.hasOwnProperty("activation")) {
+          props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
+        }
+    
+        // Filter properties and return
+        data.properties = props.filter((p) => !!p);
+        */
 
     return data;
   }
@@ -1856,34 +1870,35 @@ class ARd20Item extends Item {
 
     parts.push("@prof", "@mod");
     /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
-    if ( !["weapon", "consumable"].includes(this.data.type)) {
-      parts.push("@prof");
-      if ( this.data.data.prof?.hasProficiency ) {
-        rollData.prof = this.data.data.prof.term;
-      }
-    }
-    */
+        if ( !["weapon", "consumable"].includes(this.data.type)) {
+          parts.push("@prof");
+          if ( this.data.data.prof?.hasProficiency ) {
+            rollData.prof = this.data.data.prof.term;
+          }
+        }
+        */
 
     /* Actor-level global bonus to attack rolls
-    const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
-    if (actorBonus.attack) parts.push(actorBonus.attack);
-    */
+        const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
+        if (actorBonus.attack) parts.push(actorBonus.attack);
+        */
 
     /* One-time bonus provided by consumed ammunition
-    if (itemData.consume?.type === "ammo" && this.actor.items) {
-      const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
-            if (ammoItemData) {
-        const ammoItemQuantity = ammoItemData.data.quantity;
-        const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
-        const ammoItemAttackBonus = ammoItemData.data.attackBonus;
-        const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
-        if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
-          parts.push("@ammo");
-          rollData.ammo = ammoItemAttackBonus;
+        if (itemData.consume?.type === "ammo" && this.actor.items) {
+          const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
+    
+          if (ammoItemData) {
+            const ammoItemQuantity = ammoItemData.data.quantity;
+            const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
+            const ammoItemAttackBonus = ammoItemData.data.attackBonus;
+            const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
+            if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
+              parts.push("@ammo");
+              rollData.ammo = ammoItemAttackBonus;
+            }
+          }
         }
-      }
-    }
-    */
+        */
     // Condense the resulting attack bonus formula into a simplified label
     //@ts-expect-error
 
