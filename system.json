@@ -7,7 +7,7 @@
   "compatibleCoreVersion": "Version 9",
   "author": "ARgits",
   "esmodules": ["built/ard20_1.js"],
-  "styles": ["built/ard20_1.css", "css/ard20.css"],
+  "styles": ["select2.css","built/ard20_1.css", "css/ard20.css"],
   "dependencies": [
     {
       "name": "typhonjs",
