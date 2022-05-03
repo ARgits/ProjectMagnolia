@@ -148,13 +148,13 @@ export class ARd20Actor extends Actor {
     return data;
   }
   /**
-   * Roll an Ability Test
+   * Roll an Attribute Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    * @param {Number} attributeId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollAbilityTest(attributeId, options) {
+  rollAttributeTest(attributeId, options) {
     const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
     const actorData = this.data.data;
     const attributes = actorData.attributes;

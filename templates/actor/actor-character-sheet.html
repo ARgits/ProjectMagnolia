@@ -104,7 +104,7 @@
                         <div>
                             {{#each data.defences.stats as |defence key|}}
                                 <div class="attribute flexrow">
-                                    <label for="data.defences.stats.{{key}}.value" class="resource-label flexlarge align-left rollable"
+                                    <label for="data.defences.stats.{{key}}.value" class="resource-label flexlarge align-left rollable "
                                         data-roll="1d20+{{numberFormat defence.value decimals=0 sign=false}}-10" data-label="{{defence.label}}">
                                         {{defence.label}}
                                     </label>

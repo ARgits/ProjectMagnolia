@@ -69,7 +69,7 @@ export class ARd20ActorSheet extends ActorSheet {
    */
   //@ts-expect-error
   _prepareCharacterData(context) {
-    // Handle ability scores.
+    // Handle attribute scores.
     for (let [k, v] of obj_entries(context.data.attributes)) {
       //@ts-expect-error
       v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
@@ -176,7 +176,7 @@ export class ARd20ActorSheet extends ActorSheet {
     // Active Effect management
     html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.actor));
     //roll abilities and skills
-    html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
+    html.find(".attribute-name").click(this._onRollAttributeTest.bind(this));
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this));
     //open "character advancement" window
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this));
@@ -379,11 +379,11 @@ export class ARd20ActorSheet extends ActorSheet {
     const attr = "data.equipped";
     return item.update({ [attr]: !getProperty(item.data, attr) });
   }
-  _onRollAbilityTest(event) {
+  _onRollAttributeTest(event) {
     event.preventDefault();
     //@ts-ignore
-    let ability = event.currentTarget.parentElement.dataset.ability;
-    return this.actor.rollAbilityTest(ability, { event: event });
+    let attribute = event.currentTarget.parentElement.dataset.attribute;
+    return this.actor.rollAttributeTest(attribute, { event: event });
   }
   _onRollSkillCheck(event) {
     event.preventDefault();

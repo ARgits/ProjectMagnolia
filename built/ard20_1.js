@@ -4272,7 +4272,7 @@ class ARd20ActorSheet extends ActorSheet {
 
 
   _prepareCharacterData(context) {
-    // Handle ability scores.
+    // Handle attribute scores.
     for (let [k, v] of obj_entries$1(context.data.attributes)) {
       var _game$i18n$localize;
 
@@ -4385,7 +4385,7 @@ class ARd20ActorSheet extends ActorSheet {
 
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor)); //roll abilities and skills
 
-    html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
+    html.find(".attribute-name").click(this._onRollAttributeTest.bind(this));
     html.find(".skill-name").click(this._onRollSkillCheck.bind(this)); //open "character advancement" window
 
     html.find(".config-button").click(this._OnAdvanceMenu.bind(this)); //item's roll
@@ -4628,11 +4628,11 @@ class ARd20ActorSheet extends ActorSheet {
     });
   }
 
-  _onRollAbilityTest(event) {
+  _onRollAttributeTest(event) {
     event.preventDefault(); //@ts-ignore
 
-    let ability = event.currentTarget.parentElement.dataset.ability;
-    return this.actor.rollAbilityTest(ability, {
+    let attribute = event.currentTarget.parentElement.dataset.attribute;
+    return this.actor.rollAttributeTest(attribute, {
       event: event
     });
   }
@@ -8370,7 +8370,7 @@ class ARd20Actor extends Actor {
     return data;
   }
   /**
-   * Roll an Ability Test
+   * Roll an Attribute Test
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    * @param {Number} attributeId    The ability ID (e.g. "str")
    * @param {Object} options      Options which configure how ability tests are rolled
@@ -8378,7 +8378,7 @@ class ARd20Actor extends Actor {
    */
 
 
-  rollAbilityTest(attributeId, options) {
+  rollAttributeTest(attributeId, options) {
     var _options$parts;
 
     const label = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, attributeId));
