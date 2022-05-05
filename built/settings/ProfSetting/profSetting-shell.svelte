@@ -1,46 +1,48 @@
 <svelte:options accessors={true} />
 
 <script>
+  import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
   import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
   import { ARd20 } from "../../helpers/config.js";
-  let setting = game.settings.get("ard20", "proficiencies");
-  console.log(setting);
+  const setting = "proficiencies"
+  let data = game.settings.get("ard20", "proficiencies");
+  console.log(data);
   function removeAllAll() {
-    for (const item of Object.values(setting)) {
+    for (const item of Object.values(data)) {
       item.value = [];
     }
-    console.log(setting);
-    setting = setting;
+    console.log(data);
+    data = data;
   }
   function removeAll(type) {
-    setting[type].value = [];
-    setting = setting;
+    data[type].value = [];
+    data = data;
   }
   function add(type) {
-    setting[type].value = [
-      ...setting[type].value,
+    data[type].value = [
+      ...data[type].value,
       { id: uuidv4(), name: `New ${type}`, type: Object.keys(selectArr[type])[0] },
     ];
-    setting = setting;
+    data = data;
   }
   function setDefaultGroup(type) {
     console.log([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
-    setting[type].value = [
+    data[type].value = [
       ...[...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default[type].value,
     ];
-    setting = setting;
+    data = data;
   }
   function setDefaultAll() {
     console.log([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
-    setting = duplicate([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
+    data = duplicate([...game.settings.settings].filter((set) => set[0] === "ard20.proficiencies")[0][1].default);
   }
   function remove(key, type) {
-    const index = setting[type].value.findIndex((entry) => entry.id === key);
+    const index = data[type].value.findIndex((entry) => entry.id === key);
     if (index >= 0) {
-      setting[type].value.splice(index, 1);
-      setting = setting;
+      data[type].value.splice(index, 1);
+      data = data;
     }
   }
   export let elementRoot;
@@ -52,7 +54,7 @@
     tool: {},
   };
   async function Submit() {
-    await game.settings.set("ard20", "proficiencies", setting);
+    await game.settings.set("ard20", "proficiencies", data);
   }
 </script>
 
@@ -62,7 +64,7 @@
     <button on:click={() => setDefaultAll()}>Reset All</button>
   </div>
   <ul>
-    {#each Object.values(setting) as item}
+    {#each Object.values(data) as item}
       <li class={activeTabValue === item.id ? "active" : ""}>
         <span on:click={handleClick(item.id)}>{item.label}</span>
       </li>
@@ -70,7 +72,7 @@
   </ul>
 
   <div class="box">
-    {#each Object.values(setting) as item (item)}
+    {#each Object.values(data) as item (item)}
       {#if activeTabValue === item.id}
         <div class="flexrow">
           <button on:click={() => add(item.id)}>Add {item.label}</button>
@@ -94,7 +96,7 @@
       {/if}
     {/each}
   </div>
-  <button on:click={Submit} />
+  <SettingsSubmitButton {setting} {data}/>
 </ApplicationShell>
 
 <style lang="scss">

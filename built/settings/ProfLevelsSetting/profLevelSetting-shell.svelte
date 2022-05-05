@@ -1,27 +1,29 @@
 <svelte:options accessors={true} />
 
 <script>
+  import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
   export let elementRoot;
-  let settings = game.settings.get("ard20", "profLevel");
+  const setting = "profLevel";
+  let data = game.settings.get("ard20", "profLevel");
   function addEntry() {
     const key = "newKey";
     const label = `New level`;
     const id = uuidv4();
-    settings = [...settings, { key: key, label: label, id: id }];
-    console.log(settings);
-    settings = settings;
+    data = [...data, { key: key, label: label, id: id }];
+    console.log(data);
+    data = data;
   }
   function deleteEntry(id) {
-    const index = settings.findIndex((entry) => entry.id === id);
+    const index = data.findIndex((entry) => entry.id === id);
     if (index >= 0) {
-      settings.splice(index, 1);
-      settings = settings;
+      data.splice(index, 1);
+      data = data;
     }
   }
   async function Submit() {
-    await game.settings.set("ard20", "profLevel", settings);
+    await game.settings.set("ard20", "profLevel", data);
     game.actors.forEach((actor) => {
       actor.prepareData();
       actor._sheet.render(true);
@@ -31,7 +33,7 @@
 
 <ApplicationShell bind:elementRoot>
   <button on:click={addEntry}>Add level</button>
-  {#each settings as setting}
+  {#each data as setting}
     <div class="grid grid-5col">
       <label for="setting.key">Key:</label>
       <input bind:value={setting.key} type="text" />
@@ -45,5 +47,5 @@
       />
     </div>
   {/each}
-  <button on:click={Submit}>Submit</button>
+  <SettingsSubmitButton {setting} {data} />
 </ApplicationShell>
