@@ -1,7 +1,12 @@
 <script>
+  import { getContext } from "svelte";
   export let tabs = [];
   export let activeTab;
-  export let boxHeight
+  export let boxHeight;
+  export let trHeight
+  let data = getContext("chaAdvActorData");
+  let minBoxSize;
+  $: minBoxSize = Object.entries($data[activeTab]).length * trHeight;
 </script>
 
 <ul>
@@ -15,10 +20,10 @@
     </li>
   {/each}
 </ul>
-<div class="box" bind:clientHeight={boxHeight}>
+<div class="box" style="--minBoxSize:{minBoxSize}px" bind:clientHeight={boxHeight}>
   {#each tabs as tab}
     {#if tab.id === activeTab}
-      <svelte:component this={tab.component} tabData={tab.id} {boxHeight}  />
+      <svelte:component this={tab.component} tabData={tab.id} {boxHeight} {trHeight} />
     {/if}
   {/each}
 </div>
@@ -29,7 +34,7 @@
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
-    height: 70%;
+    height: min(70%, max(30%, var(--minBoxSize)));
     /*overflow-y: auto;*/
     background: rgba(0, 0, 0, 0.08);
   }

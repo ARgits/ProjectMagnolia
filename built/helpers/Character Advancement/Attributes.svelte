@@ -3,6 +3,7 @@
   import TDvariants from "./TDvariants.svelte";
   export let tabData;
   export let boxHeight;
+  export let trHeight
   let theadHeight;
 
   let data = getContext("chaAdvActorData");
@@ -11,7 +12,6 @@
   let thead;
   let description;
   let max;
-  let trHeight;
   let thWidth;
   let trWidth;
   //TODO: reconfigure thead for localization
@@ -112,7 +112,7 @@
     border: 1px solid black;
     text-align: center;
     padding: 0.2em;
-    word-break: break-all;
+    word-break: break-word;
   }
   th:last-child {
     border-right: 0px;

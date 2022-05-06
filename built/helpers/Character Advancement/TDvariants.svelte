@@ -11,7 +11,6 @@
   //export let cellWidth;
   export let trWidth
   export let trHeight
-  const data = getContext("chaAdvActorData");
   const originalData = getContext("chaAdvActorOriginalData");
   const aditionalData = getContext("chaAdvAditionalData");
   const formulas = getContext("chaAdvXpFormulas").formulas;
@@ -129,7 +128,7 @@
     border-right: 1px solid black;
     border-left: 1px solid black;
     width: var(--cellWidth);
-    word-break: break-all;
+    word-break: break-word;
   }
   tr {
     border: 1px solid black;
