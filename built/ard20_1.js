@@ -5577,11 +5577,9 @@ class ARd20SocketHandler {
   //@ts-expect-error
   static async updateActorData(data) {
     if (game.user.isGM) {
-      const actor = game.actors.get(data.actor._id); //@ts-expect-error
+      const actor = data.actor; //@ts-expect-error
 
-      if (actor) await actor.update(data.update, {
-        "data.health.value": data.value
-      });
+      if (actor) await actor.update(data.update);
     }
   }
 
@@ -8177,17 +8175,13 @@ Hooks.once("init", async function () {
     CONFIG.Dice.D20Roll = D20Roll;
     CONFIG.Dice.rolls.push(D20Roll);
     CONFIG.Dice.rolls.push(DamageRoll);
-
-    if (game.socket instanceof io.Socket) {
-      game.socket.on("system.ard20", data => {
-        if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
-      });
-    }
+    game.socket.on("system.ard20", data => {
+      if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
+    });
     /**
      * Set an initiative formula for the system
      * @type {String}
      */
-
 
     CONFIG.Combat.initiative = {
       formula: "1d20 + @abilities.dex.mod",
