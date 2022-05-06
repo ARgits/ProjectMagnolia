@@ -1201,8 +1201,8 @@ class ARd20Item extends Item {
 
       const data = itemData.data;
       data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.data.data.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
-      data.proficiency.levelName = game.settings.get('ard20', 'profLevel')[data.proficiency.level].label;
-      data.proficiency.key = game.settings.get('ard20', 'profLevel')[data.proficiency.level].key;
+      data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
+      data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
       prof_bonus = data.proficiency.level * 4;
     }
 
@@ -1226,7 +1226,7 @@ class ARd20Item extends Item {
     const data = itemData.data;
     if (!data.hasDamage) return;
     itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-    const prop = itemData.type === 'weapon' ? `damage.common.${data.proficiency.key}.parts` : 'damage.parts';
+    const prop = itemData.type === "weapon" ? `damage.common.${data.proficiency.key}.parts` : "damage.parts";
     let baseDamage = getProperty(data, prop); //@ts-expect-error
 
     data.damage.current = {
@@ -1314,7 +1314,11 @@ class ARd20Item extends Item {
 
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
-    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+    html.on("click", ".item-name", e => {
+      e.preventDefault;
+
+      this._onChatCardToggleContent.bind(this);
+    });
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
     html.on("hover", ".attack-roll .flexrow .value", function (event) {
       var _element$querySelecto;
