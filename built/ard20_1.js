@@ -1172,11 +1172,11 @@ class ARd20Item extends Item {
         var _data$res$phys$key$va;
 
         data.res.phys[key].value = (_data$res$phys$key$va = data.res.phys[key].value) !== null && _data$res$phys$key$va !== void 0 ? _data$res$phys$key$va : 0;
-        data.res.phys[key].value += data.res.phys[key].bonus;
+        data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
       }
 
       data.res.mag[key].value = (_data$res$mag$key$val = data.res.mag[key].value) !== null && _data$res$mag$key$val !== void 0 ? _data$res$mag$key$val : 0;
-      data.res.mag[key].value += data.res.mag[key].bonus;
+      data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
     }
 
     data.mobility.value = (_data$mobility$value = data.mobility.value) !== null && _data$mobility$value !== void 0 ? _data$mobility$value : CONFIG.ARd20.HeavyPoints[data.type][data.slot];
@@ -8382,13 +8382,13 @@ class ARd20Actor extends Actor {
         if (item.data.data.equipped) {
           for (let key of obj_keys$1(def_dam.phys)) {
             let ph = item.data.data.res.phys[key];
-            def_dam.phys[key].bonus += ph.type !== "imm" ? ph.value : 0;
+            def_dam.phys[key].bonus += ph.type !== "imm" ? parseInt(ph.value) : 0;
             def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
           }
 
           for (let key of obj_keys$1(def_dam.mag)) {
             let mg = item.data.data.res.mag[key];
-            def_dam.mag[key].bonus += mg.type !== "imm" ? mg.value : 0;
+            def_dam.mag[key].bonus += mg.type !== "imm" ? parseInt(mg.value) : 0;
             def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
           }
 

@@ -49,12 +49,12 @@ export class ARd20Actor extends Actor {
         if (item.data.data.equipped) {
           for (let key of obj_keys(def_dam.phys)) {
             let ph = item.data.data.res.phys[key];
-            def_dam.phys[key].bonus += ph.type !== "imm" ? ph.value : 0;
+            def_dam.phys[key].bonus += ph.type !== "imm" ? parseInt(ph.value) : 0;
             def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
           }
           for (let key of obj_keys(def_dam.mag)) {
             let mg = item.data.data.res.mag[key];
-            def_dam.mag[key].bonus += mg.type !== "imm" ? mg.value : 0;
+            def_dam.mag[key].bonus += mg.type !== "imm" ? parseInt(mg.value) : 0;
             def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
           }
           data.mobility.value += item.data.data.mobility.value;
