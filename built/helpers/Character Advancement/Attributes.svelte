@@ -98,7 +98,7 @@
   }
   tbody {
     display: block;
-    max-height: var(--boxHeight);
+    max-height: var(--tbodyHeight);
     width: 100%;
     overflow-y: auto;
   }

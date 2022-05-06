@@ -3164,7 +3164,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "last svelte-h2wlsz");
+			attr(th, "class", "last svelte-16ko3ho");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3341,15 +3341,15 @@ function create_fragment$7(ctx) {
 			t3 = space();
 			div0 = element("div");
 			t4 = text(/*description*/ ctx[6]);
-			attr(tr, "class", "svelte-h2wlsz");
+			attr(tr, "class", "svelte-16ko3ho");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-h2wlsz");
+			attr(thead_1, "class", "svelte-16ko3ho");
 			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[12].call(thead_1));
 			set_style(tbody, "--tbodyHeight", /*boxHeight*/ ctx[1] - /*theadHeight*/ ctx[3] + "px");
-			attr(tbody, "class", "svelte-h2wlsz");
-			attr(table, "class", "svelte-h2wlsz");
+			attr(tbody, "class", "svelte-16ko3ho");
+			attr(table, "class", "svelte-16ko3ho");
 			attr(label, "for", "description");
-			attr(div1, "class", "description svelte-h2wlsz");
+			attr(div1, "class", "description svelte-16ko3ho");
 			attr(div2, "class", "flex flexrow");
 		},
 		m(target, anchor) {
