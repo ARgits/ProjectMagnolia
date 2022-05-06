@@ -2,8 +2,9 @@
   import { getContext } from "svelte";
   import TDvariants from "./TDvariants.svelte";
   export let tabData;
-  export let theadHeight
-  export let tbodyHeight = trHeight*Object.entries(tabData).length
+  export let theadHeight;
+  export let tbodyHeight;
+  $: tbodyHeight = trHeight * Object.entries(tabData).length;
   let data = getContext("chaAdvActorData");
   const settings = game.settings.get("ard20", "profLevel");
   let typeStr;
@@ -59,7 +60,17 @@
     </thead>
     <tbody style="--tbodyHeight:{tbodyHeight}px">
       {#each Object.entries($data[tabData]) as attr, key}
-        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth {key} bind:trHeight bind:description />
+        <TDvariants
+          type={$data[tabData]}
+          {thead}
+          {typeStr}
+          val={attr}
+          {max}
+          bind:trWidth
+          {key}
+          bind:trHeight
+          bind:description
+        />
       {/each}
     </tbody>
   </table>

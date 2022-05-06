@@ -3151,7 +3151,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (55:8) {#each thead as th}
+// (56:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[21] + "";
@@ -3173,7 +3173,7 @@ function create_each_block_1$3(ctx) {
 			append(th, t1);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*thead*/ 32 && t0_value !== (t0_value = /*th*/ ctx[21] + "")) set_data(t0, t0_value);
+			if (dirty & /*thead*/ 64 && t0_value !== (t0_value = /*th*/ ctx[21] + "")) set_data(t0, t0_value);
 
 			if (dirty & /*thWidth*/ 512 && style_width !== (style_width = `${/*thWidth*/ ctx[9]}%`)) {
 				set_style(th, "width", style_width, false);
@@ -3185,7 +3185,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (61:6) {#each Object.entries($data[tabData]) as attr, key}
+// (62:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$5(ctx) {
 	let tdvariants;
 	let updating_trWidth;
@@ -3206,11 +3206,11 @@ function create_each_block$5(ctx) {
 	}
 
 	let tdvariants_props = {
-		type: /*$data*/ ctx[3][/*tabData*/ ctx[1]],
-		thead: /*thead*/ ctx[5],
-		typeStr: /*typeStr*/ ctx[4],
+		type: /*$data*/ ctx[4][/*tabData*/ ctx[2]],
+		thead: /*thead*/ ctx[6],
+		typeStr: /*typeStr*/ ctx[5],
 		val: /*attr*/ ctx[18],
-		max: /*max*/ ctx[7],
+		max: /*max*/ ctx[8],
 		key: /*key*/ ctx[20]
 	};
 
@@ -3218,12 +3218,12 @@ function create_each_block$5(ctx) {
 		tdvariants_props.trWidth = /*trWidth*/ ctx[10];
 	}
 
-	if (/*trHeight*/ ctx[8] !== void 0) {
-		tdvariants_props.trHeight = /*trHeight*/ ctx[8];
+	if (/*trHeight*/ ctx[3] !== void 0) {
+		tdvariants_props.trHeight = /*trHeight*/ ctx[3];
 	}
 
-	if (/*description*/ ctx[6] !== void 0) {
-		tdvariants_props.description = /*description*/ ctx[6];
+	if (/*description*/ ctx[7] !== void 0) {
+		tdvariants_props.description = /*description*/ ctx[7];
 	}
 
 	tdvariants = new TDvariants({ props: tdvariants_props });
@@ -3241,11 +3241,11 @@ function create_each_block$5(ctx) {
 		},
 		p(ctx, dirty) {
 			const tdvariants_changes = {};
-			if (dirty & /*$data, tabData*/ 10) tdvariants_changes.type = /*$data*/ ctx[3][/*tabData*/ ctx[1]];
-			if (dirty & /*thead*/ 32) tdvariants_changes.thead = /*thead*/ ctx[5];
-			if (dirty & /*typeStr*/ 16) tdvariants_changes.typeStr = /*typeStr*/ ctx[4];
-			if (dirty & /*$data, tabData*/ 10) tdvariants_changes.val = /*attr*/ ctx[18];
-			if (dirty & /*max*/ 128) tdvariants_changes.max = /*max*/ ctx[7];
+			if (dirty & /*$data, tabData*/ 20) tdvariants_changes.type = /*$data*/ ctx[4][/*tabData*/ ctx[2]];
+			if (dirty & /*thead*/ 64) tdvariants_changes.thead = /*thead*/ ctx[6];
+			if (dirty & /*typeStr*/ 32) tdvariants_changes.typeStr = /*typeStr*/ ctx[5];
+			if (dirty & /*$data, tabData*/ 20) tdvariants_changes.val = /*attr*/ ctx[18];
+			if (dirty & /*max*/ 256) tdvariants_changes.max = /*max*/ ctx[8];
 
 			if (!updating_trWidth && dirty & /*trWidth*/ 1024) {
 				updating_trWidth = true;
@@ -3253,15 +3253,15 @@ function create_each_block$5(ctx) {
 				add_flush_callback(() => updating_trWidth = false);
 			}
 
-			if (!updating_trHeight && dirty & /*trHeight*/ 256) {
+			if (!updating_trHeight && dirty & /*trHeight*/ 8) {
 				updating_trHeight = true;
-				tdvariants_changes.trHeight = /*trHeight*/ ctx[8];
+				tdvariants_changes.trHeight = /*trHeight*/ ctx[3];
 				add_flush_callback(() => updating_trHeight = false);
 			}
 
-			if (!updating_description && dirty & /*description*/ 64) {
+			if (!updating_description && dirty & /*description*/ 128) {
 				updating_description = true;
-				tdvariants_changes.description = /*description*/ ctx[6];
+				tdvariants_changes.description = /*description*/ ctx[7];
 				add_flush_callback(() => updating_description = false);
 			}
 
@@ -3298,14 +3298,14 @@ function create_fragment$7(ctx) {
 	let div0;
 	let t4;
 	let current;
-	let each_value_1 = /*thead*/ ctx[5];
+	let each_value_1 = /*thead*/ ctx[6];
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
 		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
 	}
 
-	let each_value = Object.entries(/*$data*/ ctx[3][/*tabData*/ ctx[1]]);
+	let each_value = Object.entries(/*$data*/ ctx[4][/*tabData*/ ctx[2]]);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -3340,12 +3340,12 @@ function create_fragment$7(ctx) {
 			label.textContent = "Description";
 			t3 = space();
 			div0 = element("div");
-			t4 = text(/*description*/ ctx[6]);
+			t4 = text(/*description*/ ctx[7]);
 			attr(tr, "class", "svelte-39sgqk");
 			set_style(tr, "width", style_width, false);
 			attr(thead_1, "class", "svelte-39sgqk");
 			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[12].call(thead_1));
-			set_style(tbody, "--tbodyHeight", /*tbodyHeight*/ ctx[2] + "px");
+			set_style(tbody, "--tbodyHeight", /*tbodyHeight*/ ctx[1] + "px");
 			attr(tbody, "class", "svelte-39sgqk");
 			attr(table, "class", "svelte-39sgqk");
 			attr(label, "for", "description");
@@ -3379,8 +3379,8 @@ function create_fragment$7(ctx) {
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*thWidth, thead*/ 544) {
-				each_value_1 = /*thead*/ ctx[5];
+			if (dirty & /*thWidth, thead*/ 576) {
+				each_value_1 = /*thead*/ ctx[6];
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
@@ -3406,8 +3406,8 @@ function create_fragment$7(ctx) {
 				set_style(tr, "width", style_width, false);
 			}
 
-			if (dirty & /*$data, tabData, thead, typeStr, Object, max, trWidth, trHeight, description*/ 1530) {
-				each_value = Object.entries(/*$data*/ ctx[3][/*tabData*/ ctx[1]]);
+			if (dirty & /*$data, tabData, thead, typeStr, Object, max, trWidth, trHeight, description*/ 1532) {
+				each_value = Object.entries(/*$data*/ ctx[4][/*tabData*/ ctx[2]]);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -3433,11 +3433,11 @@ function create_fragment$7(ctx) {
 				check_outros();
 			}
 
-			if (!current || dirty & /*tbodyHeight*/ 4) {
-				set_style(tbody, "--tbodyHeight", /*tbodyHeight*/ ctx[2] + "px");
+			if (!current || dirty & /*tbodyHeight*/ 2) {
+				set_style(tbody, "--tbodyHeight", /*tbodyHeight*/ ctx[1] + "px");
 			}
 
-			if (!current || dirty & /*description*/ 64) set_data(t4, /*description*/ ctx[6]);
+			if (!current || dirty & /*description*/ 128) set_data(t4, /*description*/ ctx[7]);
 		},
 		i(local) {
 			if (current) return;
@@ -3470,9 +3470,9 @@ function instance$7($$self, $$props, $$invalidate) {
 	let $data;
 	let { tabData } = $$props;
 	let { theadHeight } = $$props;
-	let { tbodyHeight = trHeight * Object.entries(tabData).length } = $$props;
+	let { tbodyHeight } = $$props;
 	let data = getContext("chaAdvActorData");
-	component_subscribe($$self, data, value => $$invalidate(3, $data = value));
+	component_subscribe($$self, data, value => $$invalidate(4, $data = value));
 	const settings = game.settings.get("ard20", "profLevel");
 	let typeStr;
 	let thead;
@@ -3522,22 +3522,26 @@ function instance$7($$self, $$props, $$invalidate) {
 
 	function tdvariants_trHeight_binding(value) {
 		trHeight = value;
-		$$invalidate(8, trHeight);
+		$$invalidate(3, trHeight);
 	}
 
 	function tdvariants_description_binding(value) {
 		description = value;
-		$$invalidate(6, description);
+		$$invalidate(7, description);
 	}
 
 	$$self.$$set = $$props => {
-		if ('tabData' in $$props) $$invalidate(1, tabData = $$props.tabData);
+		if ('tabData' in $$props) $$invalidate(2, tabData = $$props.tabData);
 		if ('theadHeight' in $$props) $$invalidate(0, theadHeight = $$props.theadHeight);
-		if ('tbodyHeight' in $$props) $$invalidate(2, tbodyHeight = $$props.tbodyHeight);
+		if ('tbodyHeight' in $$props) $$invalidate(1, tbodyHeight = $$props.tbodyHeight);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data*/ 8) {
+		if ($$self.$$.dirty & /*trHeight, tabData*/ 12) {
+			$$invalidate(1, tbodyHeight = trHeight * Object.entries(tabData).length);
+		}
+
+		if ($$self.$$.dirty & /*$data*/ 16) {
 			{
 				for (let [key, attr] of Object.entries($data.attributes)) {
 					attr.mod = Math.floor((attr.value - 10) / 2);
@@ -3545,7 +3549,7 @@ function instance$7($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*$data*/ 8) {
+		if ($$self.$$.dirty & /*$data*/ 16) {
 			for (let [key, skill] of Object.entries($data.skills)) {
 				skill.rankName = rankName[skill.level];
 			}
@@ -3554,14 +3558,14 @@ function instance$7($$self, $$props, $$invalidate) {
 
 	return [
 		theadHeight,
-		tabData,
 		tbodyHeight,
+		tabData,
+		trHeight,
 		$data,
 		typeStr,
 		thead,
 		description,
 		max,
-		trHeight,
 		thWidth,
 		trWidth,
 		data,
@@ -3577,9 +3581,9 @@ class Attributes extends SvelteComponent {
 		super();
 
 		init(this, options, instance$7, create_fragment$7, safe_not_equal, {
-			tabData: 1,
+			tabData: 2,
 			theadHeight: 0,
-			tbodyHeight: 2
+			tbodyHeight: 1
 		});
 	}
 }
