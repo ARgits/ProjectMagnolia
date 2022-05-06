@@ -1166,15 +1166,17 @@ class ARd20Item extends Item {
     const data = itemData.data;
 
     for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
-      var _data$res$mag$key;
+      var _data$res$mag$key$val;
 
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        var _data$res$phys$key;
+        var _data$res$phys$key$va;
 
-        data.res.phys[key] = (_data$res$phys$key = data.res.phys[key]) !== null && _data$res$phys$key !== void 0 ? _data$res$phys$key : 0;
+        data.res.phys[key].value = (_data$res$phys$key$va = data.res.phys[key].value) !== null && _data$res$phys$key$va !== void 0 ? _data$res$phys$key$va : 0;
+        data.res.phys[key].value += data.res.phys[key].bonus;
       }
 
-      data.res.mag[key] = (_data$res$mag$key = data.res.mag[key]) !== null && _data$res$mag$key !== void 0 ? _data$res$mag$key : 0;
+      data.res.mag[key].value = (_data$res$mag$key$val = data.res.mag[key].value) !== null && _data$res$mag$key$val !== void 0 ? _data$res$mag$key$val : 0;
+      data.res.mag[key].value += data.res.mag[key].bonus;
     }
 
     data.mobility.value = (_data$mobility$value = data.mobility.value) !== null && _data$mobility$value !== void 0 ? _data$mobility$value : CONFIG.ARd20.HeavyPoints[data.type][data.slot];

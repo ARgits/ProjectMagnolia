@@ -184,9 +184,11 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        data.res.phys[key] = data.res.phys[key] ?? 0;
+        data.res.phys[key].value = data.res.phys[key].value ?? 0;
+        data.res.phys[key].value += data.res.phys[key].bonus;
       }
-      data.res.mag[key] = data.res.mag[key] ?? 0;
+      data.res.mag[key].value = data.res.mag[key].value ?? 0;
+      data.res.mag[key].value += data.res.mag[key].bonus;
     }
     data.mobility.value = data.mobility.value ?? CONFIG.ARd20.HeavyPoints[data.type][data.slot];
     data.mobility.value += data.mobility.bonus;
