@@ -48,7 +48,7 @@
   }
 </script>
 
-<div class="flex flexrow" style="--trHeight={trHeight}px;--boxHeight={boxHeight}px">
+<div class="flex flexrow" >
   <table>
     <thead>
       <tr bind:clientHeight="{trHeight}" style:width="{trWidth}px">
@@ -57,7 +57,7 @@
         {/each}
       </tr>
     </thead>
-    <tbody>
+    <tbody style="--trHeight={trHeight}px;--boxHeight={boxHeight}px">
       {#each Object.entries($data[tabData]) as attr, key}
         <TDvariants
           type={$data[tabData]}

@@ -3269,13 +3269,13 @@ function create_fragment$7(ctx) {
 	let style_width = `${/*trWidth*/ ctx[9]}px`;
 	let t0;
 	let tbody;
+	let tbody_style_value;
 	let t1;
 	let div1;
 	let label;
 	let t3;
 	let div0;
 	let t4;
-	let div2_style_value;
 	let current;
 	let each_value_1 = /*thead*/ ctx[4];
 	let each_blocks_1 = [];
@@ -3324,12 +3324,12 @@ function create_fragment$7(ctx) {
 			add_render_callback(() => /*tr_elementresize_handler*/ ctx[11].call(tr));
 			set_style(tr, "width", style_width, false);
 			attr(thead_1, "class", "svelte-3psllg");
+			attr(tbody, "style", tbody_style_value = "--trHeight=" + /*trHeight*/ ctx[7] + "px;--boxHeight=" + /*boxHeight*/ ctx[1] + "px");
 			attr(tbody, "class", "svelte-3psllg");
 			attr(table, "class", "svelte-3psllg");
 			attr(label, "for", "description");
 			attr(div1, "class", "description svelte-3psllg");
 			attr(div2, "class", "flex flexrow");
-			attr(div2, "style", div2_style_value = "--trHeight=" + /*trHeight*/ ctx[7] + "px;--boxHeight=" + /*boxHeight*/ ctx[1] + "px");
 		},
 		m(target, anchor) {
 			insert(target, div2, anchor);
@@ -3412,11 +3412,11 @@ function create_fragment$7(ctx) {
 				check_outros();
 			}
 
-			if (!current || dirty & /*description*/ 32) set_data(t4, /*description*/ ctx[5]);
-
-			if (!current || dirty & /*trHeight, boxHeight*/ 130 && div2_style_value !== (div2_style_value = "--trHeight=" + /*trHeight*/ ctx[7] + "px;--boxHeight=" + /*boxHeight*/ ctx[1] + "px")) {
-				attr(div2, "style", div2_style_value);
+			if (!current || dirty & /*trHeight, boxHeight*/ 130 && tbody_style_value !== (tbody_style_value = "--trHeight=" + /*trHeight*/ ctx[7] + "px;--boxHeight=" + /*boxHeight*/ ctx[1] + "px")) {
+				attr(tbody, "style", tbody_style_value);
 			}
+
+			if (!current || dirty & /*description*/ 32) set_data(t4, /*description*/ ctx[5]);
 		},
 		i(local) {
 			if (current) return;
