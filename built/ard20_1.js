@@ -3538,7 +3538,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (15:2) {#each tabs as tab}
+// (14:2) {#each tabs as tab}
 function create_each_block_1$2(ctx) {
 	let li;
 	let span;
@@ -3594,7 +3594,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (27:4) {#if tab.id === activeTab}
+// (26:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
@@ -3666,7 +3666,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (26:2) {#each tabs as tab}
+// (25:2) {#each tabs as tab}
 function create_each_block$4(ctx) {
 	let if_block_anchor;
 	let current;
@@ -3895,7 +3895,6 @@ function instance$6($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$data, activeTab, $element*/ 69) {
 			{
-				console.log(trHeight);
 				$$invalidate(3, minBoxSize = Object.entries($data[activeTab]).length * $element.trHeight);
 			}
 		}
