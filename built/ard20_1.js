@@ -1480,6 +1480,7 @@ class ARd20Item extends Item {
 
     if (game.user.isGM) {
       console.log('GM applying damage');
+      console.log(tActor);
       await tActor.update(obj);
     } else {
       console.log('not GM applying damage');
