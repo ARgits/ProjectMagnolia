@@ -3,14 +3,14 @@
   import TDvariants from "./TDvariants.svelte";
   export let tabData;
   let data = getContext("chaAdvActorData");
-  const settings = game.settings.get('ard20','profLevel')
+  const settings = game.settings.get("ard20", "profLevel");
   let typeStr;
   let thead;
   let description;
   let max;
-  let cellWidth
-  let thWidth
-  let trWidth 
+  let cellWidth;
+  let thWidth;
+  let trWidth;
   //TODO: reconfigure thead for localization
   switch (tabData) {
     case "attributes":
@@ -23,7 +23,7 @@
       typeStr = "skills";
       thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
       description = "";
-      max = settings.length-1;
+      max = settings.length - 1;
       break;
     case "features":
       typeStr = "features";
@@ -32,20 +32,21 @@
       max = 1;
       break;
   }
-  thWidth = 100 / thead.length
+  thWidth = 100 / thead.length;
   $: {
     for (let [key, attr] of Object.entries($data.attributes)) {
       attr.mod = Math.floor((attr.value - 10) / 2);
     }
   }
-  const rankName = settings.map((setting)=>{return setting.label})
+  const rankName = settings.map((setting) => {
+    return setting.label;
+  });
   $: for (let [key, skill] of Object.entries($data.skills)) {
     skill.rankName = rankName[skill.level];
   }
 </script>
 
 <div class="flex flexrow">
-  <div class="scrollable">
   <table>
     <thead>
       <tr style:width="{trWidth}px">
@@ -56,11 +57,20 @@
     </thead>
     <tbody>
       {#each Object.entries($data[tabData]) as attr, key}
-        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth bind:cellWidth {key} bind:description />
+        <TDvariants
+          type={$data[tabData]}
+          {thead}
+          {typeStr}
+          val={attr}
+          {max}
+          bind:trWidth
+          bind:cellWidth
+          {key}
+          bind:description
+        />
       {/each}
     </tbody>
   </table>
-</div>
   <div class="description">
     <label for="description">Description</label>
     <div>{description}</div>
@@ -68,8 +78,8 @@
 </div>
 
 <style>
-  .description{
-    height: 270px;
+  .description {
+    height: 100%;
     padding-left: 2px;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
@@ -84,9 +94,9 @@
   table {
     border-collapse: collapse;
   }
-  tbody{
+  tbody {
     display: block;
-    height: 234px;
+    height: 235px;
     width: 100%;
     overflow-y: auto;
   }
@@ -101,7 +111,7 @@
     padding: 0.2em;
     word-break: break-all;
   }
-  th:last-child{
+  th:last-child {
     border-right: 0px;
   }
 </style>

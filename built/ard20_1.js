@@ -3169,7 +3169,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (52:8) {#each thead as th}
+// (53:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[18] + "";
@@ -3182,7 +3182,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "last svelte-1wrfyja");
+			attr(th, "class", "last svelte-1e0cn2u");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3203,7 +3203,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (58:6) {#each Object.entries($data[tabData]) as attr, key}
+// (59:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$5(ctx) {
 	let tdvariants;
 	let updating_trWidth;
@@ -3301,8 +3301,7 @@ function create_each_block$5(ctx) {
 }
 
 function create_fragment$7(ctx) {
-	let div3;
-	let div0;
+	let div2;
 	let table;
 	let thead_1;
 	let tr;
@@ -3310,10 +3309,10 @@ function create_fragment$7(ctx) {
 	let t0;
 	let tbody;
 	let t1;
-	let div2;
+	let div1;
 	let label;
 	let t3;
-	let div1;
+	let div0;
 	let t4;
 	let current;
 	let each_value_1 = /*thead*/ ctx[3];
@@ -3336,8 +3335,7 @@ function create_fragment$7(ctx) {
 
 	return {
 		c() {
-			div3 = element("div");
-			div0 = element("div");
+			div2 = element("div");
 			table = element("table");
 			thead_1 = element("thead");
 			tr = element("tr");
@@ -3354,26 +3352,24 @@ function create_fragment$7(ctx) {
 			}
 
 			t1 = space();
-			div2 = element("div");
+			div1 = element("div");
 			label = element("label");
 			label.textContent = "Description";
 			t3 = space();
-			div1 = element("div");
+			div0 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-1wrfyja");
+			attr(tr, "class", "svelte-1e0cn2u");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-1wrfyja");
-			attr(tbody, "class", "svelte-1wrfyja");
-			attr(table, "class", "svelte-1wrfyja");
-			attr(div0, "class", "scrollable");
+			attr(thead_1, "class", "svelte-1e0cn2u");
+			attr(tbody, "class", "svelte-1e0cn2u");
+			attr(table, "class", "svelte-1e0cn2u");
 			attr(label, "for", "description");
-			attr(div2, "class", "description svelte-1wrfyja");
-			attr(div3, "class", "flex flexrow");
+			attr(div1, "class", "description svelte-1e0cn2u");
+			attr(div2, "class", "flex flexrow");
 		},
 		m(target, anchor) {
-			insert(target, div3, anchor);
-			append(div3, div0);
-			append(div0, table);
+			insert(target, div2, anchor);
+			append(div2, table);
 			append(table, thead_1);
 			append(thead_1, tr);
 
@@ -3388,12 +3384,12 @@ function create_fragment$7(ctx) {
 				each_blocks[i].m(tbody, null);
 			}
 
-			append(div3, t1);
-			append(div3, div2);
-			append(div2, label);
-			append(div2, t3);
+			append(div2, t1);
 			append(div2, div1);
-			append(div1, t4);
+			append(div1, label);
+			append(div1, t3);
+			append(div1, div0);
+			append(div0, t4);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -3472,7 +3468,7 @@ function create_fragment$7(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div3);
+			if (detaching) detach(div2);
 			destroy_each(each_blocks_1, detaching);
 			destroy_each(each_blocks, detaching);
 		}
@@ -3484,7 +3480,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	let { tabData } = $$props;
 	let data = getContext("chaAdvActorData");
 	component_subscribe($$self, data, value => $$invalidate(1, $data = value));
-	const settings = game.settings.get('ard20', 'profLevel');
+	const settings = game.settings.get("ard20", "profLevel");
 	let typeStr;
 	let thead;
 	let description;
@@ -3615,11 +3611,11 @@ function create_each_block_1$2(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-1ieoo20");
+			attr(span, "class", "svelte-96s7wo");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-1ieoo20"));
+			: "") + " svelte-96s7wo"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -3638,7 +3634,7 @@ function create_each_block_1$2(ctx) {
 
 			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[3].id
 			? "active"
-			: "") + " svelte-1ieoo20"))) {
+			: "") + " svelte-96s7wo"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -3816,8 +3812,8 @@ function create_fragment$6(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-1ieoo20");
-			attr(div, "class", "box svelte-1ieoo20");
+			attr(ul, "class", "svelte-96s7wo");
+			attr(div, "class", "box svelte-96s7wo");
 		},
 		m(target, anchor) {
 			insert(target, ul, anchor);
