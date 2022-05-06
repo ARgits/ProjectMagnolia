@@ -1459,7 +1459,7 @@ class ARd20Item extends Item {
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
 
-  async _applyDamage(dam, tData, tHealth, tActor, tokenID) {
+  async _applyDamage(dam, tData, tHealth, tActor, tokenId) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach(term => {
