@@ -1084,7 +1084,7 @@ class ARd20Item extends Item {
     data.source.label = "";
     data.source.value.forEach((value, key) => {
       let label = game.i18n.localize(getValues$1(CONFIG.ARd20.Source, value));
-      data.source.label += key === 0 ? label : `, ${label}`;
+      data.source.label += key === 0 ? label : `</br>${label}`;
     }); //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
     //define levels
 
@@ -2297,8 +2297,7 @@ function create_if_block_10(ctx) {
 // (72:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[4][1].data.source.label + "";
-	let t;
+	let raw_value = /*val*/ ctx[4][1].data.source.label + "";
 	let td_class_value;
 	let mounted;
 	let dispose;
@@ -2306,12 +2305,11 @@ function create_if_block_9(ctx) {
 	return {
 		c() {
 			td = element("td");
-			t = text(t_value);
 			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-1qwk71v"));
 		},
 		m(target, anchor) {
 			insert(target, td, anchor);
-			append(td, t);
+			td.innerHTML = raw_value;
 
 			if (!mounted) {
 				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[18]);
@@ -2319,8 +2317,7 @@ function create_if_block_9(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*val*/ 16 && t_value !== (t_value = /*val*/ ctx[4][1].data.source.label + "")) set_data(t, t_value);
-		},
+			if (dirty[0] & /*val*/ 16 && raw_value !== (raw_value = /*val*/ ctx[4][1].data.source.label + "")) td.innerHTML = raw_value;		},
 		d(detaching) {
 			if (detaching) detach(td);
 			mounted = false;

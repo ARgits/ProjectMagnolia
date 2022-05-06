@@ -120,7 +120,7 @@ export class ARd20Item extends Item {
     data.source.label = "";
     data.source.value.forEach((value, key) => {
       let label = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
-      data.source.label += key === 0 ? label : `, ${label}`;
+      data.source.label += key === 0 ? label : `</br>${label}`;
     });
     //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
     //define levels

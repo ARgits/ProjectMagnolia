@@ -71,7 +71,7 @@
   {/if}
   {#if thead.includes("Source")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td  class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.source.label} </td>
+    <td  class={last} on:mouseover={() => changeDesc(val)}> {@html val[1].data.source.label} </td>
   {/if}
   {#if thead.includes("Increase")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
