@@ -48,10 +48,10 @@
   }
 </script>
 
-<div class="flex flexrow" >
+<div class="flex flexrow">
   <table>
-    <thead>
-      <tr bind:clientHeight="{trHeight}" style:width="{trWidth}px">
+    <thead bind:clientHeight={trHeight}>
+      <tr style:width="{trWidth}px">
         {#each thead as th}
           <th style:width="{thWidth}%" class="last"> {th} </th>
         {/each}
@@ -59,16 +59,7 @@
     </thead>
     <tbody style="--trHeight={trHeight}px;--boxHeight={boxHeight}px">
       {#each Object.entries($data[tabData]) as attr, key}
-        <TDvariants
-          type={$data[tabData]}
-          {thead}
-          {typeStr}
-          val={attr}
-          {max}
-          bind:trWidth
-          {key}
-          bind:description
-        />
+        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth {key} bind:description />
       {/each}
     </tbody>
   </table>

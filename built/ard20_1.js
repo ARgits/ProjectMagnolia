@@ -3265,8 +3265,8 @@ function create_fragment$7(ctx) {
 	let table;
 	let thead_1;
 	let tr;
-	let tr_resize_listener;
 	let style_width = `${/*trWidth*/ ctx[9]}px`;
+	let thead_1_resize_listener;
 	let t0;
 	let tbody;
 	let tbody_style_value;
@@ -3321,9 +3321,9 @@ function create_fragment$7(ctx) {
 			div0 = element("div");
 			t4 = text(/*description*/ ctx[5]);
 			attr(tr, "class", "svelte-3psllg");
-			add_render_callback(() => /*tr_elementresize_handler*/ ctx[11].call(tr));
 			set_style(tr, "width", style_width, false);
 			attr(thead_1, "class", "svelte-3psllg");
+			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[11].call(thead_1));
 			attr(tbody, "style", tbody_style_value = "--trHeight=" + /*trHeight*/ ctx[7] + "px;--boxHeight=" + /*boxHeight*/ ctx[1] + "px");
 			attr(tbody, "class", "svelte-3psllg");
 			attr(table, "class", "svelte-3psllg");
@@ -3341,7 +3341,7 @@ function create_fragment$7(ctx) {
 				each_blocks_1[i].m(tr, null);
 			}
 
-			tr_resize_listener = add_resize_listener(tr, /*tr_elementresize_handler*/ ctx[11].bind(tr));
+			thead_1_resize_listener = add_resize_listener(thead_1, /*thead_1_elementresize_handler*/ ctx[11].bind(thead_1));
 			append(table, t0);
 			append(table, tbody);
 
@@ -3439,7 +3439,7 @@ function create_fragment$7(ctx) {
 		d(detaching) {
 			if (detaching) detach(div2);
 			destroy_each(each_blocks_1, detaching);
-			tr_resize_listener();
+			thead_1_resize_listener();
 			destroy_each(each_blocks, detaching);
 		}
 	};
@@ -3491,7 +3491,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		return setting.label;
 	});
 
-	function tr_elementresize_handler() {
+	function thead_1_elementresize_handler() {
 		trHeight = this.clientHeight;
 		$$invalidate(7, trHeight);
 	}
@@ -3539,7 +3539,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		thWidth,
 		trWidth,
 		data,
-		tr_elementresize_handler,
+		thead_1_elementresize_handler,
 		tdvariants_trWidth_binding,
 		tdvariants_description_binding
 	];
