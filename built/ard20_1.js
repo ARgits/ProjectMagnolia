@@ -1169,9 +1169,9 @@ class ARd20Item extends Item {
       var _data$res$mag$key$val;
 
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        var _data$res$phys$key$va;
+        var _parseInt;
 
-        data.res.phys[key].value = (_data$res$phys$key$va = data.res.phys[key].value) !== null && _data$res$phys$key$va !== void 0 ? _data$res$phys$key$va : 0;
+        data.res.phys[key].value = (_parseInt = parseInt(data.res.phys[key].value)) !== null && _parseInt !== void 0 ? _parseInt : 0;
         data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
       }
 
