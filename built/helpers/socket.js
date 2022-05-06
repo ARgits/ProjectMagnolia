@@ -1,7 +1,7 @@
 export default class ARd20SocketHandler {
   //@ts-expect-error
   static async updateActorData(data) {
-      console.log('Socket Called')
+      console.log('Socket Called, its GM:', game.user.isGM,' and its active: ',game.user.isActive)
     if (!game.user.isGM) return;
     // if the logged in user is the active GM with the lowest user id
     const isResponsibleGM = game.users
