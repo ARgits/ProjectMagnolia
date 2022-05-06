@@ -428,8 +428,10 @@ export class ARd20Item extends Item {
     let obj = {};
     obj["data.health.value"] = tHealth;
     if (game.user.isGM) {
+      console.log('GM applying damage')
       await tActor.update(obj);
     } else {
+      console.log('not GM applying damage')
       game.socket.emit("system.ard20", {
         operation: "updateActorData",
         actor: tActor,

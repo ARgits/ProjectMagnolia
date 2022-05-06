@@ -1479,8 +1479,10 @@ class ARd20Item extends Item {
     obj["data.health.value"] = tHealth;
 
     if (game.user.isGM) {
+      console.log('GM applying damage');
       await tActor.update(obj);
     } else {
+      console.log('not GM applying damage');
       game.socket.emit("system.ard20", {
         operation: "updateActorData",
         actor: tActor,
@@ -5576,11 +5578,15 @@ ARd20.RollResult = {
 class ARd20SocketHandler {
   //@ts-expect-error
   static async updateActorData(data) {
-    if (game.user.isGM) {
-      const actor = data.actor; //@ts-expect-error
+    console.log('Socket Called');
+    if (!game.user.isGM) return; // if the logged in user is the active GM with the lowest user id
 
-      if (actor) await actor.update(data.update);
-    }
+    const isResponsibleGM = game.users.filter(user => user.isGM && user.isActive).some(other => other.data._id < game.user.data._id);
+    if (!isResponsibleGM) return;
+    console.log('HERE GM ON SOCKET CALLING');
+    const actor = data.actor; //@ts-expect-error
+
+    if (actor) await actor.update(data.update);
   }
 
 }
