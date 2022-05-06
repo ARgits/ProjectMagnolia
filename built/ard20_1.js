@@ -1236,9 +1236,13 @@ class ARd20Item extends Item {
       parts: baseDamage
     };
     baseDamage === null || baseDamage === void 0 ? void 0 : baseDamage.forEach(part => {
-      console.log('baseDamage for current damage', part); //@ts-expect-error
+      console.log("baseDamage for current damage", part); //@ts-expect-error
 
-      data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
+      data.damage.current.formula += part[0] + `[`;
+      part[1].forEach((subPart, key) => {
+        data.damage.current.formula += game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) + ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
+        data.damage.current.formula += key === part[1].length - 1 ? "]" : "; ";
+      });
     });
   }
   /**

@@ -185,10 +185,10 @@ export class ARd20Item extends Item {
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         data.res.phys[key].value = parseInt(data.res.phys[key].value) ?? 0;
-        data.res.phys[key].value += data.res.phys[key].value!=="imm"?data.res.phys[key].bonus:"";
+        data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
       }
       data.res.mag[key].value = parseInt(data.res.mag[key].value) ?? 0;
-      data.res.mag[key].value += data.res.mag[key].value!=="imm"?data.res.mag[key].bonus:"";
+      data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
     }
     data.mobility.value = data.mobility.value ?? CONFIG.ARd20.HeavyPoints[data.type][data.slot];
     data.mobility.value += data.mobility.bonus;
@@ -239,9 +239,15 @@ export class ARd20Item extends Item {
       parts: baseDamage,
     };
     baseDamage?.forEach((part) => {
-      console.log('baseDamage for current damage',part)
+      console.log("baseDamage for current damage", part);
       //@ts-expect-error
-      data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
+      data.damage.current.formula += part[0] + `[`;
+      part[1].forEach((subPart, key) => {
+        data.damage.current.formula +=
+          game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) +
+          ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
+        data.damage.current.formula += key === part[1].length - 1 ? "]" : "; ";
+      });
     });
   }
   /**
