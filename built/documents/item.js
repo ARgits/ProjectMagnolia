@@ -299,7 +299,7 @@ export class ARd20Item extends Item {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", function (event) {
-      event.preventDefault();
+      event.stopImmediatePropagation();
       this._rollDamage.bind(this);
     });
     html.on("hover", ".attack-roll .flexrow .value", function (event) {
