@@ -409,7 +409,7 @@ export class ARd20Item extends Item {
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
-  async _applyDamage(dam, tData, tHealth, tActor) {
+  async _applyDamage(dam, tData, tHealth, tActor,token) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach((term) => {
@@ -435,7 +435,7 @@ export class ARd20Item extends Item {
       console.log('not GM applying damage')
       game.socket.emit("system.ard20", {
         operation: "updateActorData",
-        actor: tActor,
+        token: token,
         update: obj,
         value: value,
       });
@@ -476,7 +476,7 @@ export class ARd20Item extends Item {
     html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
     console.log(html[0]);
     await message.update({ content: html[0].outerHTML });
-    await item._applyDamage(dam, tData, tHealth, tActor);
+    await item._applyDamage(dam, tData, tHealth, tActor,token);
   }
   /* -------------------------------------------- */
   /**
