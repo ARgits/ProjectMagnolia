@@ -1,7 +1,7 @@
 <script>
   export let tabs = [];
   export let activeTab;
-  let boxHeight;
+  export let tbodyHeight
 </script>
 
 <ul>
@@ -15,10 +15,10 @@
     </li>
   {/each}
 </ul>
-<div class="box" bind:clientHeight="{boxHeight}">
+<div class="box" style="--tbodyHeight:{tbodyHeight}px">
   {#each tabs as tab}
     {#if tab.id === activeTab}
-      <svelte:component this={tab.component} tabData={tab.id} {boxHeight} />
+      <svelte:component this={tab.component} tabData={tab.id} {tbodyHeight} />
     {/if}
   {/each}
 </div>
@@ -29,7 +29,7 @@
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
-    max-height: 70%;
+    max-height: min(70%, --tbodyHeight);
     /*overflow-y: auto;*/
     background: rgba(0, 0, 0, 0.08);
   }

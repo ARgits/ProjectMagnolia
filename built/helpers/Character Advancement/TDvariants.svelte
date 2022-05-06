@@ -10,6 +10,7 @@
   export let thead;
   //export let cellWidth;
   export let trWidth
+  export let trHeight
   const data = getContext("chaAdvActorData");
   const originalData = getContext("chaAdvActorOriginalData");
   const aditionalData = getContext("chaAdvAditionalData");
@@ -64,7 +65,7 @@
   //TODO: reconfigure thead for localization
 </script>
 
-<tr bind:clientWidth={trWidth} style="--cellWidth:{widthPercent}%">
+<tr bind:offsetHeight={trHeight} bind:clientWidth={trWidth} style="--cellWidth:{widthPercent}%">
   {#if thead.includes("Name")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>

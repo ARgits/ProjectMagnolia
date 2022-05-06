@@ -2,7 +2,8 @@
   import { getContext } from "svelte";
   import TDvariants from "./TDvariants.svelte";
   export let tabData;
-  export let boxHeight;
+  export let theadHeight
+  export let tbodyHeight = trHeight*Object.entries(tabData).length
   let data = getContext("chaAdvActorData");
   const settings = game.settings.get("ard20", "profLevel");
   let typeStr;
@@ -10,7 +11,6 @@
   let description;
   let max;
   let trHeight;
-  //let cellWidth;
   let thWidth;
   let trWidth;
   //TODO: reconfigure thead for localization
@@ -50,16 +50,16 @@
 
 <div class="flex flexrow">
   <table>
-    <thead bind:offsetHeight={trHeight}>
+    <thead bind:offsetHeight={theadHeight}>
       <tr style:width="{trWidth}px">
         {#each thead as th}
           <th style:width="{thWidth}%" class="last"> {th} </th>
         {/each}
       </tr>
     </thead>
-    <tbody style="--trHeight:{trHeight}px;--boxHeight:{boxHeight}px">
+    <tbody style="--tbodyHeight:{tbodyHeight}px">
       {#each Object.entries($data[tabData]) as attr, key}
-        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth {key} bind:description />
+        <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth {key} bind:trHeight bind:description />
       {/each}
     </tbody>
   </table>
@@ -88,7 +88,7 @@
   }
   tbody {
     display: block;
-    height: calc(var(--boxHeight) - var(--trHeight));
+    height: calc(var(--boxHeight) - var(--theadHeight));
     width: 100%;
     overflow-y: auto;
   }
