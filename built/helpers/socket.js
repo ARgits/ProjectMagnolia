@@ -11,7 +11,8 @@ export default class ARd20SocketHandler {
 
     if (!isResponsibleGM) return;
     console.log('HERE GM ON SOCKET CALLING')
-    const actor = data.token?.actor;
+    const token = await fromUuid(data.tokenId)
+    const actor = token?.actor;
     //@ts-expect-error
     if (actor) await actor.update(data.update);
   }

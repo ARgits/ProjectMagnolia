@@ -1459,7 +1459,7 @@ class ARd20Item extends Item {
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
 
-  async _applyDamage(dam, tData, tHealth, tActor, token) {
+  async _applyDamage(dam, tData, tHealth, tActor, tokenID) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach(term => {
@@ -1479,14 +1479,14 @@ class ARd20Item extends Item {
     obj["data.health.value"] = tHealth;
 
     if (game.user.isGM) {
-      console.log('GM applying damage');
+      console.log("GM applying damage");
       console.log(tActor);
       await tActor.update(obj);
     } else {
-      console.log('not GM applying damage');
+      console.log("not GM applying damage");
       game.socket.emit("system.ard20", {
         operation: "updateActorData",
-        token: token,
+        tokenId: tokenId,
         update: obj,
         value: value
       });
@@ -1535,7 +1535,7 @@ class ARd20Item extends Item {
     await message.update({
       content: html[0].outerHTML
     });
-    await item._applyDamage(dam, tData, tHealth, tActor, token);
+    await item._applyDamage(dam, tData, tHealth, tActor, targetUuid);
   }
   /* -------------------------------------------- */
 
@@ -5579,8 +5579,6 @@ ARd20.RollResult = {
 class ARd20SocketHandler {
   //@ts-expect-error
   static async updateActorData(data) {
-    var _data$token;
-
     console.log('socket data', data);
     console.log('Socket Called, its GM:', game.user.isGM, ' and its active: ', game.user.active);
     if (!game.user.isGM) return; // if the logged in user is the active GM with the lowest user id
@@ -5588,7 +5586,8 @@ class ARd20SocketHandler {
     const isResponsibleGM = game.users.filter(user => user.isGM && user.active).some(other => other.data._id <= game.user.data._id);
     if (!isResponsibleGM) return;
     console.log('HERE GM ON SOCKET CALLING');
-    const actor = (_data$token = data.token) === null || _data$token === void 0 ? void 0 : _data$token.actor; //@ts-expect-error
+    const token = await fromUuid(data.tokenId);
+    const actor = token === null || token === void 0 ? void 0 : token.actor; //@ts-expect-error
 
     if (actor) await actor.update(data.update);
   }

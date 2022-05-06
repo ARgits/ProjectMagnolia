@@ -238,7 +238,7 @@ export class ARd20Item extends Item {
       formula: "",
       parts: baseDamage,
     };
-    baseDamage?.forEach((part,key) => {
+    baseDamage?.forEach((part, key) => {
       console.log("baseDamage for current damage", part);
       //@ts-expect-error
       data.damage.current.formula += part[0] + `[`;
@@ -248,7 +248,7 @@ export class ARd20Item extends Item {
           ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
         data.damage.current.formula += subKey === part[1].length - 1 ? "]" : " or<br/>";
       });
-      data.damage.current.formula+=key===baseDamage.length-1?"":"<br/>+<br/>"
+      data.damage.current.formula += key === baseDamage.length - 1 ? "" : "<br/>+<br/>";
     });
   }
   /**
@@ -409,7 +409,7 @@ export class ARd20Item extends Item {
     const content = card.querySelector(".card-content");
     content.style.display = content.style.display === "none" ? "block" : "none";
   }
-  async _applyDamage(dam, tData, tHealth, tActor,token) {
+  async _applyDamage(dam, tData, tHealth, tActor, tokenID) {
     let value = dam.total;
     console.log("урон до резистов: ", value);
     dam.terms.forEach((term) => {
@@ -428,14 +428,14 @@ export class ARd20Item extends Item {
     let obj = {};
     obj["data.health.value"] = tHealth;
     if (game.user.isGM) {
-      console.log('GM applying damage')
-      console.log(tActor)
+      console.log("GM applying damage");
+      console.log(tActor);
       await tActor.update(obj);
     } else {
-      console.log('not GM applying damage')
+      console.log("not GM applying damage");
       game.socket.emit("system.ard20", {
         operation: "updateActorData",
-        token: token,
+        tokenId: tokenId,
         update: obj,
         value: value,
       });
@@ -476,7 +476,7 @@ export class ARd20Item extends Item {
     html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
     console.log(html[0]);
     await message.update({ content: html[0].outerHTML });
-    await item._applyDamage(dam, tData, tHealth, tActor,token);
+    await item._applyDamage(dam, tData, tHealth, tActor, targetUuid);
   }
   /* -------------------------------------------- */
   /**
