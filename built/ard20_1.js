@@ -5284,7 +5284,6 @@ class ARd20ItemSheet extends ItemSheet {
 
     $(`select.select2`, html) //@ts-expect-error
     .select2({
-      theme: "filled",
       width: "auto",
       dropdownAutoWidth: true,
       disabled: edit,
