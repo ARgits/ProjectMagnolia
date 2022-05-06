@@ -88,7 +88,7 @@ export class ARd20Item extends Item {
     data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.value.filter((prof) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
-      const item = game.items.get(id);
+      const item = game.items?.get(id);
       if (item?.data.type === "weapon") {
         data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
       }

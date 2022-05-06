@@ -10,7 +10,7 @@ export { default as DamageRoll } from "./damage-roll.js";
  *
  * @return {string}                        The resulting simplified formula
  */
-export function simplifyRollFormula(formula, data, { constantFirst = false }) {
+export function simplifyRollFormula(formula, data, options={ constantFirst : false }) {
     const roll = new Roll(formula, data); // Parses the formula and replaces any @properties
     const terms = roll.terms;
     // Some terms are "too complicated" for this algorithm to simplify
@@ -53,7 +53,7 @@ export function simplifyRollFormula(formula, data, { constantFirst = false }) {
         }
     }
     // Order the rollable and constant terms, either constant first or second depending on the optional argument
-    const parts = constantFirst ? [constantPart, rollableFormula] : [rollableFormula, constantPart];
+    const parts = options.constantFirst ? [constantPart, rollableFormula] : [rollableFormula, constantPart];
     // Join the parts with a + sign, pass them to `Roll` once again to clean up the formula
     return new Roll(parts.filterJoin(" + ")).formula;
 }

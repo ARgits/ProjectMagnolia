@@ -534,8 +534,8 @@ DamageRoll.EVALUATION_TEMPLATE = "systems/ard20/templates/chat/roll-dialog.html"
  * @return {string}                        The resulting simplified formula
  */
 
-function simplifyRollFormula(formula, data, {
-  constantFirst = false
+function simplifyRollFormula(formula, data, options = {
+  constantFirst: false
 }) {
   const roll = new Roll(formula, data); // Parses the formula and replaces any @properties
 
@@ -588,7 +588,7 @@ function simplifyRollFormula(formula, data, {
   } // Order the rollable and constant terms, either constant first or second depending on the optional argument
 
 
-  const parts = constantFirst ? [constantPart, rollableFormula] : [rollableFormula, constantPart]; // Join the parts with a + sign, pass them to `Roll` once again to clean up the formula
+  const parts = options.constantFirst ? [constantPart, rollableFormula] : [rollableFormula, constantPart]; // Join the parts with a + sign, pass them to `Roll` once again to clean up the formula
 
   return new Roll(parts.filterJoin(" + ")).formula;
 }
@@ -1057,8 +1057,10 @@ class ARd20Item extends Item {
     data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.value.filter(prof => prof.type === data.type.value);
 
     if ((_flags$core = flags.core) !== null && _flags$core !== void 0 && _flags$core.sourceId) {
+      var _game$items;
+
       const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
-      const item = game.items.get(id);
+      const item = (_game$items = game.items) === null || _game$items === void 0 ? void 0 : _game$items.get(id);
 
       if ((item === null || item === void 0 ? void 0 : item.data.type) === "weapon") {
         data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
