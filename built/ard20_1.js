@@ -1315,13 +1315,8 @@ class ARd20Item extends Item {
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
-    html.on("click", ".attack-roll .roll-controls .accept", function (event) {
-      event.stopImmediatePropagation();
-      console.log('CLICK ', event);
-
-      this._rollDamage.bind(this);
-    });
-    html.trigger('click');
+    html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
+    html.trigger("click");
     html.on("hover", ".attack-roll .flexrow .value", function (event) {
       var _element$querySelecto;
 
