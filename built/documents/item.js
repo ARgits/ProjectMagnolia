@@ -193,6 +193,7 @@ export class ARd20Item extends Item {
       const data = itemData.data;
       data.proficiency.level = this.isOwned ? this.actor?.data.data.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value : 0;
       data.proficiency.levelName = game.settings.get('ard20','profLevel')[data.proficiency.level].label;
+      data.proficiency.key = game.settings.get('ard20','profLevel')[data.proficiency.level].key;
       prof_bonus = data.proficiency.level * 4;
     }
     if (itemData.data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
@@ -213,7 +214,7 @@ export class ARd20Item extends Item {
     const data = itemData.data;
     if (!data.hasDamage) return;
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-    const prop = itemData.type==='weapon'? `damage.common.${data.proficiency.levelName}.parts`:'damage.parts';
+    const prop = itemData.type==='weapon'? `damage.common.${data.proficiency.key}.parts`:'damage.parts';
     let baseDamage = getProperty(data, prop);
     //@ts-expect-error
     data.damage.current = {
