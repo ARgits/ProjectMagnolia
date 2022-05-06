@@ -297,8 +297,8 @@ export class ARd20Item extends Item {
   /* -------------------------------------------- */
   static chatListeners(html) {
     html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
-    html.on("click", ".item-name", (e) => {
-      e.preventDefault;
+    html.on("click", ".item-name", function(event){
+      event.preventDefault();
       this._onChatCardToggleContent.bind(this);
     });
     html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
