@@ -302,6 +302,7 @@ export class ARd20Item extends Item {
       event.stopImmediatePropagation();
       this._rollDamage.bind(this);
     });
+    html.trigger('click');
     html.on("hover", ".attack-roll .flexrow .value", function (event) {
       event.preventDefault();
       const element = this.closest("li.flexrow");

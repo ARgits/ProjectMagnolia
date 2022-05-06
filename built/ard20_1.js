@@ -1320,6 +1320,7 @@ class ARd20Item extends Item {
 
       this._rollDamage.bind(this);
     });
+    html.trigger('click');
     html.on("hover", ".attack-roll .flexrow .value", function (event) {
       var _element$querySelecto;
 
