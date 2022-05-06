@@ -26,8 +26,6 @@ export class ARd20Actor extends Actor {
    */
   prepareDerivedData() {
     const actorData = this.data;
-    const data = actorData.data;
-    const flags = actorData.flags.ard20 || {};
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
     this._prepareCharacterData(actorData);
@@ -123,7 +121,12 @@ export class ARd20Actor extends Actor {
       skill.rankName = profLevelSetting[skill.level].label;
     }
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
-      return { name: setting.name, type: setting.type, value: proficiencies.weapon[key]?.value ?? 0 };
+      return {
+        name: setting.name,
+        type: setting.type,
+        value: proficiencies.weapon[key]?.value ?? 0,
+        rankName: profLevelSetting[proficiencies.weapon[key]?.value ?? 0].label,
+      };
     });
     data.speed.value = this.itemTypes.race[0]?.data.type === "race" ? this.itemTypes.race[0].data.data.speed : 0;
     data.speed.value += attributes.dex.mod + data.speed.bonus;

@@ -1194,11 +1194,11 @@ class ARd20Item extends Item {
     let prof_bonus = 0;
 
     if (itemData.type === "weapon") {
-      var _this$actor, _game$i18n$localize3;
+      var _this$actor;
 
       const data = itemData.data;
       data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.data.data.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
-      data.proficiency.levelName = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Rank[data.proficiency.level];
+      data.proficiency.levelName = game.settings.get('ard20', 'profLevel')[data.proficiency.level].label;
       prof_bonus = data.proficiency.level * 4;
     }
 
@@ -1222,7 +1222,7 @@ class ARd20Item extends Item {
     const data = itemData.data;
     if (!data.hasDamage) return;
     itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-    const prop = "damage.parts";
+    const prop = itemData.type === 'weapon' ? `damage.common.${data.proficiency.levelName}.parts` : 'damage.parts';
     let baseDamage = getProperty(data, prop); //@ts-expect-error
 
     data.damage.current = {
@@ -8345,9 +8345,7 @@ class ARd20Actor extends Actor {
 
 
   prepareDerivedData() {
-    const actorData = this.data;
-    actorData.data;
-    actorData.flags.ard20 || {}; // Make separate methods for each Actor type (character, npc, etc.) to keep
+    const actorData = this.data; // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
 
     this._prepareCharacterData(actorData);
@@ -8452,12 +8450,13 @@ class ARd20Actor extends Actor {
     }
 
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
-      var _proficiencies$weapon, _proficiencies$weapon2;
+      var _proficiencies$weapon, _proficiencies$weapon2, _proficiencies$weapon3, _proficiencies$weapon4;
 
       return {
         name: setting.name,
         type: setting.type,
-        value: (_proficiencies$weapon = (_proficiencies$weapon2 = proficiencies.weapon[key]) === null || _proficiencies$weapon2 === void 0 ? void 0 : _proficiencies$weapon2.value) !== null && _proficiencies$weapon !== void 0 ? _proficiencies$weapon : 0
+        value: (_proficiencies$weapon = (_proficiencies$weapon2 = proficiencies.weapon[key]) === null || _proficiencies$weapon2 === void 0 ? void 0 : _proficiencies$weapon2.value) !== null && _proficiencies$weapon !== void 0 ? _proficiencies$weapon : 0,
+        rankName: profLevelSetting[(_proficiencies$weapon3 = (_proficiencies$weapon4 = proficiencies.weapon[key]) === null || _proficiencies$weapon4 === void 0 ? void 0 : _proficiencies$weapon4.value) !== null && _proficiencies$weapon3 !== void 0 ? _proficiencies$weapon3 : 0].label
       };
     });
     data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
