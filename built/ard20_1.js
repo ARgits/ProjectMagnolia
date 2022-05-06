@@ -1006,8 +1006,8 @@ class ARd20Item extends Item {
       var _data$damage$common$l;
 
       data.damage.common[level.key] = (_data$damage$common$l = data.damage.common[level.key]) !== null && _data$damage$common$l !== void 0 ? _data$damage$common$l : {
-        formula: "1d6 Physical Bludgeoning",
-        parts: [["1d6", ["phys", "blud"]]]
+        formula: "",
+        parts: [["", ["", ""]]]
       };
     }
     /*for (let [key, type] of obj_entries(data.damage)) {
@@ -1166,7 +1166,7 @@ class ARd20Item extends Item {
     const data = itemData.data;
 
     for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
-      var _data$res$mag$key$val;
+      var _parseInt2;
 
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         var _parseInt;
@@ -1175,7 +1175,7 @@ class ARd20Item extends Item {
         data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
       }
 
-      data.res.mag[key].value = (_data$res$mag$key$val = data.res.mag[key].value) !== null && _data$res$mag$key$val !== void 0 ? _data$res$mag$key$val : 0;
+      data.res.mag[key].value = (_parseInt2 = parseInt(data.res.mag[key].value)) !== null && _parseInt2 !== void 0 ? _parseInt2 : 0;
       data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
     }
 
@@ -1236,7 +1236,8 @@ class ARd20Item extends Item {
       parts: baseDamage
     };
     baseDamage === null || baseDamage === void 0 ? void 0 : baseDamage.forEach(part => {
-      //@ts-expect-error
+      console.log('baseDamage for current damage', part); //@ts-expect-error
+
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });
   }

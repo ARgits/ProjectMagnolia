@@ -46,8 +46,8 @@ export class ARd20Item extends Item {
     this._setTypeAndSubtype(data, flags);
     for (const level of game.settings.get("ard20", "profLevel")) {
       data.damage.common[level.key] = data.damage.common[level.key] ?? {
-        formula: "1d6 Physical Bludgeoning",
-        parts: [["1d6", ["phys", "blud"]]],
+        formula: "",
+        parts: [["", ["", ""]]],
       };
     }
     /*for (let [key, type] of obj_entries(data.damage)) {
@@ -187,7 +187,7 @@ export class ARd20Item extends Item {
         data.res.phys[key].value = parseInt(data.res.phys[key].value) ?? 0;
         data.res.phys[key].value += data.res.phys[key].value!=="imm"?data.res.phys[key].bonus:"";
       }
-      data.res.mag[key].value = data.res.mag[key].value ?? 0;
+      data.res.mag[key].value = parseInt(data.res.mag[key].value) ?? 0;
       data.res.mag[key].value += data.res.mag[key].value!=="imm"?data.res.mag[key].bonus:"";
     }
     data.mobility.value = data.mobility.value ?? CONFIG.ARd20.HeavyPoints[data.type][data.slot];
@@ -239,6 +239,7 @@ export class ARd20Item extends Item {
       parts: baseDamage,
     };
     baseDamage?.forEach((part) => {
+      console.log('baseDamage for current damage',part)
       //@ts-expect-error
       data.damage.current.formula += part[0] + `[${part[1]}, ${part[2]}] `;
     });
