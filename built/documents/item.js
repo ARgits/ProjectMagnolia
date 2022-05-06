@@ -16,6 +16,7 @@ export class ARd20Item extends Item {
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.data;
+    this.labels = {}
     this._prepareSpellData(itemData);
     this._prepareWeaponData(itemData);
     this._prepareFeatureData(itemData);
