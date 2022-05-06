@@ -1317,6 +1317,7 @@ class ARd20Item extends Item {
     html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
     html.on("click", ".attack-roll .roll-controls .accept", function (event) {
       event.stopImmediatePropagation();
+      console.log('CLICK ', event);
 
       this._rollDamage.bind(this);
     });
