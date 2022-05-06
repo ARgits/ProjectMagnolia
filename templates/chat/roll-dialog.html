@@ -16,7 +16,7 @@
     <label> {{localize "ARd20.RollSituationalBonus"}} </label>
     <input type="text" name="bonus" value="" placeholder="{{localize "ARd20.RollExample"}}" />
   </div>
-  {{#if (eq type "damage")}}
+  {{#if damType}}
     <div class="flexrow">
       {{#each damType as |part ind|}}
         {{log "part " part "index " ind}}
