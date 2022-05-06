@@ -57,7 +57,7 @@
         {/each}
       </tr>
     </thead>
-    <tbody style="--trHeight={trHeight}px;--boxHeight={boxHeight}px">
+    <tbody style="--trHeight:{trHeight}px;--boxHeight:{boxHeight}px">
       {#each Object.entries($data[tabData]) as attr, key}
         <TDvariants type={$data[tabData]} {thead} {typeStr} val={attr} {max} bind:trWidth {key} bind:description />
       {/each}
