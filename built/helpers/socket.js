@@ -6,7 +6,7 @@ export default class ARd20SocketHandler {
     // if the logged in user is the active GM with the lowest user id
     const isResponsibleGM = game.users
       .filter((user) => user.isGM && user.active)
-      .some((other) => other.data._id < game.user.data._id);
+      .some((other) => other.data._id <= game.user.data._id);
 
     if (!isResponsibleGM) return;
     console.log('HERE GM ON SOCKET CALLING')
