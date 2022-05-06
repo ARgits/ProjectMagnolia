@@ -3496,7 +3496,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	});
 
 	function thead_1_elementresize_handler() {
-		trHeight = this.clientHeight;
+		trHeight = this.offsetHeight;
 		$$invalidate(7, trHeight);
 	}
 

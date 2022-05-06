@@ -50,7 +50,7 @@
 
 <div class="flex flexrow">
   <table>
-    <thead bind:clientHeight={trHeight}>
+    <thead bind:offsetHeight={trHeight}>
       <tr style:width="{trWidth}px">
         {#each thead as th}
           <th style:width="{thWidth}%" class="last"> {th} </th>
