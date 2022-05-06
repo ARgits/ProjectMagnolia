@@ -5578,6 +5578,7 @@ ARd20.RollResult = {
 class ARd20SocketHandler {
   //@ts-expect-error
   static async updateActorData(data) {
+    console.log('socket data', data);
     console.log('Socket Called, its GM:', game.user.isGM, ' and its active: ', game.user.active);
     if (!game.user.isGM) return; // if the logged in user is the active GM with the lowest user id
 
