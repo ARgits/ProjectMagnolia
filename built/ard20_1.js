@@ -3151,7 +3151,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (55:8) {#each thead as th}
+// (56:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[21] + "";
@@ -3185,7 +3185,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (61:6) {#each Object.entries($data[tabData]) as attr, key}
+// (62:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$5(ctx) {
 	let tdvariants;
 	let updating_trWidth;
@@ -3345,7 +3345,7 @@ function create_fragment$7(ctx) {
 			set_style(tr, "width", style_width, false);
 			attr(thead_1, "class", "svelte-16ko3ho");
 			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[12].call(thead_1));
-			set_style(tbody, "--tbodyHeight", /*boxHeight*/ ctx[1] - /*theadHeight*/ ctx[3] + "px");
+			set_style(tbody, "--tbodyHeight", 0.95 * /*boxHeight*/ ctx[1] - /*theadHeight*/ ctx[3] + "px");
 			attr(tbody, "class", "svelte-16ko3ho");
 			attr(table, "class", "svelte-16ko3ho");
 			attr(label, "for", "description");
@@ -3434,7 +3434,7 @@ function create_fragment$7(ctx) {
 			}
 
 			if (!current || dirty & /*boxHeight, theadHeight*/ 10) {
-				set_style(tbody, "--tbodyHeight", /*boxHeight*/ ctx[1] - /*theadHeight*/ ctx[3] + "px");
+				set_style(tbody, "--tbodyHeight", 0.95 * /*boxHeight*/ ctx[1] - /*theadHeight*/ ctx[3] + "px");
 			}
 
 			if (!current || dirty & /*description*/ 64) set_data(t4, /*description*/ ctx[6]);
