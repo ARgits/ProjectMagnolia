@@ -2,13 +2,15 @@
   import { getContext } from "svelte";
   import TDvariants from "./TDvariants.svelte";
   export let tabData;
+  export let boxHeight;
   let data = getContext("chaAdvActorData");
   const settings = game.settings.get("ard20", "profLevel");
   let typeStr;
   let thead;
   let description;
   let max;
-  let cellWidth;
+  let trHeight;
+  //let cellWidth;
   let thWidth;
   let trWidth;
   //TODO: reconfigure thead for localization
@@ -46,10 +48,10 @@
   }
 </script>
 
-<div class="flex flexrow">
+<div class="flex flexrow" style="--trHeight={trHeight}px;--boxHeight={boxHeight}px">
   <table>
     <thead>
-      <tr style:width="{trWidth}px">
+      <tr bind:clientHeight="{trHeight}" style:width="{trWidth}px">
         {#each thead as th}
           <th style:width="{thWidth}%" class="last"> {th} </th>
         {/each}
@@ -64,7 +66,6 @@
           val={attr}
           {max}
           bind:trWidth
-          bind:cellWidth
           {key}
           bind:description
         />
@@ -96,7 +97,7 @@
   }
   tbody {
     display: block;
-    height: 235px;
+    height: calc(var(--boxHeight) - var(--trHeight));
     width: 100%;
     overflow-y: auto;
   }
