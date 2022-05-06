@@ -9,11 +9,9 @@
   export let typeStr;
   export let thead;
   //export let cellWidth;
-  export let trWidth;
-  export let trHeight;
-  $: console.log(trHeight);
   const originalData = getContext("chaAdvActorOriginalData");
   const aditionalData = getContext("chaAdvAditionalData");
+  const element = getContext("chaAdvElementParameters")
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;
@@ -65,7 +63,7 @@
   //TODO: reconfigure thead for localization
 </script>
 
-<tr bind:offsetHeight={trHeight} bind:clientWidth={trWidth} style="--cellWidth:{widthPercent}%">
+<tr bind:offsetHeight={$element.trHeight} bind:clientWidth={$element.trWidth} style="--cellWidth:{widthPercent}%">
   {#if thead.includes("Name")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     <td class={last} on:mouseover={() => changeDesc(val)}> {val[0]} </td>

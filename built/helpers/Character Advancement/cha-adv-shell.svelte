@@ -4,7 +4,6 @@
   import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
   import AttributeComp from "./Attributes.svelte";
-  import SkillComp from "./Skills.svelte";
   import Tabs from "./Tabs.svelte";
   export let document;
   //
@@ -31,6 +30,13 @@
     isReady: duplicate(actor.data.data.isReady),
     features: duplicate(document.aditionalData.feats.awail),
   });
+  const elementParameters=writable({
+    boxHeight:0,
+    trHeight:0,
+    trWidth:0,
+    theadHeight:0,
+  })
+  setContext("chaAdvElementParameters",elementParameters)
   setContext("chaAdvActorData", actorData);
 
   //create tabs

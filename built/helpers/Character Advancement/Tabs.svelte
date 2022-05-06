@@ -2,13 +2,12 @@
   import { getContext } from "svelte";
   export let tabs = [];
   export let activeTab;
-  export let boxHeight;
-  export let trHeight;
-  let data = getContext("chaAdvActorData");
+  const data = getContext("chaAdvActorData");
+  const element = getContext("chaAdvElementParameters")
   let minBoxSize;
   $: {
     console.log(trHeight);
-    minBoxSize = Object.entries($data[activeTab]).length * trHeight;
+    minBoxSize = Object.entries($data[activeTab]).length * $element.trHeight;
   }
 </script>
 
@@ -23,10 +22,10 @@
     </li>
   {/each}
 </ul>
-<div class="box" style="--minBoxSize:{minBoxSize}px" bind:clientHeight={boxHeight}>
+<div class="box" style="--minBoxSize:{minBoxSize}px" bind:clientHeight={$element.boxHeight}>
   {#each tabs as tab}
     {#if tab.id === activeTab}
-      <svelte:component this={tab.component} tabData={tab.id} {boxHeight} {trHeight} />
+      <svelte:component this={tab.component} tabData={tab.id}/>
     {/if}
   {/each}
 </div>

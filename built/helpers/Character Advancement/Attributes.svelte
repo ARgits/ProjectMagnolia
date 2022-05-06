@@ -1,20 +1,15 @@
 <script>
   import { getContext } from "svelte";
   import TDvariants from "./TDvariants.svelte";
+  
   export let tabData;
-  export let boxHeight;
-  export let trHeight
-  $:console.log(trHeight)
-  let theadHeight;
-
-  let data = getContext("chaAdvActorData");
+  const element = getContext("chaAdvElementParameters")
+  const data = getContext("chaAdvActorData");
   const settings = game.settings.get("ard20", "profLevel");
   let typeStr;
   let thead;
   let description;
   let max;
-  let thWidth;
-  let trWidth;
   //TODO: reconfigure thead for localization
   switch (tabData) {
     case "attributes":
@@ -36,7 +31,7 @@
       max = 1;
       break;
   }
-  thWidth = 100 / thead.length;
+  let thWidth = 100 / thead.length;
   $: {
     for (let [key, attr] of Object.entries($data.attributes)) {
       attr.mod = Math.floor((attr.value - 10) / 2);
@@ -52,14 +47,14 @@
 
 <div class="flex flexrow">
   <table>
-    <thead bind:offsetHeight={theadHeight}>
-      <tr style:width="{trWidth}px">
+    <thead bind:offsetHeight={$element.theadHeight}>
+      <tr style:width="{$element.trWidth}px">
         {#each thead as th}
           <th style:width="{thWidth}%" class="last"> {th} </th>
         {/each}
       </tr>
     </thead>
-    <tbody style="--tbodyHeight:{0.95*boxHeight - theadHeight}px">
+    <tbody style="--tbodyHeight:{0.95*$element.boxHeight - $element.theadHeight}px">
       {#each Object.entries($data[tabData]) as attr, key}
         <TDvariants
           type={$data[tabData]}
@@ -67,9 +62,7 @@
           {typeStr}
           val={attr}
           {max}
-          bind:trWidth
           {key}
-          bind:trHeight
           bind:description
         />
       {/each}
