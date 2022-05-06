@@ -3,10 +3,13 @@
   export let tabs = [];
   export let activeTab;
   export let boxHeight;
-  export let trHeight
+  export let trHeight;
   let data = getContext("chaAdvActorData");
   let minBoxSize;
-  $: minBoxSize = Object.entries($data[activeTab]).length * trHeight;
+  $: {
+    console.log(trHeight);
+    minBoxSize = Object.entries($data[activeTab]).length * trHeight;
+  }
 </script>
 
 <ul>
