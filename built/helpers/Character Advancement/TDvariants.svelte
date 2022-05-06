@@ -9,15 +9,16 @@
   export let typeStr;
   export let thead;
   //export let cellWidth;
-  export let trWidth
-  export let trHeight
+  export let trWidth;
+  export let trHeight;
+  $: console.log(trHeight);
   const originalData = getContext("chaAdvActorOriginalData");
   const aditionalData = getContext("chaAdvAditionalData");
   const formulas = getContext("chaAdvXpFormulas").formulas;
   let variables = {};
   let cost;
   let min;
-  let widthPercent = 100/thead.length
+  let widthPercent = 100 / thead.length;
   switch (typeStr) {
     case "attributes":
       min = originalData[typeStr][val[0]].value;
@@ -71,23 +72,23 @@
   {/if}
   {#if thead.includes("Source")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td  class={last} on:mouseover={() => changeDesc(val)}> {@html val[1].data.source.label} </td>
+    <td class={last} on:mouseover={() => changeDesc(val)}> {@html val[1].data.source.label} </td>
   {/if}
   {#if thead.includes("Increase")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td  class={last} on:mouseover={() => changeDesc(val)}>
+    <td class={last} on:mouseover={() => changeDesc(val)}>
       <ChangeButton type={typeStr} subtype={val[0]} {max} {cost} />
     </td>
   {/if}
   {#if thead.includes("Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td  class={last} on:mouseover={() => changeDesc(val)}>
+    <td class={last} on:mouseover={() => changeDesc(val)}>
       {val[1].data.level.initial}
     </td>
   {/if}
   {#if thead.includes("Max Level")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td  class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
+    <td class={last} on:mouseover={() => changeDesc(val)}> {val[1].data.level.max} </td>
   {/if}
   {#if thead.includes("Rank")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -105,7 +106,7 @@
   {/if}
   {#if thead.includes("Mod")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <td  class={last} on:mouseover={() => changeDesc(val)}> {strMod} </td>
+    <td class={last} on:mouseover={() => changeDesc(val)}> {strMod} </td>
   {/if}
   {#if thead.includes("Cost")}
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->

@@ -4,6 +4,7 @@
   export let tabData;
   export let boxHeight;
   export let trHeight
+  $:console.log(trHeight)
   let theadHeight;
 
   let data = getContext("chaAdvActorData");

@@ -2293,7 +2293,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (72:2) {#if thead.includes("Source")}
+// (73:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
 	let raw_value = /*val*/ ctx[4][1].data.source.label + "";
@@ -2325,7 +2325,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (76:2) {#if thead.includes("Increase")}
+// (77:2) {#if thead.includes("Increase")}
 function create_if_block_8(ctx) {
 	let td;
 	let changebutton;
@@ -2337,7 +2337,7 @@ function create_if_block_8(ctx) {
 			props: {
 				type: /*typeStr*/ ctx[6],
 				subtype: /*val*/ ctx[4][0],
-				max: /*max*/ ctx[0],
+				max: /*max*/ ctx[1],
 				cost: /*cost*/ ctx[8]
 			}
 		});
@@ -2362,7 +2362,7 @@ function create_if_block_8(ctx) {
 			const changebutton_changes = {};
 			if (dirty & /*typeStr*/ 64) changebutton_changes.type = /*typeStr*/ ctx[6];
 			if (dirty & /*val*/ 16) changebutton_changes.subtype = /*val*/ ctx[4][0];
-			if (dirty & /*max*/ 1) changebutton_changes.max = /*max*/ ctx[0];
+			if (dirty & /*max*/ 2) changebutton_changes.max = /*max*/ ctx[1];
 			if (dirty & /*cost*/ 256) changebutton_changes.cost = /*cost*/ ctx[8];
 			changebutton.$set(changebutton_changes);
 		},
@@ -2384,7 +2384,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (82:2) {#if thead.includes("Level")}
+// (83:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].data.level.initial + "";
@@ -2419,7 +2419,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (88:2) {#if thead.includes("Max Level")}
+// (89:2) {#if thead.includes("Max Level")}
 function create_if_block_6(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].data.level.max + "";
@@ -2454,7 +2454,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (92:2) {#if thead.includes("Rank")}
+// (93:2) {#if thead.includes("Rank")}
 function create_if_block_5(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].rankName + "";
@@ -2489,7 +2489,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (96:2) {#if thead.includes("Value")}
+// (97:2) {#if thead.includes("Value")}
 function create_if_block_4(ctx) {
 	let td;
 	let t_value = /*val*/ ctx[4][1].value + "";
@@ -2524,7 +2524,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (100:2) {#if thead.includes("Decrease")}
+// (101:2) {#if thead.includes("Decrease")}
 function create_if_block_3(ctx) {
 	let td;
 	let changebutton;
@@ -2581,7 +2581,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (106:2) {#if thead.includes("Mod")}
+// (107:2) {#if thead.includes("Mod")}
 function create_if_block_2(ctx) {
 	let td;
 	let t;
@@ -2614,7 +2614,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (110:2) {#if thead.includes("Cost")}
+// (111:2) {#if thead.includes("Cost")}
 function create_if_block_1(ctx) {
 	let td;
 	let t;
@@ -2647,7 +2647,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (114:2) {#if key === 0 && thead.includes("Description")}
+// (115:2) {#if key === 0 && thead.includes("Description")}
 function create_if_block$2(ctx) {
 	let td;
 	let t;
@@ -2656,7 +2656,7 @@ function create_if_block$2(ctx) {
 	return {
 		c() {
 			td = element("td");
-			t = text(/*description*/ ctx[1]);
+			t = text(/*description*/ ctx[2]);
 			attr(td, "class", "description svelte-uscx8i");
 			attr(td, "rowspan", td_rowspan_value = /*thead*/ ctx[7].length);
 		},
@@ -2665,7 +2665,7 @@ function create_if_block$2(ctx) {
 			append(td, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*description*/ 2) set_data(t, /*description*/ ctx[1]);
+			if (dirty & /*description*/ 4) set_data(t, /*description*/ ctx[2]);
 
 			if (dirty & /*thead*/ 128 && td_rowspan_value !== (td_rowspan_value = /*thead*/ ctx[7].length)) {
 				attr(td, "rowspan", td_rowspan_value);
@@ -3017,7 +3017,7 @@ function instance$8($$self, $$props, $$invalidate) {
 
 	function changeDesc(val) {
 		if (!val[1].description) return "";
-		$$invalidate(1, description = val[1].description);
+		$$invalidate(2, description = val[1].description);
 	}
 
 	let strMod;
@@ -3036,23 +3036,27 @@ function instance$8($$self, $$props, $$invalidate) {
 	function tr_elementresize_handler() {
 		trHeight = this.offsetHeight;
 		trWidth = this.clientWidth;
-		$$invalidate(3, trHeight);
-		$$invalidate(2, trWidth);
+		$$invalidate(0, trHeight);
+		$$invalidate(3, trWidth);
 	}
 
 	$$self.$$set = $$props => {
-		if ('max' in $$props) $$invalidate(0, max = $$props.max);
+		if ('max' in $$props) $$invalidate(1, max = $$props.max);
 		if ('val' in $$props) $$invalidate(4, val = $$props.val);
 		if ('key' in $$props) $$invalidate(5, key = $$props.key);
 		if ('type' in $$props) $$invalidate(14, type = $$props.type);
-		if ('description' in $$props) $$invalidate(1, description = $$props.description);
+		if ('description' in $$props) $$invalidate(2, description = $$props.description);
 		if ('typeStr' in $$props) $$invalidate(6, typeStr = $$props.typeStr);
 		if ('thead' in $$props) $$invalidate(7, thead = $$props.thead);
-		if ('trWidth' in $$props) $$invalidate(2, trWidth = $$props.trWidth);
-		if ('trHeight' in $$props) $$invalidate(3, trHeight = $$props.trHeight);
+		if ('trWidth' in $$props) $$invalidate(3, trWidth = $$props.trWidth);
+		if ('trHeight' in $$props) $$invalidate(0, trHeight = $$props.trHeight);
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*trHeight*/ 1) {
+			console.log(trHeight);
+		}
+
 		if ($$self.$$.dirty & /*typeStr, val, variables*/ 32848) {
 			{
 				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
@@ -3087,10 +3091,10 @@ function instance$8($$self, $$props, $$invalidate) {
 	};
 
 	return [
+		trHeight,
 		max,
 		description,
 		trWidth,
-		trHeight,
 		val,
 		key,
 		typeStr,
@@ -3122,15 +3126,15 @@ class TDvariants extends SvelteComponent {
 		super();
 
 		init(this, options, instance$8, create_fragment$8, safe_not_equal, {
-			max: 0,
+			max: 1,
 			val: 4,
 			key: 5,
 			type: 14,
-			description: 1,
+			description: 2,
 			typeStr: 6,
 			thead: 7,
-			trWidth: 2,
-			trHeight: 3
+			trWidth: 3,
+			trHeight: 0
 		});
 	}
 }
@@ -3150,7 +3154,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (56:8) {#each thead as th}
+// (57:8) {#each thead as th}
 function create_each_block_1$3(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[21] + "";
@@ -3184,7 +3188,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (62:6) {#each Object.entries($data[tabData]) as attr, key}
+// (63:6) {#each Object.entries($data[tabData]) as attr, key}
 function create_each_block$5(ctx) {
 	let tdvariants;
 	let updating_trWidth;
@@ -3536,6 +3540,10 @@ function instance$7($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*trHeight*/ 1) {
+			console.log(trHeight);
+		}
+
 		if ($$self.$$.dirty & /*$data*/ 8) {
 			{
 				for (let [key, attr] of Object.entries($data.attributes)) {
