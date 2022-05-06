@@ -246,9 +246,9 @@ export class ARd20Item extends Item {
         data.damage.current.formula +=
           game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) +
           ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
-        data.damage.current.formula += subKey === part[1].length - 1 ? "]" : " or\n";
+        data.damage.current.formula += subKey === part[1].length - 1 ? "]" : " or<br/>";
       });
-      data.damage.current.formula+=key===baseDamage.length-1?"":"\n+\n"
+      data.damage.current.formula+=key===baseDamage.length-1?"":"<br/>+<br/>"
     });
   }
   /**
