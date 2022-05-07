@@ -6,7 +6,7 @@
   const element = getContext("chaAdvElementParameters")
   let minBoxSize;
   $: {
-    minBoxSize = Object.entries($data[activeTab]).length * $element.trHeight*1.1;
+    minBoxSize = (Object.entries($data[activeTab]).length+1) * $element.trHeight;
   }
 </script>
 
