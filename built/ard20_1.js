@@ -3895,7 +3895,7 @@ function instance$6($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$data, activeTab, $element*/ 69) {
 			{
-				$$invalidate(3, minBoxSize = Object.entries($data[activeTab]).length * $element.trHeight + $element.theadHeight * 1.1);
+				$$invalidate(3, minBoxSize = (Object.entries($data[activeTab]).length * $element.trHeight + $element.theadHeight) * 1.1);
 			}
 		}
 	};
