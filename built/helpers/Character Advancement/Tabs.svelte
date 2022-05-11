@@ -3,10 +3,10 @@
   export let tabs = [];
   export let activeTab;
   const data = getContext("chaAdvActorData");
-  const element = getContext("chaAdvElementParameters")
+  const element = getContext("chaAdvElementParameters");
   let minBoxSize;
   $: {
-    minBoxSize = (Object.entries($data[activeTab]).length * $element.trHeight+$element.theadHeight)*1.1;
+    minBoxSize = (Object.entries($data[activeTab]).length * $element.trHeight + $element.theadHeight) * 1.1;
   }
 </script>
 
@@ -24,19 +24,18 @@
 <div class="box" style="--minBoxSize:{minBoxSize}px" bind:clientHeight={$element.boxHeight}>
   {#each tabs as tab}
     {#if tab.id === activeTab}
-      <svelte:component this={tab.component} tabData={tab.id}/>
+      <svelte:component this={tab.component} tabData={tab.id} />
     {/if}
   {/each}
 </div>
 
-<style>
+<style lang="scss">
   .box {
     margin-bottom: 10px;
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
     height: min(70%, max(30%, var(--minBoxSize)));
-    /*overflow-y: auto;*/
     background: rgba(0, 0, 0, 0.08);
   }
   ul {
@@ -47,9 +46,16 @@
     list-style: none;
     border-bottom: 1px solid #dee2e6;
   }
-  li:active {
-    margin-bottom: -0.1em;
-    transform: translateY(0.1em);
+  li {
+    &:active {
+      margin-bottom: -0.1em;
+      transform: translateY(0.1em);
+    }
+    &.active > span {
+      color: white;
+      background-color: rgba(0, 0, 0, 0.08);
+      border-color: #dee2e6 #dee2e6 #fff;
+    }
   }
 
   span {
@@ -59,15 +65,8 @@
     display: block;
     padding: 0.5rem 1rem;
     cursor: pointer;
-  }
-
-  span:hover {
-    border-color: #e9ecef #e9ecef #dee2e6;
-  }
-
-  li.active > span {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: #dee2e6 #dee2e6 #fff;
+    &:hover {
+      border-color: #e9ecef #e9ecef #dee2e6;
+    }
   }
 </style>

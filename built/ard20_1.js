@@ -3163,7 +3163,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "last svelte-oaaj4v");
+			attr(th, "class", "last svelte-3ih9p1");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3304,15 +3304,15 @@ function create_fragment$7(ctx) {
 			t3 = space();
 			div0 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-oaaj4v");
+			attr(tr, "class", "svelte-3ih9p1");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-oaaj4v");
+			attr(thead_1, "class", "svelte-3ih9p1");
 			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[10].call(thead_1));
 			set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
-			attr(tbody, "class", "svelte-oaaj4v");
-			attr(table, "class", "svelte-oaaj4v");
+			attr(tbody, "class", "svelte-3ih9p1");
+			attr(table, "class", "svelte-3ih9p1");
 			attr(label, "for", "description");
-			attr(div1, "class", "description svelte-oaaj4v");
+			attr(div1, "class", "description svelte-3ih9p1");
 			attr(div2, "class", "flex flexrow");
 		},
 		m(target, anchor) {
@@ -3559,11 +3559,11 @@ function create_each_block_1$2(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-1eonoeq");
+			attr(span, "class", "svelte-e4pvcc");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
 			? "active"
-			: "") + " svelte-1eonoeq"));
+			: "") + " svelte-e4pvcc"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -3582,7 +3582,7 @@ function create_each_block_1$2(ctx) {
 
 			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
 			? "active"
-			: "") + " svelte-1eonoeq"))) {
+			: "") + " svelte-e4pvcc"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -3761,8 +3761,8 @@ function create_fragment$6(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-1eonoeq");
-			attr(div, "class", "box svelte-1eonoeq");
+			attr(ul, "class", "svelte-e4pvcc");
+			attr(div, "class", "box svelte-e4pvcc");
 			set_style(div, "--minBoxSize", /*minBoxSize*/ ctx[3] + "px");
 			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
 		},
@@ -8201,7 +8201,8 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", ARd20ItemSheet, {
       makeDefault: true
     });
-    registerSystemSettings(); // Preload Handlebars templates.
+    registerSystemSettings();
+    console.log(game.settings.get('core', 'moduleConfiguration')); // Preload Handlebars templates.
 
     return preloadHandlebarsTemplates();
   } else {

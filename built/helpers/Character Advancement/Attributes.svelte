@@ -74,7 +74,7 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .description {
     height: 100%;
     padding-left: 2px;
@@ -107,8 +107,8 @@
     text-align: center;
     padding: 0.2em;
     word-break: break-word;
-  }
-  th:last-child {
-    border-right: 0px;
+    &:last-child{
+      border-right: 0px;
+    }
   }
 </style>

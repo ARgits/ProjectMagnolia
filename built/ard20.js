@@ -72,6 +72,7 @@ Hooks.once("init", async function () {
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
     registerSystemSettings();
+    console.log(game.settings.get('core','moduleConfiguration'))
 
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();
