@@ -8204,9 +8204,9 @@ Hooks.once("init", async function () {
     registerSystemSettings();
 
     if (!game.modules.get("typhonjs")) {
-      game.ui.notifications.error("typhonjs module is not install, please install it!");
+      ui.notifications.error("typhonjs module is not install, please install it!");
     } else if (!game.modules.get("typhonjs").active) {
-      game.ui.notifications.error("typhonjs module is not active!");
+      ui.notifications.error("typhonjs module is not active!");
     } // Preload Handlebars templates.
 
 
