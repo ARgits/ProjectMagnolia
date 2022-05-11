@@ -72,11 +72,7 @@ Hooks.once("init", async function () {
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
     registerSystemSettings();
-    if (!game.modules.get("typhonjs")) {
-      ui.notifications.error("typhonjs module is not install, please install it!");
-    } else if (!game.modules.get("typhonjs").active) {
-      ui.notifications.error("typhonjs module is not active!");
-    }
+
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();
   } else {
@@ -106,6 +102,12 @@ Handlebars.registerHelper("add", function (value1, value2) {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
+  //check if typhonjs module is installed and activated
+  if (!game.modules.get("typhonjs")) {
+    ui.notifications.error("typhonjs module is not install, please install it!");
+  } else if (!game.modules.get("typhonjs").active) {
+    ui.notifications.error("typhonjs module is not active!");
+  }
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
