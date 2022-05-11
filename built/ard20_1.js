@@ -5652,7 +5652,7 @@ function get_each_context$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (29:8) {#each Object.values(data.variables) as variable}
+// (28:8) {#each Object.values(data.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[9].longName + "";
@@ -5712,13 +5712,11 @@ function create_each_block$3(ctx) {
 
 // (24:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
-	let section0;
 	let div1;
 	let label0;
 	let t1;
 	let div0;
 	let t2;
-	let section1;
 	let div2;
 	let label1;
 	let t4;
@@ -5755,7 +5753,6 @@ function create_default_slot$3(ctx) {
 
 	return {
 		c() {
-			section0 = element("section");
 			div1 = element("div");
 			label0 = element("label");
 			label0.textContent = "CustomValues";
@@ -5767,7 +5764,6 @@ function create_default_slot$3(ctx) {
 			}
 
 			t2 = space();
-			section1 = element("section");
 			div2 = element("div");
 			label1 = element("label");
 			label1.textContent = "Attribute Advancement Formula";
@@ -5801,8 +5797,7 @@ function create_default_slot$3(ctx) {
 			attr(input2, "type", "text");
 		},
 		m(target, anchor) {
-			insert(target, section0, anchor);
-			append(section0, div1);
+			insert(target, div1, anchor);
 			append(div1, label0);
 			append(div1, t1);
 			append(div1, div0);
@@ -5812,24 +5807,23 @@ function create_default_slot$3(ctx) {
 			}
 
 			insert(target, t2, anchor);
-			insert(target, section1, anchor);
-			append(section1, div2);
+			insert(target, div2, anchor);
 			append(div2, label1);
 			append(div2, t4);
 			append(div2, input0);
 			set_input_value(input0, /*data*/ ctx[1].formulas.attributes);
-			append(section1, t5);
-			append(section1, br0);
-			append(section1, t6);
-			append(section1, div3);
+			insert(target, t5, anchor);
+			insert(target, br0, anchor);
+			insert(target, t6, anchor);
+			insert(target, div3, anchor);
 			append(div3, label2);
 			append(div3, t8);
 			append(div3, input1);
 			set_input_value(input1, /*data*/ ctx[1].formulas.skills);
-			append(section1, t9);
-			append(section1, br1);
-			append(section1, t10);
-			append(section1, div4);
+			insert(target, t9, anchor);
+			insert(target, br1, anchor);
+			insert(target, t10, anchor);
+			insert(target, div4, anchor);
 			append(div4, label3);
 			append(div4, t12);
 			append(div4, input2);
@@ -5898,10 +5892,18 @@ function create_default_slot$3(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(section0);
+			if (detaching) detach(div1);
 			destroy_each(each_blocks, detaching);
 			if (detaching) detach(t2);
-			if (detaching) detach(section1);
+			if (detaching) detach(div2);
+			if (detaching) detach(t5);
+			if (detaching) detach(br0);
+			if (detaching) detach(t6);
+			if (detaching) detach(div3);
+			if (detaching) detach(t9);
+			if (detaching) detach(br1);
+			if (detaching) detach(t10);
+			if (detaching) detach(div4);
 			if (detaching) detach(t13);
 			destroy_component(settingssubmitbutton, detaching);
 			mounted = false;

@@ -22,7 +22,6 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <section>
     <div>
       <label for="Custom Values"> CustomValues </label>
       <div class="grid grid-2col">
@@ -32,8 +31,6 @@
         {/each}
       </div>
     </div>
-  </section>
-  <section>
     <div>
       <label for="Attribute Formula">Attribute Advancement Formula</label>
       <input type="text" bind:value={data.formulas.attributes} />
@@ -48,6 +45,5 @@
       <label for="Feature Formula">Feature Advancement Formula</label>
       <input type="text" bind:value={data.formulas.features} />
     </div>
-  </section>
   <SettingsSubmitButton {setting} {data} />
 </ApplicationShell>
