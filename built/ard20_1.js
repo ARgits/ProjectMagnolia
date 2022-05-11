@@ -8201,7 +8201,14 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", ARd20ItemSheet, {
       makeDefault: true
     });
-    registerSystemSettings(); // Preload Handlebars templates.
+    registerSystemSettings();
+
+    if (!game.modules.get("typhonjs")) {
+      game.ui.notifications.error("typhonjs module is not install, please install it!");
+    } else if (!game.modules.get("typhonjs").active) {
+      game.ui.notifications.error("typhonjs module is not active!");
+    } // Preload Handlebars templates.
+
 
     return preloadHandlebarsTemplates();
   } else {

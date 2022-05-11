@@ -72,6 +72,11 @@ Hooks.once("init", async function () {
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
     registerSystemSettings();
+    if (!game.modules.get("typhonjs")) {
+      game.ui.notifications.error("typhonjs module is not install, please install it!");
+    } else if (!game.modules.get("typhonjs").active) {
+      game.ui.notifications.error("typhonjs module is not active!");
+    }
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();
   } else {
@@ -118,8 +123,7 @@ async function createItemMacro(data, slot) {
   if (game instanceof Game) {
     //@ts-expect-error
     if (data.type !== "Item") return;
-    if (!("data" in data) && ui.notifications instanceof Notifications)
-      return ui.notifications.warn("You can only create macro buttons for owned Items");
+    if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items");
     //@ts-expect-error
     const item = data.data;
     // Create the macro command
