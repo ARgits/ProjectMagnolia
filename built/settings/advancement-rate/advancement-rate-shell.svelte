@@ -22,6 +22,7 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
+  <div class="">
     <div>
       <label for="Custom Values"> CustomValues </label>
       <div class="grid grid-2col">
@@ -46,4 +47,6 @@
       <input type="text" bind:value={data.formulas.features} />
     </div>
   <SettingsSubmitButton {setting} {data} />
+  </div>
 </ApplicationShell>
+

@@ -6,10 +6,10 @@
   }
 </script>
 
-<button on:click={() => SubmitSetting(setting, data)}>Submit</button>
+<button class="submit" on:click={() => SubmitSetting(setting, data)}>Submit</button>
 <style lang="scss">
-  button{
+  button.submit{
     width:100%;
-    height:fit-content;
+    flex-basis: fit-content;
   }
 </style>

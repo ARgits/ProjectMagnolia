@@ -5597,7 +5597,7 @@ function create_fragment$4(ctx) {
 		c() {
 			button = element("button");
 			button.textContent = "Submit";
-			attr(button, "class", "svelte-1opozmv");
+			attr(button, "class", "submit svelte-1kou806");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -5652,7 +5652,7 @@ function get_each_context$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (28:8) {#each Object.values(data.variables) as variable}
+// (29:8) {#each Object.values(data.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[9].longName + "";
@@ -5712,6 +5712,7 @@ function create_each_block$3(ctx) {
 
 // (24:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
+	let div5;
 	let div1;
 	let label0;
 	let t1;
@@ -5753,6 +5754,7 @@ function create_default_slot$3(ctx) {
 
 	return {
 		c() {
+			div5 = element("div");
 			div1 = element("div");
 			label0 = element("label");
 			label0.textContent = "CustomValues";
@@ -5795,9 +5797,11 @@ function create_default_slot$3(ctx) {
 			attr(input1, "type", "text");
 			attr(label3, "for", "Feature Formula");
 			attr(input2, "type", "text");
+			attr(div5, "class", "");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
+			insert(target, div5, anchor);
+			append(div5, div1);
 			append(div1, label0);
 			append(div1, t1);
 			append(div1, div0);
@@ -5806,30 +5810,30 @@ function create_default_slot$3(ctx) {
 				each_blocks[i].m(div0, null);
 			}
 
-			insert(target, t2, anchor);
-			insert(target, div2, anchor);
+			append(div5, t2);
+			append(div5, div2);
 			append(div2, label1);
 			append(div2, t4);
 			append(div2, input0);
 			set_input_value(input0, /*data*/ ctx[1].formulas.attributes);
-			insert(target, t5, anchor);
-			insert(target, br0, anchor);
-			insert(target, t6, anchor);
-			insert(target, div3, anchor);
+			append(div5, t5);
+			append(div5, br0);
+			append(div5, t6);
+			append(div5, div3);
 			append(div3, label2);
 			append(div3, t8);
 			append(div3, input1);
 			set_input_value(input1, /*data*/ ctx[1].formulas.skills);
-			insert(target, t9, anchor);
-			insert(target, br1, anchor);
-			insert(target, t10, anchor);
-			insert(target, div4, anchor);
+			append(div5, t9);
+			append(div5, br1);
+			append(div5, t10);
+			append(div5, div4);
 			append(div4, label3);
 			append(div4, t12);
 			append(div4, input2);
 			set_input_value(input2, /*data*/ ctx[1].formulas.features);
-			insert(target, t13, anchor);
-			mount_component(settingssubmitbutton, target, anchor);
+			append(div5, t13);
+			mount_component(settingssubmitbutton, div5, null);
 			current = true;
 
 			if (!mounted) {
@@ -5892,20 +5896,9 @@ function create_default_slot$3(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div1);
+			if (detaching) detach(div5);
 			destroy_each(each_blocks, detaching);
-			if (detaching) detach(t2);
-			if (detaching) detach(div2);
-			if (detaching) detach(t5);
-			if (detaching) detach(br0);
-			if (detaching) detach(t6);
-			if (detaching) detach(div3);
-			if (detaching) detach(t9);
-			if (detaching) detach(br1);
-			if (detaching) detach(t10);
-			if (detaching) detach(div4);
-			if (detaching) detach(t13);
-			destroy_component(settingssubmitbutton, detaching);
+			destroy_component(settingssubmitbutton);
 			mounted = false;
 			run_all(dispose);
 		}
