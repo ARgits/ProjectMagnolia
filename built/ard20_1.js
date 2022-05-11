@@ -8201,8 +8201,7 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", ARd20ItemSheet, {
       makeDefault: true
     });
-    registerSystemSettings();
-    console.log(game.settings.get('core', 'moduleConfiguration')); // Preload Handlebars templates.
+    registerSystemSettings(); // Preload Handlebars templates.
 
     return preloadHandlebarsTemplates();
   } else {
@@ -8245,6 +8244,9 @@ Hooks.once("ready", async function () {
     ui.notifications.error("typhonjs module is not install, please install it!");
   } else if (!game.modules.get("typhonjs").active) {
     ui.notifications.error("typhonjs module is not active!");
+    const moduleSettings = game.settings.get('core', 'moduleConfiguration');
+    moduleSettings["typhonjs"] = true;
+    await game.settings.set('core', 'moduleConfiguration', moduleSettings);
   } // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
 
 
