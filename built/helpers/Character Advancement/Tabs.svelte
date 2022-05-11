@@ -16,8 +16,10 @@
       <span
         on:click={() => {
           activeTab = tab.id;
-        }}>{tab.label}</span
+        }}
       >
+        {tab.label}
+      </span>
     </li>
   {/each}
 </ul>
@@ -35,7 +37,7 @@
     border: 1px solid #dee2e6;
     border-radius: 0 0 0.5rem 0.5rem;
     border-top: 0;
-    height: min(70%, max(30%, var(--minBoxSize)));
+    height: min(75%, max(25%, var(--minBoxSize)));
     background: rgba(0, 0, 0, 0.08);
   }
   ul {

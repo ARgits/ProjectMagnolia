@@ -3163,7 +3163,7 @@ function create_each_block_1$3(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "last svelte-3ih9p1");
+			attr(th, "class", "last svelte-d0s3st");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3304,15 +3304,15 @@ function create_fragment$7(ctx) {
 			t3 = space();
 			div0 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-3ih9p1");
+			attr(tr, "class", "svelte-d0s3st");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-3ih9p1");
+			attr(thead_1, "class", "svelte-d0s3st");
 			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[10].call(thead_1));
 			set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
-			attr(tbody, "class", "svelte-3ih9p1");
-			attr(table, "class", "svelte-3ih9p1");
+			attr(tbody, "class", "svelte-d0s3st");
+			attr(table, "class", "svelte-d0s3st");
 			attr(label, "for", "description");
-			attr(div1, "class", "description svelte-3ih9p1");
+			attr(div1, "class", "description svelte-d0s3st");
 			attr(div2, "class", "flex flexrow");
 		},
 		m(target, anchor) {
@@ -3559,11 +3559,11 @@ function create_each_block_1$2(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-e4pvcc");
+			attr(span, "class", "svelte-qwcpmp");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
 			? "active"
-			: "") + " svelte-e4pvcc"));
+			: "") + " svelte-qwcpmp"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -3582,7 +3582,7 @@ function create_each_block_1$2(ctx) {
 
 			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
 			? "active"
-			: "") + " svelte-e4pvcc"))) {
+			: "") + " svelte-qwcpmp"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -3594,7 +3594,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (26:4) {#if tab.id === activeTab}
+// (28:4) {#if tab.id === activeTab}
 function create_if_block$1(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
@@ -3666,7 +3666,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (25:2) {#each tabs as tab}
+// (27:2) {#each tabs as tab}
 function create_each_block$4(ctx) {
 	let if_block_anchor;
 	let current;
@@ -3761,8 +3761,8 @@ function create_fragment$6(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(ul, "class", "svelte-e4pvcc");
-			attr(div, "class", "box svelte-e4pvcc");
+			attr(ul, "class", "svelte-qwcpmp");
+			attr(div, "class", "box svelte-qwcpmp");
 			set_style(div, "--minBoxSize", /*minBoxSize*/ ctx[3] + "px");
 			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
 		},
@@ -5597,6 +5597,7 @@ function create_fragment$4(ctx) {
 		c() {
 			button = element("button");
 			button.textContent = "Submit";
+			attr(button, "class", "svelte-1opozmv");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);

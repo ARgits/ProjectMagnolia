@@ -7,3 +7,9 @@
 </script>
 
 <button on:click={() => SubmitSetting(setting, data)}>Submit</button>
+<style lang="scss">
+  button{
+    width:100%;
+    height:fit-content;
+  }
+</style>

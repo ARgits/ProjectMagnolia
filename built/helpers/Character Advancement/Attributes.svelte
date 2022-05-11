@@ -86,7 +86,6 @@
     width: 100%;
     position: sticky;
     inset-block-start: -0.05em;
-    border-bottom: 2px solid #ccc;
   }
   table {
     border-collapse: collapse;
@@ -104,6 +103,7 @@
   th {
     background: rgb(100, 100, 100);
     border: 1px solid black;
+    border-width: 0px 1px 0 1px;
     text-align: center;
     padding: 0.2em;
     word-break: break-word;
