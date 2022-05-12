@@ -22,9 +22,9 @@
     features: "",
   };
   let formulaSpan = {
-    attributes: formulaInput.attributes,
-    skills: formulaInput.skills,
-    features: formulaInput.features,
+    attributes: data.formulas.attributes,
+    skills: data.formulas.skills,
+    features: data.formulas.features,
   };
   $: {
     for (let item of Object.values(data.variables)) {
@@ -58,7 +58,7 @@
         {/each}
       </div>
     </div>
-    {#each paramArr as param,key}
+    {#each paramArr as param, key}
       <div>
         <label for="Attribute Formula">Attribute Advancement Formula</label>
         <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
@@ -70,8 +70,8 @@
           on:input={() => {
             validateInput(formulaInput[param].value, param);
           }}
-          bind:this={formulaInput.param}
-          bind:value={data.formulas.param}
+          bind:this={formulaInput[param]}
+          bind:value={data.formulas[param]}
         />
       </div>
       <br />
