@@ -61,9 +61,6 @@
     {#each paramArr as param, key}
       <div>
         <label for="Attribute Formula">Attribute Advancement Formula</label>
-        <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
-          {@html formulaSpan[param]}
-        </div>
         <input
           class="transparent"
           type="text"
@@ -73,6 +70,9 @@
           bind:this={formulaInput[param]}
           bind:value={data.formulas[param]}
         />
+      </div>
+      <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
+        {@html formulaSpan[param]}
       </div>
       <br />
     {/each}
@@ -84,6 +84,12 @@
   input.transparent {
     color: transparent;
     caret-color: black;
+  }
+  input.transparent::selection{
+    background: grey;
+    &+div.span{
+      font-weight: bold;
+    }
   }
   div.span {
     position: absolute;
