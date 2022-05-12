@@ -18,9 +18,9 @@
     feature:'',
   };
   let formulaSpan = {
-    attribute:'',
-    skill:'',
-    feature:''
+    attribute:formulaInput.attribute,
+    skill:formulaInput.skill,
+    feature:formulaInput.feature
   }
   let variablesList;
   $: {
@@ -33,7 +33,7 @@
     let checkArr = val.split(/[./+\*,^\s]+/);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
-        check = !funcList.includes(item);
+        let check = !funcList.includes(item);
         if (check) {
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);

@@ -5984,7 +5984,12 @@ function instance$3($$self, $$props, $$invalidate) {
 	let funcList = Object.getOwnPropertyNames(math);
 	let { elementRoot } = $$props;
 	let formulaInput = { attribute: '', skill: '', feature: '' };
-	let formulaSpan = { attribute: '', skill: '', feature: '' };
+
+	let formulaSpan = {
+		attribute: formulaInput.attribute,
+		skill: formulaInput.skill,
+		feature: formulaInput.feature
+	};
 
 	function validateInput(val, type) {
 		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
@@ -5992,7 +5997,7 @@ function instance$3($$self, $$props, $$invalidate) {
 
 		for (let item of checkArr) {
 			if (item !== "" && isNaN(item)) {
-				check = !funcList.includes(item);
+				let check = !funcList.includes(item);
 
 				if (check) {
 					let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
