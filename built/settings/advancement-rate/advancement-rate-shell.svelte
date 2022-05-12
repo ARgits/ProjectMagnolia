@@ -22,20 +22,19 @@
     skill:formulaInput.skill,
     feature:formulaInput.feature
   }
-  let variablesList;
   $: {
-    variablesList = Object.values(data.variables).map((item) => {
+    for(let item of Object.values(data.variables)){
       console.log(item)
-      return item.shortName;
-    });
-    console.log(variablesList)
+      funcList.push(item)
+    };
+    console.log(funcList)
   }
   function validateInput(val,type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s]+/);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
-        let check = !funcList.includes(item)||!variablesList.includes(item);
+        let check = !funcList.includes(item)
         if (check) {
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
