@@ -5597,7 +5597,7 @@ function create_fragment$4(ctx) {
 		c() {
 			button = element("button");
 			button.textContent = "Submit";
-			attr(button, "class", "submit svelte-1kou806");
+			attr(button, "class", "submit svelte-19kds2w");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -5646,16 +5646,16 @@ class SettingsSubmitButton extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
-	child_ctx[10] = list;
-	child_ctx[11] = i;
+	child_ctx[8] = list[i];
+	child_ctx[9] = list;
+	child_ctx[10] = i;
 	return child_ctx;
 }
 
-// (29:8) {#each Object.values(data.variables) as variable}
+// (26:8) {#each Object.values(data.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[9].longName + "";
+	let t0_value = /*variable*/ ctx[8].longName + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -5664,7 +5664,7 @@ function create_each_block$3(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[3].call(input, /*each_value*/ ctx[10], /*variable_index*/ ctx[11]);
+		/*input_input_handler*/ ctx[3].call(input, /*each_value*/ ctx[9], /*variable_index*/ ctx[10]);
 	}
 
 	return {
@@ -5673,7 +5673,7 @@ function create_each_block$3(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			input = element("input");
-			attr(label, "for", label_for_value = /*variable*/ ctx[9].longName);
+			attr(label, "for", label_for_value = /*variable*/ ctx[8].longName);
 			attr(input, "placeholder", "shortName");
 		},
 		m(target, anchor) {
@@ -5681,7 +5681,7 @@ function create_each_block$3(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*variable*/ ctx[9].shortName);
+			set_input_value(input, /*variable*/ ctx[8].shortName);
 
 			if (!mounted) {
 				dispose = listen(input, "input", input_input_handler);
@@ -5690,14 +5690,14 @@ function create_each_block$3(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[9].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[8].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[9].longName)) {
+			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[8].longName)) {
 				attr(label, "for", label_for_value);
 			}
 
-			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[9].shortName) {
-				set_input_value(input, /*variable*/ ctx[9].shortName);
+			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[8].shortName) {
+				set_input_value(input, /*variable*/ ctx[8].shortName);
 			}
 		},
 		d(detaching) {
@@ -5710,7 +5710,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (24:0) <ApplicationShell bind:elementRoot>
+// (21:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div5;
 	let div1;
@@ -5937,7 +5937,7 @@ function create_fragment$3(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, data, Object*/ 4098) {
+			if (dirty & /*$$scope, data, Object*/ 2050) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 

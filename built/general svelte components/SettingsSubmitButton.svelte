@@ -9,7 +9,10 @@
 <button class="submit" on:click={() => SubmitSetting(setting, data)}>Submit</button>
 <style lang="scss">
   button.submit{
-    width:100%;
+    width:calc(100% - 1em);
     flex-basis: fit-content;
-  }
+    position:fixed;
+    bottom:0px;
+    margin-bottom: 1em;
+}
 </style>

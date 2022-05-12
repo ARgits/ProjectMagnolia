@@ -16,9 +16,6 @@
       }
     }
   }
-  async function Submit() {
-    await game.settings.set("ard20", setting, data);
-  }
 </script>
 
 <ApplicationShell bind:elementRoot>
