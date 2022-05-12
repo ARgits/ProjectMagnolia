@@ -28,6 +28,7 @@
       return item.shortName;
     });
   }
+  console.log(variablesList)
   function validateInput(val,type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s]+/);

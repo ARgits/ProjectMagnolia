@@ -5652,7 +5652,7 @@ function get_each_context$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (51:8) {#each Object.values(data.variables) as variable}
+// (52:8) {#each Object.values(data.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5710,7 +5710,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (46:0) <ApplicationShell bind:elementRoot>
+// (47:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div8;
 	let div1;
@@ -6018,6 +6018,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	let variablesList;
+	console.log(variablesList);
 
 	function validateInput(val, type) {
 		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
