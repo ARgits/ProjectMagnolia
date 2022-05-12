@@ -5987,7 +5987,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	let formulaSpan = { attribute: '', skill: '', feature: '' };
 
 	function validateInput(val, type) {
-		$$invalidate(3, formulaSpan['type'] = val, formulaSpan);
+		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s]+/);
 
 		for (let item of checkArr) {
@@ -5996,7 +5996,7 @@ function instance$3($$self, $$props, $$invalidate) {
 
 				if (check) {
 					let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
-					$$invalidate(3, formulaSpan['type'] = formulaSpan['type'].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
+					$$invalidate(3, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
 				}
 			}
 		}
@@ -6008,7 +6008,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	}
 
 	const input_handler = () => {
-		validateInput(this.value);
+		validateInput(formulaInput.attribute.value, 'attribute');
 	};
 
 	function input0_binding($$value) {

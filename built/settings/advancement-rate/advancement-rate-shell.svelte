@@ -29,14 +29,14 @@
     });
   }
   function validateInput(val,type) {
-    formulaSpan['type'] = val;
+    formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s]+/);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
         check = !funcList.includes(item);
         if (check) {
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
-          formulaSpan['type'] = formulaSpan['type'].replace(regexp, `<span style="color:red">${item}</span>`);
+          formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
         }
       }
     }
@@ -59,7 +59,7 @@
       <div class="span">
         {@html formulaSpan.attribute}
       </div>
-      <input type="text" on:input={()=>{validateInput(this.value,'attribute')}} bind:this={formulaInput.attribute} bind:value={data.formulas.attributes} />
+      <input type="text" on:input={()=>{validateInput(formulaInput.attribute.value,'attribute')}} bind:this={formulaInput.attribute} bind:value={data.formulas.attributes} />
     </div>
     <br />
     <div>
