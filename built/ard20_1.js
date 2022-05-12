@@ -5720,13 +5720,13 @@ function create_each_block_1$2(ctx) {
 
 // (61:4) {#each paramArr as param, key}
 function create_each_block$3(ctx) {
-	let div0;
+	let div1;
 	let label;
 	let t1;
 	let input;
 	let param = /*param*/ ctx[23];
 	let t2;
-	let div1;
+	let div0;
 	let raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[23]] + "";
 	let t3;
 	let br;
@@ -5746,31 +5746,31 @@ function create_each_block$3(ctx) {
 
 	return {
 		c() {
-			div0 = element("div");
+			div1 = element("div");
 			label = element("label");
 			label.textContent = "Attribute Advancement Formula";
 			t1 = space();
 			input = element("input");
 			t2 = space();
-			div1 = element("div");
+			div0 = element("div");
 			t3 = space();
 			br = element("br");
 			attr(label, "for", "Attribute Formula");
 			attr(input, "class", "transparent svelte-1io2bov");
 			attr(input, "type", "text");
-			attr(div1, "class", "span svelte-1io2bov");
-			set_style(div1, "top", "calc(17.3em + 4.2em * (" + /*key*/ ctx[25] + "-1))");
+			attr(div0, "class", "span svelte-1io2bov");
+			set_style(div0, "top", "calc(17.3em + 4.2em * (" + /*key*/ ctx[25] + "-1))");
 		},
 		m(target, anchor) {
-			insert(target, div0, anchor);
-			append(div0, label);
-			append(div0, t1);
-			append(div0, input);
+			insert(target, div1, anchor);
+			append(div1, label);
+			append(div1, t1);
+			append(div1, input);
 			assign_input();
 			set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[23]]);
-			insert(target, t2, anchor);
-			insert(target, div1, anchor);
-			div1.innerHTML = raw_value;
+			append(div1, t2);
+			append(div1, div0);
+			div0.innerHTML = raw_value;
 			insert(target, t3, anchor);
 			insert(target, br, anchor);
 
@@ -5796,12 +5796,10 @@ function create_each_block$3(ctx) {
 				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[23]]);
 			}
 
-			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[23]] + "")) div1.innerHTML = raw_value;		},
+			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[23]] + "")) div0.innerHTML = raw_value;		},
 		d(detaching) {
-			if (detaching) detach(div0);
-			unassign_input();
-			if (detaching) detach(t2);
 			if (detaching) detach(div1);
+			unassign_input();
 			if (detaching) detach(t3);
 			if (detaching) detach(br);
 			mounted = false;

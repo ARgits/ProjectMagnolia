@@ -70,9 +70,9 @@
           bind:this={formulaInput[param]}
           bind:value={data.formulas[param]}
         />
-      </div>
-      <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
-        {@html formulaSpan[param]}
+        <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
+          {@html formulaSpan[param]}
+        </div>
       </div>
       <br />
     {/each}
@@ -85,9 +85,9 @@
     color: transparent;
     caret-color: black;
   }
-  input.transparent::selection{
+  input.transparent::selection {
     background: grey;
-    &+div.span{
+    & + div.span {
       font-weight: bold;
     }
   }
