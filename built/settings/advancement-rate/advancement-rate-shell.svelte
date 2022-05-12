@@ -5,14 +5,39 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   const setting = "advancement-rate";
   let data = game.settings.get("ard20", setting);
+  let funcList = Object.getOwnPropertyNames(math);
   export let elementRoot;
-  let attributeFormula;
+  let variableInput = {
+    attribute,
+    skill,
+    feature,
+  };
+  let formulaInput = {
+    attribute,
+    skill,
+    feature,
+  };
+  let formulaSpan = {
+    attribute,
+    skill,
+    feature
+  }
+  let variablesList;
   $: {
-    attributeFormula = data.formulas.attributes;
-    for (let variable of Object.values(data.variables)) {
-      if (variable.value) {
-        console.log(attributeFormula);
-        attributeFormula = attributeFormula.replaceAll(variable.shortName, variable.value);
+    variablesList = Object.entries(data.variables).map((item) => {
+      return item.shortName;
+    });
+  }
+  function validateInput(val,type) {
+    formulaSpan['type'] = val;
+    let checkArr = val.split(/[./+\*,^\s]+/);
+    for (let item of checkArr) {
+      if (item !== "" && isNaN(item)) {
+        check = !funcList.includes(item);
+        if (check) {
+          let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
+          formulaSpan['type'] = formulaSpan['type'].replace(regexp, `<span style="color:red">${item}</span>`);
+        }
       }
     }
   }
@@ -31,7 +56,10 @@
     </div>
     <div>
       <label for="Attribute Formula">Attribute Advancement Formula</label>
-      <input type="text" bind:value={data.formulas.attributes} />
+      <div class="span">
+        {@html formulaSpan.attribute}
+      </div>
+      <input type="text" on:input={()=>{validateInput(this.value,'attribute')}} bind:this={formulaInput.attribute} bind:value={data.formulas.attributes} />
     </div>
     <br />
     <div>
@@ -43,7 +71,6 @@
       <label for="Feature Formula">Feature Advancement Formula</label>
       <input type="text" bind:value={data.formulas.features} />
     </div>
-  <SettingsSubmitButton {setting} {data} />
+    <SettingsSubmitButton {setting} {data} />
   </div>
 </ApplicationShell>
-
