@@ -5646,16 +5646,16 @@ class SettingsSubmitButton extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[15] = list[i];
-	child_ctx[16] = list;
-	child_ctx[17] = i;
+	child_ctx[19] = list[i];
+	child_ctx[20] = list;
+	child_ctx[21] = i;
 	return child_ctx;
 }
 
 // (51:8) {#each Object.values(data.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[15].longName + "";
+	let t0_value = /*variable*/ ctx[19].longName + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -5664,7 +5664,7 @@ function create_each_block$3(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[16], /*variable_index*/ ctx[17]);
+		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[20], /*variable_index*/ ctx[21]);
 	}
 
 	return {
@@ -5673,7 +5673,7 @@ function create_each_block$3(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			input = element("input");
-			attr(label, "for", label_for_value = /*variable*/ ctx[15].longName);
+			attr(label, "for", label_for_value = /*variable*/ ctx[19].longName);
 			attr(input, "placeholder", "shortName");
 		},
 		m(target, anchor) {
@@ -5681,7 +5681,7 @@ function create_each_block$3(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*variable*/ ctx[15].shortName);
+			set_input_value(input, /*variable*/ ctx[19].shortName);
 
 			if (!mounted) {
 				dispose = listen(input, "input", input_input_handler);
@@ -5690,14 +5690,14 @@ function create_each_block$3(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[15].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[19].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[15].longName)) {
+			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[19].longName)) {
 				attr(label, "for", label_for_value);
 			}
 
-			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[15].shortName) {
-				set_input_value(input, /*variable*/ ctx[15].shortName);
+			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[19].shortName) {
+				set_input_value(input, /*variable*/ ctx[19].shortName);
 			}
 		},
 		d(detaching) {
@@ -5712,7 +5712,7 @@ function create_each_block$3(ctx) {
 
 // (46:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
-	let div6;
+	let div8;
 	let div1;
 	let label0;
 	let t1;
@@ -5722,24 +5722,30 @@ function create_default_slot$3(ctx) {
 	let label1;
 	let t4;
 	let div2;
-	let raw_value = /*formulaSpan*/ ctx[3].attribute + "";
+	let raw0_value = /*formulaSpan*/ ctx[3].attribute + "";
 	let t5;
 	let input0;
 	let t6;
 	let br0;
 	let t7;
-	let div4;
-	let label2;
-	let t9;
-	let input1;
-	let t10;
-	let br1;
-	let t11;
 	let div5;
-	let label3;
+	let div4;
+	let raw1_value = /*formulaSpan*/ ctx[3].skill + "";
+	let t8;
+	let label2;
+	let t10;
+	let input1;
+	let t11;
+	let br1;
+	let t12;
+	let div7;
+	let div6;
+	let raw2_value = /*formulaSpan*/ ctx[3].feature + "";
 	let t13;
+	let label3;
+	let t15;
 	let input2;
-	let t14;
+	let t16;
 	let settingssubmitbutton;
 	let current;
 	let mounted;
@@ -5757,7 +5763,7 @@ function create_default_slot$3(ctx) {
 
 	return {
 		c() {
-			div6 = element("div");
+			div8 = element("div");
 			div1 = element("div");
 			label0 = element("label");
 			label0.textContent = "CustomValues";
@@ -5779,35 +5785,41 @@ function create_default_slot$3(ctx) {
 			t6 = space();
 			br0 = element("br");
 			t7 = space();
+			div5 = element("div");
 			div4 = element("div");
+			t8 = space();
 			label2 = element("label");
 			label2.textContent = "Skill Advancement Formula";
-			t9 = space();
-			input1 = element("input");
 			t10 = space();
-			br1 = element("br");
+			input1 = element("input");
 			t11 = space();
-			div5 = element("div");
+			br1 = element("br");
+			t12 = space();
+			div7 = element("div");
+			div6 = element("div");
+			t13 = space();
 			label3 = element("label");
 			label3.textContent = "Feature Advancement Formula";
-			t13 = space();
+			t15 = space();
 			input2 = element("input");
-			t14 = space();
+			t16 = space();
 			create_component(settingssubmitbutton.$$.fragment);
 			attr(label0, "for", "Custom Values");
 			attr(div0, "class", "grid grid-2col");
 			attr(label1, "for", "Attribute Formula");
 			attr(div2, "class", "span");
 			attr(input0, "type", "text");
+			attr(div4, "class", "span");
 			attr(label2, "for", "Skill Formula");
 			attr(input1, "type", "text");
+			attr(div6, "class", "span");
 			attr(label3, "for", "Feature Formula");
 			attr(input2, "type", "text");
-			attr(div6, "class", "");
+			attr(div8, "class", "");
 		},
 		m(target, anchor) {
-			insert(target, div6, anchor);
-			append(div6, div1);
+			insert(target, div8, anchor);
+			append(div8, div1);
 			append(div1, label0);
 			append(div1, t1);
 			append(div1, div0);
@@ -5816,42 +5828,52 @@ function create_default_slot$3(ctx) {
 				each_blocks[i].m(div0, null);
 			}
 
-			append(div6, t2);
-			append(div6, div3);
+			append(div8, t2);
+			append(div8, div3);
 			append(div3, label1);
 			append(div3, t4);
 			append(div3, div2);
-			div2.innerHTML = raw_value;
+			div2.innerHTML = raw0_value;
 			append(div3, t5);
 			append(div3, input0);
 			/*input0_binding*/ ctx[7](input0);
 			set_input_value(input0, /*data*/ ctx[1].formulas.attributes);
-			append(div6, t6);
-			append(div6, br0);
-			append(div6, t7);
-			append(div6, div4);
-			append(div4, label2);
-			append(div4, t9);
-			append(div4, input1);
+			append(div8, t6);
+			append(div8, br0);
+			append(div8, t7);
+			append(div8, div5);
+			append(div5, div4);
+			div4.innerHTML = raw1_value;
+			append(div5, t8);
+			append(div5, label2);
+			append(div5, t10);
+			append(div5, input1);
+			/*input1_binding*/ ctx[10](input1);
 			set_input_value(input1, /*data*/ ctx[1].formulas.skills);
-			append(div6, t10);
-			append(div6, br1);
-			append(div6, t11);
-			append(div6, div5);
-			append(div5, label3);
-			append(div5, t13);
-			append(div5, input2);
+			append(div8, t11);
+			append(div8, br1);
+			append(div8, t12);
+			append(div8, div7);
+			append(div7, div6);
+			div6.innerHTML = raw2_value;
+			append(div7, t13);
+			append(div7, label3);
+			append(div7, t15);
+			append(div7, input2);
+			/*input2_binding*/ ctx[13](input2);
 			set_input_value(input2, /*data*/ ctx[1].formulas.features);
-			append(div6, t14);
-			mount_component(settingssubmitbutton, div6, null);
+			append(div8, t16);
+			mount_component(settingssubmitbutton, div8, null);
 			current = true;
 
 			if (!mounted) {
 				dispose = [
 					listen(input0, "input", /*input_handler*/ ctx[6]),
 					listen(input0, "input", /*input0_input_handler*/ ctx[8]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[9]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[10])
+					listen(input1, "input", /*input_handler_1*/ ctx[9]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[11]),
+					listen(input2, "input", /*input_handler_2*/ ctx[12]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[14])
 				];
 
 				mounted = true;
@@ -5881,15 +5903,17 @@ function create_default_slot$3(ctx) {
 				each_blocks.length = each_value.length;
 			}
 
-			if ((!current || dirty & /*formulaSpan*/ 8) && raw_value !== (raw_value = /*formulaSpan*/ ctx[3].attribute + "")) div2.innerHTML = raw_value;
+			if ((!current || dirty & /*formulaSpan*/ 8) && raw0_value !== (raw0_value = /*formulaSpan*/ ctx[3].attribute + "")) div2.innerHTML = raw0_value;
 			if (dirty & /*data*/ 2 && input0.value !== /*data*/ ctx[1].formulas.attributes) {
 				set_input_value(input0, /*data*/ ctx[1].formulas.attributes);
 			}
 
+			if ((!current || dirty & /*formulaSpan*/ 8) && raw1_value !== (raw1_value = /*formulaSpan*/ ctx[3].skill + "")) div4.innerHTML = raw1_value;
 			if (dirty & /*data*/ 2 && input1.value !== /*data*/ ctx[1].formulas.skills) {
 				set_input_value(input1, /*data*/ ctx[1].formulas.skills);
 			}
 
+			if ((!current || dirty & /*formulaSpan*/ 8) && raw2_value !== (raw2_value = /*formulaSpan*/ ctx[3].feature + "")) div6.innerHTML = raw2_value;
 			if (dirty & /*data*/ 2 && input2.value !== /*data*/ ctx[1].formulas.features) {
 				set_input_value(input2, /*data*/ ctx[1].formulas.features);
 			}
@@ -5908,9 +5932,11 @@ function create_default_slot$3(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div6);
+			if (detaching) detach(div8);
 			destroy_each(each_blocks, detaching);
 			/*input0_binding*/ ctx[7](null);
+			/*input1_binding*/ ctx[10](null);
+			/*input2_binding*/ ctx[13](null);
 			destroy_component(settingssubmitbutton);
 			mounted = false;
 			run_all(dispose);
@@ -5924,7 +5950,7 @@ function create_fragment$3(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[11](value);
+		/*applicationshell_elementRoot_binding*/ ctx[15](value);
 	}
 
 	let applicationshell_props = {
@@ -5950,7 +5976,7 @@ function create_fragment$3(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, data, formulaInput, formulaSpan, Object*/ 262158) {
+			if (dirty & /*$$scope, data, formulaInput, formulaSpan, Object*/ 4194318) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -5991,13 +6017,15 @@ function instance$3($$self, $$props, $$invalidate) {
 		feature: formulaInput.feature
 	};
 
+	let variablesList;
+
 	function validateInput(val, type) {
 		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s]+/);
 
 		for (let item of checkArr) {
 			if (item !== "" && isNaN(item)) {
-				let check = !funcList.includes(item);
+				let check = !funcList.includes(item) || !variablesList.includes(item);
 
 				if (check) {
 					let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
@@ -6028,9 +6056,31 @@ function instance$3($$self, $$props, $$invalidate) {
 		$$invalidate(1, data);
 	}
 
+	const input_handler_1 = () => {
+		validateInput(formulaInput.skill.value, 'skill');
+	};
+
+	function input1_binding($$value) {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			formulaInput.skill = $$value;
+			$$invalidate(2, formulaInput);
+		});
+	}
+
 	function input1_input_handler() {
 		data.formulas.skills = this.value;
 		$$invalidate(1, data);
+	}
+
+	const input_handler_2 = () => {
+		validateInput(formulaInput.feature.value, 'feature');
+	};
+
+	function input2_binding($$value) {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			formulaInput.feature = $$value;
+			$$invalidate(2, formulaInput);
+		});
 	}
 
 	function input2_input_handler() {
@@ -6050,7 +6100,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*Object, data*/ 2) {
 			{
-				Object.entries(data.variables).map(item => {
+				variablesList = Object.entries(data.variables).map(item => {
 					return item.shortName;
 				});
 			}
@@ -6067,7 +6117,11 @@ function instance$3($$self, $$props, $$invalidate) {
 		input_handler,
 		input0_binding,
 		input0_input_handler,
+		input_handler_1,
+		input1_binding,
 		input1_input_handler,
+		input_handler_2,
+		input2_binding,
 		input2_input_handler,
 		applicationshell_elementRoot_binding
 	];

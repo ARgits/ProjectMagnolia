@@ -33,7 +33,7 @@
     let checkArr = val.split(/[./+\*,^\s]+/);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
-        let check = !funcList.includes(item);
+        let check = !funcList.includes(item)||!variablesList.includes(item);
         if (check) {
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
@@ -63,13 +63,19 @@
     </div>
     <br />
     <div>
+      <div class="span">
+        {@html formulaSpan.skill}
+      </div>
       <label for="Skill Formula">Skill Advancement Formula</label>
-      <input type="text" bind:value={data.formulas.skills} />
+      <input type="text" on:input={()=>{validateInput(formulaInput.skill.value,'skill')}} bind:this={formulaInput.skill} bind:value={data.formulas.skills} />
     </div>
     <br />
     <div>
+      <div class="span">
+        {@html formulaSpan.feature}
+      </div>
       <label for="Feature Formula">Feature Advancement Formula</label>
-      <input type="text" bind:value={data.formulas.features} />
+      <input type="text" on:input={()=>{validateInput(formulaInput.feature.value,'feature')}} bind:this={formulaInput.feature} bind:value={data.formulas.features} />
     </div>
     <SettingsSubmitButton {setting} {data} />
   </div>
