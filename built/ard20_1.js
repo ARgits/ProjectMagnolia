@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (55:8) {#each Object.values(data.variables) as variable}
+// (54:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[26].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (61:4) {#each paramArr as param, key}
+// (60:4) {#each paramArr as param, key}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5759,7 +5759,7 @@ function create_each_block$3(ctx) {
 			attr(input, "class", "transparent svelte-1io2bov");
 			attr(input, "type", "text");
 			attr(div0, "class", "span svelte-1io2bov");
-			set_style(div0, "top", "calc(17.3em + 4.2em * (" + /*key*/ ctx[25] + "-1))");
+			set_style(div0, "top", "calc(17.3em + 4.25em * (" + /*key*/ ctx[25] + "-1))");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
@@ -5808,7 +5808,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (50:0) <ApplicationShell bind:elementRoot>
+// (49:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div2;
 	let div1;
@@ -6037,7 +6037,6 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
-					console.log(item);
 					let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
 					$$invalidate(3, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
 				}

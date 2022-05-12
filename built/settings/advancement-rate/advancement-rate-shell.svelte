@@ -38,7 +38,6 @@
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
         if (check) {
-          console.log(item);
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
         }
@@ -70,7 +69,7 @@
           bind:this={formulaInput[param]}
           bind:value={data.formulas[param]}
         />
-        <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
+        <div class="span" style="top:calc(17.3em + 4.25em * ({key}-1))">
           {@html formulaSpan[param]}
         </div>
       </div>
