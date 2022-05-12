@@ -24,10 +24,8 @@
   }
   $: {
     for(let item of Object.values(data.variables)){
-      console.log(item)
-      funcList.push(item)
+      funcList.push(item.shortName)
     };
-    console.log(funcList)
   }
   function validateInput(val,type) {
     formulaSpan[type] = val;
