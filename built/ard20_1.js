@@ -5652,7 +5652,7 @@ function get_each_context$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (52:8) {#each Object.values(data.variables) as variable}
+// (53:8) {#each Object.values(data.variables) as variable}
 function create_each_block$3(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5710,7 +5710,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (47:0) <ApplicationShell bind:elementRoot>
+// (48:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div8;
 	let div1;
@@ -6101,6 +6101,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		if ($$self.$$.dirty & /*Object, data, variablesList*/ 34) {
 			{
 				$$invalidate(5, variablesList = Object.entries(data.variables).map(item => {
+					console.log(item);
 					return item.shortName;
 				}));
 

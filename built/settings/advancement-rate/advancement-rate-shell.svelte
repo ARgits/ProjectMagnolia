@@ -25,6 +25,7 @@
   let variablesList;
   $: {
     variablesList = Object.entries(data.variables).map((item) => {
+      console.log(item)
       return item.shortName;
     });
     console.log(variablesList)
