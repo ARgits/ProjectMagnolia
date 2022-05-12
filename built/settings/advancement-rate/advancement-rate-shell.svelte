@@ -1,39 +1,44 @@
 <svelte:options accessors={true} />
 
 <script>
+  import { getContext } from "svelte";
   import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  const application = getContext("external").application;
+  const { top, left, width, height, rotateX, rotateY, rotateZ, scale, zIndex } = application.position.stores;
   const setting = "advancement-rate";
   let data = game.settings.get("ard20", setting);
   let funcList = Object.getOwnPropertyNames(math);
   export let elementRoot;
+  let paramArr = ["attributes", "skills", "features"];
   let variableInput = {
-    attribute:'',
-    skill:'',
-    feature:'',
+    attributes: "",
+    skills: "",
+    features: "",
   };
   let formulaInput = {
-    attribute:'',
-    skill:'',
-    feature:'',
+    attributes: "",
+    skills: "",
+    features: "",
   };
   let formulaSpan = {
-    attribute:formulaInput.attribute,
-    skill:formulaInput.skill,
-    feature:formulaInput.feature
-  }
+    attributes: formulaInput.attributes,
+    skills: formulaInput.skills,
+    features: formulaInput.features,
+  };
   $: {
-    for(let item of Object.values(data.variables)){
-      funcList.push(item.shortName)
-    };
+    for (let item of Object.values(data.variables)) {
+      funcList.push(item.shortName);
+    }
   }
-  function validateInput(val,type) {
+  function validateInput(val, type) {
     formulaSpan[type] = val;
-    let checkArr = val.split(/[./+\*,^\s]+/);
+    let checkArr = val.split(/[./+\*,^\s\(\)]+/);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
-        let check = !funcList.includes(item)
+        let check = !funcList.includes(item);
         if (check) {
+          console.log(item);
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
         }
@@ -53,29 +58,35 @@
         {/each}
       </div>
     </div>
-    <div>
-      <label for="Attribute Formula">Attribute Advancement Formula</label>
-      <div class="span">
-        {@html formulaSpan.attribute}
+    {#each paramArr as param,key}
+      <div>
+        <label for="Attribute Formula">Attribute Advancement Formula</label>
+        <div class="span" style="top:calc(17.3em + 4.2em * ({key}-1))">
+          {@html formulaSpan[param]}
+        </div>
+        <input
+          class="transparent"
+          type="text"
+          on:input={() => {
+            validateInput(formulaInput[param].value, param);
+          }}
+          bind:this={formulaInput.param}
+          bind:value={data.formulas.param}
+        />
       </div>
-      <input type="text" on:input={()=>{validateInput(formulaInput.attribute.value,'attribute')}} bind:this={formulaInput.attribute} bind:value={data.formulas.attributes} />
-    </div>
-    <br />
-    <div>
-      <div class="span">
-        {@html formulaSpan.skill}
-      </div>
-      <label for="Skill Formula">Skill Advancement Formula</label>
-      <input type="text" on:input={()=>{validateInput(formulaInput.skill.value,'skill')}} bind:this={formulaInput.skill} bind:value={data.formulas.skills} />
-    </div>
-    <br />
-    <div>
-      <div class="span">
-        {@html formulaSpan.feature}
-      </div>
-      <label for="Feature Formula">Feature Advancement Formula</label>
-      <input type="text" on:input={()=>{validateInput(formulaInput.feature.value,'feature')}} bind:this={formulaInput.feature} bind:value={data.formulas.features} />
-    </div>
+      <br />
+    {/each}
     <SettingsSubmitButton {setting} {data} />
   </div>
 </ApplicationShell>
+
+<style lang="scss">
+  input.transparent {
+    color: transparent;
+    caret-color: black;
+  }
+  div.span {
+    position: absolute;
+    left: 0.865em;
+  }
+</style>
