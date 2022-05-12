@@ -8,19 +8,19 @@
   let funcList = Object.getOwnPropertyNames(math);
   export let elementRoot;
   let variableInput = {
-    attribute,
-    skill,
-    feature,
+    attribute:'',
+    skill:'',
+    feature:'',
   };
   let formulaInput = {
-    attribute,
-    skill,
-    feature,
+    attribute:'',
+    skill:'',
+    feature:'',
   };
   let formulaSpan = {
-    attribute,
-    skill,
-    feature
+    attribute:'',
+    skill:'',
+    feature:''
   }
   let variablesList;
   $: {

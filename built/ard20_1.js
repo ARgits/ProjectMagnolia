@@ -5983,9 +5983,8 @@ function instance$3($$self, $$props, $$invalidate) {
 	let data = game.settings.get("ard20", setting$3);
 	let funcList = Object.getOwnPropertyNames(math);
 	let { elementRoot } = $$props;
-	({ attribute, skill, feature });
-	let formulaInput = { attribute, skill, feature };
-	let formulaSpan = { attribute, skill, feature };
+	let formulaInput = { attribute: '', skill: '', feature: '' };
+	let formulaSpan = { attribute: '', skill: '', feature: '' };
 
 	function validateInput(val, type) {
 		$$invalidate(3, formulaSpan['type'] = val, formulaSpan);
