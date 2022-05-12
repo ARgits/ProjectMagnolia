@@ -5664,7 +5664,7 @@ function create_each_block$3(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[5].call(input, /*each_value*/ ctx[20], /*variable_index*/ ctx[21]);
+		/*input_input_handler*/ ctx[6].call(input, /*each_value*/ ctx[20], /*variable_index*/ ctx[21]);
 	}
 
 	return {
@@ -5836,7 +5836,7 @@ function create_default_slot$3(ctx) {
 			div2.innerHTML = raw0_value;
 			append(div3, t5);
 			append(div3, input0);
-			/*input0_binding*/ ctx[7](input0);
+			/*input0_binding*/ ctx[8](input0);
 			set_input_value(input0, /*data*/ ctx[1].formulas.attributes);
 			append(div8, t6);
 			append(div8, br0);
@@ -5848,7 +5848,7 @@ function create_default_slot$3(ctx) {
 			append(div5, label2);
 			append(div5, t10);
 			append(div5, input1);
-			/*input1_binding*/ ctx[10](input1);
+			/*input1_binding*/ ctx[11](input1);
 			set_input_value(input1, /*data*/ ctx[1].formulas.skills);
 			append(div8, t11);
 			append(div8, br1);
@@ -5860,7 +5860,7 @@ function create_default_slot$3(ctx) {
 			append(div7, label3);
 			append(div7, t15);
 			append(div7, input2);
-			/*input2_binding*/ ctx[13](input2);
+			/*input2_binding*/ ctx[14](input2);
 			set_input_value(input2, /*data*/ ctx[1].formulas.features);
 			append(div8, t16);
 			mount_component(settingssubmitbutton, div8, null);
@@ -5868,12 +5868,12 @@ function create_default_slot$3(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input0, "input", /*input_handler*/ ctx[6]),
-					listen(input0, "input", /*input0_input_handler*/ ctx[8]),
-					listen(input1, "input", /*input_handler_1*/ ctx[9]),
-					listen(input1, "input", /*input1_input_handler*/ ctx[11]),
-					listen(input2, "input", /*input_handler_2*/ ctx[12]),
-					listen(input2, "input", /*input2_input_handler*/ ctx[14])
+					listen(input0, "input", /*input_handler*/ ctx[7]),
+					listen(input0, "input", /*input0_input_handler*/ ctx[9]),
+					listen(input1, "input", /*input_handler_1*/ ctx[10]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[12]),
+					listen(input2, "input", /*input_handler_2*/ ctx[13]),
+					listen(input2, "input", /*input2_input_handler*/ ctx[15])
 				];
 
 				mounted = true;
@@ -5934,9 +5934,9 @@ function create_default_slot$3(ctx) {
 		d(detaching) {
 			if (detaching) detach(div8);
 			destroy_each(each_blocks, detaching);
-			/*input0_binding*/ ctx[7](null);
-			/*input1_binding*/ ctx[10](null);
-			/*input2_binding*/ ctx[13](null);
+			/*input0_binding*/ ctx[8](null);
+			/*input1_binding*/ ctx[11](null);
+			/*input2_binding*/ ctx[14](null);
 			destroy_component(settingssubmitbutton);
 			mounted = false;
 			run_all(dispose);
@@ -5950,7 +5950,7 @@ function create_fragment$3(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[15](value);
+		/*applicationshell_elementRoot_binding*/ ctx[16](value);
 	}
 
 	let applicationshell_props = {
@@ -6018,7 +6018,6 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	let variablesList;
-	console.log(variablesList);
 
 	function validateInput(val, type) {
 		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
@@ -6099,11 +6098,13 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*Object, data*/ 2) {
+		if ($$self.$$.dirty & /*Object, data, variablesList*/ 34) {
 			{
-				variablesList = Object.entries(data.variables).map(item => {
+				$$invalidate(5, variablesList = Object.entries(data.variables).map(item => {
 					return item.shortName;
-				});
+				}));
+
+				console.log(variablesList);
 			}
 		}
 	};
@@ -6114,6 +6115,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		formulaInput,
 		formulaSpan,
 		validateInput,
+		variablesList,
 		input_input_handler,
 		input_handler,
 		input0_binding,

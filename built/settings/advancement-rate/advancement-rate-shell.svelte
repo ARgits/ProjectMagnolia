@@ -27,8 +27,8 @@
     variablesList = Object.entries(data.variables).map((item) => {
       return item.shortName;
     });
+    console.log(variablesList)
   }
-  console.log(variablesList)
   function validateInput(val,type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s]+/);
