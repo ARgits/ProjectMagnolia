@@ -6100,7 +6100,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*Object, data, variablesList*/ 34) {
 			{
-				$$invalidate(5, variablesList = Object.entries(data.variables).map(item => {
+				$$invalidate(5, variablesList = Object.values(data.variables).map(item => {
 					console.log(item);
 					return item.shortName;
 				}));
