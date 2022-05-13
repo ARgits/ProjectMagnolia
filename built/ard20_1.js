@@ -6061,7 +6061,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
-					let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>)`, "");
+					let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>)`, "");
 					console.log(item, regexp, formulaSpan[type]);
 					$$invalidate(4, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
 					console.log(formulaSpan[type]);
