@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (117:8) {#each Object.values(data.variables) as variable}
+// (113:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (149:10) {#if formulaSet[param].check}
+// (145:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (124:6) {#each paramArr as param}
+// (120:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (112:0) <ApplicationShell bind:elementRoot>
+// (108:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6149,17 +6149,13 @@ function instance$3($$self, $$props, $$invalidate) {
 
 				if (check) {
 					formulaSet[type].set.add(item);
-					console.log(formulaSpan[type], "spanValue");
-					console.log(item, "item");
 
 					let lastSpan = formulaSpan[type].lastIndexOf("</span>") > 0
 					? formulaSpan[type].lastIndexOf("</span>") + 8
 					: -1;
 
 					let wordLastIndex = formulaSpan[type].indexOf(item);
-					console.log(lastSpan, wordLastIndex);
 					$$invalidate(5, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
-					console.log(formulaSpan[type]);
 				}
 			}
 		}
@@ -6191,7 +6187,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function div0_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			spanDiv[param] = $$value;
-			$$invalidate(3, spanDiv);
+			($$invalidate(3, spanDiv), $$invalidate(2, formulaSet));
 		});
 	}
 
@@ -6211,6 +6207,19 @@ function instance$3($$self, $$props, $$invalidate) {
 				for (let item of Object.values(data.variables)) {
 					funcList.push(item.shortName);
 				}
+			}
+		}
+
+		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv*/ 12) {
+			for (let [key, item] of Object.entries(formulaSet)) {
+				console.log(spanDiv[key], key);
+				let input = spanDiv[key].previousElementSibling;
+				$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
+				$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
+				$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
+				$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
+				$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
+				$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
 			}
 		}
 	};

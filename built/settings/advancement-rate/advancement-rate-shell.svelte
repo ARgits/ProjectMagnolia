@@ -64,26 +64,22 @@
         let check = !funcList.includes(item);
         if (check) {
           formulaSet[type].set.add(item);
-          console.log(formulaSpan[type], "spanValue");
-          console.log(item, "item");
           let lastSpan =
             formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
           let wordLastIndex = formulaSpan[type].indexOf(item);
-          console.log(lastSpan, wordLastIndex);
           formulaSpan[type] = replaceStrAt(
             formulaSpan[type],
             Math.max(lastSpan, wordLastIndex),
             `<span style="color:red">${item}</span>`,
             item.length
           );
-          console.log(formulaSpan[type]);
         }
       }
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
-  /*$: for (let [key, item] of Object.entries(formulaSet)) {
-    console.log(spanDiv[key])
+  $: for (let [key, item] of Object.entries(formulaSet)) {
+    console.log(spanDiv[key],key)
     let input = spanDiv[key].previousElementSibling;
     spanDiv[key].style.margin = getComputedStyle(input).margin;
     spanDiv[key].style.padding = getComputedStyle(input).padding;
@@ -91,7 +87,7 @@
     spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
     spanDiv[key].style.border = getComputedStyle(input).border;
     spanDiv[key].style["border-color"] = "transparent";
-  }*/
+  }
   /*$: for (let item of Object.values(formulaSet)) {
     if (item.check) {
       let key = Object.values(formulaSet).indexOf(item);
