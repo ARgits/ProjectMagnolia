@@ -6076,7 +6076,7 @@ function instance$3($$self, $$props, $$invalidate) {
 					? formulaSpan[type].lastIndexOf("</span>") + 8
 					: -1;
 
-					let wordLastIndex = spanValue.indexOf(item);
+					let wordLastIndex = formulaSpan[type].indexOf(item);
 					console.log(lastSpan, wordLastIndex);
 					$$invalidate(4, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
 					console.log(formulaSpan[type]);

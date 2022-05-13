@@ -59,7 +59,7 @@
           console.log(formulaSpan[type], "spanValue");
           console.log(item, "item");
           let lastSpan = formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
-          let wordLastIndex = spanValue.indexOf(item);
+          let wordLastIndex = formulaSpan[type].indexOf(item);
           console.log(lastSpan, wordLastIndex);
           formulaSpan[type] = replaceStrAt(
             formulaSpan[type],
