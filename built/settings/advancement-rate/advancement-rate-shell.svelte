@@ -9,9 +9,9 @@
   let data = game.settings.get("ard20", setting);
   let funcList = Object.getOwnPropertyNames(math);
   let formulaSet = {
-    attributes: new Set(),
-    skills: new Set(),
-    features: new Set(),
+    attributes: { set: new Set(), check: false },
+    skills: { set: new Set(), check: false },
+    features: { set: new Set(), check: false },
   };
   export let elementRoot;
   let paramArr = ["attributes", "skills", "features"];
@@ -55,13 +55,13 @@
   function validateInput(val, type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
-    formulaSet[type].clear();
+    formulaSet[type].set.clear();
     console.log(checkArr);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
         if (check) {
-          formulaSet[type].add(item);
+          formulaSet[type].set.add(item);
           console.log(formulaSpan[type], "spanValue");
           console.log(item, "item");
           let lastSpan =
@@ -78,7 +78,10 @@
         }
       }
     }
-    console.log(formulaSet[type].size)
+    console.log(formulaSet[type].set.size);
+  }
+  $: for (let item in formulaSet) {
+    item.check = item.set.size > 0;
   }
 </script>
 
@@ -119,7 +122,7 @@
             {@html formulaSpan[param]}
           </div>
           {console.log([...formulaSet[param]].length)}
-          {#if [...formulaSet[param]].length > 0}
+          {#if formulaSet[param].check}
             <div style="color:red">
               there is no such variable as {[...formulaSet[param]].join(", ")}
             </div>

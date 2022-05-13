@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (90:8) {#each Object.values(data.variables) as variable}
+// (93:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[17].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (122:10) {#if [...formulaSet[param]].length > 0}
+// (125:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5744,7 +5744,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (97:6) {#each paramArr as param}
+// (100:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5774,7 +5774,7 @@ function create_each_block$3(ctx) {
 		/*input_input_handler_1*/ ctx[10].call(input, /*param*/ ctx[14]);
 	}
 
-	let if_block = [.../*formulaSet*/ ctx[4][/*param*/ ctx[14]]].length > 0 && create_if_block$1(ctx);
+	let if_block = /*formulaSet*/ ctx[4][/*param*/ ctx[14]].check && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -5837,7 +5837,7 @@ function create_each_block$3(ctx) {
 				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[14]]);
 			}
 
-			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "")) div0.innerHTML = raw_value;			if ([.../*formulaSet*/ ctx[4][/*param*/ ctx[14]]].length > 0) if_block.p(ctx, dirty);
+			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "")) div0.innerHTML = raw_value;			if (/*formulaSet*/ ctx[4][/*param*/ ctx[14]].check) if_block.p(ctx, dirty);
 		},
 		d(detaching) {
 			if (detaching) detach(div1);
@@ -5851,7 +5851,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (85:0) <ApplicationShell bind:elementRoot>
+// (88:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6081,9 +6081,9 @@ function instance$3($$self, $$props, $$invalidate) {
 	let funcList = Object.getOwnPropertyNames(math);
 
 	let formulaSet = {
-		attributes: new Set(),
-		skills: new Set(),
-		features: new Set()
+		attributes: { set: new Set(), check: false },
+		skills: { set: new Set(), check: false },
+		features: { set: new Set(), check: false }
 	};
 
 	let { elementRoot } = $$props;
@@ -6111,7 +6111,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function validateInput(val, type) {
 		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s\(\)]+/);
-		formulaSet[type].clear();
+		formulaSet[type].set.clear();
 		console.log(checkArr);
 
 		for (let item of checkArr) {
@@ -6119,7 +6119,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
-					formulaSet[type].add(item);
+					formulaSet[type].set.add(item);
 					console.log(formulaSpan[type], "spanValue");
 					console.log(item, "item");
 
@@ -6135,7 +6135,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		console.log(formulaSet[type].size);
+		console.log(formulaSet[type].set.size);
 	}
 
 	function input_input_handler(each_value_1, variable_index) {
@@ -6177,6 +6177,10 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 	};
+
+	for (let item in formulaSet) {
+		item.check = item.set.size > 0;
+	}
 
 	return [
 		elementRoot,
