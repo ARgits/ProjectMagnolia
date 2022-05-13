@@ -101,6 +101,7 @@
     background: grey;
     & + div.span {
       font-weight: bold;
+      color: white;
     }
   }
   div.span {

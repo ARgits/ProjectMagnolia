@@ -5597,7 +5597,7 @@ function create_fragment$4(ctx) {
 		c() {
 			button = element("button");
 			button.textContent = "Submit";
-			attr(button, "class", "submit svelte-19kds2w");
+			attr(button, "class", "submit svelte-1tfoq8h");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -5756,9 +5756,9 @@ function create_each_block$3(ctx) {
 			t3 = space();
 			br = element("br");
 			attr(label, "for", "Attribute Formula");
-			attr(input, "class", "transparent svelte-1dwjxay");
+			attr(input, "class", "transparent svelte-1j2il8b");
 			attr(input, "type", "text");
-			attr(div0, "class", "span svelte-1dwjxay");
+			attr(div0, "class", "span svelte-1j2il8b");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
