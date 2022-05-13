@@ -42,7 +42,7 @@
       console.log(div.top, div.left);
     }
   });
-  $: if (formulaSpan&&elementRoot) {
+  $: if (formulaInput&&elementRoot) {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
       div.left = Math.ceil(elem.offsetLeft*1.01) + "px";

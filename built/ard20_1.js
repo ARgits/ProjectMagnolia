@@ -5755,7 +5755,7 @@ function create_each_block$3(ctx) {
 	let param = /*param*/ ctx[16];
 	let t2;
 	let div0;
-	let raw_value = /*formulaSpan*/ ctx[2][/*param*/ ctx[16]] + "";
+	let raw_value = /*formulaSpan*/ ctx[5][/*param*/ ctx[16]] + "";
 	let t3;
 	let t4;
 	let br;
@@ -5835,7 +5835,7 @@ function create_each_block$3(ctx) {
 				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[16]]);
 			}
 
-			if (dirty & /*formulaSpan*/ 4 && raw_value !== (raw_value = /*formulaSpan*/ ctx[2][/*param*/ ctx[16]] + "")) div0.innerHTML = raw_value;
+			if (dirty & /*formulaSpan*/ 32 && raw_value !== (raw_value = /*formulaSpan*/ ctx[5][/*param*/ ctx[16]] + "")) div0.innerHTML = raw_value;
 			if (param !== /*param*/ ctx[16]) {
 				unassign_div0();
 				param = /*param*/ ctx[16];
@@ -6139,7 +6139,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	});
 
 	function validateInput(val, type) {
-		$$invalidate(2, formulaSpan[type] = val, formulaSpan);
+		$$invalidate(5, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s\(\)]+/);
 		formulaSet[type].set.clear();
 
@@ -6155,7 +6155,7 @@ function instance$3($$self, $$props, $$invalidate) {
 					: -1;
 
 					let wordLastIndex = formulaSpan[type].indexOf(item);
-					$$invalidate(2, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
+					$$invalidate(5, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
 				}
 			}
 		}
@@ -6175,7 +6175,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function input_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			formulaInput[param] = $$value;
-			$$invalidate(5, formulaInput);
+			$$invalidate(2, formulaInput);
 		});
 	}
 
@@ -6210,8 +6210,8 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*formulaSpan, elementRoot*/ 5) {
-			if (formulaSpan && elementRoot) {
+		if ($$self.$$.dirty & /*formulaInput, elementRoot*/ 5) {
+			if (formulaInput && elementRoot) {
 				for (let elem of elementRoot.querySelectorAll("input.transparent")) {
 					let div = elem.nextElementSibling.style;
 					div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
@@ -6226,10 +6226,10 @@ function instance$3($$self, $$props, $$invalidate) {
 	return [
 		elementRoot,
 		data,
-		formulaSpan,
+		formulaInput,
 		formulaSet,
 		spanDiv,
-		formulaInput,
+		formulaSpan,
 		paramArr,
 		validateInput,
 		input_input_handler,
