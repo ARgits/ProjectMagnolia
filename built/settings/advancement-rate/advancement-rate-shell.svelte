@@ -82,7 +82,7 @@
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
-  $: for (let [key, item] of Object.entries(formulaSet)) {
+  /*$: for (let [key, item] of Object.entries(formulaSet)) {
     console.log(spanDiv[key])
     let input = spanDiv[key].previousElementSibling;
     spanDiv[key].style.margin = getComputedStyle(input).margin;
@@ -91,7 +91,7 @@
     spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
     spanDiv[key].style.border = getComputedStyle(input).border;
     spanDiv[key].style["border-color"] = "transparent";
-  }
+  }*/
   /*$: for (let item of Object.values(formulaSet)) {
     if (item.check) {
       let key = Object.values(formulaSet).indexOf(item);

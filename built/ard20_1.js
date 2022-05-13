@@ -6191,7 +6191,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function div0_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			spanDiv[param] = $$value;
-			($$invalidate(3, spanDiv), $$invalidate(2, formulaSet));
+			$$invalidate(3, spanDiv);
 		});
 	}
 
@@ -6211,19 +6211,6 @@ function instance$3($$self, $$props, $$invalidate) {
 				for (let item of Object.values(data.variables)) {
 					funcList.push(item.shortName);
 				}
-			}
-		}
-
-		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv*/ 12) {
-			for (let [key, item] of Object.entries(formulaSet)) {
-				console.log(spanDiv[key]);
-				let input = spanDiv[key].previousElementSibling;
-				$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
-				$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
-				$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-				$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-				$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
-				$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
 			}
 		}
 	};
