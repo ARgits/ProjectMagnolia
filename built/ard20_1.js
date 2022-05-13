@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (125:10) {#if formulaSet[param].check}
+// (124:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5755,10 +5755,7 @@ function create_each_block$3(ctx) {
 	let div0;
 	let raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "";
 	let t3;
-	let t4_value = console.log([.../*formulaSet*/ ctx[4][/*param*/ ctx[14]]].length) + "";
 	let t4;
-	let t5;
-	let t6;
 	let br;
 	let mounted;
 	let dispose;
@@ -5786,10 +5783,8 @@ function create_each_block$3(ctx) {
 			t2 = space();
 			div0 = element("div");
 			t3 = space();
-			t4 = text(t4_value);
-			t5 = space();
 			if (if_block) if_block.c();
-			t6 = space();
+			t4 = space();
 			br = element("br");
 			attr(label, "for", "Attribute Formula");
 			attr(input, "class", "transparent svelte-1j2il8b");
@@ -5807,10 +5802,8 @@ function create_each_block$3(ctx) {
 			append(div1, div0);
 			div0.innerHTML = raw_value;
 			append(div1, t3);
-			append(div1, t4);
-			append(div1, t5);
 			if (if_block) if_block.m(div1, null);
-			insert(target, t6, anchor);
+			insert(target, t4, anchor);
 			insert(target, br, anchor);
 
 			if (!mounted) {
@@ -5843,7 +5836,7 @@ function create_each_block$3(ctx) {
 			if (detaching) detach(div1);
 			unassign_input();
 			if (if_block) if_block.d();
-			if (detaching) detach(t6);
+			if (detaching) detach(t4);
 			if (detaching) detach(br);
 			mounted = false;
 			run_all(dispose);
@@ -5953,7 +5946,7 @@ function create_default_slot$3(ctx) {
 				each_blocks_1.length = each_value_1.length;
 			}
 
-			if (dirty & /*formulaSet, paramArr, console, formulaSpan, formulaInput, data, validateInput*/ 126) {
+			if (dirty & /*formulaSet, paramArr, formulaSpan, formulaInput, data, validateInput*/ 126) {
 				each_value = /*paramArr*/ ctx[5];
 				let i;
 
