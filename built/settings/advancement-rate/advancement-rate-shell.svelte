@@ -14,7 +14,6 @@
     features: new Set(),
   };
   export let elementRoot;
-  let divFormula;
   let paramArr = ["attributes", "skills", "features"];
   let variableInput = {
     attributes: "",
@@ -93,7 +92,7 @@
         {/each}
       </div>
     </div>
-    <div class="formula" bind:this={divFormula}>
+    <div class="formula">
       {#each paramArr as param}
         <div>
           <label for="Attribute Formula">Attribute Advancement Formula</label>
@@ -119,7 +118,9 @@
             {@html formulaSpan[param]}
           </div>
           {#if formulaSet[param].size > 0}
-            <div style="color:red">there is no such variable as {[...formulaSet[param]].join(", ")}</div>
+            <div style="color:red">
+              there is no such variable as {[...formulaSet[param]].join(", ")}
+            </div>
           {/if}
         </div>
         <br />

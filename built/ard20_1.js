@@ -5646,24 +5646,24 @@ class SettingsSubmitButton extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i];
-	child_ctx[17] = list;
-	child_ctx[18] = i;
+	child_ctx[14] = list[i];
+	child_ctx[15] = list;
+	child_ctx[16] = i;
 	return child_ctx;
 }
 
 function get_each_context_1$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[19] = list[i];
-	child_ctx[20] = list;
-	child_ctx[21] = i;
+	child_ctx[17] = list[i];
+	child_ctx[18] = list;
+	child_ctx[19] = i;
 	return child_ctx;
 }
 
-// (90:8) {#each Object.values(data.variables) as variable}
+// (89:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[19].longName + "";
+	let t0_value = /*variable*/ ctx[17].longName + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -5672,7 +5672,7 @@ function create_each_block_1$2(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[8].call(input, /*each_value_1*/ ctx[20], /*variable_index*/ ctx[21]);
+		/*input_input_handler*/ ctx[7].call(input, /*each_value_1*/ ctx[18], /*variable_index*/ ctx[19]);
 	}
 
 	return {
@@ -5681,7 +5681,7 @@ function create_each_block_1$2(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			input = element("input");
-			attr(label, "for", label_for_value = /*variable*/ ctx[19].longName);
+			attr(label, "for", label_for_value = /*variable*/ ctx[17].longName);
 			attr(input, "placeholder", "shortName");
 		},
 		m(target, anchor) {
@@ -5689,7 +5689,7 @@ function create_each_block_1$2(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*variable*/ ctx[19].shortName);
+			set_input_value(input, /*variable*/ ctx[17].shortName);
 
 			if (!mounted) {
 				dispose = listen(input, "input", input_input_handler);
@@ -5698,14 +5698,14 @@ function create_each_block_1$2(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[19].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[17].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[19].longName)) {
+			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[17].longName)) {
 				attr(label, "for", label_for_value);
 			}
 
-			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[19].shortName) {
-				set_input_value(input, /*variable*/ ctx[19].shortName);
+			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[17].shortName) {
+				set_input_value(input, /*variable*/ ctx[17].shortName);
 			}
 		},
 		d(detaching) {
@@ -5718,11 +5718,11 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (121:10) {#if formulaSet[param].size > 0}
+// (120:10) {#if formulaSet[param].size > 0}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
-	let t1_value = [.../*formulaSet*/ ctx[5][/*param*/ ctx[16]]].join(", ") + "";
+	let t1_value = [.../*formulaSet*/ ctx[4][/*param*/ ctx[14]]].join(", ") + "";
 	let t1;
 
 	return {
@@ -5744,16 +5744,16 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (97:6) {#each paramArr as param}
+// (96:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
 	let t1;
 	let input;
-	let param = /*param*/ ctx[16];
+	let param = /*param*/ ctx[14];
 	let t2;
 	let div0;
-	let raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[16]] + "";
+	let raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "";
 	let t3;
 	let t4;
 	let br;
@@ -5761,17 +5761,17 @@ function create_each_block$3(ctx) {
 	let dispose;
 
 	function input_handler() {
-		return /*input_handler*/ ctx[9](/*param*/ ctx[16]);
+		return /*input_handler*/ ctx[8](/*param*/ ctx[14]);
 	}
 
-	const assign_input = () => /*input_binding*/ ctx[10](input, param);
-	const unassign_input = () => /*input_binding*/ ctx[10](null, param);
+	const assign_input = () => /*input_binding*/ ctx[9](input, param);
+	const unassign_input = () => /*input_binding*/ ctx[9](null, param);
 
 	function input_input_handler_1() {
-		/*input_input_handler_1*/ ctx[11].call(input, /*param*/ ctx[16]);
+		/*input_input_handler_1*/ ctx[10].call(input, /*param*/ ctx[14]);
 	}
 
-	let if_block = /*formulaSet*/ ctx[5][/*param*/ ctx[16]].size > 0 && create_if_block$1(ctx);
+	let if_block = /*formulaSet*/ ctx[4][/*param*/ ctx[14]].size > 0 && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -5797,7 +5797,7 @@ function create_each_block$3(ctx) {
 			append(div1, t1);
 			append(div1, input);
 			assign_input();
-			set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[16]]);
+			set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[14]]);
 			append(div1, t2);
 			append(div1, div0);
 			div0.innerHTML = raw_value;
@@ -5820,17 +5820,17 @@ function create_each_block$3(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (param !== /*param*/ ctx[16]) {
+			if (param !== /*param*/ ctx[14]) {
 				unassign_input();
-				param = /*param*/ ctx[16];
+				param = /*param*/ ctx[14];
 				assign_input();
 			}
 
-			if (dirty & /*data, paramArr*/ 66 && input.value !== /*data*/ ctx[1].formulas[/*param*/ ctx[16]]) {
-				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[16]]);
+			if (dirty & /*data, paramArr*/ 34 && input.value !== /*data*/ ctx[1].formulas[/*param*/ ctx[14]]) {
+				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[14]]);
 			}
 
-			if (dirty & /*formulaSpan*/ 16 && raw_value !== (raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[16]] + "")) div0.innerHTML = raw_value;			if (/*formulaSet*/ ctx[5][/*param*/ ctx[16]].size > 0) if_block.p(ctx, dirty);
+			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "")) div0.innerHTML = raw_value;			if (/*formulaSet*/ ctx[4][/*param*/ ctx[14]].size > 0) if_block.p(ctx, dirty);
 		},
 		d(detaching) {
 			if (detaching) detach(div1);
@@ -5844,7 +5844,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (85:0) <ApplicationShell bind:elementRoot>
+// (84:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -5863,7 +5863,7 @@ function create_default_slot$3(ctx) {
 		each_blocks_1[i] = create_each_block_1$2(get_each_context_1$2(ctx, each_value_1, i));
 	}
 
-	let each_value = /*paramArr*/ ctx[6];
+	let each_value = /*paramArr*/ ctx[5];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -5918,7 +5918,6 @@ function create_default_slot$3(ctx) {
 				each_blocks[i].m(div2, null);
 			}
 
-			/*div2_binding*/ ctx[12](div2);
 			append(div3, t3);
 			mount_component(settingssubmitbutton, div3, null);
 			current = true;
@@ -5947,8 +5946,8 @@ function create_default_slot$3(ctx) {
 				each_blocks_1.length = each_value_1.length;
 			}
 
-			if (dirty & /*formulaSet, paramArr, formulaSpan, formulaInput, data, validateInput*/ 250) {
-				each_value = /*paramArr*/ ctx[6];
+			if (dirty & /*formulaSet, paramArr, formulaSpan, formulaInput, data, validateInput*/ 126) {
+				each_value = /*paramArr*/ ctx[5];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -5987,7 +5986,6 @@ function create_default_slot$3(ctx) {
 			if (detaching) detach(div3);
 			destroy_each(each_blocks_1, detaching);
 			destroy_each(each_blocks, detaching);
-			/*div2_binding*/ ctx[12](null);
 			destroy_component(settingssubmitbutton);
 		}
 	};
@@ -5999,7 +5997,7 @@ function create_fragment$3(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[13](value);
+		/*applicationshell_elementRoot_binding*/ ctx[11](value);
 	}
 
 	let applicationshell_props = {
@@ -6025,7 +6023,7 @@ function create_fragment$3(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, data, divFormula, formulaSpan, formulaInput, Object*/ 4194334) {
+			if (dirty & /*$$scope, data, formulaSpan, formulaInput, Object*/ 1048590) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6082,7 +6080,6 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	let { elementRoot } = $$props;
-	let divFormula;
 	let paramArr = ["attributes", "skills", "features"];
 	let formulaInput = { attributes: "", skills: "", features: "" };
 
@@ -6105,7 +6102,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	});
 
 	function validateInput(val, type) {
-		$$invalidate(4, formulaSpan[type] = val, formulaSpan);
+		$$invalidate(3, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s\(\)]+/);
 		formulaSet[type].clear();
 		console.log(checkArr);
@@ -6125,7 +6122,7 @@ function instance$3($$self, $$props, $$invalidate) {
 
 					let wordLastIndex = formulaSpan[type].indexOf(item);
 					console.log(lastSpan, wordLastIndex);
-					$$invalidate(4, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
+					$$invalidate(3, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
 					console.log(formulaSpan[type]);
 				}
 			}
@@ -6144,20 +6141,13 @@ function instance$3($$self, $$props, $$invalidate) {
 	function input_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			formulaInput[param] = $$value;
-			$$invalidate(3, formulaInput);
+			$$invalidate(2, formulaInput);
 		});
 	}
 
 	function input_input_handler_1(param) {
 		data.formulas[param] = this.value;
 		$$invalidate(1, data);
-	}
-
-	function div2_binding($$value) {
-		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-			divFormula = $$value;
-			$$invalidate(2, divFormula);
-		});
 	}
 
 	function applicationshell_elementRoot_binding(value) {
@@ -6182,7 +6172,6 @@ function instance$3($$self, $$props, $$invalidate) {
 	return [
 		elementRoot,
 		data,
-		divFormula,
 		formulaInput,
 		formulaSpan,
 		formulaSet,
@@ -6192,7 +6181,6 @@ function instance$3($$self, $$props, $$invalidate) {
 		input_handler,
 		input_binding,
 		input_input_handler_1,
-		div2_binding,
 		applicationshell_elementRoot_binding
 	];
 }
