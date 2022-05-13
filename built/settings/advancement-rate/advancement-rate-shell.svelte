@@ -1,11 +1,10 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { getContext } from "svelte";
+  import { onMount } from "svelte";
   import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  const application = getContext("external").application;
-  const { top, left, width, height, rotateX, rotateY, rotateZ, scale, zIndex } = application.position.stores;
+import { element } from "svelte/internal";
   const setting = "advancement-rate";
   let data = game.settings.get("ard20", setting);
   let funcList = Object.getOwnPropertyNames(math);
@@ -31,6 +30,16 @@
       funcList.push(item.shortName);
     }
   }
+  onMount((element)=>{
+    console.log(element)
+    if(element.classList.includes('transparent')){
+      let div = element.nextElementSibling
+      div.style.padding = getComputedStyle(element).padding
+      div.style.margin = getComputedStyle(element).margin
+      div.style.top = element.getBoundingClientRect().top+'px'
+      div.style.left = element.getBoundingClientRect().left+'px'
+    }
+  })
   function validateInput(val, type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
@@ -57,7 +66,7 @@
         {/each}
       </div>
     </div>
-    {#each paramArr as param, key}
+    {#each paramArr as param}
       <div>
         <label for="Attribute Formula">Attribute Advancement Formula</label>
         <input
@@ -69,7 +78,7 @@
           bind:this={formulaInput[param]}
           bind:value={data.formulas[param]}
         />
-        <div class="span" style="top:calc(17.3em + 4.25em * ({key}-1))">
+        <div class="span">
           {@html formulaSpan[param]}
         </div>
       </div>
@@ -92,6 +101,5 @@
   }
   div.span {
     position: absolute;
-    left: 0.865em;
   }
 </style>
