@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (69:8) {#each Object.values(data.variables) as variable}
+// (86:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (76:6) {#each paramArr as param}
+// (93:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div2;
 	let label;
@@ -5815,7 +5815,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (64:0) <ApplicationShell bind:elementRoot>
+// (81:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6025,6 +6025,14 @@ function create_fragment$3(ctx) {
 
 const setting$3 = "advancement-rate";
 
+function replaceStrAt(str, index, replacement, endLength) {
+	if (index >= str.length) {
+		return str.valueOf();
+	}
+
+	return str.substring(0, index) + replacement + str.substring(index + endLength);
+}
+
 function instance$3($$self, $$props, $$invalidate) {
 	let data = game.settings.get("ard20", setting$3);
 	let funcList = Object.getOwnPropertyNames(math);
@@ -6047,7 +6055,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			div.style.left = elem.getBoundingClientRect().left + "px";
 			div.style.top = elem.getBoundingClientRect().top + "px";
 			div.style.border = getComputedStyle(elem).border;
-			div.style['border-color'] = 'transparent';
+			div.style["border-color"] = "transparent";
 		}
 	});
 
@@ -6061,11 +6069,21 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
-					let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
-					console.log(item, regexp, formulaSpan[type]);
-					$$invalidate(4, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
-					console.log(formulaSpan[type]);
-				}
+					console.log(spanValue, "spanValue");
+					console.log(item, "item");
+
+					let lastSpan = spanValue.lastIndexOf("</span>") > 0
+					? spanValue.lastIndexOf("</span>") + 8
+					: -1;
+
+					let wordLastIndex = spanValue.indexOf(item);
+					console.log(lastSpan, wordLastIndex);
+					spanValue = replaceStrAt(spanValue, Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length);
+					console.log(spanValue);
+				} /*let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
+console.log(item,regexp,formulaSpan[type])
+formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
+console.log(formulaSpan[type])*/
 			}
 		}
 	}

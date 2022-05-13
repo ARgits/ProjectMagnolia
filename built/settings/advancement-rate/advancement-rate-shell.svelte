@@ -38,23 +38,40 @@
       div.style.padding = getComputedStyle(elem).padding;
       div.style.left = elem.getBoundingClientRect().left + "px";
       div.style.top = elem.getBoundingClientRect().top + "px";
-      div.style.border = getComputedStyle(elem).border
-			div.style['border-color'] = 'transparent'
+      div.style.border = getComputedStyle(elem).border;
+      div.style["border-color"] = "transparent";
     }
   });
+  function replaceStrAt(str, index, replacement, endLength) {
+    if (index >= str.length) {
+      return str.valueOf();
+    }
+    return str.substring(0, index) + replacement + str.substring(index + endLength);
+  }
   function validateInput(val, type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
-    console.log(checkArr)
+    console.log(checkArr);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
         if (check) {
-          let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
+          console.log(spanValue, "spanValue");
+          console.log(item, "item");
+          let lastSpan = spanValue.lastIndexOf("</span>") > 0 ? spanValue.lastIndexOf("</span>") + 8 : -1;
+          let wordLastIndex = spanValue.indexOf(item);
+          console.log(lastSpan, wordLastIndex);
+          spanValue = replaceStrAt(
+            spanValue,
+            Math.max(lastSpan, wordLastIndex),
+            `<span style="color:red">${item}</span>`,
+            item.length
+          );
+          console.log(spanValue);
+          /*let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
           console.log(item,regexp,formulaSpan[type])
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
-          console.log(formulaSpan[type])
- 
+          console.log(formulaSpan[type])*/
         }
       }
     }
@@ -85,7 +102,13 @@
             bind:this={formulaInput[param]}
             bind:value={data.formulas[param]}
           />
-          <div class="span" on:click={(e)=>{console.log(e,e.target.previousElementSibling);e.target.previousElementSibling.focus()}}>
+          <div
+            class="span"
+            on:click={(e) => {
+              console.log(e, e.target.previousElementSibling);
+              e.target.previousElementSibling.focus();
+            }}
+          >
             {@html formulaSpan[param]}
           </div>
           <div>there is no such variable</div>
