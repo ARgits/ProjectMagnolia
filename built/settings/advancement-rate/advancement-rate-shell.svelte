@@ -80,7 +80,7 @@
   }
   $: for (let [key, item] of Object.entries(formulaSet)) {
     console.log(spanDiv[key],key)
-    let input = spanDiv[key].previousElementSibling;
+    let input = formulaInput[key];
     spanDiv[key].style.margin = getComputedStyle(input).margin;
     spanDiv[key].style.padding = getComputedStyle(input).padding;
     spanDiv[key].style.left = input.getBoundingClientRect().left + "px";

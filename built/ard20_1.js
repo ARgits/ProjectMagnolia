@@ -6187,7 +6187,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function div0_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			spanDiv[param] = $$value;
-			($$invalidate(3, spanDiv), $$invalidate(2, formulaSet));
+			(($$invalidate(3, spanDiv), $$invalidate(2, formulaSet)), $$invalidate(4, formulaInput));
 		});
 	}
 
@@ -6210,10 +6210,10 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv*/ 12) {
+		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv, formulaInput*/ 28) {
 			for (let [key, item] of Object.entries(formulaSet)) {
 				console.log(spanDiv[key], key);
-				let input = spanDiv[key].previousElementSibling;
+				let input = formulaInput[key];
 				$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
 				$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
 				$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
