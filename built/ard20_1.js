@@ -6187,7 +6187,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function div0_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			spanDiv[param] = $$value;
-			(($$invalidate(3, spanDiv), $$invalidate(2, formulaSet)), $$invalidate(4, formulaInput));
+			($$invalidate(3, spanDiv), $$invalidate(2, formulaSet));
 		});
 	}
 
@@ -6210,17 +6210,33 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv, formulaInput*/ 28) {
-			for (let [key, item] of Object.entries(formulaSet)) {
-				if (spanDiv[key]) {
-					let input = formulaInput[key];
-					console.log(input);
-					$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
-					$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
-					$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-					$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-					$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
-					$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
+		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv*/ 12) {
+			/*$: for (let [key, item] of Object.entries(formulaSet)) {
+  if (spanDiv[key]) {
+    let input = formulaInput[key];
+    console.log(input);
+    spanDiv[key].style.margin = getComputedStyle(input).margin;
+    spanDiv[key].style.padding = getComputedStyle(input).padding;
+    spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
+    spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
+    spanDiv[key].style.border = getComputedStyle(input).border;
+    spanDiv[key].style["border-color"] = "transparent";
+  }
+}*/
+			for (let item of Object.values(formulaSet)) {
+				if (item.check) {
+					let key = Object.values(formulaSet).indexOf(item);
+
+					for (let i = key; i < Object.values(formulaSet).length; i++) {
+						let type = Object.keys(formulaSet)[i];
+						let input = spanDiv[type].previousElementSibling;
+						$$invalidate(3, spanDiv[type].style.margin = getComputedStyle(input).margin, spanDiv);
+						$$invalidate(3, spanDiv[type].style.padding = getComputedStyle(input).padding, spanDiv);
+						$$invalidate(3, spanDiv[type].style.left = input.getBoundingClientRect().left + "px", spanDiv);
+						$$invalidate(3, spanDiv[type].style.top = input.getBoundingClientRect().top + "px", spanDiv);
+						$$invalidate(3, spanDiv[type].style.border = getComputedStyle(input).border, spanDiv);
+						$$invalidate(3, spanDiv[type].style["border-color"] = "transparent", spanDiv);
+					}
 				}
 			}
 		}

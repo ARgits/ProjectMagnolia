@@ -78,7 +78,7 @@
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
-  $: for (let [key, item] of Object.entries(formulaSet)) {
+  /*$: for (let [key, item] of Object.entries(formulaSet)) {
     if (spanDiv[key]) {
       let input = formulaInput[key];
       console.log(input);
@@ -89,8 +89,8 @@
       spanDiv[key].style.border = getComputedStyle(input).border;
       spanDiv[key].style["border-color"] = "transparent";
     }
-  }
-  /*$: for (let item of Object.values(formulaSet)) {
+  }*/
+  $: for (let item of Object.values(formulaSet)) {
     if (item.check) {
       let key = Object.values(formulaSet).indexOf(item);
       for (let i = key; i < Object.values(formulaSet).length; i++) {
@@ -104,7 +104,7 @@
         spanDiv[type].style["border-color"] = "transparent";
       }
     }
-  }*/
+  }
 </script>
 
 <ApplicationShell bind:elementRoot>
