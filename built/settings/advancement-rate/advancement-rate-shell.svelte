@@ -82,15 +82,15 @@
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
-  $:for(let item of Object.values(formulaSet)){
+  $:for(let [key,item] of Object.entries(formulaSet)){
     if(item.check){
-      let input = spanDiv[item].previousElementSibling
-      spanDiv[item].style.margin = getComputedStyle(input).margin;
-      spanDiv[item].style.padding = getComputedStyle(input).padding;
-      spanDiv[item].style.left = input.getBoundingClientRect().left + "px";
-      spanDiv[item].style.top = input.getBoundingClientRect().top + "px";
-      spanDiv[item].style.border = getComputedStyle(input).border;
-      spanDiv[item].style["border-color"] = "transparent";
+      let input = spanDiv[key].previousElementSibling
+      spanDiv[key].style.margin = getComputedStyle(input).margin;
+      spanDiv[key].style.padding = getComputedStyle(input).padding;
+      spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
+      spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
+      spanDiv[key].style.border = getComputedStyle(input).border;
+      spanDiv[key].style["border-color"] = "transparent";
     }
   }
 </script>

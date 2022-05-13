@@ -6215,15 +6215,15 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 
 		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv*/ 12) {
-			for (let item of Object.values(formulaSet)) {
+			for (let [key, item] of Object.entries(formulaSet)) {
 				if (item.check) {
-					let input = spanDiv[item].previousElementSibling;
-					$$invalidate(3, spanDiv[item].style.margin = getComputedStyle(input).margin, spanDiv);
-					$$invalidate(3, spanDiv[item].style.padding = getComputedStyle(input).padding, spanDiv);
-					$$invalidate(3, spanDiv[item].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-					$$invalidate(3, spanDiv[item].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-					$$invalidate(3, spanDiv[item].style.border = getComputedStyle(input).border, spanDiv);
-					$$invalidate(3, spanDiv[item].style["border-color"] = "transparent", spanDiv);
+					let input = spanDiv[key].previousElementSibling;
+					$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
+					$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
+					$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
+					$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
+					$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
+					$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
 				}
 			}
 		}
