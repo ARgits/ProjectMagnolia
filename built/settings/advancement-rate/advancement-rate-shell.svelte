@@ -41,14 +41,16 @@
       div["border-color"] = "transparent";
     }
   });
-  $: for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-    let div = elem.nextElementSibling.style;
-    div.margin = getComputedStyle(elem).margin;
-    div.padding = getComputedStyle(elem).padding;
-    div.left = elem.getBoundingClientRect().left + "px";
-    div.top = elem.getBoundingClientRect().top + "px";
-    div.border = getComputedStyle(elem).border;
-    div["border-color"] = "transparent";
+  $: if (elementRoot) {
+    for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+      let div = elem.nextElementSibling.style;
+      div.margin = getComputedStyle(elem).margin;
+      div.padding = getComputedStyle(elem).padding;
+      div.left = elem.getBoundingClientRect().left + "px";
+      div.top = elem.getBoundingClientRect().top + "px";
+      div.border = getComputedStyle(elem).border;
+      div["border-color"] = "transparent";
+    }
   }
   /**
    * replace part of string at given index

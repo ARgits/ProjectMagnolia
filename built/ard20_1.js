@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (124:8) {#each Object.values(data.variables) as variable}
+// (126:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (156:10) {#if formulaSet[param].check}
+// (158:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (131:6) {#each paramArr as param}
+// (133:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (119:0) <ApplicationShell bind:elementRoot>
+// (121:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6210,14 +6210,16 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 
 		if ($$self.$$.dirty & /*elementRoot*/ 1) {
-			for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-				let div = elem.nextElementSibling.style;
-				div.margin = getComputedStyle(elem).margin;
-				div.padding = getComputedStyle(elem).padding;
-				div.left = elem.getBoundingClientRect().left + "px";
-				div.top = elem.getBoundingClientRect().top + "px";
-				div.border = getComputedStyle(elem).border;
-				div["border-color"] = "transparent";
+			if (elementRoot) {
+				for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+					let div = elem.nextElementSibling.style;
+					div.margin = getComputedStyle(elem).margin;
+					div.padding = getComputedStyle(elem).padding;
+					div.left = elem.getBoundingClientRect().left + "px";
+					div.top = elem.getBoundingClientRect().top + "px";
+					div.border = getComputedStyle(elem).border;
+					div["border-color"] = "transparent";
+				}
 			}
 		}
 	};
