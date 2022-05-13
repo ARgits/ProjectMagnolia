@@ -2012,7 +2012,7 @@ function create_if_block_1$1(ctx) {
 }
 
 // (94:0) {#if min !== undefined}
-function create_if_block$3(ctx) {
+function create_if_block$4(ctx) {
 	let button;
 	let t;
 	let mounted;
@@ -2051,7 +2051,7 @@ function create_fragment$9(ctx) {
 	let t;
 	let if_block1_anchor;
 	let if_block0 = /*max*/ ctx[0] !== undefined && create_if_block_1$1(ctx);
-	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$3(ctx);
+	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$4(ctx);
 
 	return {
 		c() {
@@ -2084,7 +2084,7 @@ function create_fragment$9(ctx) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
-					if_block1 = create_if_block$3(ctx);
+					if_block1 = create_if_block$4(ctx);
 					if_block1.c();
 					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
 				}
@@ -2648,7 +2648,7 @@ function create_if_block_1(ctx) {
 }
 
 // (113:2) {#if key === 0 && thead.includes("Description")}
-function create_if_block$2(ctx) {
+function create_if_block$3(ctx) {
 	let td;
 	let t;
 	let td_rowspan_value;
@@ -2712,7 +2712,7 @@ function create_fragment$8(ctx) {
 	let if_block7 = show_if_3 && create_if_block_3(ctx);
 	let if_block8 = show_if_2 && create_if_block_2(ctx);
 	let if_block9 = show_if_1 && create_if_block_1(ctx);
-	let if_block10 = show_if && create_if_block$2(ctx);
+	let if_block10 = show_if && create_if_block$3(ctx);
 
 	return {
 		c() {
@@ -2945,7 +2945,7 @@ function create_fragment$8(ctx) {
 				if (if_block10) {
 					if_block10.p(ctx, dirty);
 				} else {
-					if_block10 = create_if_block$2(ctx);
+					if_block10 = create_if_block$3(ctx);
 					if_block10.c();
 					if_block10.m(tr, null);
 				}
@@ -3595,7 +3595,7 @@ function create_each_block_1$3(ctx) {
 }
 
 // (28:4) {#if tab.id === activeTab}
-function create_if_block$1(ctx) {
+function create_if_block$2(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
@@ -3670,7 +3670,7 @@ function create_if_block$1(ctx) {
 function create_each_block$4(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*tab*/ ctx[9].id === /*activeTab*/ ctx[0] && create_if_block$1(ctx);
+	let if_block = /*tab*/ ctx[9].id === /*activeTab*/ ctx[0] && create_if_block$2(ctx);
 
 	return {
 		c() {
@@ -3691,7 +3691,7 @@ function create_each_block$4(ctx) {
 						transition_in(if_block, 1);
 					}
 				} else {
-					if_block = create_if_block$1(ctx);
+					if_block = create_if_block$2(ctx);
 					if_block.c();
 					transition_in(if_block, 1);
 					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -5646,24 +5646,24 @@ class SettingsSubmitButton extends SvelteComponent {
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[15] = list[i];
-	child_ctx[16] = list;
-	child_ctx[17] = i;
+	child_ctx[16] = list[i];
+	child_ctx[17] = list;
+	child_ctx[18] = i;
 	return child_ctx;
 }
 
 function get_each_context_1$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[18] = list[i];
-	child_ctx[19] = list;
-	child_ctx[20] = i;
+	child_ctx[19] = list[i];
+	child_ctx[20] = list;
+	child_ctx[21] = i;
 	return child_ctx;
 }
 
-// (87:8) {#each Object.values(data.variables) as variable}
+// (90:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
-	let t0_value = /*variable*/ ctx[18].longName + "";
+	let t0_value = /*variable*/ ctx[19].longName + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -5672,7 +5672,7 @@ function create_each_block_1$2(ctx) {
 	let dispose;
 
 	function input_input_handler() {
-		/*input_input_handler*/ ctx[7].call(input, /*each_value_1*/ ctx[19], /*variable_index*/ ctx[20]);
+		/*input_input_handler*/ ctx[8].call(input, /*each_value_1*/ ctx[20], /*variable_index*/ ctx[21]);
 	}
 
 	return {
@@ -5681,7 +5681,7 @@ function create_each_block_1$2(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			input = element("input");
-			attr(label, "for", label_for_value = /*variable*/ ctx[18].longName);
+			attr(label, "for", label_for_value = /*variable*/ ctx[19].longName);
 			attr(input, "placeholder", "shortName");
 		},
 		m(target, anchor) {
@@ -5689,7 +5689,7 @@ function create_each_block_1$2(ctx) {
 			append(label, t0);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*variable*/ ctx[18].shortName);
+			set_input_value(input, /*variable*/ ctx[19].shortName);
 
 			if (!mounted) {
 				dispose = listen(input, "input", input_input_handler);
@@ -5698,14 +5698,14 @@ function create_each_block_1$2(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[18].longName + "")) set_data(t0, t0_value);
+			if (dirty & /*Object, data*/ 2 && t0_value !== (t0_value = /*variable*/ ctx[19].longName + "")) set_data(t0, t0_value);
 
-			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[18].longName)) {
+			if (dirty & /*Object, data*/ 2 && label_for_value !== (label_for_value = /*variable*/ ctx[19].longName)) {
 				attr(label, "for", label_for_value);
 			}
 
-			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[18].shortName) {
-				set_input_value(input, /*variable*/ ctx[18].shortName);
+			if (dirty & /*Object, data*/ 2 && input.value !== /*variable*/ ctx[19].shortName) {
+				set_input_value(input, /*variable*/ ctx[19].shortName);
 			}
 		},
 		d(detaching) {
@@ -5718,37 +5718,64 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (94:6) {#each paramArr as param}
+// (121:10) {#if formulaSet[param].size > 0}
+function create_if_block$1(ctx) {
+	let div;
+	let t0;
+	let t1_value = [.../*formulaSet*/ ctx[5][/*param*/ ctx[16]]].join(", ") + "";
+	let t1;
+
+	return {
+		c() {
+			div = element("div");
+			t0 = text("there is no such variable as ");
+			t1 = text(t1_value);
+			set_style(div, "color", "red");
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			append(div, t0);
+			append(div, t1);
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(div);
+		}
+	};
+}
+
+// (97:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
-	let div2;
+	let div1;
 	let label;
 	let t1;
 	let input;
-	let param = /*param*/ ctx[15];
+	let param = /*param*/ ctx[16];
 	let t2;
 	let div0;
-	let raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[15]] + "";
+	let raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[16]] + "";
 	let t3;
-	let div1;
-	let t5;
+	let t4;
 	let br;
 	let mounted;
 	let dispose;
 
 	function input_handler() {
-		return /*input_handler*/ ctx[8](/*param*/ ctx[15]);
+		return /*input_handler*/ ctx[9](/*param*/ ctx[16]);
 	}
 
-	const assign_input = () => /*input_binding*/ ctx[9](input, param);
-	const unassign_input = () => /*input_binding*/ ctx[9](null, param);
+	const assign_input = () => /*input_binding*/ ctx[10](input, param);
+	const unassign_input = () => /*input_binding*/ ctx[10](null, param);
 
 	function input_input_handler_1() {
-		/*input_input_handler_1*/ ctx[10].call(input, /*param*/ ctx[15]);
+		/*input_input_handler_1*/ ctx[11].call(input, /*param*/ ctx[16]);
 	}
+
+	let if_block = /*formulaSet*/ ctx[5][/*param*/ ctx[16]].size > 0 && create_if_block$1(ctx);
 
 	return {
 		c() {
-			div2 = element("div");
+			div1 = element("div");
 			label = element("label");
 			label.textContent = "Attribute Advancement Formula";
 			t1 = space();
@@ -5756,9 +5783,8 @@ function create_each_block$3(ctx) {
 			t2 = space();
 			div0 = element("div");
 			t3 = space();
-			div1 = element("div");
-			div1.textContent = "there is no such variable";
-			t5 = space();
+			if (if_block) if_block.c();
+			t4 = space();
 			br = element("br");
 			attr(label, "for", "Attribute Formula");
 			attr(input, "class", "transparent svelte-1j2il8b");
@@ -5766,18 +5792,18 @@ function create_each_block$3(ctx) {
 			attr(div0, "class", "span svelte-1j2il8b");
 		},
 		m(target, anchor) {
-			insert(target, div2, anchor);
-			append(div2, label);
-			append(div2, t1);
-			append(div2, input);
+			insert(target, div1, anchor);
+			append(div1, label);
+			append(div1, t1);
+			append(div1, input);
 			assign_input();
-			set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[15]]);
-			append(div2, t2);
-			append(div2, div0);
+			set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[16]]);
+			append(div1, t2);
+			append(div1, div0);
 			div0.innerHTML = raw_value;
-			append(div2, t3);
-			append(div2, div1);
-			insert(target, t5, anchor);
+			append(div1, t3);
+			if (if_block) if_block.m(div1, null);
+			insert(target, t4, anchor);
 			insert(target, br, anchor);
 
 			if (!mounted) {
@@ -5794,21 +5820,23 @@ function create_each_block$3(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 
-			if (param !== /*param*/ ctx[15]) {
+			if (param !== /*param*/ ctx[16]) {
 				unassign_input();
-				param = /*param*/ ctx[15];
+				param = /*param*/ ctx[16];
 				assign_input();
 			}
 
-			if (dirty & /*data, paramArr*/ 34 && input.value !== /*data*/ ctx[1].formulas[/*param*/ ctx[15]]) {
-				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[15]]);
+			if (dirty & /*data, paramArr*/ 66 && input.value !== /*data*/ ctx[1].formulas[/*param*/ ctx[16]]) {
+				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[16]]);
 			}
 
-			if (dirty & /*formulaSpan*/ 16 && raw_value !== (raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[15]] + "")) div0.innerHTML = raw_value;		},
+			if (dirty & /*formulaSpan*/ 16 && raw_value !== (raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[16]] + "")) div0.innerHTML = raw_value;			if (/*formulaSet*/ ctx[5][/*param*/ ctx[16]].size > 0) if_block.p(ctx, dirty);
+		},
 		d(detaching) {
-			if (detaching) detach(div2);
+			if (detaching) detach(div1);
 			unassign_input();
-			if (detaching) detach(t5);
+			if (if_block) if_block.d();
+			if (detaching) detach(t4);
 			if (detaching) detach(br);
 			mounted = false;
 			run_all(dispose);
@@ -5816,7 +5844,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (82:0) <ApplicationShell bind:elementRoot>
+// (85:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -5835,7 +5863,7 @@ function create_default_slot$3(ctx) {
 		each_blocks_1[i] = create_each_block_1$2(get_each_context_1$2(ctx, each_value_1, i));
 	}
 
-	let each_value = /*paramArr*/ ctx[5];
+	let each_value = /*paramArr*/ ctx[6];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -5890,7 +5918,7 @@ function create_default_slot$3(ctx) {
 				each_blocks[i].m(div2, null);
 			}
 
-			/*div2_binding*/ ctx[11](div2);
+			/*div2_binding*/ ctx[12](div2);
 			append(div3, t3);
 			mount_component(settingssubmitbutton, div3, null);
 			current = true;
@@ -5919,8 +5947,8 @@ function create_default_slot$3(ctx) {
 				each_blocks_1.length = each_value_1.length;
 			}
 
-			if (dirty & /*formulaSpan, paramArr, formulaInput, data, validateInput*/ 122) {
-				each_value = /*paramArr*/ ctx[5];
+			if (dirty & /*formulaSet, paramArr, formulaSpan, formulaInput, data, validateInput*/ 250) {
+				each_value = /*paramArr*/ ctx[6];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -5959,7 +5987,7 @@ function create_default_slot$3(ctx) {
 			if (detaching) detach(div3);
 			destroy_each(each_blocks_1, detaching);
 			destroy_each(each_blocks, detaching);
-			/*div2_binding*/ ctx[11](null);
+			/*div2_binding*/ ctx[12](null);
 			destroy_component(settingssubmitbutton);
 		}
 	};
@@ -5971,7 +5999,7 @@ function create_fragment$3(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[12](value);
+		/*applicationshell_elementRoot_binding*/ ctx[13](value);
 	}
 
 	let applicationshell_props = {
@@ -5997,7 +6025,7 @@ function create_fragment$3(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, data, divFormula, formulaSpan, formulaInput, Object*/ 2097182) {
+			if (dirty & /*$$scope, data, divFormula, formulaSpan, formulaInput, Object*/ 4194334) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -6046,6 +6074,13 @@ const dblclick_handler = e => {
 function instance$3($$self, $$props, $$invalidate) {
 	let data = game.settings.get("ard20", setting$3);
 	let funcList = Object.getOwnPropertyNames(math);
+
+	let formulaSet = {
+		attributes: new Set(),
+		skills: new Set(),
+		features: new Set()
+	};
+
 	let { elementRoot } = $$props;
 	let divFormula;
 	let paramArr = ["attributes", "skills", "features"];
@@ -6059,19 +6094,20 @@ function instance$3($$self, $$props, $$invalidate) {
 
 	onMount(() => {
 		for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-			let div = elem.nextElementSibling;
-			div.style.margin = getComputedStyle(elem).margin;
-			div.style.padding = getComputedStyle(elem).padding;
-			div.style.left = elem.getBoundingClientRect().left + "px";
-			div.style.top = elem.getBoundingClientRect().top + "px";
-			div.style.border = getComputedStyle(elem).border;
-			div.style["border-color"] = "transparent";
+			let div = elem.nextElementSibling.style;
+			div.margin = getComputedStyle(elem).margin;
+			div.padding = getComputedStyle(elem).padding;
+			div.left = elem.getBoundingClientRect().left + "px";
+			div.top = elem.getBoundingClientRect().top + "px";
+			div.border = getComputedStyle(elem).border;
+			div["border-color"] = "transparent";
 		}
 	});
 
 	function validateInput(val, type) {
 		$$invalidate(4, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s\(\)]+/);
+		formulaSet[type].clear();
 		console.log(checkArr);
 
 		for (let item of checkArr) {
@@ -6079,6 +6115,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
+					formulaSet[type].add(item);
 					console.log(formulaSpan[type], "spanValue");
 					console.log(item, "item");
 
@@ -6090,10 +6127,7 @@ function instance$3($$self, $$props, $$invalidate) {
 					console.log(lastSpan, wordLastIndex);
 					$$invalidate(4, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
 					console.log(formulaSpan[type]);
-				} /*let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
-console.log(item,regexp,formulaSpan[type])
-formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
-console.log(formulaSpan[type])*/
+				}
 			}
 		}
 	}
@@ -6151,6 +6185,7 @@ console.log(formulaSpan[type])*/
 		divFormula,
 		formulaInput,
 		formulaSpan,
+		formulaSet,
 		paramArr,
 		validateInput,
 		input_input_handler,

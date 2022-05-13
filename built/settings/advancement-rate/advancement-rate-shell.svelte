@@ -8,6 +8,11 @@
   const setting = "advancement-rate";
   let data = game.settings.get("ard20", setting);
   let funcList = Object.getOwnPropertyNames(math);
+  let formulaSet = {
+    attributes: new Set(),
+    skills: new Set(),
+    features: new Set(),
+  };
   export let elementRoot;
   let divFormula;
   let paramArr = ["attributes", "skills", "features"];
@@ -33,13 +38,13 @@
   }
   onMount(() => {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-      let div = elem.nextElementSibling;
-      div.style.margin = getComputedStyle(elem).margin;
-      div.style.padding = getComputedStyle(elem).padding;
-      div.style.left = elem.getBoundingClientRect().left + "px";
-      div.style.top = elem.getBoundingClientRect().top + "px";
-      div.style.border = getComputedStyle(elem).border;
-      div.style["border-color"] = "transparent";
+      let div = elem.nextElementSibling.style;
+      div.margin = getComputedStyle(elem).margin;
+      div.padding = getComputedStyle(elem).padding;
+      div.left = elem.getBoundingClientRect().left + "px";
+      div.top = elem.getBoundingClientRect().top + "px";
+      div.border = getComputedStyle(elem).border;
+      div["border-color"] = "transparent";
     }
   });
   function replaceStrAt(str, index, replacement, endLength) {
@@ -51,11 +56,13 @@
   function validateInput(val, type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
+    formulaSet[type].clear();
     console.log(checkArr);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
         if (check) {
+          formulaSet[type].add(item);
           console.log(formulaSpan[type], "spanValue");
           console.log(item, "item");
           let lastSpan =
@@ -69,10 +76,6 @@
             item.length
           );
           console.log(formulaSpan[type]);
-          /*let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
-          console.log(item,regexp,formulaSpan[type])
-          formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
-          console.log(formulaSpan[type])*/
         }
       }
     }
@@ -115,7 +118,9 @@
           >
             {@html formulaSpan[param]}
           </div>
-          <div>there is no such variable</div>
+          {#if formulaSet[param].size > 0}
+            <div style="color:red">there is no such variable as {[...formulaSet[param]].join(", ")}</div>
+          {/if}
         </div>
         <br />
       {/each}
