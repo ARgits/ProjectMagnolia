@@ -39,19 +39,14 @@
       div.top = elem.getBoundingClientRect().top + "px";
       div.border = getComputedStyle(elem).border;
       div["border-color"] = "transparent";
+      console.log(div.top, div.left);
     }
   });
-  $: if (elementRoot&&formulaSpan) {
-    console.log(elementRoot);
+  $: if (formulaSpan) {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
-      console.log(elem, div);
-      div.margin = getComputedStyle(elem).margin;
-      div.padding = getComputedStyle(elem).padding;
-      div.left = elem.getBoundingClientRect().left + "px";
-      div.top = elem.getBoundingClientRect().top + "px";
-      div.border = getComputedStyle(elem).border;
-      div["border-color"] = "transparent";
+      console.log(elem.getBoundingClientRect().left + "px", elem.getBoundingClientRect().top + "px", "elem params");
+      console.log(div.top, div.left, "div params");
     }
   }
   /**
@@ -90,34 +85,6 @@
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
-  /*$: for (let [key, item] of Object.entries(formulaSet)) {
-    if (spanDiv[key]) {
-      let input = formulaInput[key];
-      console.log(input);
-      spanDiv[key].style.margin = getComputedStyle(input).margin;
-      spanDiv[key].style.padding = getComputedStyle(input).padding;
-      spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
-      spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
-      spanDiv[key].style.border = getComputedStyle(input).border;
-      spanDiv[key].style["border-color"] = "transparent";
-    }
-  }*/
-  /*$: for (let item of Object.values(formulaSet)) {
-    if (item.check) {
-      let key = Object.values(formulaSet).indexOf(item);
-      for (let i = key; i < Object.values(formulaSet).length; i++) {
-        let type = Object.keys(formulaSet)[i];
-        let input = formulaInput[type];
-        console.log(input, spanDiv[type]);
-        spanDiv[type].style.margin = getComputedStyle(input).margin;
-        spanDiv[type].style.padding = getComputedStyle(input).padding;
-        spanDiv[type].style.left = input.getBoundingClientRect().left + "px";
-        spanDiv[type].style.top = input.getBoundingClientRect().top + "px";
-        spanDiv[type].style.border = getComputedStyle(input).border;
-        spanDiv[type].style["border-color"] = "transparent";
-      }
-    }
-  }*/
 </script>
 
 <ApplicationShell bind:elementRoot>

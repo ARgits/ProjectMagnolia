@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (128:8) {#each Object.values(data.variables) as variable}
+// (95:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (160:10) {#if formulaSet[param].check}
+// (127:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (135:6) {#each paramArr as param}
+// (102:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (123:0) <ApplicationShell bind:elementRoot>
+// (90:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6134,6 +6134,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			div.top = elem.getBoundingClientRect().top + "px";
 			div.border = getComputedStyle(elem).border;
 			div["border-color"] = "transparent";
+			console.log(div.top, div.left);
 		}
 	});
 
@@ -6209,19 +6210,12 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*elementRoot, formulaSpan*/ 5) {
-			if (elementRoot && formulaSpan) {
-				console.log(elementRoot);
-
+		if ($$self.$$.dirty & /*formulaSpan, elementRoot*/ 5) {
+			if (formulaSpan) {
 				for (let elem of elementRoot.querySelectorAll("input.transparent")) {
 					let div = elem.nextElementSibling.style;
-					console.log(elem, div);
-					div.margin = getComputedStyle(elem).margin;
-					div.padding = getComputedStyle(elem).padding;
-					div.left = elem.getBoundingClientRect().left + "px";
-					div.top = elem.getBoundingClientRect().top + "px";
-					div.border = getComputedStyle(elem).border;
-					div["border-color"] = "transparent";
+					console.log(elem.getBoundingClientRect().left + "px", elem.getBoundingClientRect().top + "px", "elem params");
+					console.log(div.top, div.left, "div params");
 				}
 			}
 		}
