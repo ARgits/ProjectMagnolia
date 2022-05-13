@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (115:8) {#each Object.values(data.variables) as variable}
+// (124:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (147:10) {#if formulaSet[param].check}
+// (156:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (122:6) {#each paramArr as param}
+// (131:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (110:0) <ApplicationShell bind:elementRoot>
+// (119:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6186,7 +6186,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function div0_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			spanDiv[param] = $$value;
-			(($$invalidate(3, spanDiv), $$invalidate(2, formulaSet)), $$invalidate(4, formulaInput));
+			$$invalidate(3, spanDiv);
 		});
 	}
 
@@ -6209,35 +6209,15 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*Object, formulaSet, formulaInput, spanDiv*/ 28) {
-			/*$: for (let [key, item] of Object.entries(formulaSet)) {
-  if (spanDiv[key]) {
-    let input = formulaInput[key];
-    console.log(input);
-    spanDiv[key].style.margin = getComputedStyle(input).margin;
-    spanDiv[key].style.padding = getComputedStyle(input).padding;
-    spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
-    spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
-    spanDiv[key].style.border = getComputedStyle(input).border;
-    spanDiv[key].style["border-color"] = "transparent";
-  }
-}*/
-			for (let item of Object.values(formulaSet)) {
-				if (item.check) {
-					let key = Object.values(formulaSet).indexOf(item);
-
-					for (let i = key; i < Object.values(formulaSet).length; i++) {
-						let type = Object.keys(formulaSet)[i];
-						let input = formulaInput[type];
-						console.log(input, spanDiv[type]);
-						$$invalidate(3, spanDiv[type].style.margin = getComputedStyle(input).margin, spanDiv);
-						$$invalidate(3, spanDiv[type].style.padding = getComputedStyle(input).padding, spanDiv);
-						$$invalidate(3, spanDiv[type].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-						$$invalidate(3, spanDiv[type].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-						$$invalidate(3, spanDiv[type].style.border = getComputedStyle(input).border, spanDiv);
-						$$invalidate(3, spanDiv[type].style["border-color"] = "transparent", spanDiv);
-					}
-				}
+		if ($$self.$$.dirty & /*elementRoot*/ 1) {
+			for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+				let div = elem.nextElementSibling.style;
+				div.margin = getComputedStyle(elem).margin;
+				div.padding = getComputedStyle(elem).padding;
+				div.left = elem.getBoundingClientRect().left + "px";
+				div.top = elem.getBoundingClientRect().top + "px";
+				div.border = getComputedStyle(elem).border;
+				div["border-color"] = "transparent";
 			}
 		}
 	};

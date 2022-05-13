@@ -41,6 +41,15 @@
       div["border-color"] = "transparent";
     }
   });
+  $: for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+    let div = elem.nextElementSibling.style;
+    div.margin = getComputedStyle(elem).margin;
+    div.padding = getComputedStyle(elem).padding;
+    div.left = elem.getBoundingClientRect().left + "px";
+    div.top = elem.getBoundingClientRect().top + "px";
+    div.border = getComputedStyle(elem).border;
+    div["border-color"] = "transparent";
+  }
   /**
    * replace part of string at given index
    * @param {string} str - String
@@ -89,13 +98,13 @@
       spanDiv[key].style["border-color"] = "transparent";
     }
   }*/
-  $: for (let item of Object.values(formulaSet)) {
+  /*$: for (let item of Object.values(formulaSet)) {
     if (item.check) {
       let key = Object.values(formulaSet).indexOf(item);
       for (let i = key; i < Object.values(formulaSet).length; i++) {
         let type = Object.keys(formulaSet)[i];
         let input = formulaInput[type];
-        console.log(input, spanDiv[type])
+        console.log(input, spanDiv[type]);
         spanDiv[type].style.margin = getComputedStyle(input).margin;
         spanDiv[type].style.padding = getComputedStyle(input).padding;
         spanDiv[type].style.left = input.getBoundingClientRect().left + "px";
@@ -104,7 +113,7 @@
         spanDiv[type].style["border-color"] = "transparent";
       }
     }
-  }
+  }*/
 </script>
 
 <ApplicationShell bind:elementRoot>
