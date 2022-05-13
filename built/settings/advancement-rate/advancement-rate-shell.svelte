@@ -51,7 +51,7 @@
         let check = !funcList.includes(item);
         console.log(check,'validateInput check')
         if (check) {
-          let regexp = new RegExp(`(?<!>|<)${item}\\b|[а-яА-я]*(?!\w|>)`, "");
+          let regexp = new RegExp(`(?<!>|<)(${item}\\b)|([а-яА-я]*)(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
         }
       }

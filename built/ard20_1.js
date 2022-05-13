@@ -6062,7 +6062,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				console.log(check, 'validateInput check');
 
 				if (check) {
-					let regexp = new RegExp(`(?<!>|<)${item}\\b|[а-яА-я]*(?!\w|>)`, "");
+					let regexp = new RegExp(`(?<!>|<)(${item}\\b)|([а-яА-я]*)(?!\w|>)`, "");
 					$$invalidate(4, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
 				}
 			}
