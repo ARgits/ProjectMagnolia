@@ -35,8 +35,8 @@
       let div = elem.nextElementSibling.style;
       div.margin = getComputedStyle(elem).margin;
       div.padding = getComputedStyle(elem).padding;
-      div.left = elem.getBoundingClientRect().left + "px";
-      div.top = elem.getBoundingClientRect().top + "px";
+      div.left = elem.offsetLeft + "px";
+      div.top = elem.offsetTop + "px";
       div.border = getComputedStyle(elem).border;
       div["border-color"] = "transparent";
       console.log(div.top, div.left);
@@ -45,7 +45,7 @@
   $: if (formulaSpan&&elementRoot) {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
-      console.log(elem.getBoundingClientRect().left + "px", elem.getBoundingClientRect().top + "px", "elem params");
+      console.log(elem.offsetLeft + "px", elem.offsetTop + "px", "elem params");
       console.log(div.top, div.left, "div params");
     }
   }
