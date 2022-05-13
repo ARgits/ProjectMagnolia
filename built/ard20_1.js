@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (95:8) {#each Object.values(data.variables) as variable}
+// (97:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (127:10) {#if formulaSet[param].check}
+// (129:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (102:6) {#each paramArr as param}
+// (104:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (90:0) <ApplicationShell bind:elementRoot>
+// (92:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6130,8 +6130,8 @@ function instance$3($$self, $$props, $$invalidate) {
 			let div = elem.nextElementSibling.style;
 			div.margin = getComputedStyle(elem).margin;
 			div.padding = getComputedStyle(elem).padding;
-			div.left = elem.offsetLeft * 1.01 + "px";
-			div.top = elem.offsetTop * 1.01 + "px";
+			div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
+			div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
 			div.border = getComputedStyle(elem).border;
 			div["border-color"] = "transparent";
 			console.log(div.top, div.left);
@@ -6214,6 +6214,8 @@ function instance$3($$self, $$props, $$invalidate) {
 			if (formulaSpan && elementRoot) {
 				for (let elem of elementRoot.querySelectorAll("input.transparent")) {
 					let div = elem.nextElementSibling.style;
+					div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
+					div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
 					console.log(elem.offsetLeft + "px", elem.offsetTop + "px", "elem params");
 					console.log(div.top, div.left, "div params");
 				}
