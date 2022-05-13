@@ -83,6 +83,7 @@
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
   $: for (let [key, item] of Object.entries(formulaSet)) {
+    console.log(spanDiv[key])
     let input = spanDiv[key].previousElementSibling;
     spanDiv[key].style.margin = getComputedStyle(input).margin;
     spanDiv[key].style.padding = getComputedStyle(input).padding;
