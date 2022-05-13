@@ -6211,7 +6211,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 
 		if ($$self.$$.dirty & /*formulaSpan, elementRoot*/ 5) {
-			if (formulaSpan) {
+			if (formulaSpan && elementRoot) {
 				for (let elem of elementRoot.querySelectorAll("input.transparent")) {
 					let div = elem.nextElementSibling.style;
 					console.log(elem.getBoundingClientRect().left + "px", elem.getBoundingClientRect().top + "px", "elem params");
