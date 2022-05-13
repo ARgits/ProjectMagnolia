@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (89:8) {#each Object.values(data.variables) as variable}
+// (90:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[17].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (120:10) {#if formulaSet[param].size > 0}
+// (121:10) {#if formulaSet[param].size > 0}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5744,7 +5744,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (96:6) {#each paramArr as param}
+// (97:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5844,7 +5844,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (84:0) <ApplicationShell bind:elementRoot>
+// (85:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6127,6 +6127,8 @@ function instance$3($$self, $$props, $$invalidate) {
 				}
 			}
 		}
+
+		console.log(formulaSet[type].size);
 	}
 
 	function input_input_handler(each_value_1, variable_index) {

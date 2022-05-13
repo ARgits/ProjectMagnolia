@@ -78,6 +78,7 @@
         }
       }
     }
+    console.log(formulaSet[type].size)
   }
 </script>
 
