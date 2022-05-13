@@ -41,7 +41,8 @@
       div["border-color"] = "transparent";
     }
   });
-  $: if (elementRoot) {
+  $: if (elementRoot&&formulaSpan) {
+    console.log(elementRoot);
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
       console.log(elem, div);
