@@ -38,6 +38,8 @@
       div.style.padding = getComputedStyle(elem).padding;
       div.style.left = elem.getBoundingClientRect().left + "px";
       div.style.top = elem.getBoundingClientRect().top + "px";
+      div.style.border = getComputedStyle(elem).border
+			div.style['border-color'] = 'transparent'
     }
   });
   function validateInput(val, type) {
@@ -56,7 +58,7 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <div class="">
+  <div>
     <div>
       <label for="Custom Values"> CustomValues </label>
       <div class="grid grid-2col">

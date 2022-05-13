@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (63:8) {#each Object.values(data.variables) as variable}
+// (65:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[18].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (70:6) {#each paramArr as param}
+// (72:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5807,7 +5807,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (58:0) <ApplicationShell bind:elementRoot>
+// (60:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -5862,7 +5862,6 @@ function create_default_slot$3(ctx) {
 			attr(label, "for", "Custom Values");
 			attr(div0, "class", "grid grid-2col");
 			attr(div2, "class", "formula");
-			attr(div3, "class", "");
 		},
 		m(target, anchor) {
 			insert(target, div3, anchor);
@@ -6039,6 +6038,8 @@ function instance$3($$self, $$props, $$invalidate) {
 			div.style.padding = getComputedStyle(elem).padding;
 			div.style.left = elem.getBoundingClientRect().left + "px";
 			div.style.top = elem.getBoundingClientRect().top + "px";
+			div.style.border = getComputedStyle(elem).border;
+			div.style['border-color'] = 'transparent';
 		}
 	});
 
