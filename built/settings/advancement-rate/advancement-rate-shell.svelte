@@ -9,11 +9,11 @@
   let data = game.settings.get("ard20", setting); //get setting
   let funcList = Object.getOwnPropertyNames(math); //get all possible functions from math.js library
   //create several Sets where we will store wrong variables
-  let formulaSet
-  let spanDiv
-  let formulaInput
-  let variableInput
-  let formulaSpan
+  let formulaSet = {}
+  let spanDiv = {}
+  let formulaInput = {}
+  let variableInput = {}
+  let formulaSpan = {}
   //creaet list of parameters
   let paramArr = ["attributes", "skills", "features"];
   for(let item of paramArr){
