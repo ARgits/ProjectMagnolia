@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (121:10) {#if formulaSet[param].size > 0}
+// (121:10) {#if [...formulaSet[param]].length > 0}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5771,7 +5771,7 @@ function create_each_block$3(ctx) {
 		/*input_input_handler_1*/ ctx[10].call(input, /*param*/ ctx[14]);
 	}
 
-	let if_block = /*formulaSet*/ ctx[4][/*param*/ ctx[14]].size > 0 && create_if_block$1(ctx);
+	let if_block = [.../*formulaSet*/ ctx[4][/*param*/ ctx[14]]].length > 0 && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -5830,7 +5830,7 @@ function create_each_block$3(ctx) {
 				set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[14]]);
 			}
 
-			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "")) div0.innerHTML = raw_value;			if (/*formulaSet*/ ctx[4][/*param*/ ctx[14]].size > 0) if_block.p(ctx, dirty);
+			if (dirty & /*formulaSpan*/ 8 && raw_value !== (raw_value = /*formulaSpan*/ ctx[3][/*param*/ ctx[14]] + "")) div0.innerHTML = raw_value;			if ([.../*formulaSet*/ ctx[4][/*param*/ ctx[14]]].length > 0) if_block.p(ctx, dirty);
 		},
 		d(detaching) {
 			if (detaching) detach(div1);
