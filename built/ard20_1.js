@@ -6130,8 +6130,8 @@ function instance$3($$self, $$props, $$invalidate) {
 			let div = elem.nextElementSibling.style;
 			div.margin = getComputedStyle(elem).margin;
 			div.padding = getComputedStyle(elem).padding;
-			div.left = elem.offsetLeft + "px";
-			div.top = elem.offsetTop + "px";
+			div.left = elem.offsetLeft * 1.01 + "px";
+			div.top = elem.offsetTop * 1.01 + "px";
 			div.border = getComputedStyle(elem).border;
 			div["border-color"] = "transparent";
 			console.log(div.top, div.left);
