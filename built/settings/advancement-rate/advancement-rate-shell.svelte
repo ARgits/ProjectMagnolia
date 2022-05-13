@@ -81,6 +81,7 @@
     console.log(formulaSet[type].set.size);
   }
   $: for (let item of Object.entries(formulaSet)) {
+    console.log(item)
     item.check = item.set.size > 0;
   }
 </script>
