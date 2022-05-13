@@ -50,7 +50,7 @@
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
         if (check) {
-          let regexp = new RegExp(`(?<!>|<)(${item}\\b|([а-я]+))(?!w|>)`, "");
+          let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>)`, "");
           console.log(item,regexp,formulaSpan[type])
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
           console.log(formulaSpan[type])
@@ -85,7 +85,7 @@
             bind:this={formulaInput[param]}
             bind:value={data.formulas[param]}
           />
-          <div class="span" on:click={(e)=>{console.log(e,e.previousElementSibling);e.previousElementSibling.focus()}}>
+          <div class="span" on:click={(e)=>{console.log(e,e.target.previousElementSibling);e.target.previousElementSibling.focus()}}>
             {@html formulaSpan[param]}
           </div>
           <div>there is no such variable</div>

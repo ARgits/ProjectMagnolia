@@ -6061,7 +6061,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
-					let regexp = new RegExp(`(?<!>|<)(${item}\\b|([а-я]+))(?!w|>)`, "");
+					let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>)`, "");
 					console.log(item, regexp, formulaSpan[type]);
 					$$invalidate(4, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
 					console.log(formulaSpan[type]);
@@ -6092,8 +6092,8 @@ function instance$3($$self, $$props, $$invalidate) {
 	}
 
 	const click_handler = e => {
-		console.log(e, e.previousElementSibling);
-		e.previousElementSibling.focus();
+		console.log(e, e.target.previousElementSibling);
+		e.target.previousElementSibling.focus();
 	};
 
 	function div2_binding($$value) {
