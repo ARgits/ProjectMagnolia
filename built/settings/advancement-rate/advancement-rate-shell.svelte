@@ -95,6 +95,7 @@
       for (let i = key; i < Object.values(formulaSet).length; i++) {
         let type = Object.keys(formulaSet)[i];
         let input = formulaInput[type];
+        console.log(input, spanDiv[type])
         spanDiv[type].style.margin = getComputedStyle(input).margin;
         spanDiv[type].style.padding = getComputedStyle(input).padding;
         spanDiv[type].style.left = input.getBoundingClientRect().left + "px";

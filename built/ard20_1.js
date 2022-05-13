@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (114:8) {#each Object.values(data.variables) as variable}
+// (115:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (146:10) {#if formulaSet[param].check}
+// (147:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (121:6) {#each paramArr as param}
+// (122:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (109:0) <ApplicationShell bind:elementRoot>
+// (110:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6174,7 +6174,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function input_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			formulaInput[param] = $$value;
-			$$invalidate(3, formulaInput);
+			$$invalidate(4, formulaInput);
 		});
 	}
 
@@ -6186,7 +6186,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	function div0_binding($$value, param) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			spanDiv[param] = $$value;
-			(($$invalidate(4, spanDiv), $$invalidate(2, formulaSet)), $$invalidate(3, formulaInput));
+			(($$invalidate(3, spanDiv), $$invalidate(2, formulaSet)), $$invalidate(4, formulaInput));
 		});
 	}
 
@@ -6209,7 +6209,7 @@ function instance$3($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*Object, formulaSet, formulaInput*/ 12) {
+		if ($$self.$$.dirty & /*Object, formulaSet, formulaInput, spanDiv*/ 28) {
 			/*$: for (let [key, item] of Object.entries(formulaSet)) {
   if (spanDiv[key]) {
     let input = formulaInput[key];
@@ -6229,12 +6229,13 @@ function instance$3($$self, $$props, $$invalidate) {
 					for (let i = key; i < Object.values(formulaSet).length; i++) {
 						let type = Object.keys(formulaSet)[i];
 						let input = formulaInput[type];
-						$$invalidate(4, spanDiv[type].style.margin = getComputedStyle(input).margin, spanDiv);
-						$$invalidate(4, spanDiv[type].style.padding = getComputedStyle(input).padding, spanDiv);
-						$$invalidate(4, spanDiv[type].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-						$$invalidate(4, spanDiv[type].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-						$$invalidate(4, spanDiv[type].style.border = getComputedStyle(input).border, spanDiv);
-						$$invalidate(4, spanDiv[type].style["border-color"] = "transparent", spanDiv);
+						console.log(input, spanDiv[type]);
+						$$invalidate(3, spanDiv[type].style.margin = getComputedStyle(input).margin, spanDiv);
+						$$invalidate(3, spanDiv[type].style.padding = getComputedStyle(input).padding, spanDiv);
+						$$invalidate(3, spanDiv[type].style.left = input.getBoundingClientRect().left + "px", spanDiv);
+						$$invalidate(3, spanDiv[type].style.top = input.getBoundingClientRect().top + "px", spanDiv);
+						$$invalidate(3, spanDiv[type].style.border = getComputedStyle(input).border, spanDiv);
+						$$invalidate(3, spanDiv[type].style["border-color"] = "transparent", spanDiv);
 					}
 				}
 			}
@@ -6245,8 +6246,8 @@ function instance$3($$self, $$props, $$invalidate) {
 		elementRoot,
 		data,
 		formulaSet,
-		formulaInput,
 		spanDiv,
+		formulaInput,
 		formulaSpan,
 		paramArr,
 		validateInput,
