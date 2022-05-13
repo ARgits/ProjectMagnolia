@@ -51,7 +51,7 @@
         let check = !funcList.includes(item);
         console.log(check,'validateInput check')
         if (check) {
-          let regexp = new RegExp(`(?<!>|<)${item}\\b|[а-яА-я](?!\w|>)`, "");
+          let regexp = new RegExp(`(?<!>|<)${item}\\b|[а-яА-я]*(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
         }
       }
@@ -83,7 +83,7 @@
             bind:this={formulaInput[param]}
             bind:value={data.formulas[param]}
           />
-          <div class="span">
+          <div class="span" on:click={(e)=>{console.log(e,e.previousElementSibling);e.previousElementSibling.focus()}}>
             {@html formulaSpan[param]}
           </div>
           <div>there is no such variable</div>
