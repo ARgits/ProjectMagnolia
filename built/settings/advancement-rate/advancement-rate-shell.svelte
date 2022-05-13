@@ -4,37 +4,32 @@
   import { onMount } from "svelte";
   import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  import { element } from "svelte/internal";
-  const setting = "advancement-rate";
-  let data = game.settings.get("ard20", setting);
-  let funcList = Object.getOwnPropertyNames(math);
-  let formulaSet = {
-    attributes: { set: new Set(), check: false },
-    skills: { set: new Set(), check: false },
-    features: { set: new Set(), check: false },
-  };
   export let elementRoot;
+  const setting = "advancement-rate"; //name of setting
+  let data = game.settings.get("ard20", setting); //get setting
+  let funcList = Object.getOwnPropertyNames(math); //get all possible functions from math.js library
+  //create several Sets where we will store wrong variables
+  let formulaSet
+  let spanDiv
+  let formulaInput
+  let variableInput
+  let formulaSpan
+  //creaet list of parameters
   let paramArr = ["attributes", "skills", "features"];
-  let variableInput = {
-    attributes: "",
-    skills: "",
-    features: "",
-  };
-  let formulaInput = {
-    attributes: "",
-    skills: "",
-    features: "",
-  };
-  let formulaSpan = {
-    attributes: data.formulas.attributes,
-    skills: data.formulas.skills,
-    features: data.formulas.features,
-  };
+  for(let item of paramArr){
+    spanDiv[item] = ''
+    formulaSet[item] = {set:new Set(),check:false}
+    formulaInput[item] = ''
+    variableInput[item]=''
+    formulaSpan[item] = data.formulas[item]
+  }
+  //add to funcList variables
   $: {
     for (let item of Object.values(data.variables)) {
       funcList.push(item.shortName);
     }
   }
+  //set position for divs with span
   onMount(() => {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
@@ -46,6 +41,13 @@
       div["border-color"] = "transparent";
     }
   });
+  /**
+   * replace part of string at given index
+   * @param {string} str - String
+   * @param {number} index  - chosen start index
+   * @param {string} replacement - string which replaces old one
+   * @param {number} endLength - chosen end index
+  */
   function replaceStrAt(str, index, replacement, endLength) {
     if (index >= str.length) {
       return str.valueOf();
@@ -80,6 +82,17 @@
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
+  $:for(let item of Object.values(formulaSet)){
+    if(item.check){
+      let input = spanDiv[item].previousElementSibling
+      spanDiv[item].style.margin = getComputedStyle(input).margin;
+      spanDiv[item].style.padding = getComputedStyle(input).padding;
+      spanDiv[item].style.left = input.getBoundingClientRect().left + "px";
+      spanDiv[item].style.top = input.getBoundingClientRect().top + "px";
+      spanDiv[item].style.border = getComputedStyle(input).border;
+      spanDiv[item].style["border-color"] = "transparent";
+    }
+  }
 </script>
 
 <ApplicationShell bind:elementRoot>
@@ -108,6 +121,7 @@
           />
           <div
             class="span"
+            bind:this={spanDiv[param]}
             on:click={(e) => {
               e.target.previousElementSibling.focus();
             }}
