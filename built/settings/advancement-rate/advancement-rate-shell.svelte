@@ -118,6 +118,7 @@
           >
             {@html formulaSpan[param]}
           </div>
+          {console.log([...formulaSet[param]].length)}
           {#if [...formulaSet[param]].length > 0}
             <div style="color:red">
               there is no such variable as {[...formulaSet[param]].join(", ")}
