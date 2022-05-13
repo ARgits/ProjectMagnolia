@@ -35,22 +35,13 @@
       let div = elem.nextElementSibling.style;
       div.margin = getComputedStyle(elem).margin;
       div.padding = getComputedStyle(elem).padding;
-      div.left = Math.ceil(elem.offsetLeft*1.01) + "px";
-      div.top = Math.ceil(elem.offsetTop*1.01) + "px";
+      div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
+      div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
       div.border = getComputedStyle(elem).border;
       div["border-color"] = "transparent";
       console.log(div.top, div.left);
     }
   });
-  $: if (formulaInput&&elementRoot) {
-    for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-      let div = elem.nextElementSibling.style;
-      div.left = Math.ceil(elem.offsetLeft*1.01) + "px";
-      div.top = Math.ceil(elem.offsetTop*1.01) + "px"
-      console.log(elem.offsetLeft + "px", elem.offsetTop + "px", "elem params");
-      console.log(div.top, div.left, "div params");
-    }
-  }
   /**
    * replace part of string at given index
    * @param {string} str - String
@@ -86,6 +77,23 @@
       }
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
+  }
+  let setCheck;
+
+  $: {
+    for (let item of Object.values(formulaSet)) {
+      setCheck = setCheck || item.check;
+    }
+    console.log(setCheck);
+  }
+  $: if (setCheck) {
+    for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+      let div = elem.nextElementSibling.style;
+      div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
+      div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
+      console.log(elem.offsetLeft + "px", elem.offsetTop + "px", "elem params");
+      console.log(div.top, div.left, "div params");
+    }
   }
 </script>
 
