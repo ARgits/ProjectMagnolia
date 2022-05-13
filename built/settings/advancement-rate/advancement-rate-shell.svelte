@@ -58,7 +58,6 @@
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
     formulaSet[type].set.clear();
-    console.log(checkArr);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
@@ -95,7 +94,7 @@
       let key = Object.values(formulaSet).indexOf(item);
       for (let i = key; i < Object.values(formulaSet).length; i++) {
         let type = Object.keys(formulaSet)[i];
-        let input = spanDiv[type].previousElementSibling;
+        let input = formulaInput[type];
         spanDiv[type].style.margin = getComputedStyle(input).margin;
         spanDiv[type].style.padding = getComputedStyle(input).padding;
         spanDiv[type].style.left = input.getBoundingClientRect().left + "px";
