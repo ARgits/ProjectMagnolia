@@ -78,11 +78,7 @@
         }
       }
     }
-    console.log(formulaSet[type].set.size);
-  }
-  $: for (let item of Object.entries(formulaSet)) {
-    console.log(item)
-    item.check = item.set.size > 0;
+    formulaSet[type].check = formulaSet[type].set.size > 0;
   }
 </script>
 
@@ -124,7 +120,7 @@
           </div>
           {#if formulaSet[param].check}
             <div style="color:red">
-              there is no such variable as {[...formulaSet[param]].join(", ")}
+              there is no such variable as {[...formulaSet[param].set].join(", ")}
             </div>
           {/if}
         </div>
