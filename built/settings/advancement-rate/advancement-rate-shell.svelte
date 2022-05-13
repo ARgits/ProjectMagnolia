@@ -58,7 +58,8 @@
         if (check) {
           console.log(formulaSpan[type], "spanValue");
           console.log(item, "item");
-          let lastSpan = formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
+          let lastSpan =
+            formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
           let wordLastIndex = formulaSpan[type].indexOf(item);
           console.log(lastSpan, wordLastIndex);
           formulaSpan[type] = replaceStrAt(
@@ -105,8 +106,11 @@
           <div
             class="span"
             on:click={(e) => {
-              console.log(e, e.target.previousElementSibling);
               e.target.previousElementSibling.focus();
+            }}
+            on:dblclick={(e) => {
+              e.target.previousElementSibling.focus();
+              e.target.previousElementSibling.select();
             }}
           >
             {@html formulaSpan[param]}
