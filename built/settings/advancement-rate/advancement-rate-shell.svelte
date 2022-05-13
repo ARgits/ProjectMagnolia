@@ -50,7 +50,7 @@
       if (item !== "" && isNaN(item)) {
         let check = !funcList.includes(item);
         if (check) {
-          let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>)`, "");
+          let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
           console.log(item,regexp,formulaSpan[type])
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
           console.log(formulaSpan[type])
