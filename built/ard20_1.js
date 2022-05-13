@@ -6069,17 +6069,17 @@ function instance$3($$self, $$props, $$invalidate) {
 				let check = !funcList.includes(item);
 
 				if (check) {
-					console.log(spanValue, "spanValue");
+					console.log(formulaSpan[type], "spanValue");
 					console.log(item, "item");
 
-					let lastSpan = spanValue.lastIndexOf("</span>") > 0
-					? spanValue.lastIndexOf("</span>") + 8
+					let lastSpan = formulaSpan[type].lastIndexOf("</span>") > 0
+					? formulaSpan[type].lastIndexOf("</span>") + 8
 					: -1;
 
 					let wordLastIndex = spanValue.indexOf(item);
 					console.log(lastSpan, wordLastIndex);
-					spanValue = replaceStrAt(spanValue, Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length);
-					console.log(spanValue);
+					$$invalidate(4, formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item}</span>`, item.length), formulaSpan);
+					console.log(formulaSpan[type]);
 				} /*let regexp = new RegExp(`(?<!>|<|<s|<sp|<spa|<span s| st| sty| styl|"c|"co|"col|"colo| style|"color| |="|:|:r|:re)(${item}\\b|([а-я]+))(?!\w|>|n>|an>|pan>|span>|<)`, "");
 console.log(item,regexp,formulaSpan[type])
 formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
