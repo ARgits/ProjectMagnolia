@@ -47,7 +47,9 @@
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
+        console.log(item,'validateInput item')
         let check = !funcList.includes(item);
+        console.log(check,'validateInput check')
         if (check) {
           let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);

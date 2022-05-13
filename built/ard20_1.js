@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (65:8) {#each Object.values(data.variables) as variable}
+// (67:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[18].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (72:6) {#each paramArr as param}
+// (74:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5807,7 +5807,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (60:0) <ApplicationShell bind:elementRoot>
+// (62:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6049,7 +6049,9 @@ function instance$3($$self, $$props, $$invalidate) {
 
 		for (let item of checkArr) {
 			if (item !== "" && isNaN(item)) {
+				console.log(item, 'validateInput item');
 				let check = !funcList.includes(item);
+				console.log(check, 'validateInput check');
 
 				if (check) {
 					let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
