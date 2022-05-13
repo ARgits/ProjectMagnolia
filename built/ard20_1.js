@@ -6176,11 +6176,13 @@ function instance$3($$self, $$props, $$invalidate) {
 				}
 			}
 		}
-	};
 
-	for (let item in formulaSet) {
-		item.check = item.set.size > 0;
-	}
+		if ($$self.$$.dirty & /*Object*/ 0) {
+			for (let item of Object.entries(formulaSet)) {
+				item.check = item.set.size > 0;
+			}
+		}
+	};
 
 	return [
 		elementRoot,
