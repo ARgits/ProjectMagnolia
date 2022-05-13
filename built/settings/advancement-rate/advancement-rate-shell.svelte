@@ -45,14 +45,16 @@
   function validateInput(val, type) {
     formulaSpan[type] = val;
     let checkArr = val.split(/[./+\*,^\s\(\)]+/);
+    console.log(checkArr)
     for (let item of checkArr) {
       if (item !== "" && isNaN(item)) {
-        console.log(item,'validateInput item')
         let check = !funcList.includes(item);
-        console.log(check,'validateInput check')
         if (check) {
           let regexp = new RegExp(`(?<!>|<)(${item}\\b)|([а-яА-я]*)(?!\w|>)`, "");
+          console.log(item,regexp,formulaSpan)
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
+          console.log(formulaSpan)
+ 
         }
       }
     }

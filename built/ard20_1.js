@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (67:8) {#each Object.values(data.variables) as variable}
+// (69:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (74:6) {#each paramArr as param}
+// (76:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div2;
 	let label;
@@ -5815,7 +5815,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (62:0) <ApplicationShell bind:elementRoot>
+// (64:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6054,16 +6054,17 @@ function instance$3($$self, $$props, $$invalidate) {
 	function validateInput(val, type) {
 		$$invalidate(4, formulaSpan[type] = val, formulaSpan);
 		let checkArr = val.split(/[./+\*,^\s\(\)]+/);
+		console.log(checkArr);
 
 		for (let item of checkArr) {
 			if (item !== "" && isNaN(item)) {
-				console.log(item, 'validateInput item');
 				let check = !funcList.includes(item);
-				console.log(check, 'validateInput check');
 
 				if (check) {
 					let regexp = new RegExp(`(?<!>|<)(${item}\\b)|([а-яА-я]*)(?!\w|>)`, "");
+					console.log(item, regexp, formulaSpan);
 					$$invalidate(4, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
+					console.log(formulaSpan);
 				}
 			}
 		}
