@@ -9,19 +9,19 @@
   let data = game.settings.get("ard20", setting); //get setting
   let funcList = Object.getOwnPropertyNames(math); //get all possible functions from math.js library
   //create several Sets where we will store wrong variables
-  let formulaSet = {}
-  let spanDiv = {}
-  let formulaInput = {}
-  let variableInput = {}
-  let formulaSpan = {}
+  let formulaSet = {};
+  let spanDiv = {};
+  let formulaInput = {};
+  let variableInput = {};
+  let formulaSpan = {};
   //creaet list of parameters
   let paramArr = ["attributes", "skills", "features"];
-  for(let item of paramArr){
-    spanDiv[item] = ''
-    formulaSet[item] = {set:new Set(),check:false}
-    formulaInput[item] = ''
-    variableInput[item]=''
-    formulaSpan[item] = data.formulas[item]
+  for (let item of paramArr) {
+    spanDiv[item] = "";
+    formulaSet[item] = { set: new Set(), check: false };
+    formulaInput[item] = "";
+    variableInput[item] = "";
+    formulaSpan[item] = data.formulas[item];
   }
   //add to funcList variables
   $: {
@@ -47,7 +47,7 @@
    * @param {number} index  - chosen start index
    * @param {string} replacement - string which replaces old one
    * @param {number} endLength - chosen end index
-  */
+   */
   function replaceStrAt(str, index, replacement, endLength) {
     if (index >= str.length) {
       return str.valueOf();
@@ -82,17 +82,30 @@
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
-  $:for(let [key,item] of Object.entries(formulaSet)){
-    if(item.check){
-      let input = spanDiv[key].previousElementSibling
-      spanDiv[key].style.margin = getComputedStyle(input).margin;
-      spanDiv[key].style.padding = getComputedStyle(input).padding;
-      spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
-      spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
-      spanDiv[key].style.border = getComputedStyle(input).border;
-      spanDiv[key].style["border-color"] = "transparent";
-    }
+  $: for (let [key, item] of Object.entries(formulaSet)) {
+    let input = spanDiv[key].previousElementSibling;
+    spanDiv[key].style.margin = getComputedStyle(input).margin;
+    spanDiv[key].style.padding = getComputedStyle(input).padding;
+    spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
+    spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
+    spanDiv[key].style.border = getComputedStyle(input).border;
+    spanDiv[key].style["border-color"] = "transparent";
   }
+  /*$: for (let item of Object.values(formulaSet)) {
+    if (item.check) {
+      let key = Object.values(formulaSet).indexOf(item);
+      for (let i = key; i < Object.values(formulaSet).length; i++) {
+        let type = Object.keys(formulaSet)[i];
+        let input = spanDiv[type].previousElementSibling;
+        spanDiv[type].style.margin = getComputedStyle(input).margin;
+        spanDiv[type].style.padding = getComputedStyle(input).padding;
+        spanDiv[type].style.left = input.getBoundingClientRect().left + "px";
+        spanDiv[type].style.top = input.getBoundingClientRect().top + "px";
+        spanDiv[type].style.border = getComputedStyle(input).border;
+        spanDiv[type].style["border-color"] = "transparent";
+      }
+    }
+  }*/
 </script>
 
 <ApplicationShell bind:elementRoot>

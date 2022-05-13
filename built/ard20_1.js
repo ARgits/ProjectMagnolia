@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (103:8) {#each Object.values(data.variables) as variable}
+// (116:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (135:10) {#if formulaSet[param].check}
+// (148:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (110:6) {#each paramArr as param}
+// (123:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (98:0) <ApplicationShell bind:elementRoot>
+// (111:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6082,7 +6082,7 @@ const setting$3 = "advancement-rate"; //name of setting
  * @param {number} index  - chosen start index
  * @param {string} replacement - string which replaces old one
  * @param {number} endLength - chosen end index
-*/
+ */
 function replaceStrAt(str, index, replacement, endLength) {
 	if (index >= str.length) {
 		return str.valueOf();
@@ -6117,10 +6117,10 @@ function instance$3($$self, $$props, $$invalidate) {
 	let paramArr = ["attributes", "skills", "features"];
 
 	for (let item of paramArr) {
-		spanDiv[item] = '';
+		spanDiv[item] = "";
 		formulaSet[item] = { set: new Set(), check: false };
-		formulaInput[item] = '';
-		variableInput[item] = '';
+		formulaInput[item] = "";
+		variableInput[item] = "";
 		formulaSpan[item] = data.formulas[item];
 	}
 
@@ -6216,15 +6216,13 @@ function instance$3($$self, $$props, $$invalidate) {
 
 		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv*/ 12) {
 			for (let [key, item] of Object.entries(formulaSet)) {
-				if (item.check) {
-					let input = spanDiv[key].previousElementSibling;
-					$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
-					$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
-					$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-					$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-					$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
-					$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
-				}
+				let input = spanDiv[key].previousElementSibling;
+				$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
+				$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
+				$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
+				$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
+				$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
+				$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
 			}
 		}
 	};
