@@ -44,6 +44,7 @@
   $: if (elementRoot) {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
+      console.log(elem, div);
       div.margin = getComputedStyle(elem).margin;
       div.padding = getComputedStyle(elem).padding;
       div.left = elem.getBoundingClientRect().left + "px";
