@@ -5660,7 +5660,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (114:8) {#each Object.values(data.variables) as variable}
+// (115:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[19].longName + "";
@@ -5718,7 +5718,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (146:10) {#if formulaSet[param].check}
+// (147:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -5746,7 +5746,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (121:6) {#each paramArr as param}
+// (122:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -5868,7 +5868,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (109:0) <ApplicationShell bind:elementRoot>
+// (110:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$3(ctx) {
 	let div3;
 	let div1;
@@ -6212,15 +6212,16 @@ function instance$3($$self, $$props, $$invalidate) {
 
 		if ($$self.$$.dirty & /*Object, formulaSet, spanDiv, formulaInput*/ 28) {
 			for (let [key, item] of Object.entries(formulaSet)) {
-				console.log(spanDiv[key], key);
-				let input = formulaInput[key];
-				console.log(input);
-				$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
-				$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
-				$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
-				$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
-				$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
-				$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
+				if (spanDiv[key]) {
+					let input = formulaInput[key];
+					console.log(input);
+					$$invalidate(3, spanDiv[key].style.margin = getComputedStyle(input).margin, spanDiv);
+					$$invalidate(3, spanDiv[key].style.padding = getComputedStyle(input).padding, spanDiv);
+					$$invalidate(3, spanDiv[key].style.left = input.getBoundingClientRect().left + "px", spanDiv);
+					$$invalidate(3, spanDiv[key].style.top = input.getBoundingClientRect().top + "px", spanDiv);
+					$$invalidate(3, spanDiv[key].style.border = getComputedStyle(input).border, spanDiv);
+					$$invalidate(3, spanDiv[key].style["border-color"] = "transparent", spanDiv);
+				}
 			}
 		}
 	};

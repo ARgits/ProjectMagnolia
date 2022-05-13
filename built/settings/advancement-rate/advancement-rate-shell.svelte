@@ -79,15 +79,16 @@
     formulaSet[type].check = formulaSet[type].set.size > 0;
   }
   $: for (let [key, item] of Object.entries(formulaSet)) {
-    console.log(spanDiv[key],key)
-    let input = formulaInput[key];
-    console.log(input)
-    spanDiv[key].style.margin = getComputedStyle(input).margin;
-    spanDiv[key].style.padding = getComputedStyle(input).padding;
-    spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
-    spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
-    spanDiv[key].style.border = getComputedStyle(input).border;
-    spanDiv[key].style["border-color"] = "transparent";
+    if (spanDiv[key]) {
+      let input = formulaInput[key];
+      console.log(input);
+      spanDiv[key].style.margin = getComputedStyle(input).margin;
+      spanDiv[key].style.padding = getComputedStyle(input).padding;
+      spanDiv[key].style.left = input.getBoundingClientRect().left + "px";
+      spanDiv[key].style.top = input.getBoundingClientRect().top + "px";
+      spanDiv[key].style.border = getComputedStyle(input).border;
+      spanDiv[key].style["border-color"] = "transparent";
+    }
   }
   /*$: for (let item of Object.values(formulaSet)) {
     if (item.check) {
