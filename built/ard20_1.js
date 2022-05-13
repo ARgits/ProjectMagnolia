@@ -5720,7 +5720,7 @@ function create_each_block_1$2(ctx) {
 
 // (74:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
-	let div1;
+	let div2;
 	let label;
 	let t1;
 	let input;
@@ -5729,6 +5729,8 @@ function create_each_block$3(ctx) {
 	let div0;
 	let raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[15]] + "";
 	let t3;
+	let div1;
+	let t5;
 	let br;
 	let mounted;
 	let dispose;
@@ -5746,7 +5748,7 @@ function create_each_block$3(ctx) {
 
 	return {
 		c() {
-			div1 = element("div");
+			div2 = element("div");
 			label = element("label");
 			label.textContent = "Attribute Advancement Formula";
 			t1 = space();
@@ -5754,6 +5756,9 @@ function create_each_block$3(ctx) {
 			t2 = space();
 			div0 = element("div");
 			t3 = space();
+			div1 = element("div");
+			div1.textContent = "there is no such variable";
+			t5 = space();
 			br = element("br");
 			attr(label, "for", "Attribute Formula");
 			attr(input, "class", "transparent svelte-1j2il8b");
@@ -5761,16 +5766,18 @@ function create_each_block$3(ctx) {
 			attr(div0, "class", "span svelte-1j2il8b");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, label);
-			append(div1, t1);
-			append(div1, input);
+			insert(target, div2, anchor);
+			append(div2, label);
+			append(div2, t1);
+			append(div2, input);
 			assign_input();
 			set_input_value(input, /*data*/ ctx[1].formulas[/*param*/ ctx[15]]);
-			append(div1, t2);
-			append(div1, div0);
+			append(div2, t2);
+			append(div2, div0);
 			div0.innerHTML = raw_value;
-			insert(target, t3, anchor);
+			append(div2, t3);
+			append(div2, div1);
+			insert(target, t5, anchor);
 			insert(target, br, anchor);
 
 			if (!mounted) {
@@ -5797,9 +5804,9 @@ function create_each_block$3(ctx) {
 
 			if (dirty & /*formulaSpan*/ 16 && raw_value !== (raw_value = /*formulaSpan*/ ctx[4][/*param*/ ctx[15]] + "")) div0.innerHTML = raw_value;		},
 		d(detaching) {
-			if (detaching) detach(div1);
+			if (detaching) detach(div2);
 			unassign_input();
-			if (detaching) detach(t3);
+			if (detaching) detach(t5);
 			if (detaching) detach(br);
 			mounted = false;
 			run_all(dispose);
@@ -6054,7 +6061,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				console.log(check, 'validateInput check');
 
 				if (check) {
-					let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
+					let regexp = new RegExp(`(?<!>|<)${item}\\b|[а-яА-я](?!\w|>)`, "");
 					$$invalidate(4, formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`), formulaSpan);
 				}
 			}

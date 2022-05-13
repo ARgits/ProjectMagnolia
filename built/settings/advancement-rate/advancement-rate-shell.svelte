@@ -51,7 +51,7 @@
         let check = !funcList.includes(item);
         console.log(check,'validateInput check')
         if (check) {
-          let regexp = new RegExp(`(?<!>|<)${item}\\b(?!\w|>)`, "");
+          let regexp = new RegExp(`(?<!>|<)${item}\\b|[а-яА-я](?!\w|>)`, "");
           formulaSpan[type] = formulaSpan[type].replace(regexp, `<span style="color:red">${item}</span>`);
         }
       }
@@ -86,6 +86,7 @@
           <div class="span">
             {@html formulaSpan[param]}
           </div>
+          <div>there is no such variable</div>
         </div>
         <br />
       {/each}
