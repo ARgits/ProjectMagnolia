@@ -1,7 +1,7 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   export let elementRoot;
@@ -55,44 +55,40 @@
     }
     return str.substring(0, index) + replacement + str.substring(index + endLength);
   }
-  function validateInput(val, type) {
+  async function validateInput(val, type) {
     formulaSpan[type] = val;
-    let checkArr = val.split(/[./+\*,^\s\(\)]+/);
+    let ind = 0; //starting index
+
+    //create an array of variables/functions in formula field and their indexes
+    let checkArr = val.split(/[./+\*,^\s\(\)]+/).map((item) => {
+      return { name: item, index: 0 };
+    });
+    for (let item of checkArr) {
+      item.index = val.indexOf(item.name, ind);
+      ind = item.index + 1;
+    }
     formulaSet[type].set.clear();
     for (let item of checkArr) {
-      if (item !== "" && isNaN(item)) {
-        let check = !funcList.includes(item);
+      if (item.name !== "" && isNaN(item.name)) {
+        let check = !funcList.includes(item.name);
         if (check) {
-          formulaSet[type].set.add(item);
-          let lastSpan =
-            formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
-          let wordLastIndex = formulaSpan[type].indexOf(item);
-          formulaSpan[type] = replaceStrAt(
-            formulaSpan[type],
-            Math.max(lastSpan, wordLastIndex),
-            `<span style="color:red">${item}</span>`,
-            item.length
-          );
+          formulaSet[type].set.add(item.name);
+
+          //get last index of changed word
+          let lastSpan = formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
+
+          //get new index of word
+          let wordLastIndex = item.index + formulaSpan[type].length - val.length;
+          formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item.name}</span>`, item.name.length);
         }
       }
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
-  }
-  let setCheck;
-
-  $: {
-    for (let item of Object.values(formulaSet)) {
-      setCheck = setCheck || item.check;
-    }
-    console.log(setCheck);
-  }
-  $: if (setCheck) {
+    await tick();
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
       div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
       div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
-      console.log(elem.offsetLeft + "px", elem.offsetTop + "px", "elem params");
-      console.log(div.top, div.left, "div params");
     }
   }
 </script>
