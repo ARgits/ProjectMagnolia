@@ -135,7 +135,7 @@
                             <td>{{localize dam}}</td>
                             <td>{{#if (and (ne key 'rad') (ne key 'force') (ne key 'psyhic'))}}
                                     {{#with (lookup @root.data.defences.damage.phys key)}}
-                                        {{#if ne(immune true)}}
+                                        {{#if (ne immune true)}}
                                             {{value}}
                                         {{else}}
                                             immune
@@ -146,7 +146,7 @@
                                 {{/if}}
                             </td>
                             <td>{{#with (lookup @root.data.defences.damage.mag key)}}
-                                    {{#if ne(immune true)}}
+                                    {{#if (ne immune true)}}
                                         {{value}}
                                     {{else}}
                                         immune
