@@ -1166,16 +1166,12 @@ class ARd20Item extends Item {
     const data = itemData.data;
 
     for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
-      var _parseInt2;
-
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        var _parseInt;
-
-        data.res.phys[key].value = (_parseInt = parseInt(data.res.phys[key].value)) !== null && _parseInt !== void 0 ? _parseInt : 0;
+        data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
         data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
       }
 
-      data.res.mag[key].value = (_parseInt2 = parseInt(data.res.mag[key].value)) !== null && _parseInt2 !== void 0 ? _parseInt2 : 0;
+      data.res.mag[key].value = parseInt(data.res.mag[key].value) || 0;
       data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
     }
 
