@@ -8610,7 +8610,7 @@ class ARd20Actor extends Actor {
 
           for (let key of obj_keys$1(def_dam.mag)) {
             let mg = item.data.data.res.mag[key];
-            def_dam.mag[key].bonus += !ph.immune ? parseInt(mg.value) : 0;
+            def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
           }
 
           data.mobility.value += item.data.data.mobility.value;
