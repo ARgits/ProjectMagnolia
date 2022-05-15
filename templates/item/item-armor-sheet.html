@@ -57,7 +57,7 @@
           </select>
         </label>
         <Label for="data.heavyPoints">
-          "Подвижность": {{data.heavyPoints}}
+          "Подвижность": {{data.mobility.value}}
         </Label>
       </div>
       <div>
@@ -73,7 +73,10 @@
               <td>
                 {{#if (and (ne key 'rad') (ne key 'force') (ne key 'psyhic'))}}
                   {{#with (lookup @root.data.res.phys key)}}
-                    <input name="data.res.phys.{{key}}.value" value="{{value}}" />
+                    <div>
+                      <input type="checkbox" name="data.res.phys.{{key}}.immune" value="{{immune}}">
+                      <input name="data.res.phys.{{key}}.value" value="{{value}}" />
+                    </div>
                   {{/with}}
                 {{else}}
                   ---
@@ -81,7 +84,10 @@
               </td>
               <td>
                 {{#with (lookup @root.data.res.mag key)}}
-                  <input name="data.res.mag.{{key}}.value" value="{{value}}" />
+                  <div>
+                    <input type="checkbox" name="data.res.mag.{{key}}.immune" value="{{immune}}">
+                    <input name="data.res.mag.{{key}}.value" value="{{value}}" />
+                  </div>
                 {{/with}}
               </td>
             </tr>

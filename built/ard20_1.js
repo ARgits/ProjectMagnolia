@@ -8605,14 +8605,12 @@ class ARd20Actor extends Actor {
         if (item.data.data.equipped) {
           for (let key of obj_keys$1(def_dam.phys)) {
             let ph = item.data.data.res.phys[key];
-            def_dam.phys[key].bonus += ph.type !== "imm" ? parseInt(ph.value) : 0;
-            def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
+            def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
           }
 
           for (let key of obj_keys$1(def_dam.mag)) {
             let mg = item.data.data.res.mag[key];
-            def_dam.mag[key].bonus += mg.type !== "imm" ? parseInt(mg.value) : 0;
-            def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
+            def_dam.mag[key].bonus += !ph.immune ? parseInt(mg.value) : 0;
           }
 
           data.mobility.value += item.data.data.mobility.value;
@@ -8660,11 +8658,11 @@ class ARd20Actor extends Actor {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         var _def_dam$phys$key, _def_dam$phys$key2, _def_dam$phys$key3, _def_dam$phys$key4, _game$i18n$localize;
 
-        def_dam.phys[key].value = (_def_dam$phys$key = def_dam.phys[key]) !== null && _def_dam$phys$key !== void 0 && _def_dam$phys$key.value || ((_def_dam$phys$key2 = def_dam.phys[key]) === null || _def_dam$phys$key2 === void 0 ? void 0 : _def_dam$phys$key2.type) !== "imm" ? Math.max(isNaN((_def_dam$phys$key3 = def_dam.phys[key]) === null || _def_dam$phys$key3 === void 0 ? void 0 : _def_dam$phys$key3.value) ? 0 : def_dam.phys[key].value) + ((_def_dam$phys$key4 = def_dam.phys[key]) === null || _def_dam$phys$key4 === void 0 ? void 0 : _def_dam$phys$key4.bonus) : 0;
+        def_dam.phys[key].value = (_def_dam$phys$key = def_dam.phys[key]) !== null && _def_dam$phys$key !== void 0 && _def_dam$phys$key.value || !((_def_dam$phys$key2 = def_dam.phys[key]) !== null && _def_dam$phys$key2 !== void 0 && _def_dam$phys$key2.immune) ? Math.max(isNaN((_def_dam$phys$key3 = def_dam.phys[key]) === null || _def_dam$phys$key3 === void 0 ? void 0 : _def_dam$phys$key3.value) ? 0 : def_dam.phys[key].value) + ((_def_dam$phys$key4 = def_dam.phys[key]) === null || _def_dam$phys$key4 === void 0 ? void 0 : _def_dam$phys$key4.bonus) : 0;
         def_dam.phys[key].name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.DamageSubTypes[key];
       }
 
-      def_dam.mag[key].value = (_def_dam$mag$key = def_dam.mag[key]) !== null && _def_dam$mag$key !== void 0 && _def_dam$mag$key.value || ((_def_dam$mag$key2 = def_dam.mag[key]) === null || _def_dam$mag$key2 === void 0 ? void 0 : _def_dam$mag$key2.type) !== "imm" ? Math.max(isNaN((_def_dam$mag$key3 = def_dam.mag[key]) === null || _def_dam$mag$key3 === void 0 ? void 0 : _def_dam$mag$key3.value) ? 0 : def_dam.mag[key].value) + ((_def_dam$mag$key4 = def_dam.mag[key]) === null || _def_dam$mag$key4 === void 0 ? void 0 : _def_dam$mag$key4.bonus) : 0;
+      def_dam.mag[key].value = (_def_dam$mag$key = def_dam.mag[key]) !== null && _def_dam$mag$key !== void 0 && _def_dam$mag$key.value || !((_def_dam$mag$key2 = def_dam.mag[key]) !== null && _def_dam$mag$key2 !== void 0 && _def_dam$mag$key2.immune) ? Math.max(isNaN((_def_dam$mag$key3 = def_dam.mag[key]) === null || _def_dam$mag$key3 === void 0 ? void 0 : _def_dam$mag$key3.value) ? 0 : def_dam.mag[key].value) + ((_def_dam$mag$key4 = def_dam.mag[key]) === null || _def_dam$mag$key4 === void 0 ? void 0 : _def_dam$mag$key4.bonus) : 0;
       def_dam.mag[key].name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.DamageSubTypes[key];
     }
 

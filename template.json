@@ -144,29 +144,29 @@
         },
         "damage": {
           "phys": {
-            "acid": { "bonus": 0, "type": "res" },
-            "bludgeoning": { "bonus": 0, "type": "res" },
-            "cold": { "bonus": 0, "type": "res" },
-            "fire": { "bonus": 0, "type": "res" },
-            "lightning": { "bonus": 0, "type": "res" },
-            "necr": { "bonus": 0, "type": "res" },
-            "piercing": { "bonus": 0, "type": "res" },
-            "poison": { "bonus": 0, "type": "res" },
-            "slashing": { "bonus": 0, "type": "res" }
+            "acid": { "bonus": 0, "immune": false },
+            "bludgeoning": { "bonus": 0, "immune": false },
+            "cold": { "bonus": 0, "immune": false },
+            "fire": { "bonus": 0, "immune": false },
+            "lightning": { "bonus": 0, "immune": false },
+            "necr": { "bonus": 0, "immune": false },
+            "piercing": { "bonus": 0, "immune": false },
+            "poison": { "bonus": 0, "immune": false },
+            "slashing": { "bonus": 0, "immune": false }
           },
           "mag": {
-            "acid": { "bonus": 0, "type": "res" },
-            "bludgeoning": { "bonus": 0, "type": "res" },
-            "cold": { "bonus": 0, "type": "res" },
-            "fire": { "bonus": 0, "type": "res" },
-            "lightning": { "bonus": 0, "type": "res" },
-            "necr": { "bonus": 0, "type": "res" },
-            "piercing": { "bonus": 0, "type": "res" },
-            "poison": { "bonus": 0, "type": "res" },
-            "slashing": { "bonus": 0, "type": "res" },
-            "force": { "bonus": 0, "type": "res" },
-            "radiant": { "bonus": 0, "type": "res" },
-            "psychic": { "bonus": 0, "type": "res" }
+            "acid": { "bonus": 0, "immune": false },
+            "bludgeoning": { "bonus": 0, "immune": false },
+            "cold": { "bonus": 0, "immune": false },
+            "fire": { "bonus": 0, "immune": false },
+            "lightning": { "bonus": 0, "immune": false },
+            "necr": { "bonus": 0, "immune": false },
+            "piercing": { "bonus": 0, "immune": false },
+            "poison": { "bonus": 0, "immune": false },
+            "slashing": { "bonus": 0, "immune": false },
+            "force": { "bonus": 0, "immune": false },
+            "radiant": { "bonus": 0, "immune": false },
+            "psychic": { "bonus": 0, "immune": false }
           }
         },
         "conditions": {}
@@ -327,29 +327,29 @@
       },
       "res": {
         "phys": {
-          "acid": { "bonus": 0, "type": "res" },
-          "bludgeoning": { "bonus": 0, "type": "res" },
-          "cold": { "bonus": 0, "type": "res" },
-          "fire": { "bonus": 0, "type": "res" },
-          "lightning": { "bonus": 0, "type": "res" },
-          "necr": { "bonus": 0, "type": "res" },
-          "piercing": { "bonus": 0, "type": "res" },
-          "poison": { "bonus": 0, "type": "res" },
-          "slashing": { "bonus": 0, "type": "res" }
+          "acid": { "bonus": 0, "immune": false },
+          "bludgeoning": { "bonus": 0, "immune": false },
+          "cold": { "bonus": 0, "immune": false },
+          "fire": { "bonus": 0, "immune": false },
+          "lightning": { "bonus": 0, "immune": false },
+          "necr": { "bonus": 0, "immune": false },
+          "piercing": { "bonus": 0, "immune": false },
+          "poison": { "bonus": 0, "immune": false },
+          "slashing": { "bonus": 0, "immune": false }
         },
         "mag": {
-          "acid": { "bonus": 0, "type": "res" },
-          "bludgeoning": { "bonus": 0, "type": "res" },
-          "cold": { "bonus": 0, "type": "res" },
-          "fire": { "bonus": 0, "type": "res" },
-          "lightning": { "bonus": 0, "type": "res" },
-          "necr": { "bonus": 0, "type": "res" },
-          "piercing": { "bonus": 0, "type": "res" },
-          "poison": { "bonus": 0, "type": "res" },
-          "slashing": { "bonus": 0, "type": "res" },
-          "force": { "bonus": 0, "type": "res" },
-          "radiant": { "bonus": 0, "type": "res" },
-          "psychic": { "bonus": 0, "type": "res" }
+          "acid": { "bonus": 0, "immune": false },
+          "bludgeoning": { "bonus": 0, "immune": false },
+          "cold": { "bonus": 0, "immune": false },
+          "fire": { "bonus": 0, "immune": false },
+          "lightning": { "bonus": 0, "immune": false },
+          "necr": { "bonus": 0, "immune": false },
+          "piercing": { "bonus": 0, "immune": false },
+          "poison": { "bonus": 0, "immune": false },
+          "slashing": { "bonus": 0, "immune": false },
+          "force": { "bonus": 0, "immune": false },
+          "radiant": { "bonus": 0, "immune": false },
+          "psychic": { "bonus": 0, "immune": false }
         }
       }
     },
