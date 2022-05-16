@@ -12,6 +12,7 @@ import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
 import ItemShell from "../built/sheets/ItemShell.svelte"
+import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */

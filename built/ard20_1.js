@@ -1,4 +1,4 @@
-import { TJSDialog, SvelteApplication as SvelteApplication$1 } from '/modules/typhonjs/svelte/application.js';
+import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, update_keyed_each, destroy_block, select_value, is_function, select_option } from '/modules/typhonjs/svelte/internal.js';
 import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
@@ -6281,7 +6281,7 @@ class AdvRateSettingsShim extends FormApplication {
 
 }
 
-class AdvancementRateFormApp extends SvelteApplication$1 {
+class AdvancementRateFormApp extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
@@ -6758,7 +6758,7 @@ class FeatSettingsShim extends FormApplication {
 
 }
 
-class FeatSetting extends SvelteApplication$1 {
+class FeatSetting extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
@@ -7572,7 +7572,7 @@ class ProfSettingsShim extends FormApplication {
 
 }
 
-class ProfSetting extends SvelteApplication$1 {
+class ProfSetting extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
@@ -7943,7 +7943,7 @@ class ProfLevelSettingShim extends FormApplication {
 
 }
 
-class ProfLevelSetting extends SvelteApplication$1 {
+class ProfLevelSetting extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
