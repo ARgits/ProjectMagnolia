@@ -8696,7 +8696,7 @@ function create_fragment(ctx) {
 
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
-	this.Logging();
+	console.log(elementRoot);
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -8727,7 +8727,8 @@ class SvelteItemSheet extends SvelteApplication {
       width: 600,
       height: 600,
       svelte: {
-        class: ItemShell
+        class: ItemShell,
+        target: document.body
       }
     });
   }

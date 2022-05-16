@@ -1,7 +1,7 @@
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   export let elementRoot;
-  this.Logging();
+  console.log(elementRoot)
 </script>
 
 <ApplicationShell bind:elementRoot>

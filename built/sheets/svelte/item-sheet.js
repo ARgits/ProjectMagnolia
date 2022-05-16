@@ -11,6 +11,7 @@ export class SvelteItemSheet extends SvelteApplication{
         height: 600,
         svelte: {
           class: ItemShell,
+          target:document.body,
         },
       });
     }
