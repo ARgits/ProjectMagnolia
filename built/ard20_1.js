@@ -8827,14 +8827,30 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 }
 class SvelteItemSheet extends SvelteDocumentSheet {
+  get item() {
+    return this.object;
+  }
+
+  get title() {
+    return this.item.name;
+  }
+
+  get actor() {
+    return this.item.actor;
+  }
+
+  get id() {
+    if (this.actor) return `actor-${this.actor.id}-item-${this.item.id}`;else return super.id;
+  }
+
   static get defaultOptions() {
+    console.log(this, 'deafultOptions');
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       minimizable: true,
       resizable: true,
       width: 600,
       height: 600,
-      title: this.object.name,
       svelte: {
         class: ItemShell,
         target: document.body
@@ -8843,23 +8859,8 @@ class SvelteItemSheet extends SvelteDocumentSheet {
     });
   }
 
-  get id() {
-    if (this.actor) return `actor-${this.actor.id}-item-${this.item.id}`;else return super.id;
-  }
-
-  get title() {
-    return this.item.name;
-  }
-
-  get item() {
-    return this.object;
-  }
-
-  get actor() {
-    return this.item.actor;
-  }
-
   getData(options = {}) {
+    console.log(this, 'getData');
     const data = super.getData(options);
     data.item = data.document;
     return data;
