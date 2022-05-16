@@ -58,6 +58,7 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
       resizable: true,
       width: 600,
       height: 600,
+      title:this.item.name,
       svelte: {
         class: ItemShell,
         target: document.body,

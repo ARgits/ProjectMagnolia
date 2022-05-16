@@ -12,5 +12,5 @@
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
-  <input bind:value={$itemContext.name}/>
+  <input bind:value={$itemContext.data.name}/>
 </ApplicationShell>

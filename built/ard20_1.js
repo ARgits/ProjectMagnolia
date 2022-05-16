@@ -8637,7 +8637,7 @@ function create_default_slot(ctx) {
 			insert(target, div, anchor);
 			insert(target, t1, anchor);
 			insert(target, input, anchor);
-			set_input_value(input, /*$itemContext*/ ctx[1].name);
+			set_input_value(input, /*$itemContext*/ ctx[1].data.name);
 
 			if (!mounted) {
 				dispose = listen(input, "input", /*input_input_handler*/ ctx[3]);
@@ -8645,8 +8645,8 @@ function create_default_slot(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$itemContext*/ 2 && input.value !== /*$itemContext*/ ctx[1].name) {
-				set_input_value(input, /*$itemContext*/ ctx[1].name);
+			if (dirty & /*$itemContext*/ 2 && input.value !== /*$itemContext*/ ctx[1].data.name) {
+				set_input_value(input, /*$itemContext*/ ctx[1].data.name);
 			}
 		},
 		d(detaching) {
@@ -8727,7 +8727,7 @@ function instance($$self, $$props, $$invalidate) {
 	console.log($itemContext);
 
 	function input_input_handler() {
-		$itemContext.name = this.value;
+		$itemContext.data.name = this.value;
 		itemContext.set($itemContext);
 	}
 
@@ -8834,6 +8834,7 @@ class SvelteItemSheet extends SvelteDocumentSheet {
       resizable: true,
       width: 600,
       height: 600,
+      title: this.item.name,
       svelte: {
         class: ItemShell,
         target: document.body
