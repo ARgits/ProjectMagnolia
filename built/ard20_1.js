@@ -8668,7 +8668,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope*/ 4) {
+			if (dirty & /*$$scope*/ 8) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8697,7 +8697,8 @@ function create_fragment(ctx) {
 
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
-	console.log(elementRoot, this, getContext('external'));
+	const item = getContext('external').application.object;
+	console.log(elementRoot, this, item);
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
