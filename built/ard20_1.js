@@ -8708,7 +8708,6 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	console.log(elementRoot);
-	console.log(this.LogMethod());
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -8740,6 +8739,7 @@ class ItemShell extends SvelteComponent {
 
 class SvelteItemSheet extends SvelteApplication {
   static get defaultOptions() {
+    console.log(this);
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "sheet",
@@ -8752,10 +8752,6 @@ class SvelteItemSheet extends SvelteApplication {
         target: document.body
       }
     });
-  }
-
-  LogMethod() {
-    console.log(this);
   }
 
 }
