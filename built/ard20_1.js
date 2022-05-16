@@ -8642,7 +8642,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[1](value);
+		/*applicationshell_elementRoot_binding*/ ctx[2](value);
 	}
 
 	let applicationshell_props = {
@@ -8668,7 +8668,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope*/ 8) {
+			if (dirty & /*$$scope*/ 16) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8696,9 +8696,11 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
+	let $itemContext;
 	let { elementRoot } = $$props;
-	const item = getContext('external').application.object;
-	console.log(elementRoot, this, item);
+	const itemContext = setContext("itemContext", writable(getContext("external").application.object));
+	component_subscribe($$self, itemContext, value => $$invalidate(3, $itemContext = value));
+	console.log($itemContext);
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -8709,7 +8711,7 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	return [elementRoot, applicationshell_elementRoot_binding];
+	return [elementRoot, itemContext, applicationshell_elementRoot_binding];
 }
 
 class ItemShell extends SvelteComponent {
