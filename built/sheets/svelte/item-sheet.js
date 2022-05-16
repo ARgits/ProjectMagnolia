@@ -6,7 +6,6 @@ export class SvelteItemSheet extends SvelteApplication {
     this.object = object;
   }
   static get defaultOptions() {
-    console.log(this.object);
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "sheet",
@@ -19,5 +18,12 @@ export class SvelteItemSheet extends SvelteApplication {
         target: document.body,
       },
     });
+  }
+  getData(options={}){
+    return{
+      object:this.object,
+      options:this.options,
+      title:this.title
+    }
   }
 }
