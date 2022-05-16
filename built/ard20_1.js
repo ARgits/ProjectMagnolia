@@ -8624,7 +8624,7 @@ function create_default_slot(ctx) {
 	let div0;
 	let t1;
 	let div1;
-	let t4;
+	let t3;
 	let input;
 
 	return {
@@ -8633,23 +8633,22 @@ function create_default_slot(ctx) {
 			div0.textContent = "blank sheet";
 			t1 = space();
 			div1 = element("div");
-			div1.textContent = `Name: ${/*doc*/ ctx[1].data.name}`;
-			t4 = space();
+			div1.textContent = "Name:";
+			t3 = space();
 			input = element("input");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
 			insert(target, t1, anchor);
 			insert(target, div1, anchor);
-			insert(target, t4, anchor);
+			insert(target, t3, anchor);
 			insert(target, input, anchor);
 		},
-		p: noop,
 		d(detaching) {
 			if (detaching) detach(div0);
 			if (detaching) detach(t1);
 			if (detaching) detach(div1);
-			if (detaching) detach(t4);
+			if (detaching) detach(t3);
 			if (detaching) detach(input);
 		}
 	};
@@ -8661,7 +8660,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[2](value);
+		/*applicationshell_elementRoot_binding*/ ctx[1](value);
 	}
 
 	let applicationshell_props = {
@@ -8718,7 +8717,11 @@ function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
 	const uuid = application.object.uuid;
-	const doc = new TJSDocument().setFromUUID(uuid);
+
+	const doc = new TJSDocument().setFromUUID(uuid).then(success => {
+		if (success) console.log(success);
+	});
+
 	console.log(uuid, doc);
 
 	function applicationshell_elementRoot_binding(value) {
@@ -8730,7 +8733,7 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	return [elementRoot, doc, applicationshell_elementRoot_binding];
+	return [elementRoot, applicationshell_elementRoot_binding];
 }
 
 class ItemShell extends SvelteComponent {

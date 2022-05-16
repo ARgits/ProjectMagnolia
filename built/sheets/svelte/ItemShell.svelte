@@ -8,12 +8,14 @@
   export let elementRoot;
   const { application } = getContext("external");
   const uuid = application.object.uuid;
-  const doc = new TJSDocument().setFromUUID(uuid);
+  const doc = new TJSDocument().setFromUUID(uuid).then((success) => {
+    if (success) console.log(success);
+  });
   console.log(uuid, doc);
 </script>
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
-  <div>Name: {doc.data.name}</div>
+  <div>Name:</div>
   <input />
 </ApplicationShell>
