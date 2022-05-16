@@ -8778,7 +8778,8 @@ class SvelteDocumentSheet extends SvelteApplication {
       sheetConfig: true,
       svelte: {
         target: document.body
-      }
+      },
+      title: this.object.name
     });
   }
 
