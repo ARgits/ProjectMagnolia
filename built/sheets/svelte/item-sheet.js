@@ -51,10 +51,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
   }
 }
 export class SvelteItemSheet extends SvelteDocumentSheet {
-  constructor(object={},options={}){
-    super(object,options)
-    options.title = object.title
-  }
   get item(){
     return this.object
   }
@@ -87,9 +83,11 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
   getData(options = {}) {
     console.log(this.title,'getData')
     console.log(options,'getData options')
+    console.log(this.reactive,'this.reactive')
     const data = super.getData(options)
     data.item = data.document
     //this.options.title = this.object.name
     return data
   }
+
 }
