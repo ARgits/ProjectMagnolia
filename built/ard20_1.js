@@ -8718,7 +8718,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
 	const uuid = application.object.uuid;
-	const doc = new TJSDocument();
+	const doc = new TJSDocument().setFromUUID(uuid);
 	console.log(uuid, doc);
 
 	function applicationshell_elementRoot_binding(value) {
@@ -8730,7 +8730,6 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	doc.setFromUUID(uuid);
 	return [elementRoot, doc, applicationshell_elementRoot_binding];
 }
 

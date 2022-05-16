@@ -8,8 +8,7 @@
   export let elementRoot;
   const { application } = getContext("external");
   const uuid = application.object.uuid;
-  const doc = new TJSDocument();
-  $: doc.setFromUUID(uuid);
+  const doc = new TJSDocument().setFromUUID(uuid);
   console.log(uuid, doc);
 </script>
 
