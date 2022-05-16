@@ -8718,8 +8718,9 @@ function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
 	const uuid = application.object.uuid;
-	const doc = new TJSDocument().setFromUUID(uuid);
+	const doc = new TJSDocument();
 	component_subscribe($$self, doc, value => $$invalidate(3, $doc = value));
+	doc.setFromUUID();
 	console.log(uuid, $doc);
 
 	function applicationshell_elementRoot_binding(value) {
