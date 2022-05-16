@@ -8660,7 +8660,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[1](value);
+		/*applicationshell_elementRoot_binding*/ ctx[2](value);
 	}
 
 	let applicationshell_props = {
@@ -8686,7 +8686,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope*/ 32) {
+			if (dirty & /*$$scope*/ 64) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8714,15 +8714,13 @@ function create_fragment(ctx) {
 }
 
 function instance($$self, $$props, $$invalidate) {
+	let $doc;
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
 	const uuid = application.object.uuid;
-
-	const doc = new TJSDocument().setFromUUID(uuid).then(success => {
-		if (success) console.log(success);
-	});
-
-	console.log(uuid, doc);
+	const doc = new TJSDocument().setFromUUID(uuid);
+	component_subscribe($$self, doc, value => $$invalidate(3, $doc = value));
+	console.log(uuid, $doc);
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -8733,7 +8731,7 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	return [elementRoot, applicationshell_elementRoot_binding];
+	return [elementRoot, doc, applicationshell_elementRoot_binding];
 }
 
 class ItemShell extends SvelteComponent {
