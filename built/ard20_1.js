@@ -8621,27 +8621,17 @@ function applyChatCardDamage(li, multiplier) {
 
 function create_default_slot(ctx) {
 	let div;
-	let t1;
-	let t2_value = (console.log(this.getData()), "") + "";
-	let t2;
 
 	return {
 		c() {
 			div = element("div");
 			div.textContent = "blank sheet";
-			t1 = space();
-			t2 = text(t2_value);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
-			insert(target, t1, anchor);
-			insert(target, t2, anchor);
 		},
-		p: noop,
 		d(detaching) {
 			if (detaching) detach(div);
-			if (detaching) detach(t1);
-			if (detaching) detach(t2);
 		}
 	};
 }
@@ -8736,12 +8726,68 @@ class ItemShell extends SvelteComponent {
 	}
 }
 
-class SvelteItemSheet extends SvelteApplication {
+class SvelteDocumentSheet extends SvelteApplication {
   constructor(object = {}, options = {}) {
     super(options);
     this.object = object;
   }
 
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["sheet"],
+      viewPermission: CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED,
+      sheetConfig: true,
+      svelte: {
+        target: document.body
+      }
+    });
+  }
+
+  get document() {
+    return this.object;
+  }
+
+  get id() {
+    const name = this.options.id || `${this.document.documentName.toLowerCase()}-sheet`;
+    return `${name}-${this.document.id}`;
+  }
+
+  get isEditable() {
+    let editable = this.options["editable"] && this.document.isOwner;
+
+    if (this.document.pack) {
+      const pack = game.packs.get(this.document.pack);
+      if (pack.locked) editable = false;
+    }
+
+    return editable;
+  }
+
+  get title() {
+    var _this$document$name;
+
+    const name = (_this$document$name = this.document.name) !== null && _this$document$name !== void 0 ? _this$document$name : this.document.id;
+    const reference = name ? `: ${name}` : "";
+    return `${game.i18n.localize(this.document.constructor.metadata.label)}}${reference}`;
+  }
+
+  getData(options) {
+    const data = this.document.data.toObject(false);
+    const isEditable = this.isEditable;
+    return {
+      cssClass: isEditable ? "editable" : "locked",
+      editable: isEditable,
+      document: this.document,
+      data: data,
+      limited: this.document.limited,
+      options: this.options,
+      owner: this.document.isOwner,
+      title: this.title
+    };
+  }
+
+}
+class SvelteItemSheet extends SvelteDocumentSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
@@ -8753,16 +8799,31 @@ class SvelteItemSheet extends SvelteApplication {
       svelte: {
         class: ItemShell,
         target: document.body
-      }
+      },
+      id: "item"
     });
   }
 
+  get id() {
+    if (this.actor) return `actor-${this.actor.id}-item-${this.item.id}`;else return super.id;
+  }
+
+  get title() {
+    return this.item.name;
+  }
+
+  get item() {
+    return this.object;
+  }
+
+  get actor() {
+    return this.item.actor;
+  }
+
   getData(options = {}) {
-    return {
-      object: this.object,
-      options: this.options,
-      title: this.title
-    };
+    const data = super.getData(options);
+    data.item = data.document;
+    return data;
   }
 
 }

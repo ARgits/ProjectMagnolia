@@ -7,5 +7,5 @@
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
-  {(console.log(this.getData()), "")}
+  <!--{(console.log(this.getData()), "")}-->
 </ApplicationShell>
