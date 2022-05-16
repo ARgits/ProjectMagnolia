@@ -8624,8 +8624,13 @@ function create_default_slot(ctx) {
 	let div0;
 	let t1;
 	let div1;
+	let t2;
+	let t3_value = /*$doc*/ ctx[1].data.name + "";
 	let t3;
+	let t4;
 	let input;
+	let mounted;
+	let dispose;
 
 	return {
 		c() {
@@ -8633,23 +8638,41 @@ function create_default_slot(ctx) {
 			div0.textContent = "blank sheet";
 			t1 = space();
 			div1 = element("div");
-			div1.textContent = "Name:";
-			t3 = space();
+			t2 = text("Name: ");
+			t3 = text(t3_value);
+			t4 = space();
 			input = element("input");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
 			insert(target, t1, anchor);
 			insert(target, div1, anchor);
-			insert(target, t3, anchor);
+			append(div1, t2);
+			append(div1, t3);
+			insert(target, t4, anchor);
 			insert(target, input, anchor);
+			set_input_value(input, /*$doc*/ ctx[1].data.name);
+
+			if (!mounted) {
+				dispose = listen(input, "input", /*input_input_handler*/ ctx[3]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$doc*/ 2 && t3_value !== (t3_value = /*$doc*/ ctx[1].data.name + "")) set_data(t3, t3_value);
+
+			if (dirty & /*$doc*/ 2 && input.value !== /*$doc*/ ctx[1].data.name) {
+				set_input_value(input, /*$doc*/ ctx[1].data.name);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(div0);
 			if (detaching) detach(t1);
 			if (detaching) detach(div1);
-			if (detaching) detach(t3);
+			if (detaching) detach(t4);
 			if (detaching) detach(input);
+			mounted = false;
+			dispose();
 		}
 	};
 }
@@ -8660,7 +8683,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[2](value);
+		/*applicationshell_elementRoot_binding*/ ctx[4](value);
 	}
 
 	let applicationshell_props = {
@@ -8686,7 +8709,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope, $doc*/ 66) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8717,10 +8740,14 @@ function instance($$self, $$props, $$invalidate) {
 	let $doc;
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
-	const uuid = application.object.uuid;
 	const doc = new TJSDocument(application.object);
-	component_subscribe($$self, doc, value => $$invalidate(3, $doc = value));
-	console.log(uuid, doc, $doc);
+	component_subscribe($$self, doc, value => $$invalidate(1, $doc = value));
+	console.log($doc);
+
+	function input_input_handler() {
+		$doc.data.name = this.value;
+		doc.set($doc);
+	}
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -8731,7 +8758,13 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	return [elementRoot, doc, applicationshell_elementRoot_binding];
+	return [
+		elementRoot,
+		$doc,
+		doc,
+		input_input_handler,
+		applicationshell_elementRoot_binding
+	];
 }
 
 class ItemShell extends SvelteComponent {

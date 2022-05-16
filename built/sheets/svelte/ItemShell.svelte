@@ -7,13 +7,12 @@
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
   export let elementRoot;
   const { application } = getContext("external");
-  const uuid = application.object.uuid;
   const doc = new TJSDocument(application.object);
-  console.log(uuid, doc, $doc);
+  console.log($doc);
 </script>
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
-  <div>Name:</div>
-  <input />
+  <div>Name: {$doc.data.name}</div>
+  <input bind:value={$doc.data.name} />
 </ApplicationShell>
