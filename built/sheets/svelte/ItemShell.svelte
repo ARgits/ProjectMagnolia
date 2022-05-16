@@ -1,4 +1,9 @@
 <script>
-    Logging()
+  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  export let elementRoot;
+  this.Logging();
 </script>
-<div>blank sheet</div>
+
+<ApplicationShell bind:elementRoot>
+  <div>blank sheet</div>
+</ApplicationShell>
