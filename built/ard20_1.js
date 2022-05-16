@@ -8720,7 +8720,7 @@ function instance($$self, $$props, $$invalidate) {
 	const uuid = application.object.uuid;
 	const doc = new TJSDocument();
 	component_subscribe($$self, doc, value => $$invalidate(3, $doc = value));
-	doc.setFromUUID();
+	doc.setFromUUID(uuid);
 	console.log(uuid, $doc);
 
 	function applicationshell_elementRoot_binding(value) {
