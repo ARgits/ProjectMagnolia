@@ -8772,6 +8772,7 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   static get defaultOptions() {
+    console.log(this.object, 'this object');
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sheet"],
       viewPermission: CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED,
@@ -8855,8 +8856,7 @@ class SvelteItemSheet extends SvelteDocumentSheet {
         class: ItemShell,
         target: document.body
       },
-      id: "item",
-      title: super.object.title
+      id: "item"
     });
   }
 
