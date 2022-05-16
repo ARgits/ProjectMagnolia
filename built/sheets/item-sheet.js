@@ -1,8 +1,6 @@
-import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { obj_entries } from "../ard20.js";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
 import { FeatRequirements } from "../helpers/feat_req.js";
-import SpellSheetShell from "./SpellSheetShell.svelte"
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
@@ -19,13 +17,8 @@ export class ARd20ItemSheet extends ItemSheet {
   }
   /** @override */
   get template() {
-    if (this.item.data.type === "spell") {
-      new SpellItemSheet().render(true, { focus: true });
-      this.close();
-    } else {
       const path = "systems/ard20/templates/item";
       return `${path}/item-${this.item.data.type}-sheet.html`;
-    }
   }
   /* -------------------------------------------- */
   /** @override */
@@ -208,21 +201,5 @@ export class ARd20ItemSheet extends ItemSheet {
     if (this._tabs[0].active === "data") this.position.height = "auto";
     //@ts-expect-error
     await super._onSubmit(...args);
-  }
-}
-class SpellItemSheet extends SvelteApplication {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      title: "Spell Sheet",
-      minimizable: true,
-      resizable: true,
-      width: 600,
-      height: 600,
-      svelte: {
-        class: SpellSheetShell,
-        target: document.body,
-      },
-    });
   }
 }

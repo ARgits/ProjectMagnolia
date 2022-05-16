@@ -11,6 +11,7 @@ import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
+import ItemShell from "../built/sheets/ItemShell.svelte"
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -71,6 +72,7 @@ Hooks.once("init", async function () {
     Items.unregisterSheet("core", ItemSheet);
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
+    Items.registerSheet("ard20", SvelteItemSheet, { makeDefault: false });
     registerSystemSettings();
 
 
@@ -182,3 +184,19 @@ Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 //@ts-expect-error
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
+class SvelteItemSheet extends SvelteApplication{
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["ard20"],
+      title: "Spell Sheet",
+      minimizable: true,
+      resizable: true,
+      width: 600,
+      height: 600,
+      svelte: {
+        class: ItemShell,
+        target: document.body,
+      },
+    });
+  }
+}
