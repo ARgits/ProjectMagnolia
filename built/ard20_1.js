@@ -8827,11 +8827,6 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 }
 class SvelteItemSheet extends SvelteDocumentSheet {
-  constructor(object = {}, options = {}) {
-    super(options);
-    this.options.title = this.object.name;
-  }
-
   get item() {
     return this.object;
   }
@@ -8867,6 +8862,7 @@ class SvelteItemSheet extends SvelteDocumentSheet {
     console.log(this.title, 'getData');
     const data = super.getData(options);
     data.item = data.document;
+    this.options.title = this.object.name;
     return data;
   }
 
