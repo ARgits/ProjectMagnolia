@@ -40,7 +40,7 @@ export default () =>
 
    return [
       {  // The main module bundle
-         input: `svelte/init.js`,
+         input: `built/ard20.js`,
          output: {
             file: `built/ard20_1.js`,
             format: 'es',

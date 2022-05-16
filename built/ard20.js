@@ -2,8 +2,8 @@
 import { ARd20Actor } from "./documents/actor.js";
 import { ARd20Item } from "./documents/item.js";
 // Import sheet classes.
-import { ARd20ActorSheet } from "./sheets/actor-sheet.js";
-import { ARd20ItemSheet } from "./sheets/item-sheet.js";
+import { ARd20ActorSheet } from "./sheets/legacy/actor-sheet.js";
+import { ARd20ItemSheet } from "./sheets/legacy/item-sheet.jsheet.js";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.js";
 import { ARd20 } from "./helpers/config.js";
@@ -11,8 +11,8 @@ import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
-import ItemShell from "../built/sheets/ItemShell.svelte"
-import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
+import {SvelteItemSheet} from "../built/sheets/svelte/item-sheet"
+
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -185,18 +185,3 @@ Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 //@ts-expect-error
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
-class SvelteItemSheet extends SvelteApplication{
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      title: "Spell Sheet",
-      minimizable: true,
-      resizable: true,
-      width: 600,
-      height: 600,
-      svelte: {
-        class: ItemShell,
-      },
-    });
-  }
-}

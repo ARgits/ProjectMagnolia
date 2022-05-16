@@ -1,7 +1,7 @@
 import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
 import CharacterAdvancementShell from "../helpers/Character Advancement/cha-adv-shell.svelte";
-import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
-import { getValues, obj_entries } from "../ard20.js";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js";
+import { getValues, obj_entries } from "../../ard20.js";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
