@@ -8828,6 +8828,7 @@ class SvelteDocumentSheet extends SvelteApplication {
 }
 class SvelteItemSheet extends SvelteDocumentSheet {
   constructor(object = {}, options = {}) {
+    super(object, options);
     options.title = object.title;
   }
 

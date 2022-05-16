@@ -52,6 +52,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
 }
 export class SvelteItemSheet extends SvelteDocumentSheet {
   constructor(object={},options={}){
+    super(object,options)
     options.title = object.title
   }
   get item(){
