@@ -8716,6 +8716,15 @@ class ItemShell extends SvelteComponent {
 		super();
 		init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0 });
 	}
+
+	get elementRoot() {
+		return this.$$.ctx[0];
+	}
+
+	set elementRoot(elementRoot) {
+		this.$$set({ elementRoot });
+		flush();
+	}
 }
 
 class SvelteItemSheet extends SvelteApplication {
