@@ -13,7 +13,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       svelte: {
         target: document.body,
       },
-      title:this.object.name
+      title:title,
     });
   }
   get document() {
