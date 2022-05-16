@@ -2362,7 +2362,7 @@ function create_fragment$a(ctx) {
 	};
 }
 
-function instance$9($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
 	let $changes;
 	let $doc;
 	let { max } = $$props;
@@ -2504,7 +2504,7 @@ class ChangeButton extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$9, create_fragment$a, safe_not_equal, {
+		init(this, options, instance$a, create_fragment$a, safe_not_equal, {
 			max: 0,
 			min: 1,
 			type: 2,
@@ -3241,7 +3241,7 @@ function create_fragment$9(ctx) {
 	};
 }
 
-function instance$8($$self, $$props, $$invalidate) {
+function instance$9($$self, $$props, $$invalidate) {
 	let $element;
 	let { max } = $$props;
 	let { val } = $$props;
@@ -3381,7 +3381,7 @@ class TDvariants extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$8, create_fragment$9, safe_not_equal, {
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, {
 			max: 0,
 			val: 2,
 			key: 3,
@@ -3687,7 +3687,7 @@ function create_fragment$8(ctx) {
 	};
 }
 
-function instance$7($$self, $$props, $$invalidate) {
+function instance$8($$self, $$props, $$invalidate) {
 	let $data;
 	let $element;
 	let { tabData } = $$props;
@@ -3778,7 +3778,7 @@ function instance$7($$self, $$props, $$invalidate) {
 class Attributes extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$7, create_fragment$8, safe_not_equal, { tabData: 0 });
+		init(this, options, instance$8, create_fragment$8, safe_not_equal, { tabData: 0 });
 	}
 }
 
@@ -4125,7 +4125,7 @@ function create_fragment$7(ctx) {
 	};
 }
 
-function instance$6($$self, $$props, $$invalidate) {
+function instance$7($$self, $$props, $$invalidate) {
 	let $element;
 	let $data;
 	let { tabs = [] } = $$props;
@@ -4174,7 +4174,7 @@ function instance$6($$self, $$props, $$invalidate) {
 class Tabs extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$6, create_fragment$7, safe_not_equal, { tabs: 1, activeTab: 0 });
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, { tabs: 1, activeTab: 0 });
 	}
 }
 
@@ -4265,7 +4265,7 @@ function create_fragment$6(ctx) {
 
 const activeTab = "attributes";
 
-function instance$5($$self, $$props, $$invalidate) {
+function instance$6($$self, $$props, $$invalidate) {
 	let $actorData;
 	let $changes;
 	let { document } = $$props;
@@ -4382,7 +4382,7 @@ function instance$5($$self, $$props, $$invalidate) {
 class Cha_adv_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$5, create_fragment$6, safe_not_equal, { document: 5 });
+		init(this, options, instance$6, create_fragment$6, safe_not_equal, { document: 5 });
 	}
 
 	get document() {
@@ -5880,7 +5880,7 @@ function SubmitSetting(setting, data) {
 	game.settings.set("ard20", setting, data);
 }
 
-function instance$4($$self, $$props, $$invalidate) {
+function instance$5($$self, $$props, $$invalidate) {
 	let { setting } = $$props;
 	let { data } = $$props;
 	const click_handler = () => SubmitSetting(setting, data);
@@ -5896,7 +5896,7 @@ function instance$4($$self, $$props, $$invalidate) {
 class SettingsSubmitButton extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$4, create_fragment$5, safe_not_equal, { setting: 0, data: 1 });
+		init(this, options, instance$5, create_fragment$5, safe_not_equal, { setting: 0, data: 1 });
 	}
 }
 
@@ -6358,7 +6358,7 @@ const dblclick_handler = e => {
 	e.target.previousElementSibling.select();
 };
 
-function instance$3($$self, $$props, $$invalidate) {
+function instance$4($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let data = game.settings.get("ard20", setting$3); //get setting
 	let funcList = Object.getOwnPropertyNames(math); //get all possible functions from math.js library
@@ -6511,7 +6511,7 @@ function instance$3($$self, $$props, $$invalidate) {
 class Advancement_rate_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$4, safe_not_equal, { elementRoot: 0 });
+		init(this, options, instance$4, create_fragment$4, safe_not_equal, { elementRoot: 0 });
 	}
 
 	get elementRoot() {
@@ -6911,7 +6911,7 @@ function create_fragment$3(ctx) {
 
 const setting$2 = "feat";
 
-function instance$2($$self, $$props, $$invalidate) {
+function instance$3($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let { data = game.settings.get("ard20", "feat") } = $$props;
 	console.log(data);
@@ -6979,7 +6979,7 @@ function instance$2($$self, $$props, $$invalidate) {
 class FeatSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$2, create_fragment$3, safe_not_equal, { elementRoot: 0, data: 1 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { elementRoot: 0, data: 1 });
 	}
 
 	get elementRoot() {
@@ -7669,7 +7669,7 @@ function create_fragment$2(ctx) {
 
 const setting$1 = "proficiencies";
 
-function instance$1($$self, $$props, $$invalidate) {
+function instance$2($$self, $$props, $$invalidate) {
 	let data = game.settings.get("ard20", "proficiencies");
 	console.log(data);
 
@@ -7802,7 +7802,7 @@ function instance$1($$self, $$props, $$invalidate) {
 class ProfSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$1, create_fragment$2, safe_not_equal, { elementRoot: 0 }, null, [-1, -1]);
+		init(this, options, instance$2, create_fragment$2, safe_not_equal, { elementRoot: 0 }, null, [-1, -1]);
 	}
 
 	get elementRoot() {
@@ -8113,7 +8113,7 @@ function create_fragment$1(ctx) {
 
 const setting = "profLevel";
 
-function instance($$self, $$props, $$invalidate) {
+function instance$1($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
 	let data = game.settings.get("ard20", "profLevel");
 
@@ -8173,7 +8173,7 @@ function instance($$self, $$props, $$invalidate) {
 class ProfLevelSetting_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment$1, safe_not_equal, { elementRoot: 0 });
+		init(this, options, instance$1, create_fragment$1, safe_not_equal, { elementRoot: 0 });
 	}
 
 	get elementRoot() {
@@ -8638,10 +8638,15 @@ function create_fragment(ctx) {
 	};
 }
 
+function instance($$self) {
+	console.log(this);
+	return [];
+}
+
 class ItemShell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, null, create_fragment, safe_not_equal, {});
+		init(this, options, instance, create_fragment, safe_not_equal, {});
 	}
 }
 
