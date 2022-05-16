@@ -15,4 +15,7 @@ export class SvelteItemSheet extends SvelteApplication{
         },
       });
     }
+    LogMethod(){
+      console.log(this)
+    }
   }
