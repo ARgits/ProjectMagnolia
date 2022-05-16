@@ -51,6 +51,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
   }
 }
 export class SvelteItemSheet extends SvelteDocumentSheet {
+  constructor(object={}, options={}){
+    super(options)
+    this.options.title = this.object.name
+  }
   get item(){
     return this.object
   }
@@ -66,7 +70,6 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
     else return super.id
   }
   static get defaultOptions() {
-    console.log(this.title,'deafultOptions')
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       minimizable: true,

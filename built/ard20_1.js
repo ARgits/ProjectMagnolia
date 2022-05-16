@@ -8827,6 +8827,11 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 }
 class SvelteItemSheet extends SvelteDocumentSheet {
+  constructor(object = {}, options = {}) {
+    super(options);
+    this.options.title = this.object.name;
+  }
+
   get item() {
     return this.object;
   }
@@ -8844,7 +8849,6 @@ class SvelteItemSheet extends SvelteDocumentSheet {
   }
 
   static get defaultOptions() {
-    console.log(this.title, 'deafultOptions');
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       minimizable: true,
