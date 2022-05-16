@@ -1,6 +1,6 @@
-import { obj_entries } from "../../ard20.js.js";
-import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js.js";
-import { FeatRequirements } from "../../helpers/feat_req.js.js";
+import { obj_entries } from "../../ard20.js";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js";
+import { FeatRequirements } from "../../helpers/feat_req.js";
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}

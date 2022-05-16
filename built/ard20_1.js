@@ -946,6 +946,268 @@ var dice = /*#__PURE__*/Object.freeze({
 });
 
 /**
+ * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
+ * @extends {Actor}
+ */
+
+class ARd20Actor extends Actor {
+  //@ts-check
+
+  /** @override */
+  prepareData() {
+    // Prepare data for the actor. Calling the super version of this executes
+    // the following, in order: data reset (to clear active effects),
+    // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
+    // prepareDerivedData().
+    super.prepareData();
+    this.items.forEach(item => item.prepareFinalAttributes());
+  }
+  /**
+   * @override
+   * Augment the basic actor data with additional dynamic data. Typically,
+   * you'll want to handle most of your calculated/derived data in this step.
+   * Data calculated in this step should generally not exist in template.json
+   * (such as ability modifiers rather than ability scores) and should be
+   * available both inside and outside of character sheets (such as if an actor
+   * is queried and has a roll executed directly from it).
+   */
+
+
+  prepareDerivedData() {
+    const actorData = this.data; // Make separate methods for each Actor type (character, npc, etc.) to keep
+    // things organized.
+
+    this._prepareCharacterData(actorData);
+
+    this._prepareNpcData(actorData);
+  }
+  /**
+   * Prepare Character type specific data
+   */
+
+
+  _prepareCharacterData(actorData) {
+    var _this$itemTypes$race$;
+
+    if (actorData.type !== "character") return; // Make modifications to data here. For example:
+
+    const data = actorData.data;
+    const attributes = data.attributes;
+    const advancement = data.advancement;
+    const def_stats = data.defences.stats;
+    const def_dam = data.defences.damage;
+    const proficiencies = data.proficiencies;
+    data.mobility.value = 0;
+    this.itemTypes.armor.forEach(item => {
+      if (item.data.type === "armor") {
+        if (item.data.data.equipped) {
+          for (let key of obj_keys(def_dam.phys)) {
+            let ph = item.data.data.res.phys[key];
+            def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
+          }
+
+          for (let key of obj_keys(def_dam.mag)) {
+            let mg = item.data.data.res.mag[key];
+            def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
+          }
+
+          data.mobility.value += item.data.data.mobility.value;
+        }
+      }
+    });
+    data.mobility.value += data.mobility.bonus; // Loop through ability scores, and add their modifiers to our sheet output.
+
+    for (let ability of Object.values(attributes)) {
+      // Calculate the modifier using d20 rules.
+      ability.total = ability.value + ability.bonus;
+      ability.mod = Math.floor((ability.value - 10) / 2);
+    }
+
+    let dexMod = data.mobility.value < 10 ? attributes.dex.mod : data.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
+
+    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
+
+    if (advancement.xp.used) {
+      var _advancement$xp$used;
+
+      advancement.xp.used = (_advancement$xp$used = advancement.xp.used) !== null && _advancement$xp$used !== void 0 ? _advancement$xp$used : 0;
+    }
+
+    for (let i = 1; i < 21; i++) {
+      if (advancement.xp.used >= levels[i - 1] && advancement.xp.used < levels[i]) {
+        advancement.level = i;
+        advancement.xp.level = levels[i];
+        advancement.xp.level_min = levels[i - 1];
+      }
+    }
+
+    advancement.xp.bar_max = advancement.xp.level - advancement.xp.level_min;
+    advancement.xp.bar_min = advancement.xp.used - advancement.xp.level_min;
+    def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
+    def_stats.reflex.label = "Reflex";
+    def_stats.fortitude.value = 10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
+    def_stats.fortitude.label = "Fortitude";
+    def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
+    def_stats.will.label = "Will";
+
+    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+      var _def_dam$mag$key, _def_dam$mag$key2, _def_dam$mag$key3, _def_dam$mag$key4, _game$i18n$localize2;
+
+      if (!(key === "force" || key === "radiant" || key === "psychic")) {
+        var _def_dam$phys$key, _def_dam$phys$key2, _def_dam$phys$key3, _def_dam$phys$key4, _game$i18n$localize;
+
+        def_dam.phys[key].value = (_def_dam$phys$key = def_dam.phys[key]) !== null && _def_dam$phys$key !== void 0 && _def_dam$phys$key.value || !((_def_dam$phys$key2 = def_dam.phys[key]) !== null && _def_dam$phys$key2 !== void 0 && _def_dam$phys$key2.immune) ? Math.max(isNaN((_def_dam$phys$key3 = def_dam.phys[key]) === null || _def_dam$phys$key3 === void 0 ? void 0 : _def_dam$phys$key3.value) ? 0 : def_dam.phys[key].value) + ((_def_dam$phys$key4 = def_dam.phys[key]) === null || _def_dam$phys$key4 === void 0 ? void 0 : _def_dam$phys$key4.bonus) : 0;
+        def_dam.phys[key].name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.DamageSubTypes[key];
+      }
+
+      def_dam.mag[key].value = (_def_dam$mag$key = def_dam.mag[key]) !== null && _def_dam$mag$key !== void 0 && _def_dam$mag$key.value || !((_def_dam$mag$key2 = def_dam.mag[key]) !== null && _def_dam$mag$key2 !== void 0 && _def_dam$mag$key2.immune) ? Math.max(isNaN((_def_dam$mag$key3 = def_dam.mag[key]) === null || _def_dam$mag$key3 === void 0 ? void 0 : _def_dam$mag$key3.value) ? 0 : def_dam.mag[key].value) + ((_def_dam$mag$key4 = def_dam.mag[key]) === null || _def_dam$mag$key4 === void 0 ? void 0 : _def_dam$mag$key4.bonus) : 0;
+      def_dam.mag[key].name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.DamageSubTypes[key];
+    }
+
+    const profLevelSetting = game.settings.get("ard20", "profLevel");
+    const maxProfLevel = profLevelSetting.length - 1; //calculate rolls for character's skills
+
+    for (let [key, skill] of obj_entries(data.skills)) {
+      var _game$i18n$localize3;
+
+      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
+      skill.value = skill.level * 4 + skill.bonus;
+      skill.name = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Skills[key];
+      skill.rankName = profLevelSetting[skill.level].label;
+    }
+
+    proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
+      var _proficiencies$weapon, _proficiencies$weapon2, _proficiencies$weapon3, _proficiencies$weapon4;
+
+      return {
+        name: setting.name,
+        type: setting.type,
+        value: (_proficiencies$weapon = (_proficiencies$weapon2 = proficiencies.weapon[key]) === null || _proficiencies$weapon2 === void 0 ? void 0 : _proficiencies$weapon2.value) !== null && _proficiencies$weapon !== void 0 ? _proficiencies$weapon : 0,
+        rankName: profLevelSetting[(_proficiencies$weapon3 = (_proficiencies$weapon4 = proficiencies.weapon[key]) === null || _proficiencies$weapon4 === void 0 ? void 0 : _proficiencies$weapon4.value) !== null && _proficiencies$weapon3 !== void 0 ? _proficiencies$weapon3 : 0].label
+      };
+    });
+    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
+    data.speed.value += attributes.dex.mod + data.speed.bonus;
+  }
+  /**
+   * Prepare NPC type specific data.
+   */
+
+
+  _prepareNpcData(actorData) {
+    //@ts-expect-error
+    if (actorData.type !== "npc") return; // Make modifications to data here. For example:
+
+    const data = actorData.data; //@ts-expect-error
+
+    data.xp = data.cr * data.cr * 100;
+  }
+  /**
+   * Override getRollData() that's supplied to rolls.
+   */
+
+
+  getRollData() {
+    const data = super.getRollData(); // Prepare character roll data.
+
+    return data;
+  }
+  /**
+   * Roll an Attribute Test
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * @param {Number} attributeId    The ability ID (e.g. "str")
+   * @param {Object} options      Options which configure how ability tests are rolled
+   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   */
+
+
+  rollAttributeTest(attributeId, options) {
+    var _options$parts;
+
+    const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
+    const actorData = this.data.data;
+    const attributes = actorData.attributes;
+    const attr = getValues(attributes, attributeId); // Construct parts
+
+    const parts = ["@mod"];
+    const data = {
+      mod: attr.mod
+    }; // Add provided extra roll parts now because they will get clobbered by mergeObject below
+
+    if ((options === null || options === void 0 ? void 0 : (_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
+      parts.push(...options.parts);
+    } // Roll and return
+
+
+    const rollData = foundry.utils.mergeObject(options, {
+      parts: parts,
+      data: data,
+      title: game.i18n.format("ARd20.AttributePromptTitle", {
+        attribute: label
+      }),
+      messageData: {
+        speaker: options.speaker || ChatMessage.getSpeaker({
+          actor: this
+        }),
+        "flags.ard20.roll": {
+          type: "attribute",
+          attributeId
+        }
+      }
+    }); //@ts-expect-error
+
+    return d20Roll(rollData);
+  }
+  /**
+   * Roll a Skill Check
+   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
+   * @param {string} skillId      The skill id (e.g. "ins")
+   * @param {Object} options      Options which configure how the skill check is rolled
+   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
+   */
+
+
+  rollSkill(skillId, options) {
+    var _options$parts2;
+
+    console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
+    const skl = getValues(this.data.data.skills, skillId); // Compose roll parts and data
+
+    const parts = ["@proficiency", "@mod"];
+    const data = {
+      attributes: this.getRollData().attributes,
+      proficiency: skl.value
+    }; // Add provided extra roll parts now because they will get clobbered by mergeObject below
+
+    if (((_options$parts2 = options.parts) === null || _options$parts2 === void 0 ? void 0 : _options$parts2.length) > 0) {
+      parts.push(...options.parts);
+    } // Roll and return
+
+
+    const rollData = foundry.utils.mergeObject(options, {
+      parts: parts,
+      data: data,
+      title: game.i18n.format("ARd20.SkillPromptTitle", {
+        skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId))
+      }),
+      messageData: {
+        speaker: options.speaker || ChatMessage.getSpeaker({
+          actor: this
+        }),
+        "flags.ard20.roll": {
+          type: "skill",
+          skillId
+        }
+      },
+      chooseModifier: true
+    }); //@ts-expect-error
+
+    return d20Roll(rollData);
+  }
+
+}
+
+/**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
@@ -1069,8 +1331,8 @@ class ARd20Item extends Item {
     }
 
     data.sub_type = data.sub_type_array.filter(prof => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, data.proficiency.level))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : getValues$1(CONFIG.ARd20.Rank, data.proficiency.level);
-    data.type.name = (_game$i18n$localize2 = game.i18n.localize(getValues$1(CONFIG.ARd20.Rank, data.type.value))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : getValues$1(CONFIG.ARd20.Rank, data.type.value);
+    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : getValues(CONFIG.ARd20.Rank, data.proficiency.level);
+    data.type.name = (_game$i18n$localize2 = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : getValues(CONFIG.ARd20.Rank, data.type.value);
   }
   /**
    *Prepare data for features
@@ -1083,7 +1345,7 @@ class ARd20Item extends Item {
 
     data.source.label = "";
     data.source.value.forEach((value, key) => {
-      let label = game.i18n.localize(getValues$1(CONFIG.ARd20.Source, value));
+      let label = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
       data.source.label += key === 0 ? label : `</br>${label}`;
     }); //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
     //define levels
@@ -1119,14 +1381,14 @@ class ARd20Item extends Item {
 
       switch (req.type) {
         case "ability":
-          for (let [_key, v] of obj_entries$1(CONFIG.ARd20.Attributes)) {
+          for (let [_key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[_key])) req.value = _key;
           }
 
           break;
 
         case "skill":
-          for (let [_key2, v] of obj_entries$1(CONFIG.ARd20.Skills)) {
+          for (let [_key2, v] of obj_entries(CONFIG.ARd20.Skills)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[_key2])) req.value = _key2;
           }
 
@@ -1165,7 +1427,7 @@ class ARd20Item extends Item {
     if (itemData.type !== "armor") return;
     const data = itemData.data;
 
-    for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
         data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
@@ -1188,7 +1450,7 @@ class ARd20Item extends Item {
 
     const abil = itemData.abil = {};
 
-    for (let [k, v] of obj_entries$1(CONFIG.ARd20.Attributes)) {
+    for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
       abil[k] = this.isOwned ? getProperty(this.actor.data, `data.attributes.${k}.mod`) : null;
     }
 
@@ -4290,11 +4552,11 @@ class ARd20ActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Handle attribute scores.
-    for (let [k, v] of obj_entries$1(context.data.attributes)) {
+    for (let [k, v] of obj_entries(context.data.attributes)) {
       var _game$i18n$localize;
 
       //@ts-expect-error
-      v.label = (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
+      v.label = (_game$i18n$localize = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
     /*for (let [k, v] of obj_entries(context.data.skills)) {
       //@ts-expect-error
@@ -4912,17 +5174,17 @@ class FeatRequirements extends FormApplication {
       var _game$i18n$localize;
 
       data.push({
-        name: (_game$i18n$localize = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k,
+        name: (_game$i18n$localize = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k,
         value: k,
         type: "attribute"
       });
     }
 
-    for (let [k, v] of obj_entries$1(CONFIG.ARd20.Skills)) {
+    for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
       var _game$i18n$localize2;
 
       data.push({
-        name: (_game$i18n$localize2 = game.i18n.localize(getValues$1(CONFIG.ARd20.Skills, k))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k,
+        name: (_game$i18n$localize2 = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k,
         value: k,
         type: "skill"
       });
@@ -5067,7 +5329,7 @@ class FeatRequirements extends FormApplication {
     const req = this.options.data.req;
     let sub_list = []; //temporary list with attributes
 
-    for (let [k, i] of obj_entries$1(CONFIG.ARd20.Attributes)) {
+    for (let [k, i] of obj_entries(CONFIG.ARd20.Attributes)) {
       sub_list.push(k);
     } //create varible for easier access to maximum level of feature
 
@@ -5236,8 +5498,8 @@ class ARd20ItemSheet extends ItemSheet {
           return [d[0] || "", a];
         });
       } else {
-        for (let [key, type] of obj_entries$1(damage)) {
-          for (let [k, prof] of obj_entries$1(type)) {
+        for (let [key, type] of obj_entries(damage)) {
+          for (let [k, prof] of obj_entries(type)) {
             prof.damType = Object.values((prof === null || prof === void 0 ? void 0 : prof.damType) || {});
             prof.parts = Object.values((prof === null || prof === void 0 ? void 0 : prof.parts) || {}).map(function (d, ind) {
               let a = [];
@@ -8354,7 +8616,7 @@ function applyChatCardDamage(li, multiplier) {
 }
 /* -------------------------------------------- */
 
-/* built\sheets\ItemShell.svelte generated by Svelte v3.46.5 */
+/* built\sheets\svelte\ItemShell.svelte generated by Svelte v3.46.5 */
 
 function create_fragment(ctx) {
 	let div;
@@ -8383,6 +8645,23 @@ class ItemShell extends SvelteComponent {
 	}
 }
 
+class SvelteItemSheet extends SvelteApplication {
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["ard20"],
+      title: "Spell Sheet",
+      minimizable: true,
+      resizable: true,
+      width: 600,
+      height: 600,
+      svelte: {
+        class: ItemShell
+      }
+    });
+  }
+
+}
+
 // Import document classes.
 /* -------------------------------------------- */
 
@@ -8390,13 +8669,19 @@ class ItemShell extends SvelteComponent {
 
 /* -------------------------------------------- */
 
-function obj_entries$1(obj) {
+function obj_entries(obj) {
   return Object.entries(obj);
 }
-function getValues$1(SourceObject, key) {
+function arr_entries(arr) {
+  return Object.entries(arr);
+}
+function getValues(SourceObject, key) {
   return SourceObject[key];
 }
-function obj_keys$1(obj) {
+function obj_keys(obj) {
+  return Object.keys(obj);
+}
+function array_keys(obj) {
   return Object.keys(obj);
 }
 Hooks.once("init", async function () {
@@ -8408,7 +8693,7 @@ Hooks.once("init", async function () {
         ARd20Actor,
         ARd20Item
       },
-      rollItemMacro: rollItemMacro$1,
+      rollItemMacro,
       config: ARd20,
       dice: dice
     }; // Add custom constants for configuration.
@@ -8497,478 +8782,6 @@ Hooks.once("ready", async function () {
   } // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
 
 
-  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro$1(data, slot));
-});
-/* -------------------------------------------- */
-
-/*  Hotbar Macros                               */
-
-/* -------------------------------------------- */
-
-/**
- * Create a Macro from an Item drop.
- * Get an existing item macro if one exists, otherwise create a new one.
- * @param {Object} data     The dropped data
- * @param {number} slot     The hotbar slot to use
- * @returns {Promise}
- */
-
-async function createItemMacro$1(data, slot) {
-  if (game instanceof Game) {
-    //@ts-expect-error
-    if (data.type !== "Item") return;
-    if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items"); //@ts-expect-error
-
-    const item = data.data; // Create the macro command
-
-    const command = `game.ard20.rollItemMacro("${item.name}");`;
-    let macroList = game.macros.contents.filter(m => m.name === item.name && (m === null || m === void 0 ? void 0 : m.command) === command);
-    let macroCheck = macroList.length !== 0 ? macroList[0] : null;
-
-    if (macroCheck !== null) {
-      let macro = await Macro.create({
-        name: item.name,
-        type: "script",
-        img: item.img,
-        command: command,
-        flags: {
-          "ard20.itemMacro": true
-        }
-      });
-
-      if (macro instanceof Macro) {
-        var _game$user;
-
-        (_game$user = game.user) === null || _game$user === void 0 ? void 0 : _game$user.assignHotbarMacro(macro, slot);
-      }
-    }
-
-    return false;
-  }
-}
-/**
- * Create a Macro from an Item drop.
- * Get an existing item macro if one exists, otherwise create a new one.
- * @param {string} itemName
- * @return {Promise}
- */
-
-
-function rollItemMacro$1(itemName) {
-  if (game instanceof Game) {
-    const speaker = ChatMessage.getSpeaker();
-    let actor;
-    if (speaker.token) actor = game.actors.tokens[speaker.token];
-    if (!actor && typeof speaker.actor === "string") actor = game.actors.get(speaker.actor);
-    const item = actor ? actor.items.find(i => i.name === itemName) : null;
-    if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`); // Trigger the item roll
-    //@ts-expect-error
-
-    return item.roll();
-  }
-}
-Hooks.on("renderChatMessage", (app, html, data) => {
-  // Display action buttons
-  displayChatActionButtons(app, html, data); // Highlight critical success or failure die
-
-  highlightCriticalSuccessFailure(app, html); // Optionally collapse the content
-});
-Hooks.on("getChatLogEntryContext", addChatMessageContextOptions); //@ts-expect-error
-
-Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); //@ts-expect-error
-
-Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
-
-class SvelteItemSheet extends SvelteApplication {
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      title: "Spell Sheet",
-      minimizable: true,
-      resizable: true,
-      width: 600,
-      height: 600,
-      svelte: {
-        class: ItemShell
-      }
-    });
-  }
-
-}
-
-/**
- * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
- * @extends {Actor}
- */
-
-class ARd20Actor extends Actor {
-  //@ts-check
-
-  /** @override */
-  prepareData() {
-    // Prepare data for the actor. Calling the super version of this executes
-    // the following, in order: data reset (to clear active effects),
-    // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
-    // prepareDerivedData().
-    super.prepareData();
-    this.items.forEach(item => item.prepareFinalAttributes());
-  }
-  /**
-   * @override
-   * Augment the basic actor data with additional dynamic data. Typically,
-   * you'll want to handle most of your calculated/derived data in this step.
-   * Data calculated in this step should generally not exist in template.json
-   * (such as ability modifiers rather than ability scores) and should be
-   * available both inside and outside of character sheets (such as if an actor
-   * is queried and has a roll executed directly from it).
-   */
-
-
-  prepareDerivedData() {
-    const actorData = this.data; // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
-
-    this._prepareCharacterData(actorData);
-
-    this._prepareNpcData(actorData);
-  }
-  /**
-   * Prepare Character type specific data
-   */
-
-
-  _prepareCharacterData(actorData) {
-    var _this$itemTypes$race$;
-
-    if (actorData.type !== "character") return; // Make modifications to data here. For example:
-
-    const data = actorData.data;
-    const attributes = data.attributes;
-    const advancement = data.advancement;
-    const def_stats = data.defences.stats;
-    const def_dam = data.defences.damage;
-    const proficiencies = data.proficiencies;
-    data.mobility.value = 0;
-    this.itemTypes.armor.forEach(item => {
-      if (item.data.type === "armor") {
-        if (item.data.data.equipped) {
-          for (let key of obj_keys$1(def_dam.phys)) {
-            let ph = item.data.data.res.phys[key];
-            def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
-          }
-
-          for (let key of obj_keys$1(def_dam.mag)) {
-            let mg = item.data.data.res.mag[key];
-            def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
-          }
-
-          data.mobility.value += item.data.data.mobility.value;
-        }
-      }
-    });
-    data.mobility.value += data.mobility.bonus; // Loop through ability scores, and add their modifiers to our sheet output.
-
-    for (let ability of Object.values(attributes)) {
-      // Calculate the modifier using d20 rules.
-      ability.total = ability.value + ability.bonus;
-      ability.mod = Math.floor((ability.value - 10) / 2);
-    }
-
-    let dexMod = data.mobility.value < 10 ? attributes.dex.mod : data.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
-
-    const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
-
-    if (advancement.xp.used) {
-      var _advancement$xp$used;
-
-      advancement.xp.used = (_advancement$xp$used = advancement.xp.used) !== null && _advancement$xp$used !== void 0 ? _advancement$xp$used : 0;
-    }
-
-    for (let i = 1; i < 21; i++) {
-      if (advancement.xp.used >= levels[i - 1] && advancement.xp.used < levels[i]) {
-        advancement.level = i;
-        advancement.xp.level = levels[i];
-        advancement.xp.level_min = levels[i - 1];
-      }
-    }
-
-    advancement.xp.bar_max = advancement.xp.level - advancement.xp.level_min;
-    advancement.xp.bar_min = advancement.xp.used - advancement.xp.level_min;
-    def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
-    def_stats.reflex.label = "Reflex";
-    def_stats.fortitude.value = 10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
-    def_stats.fortitude.label = "Fortitude";
-    def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
-    def_stats.will.label = "Will";
-
-    for (let [key, dr] of obj_entries$1(CONFIG.ARd20.DamageSubTypes)) {
-      var _def_dam$mag$key, _def_dam$mag$key2, _def_dam$mag$key3, _def_dam$mag$key4, _game$i18n$localize2;
-
-      if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        var _def_dam$phys$key, _def_dam$phys$key2, _def_dam$phys$key3, _def_dam$phys$key4, _game$i18n$localize;
-
-        def_dam.phys[key].value = (_def_dam$phys$key = def_dam.phys[key]) !== null && _def_dam$phys$key !== void 0 && _def_dam$phys$key.value || !((_def_dam$phys$key2 = def_dam.phys[key]) !== null && _def_dam$phys$key2 !== void 0 && _def_dam$phys$key2.immune) ? Math.max(isNaN((_def_dam$phys$key3 = def_dam.phys[key]) === null || _def_dam$phys$key3 === void 0 ? void 0 : _def_dam$phys$key3.value) ? 0 : def_dam.phys[key].value) + ((_def_dam$phys$key4 = def_dam.phys[key]) === null || _def_dam$phys$key4 === void 0 ? void 0 : _def_dam$phys$key4.bonus) : 0;
-        def_dam.phys[key].name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.DamageSubTypes[key];
-      }
-
-      def_dam.mag[key].value = (_def_dam$mag$key = def_dam.mag[key]) !== null && _def_dam$mag$key !== void 0 && _def_dam$mag$key.value || !((_def_dam$mag$key2 = def_dam.mag[key]) !== null && _def_dam$mag$key2 !== void 0 && _def_dam$mag$key2.immune) ? Math.max(isNaN((_def_dam$mag$key3 = def_dam.mag[key]) === null || _def_dam$mag$key3 === void 0 ? void 0 : _def_dam$mag$key3.value) ? 0 : def_dam.mag[key].value) + ((_def_dam$mag$key4 = def_dam.mag[key]) === null || _def_dam$mag$key4 === void 0 ? void 0 : _def_dam$mag$key4.bonus) : 0;
-      def_dam.mag[key].name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.DamageSubTypes[key];
-    }
-
-    const profLevelSetting = game.settings.get("ard20", "profLevel");
-    const maxProfLevel = profLevelSetting.length - 1; //calculate rolls for character's skills
-
-    for (let [key, skill] of obj_entries$1(data.skills)) {
-      var _game$i18n$localize3;
-
-      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
-      skill.value = skill.level * 4 + skill.bonus;
-      skill.name = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.Skills[key];
-      skill.rankName = profLevelSetting[skill.level].label;
-    }
-
-    proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
-      var _proficiencies$weapon, _proficiencies$weapon2, _proficiencies$weapon3, _proficiencies$weapon4;
-
-      return {
-        name: setting.name,
-        type: setting.type,
-        value: (_proficiencies$weapon = (_proficiencies$weapon2 = proficiencies.weapon[key]) === null || _proficiencies$weapon2 === void 0 ? void 0 : _proficiencies$weapon2.value) !== null && _proficiencies$weapon !== void 0 ? _proficiencies$weapon : 0,
-        rankName: profLevelSetting[(_proficiencies$weapon3 = (_proficiencies$weapon4 = proficiencies.weapon[key]) === null || _proficiencies$weapon4 === void 0 ? void 0 : _proficiencies$weapon4.value) !== null && _proficiencies$weapon3 !== void 0 ? _proficiencies$weapon3 : 0].label
-      };
-    });
-    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
-    data.speed.value += attributes.dex.mod + data.speed.bonus;
-  }
-  /**
-   * Prepare NPC type specific data.
-   */
-
-
-  _prepareNpcData(actorData) {
-    //@ts-expect-error
-    if (actorData.type !== "npc") return; // Make modifications to data here. For example:
-
-    const data = actorData.data; //@ts-expect-error
-
-    data.xp = data.cr * data.cr * 100;
-  }
-  /**
-   * Override getRollData() that's supplied to rolls.
-   */
-
-
-  getRollData() {
-    const data = super.getRollData(); // Prepare character roll data.
-
-    return data;
-  }
-  /**
-   * Roll an Attribute Test
-   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {Number} attributeId    The ability ID (e.g. "str")
-   * @param {Object} options      Options which configure how ability tests are rolled
-   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
-   */
-
-
-  rollAttributeTest(attributeId, options) {
-    var _options$parts;
-
-    const label = game.i18n.localize(getValues$1(CONFIG.ARd20.Attributes, attributeId));
-    const actorData = this.data.data;
-    const attributes = actorData.attributes;
-    const attr = getValues$1(attributes, attributeId); // Construct parts
-
-    const parts = ["@mod"];
-    const data = {
-      mod: attr.mod
-    }; // Add provided extra roll parts now because they will get clobbered by mergeObject below
-
-    if ((options === null || options === void 0 ? void 0 : (_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
-      parts.push(...options.parts);
-    } // Roll and return
-
-
-    const rollData = foundry.utils.mergeObject(options, {
-      parts: parts,
-      data: data,
-      title: game.i18n.format("ARd20.AttributePromptTitle", {
-        attribute: label
-      }),
-      messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({
-          actor: this
-        }),
-        "flags.ard20.roll": {
-          type: "attribute",
-          attributeId
-        }
-      }
-    }); //@ts-expect-error
-
-    return d20Roll(rollData);
-  }
-  /**
-   * Roll a Skill Check
-   * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
-   * @param {string} skillId      The skill id (e.g. "ins")
-   * @param {Object} options      Options which configure how the skill check is rolled
-   * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
-   */
-
-
-  rollSkill(skillId, options) {
-    var _options$parts2;
-
-    console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
-    const skl = getValues$1(this.data.data.skills, skillId); // Compose roll parts and data
-
-    const parts = ["@proficiency", "@mod"];
-    const data = {
-      attributes: this.getRollData().attributes,
-      proficiency: skl.value
-    }; // Add provided extra roll parts now because they will get clobbered by mergeObject below
-
-    if (((_options$parts2 = options.parts) === null || _options$parts2 === void 0 ? void 0 : _options$parts2.length) > 0) {
-      parts.push(...options.parts);
-    } // Roll and return
-
-
-    const rollData = foundry.utils.mergeObject(options, {
-      parts: parts,
-      data: data,
-      title: game.i18n.format("ARd20.SkillPromptTitle", {
-        skill: game.i18n.localize(getValues$1(CONFIG.ARd20.Skills, skillId))
-      }),
-      messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({
-          actor: this
-        }),
-        "flags.ard20.roll": {
-          type: "skill",
-          skillId
-        }
-      },
-      chooseModifier: true
-    }); //@ts-expect-error
-
-    return d20Roll(rollData);
-  }
-
-}
-
-// Import document classes.
-/* -------------------------------------------- */
-
-/*  Init Hook                                   */
-
-/* -------------------------------------------- */
-
-function obj_entries(obj) {
-  return Object.entries(obj);
-}
-function arr_entries(arr) {
-  return Object.entries(arr);
-}
-function getValues(SourceObject, key) {
-  return SourceObject[key];
-}
-function obj_keys(obj) {
-  return Object.keys(obj);
-}
-function array_keys(obj) {
-  return Object.keys(obj);
-}
-Hooks.once("init", async function () {
-  // Add utility classes to the global game object so that they're more easily
-  // accessible in global contexts.
-  if (game instanceof Game) {
-    game.ard20 = {
-      documents: {
-        ARd20Actor,
-        ARd20Item
-      },
-      rollItemMacro,
-      config: ARd20,
-      dice: dice
-    }; // Add custom constants for configuration.
-
-    CONFIG.ARd20 = ARd20; //@ts-expect-error
-
-    CONFIG.Dice.DamageRoll = DamageRoll; //@ts-expect-error
-
-    CONFIG.Dice.D20Roll = D20Roll;
-    CONFIG.Dice.rolls.push(D20Roll);
-    CONFIG.Dice.rolls.push(DamageRoll);
-
-    if (game.socket instanceof io.Socket) {
-      game.socket.on("system.ard20", data => {
-        if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
-      });
-    }
-    /**
-     * Set an initiative formula for the system
-     * @type {String}
-     */
-
-
-    CONFIG.Combat.initiative = {
-      formula: "1d20 + @abilities.dex.mod",
-      decimals: 2
-    }; // Define custom Document classes
-
-    CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
-
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("ard20", ARd20ActorSheet, {
-      makeDefault: true
-    });
-    Items.unregisterSheet("core", ItemSheet); //@ts-expect-error
-
-    Items.registerSheet("ard20", ARd20ItemSheet, {
-      makeDefault: true
-    });
-    registerSystemSettings(); // Preload Handlebars templates.
-
-    return preloadHandlebarsTemplates();
-  } else {
-    throw new Error("game not initialized yet!");
-  }
-});
-/* -------------------------------------------- */
-
-/*  Handlebars Helpers                          */
-
-/* -------------------------------------------- */
-// If you need to add Handlebars helpers, here are a few useful examples:
-
-Handlebars.registerHelper("concat", function () {
-  var outStr = "";
-
-  for (var arg in arguments) {
-    if (typeof arguments[arg] != "object") {
-      outStr += arguments[arg];
-    }
-  }
-
-  return outStr;
-});
-Handlebars.registerHelper("toLowerCase", function (str) {
-  return str.toLowerCase();
-});
-Handlebars.registerHelper("add", function (value1, value2) {
-  return Number(value1) + Number(value2);
-});
-/* -------------------------------------------- */
-
-/*  Ready Hook                                  */
-
-/* -------------------------------------------- */
-
-Hooks.once("ready", async function () {
-  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });
 /* -------------------------------------------- */

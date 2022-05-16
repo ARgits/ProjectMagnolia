@@ -1,6 +1,6 @@
-import ItemShell from "./sheets/svelte/ItemShell.svelte"
+import ItemShell from "../svelte/ItemShell.svelte"
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
-class SvelteItemSheet extends SvelteApplication{
+export class SvelteItemSheet extends SvelteApplication{
     static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["ard20"],
