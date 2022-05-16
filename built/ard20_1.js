@@ -8886,6 +8886,14 @@ class SvelteItemSheet extends SvelteDocumentSheet {
     return data;
   }
 
+  async close(options = {}) {
+    super.close();
+
+    for (const app of Object.values(this.apps)) {
+      app.close();
+    }
+  }
+
 }
 
 // Import document classes.
