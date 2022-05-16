@@ -30,7 +30,7 @@
     }
   }
   //set position for divs with span
-  onMount(() => {
+  function changeDivPosition() {
     for (let elem of elementRoot.querySelectorAll("input.transparent")) {
       let div = elem.nextElementSibling.style;
       div.margin = getComputedStyle(elem).margin;
@@ -40,6 +40,11 @@
       div.border = getComputedStyle(elem).border;
       div["border-color"] = "transparent";
       console.log(div.top, div.left);
+    }
+  }
+  onMount(async () => {
+    for (let param in paramArr) {
+      await validateInput(formulaInput[param].value, param);
     }
   });
   /**
@@ -75,21 +80,23 @@
           formulaSet[type].set.add(item.name);
 
           //get last index of changed word
-          let lastSpan = formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
+          let lastSpan =
+            formulaSpan[type].lastIndexOf("</span>") > 0 ? formulaSpan[type].lastIndexOf("</span>") + 8 : -1;
 
           //get new index of word
           let wordLastIndex = item.index + formulaSpan[type].length - val.length;
-          formulaSpan[type] = replaceStrAt(formulaSpan[type], Math.max(lastSpan, wordLastIndex), `<span style="color:red">${item.name}</span>`, item.name.length);
+          formulaSpan[type] = replaceStrAt(
+            formulaSpan[type],
+            Math.max(lastSpan, wordLastIndex),
+            `<span style="color:red">${item.name}</span>`,
+            item.name.length
+          );
         }
       }
     }
     formulaSet[type].check = formulaSet[type].set.size > 0;
     await tick();
-    for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-      let div = elem.nextElementSibling.style;
-      div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
-      div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
-    }
+    changeDivPosition();
   }
 </script>
 
