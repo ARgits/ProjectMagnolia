@@ -8621,27 +8621,17 @@ function applyChatCardDamage(li, multiplier) {
 
 function create_default_slot(ctx) {
 	let div;
-	let t1;
-	let t2_value = (console.log(this), '') + "";
-	let t2;
 
 	return {
 		c() {
 			div = element("div");
 			div.textContent = "blank sheet";
-			t1 = space();
-			t2 = text(t2_value);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
-			insert(target, t1, anchor);
-			insert(target, t2, anchor);
 		},
-		p: noop,
 		d(detaching) {
 			if (detaching) detach(div);
-			if (detaching) detach(t1);
-			if (detaching) detach(t2);
 		}
 	};
 }
@@ -8739,7 +8729,7 @@ class ItemShell extends SvelteComponent {
 
 class SvelteItemSheet extends SvelteApplication {
   static get defaultOptions() {
-    console.log(this);
+    console.log(this.options);
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       title: "sheet",
