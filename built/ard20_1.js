@@ -8727,6 +8727,11 @@ class ItemShell extends SvelteComponent {
 }
 
 class SvelteItemSheet extends SvelteApplication {
+  constructor(object = {}, options = {}) {
+    super(options);
+    this.object = object;
+  }
+
   static get defaultOptions() {
     console.log(this.object);
     return foundry.utils.mergeObject(super.defaultOptions, {
