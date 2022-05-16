@@ -8889,7 +8889,7 @@ class SvelteItemSheet extends SvelteDocumentSheet {
   async close(options = {}) {
     super.close();
 
-    for (const app of Object.values(this.apps)) {
+    for (const app of Object.values(this.object.apps)) {
       app.close();
     }
   }
