@@ -8639,7 +8639,7 @@ function create_fragment(ctx) {
 }
 
 function instance($$self) {
-	console.log(this);
+	Logging();
 	return [];
 }
 
@@ -8663,6 +8663,10 @@ class SvelteItemSheet extends SvelteApplication {
         class: ItemShell
       }
     });
+  }
+
+  Logging() {
+    console.log(this);
   }
 
 }

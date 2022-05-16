@@ -1,4 +1,4 @@
 <script>
-    console.log(this)
+    Logging()
 </script>
 <div>blank sheet</div>
