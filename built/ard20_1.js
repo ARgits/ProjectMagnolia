@@ -8697,7 +8697,7 @@ function create_fragment(ctx) {
 
 function instance($$self, $$props, $$invalidate) {
 	let { elementRoot } = $$props;
-	console.log(elementRoot, this);
+	console.log(elementRoot, this, getContext('external'));
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;

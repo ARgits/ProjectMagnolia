@@ -2,8 +2,9 @@
 
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  import { getContext, setContext } from "svelte";
   export let elementRoot;
-  console.log(elementRoot,this)
+  console.log(elementRoot,this,getContext('external'))
 </script>
 
 <ApplicationShell bind:elementRoot>
