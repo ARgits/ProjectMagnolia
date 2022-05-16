@@ -39,6 +39,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   getData(options) {
     const data = this.document.data.toObject(false);
     const isEditable = this.isEditable;
+    console.log(this.title,'svelteDocumentSheet this.title')
     return {
       cssClass: isEditable ? "editable" : "locked",
       editable: isEditable,
@@ -83,7 +84,6 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
   }
 
   getData(options = {}) {
-    console.log(this.title,'getData')
     console.log(options,'getData options')
     console.log(this.reactive,'this.reactive')
     const data = super.getData(options)
