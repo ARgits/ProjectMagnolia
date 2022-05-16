@@ -8721,19 +8721,16 @@ class SvelteItemSheet extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
-      title: "Spell Sheet",
+      title: "sheet",
       minimizable: true,
       resizable: true,
       width: 600,
       height: 600,
       svelte: {
-        class: ItemShell
+        class: ItemShell,
+        target: document.body
       }
     });
-  }
-
-  Logging() {
-    console.log(this);
   }
 
 }
