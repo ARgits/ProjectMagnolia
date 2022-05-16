@@ -15,5 +15,6 @@
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
+  <div>Name: {doc.data.name}</div>
   <input />
 </ApplicationShell>
