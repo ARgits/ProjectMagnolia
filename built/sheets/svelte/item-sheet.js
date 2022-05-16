@@ -13,7 +13,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
       svelte: {
         target: document.body,
       },
-      title:title,
     });
   }
   get document() {
@@ -78,7 +77,8 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
         class: ItemShell,
         target: document.body,
       },
-      id:"item"
+      id:"item",
+      title:super.object.title
     });
   }
 

@@ -8778,8 +8778,7 @@ class SvelteDocumentSheet extends SvelteApplication {
       sheetConfig: true,
       svelte: {
         target: document.body
-      },
-      title: title
+      }
     });
   }
 
@@ -8856,7 +8855,8 @@ class SvelteItemSheet extends SvelteDocumentSheet {
         class: ItemShell,
         target: document.body
       },
-      id: "item"
+      id: "item",
+      title: super.object.title
     });
   }
 
