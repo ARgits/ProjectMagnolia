@@ -6,7 +6,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
     this.object = object;
   }
   static get defaultOptions() {
-    console.log(this.object,'this object')
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["sheet"],
       viewPermission: CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED,
@@ -39,7 +38,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
   getData(options) {
     const data = this.document.data.toObject(false);
     const isEditable = this.isEditable;
-    console.log(this.title,'svelteDocumentSheet this.title')
     return {
       cssClass: isEditable ? "editable" : "locked",
       editable: isEditable,

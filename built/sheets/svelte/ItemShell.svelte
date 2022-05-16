@@ -4,13 +4,16 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
+  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
   export let elementRoot;
-  setContext("itemContext", writable(getContext("external").application.object));
-  const itemContext = getContext("itemContext")
-  console.log($itemContext);
+  const { application } = getContext("external");
+  const uuid = application.object.uuid;
+  const doc = new TJSDocument();
+  $: doc.setFromUUID(uuid);
+  console.log(uuid, doc);
 </script>
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
-  <input bind:value={$itemContext.data.name}/>
+  <input />
 </ApplicationShell>
