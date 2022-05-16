@@ -8621,17 +8621,40 @@ function applyChatCardDamage(li, multiplier) {
 
 function create_default_slot(ctx) {
 	let div;
+	let t1;
+	let input;
+	let mounted;
+	let dispose;
 
 	return {
 		c() {
 			div = element("div");
 			div.textContent = "blank sheet";
+			t1 = space();
+			input = element("input");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
+			insert(target, t1, anchor);
+			insert(target, input, anchor);
+			set_input_value(input, /*$itemContext*/ ctx[1].name);
+
+			if (!mounted) {
+				dispose = listen(input, "input", /*input_input_handler*/ ctx[3]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$itemContext*/ 2 && input.value !== /*$itemContext*/ ctx[1].name) {
+				set_input_value(input, /*$itemContext*/ ctx[1].name);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(div);
+			if (detaching) detach(t1);
+			if (detaching) detach(input);
+			mounted = false;
+			dispose();
 		}
 	};
 }
@@ -8642,7 +8665,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[2](value);
+		/*applicationshell_elementRoot_binding*/ ctx[4](value);
 	}
 
 	let applicationshell_props = {
@@ -8668,7 +8691,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope*/ 16) {
+			if (dirty & /*$$scope, $itemContext*/ 34) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8698,9 +8721,15 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let $itemContext;
 	let { elementRoot } = $$props;
-	const itemContext = setContext("itemContext", writable(getContext("external").application.object));
-	component_subscribe($$self, itemContext, value => $$invalidate(3, $itemContext = value));
+	setContext("itemContext", writable(getContext("external").application.object));
+	const itemContext = getContext("itemContext");
+	component_subscribe($$self, itemContext, value => $$invalidate(1, $itemContext = value));
 	console.log($itemContext);
+
+	function input_input_handler() {
+		$itemContext.name = this.value;
+		itemContext.set($itemContext);
+	}
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -8711,7 +8740,13 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	return [elementRoot, itemContext, applicationshell_elementRoot_binding];
+	return [
+		elementRoot,
+		$itemContext,
+		itemContext,
+		input_input_handler,
+		applicationshell_elementRoot_binding
+	];
 }
 
 class ItemShell extends SvelteComponent {
@@ -8795,7 +8830,6 @@ class SvelteItemSheet extends SvelteDocumentSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
-      title: "sheet",
       minimizable: true,
       resizable: true,
       width: 600,

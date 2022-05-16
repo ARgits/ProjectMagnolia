@@ -54,7 +54,6 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
-      title: "sheet",
       minimizable: true,
       resizable: true,
       width: 600,

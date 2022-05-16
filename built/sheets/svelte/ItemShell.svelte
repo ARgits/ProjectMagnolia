@@ -5,12 +5,12 @@
   import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
   export let elementRoot;
-  const itemContext = setContext("itemContext", writable(getContext("external").application.object));
-
+  setContext("itemContext", writable(getContext("external").application.object));
+  const itemContext = getContext("itemContext")
   console.log($itemContext);
 </script>
 
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
-  <!--{(console.log(this.getData()), "")}-->
+  <input bind:value={$itemContext.name}/>
 </ApplicationShell>
