@@ -8737,8 +8737,8 @@ class SvelteItemSheet extends SvelteApplication {
       width: 600,
       height: 600,
       svelte: {
-        class: ItemShell //target: document.body
-
+        class: ItemShell,
+        target: document.body
       }
     });
   }
