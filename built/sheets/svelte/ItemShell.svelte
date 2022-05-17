@@ -15,7 +15,7 @@
   afterUpdate(async () => {
     console.log("afterUpdate");
     console.log(application.object, $doc)
-    await application.object.update();
+    await $doc.update($doc.data);
   });
 </script>
 
