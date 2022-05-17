@@ -8748,7 +8748,7 @@ function instance($$self, $$props, $$invalidate) {
 		console.log("afterUpdate");
 		let data = $doc.data;
 		console.log(data);
-		await application.object.update(data);
+		await application.object.update();
 	});
 
 	function input_input_handler() {
