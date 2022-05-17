@@ -8750,6 +8750,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	afterUpdate(async () => {
 		console.log("afterUpdate");
+		console.log(application.object);
 		await application.object.update();
 	});
 
