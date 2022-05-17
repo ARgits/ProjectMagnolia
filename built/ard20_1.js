@@ -8709,7 +8709,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, $doc*/ 66) {
+			if (dirty & /*$$scope, $doc*/ 130) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8742,13 +8742,15 @@ function instance($$self, $$props, $$invalidate) {
 	const { application } = getContext("external");
 	const doc = new TJSDocument(application.object);
 	component_subscribe($$self, doc, value => $$invalidate(1, $doc = value));
+	let updateData = "";
 	console.log($doc);
 
 	afterUpdate(async () => {
-		console.log("afterUpdate");
-		let data = $doc.data;
-		console.log(data);
-		await application.object.update();
+		if (updateData) {
+			console.log("afterUpdate");
+			console.log(updateData);
+			await application.object.update(updateData);
+		} else updateData = { name: $doc.name, data: $doc.data.data };
 	});
 
 	function input_input_handler() {

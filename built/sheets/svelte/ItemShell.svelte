@@ -2,18 +2,20 @@
 
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  import { getContext, setContext, afterUpdate, beforeUpdate } from "svelte";
+  import { getContext, setContext, afterUpdate} from "svelte";
   import { writable } from "svelte/store";
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
   export let elementRoot;
   const { application } = getContext("external");
   const doc = new TJSDocument(application.object);
+  let updateData = "";
   console.log($doc);
   afterUpdate(async () => {
-    console.log("afterUpdate");
-    let data = $doc.data
-    console.log(data)
-    await application.object.update();
+    if (updateData) {
+      console.log("afterUpdate");
+      console.log(updateData);
+      await application.object.update(updateData);
+    } else updateData = { name: $doc.name, data: $doc.data.data };
   });
 </script>
 
