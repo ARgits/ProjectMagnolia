@@ -7,7 +7,6 @@
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
   export let elementRoot;
   const { application } = getContext("external");
-  $: application.title = $doc.data.name;
   setContext("document", $doc);
   const document = application.object;
   const doc = new TJSDocument(application.object);

@@ -8910,12 +8910,6 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$doc*/ 2) {
-			application.title = $doc.data.name;
-		}
-	};
-
 	return [
 		elementRoot,
 		$doc,
@@ -9021,7 +9015,6 @@ class SvelteItemSheet extends SvelteDocumentSheet {
   }
 
   static get defaultOptions() {
-    console.log(super.defaultOptions.title, 'super.defaultOptions.title');
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["ard20"],
       minimizable: true,
@@ -9034,15 +9027,6 @@ class SvelteItemSheet extends SvelteDocumentSheet {
       },
       id: "item"
     });
-  }
-
-  getData(options = {}) {
-    console.log(options, 'getData options');
-    console.log(this.reactive, 'this.reactive');
-    const data = super.getData(options);
-    data.item = data.document;
-    this.options.title = this.object.name;
-    return data;
   }
 
   async close(options = {}) {
