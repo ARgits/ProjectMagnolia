@@ -86,7 +86,7 @@ export class SvelteItemSheet extends SvelteDocumentSheet {
     console.log(this.reactive,'this.reactive')
     const data = super.getData(options)
     data.item = data.document
-    //this.options.title = this.object.name
+    this.options.title = this.object.name
     return data
   }
   async close(options = {}){

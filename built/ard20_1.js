@@ -8885,8 +8885,8 @@ class SvelteItemSheet extends SvelteDocumentSheet {
     console.log(options, 'getData options');
     console.log(this.reactive, 'this.reactive');
     const data = super.getData(options);
-    data.item = data.document; //this.options.title = this.object.name
-
+    data.item = data.document;
+    this.options.title = this.object.name;
     return data;
   }
 
