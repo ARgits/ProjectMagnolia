@@ -8889,6 +8889,7 @@ function instance($$self, $$props, $$invalidate) {
 	let $doc;
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
+	console.log(application);
 	setContext("document", $doc);
 	const document = application.object;
 	const doc = new TJSDocument(application.object);
