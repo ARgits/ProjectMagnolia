@@ -9,13 +9,10 @@
   const { application } = getContext("external");
   const doc = new TJSDocument(application.object);
   console.log($doc);
-  beforeUpdate(() => {
-    console.log("beforeUpdate");
-  });
   afterUpdate(async () => {
     console.log("afterUpdate");
-    console.log($doc.data)
-    await application.object.update();
+    let data = $doc.data
+    await application.object.update(data);
   });
 </script>
 
