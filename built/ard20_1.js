@@ -8889,7 +8889,6 @@ function instance($$self, $$props, $$invalidate) {
 	let $doc;
 	let { elementRoot } = $$props;
 	const { application } = getContext("external");
-	console.log(application);
 	setContext("document", $doc);
 	const document = application.object;
 	const doc = new TJSDocument(application.object);
@@ -8909,6 +8908,12 @@ function instance($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$doc*/ 2) {
+			application.title = $doc.data.name;
+		}
 	};
 
 	return [
