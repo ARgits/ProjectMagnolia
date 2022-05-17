@@ -8663,7 +8663,7 @@ function instance$1($$self, $$props, $$invalidate) {
 	let { path } = $$props;
 
 	async function updateDocument() {
-		data = {};
+		let data = {};
 		data[path] = value;
 		await document.update(data);
 	}
@@ -8727,15 +8727,21 @@ function create_default_slot(ctx) {
 	let t3;
 	let t4;
 	let input;
+	let updating_value;
 	let current;
 
-	input = new DocumentSheetInput({
-			props: {
-				value: /*$doc*/ ctx[1].data.name,
-				document: /*item*/ ctx[2],
-				path: "name"
-			}
-		});
+	function input_value_binding(value) {
+		/*input_value_binding*/ ctx[4](value);
+	}
+
+	let input_props = { document: /*item*/ ctx[2], path: "name" };
+
+	if (/*$doc*/ ctx[1].data.name !== void 0) {
+		input_props.value = /*$doc*/ ctx[1].data.name;
+	}
+
+	input = new DocumentSheetInput({ props: input_props });
+	binding_callbacks.push(() => bind(input, 'value', input_value_binding));
 
 	return {
 		c() {
@@ -8761,7 +8767,13 @@ function create_default_slot(ctx) {
 		p(ctx, dirty) {
 			if ((!current || dirty & /*$doc*/ 2) && t3_value !== (t3_value = /*$doc*/ ctx[1].data.name + "")) set_data(t3, t3_value);
 			const input_changes = {};
-			if (dirty & /*$doc*/ 2) input_changes.value = /*$doc*/ ctx[1].data.name;
+
+			if (!updating_value && dirty & /*$doc*/ 2) {
+				updating_value = true;
+				input_changes.value = /*$doc*/ ctx[1].data.name;
+				add_flush_callback(() => updating_value = false);
+			}
+
 			input.$set(input_changes);
 		},
 		i(local) {
@@ -8789,7 +8801,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[4](value);
+		/*applicationshell_elementRoot_binding*/ ctx[5](value);
 	}
 
 	let applicationshell_props = {
@@ -8815,7 +8827,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, $doc*/ 66) {
+			if (dirty & /*$$scope, $doc*/ 130) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8851,6 +8863,13 @@ function instance($$self, $$props, $$invalidate) {
 	const doc = new TJSDocument(application.object);
 	component_subscribe($$self, doc, value => $$invalidate(1, $doc = value));
 
+	function input_value_binding(value) {
+		if ($$self.$$.not_equal($doc.data.name, value)) {
+			$doc.data.name = value;
+			doc.set($doc);
+		}
+	}
+
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
 		$$invalidate(0, elementRoot);
@@ -8860,7 +8879,14 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
-	return [elementRoot, $doc, item, doc, applicationshell_elementRoot_binding];
+	return [
+		elementRoot,
+		$doc,
+		item,
+		doc,
+		input_value_binding,
+		applicationshell_elementRoot_binding
+	];
 }
 
 class ItemShell extends SvelteComponent {

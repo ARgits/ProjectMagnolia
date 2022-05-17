@@ -5,7 +5,7 @@
     export let value
     export let path
     async function updateDocument(){
-        data = {}
+        let data = {}
         data[path] = value
         await document.update(data)
     }

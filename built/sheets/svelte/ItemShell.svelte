@@ -25,5 +25,5 @@
 <ApplicationShell bind:elementRoot>
   <div>blank sheet</div>
   <div>Name: {$doc.data.name}</div>
-  <Input value={$doc.data.name} document={item} path={"name"}/>
+  <Input bind:value={$doc.data.name} document={item} path={"name"}/>
 </ApplicationShell>
