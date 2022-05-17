@@ -1,6 +1,6 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, update_keyed_each, destroy_block, select_value, is_function, select_option } from '/modules/typhonjs/svelte/internal.js';
-import { getContext, setContext, onMount, tick, afterUpdate } from '/modules/typhonjs/svelte/index.js';
+import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
@@ -8815,7 +8815,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, $doc*/ 130) {
+			if (dirty & /*$$scope, $doc*/ 66) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8850,17 +8850,6 @@ function instance($$self, $$props, $$invalidate) {
 	const item = application.object;
 	const doc = new TJSDocument(application.object);
 	component_subscribe($$self, doc, value => $$invalidate(1, $doc = value));
-	let updateData = "";
-
-	afterUpdate(async () => {
-		console.log("afterUpdate");
-
-		if (updateData) {
-			console.log(updateData);
-			await item.update(updateData);
-			await tick();
-		} else updateData = { name: $doc.name, data: $doc.data.data };
-	});
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;

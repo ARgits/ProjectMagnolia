@@ -12,14 +12,14 @@
   const item = application.object
   const doc = new TJSDocument(application.object);
   let updateData = "";
-  afterUpdate(async () => {
+  /*afterUpdate(async () => {
     console.log("afterUpdate");
     if (updateData) {
       console.log(updateData);
       await item.update(updateData);
       await tick();
     } else updateData = { name: $doc.name, data: $doc.data.data };
-  });
+  });*/
 </script>
 
 <ApplicationShell bind:elementRoot>
