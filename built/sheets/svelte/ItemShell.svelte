@@ -8,6 +8,7 @@
   export let elementRoot;
   const { application } = getContext("external");
   setContext("document", $doc);
+  $: application.options.title = $doc.data.name;
   const document = application.object;
   const doc = new TJSDocument(application.object);
   let updateData = "";

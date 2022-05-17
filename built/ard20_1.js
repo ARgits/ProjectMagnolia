@@ -8910,6 +8910,12 @@ function instance($$self, $$props, $$invalidate) {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 	};
 
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$doc*/ 2) {
+			application.options.title = $doc.data.name;
+		}
+	};
+
 	return [
 		elementRoot,
 		$doc,
