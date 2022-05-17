@@ -1,6 +1,6 @@
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, update_keyed_each, destroy_block, select_value, is_function, select_option } from '/modules/typhonjs/svelte/internal.js';
-import { getContext, setContext, onMount, tick, afterUpdate } from '/modules/typhonjs/svelte/index.js';
+import { getContext, setContext, onMount, tick, beforeUpdate, afterUpdate } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
@@ -8744,7 +8744,12 @@ function instance($$self, $$props, $$invalidate) {
 	component_subscribe($$self, doc, value => $$invalidate(1, $doc = value));
 	console.log($doc);
 
+	beforeUpdate(() => {
+		console.log("beforeUpdate");
+	});
+
 	afterUpdate(async () => {
+		console.log("afterUpdate");
 		await application.object.update();
 	});
 
