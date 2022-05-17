@@ -8743,13 +8743,14 @@ function instance($$self, $$props, $$invalidate) {
 	const doc = new TJSDocument(application.object);
 	component_subscribe($$self, doc, value => $$invalidate(1, $doc = value));
 	let updateData = "";
-	console.log($doc);
 
 	afterUpdate(async () => {
+		console.log("afterUpdate");
+
 		if (updateData) {
-			console.log("afterUpdate");
 			console.log(updateData);
-			await application.object.update(updateData);
+			await $doc.update(updateData);
+			await tick();
 		} else updateData = { name: $doc.name, data: $doc.data.data };
 	});
 
