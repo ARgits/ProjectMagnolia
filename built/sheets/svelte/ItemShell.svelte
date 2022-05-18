@@ -15,7 +15,5 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <div>blank sheet</div>
-  <div>Name: {$doc.data.name}</div>
   <Input bind:value={$doc.data.name} {document} path={"name"} label={"Name"} />
 </ApplicationShell>

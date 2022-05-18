@@ -37,6 +37,7 @@
     "@types/sass": "^1.43.1",
     "@typhonjs-config/eslint-config": "^0.3.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "cypress": "^9.6.1",
     "eslint": "^8.11.0",
     "gulp-sass": "^5.1.0",
     "rollup": "^2.70.1",
