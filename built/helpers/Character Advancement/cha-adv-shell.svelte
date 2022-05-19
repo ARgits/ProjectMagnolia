@@ -15,19 +15,19 @@
   //create context for formulas from setting, CONFIG data, Actor's ID
   setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
   setContext("chaAdvCONFIG", CONFIG);
-  setContext("chaAdvActorOriginalData", actor.data.data);
+  setContext("chaAdvActorOriginalData", actor.system);
   setContext("chaAdvActorID", document.id);
   setContext("chaAdvAditionalData", document.aditionalData);
 
   //create store and context for data
   //TODO: add features and other stuff
   const actorData = writable({
-    attributes: duplicate(actor.data.data.attributes),
-    skills: duplicate(actor.data.data.skills),
-    advancement: duplicate(actor.data.data.advancement),
-    proficiencies: duplicate(actor.data.data.proficiencies),
-    health: duplicate(actor.data.data.health),
-    isReady: duplicate(actor.data.data.isReady),
+    attributes: duplicate(actor.system.attributes),
+    skills: duplicate(actor.system.skills),
+    advancement: duplicate(actor.system.advancement),
+    proficiencies: duplicate(actor.system.proficiencies),
+    health: duplicate(actor.system.health),
+    isReady: duplicate(actor.system.isReady),
     features: duplicate(document.aditionalData.feats.awail),
   });
   const elementParameters=writable({

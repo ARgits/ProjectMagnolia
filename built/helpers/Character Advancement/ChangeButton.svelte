@@ -22,8 +22,8 @@
       case "features":
         console.log(max,min)
         disabled =
-          $doc[type][subtype].data.level.initial === max ||
-          $doc[type][subtype].data.level.initial === min ||
+          $doc[type][subtype].system.level.initial === max ||
+          $doc[type][subtype].system.level.initial === min ||
           $doc.advancement.xp.get < cost;
         break;
     }
@@ -61,7 +61,7 @@
           store.skills[subtype].level -= 1;
           break;
         case "features":
-          store.features[subtype].data.level.initial -= 1;
+          store.features[subtype].system.level.initial -= 1;
           break;
       }
       let index = -1;

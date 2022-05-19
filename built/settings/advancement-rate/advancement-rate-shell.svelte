@@ -44,7 +44,7 @@
   }
   onMount(async () => {
     for (let param in paramArr) {
-      await validateInput(formulaInput[param].value, param);
+      await validateInput(data.formulas[param], param);
     }
   });
   /**

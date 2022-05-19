@@ -975,7 +975,7 @@ class ARd20Actor extends Actor {
 
 
   prepareDerivedData() {
-    const actorData = this.data; // Make separate methods for each Actor type (character, npc, etc.) to keep
+    const actorData = this.system; // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
 
     this._prepareCharacterData(actorData);
@@ -992,7 +992,7 @@ class ARd20Actor extends Actor {
 
     if (actorData.type !== "character") return; // Make modifications to data here. For example:
 
-    const data = actorData.data;
+    const data = actorData;
     const attributes = data.attributes;
     const advancement = data.advancement;
     const def_stats = data.defences.stats;
@@ -1001,18 +1001,18 @@ class ARd20Actor extends Actor {
     data.mobility.value = 0;
     this.itemTypes.armor.forEach(item => {
       if (item.data.type === "armor") {
-        if (item.data.data.equipped) {
+        if (item.system.equipped) {
           for (let key of obj_keys(def_dam.phys)) {
-            let ph = item.data.data.res.phys[key];
+            let ph = item.system.res.phys[key];
             def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
           }
 
           for (let key of obj_keys(def_dam.mag)) {
-            let mg = item.data.data.res.mag[key];
+            let mg = item.system.res.mag[key];
             def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
           }
 
-          data.mobility.value += item.data.data.mobility.value;
+          data.mobility.value += item.system.mobility.value;
         }
       }
     });
@@ -1087,7 +1087,7 @@ class ARd20Actor extends Actor {
         rankName: profLevelSetting[(_proficiencies$weapon3 = (_proficiencies$weapon4 = proficiencies.weapon[key]) === null || _proficiencies$weapon4 === void 0 ? void 0 : _proficiencies$weapon4.value) !== null && _proficiencies$weapon3 !== void 0 ? _proficiencies$weapon3 : 0].label
       };
     });
-    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].data.data.speed : 0;
+    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].system.speed : 0;
     data.speed.value += attributes.dex.mod + data.speed.bonus;
   }
   /**
@@ -1099,7 +1099,7 @@ class ARd20Actor extends Actor {
     //@ts-expect-error
     if (actorData.type !== "npc") return; // Make modifications to data here. For example:
 
-    const data = actorData.data; //@ts-expect-error
+    const data = actorData; //@ts-expect-error
 
     data.xp = data.cr * data.cr * 100;
   }
@@ -1126,7 +1126,7 @@ class ARd20Actor extends Actor {
     var _options$parts;
 
     const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
-    const actorData = this.data.data;
+    const actorData = this.system;
     const attributes = actorData.attributes;
     const attr = getValues(attributes, attributeId); // Construct parts
 
@@ -1172,7 +1172,7 @@ class ARd20Actor extends Actor {
     var _options$parts2;
 
     console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
-    const skl = getValues(this.data.data.skills, skillId); // Compose roll parts and data
+    const skl = getValues(this.system.skills, skillId); // Compose roll parts and data
 
     const parts = ["@proficiency", "@mod"];
     const data = {
@@ -1225,7 +1225,7 @@ class ARd20Item extends Item {
 
   prepareDerivedData() {
     super.prepareDerivedData();
-    const itemData = this.data;
+    const itemData = this.system;
     this.labels = {};
 
     this._prepareSpellData(itemData);
@@ -1238,8 +1238,8 @@ class ARd20Item extends Item {
 
     this._prepareArmorData(itemData);
 
-    if (itemData.data.hasAttack) this._prepareAttack(itemData);
-    if (itemData.data.hasDamage) this._prepareDamage(itemData);
+    if (itemData.hasAttack) this._prepareAttack(itemData);
+    if (itemData.hasDamage) this._prepareDamage(itemData);
     if (!this.isOwned) this.prepareFinalAttributes();
   }
   /**
@@ -1249,7 +1249,6 @@ class ARd20Item extends Item {
 
   _prepareSpellData(itemData) {
     if (itemData.type !== "spell") return;
-    itemData.data;
   }
   /**
    *Prepare data for weapons
@@ -1258,8 +1257,8 @@ class ARd20Item extends Item {
 
   _prepareWeaponData(itemData) {
     if (itemData.type !== "weapon") return;
-    const data = itemData.data;
-    const flags = itemData.flags;
+    const data = itemData;
+    const flags = this.flags;
     data.hasAttack = data.hasAttack || true;
     data.hasDamage = data.hasDamage || true; //TODO: this._setDeflect(data);
 
@@ -1327,7 +1326,7 @@ class ARd20Item extends Item {
       const item = (_game$items = game.items) === null || _game$items === void 0 ? void 0 : _game$items.get(id);
 
       if ((item === null || item === void 0 ? void 0 : item.data.type) === "weapon") {
-        data.sub_type = data.sub_type === undefined ? item.data.data.sub_type : data.sub_type;
+        data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
       }
     }
 
@@ -1342,7 +1341,7 @@ class ARd20Item extends Item {
 
   _prepareFeatureData(itemData) {
     if (itemData.type !== "feature") return;
-    const data = itemData.data; // Handle Source of the feature
+    const data = itemData; // Handle Source of the feature
 
     data.source.label = "";
     data.source.value.forEach((value, key) => {
@@ -1426,7 +1425,7 @@ class ARd20Item extends Item {
     var _data$mobility$value;
 
     if (itemData.type !== "armor") return;
-    const data = itemData.data;
+    const data = itemData;
 
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
@@ -1460,19 +1459,19 @@ class ARd20Item extends Item {
     if (itemData.type === "weapon") {
       var _this$actor;
 
-      const data = itemData.data;
-      data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.data.data.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
+      const data = itemData;
+      data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.system.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
       data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
       data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
       prof_bonus = data.proficiency.level * 4;
     }
 
-    if (itemData.data.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
-    if (itemData.data.hasDamage) this._prepareDamage(itemData, abil);
+    if (itemData.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
+    if (itemData.hasDamage) this._prepareDamage(itemData, abil);
   }
 
   _prepareAttack(itemData, prof_bonus, abil) {
-    const data = itemData.data;
+    const data = itemData;
     if (!data.hasAttack) return; //@ts-expect-error
 
     let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod; //@ts-expect-error
@@ -1484,7 +1483,7 @@ class ARd20Item extends Item {
   }
 
   _prepareDamage(itemData, abil) {
-    const data = itemData.data;
+    const data = itemData;
     if (!data.hasDamage) return;
     itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
     const prop = itemData.type === "weapon" ? `damage.common.${data.proficiency.key}.parts` : "damage.parts";
@@ -1516,18 +1515,18 @@ class ARd20Item extends Item {
     // If present, return the actor's roll data.
     if (!this.actor) return null;
     const rollData = this.actor.getRollData();
-    const hasDamage = this.data.data.hasDamage;
-    const hasAttack = this.data.data.hasAttack; //@ts-expect-error
+    const hasDamage = this.system.hasDamage;
+    const hasAttack = this.system.hasAttack; //@ts-expect-error
 
-    rollData.item = foundry.utils.deepClone(this.data.data); //@ts-expect-error
+    rollData.item = foundry.utils.deepClone(this.system); //@ts-expect-error
 
-    rollData.damageDie = hasDamage ? this.data.data.damage.current.parts[0] : null; //@ts-expect-error
+    rollData.damageDie = hasDamage ? this.system.damage.current.parts[0] : null; //@ts-expect-error
 
     rollData.mod = hasAttack ? //@ts-expect-error
-    this.data.data.attack.parts[0] : hasDamage ? //@ts-expect-error
-    this.data.data.damage.current.parts[1] : null; //@ts-expect-error
+    this.system.attack.parts[0] : hasDamage ? //@ts-expect-error
+    this.system.damage.current.parts[1] : null; //@ts-expect-error
 
-    rollData.prof = hasAttack ? this.data.data.attack.parts[1] : null;
+    rollData.prof = hasAttack ? this.system.attack.parts[1] : null;
     return rollData;
   }
   /**
@@ -1547,10 +1546,10 @@ class ARd20Item extends Item {
   }) {
     let item = this;
     item.id;
-    const iData = this.data.data; //Item data
+    const iData = this.system; //Item data
 
     const actor = this.actor;
-    actor === null || actor === void 0 ? void 0 : actor.data.data;
+    actor === null || actor === void 0 ? void 0 : actor.system;
     hasDamage = iData.hasDamage || hasDamage;
     hasAttack = iData.hasAttack || hasAttack; // Initialize chat data.
 
@@ -1561,7 +1560,7 @@ class ARd20Item extends Item {
 
     const targets = Array.from(game.user.targets); //@ts-expect-error
 
-    const mRoll = this.data.data.mRoll || false; //@ts-expect-error
+    const mRoll = this.system.mRoll || false; //@ts-expect-error
 
     return item.displayCard({
       rollMode,
@@ -1761,7 +1760,7 @@ class ARd20Item extends Item {
     const token = await fromUuid(targetUuid); //@ts-expect-error
 
     const tActor = token === null || token === void 0 ? void 0 : token.actor;
-    const tData = tActor.data.data;
+    const tData = tActor.system;
     let tHealth = tData.health.value;
     console.log(tHealth, "здоровье цели"); // Recover the actor for the chat card
 
@@ -1852,7 +1851,7 @@ class ARd20Item extends Item {
     targets = [],
     mRoll = Boolean()
   } = {}) {
-    var _this$data$data$attac, _this$data$data$attac2;
+    var _this$system$attack$d, _this$system$attack;
 
     // Render the chat card template
     let atk = {};
@@ -1864,7 +1863,7 @@ class ARd20Item extends Item {
     let dmg = {};
     let dieResultCss = {}; //@ts-expect-error
 
-    const def = (_this$data$data$attac = (_this$data$data$attac2 = this.data.data.attack) === null || _this$data$data$attac2 === void 0 ? void 0 : _this$data$data$attac2.def) !== null && _this$data$data$attac !== void 0 ? _this$data$data$attac : "reflex";
+    const def = (_this$system$attack$d = (_this$system$attack = this.system.attack) === null || _this$system$attack === void 0 ? void 0 : _this$system$attack.def) !== null && _this$system$attack$d !== void 0 ? _this$system$attack$d : "reflex";
     const token = this.actor.token;
 
     if (targets.length !== 0) {
@@ -1880,7 +1879,7 @@ class ARd20Item extends Item {
         if (atkRoll) {
           mRoll = atkRoll.options.mRoll; //@ts-expect-error
 
-          dc[key] = target.actor.data.data.defences.stats[def].value; //@ts-expect-error
+          dc[key] = target.actor.system.defences.stats[def].value; //@ts-expect-error
 
           atk[key] = hasAttack ? Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll() : null; //@ts-expect-error
 
@@ -1944,7 +1943,7 @@ class ARd20Item extends Item {
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       content: html,
       //@ts-expect-error
-      flavor: this.data.data.chatFlavor || this.name,
+      flavor: this.system.chatFlavor || this.name,
       //@ts-expect-error
       speaker: ChatMessage.getSpeaker({
         actor: this.actor,
@@ -1973,7 +1972,7 @@ class ARd20Item extends Item {
 
 
   getChatData(htmlOptions = {}) {
-    const data = foundry.utils.deepClone(this.data.data); // Rich text description
+    const data = foundry.utils.deepClone(this.system); // Rich text description
 
     /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
           /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
@@ -2019,7 +2018,7 @@ class ARd20Item extends Item {
     var _options$parts;
 
     console.log(canMult);
-    this.data.data; //@ts-expect-error
+    this.system; //@ts-expect-error
 
     this.actor.data.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
@@ -2071,8 +2070,8 @@ class ARd20Item extends Item {
     var _ref;
 
     console.log(canMult);
-    const iData = this.data.data;
-    this.actor.data.data; //@ts-expect-error
+    const iData = this.system;
+    this.actor.system; //@ts-expect-error
 
     const parts = iData.damage.current.parts.map(d => d[0]); //@ts-expect-error
 
@@ -2120,7 +2119,7 @@ class ARd20Item extends Item {
 
 
   getAttackToHit() {
-    const itemData = this.data.data;
+    const itemData = this.system;
     const hasAttack = true;
     const hasDamage = false; //if (!this.hasAttack || !itemData) return;
     //@ts-expect-error
@@ -2148,14 +2147,14 @@ class ARd20Item extends Item {
     /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
         if ( !["weapon", "consumable"].includes(this.data.type)) {
           parts.push("@prof");
-          if ( this.data.data.prof?.hasProficiency ) {
-            rollData.prof = this.data.data.prof.term;
+          if ( this.system.prof?.hasProficiency ) {
+            rollData.prof = this.system.prof.term;
           }
         }
         */
 
     /* Actor-level global bonus to attack rolls
-        const actorBonus = this.actor.data.data.bonuses?.[itemData.actionType] || {};
+        const actorBonus = this.actor.system.bonuses?.[itemData.actionType] || {};
         if (actorBonus.attack) parts.push(actorBonus.attack);
         */
 
@@ -2233,7 +2232,7 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-/* built\helpers\Character Advancement\ChangeButton.svelte generated by Svelte v3.46.5 */
+/* built\helpers\Character Advancement\ChangeButton.svelte generated by Svelte v3.46.4 */
 
 function create_if_block_1$1(ctx) {
 	let button;
@@ -2413,7 +2412,7 @@ function instance$b($$self, $$props, $$invalidate) {
 					store.skills[subtype].level -= 1;
 					break;
 				case "features":
-					store.features[subtype].data.level.initial -= 1;
+					store.features[subtype].system.level.initial -= 1;
 					break;
 			}
 
@@ -2474,7 +2473,7 @@ function instance$b($$self, $$props, $$invalidate) {
 						break;
 					case "features":
 						console.log(max, min);
-						$$invalidate(4, disabled = $doc[type][subtype].data.level.initial === max || $doc[type][subtype].data.level.initial === min || $doc.advancement.xp.get < cost);
+						$$invalidate(4, disabled = $doc[type][subtype].system.level.initial === max || $doc[type][subtype].system.level.initial === min || $doc.advancement.xp.get < cost);
 						break;
 				}
 
@@ -2516,7 +2515,7 @@ class ChangeButton extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\TDvariants.svelte generated by Svelte v3.46.5 */
+/* built\helpers\Character Advancement\TDvariants.svelte generated by Svelte v3.46.4 */
 
 function create_if_block_10(ctx) {
 	let td;
@@ -3394,7 +3393,7 @@ class TDvariants extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\Attributes.svelte generated by Svelte v3.46.5 */
+/* built\helpers\Character Advancement\Attributes.svelte generated by Svelte v3.46.4 */
 
 function get_each_context$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -3422,7 +3421,7 @@ function create_each_block_1$4(ctx) {
 			th = element("th");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(th, "class", "last svelte-1or51gx");
+			attr(th, "class", "last svelte-d0s3st");
 			set_style(th, "width", style_width, false);
 		},
 		m(target, anchor) {
@@ -3563,15 +3562,15 @@ function create_fragment$9(ctx) {
 			t3 = space();
 			div0 = element("div");
 			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-1or51gx");
+			attr(tr, "class", "svelte-d0s3st");
 			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-1or51gx");
+			attr(thead_1, "class", "svelte-d0s3st");
 			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[10].call(thead_1));
 			set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
-			attr(tbody, "class", "svelte-1or51gx");
-			attr(table, "class", "svelte-1or51gx");
+			attr(tbody, "class", "svelte-d0s3st");
+			attr(table, "class", "svelte-d0s3st");
 			attr(label, "for", "description");
-			attr(div1, "class", "description svelte-1or51gx");
+			attr(div1, "class", "description svelte-d0s3st");
 			attr(div2, "class", "flex flexrow");
 		},
 		m(target, anchor) {
@@ -3783,7 +3782,7 @@ class Attributes extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\Tabs.svelte generated by Svelte v3.46.5 */
+/* built\helpers\Character Advancement\Tabs.svelte generated by Svelte v3.46.4 */
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -4179,7 +4178,7 @@ class Tabs extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.46.5 */
+/* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.46.4 */
 
 function create_fragment$7(ctx) {
 	let div0;
@@ -4286,19 +4285,19 @@ function instance$7($$self, $$props, $$invalidate) {
 	setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
 
 	setContext("chaAdvCONFIG", CONFIG);
-	setContext("chaAdvActorOriginalData", actor.data.data);
+	setContext("chaAdvActorOriginalData", actor.system);
 	setContext("chaAdvActorID", document.id);
 	setContext("chaAdvAditionalData", document.aditionalData);
 
 	//create store and context for data
 	//TODO: add features and other stuff
 	const actorData = writable({
-		attributes: duplicate(actor.data.data.attributes),
-		skills: duplicate(actor.data.data.skills),
-		advancement: duplicate(actor.data.data.advancement),
-		proficiencies: duplicate(actor.data.data.proficiencies),
-		health: duplicate(actor.data.data.health),
-		isReady: duplicate(actor.data.data.isReady),
+		attributes: duplicate(actor.system.attributes),
+		skills: duplicate(actor.system.skills),
+		advancement: duplicate(actor.system.advancement),
+		proficiencies: duplicate(actor.system.proficiencies),
+		health: duplicate(actor.system.health),
+		isReady: duplicate(actor.system.isReady),
 		features: duplicate(document.aditionalData.feats.awail)
 	});
 
@@ -4508,10 +4507,10 @@ class ARd20ActorSheet extends ActorSheet {
     // editable, the items array, and the effects array.
     const context = super.getData(); // Use a safe clone of the actor data for further operations.
 
-    const actorData = this.actor.data; // Add the actor's data to context.data for easier access, as well as flags.
+    const actorData = this.actor; // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
 
-    context.data = actorData.data; //@ts-expect-error
+    context.data = actorData.system; //@ts-expect-error
 
     context.flags = actorData.flags; //@ts-expect-error
 
@@ -4715,7 +4714,7 @@ class ARd20ActorSheet extends ActorSheet {
                   const new_key = game.packs.filter(pack => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
                   const doc = await game.packs.get(new_key).getDocument(feat.id);
                   const item = doc.toObject();
-                  item.data = foundry.utils.deepClone(doc.data.data);
+                  item.data = foundry.utils.deepClone(doc.system);
                   pack_list.push(item);
                   pack_name.push(item.name);
                 }
@@ -4744,7 +4743,7 @@ class ARd20ActorSheet extends ActorSheet {
                 for (let feat of feat_list) {
                   console.log("item added from folder ", feat);
                   const item = feat.toObject();
-                  item.data = foundry.utils.deepClone(feat.data.data);
+                  item.data = foundry.utils.deepClone(feat.system);
                   folder_list.push(item);
                   folder_name.push(item.name);
                 }
@@ -4872,9 +4871,9 @@ class ARd20ActorSheet extends ActorSheet {
               awail: featList.temp_feat_list
             },
             allow: {
-              attribute: duplicate(actor.data.data.isReady),
-              race: duplicate(actor.data.data.isReady),
-              final: duplicate(actor.data.data.isReady)
+              attribute: duplicate(actor.system.isReady),
+              race: duplicate(actor.system.isReady),
+              final: duplicate(actor.system.isReady)
             }
           };
           return obj;
@@ -4932,8 +4931,8 @@ class ARd20ActorSheet extends ActorSheet {
 
     const id = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(id);
-    const hasAttack = item.data.data.hasAttack;
-    const hasDamage = item.data.data.hasDamage; //@ts-expect-error
+    const hasAttack = item.system.hasAttack;
+    const hasDamage = item.system.hasDamage; //@ts-expect-error
 
     if (item) return item.roll({
       hasAttack,
@@ -5443,7 +5442,7 @@ class ARd20ItemSheet extends ItemSheet {
     const context = super.getData(); // Use a safe clone of the item data for further operations.
     //@ts-expect-error
 
-    const itemData = context.item.data; //@ts-expect-error
+    const itemData = context.item; //@ts-expect-error
 
     context.config = CONFIG.ARd20; // Retrieve the roll data for TinyMCE editors.
     //@ts-expect-error
@@ -5458,7 +5457,7 @@ class ARd20ItemSheet extends ItemSheet {
     //@ts-expect-error
 
 
-    context.data = itemData.data; //@ts-expect-error
+    context.data = itemData.system; //@ts-expect-error
 
     context.flags = itemData.flags; //@ts-expect-error
 
@@ -5610,7 +5609,7 @@ class ARd20ItemSheet extends ItemSheet {
       var _damage$damType;
 
       //await this._onSubmit(event);
-      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
+      let path = a.dataset.type ? "system.damage" + a.dataset.type : "system.damage";
       const damage = getProperty(this.item.data, path);
       damage.damType = damage.damType || [];
       const partsPath = path + ".parts";
@@ -5624,7 +5623,7 @@ class ARd20ItemSheet extends ItemSheet {
     if (a.classList.contains("delete-damage")) {
       //await this._onSubmit(event);
       const li = a.closest(".damage-part");
-      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
+      let path = a.dataset.type ? "system.damage" + a.dataset.type : "system.damage";
       const damage = getProperty(this.item.data, path);
       console.log(damage);
       damage.parts.splice(Number(li.dataset.damagePart), 1);
@@ -5845,7 +5844,7 @@ class ARd20SocketHandler {
 
 }
 
-/* built\general svelte components\SettingsSubmitButton.svelte generated by Svelte v3.46.5 */
+/* built\general svelte components\SettingsSubmitButton.svelte generated by Svelte v3.46.4 */
 
 function create_fragment$6(ctx) {
 	let button;
@@ -5901,7 +5900,7 @@ class SettingsSubmitButton extends SvelteComponent {
 	}
 }
 
-/* built\settings\advancement-rate\advancement-rate-shell.svelte generated by Svelte v3.46.5 */
+/* built\settings\advancement-rate\advancement-rate-shell.svelte generated by Svelte v3.46.4 */
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -6399,7 +6398,7 @@ function instance$5($$self, $$props, $$invalidate) {
 
 	onMount(async () => {
 		for (let param in paramArr) {
-			await validateInput(formulaInput[param].value, param);
+			await validateInput(data.formulas[param], param);
 		}
 	});
 
@@ -6563,7 +6562,7 @@ class AdvancementRateFormApp extends SvelteApplication {
 
 }
 
-/* built\settings\FeatSetting\featSetting-shell.svelte generated by Svelte v3.46.5 */
+/* built\settings\FeatSetting\featSetting-shell.svelte generated by Svelte v3.46.4 */
 
 function get_each_context$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -7040,7 +7039,7 @@ class FeatSetting extends SvelteApplication {
 
 }
 
-/* built\settings\ProfSetting\profSetting-shell.svelte generated by Svelte v3.46.5 */
+/* built\settings\ProfSetting\profSetting-shell.svelte generated by Svelte v3.46.4 */
 
 function get_each_context$1(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -7085,11 +7084,11 @@ function create_each_block_3(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
-			attr(span, "class", "svelte-11ce50k");
+			attr(span, "class", "svelte-1v3311j");
 
 			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[2] === /*item*/ ctx[21].id
 			? "active"
-			: "") + " svelte-11ce50k"));
+			: "") + " svelte-1v3311j"));
 		},
 		m(target, anchor) {
 			insert(target, li, anchor);
@@ -7111,7 +7110,7 @@ function create_each_block_3(ctx) {
 
 			if (dirty[0] & /*activeTabValue, data, selectArr*/ 1030 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTabValue*/ ctx[2] === /*item*/ ctx[21].id
 			? "active"
-			: "") + " svelte-11ce50k"))) {
+			: "") + " svelte-1v3311j"))) {
 				attr(li, "class", li_class_value);
 			}
 		},
@@ -7191,9 +7190,9 @@ function create_if_block(ctx) {
 			}
 
 			t9 = space();
-			attr(button0, "class", "svelte-11ce50k");
-			attr(button1, "class", "svelte-11ce50k");
-			attr(button2, "class", "svelte-11ce50k");
+			attr(button0, "class", "svelte-1v3311j");
+			attr(button1, "class", "svelte-1v3311j");
+			attr(button2, "class", "svelte-1v3311j");
 			attr(div0, "class", "flexrow");
 		},
 		m(target, anchor) {
@@ -7333,7 +7332,7 @@ function create_each_block_1(key_1, ctx) {
 			t1 = space();
 			button = element("button");
 			if (/*entry*/ ctx[24].type === void 0) add_render_callback(select_change_handler);
-			attr(button, "class", "minus far fa-minus-square svelte-11ce50k");
+			attr(button, "class", "minus far fa-minus-square svelte-1v3311j");
 			attr(div, "class", "flexrow");
 			this.first = div;
 		},
@@ -7510,11 +7509,11 @@ function create_default_slot$2(ctx) {
 
 			t5 = space();
 			create_component(settingssubmitbutton.$$.fragment);
-			attr(button0, "class", "svelte-11ce50k");
-			attr(button1, "class", "svelte-11ce50k");
+			attr(button0, "class", "svelte-1v3311j");
+			attr(button1, "class", "svelte-1v3311j");
 			attr(div0, "class", "flexrow");
-			attr(ul, "class", "svelte-11ce50k");
-			attr(div1, "class", "box svelte-11ce50k");
+			attr(ul, "class", "svelte-1v3311j");
+			attr(div1, "class", "box svelte-1v3311j");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
@@ -7854,7 +7853,7 @@ class ProfSetting extends SvelteApplication {
 
 }
 
-/* built\settings\ProfLevelsSetting\profLevelSetting-shell.svelte generated by Svelte v3.46.5 */
+/* built\settings\ProfLevelsSetting\profLevelSetting-shell.svelte generated by Svelte v3.46.4 */
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -8371,7 +8370,7 @@ const registerSystemSettings = function registerSystemSettings() {
       formulas: {
         skills: "SV",
         features: "FL",
-        attributes: "max(floor((AS-10)/2)+2,1)"
+        attributes: "max(floor((AV-10)/2)+2,1)"
       }
     },
     onChange: value => {
@@ -8618,7 +8617,7 @@ function applyChatCardDamage(li, multiplier) {
 }
 /* -------------------------------------------- */
 
-/* built\sheets\svelte\DocumentSheetInput.svelte generated by Svelte v3.46.5 */
+/* built\sheets\svelte\DocumentSheetInput.svelte generated by Svelte v3.46.4 */
 
 function create_fragment$1(ctx) {
 	let label_1;
@@ -8743,16 +8742,9 @@ class DocumentSheetInput extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\ItemShell.svelte generated by Svelte v3.46.5 */
+/* built\sheets\svelte\ItemShell.svelte generated by Svelte v3.46.4 */
 
 function create_default_slot(ctx) {
-	let div0;
-	let t1;
-	let div1;
-	let t2;
-	let t3_value = /*$doc*/ ctx[1].data.name + "";
-	let t3;
-	let t4;
 	let input;
 	let updating_value;
 	let current;
@@ -8776,27 +8768,13 @@ function create_default_slot(ctx) {
 
 	return {
 		c() {
-			div0 = element("div");
-			div0.textContent = "blank sheet";
-			t1 = space();
-			div1 = element("div");
-			t2 = text("Name: ");
-			t3 = text(t3_value);
-			t4 = space();
 			create_component(input.$$.fragment);
 		},
 		m(target, anchor) {
-			insert(target, div0, anchor);
-			insert(target, t1, anchor);
-			insert(target, div1, anchor);
-			append(div1, t2);
-			append(div1, t3);
-			insert(target, t4, anchor);
 			mount_component(input, target, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*$doc*/ 2) && t3_value !== (t3_value = /*$doc*/ ctx[1].data.name + "")) set_data(t3, t3_value);
 			const input_changes = {};
 
 			if (!updating_value && dirty & /*$doc*/ 2) {
@@ -8817,10 +8795,6 @@ function create_default_slot(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div0);
-			if (detaching) detach(t1);
-			if (detaching) detach(div1);
-			if (detaching) detach(t4);
 			destroy_component(input, detaching);
 		}
 	};

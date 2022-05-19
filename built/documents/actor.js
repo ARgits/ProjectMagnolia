@@ -25,7 +25,7 @@ export class ARd20Actor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this.data;
+    const actorData = this.system;
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
     this._prepareCharacterData(actorData);
@@ -37,7 +37,7 @@ export class ARd20Actor extends Actor {
   _prepareCharacterData(actorData) {
     if (actorData.type !== "character") return;
     // Make modifications to data here. For example:
-    const data = actorData.data;
+    const data = actorData;
     const attributes = data.attributes;
     const advancement = data.advancement;
     const def_stats = data.defences.stats;
@@ -46,16 +46,16 @@ export class ARd20Actor extends Actor {
     data.mobility.value = 0;
     this.itemTypes.armor.forEach((item) => {
       if (item.data.type === "armor") {
-        if (item.data.data.equipped) {
+        if (item.system.equipped) {
           for (let key of obj_keys(def_dam.phys)) {
-            let ph = item.data.data.res.phys[key];
+            let ph = item.system.res.phys[key];
             def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
           }
           for (let key of obj_keys(def_dam.mag)) {
-            let mg = item.data.data.res.mag[key];
+            let mg = item.system.res.mag[key];
             def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
           }
-          data.mobility.value += item.data.data.mobility.value;
+          data.mobility.value += item.system.mobility.value;
         }
       }
     });
@@ -112,7 +112,7 @@ export class ARd20Actor extends Actor {
         rankName: profLevelSetting[proficiencies.weapon[key]?.value ?? 0].label,
       };
     });
-    data.speed.value = this.itemTypes.race[0]?.data.type === "race" ? this.itemTypes.race[0].data.data.speed : 0;
+    data.speed.value = this.itemTypes.race[0]?.data.type === "race" ? this.itemTypes.race[0].system.speed : 0;
     data.speed.value += attributes.dex.mod + data.speed.bonus;
   }
   /**
@@ -122,7 +122,7 @@ export class ARd20Actor extends Actor {
     //@ts-expect-error
     if (actorData.type !== "npc") return;
     // Make modifications to data here. For example:
-    const data = actorData.data;
+    const data = actorData;
     //@ts-expect-error
     data.xp = data.cr * data.cr * 100;
   }
@@ -143,7 +143,7 @@ export class ARd20Actor extends Actor {
    */
   rollAttributeTest(attributeId, options) {
     const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
-    const actorData = this.data.data;
+    const actorData = this.system;
     const attributes = actorData.attributes;
     const attr = getValues(attributes, attributeId);
     // Construct parts
@@ -175,7 +175,7 @@ export class ARd20Actor extends Actor {
    */
   rollSkill(skillId, options) {
     console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
-    const skl = getValues(this.data.data.skills, skillId);
+    const skl = getValues(this.system.skills, skillId);
     // Compose roll parts and data
     const parts = ["@proficiency", "@mod"];
     const data = { attributes: this.getRollData().attributes, proficiency: skl.value };

@@ -30,10 +30,10 @@ export class ARd20ActorSheet extends ActorSheet {
     // editable, the items array, and the effects array.
     const context = super.getData();
     // Use a safe clone of the actor data for further operations.
-    const actorData = this.actor.data;
+    const actorData = this.actor;
     // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
-    context.data = actorData.data;
+    context.data = actorData.system;
     //@ts-expect-error
     context.flags = actorData.flags;
     //@ts-expect-error
@@ -224,7 +224,7 @@ export class ARd20ActorSheet extends ActorSheet {
                     game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
                   const doc = await game.packs.get(new_key).getDocument(feat.id);
                   const item = doc.toObject();
-                  item.data = foundry.utils.deepClone(doc.data.data);
+                  item.data = foundry.utils.deepClone(doc.system);
                   pack_list.push(item);
                   pack_name.push(item.name);
                 }
@@ -250,7 +250,7 @@ export class ARd20ActorSheet extends ActorSheet {
                 for (let feat of feat_list) {
                   console.log("item added from folder ", feat);
                   const item = feat.toObject();
-                  item.data = foundry.utils.deepClone(feat.data.data);
+                  item.data = foundry.utils.deepClone(feat.system);
                   folder_list.push(item);
                   folder_name.push(item.name);
                 }
@@ -349,9 +349,9 @@ export class ARd20ActorSheet extends ActorSheet {
               awail: featList.temp_feat_list,
             },
             allow: {
-              attribute: duplicate(actor.data.data.isReady),
-              race: duplicate(actor.data.data.isReady),
-              final: duplicate(actor.data.data.isReady),
+              attribute: duplicate(actor.system.isReady),
+              race: duplicate(actor.system.isReady),
+              final: duplicate(actor.system.isReady),
             },
           };
           return obj;
@@ -397,8 +397,8 @@ export class ARd20ActorSheet extends ActorSheet {
     //@ts-ignore
     const id = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(id);
-    const hasAttack = item.data.data.hasAttack;
-    const hasDamage = item.data.data.hasDamage;
+    const hasAttack = item.system.hasAttack;
+    const hasDamage = item.system.hasDamage;
     //@ts-expect-error
     if (item) return item.roll({ hasAttack, hasDamage });
   }

@@ -27,7 +27,7 @@ export class ARd20ItemSheet extends ItemSheet {
     const context = super.getData();
     // Use a safe clone of the item data for further operations.
     //@ts-expect-error
-    const itemData = context.item.data;
+    const itemData = context.item;
     //@ts-expect-error
     context.config = CONFIG.ARd20;
     // Retrieve the roll data for TinyMCE editors.
@@ -40,7 +40,7 @@ export class ARd20ItemSheet extends ItemSheet {
     }
     // Add the actor's data to context.data for easier access, as well as flags.
     //@ts-expect-error
-    context.data = itemData.data;
+    context.data = itemData.system;
     //@ts-expect-error
     context.flags = itemData.flags;
     //@ts-expect-error
@@ -170,7 +170,7 @@ export class ARd20ItemSheet extends ItemSheet {
     const a = event.currentTarget;
     if (a.classList.contains("add-damage")) {
       //await this._onSubmit(event);
-      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
+      let path = a.dataset.type ? "system.damage" + a.dataset.type : "system.damage";
       const damage = getProperty(this.item.data, path);
       damage.damType = damage.damType || [];
       const partsPath = path + ".parts";
@@ -183,7 +183,7 @@ export class ARd20ItemSheet extends ItemSheet {
     if (a.classList.contains("delete-damage")) {
       //await this._onSubmit(event);
       const li = a.closest(".damage-part");
-      let path = a.dataset.type ? "data.damage" + a.dataset.type : "data.damage";
+      let path = a.dataset.type ? "system.damage" + a.dataset.type : "system.damage";
       const damage = getProperty(this.item.data, path);
       console.log(damage);
       damage.parts.splice(Number(li.dataset.damagePart), 1);

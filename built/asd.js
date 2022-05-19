@@ -39,3 +39,11 @@ function createDataPath(object) {
   iterateOverObject(object);
   return newObject;
 }
+function recurse(parts) {
+  if (parts.length == 1)
+      return parts[0];
+  // else
+  var obj = {};
+  obj[parts.shift()] = recurse(parts);
+  return obj;
+}

@@ -90,7 +90,7 @@ export const registerSystemSettings = function () {
       formulas: {
         skills: "SV",
         features: "FL",
-        attributes: "max(floor((AS-10)/2)+2,1)",
+        attributes: "max(floor((AV-10)/2)+2,1)",
       },
     },
     onChange: (value) => {
