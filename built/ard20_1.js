@@ -8932,8 +8932,6 @@ class SvelteDocumentSheet extends SvelteApplication {
       _classPrivateFieldGet(this, _storeUnsubscribe).call(this);
 
       _classPrivateFieldSet(this, _storeUnsubscribe, void 0);
-
-      this.object.app.close();
     }
   }
   /**
@@ -8946,13 +8944,13 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   /* _activateCoreListeners(html) {
-     super._activateCoreListeners();
-     if (this.isEditable) return;
-     html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
-   }
-   _onChangeInput(event) {
-     console.log(event);
-   }*/
+    super._activateCoreListeners();
+    if (this.isEditable) return;
+    html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
+  }
+  _onChangeInput(event) {
+    console.log(event);
+  }*/
   render(force = false, options = {}) {
     console.log(this, force, options, "render: this, force, options");
 
@@ -8966,13 +8964,23 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 }
 
-function _handleDocUpdate2(doc, options) {
+async function _handleDocUpdate2(doc, options) {
   const {
     action,
     data,
     documentType
   } = options;
-  console.log(doc.update);
+  const id = doc.id;
+  const type = doc.type;
+  const origDoc = game[`${type}s`].get(id);
+  console.log("id: ", id, " type: ", type, " originalDocument: ", origDoc);
+  let newData = {
+    img: doc.img,
+    system: doc.system,
+    flags: doc.flags,
+    name: doc.name
+  };
+  await (origDoc === null || origDoc === void 0 ? void 0 : origDoc.update(newData));
   console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType); // I need to add a 'subscribe' action to TJSDocument so must check void.
 
   if ((action === void 0 || action === "update") && doc) {

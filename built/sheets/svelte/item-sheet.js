@@ -81,7 +81,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
    *
    * @param {object}                     options -
    */
-  #handleDocUpdate(doc, options) {
+  async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
     const id = doc.id;
     const type = doc.type;
