@@ -8956,13 +8956,13 @@ class SvelteDocumentSheet extends SvelteApplication {
       _classPrivateFieldSet(this, _storeUnsubscribe, _classPrivateFieldGet(this, _storeDoc).subscribe(_classPrivateMethodGet(this, _handleDocUpdate, _handleDocUpdate2).bind(this)));
     }
 
+    super.render(force, options);
     console.log(this._element);
 
     this._element.addEventListener('change', () => {
       console.log(_classPrivateFieldGet(this, _storeDoc));
     });
 
-    super.render(force, options);
     return this;
   }
 
