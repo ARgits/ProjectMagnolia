@@ -1,6 +1,6 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-import {element} from "svelte/internal"
+import { element } from "svelte/internal";
 
 import DocumentShell from "./DocumentShell.svelte";
 
@@ -71,7 +71,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if (this.#storeUnsubscribe) {
       this.#storeUnsubscribe();
       this.#storeUnsubscribe = void 0;
-      this.object.app.close()
+      this.object.app.close();
     }
   }
 
@@ -91,8 +91,12 @@ export class SvelteDocumentSheet extends SvelteApplication {
       this.reactive.title = doc?.name ?? "No Document Assigned";
     }
   }
-  async _onChangeInput(){
-    console.log('event ',this._element, ' CHANGE INPUT!!!!! ',this._element.onchange)
+  _activateCoreListeners(html) {
+    super._activateCoreListeners();
+    if (this.isEditable) return;
+    html.on("change", "input,select,textarea", () => {
+      console.log(this);
+    });
   }
 
   render(force = false, options = {}) {
@@ -101,13 +105,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
     super.render(force, options);
-    const _elem = this._element
-    const elem = this.element
-    console.log(_elem, elem)
-    /*this._element.addEventListener('change',()=>{
-      console.log(this.#storeDoc)
-    })*/
-
     return this;
   }
 }

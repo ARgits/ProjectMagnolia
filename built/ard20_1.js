@@ -8945,8 +8945,13 @@ class SvelteDocumentSheet extends SvelteApplication {
    */
 
 
-  async _onChangeInput() {
-    console.log('event ', this._element, ' CHANGE INPUT!!!!! ', this._element.onchange);
+  _activateCoreListeners(html) {
+    super._activateCoreListeners();
+
+    if (this.isEditable) return;
+    html.on("change", "input,select,textarea", () => {
+      console.log(this);
+    });
   }
 
   render(force = false, options = {}) {
@@ -8957,13 +8962,6 @@ class SvelteDocumentSheet extends SvelteApplication {
     }
 
     super.render(force, options);
-    const _elem = this._element;
-    const elem = this.element;
-    console.log(_elem, elem);
-    /*this._element.addEventListener('change',()=>{
-      console.log(this.#storeDoc)
-    })*/
-
     return this;
   }
 
