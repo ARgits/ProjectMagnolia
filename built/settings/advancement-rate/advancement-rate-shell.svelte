@@ -48,7 +48,7 @@
     }
   });
   /**
-   * replace part of string at given index
+   * Replace part of string at given index
    * @param {string} str - String
    * @param {number} index  - chosen start index
    * @param {string} replacement - string which replaces old one
@@ -60,7 +60,13 @@
     }
     return str.substring(0, index) + replacement + str.substring(index + endLength);
   }
+  /** 
+   * Check string for wrong things
+   * @param {string} val - original input 
+   * @param {string} type - can be "attributes", "skills" or "features"
+   */
   async function validateInput(val, type) {
+    console.log(val,type, 'ValidateInput function')
     formulaSpan[type] = val;
     let ind = 0; //starting index
 

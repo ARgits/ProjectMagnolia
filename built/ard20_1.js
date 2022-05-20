@@ -5986,7 +5986,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (108:8) {#each Object.values(data.variables) as variable}
+// (114:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[20].longName + "";
@@ -6044,7 +6044,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (140:10) {#if formulaSet[param].check}
+// (146:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -6072,7 +6072,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (115:6) {#each paramArr as param}
+// (121:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -6194,7 +6194,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (103:0) <ApplicationShell bind:elementRoot>
+// (109:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$4(ctx) {
 	let div3;
 	let div1;
@@ -6403,7 +6403,7 @@ function create_fragment$4(ctx) {
 const setting$3 = "advancement-rate"; //name of setting
 
 /**
- * replace part of string at given index
+ * Replace part of string at given index
  * @param {string} str - String
  * @param {number} index  - chosen start index
  * @param {string} replacement - string which replaces old one
@@ -6470,7 +6470,13 @@ function instance$4($$self, $$props, $$invalidate) {
 		}
 	});
 
+	/** 
+ * Check string for wrong things
+ * @param {string} val - original input 
+ * @param {string} type - can be "attributes", "skills" or "features"
+ */
 	async function validateInput(val, type) {
+		console.log(val, type, 'ValidateInput function');
 		$$invalidate(5, formulaSpan[type] = val, formulaSpan);
 		let ind = 0; //starting index
 
