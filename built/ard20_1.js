@@ -1446,7 +1446,7 @@ class ARd20Item extends Item {
 
 
   prepareFinalAttributes() {
-    const itemData = this.data; //@ts-expect-error
+    const itemData = this.system; //@ts-expect-error
 
     const abil = itemData.abil = {};
 
@@ -8943,14 +8943,6 @@ class SvelteDocumentSheet extends SvelteApplication {
    */
 
 
-  /* _activateCoreListeners(html) {
-    super._activateCoreListeners();
-    if (this.isEditable) return;
-    html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
-  }
-  _onChangeInput(event) {
-    console.log(event);
-  }*/
   render(force = false, options = {}) {
     console.log(this, force, options, "render: this, force, options");
 
@@ -8970,18 +8962,16 @@ async function _handleDocUpdate2(doc, options) {
     data,
     documentType
   } = options;
-  const id = doc.id;
-  const type = doc.type;
-  const origDoc = game[`${type}s`].get(id);
-  console.log("id: ", id, " type: ", type, " originalDocument: ", origDoc);
-  let newData = {
+  const origDoc = game[`${doc.type}s`].get(doc.id); //reference to orignal DOcument
+
+  const updateData = {
     img: doc.img,
     system: doc.system,
     flags: doc.flags,
     name: doc.name
-  };
-  await (origDoc === null || origDoc === void 0 ? void 0 : origDoc.update(newData));
-  console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType); // I need to add a 'subscribe' action to TJSDocument so must check void.
+  }; //updateData
+
+  await (origDoc === null || origDoc === void 0 ? void 0 : origDoc.update(updateData)); // I need to add a 'subscribe' action to TJSDocument so must check void.
 
   if ((action === void 0 || action === "update") && doc) {
     var _doc$name;

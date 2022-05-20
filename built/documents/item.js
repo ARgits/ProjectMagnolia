@@ -197,7 +197,7 @@ export class ARd20Item extends Item {
     Prepare Data that uses actor's data
     */
   prepareFinalAttributes() {
-    const itemData = this.data;
+    const itemData = this.system;
     //@ts-expect-error
     const abil = (itemData.abil = {});
     for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {

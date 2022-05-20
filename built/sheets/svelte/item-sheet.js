@@ -83,27 +83,15 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
-    const id = doc.id;
-    const type = doc.type;
-    const origDoc = game[`${type}s`].get(id);
-    console.log("id: ", id, " type: ", type, " originalDocument: ", origDoc);
-    let newData = { img: doc.img, system: doc.system, flags: doc.flags, name: doc.name };
-    await origDoc?.update(newData);
-    console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType);
+    const origDoc = game[`${doc.type}s`].get(doc.id); //reference to orignal DOcument
+    const updateData = { img: doc.img, system: doc.system, flags: doc.flags, name: doc.name }; //updateData
+    await origDoc?.update(updateData);
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update") && doc) {
       this.reactive.title = doc?.name ?? "No Document Assigned";
     }
   }
-  /* _activateCoreListeners(html) {
-    super._activateCoreListeners();
-    if (this.isEditable) return;
-    html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
-  }
-  _onChangeInput(event) {
-    console.log(event);
-  }*/
 
   render(force = false, options = {}) {
     console.log(this, force, options, "render: this, force, options");
