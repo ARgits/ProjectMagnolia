@@ -101,10 +101,12 @@ export class SvelteDocumentSheet extends SvelteApplication {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
     super.render(force, options);
-    console.log(this._element)
-    this._element.addEventListener('change',()=>{
+    const _elem = this._element
+    const elem = this.element
+    console.log(_elem, elem)
+    /*this._element.addEventListener('change',()=>{
       console.log(this.#storeDoc)
-    })
+    })*/
 
     return this;
   }

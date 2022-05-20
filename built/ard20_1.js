@@ -8957,11 +8957,12 @@ class SvelteDocumentSheet extends SvelteApplication {
     }
 
     super.render(force, options);
-    console.log(this._element);
-
-    this._element.addEventListener('change', () => {
-      console.log(_classPrivateFieldGet(this, _storeDoc));
-    });
+    const _elem = this._element;
+    const elem = this.element;
+    console.log(_elem, elem);
+    /*this._element.addEventListener('change',()=>{
+      console.log(this.#storeDoc)
+    })*/
 
     return this;
   }
