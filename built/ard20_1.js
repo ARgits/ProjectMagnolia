@@ -5986,7 +5986,7 @@ function get_each_context_1$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (114:8) {#each Object.values(data.variables) as variable}
+// (117:8) {#each Object.values(data.variables) as variable}
 function create_each_block_1$2(ctx) {
 	let label;
 	let t0_value = /*variable*/ ctx[20].longName + "";
@@ -6044,7 +6044,7 @@ function create_each_block_1$2(ctx) {
 	};
 }
 
-// (146:10) {#if formulaSet[param].check}
+// (149:10) {#if formulaSet[param].check}
 function create_if_block$1(ctx) {
 	let div;
 	let t0;
@@ -6072,7 +6072,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-// (121:6) {#each paramArr as param}
+// (124:6) {#each paramArr as param}
 function create_each_block$3(ctx) {
 	let div1;
 	let label;
@@ -6194,7 +6194,7 @@ function create_each_block$3(ctx) {
 	};
 }
 
-// (109:0) <ApplicationShell bind:elementRoot>
+// (112:0) <ApplicationShell bind:elementRoot>
 function create_default_slot$4(ctx) {
 	let div3;
 	let div1;
@@ -6451,32 +6451,20 @@ function instance$4($$self, $$props, $$invalidate) {
 	}
 
 	//set position for divs with span
-	function changeDivPosition() {
-		for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-			let div = elem.nextElementSibling.style;
-			div.margin = getComputedStyle(elem).margin;
-			div.padding = getComputedStyle(elem).padding;
-			div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
-			div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
-			div.border = getComputedStyle(elem).border;
-			div["border-color"] = "transparent";
-			console.log(div.top, div.left);
-		}
-	}
-
 	onMount(async () => {
-		for (let param in paramArr) {
+		for (let param of paramArr) {
+			console.log(data.formulas[param], param);
 			await validateInput(data.formulas[param], param);
 		}
 	});
 
-	/** 
+	/**
  * Check string for wrong things
- * @param {string} val - original input 
+ * @param {string} val - original input
  * @param {string} type - can be "attributes", "skills" or "features"
  */
 	async function validateInput(val, type) {
-		console.log(val, type, 'ValidateInput function');
+		console.log(val, type, "ValidateInput function");
 		$$invalidate(5, formulaSpan[type] = val, formulaSpan);
 		let ind = 0; //starting index
 
@@ -6515,6 +6503,19 @@ function instance$4($$self, $$props, $$invalidate) {
 		$$invalidate(2, formulaSet[type].check = formulaSet[type].set.size > 0, formulaSet);
 		await tick();
 		changeDivPosition();
+	}
+
+	function changeDivPosition() {
+		for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+			let div = elem.nextElementSibling.style;
+			div.margin = getComputedStyle(elem).margin;
+			div.padding = getComputedStyle(elem).padding;
+			div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
+			div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
+			div.border = getComputedStyle(elem).border;
+			div["border-color"] = "transparent";
+			console.log(div.top, div.left);
+		}
 	}
 
 	function input_input_handler(each_value_1, variable_index) {
@@ -8865,13 +8866,14 @@ class SvelteDocumentSheet extends SvelteApplication {
       value: void 0
     });
 
-    Object.defineProperty(this.reactive, 'document', {
+    Object.defineProperty(this.reactive, "document", {
       get: () => _classPrivateFieldGet(this, _storeDoc).get(),
       set: document => {
         _classPrivateFieldGet(this, _storeDoc).set(document);
       }
     });
-    console.log(object, _options, 'constructor options'); // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
+    console.log(object, _options, "constructor options");
+    this.reactive.document = object; // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
   /**
    * Default Application options
@@ -8883,9 +8885,9 @@ class SvelteDocumentSheet extends SvelteApplication {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      title: 'No Document Assigned',
+      title: "No Document Assigned",
       width: 450,
-      height: 'auto',
+      height: "auto",
       resizable: true,
       minimizable: true,
       svelte: {
@@ -8920,6 +8922,8 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   render(force = false, options = {}) {
+    console.log(this, force, options, 'render: this, force, options');
+
     if (!_classPrivateFieldGet(this, _storeUnsubscribe)) {
       _classPrivateFieldSet(this, _storeUnsubscribe, _classPrivateFieldGet(this, _storeDoc).subscribe(_classPrivateMethodGet(this, _handleDocUpdate, _handleDocUpdate2).bind(this)));
     }
@@ -8931,17 +8935,17 @@ class SvelteDocumentSheet extends SvelteApplication {
 }
 
 function _handleDocUpdate2(doc, options) {
-  console.log(doc, options, 'handleDocUpdate');
+  console.log(doc, options, "handleDocUpdate");
   const {
     action,
     data,
     documentType
   } = options; // I need to add a 'subscribe' action to TJSDocument so must check void.
 
-  if ((action === void 0 || action === 'update') && doc) {
+  if ((action === void 0 || action === "update") && doc) {
     var _doc$name;
 
-    this.reactive.title = (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : 'No Document Assigned';
+    this.reactive.title = (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : "No Document Assigned";
   }
 }
 

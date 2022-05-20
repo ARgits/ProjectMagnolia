@@ -30,43 +30,21 @@
     }
   }
   //set position for divs with span
-  function changeDivPosition() {
-    for (let elem of elementRoot.querySelectorAll("input.transparent")) {
-      let div = elem.nextElementSibling.style;
-      div.margin = getComputedStyle(elem).margin;
-      div.padding = getComputedStyle(elem).padding;
-      div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
-      div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
-      div.border = getComputedStyle(elem).border;
-      div["border-color"] = "transparent";
-      console.log(div.top, div.left);
-    }
-  }
+
   onMount(async () => {
-    for (let param in paramArr) {
+    for (let param of paramArr) {
+      console.log(data.formulas[param], param);
       await validateInput(data.formulas[param], param);
     }
   });
+
   /**
-   * Replace part of string at given index
-   * @param {string} str - String
-   * @param {number} index  - chosen start index
-   * @param {string} replacement - string which replaces old one
-   * @param {number} endLength - chosen end index
-   */
-  function replaceStrAt(str, index, replacement, endLength) {
-    if (index >= str.length) {
-      return str.valueOf();
-    }
-    return str.substring(0, index) + replacement + str.substring(index + endLength);
-  }
-  /** 
    * Check string for wrong things
-   * @param {string} val - original input 
+   * @param {string} val - original input
    * @param {string} type - can be "attributes", "skills" or "features"
    */
   async function validateInput(val, type) {
-    console.log(val,type, 'ValidateInput function')
+    console.log(val, type, "ValidateInput function");
     formulaSpan[type] = val;
     let ind = 0; //starting index
 
@@ -103,6 +81,31 @@
     formulaSet[type].check = formulaSet[type].set.size > 0;
     await tick();
     changeDivPosition();
+  }
+  function changeDivPosition() {
+    for (let elem of elementRoot.querySelectorAll("input.transparent")) {
+      let div = elem.nextElementSibling.style;
+      div.margin = getComputedStyle(elem).margin;
+      div.padding = getComputedStyle(elem).padding;
+      div.left = Math.ceil(elem.offsetLeft * 1.01) + "px";
+      div.top = Math.ceil(elem.offsetTop * 1.01) + "px";
+      div.border = getComputedStyle(elem).border;
+      div["border-color"] = "transparent";
+      console.log(div.top, div.left);
+    }
+  }
+  /**
+   * Replace part of string at given index
+   * @param {string} str - String
+   * @param {number} index  - chosen start index
+   * @param {string} replacement - string which replaces old one
+   * @param {number} endLength - chosen end index
+   */
+  function replaceStrAt(str, index, replacement, endLength) {
+    if (index >= str.length) {
+      return str.valueOf();
+    }
+    return str.substring(0, index) + replacement + str.substring(index + endLength);
   }
 </script>
 
