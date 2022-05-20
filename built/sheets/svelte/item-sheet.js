@@ -94,9 +94,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
   _activateCoreListeners(html) {
     super._activateCoreListeners();
     if (this.isEditable) return;
-    html.on("change", "input,select,textarea", () => {
-      console.log(this);
-    });
+    html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
+  }
+  _onChangeInput(event) {
+    console.log(event);
   }
 
   render(force = false, options = {}) {
