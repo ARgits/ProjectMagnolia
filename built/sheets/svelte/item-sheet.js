@@ -71,7 +71,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if (this.#storeUnsubscribe) {
       this.#storeUnsubscribe();
       this.#storeUnsubscribe = void 0;
-      this.object.app.close();
     }
   }
 
