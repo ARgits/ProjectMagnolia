@@ -9,4 +9,5 @@
 
 <ApplicationShell bind:elementRoot>
   Name: <input bind:value={$storeDoc.name} />
+  formula
 </ApplicationShell>

@@ -45,6 +45,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
    * @see https://foundryvtt.com/api/Application.html#options
    */
   static get defaultOptions() {
+    let sheetThis = this;
+    console.log(sheetThis)
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: "No Document Assigned",
       width: 450,
@@ -83,7 +85,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
-    const origDoc = game[`${doc.type}s`].get(doc.id); //reference to orignal DOcument
+    const origDoc = game[`${doc.type}s`].get(doc.id); //reference to original DOcument
     const updateData = { img: doc.img, system: doc.system, flags: doc.flags, name: doc.name }; //updateData
     await origDoc?.update(updateData);
 
