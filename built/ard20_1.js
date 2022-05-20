@@ -8944,7 +8944,7 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   render(force = false, options = {}) {
-    console.log(this, force, options, 'render: this, force, options');
+    console.log(this, force, options, "render: this, force, options");
 
     if (!_classPrivateFieldGet(this, _storeUnsubscribe)) {
       _classPrivateFieldSet(this, _storeUnsubscribe, _classPrivateFieldGet(this, _storeDoc).subscribe(_classPrivateMethodGet(this, _handleDocUpdate, _handleDocUpdate2).bind(this)));
@@ -8962,7 +8962,8 @@ function _handleDocUpdate2(doc, options) {
     action,
     data,
     documentType
-  } = options; // I need to add a 'subscribe' action to TJSDocument so must check void.
+  } = options;
+  console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType); // I need to add a 'subscribe' action to TJSDocument so must check void.
 
   if ((action === void 0 || action === "update") && doc) {
     var _doc$name;

@@ -83,6 +83,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   #handleDocUpdate(doc, options) {
     console.log(doc, options, "handleDocUpdate");
     const { action, data, documentType } = options;
+    console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType);
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update") && doc) {
@@ -91,7 +92,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   }
 
   render(force = false, options = {}) {
-    console.log(this, force, options, 'render: this, force, options')
+    console.log(this, force, options, "render: this, force, options");
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
