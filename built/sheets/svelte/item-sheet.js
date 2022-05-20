@@ -46,8 +46,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: "No Document Assigned",
-      width: 450,
-      height: "auto",
+      width: 800,
+      height: 600,
       resizable: true,
       minimizable: true,
 

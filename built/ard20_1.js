@@ -8735,8 +8735,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	let $document;
 	let { value } = $$props;
 	const document = getContext("DocumentSheetObject");
-	component_subscribe($$self, document, value => $$invalidate(2, $document = value));
-	console.log($document);
+	component_subscribe($$self, document, value => $$invalidate(1, $document = value));
 	let data;
 
 	function input_input_handler() {
@@ -8753,21 +8752,19 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$document, data*/ 6) {
+		if ($$self.$$.dirty & /*$document*/ 2) {
 			{
-				$$invalidate(1, data = {
+				$$invalidate(2, data = {
 					img: $document.img,
 					system: $document.system,
 					flags: $document.flags,
 					name: $document.name
 				});
-
-				console.log(data);
 			}
 		}
 	};
 
-	return [value, data, $document, document, input_input_handler, change_handler];
+	return [value, $document, data, document, input_input_handler, change_handler];
 }
 
 class InputForDocumentSheet extends SvelteComponent {
@@ -9208,8 +9205,8 @@ class SvelteDocumentSheet extends SvelteApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: "No Document Assigned",
-      width: 450,
-      height: "auto",
+      width: 800,
+      height: 600,
       resizable: true,
       minimizable: true,
       svelte: {
