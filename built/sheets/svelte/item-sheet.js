@@ -84,6 +84,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
+    console.log(doc.update)
     console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType);
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
@@ -91,14 +92,14 @@ export class SvelteDocumentSheet extends SvelteApplication {
       this.reactive.title = doc?.name ?? "No Document Assigned";
     }
   }
-  _activateCoreListeners(html) {
+ /* _activateCoreListeners(html) {
     super._activateCoreListeners();
     if (this.isEditable) return;
     html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
   }
   _onChangeInput(event) {
     console.log(event);
-  }
+  }*/
 
   render(force = false, options = {}) {
     console.log(this, force, options, "render: this, force, options");
