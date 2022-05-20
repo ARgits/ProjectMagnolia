@@ -1,5 +1,6 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
+import {element} from "svelte/internal"
 
 import DocumentShell from "./DocumentShell.svelte";
 
@@ -71,6 +72,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if (this.#storeUnsubscribe) {
       this.#storeUnsubscribe();
       this.#storeUnsubscribe = void 0;
+      this.object.app.close()
     }
   }
 
@@ -92,7 +94,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }
   }
   async _onChangeInput(event){
-    console.log('CHANGE INPUT!!!!!')
+    console.log('event ',event, ' CHANGE INPUT!!!!! ',event.onchange)
   }
 
   render(force = false, options = {}) {
@@ -100,6 +102,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
+    this._onChangeInput.bind(this.element)
 
     super.render(force, options);
 

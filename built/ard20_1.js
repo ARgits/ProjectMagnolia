@@ -8933,6 +8933,8 @@ class SvelteDocumentSheet extends SvelteApplication {
       _classPrivateFieldGet(this, _storeUnsubscribe).call(this);
 
       _classPrivateFieldSet(this, _storeUnsubscribe, void 0);
+
+      this.object.app.close();
     }
   }
   /**
@@ -8945,7 +8947,7 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   async _onChangeInput(event) {
-    console.log('CHANGE INPUT!!!!!');
+    console.log('event ', event, ' CHANGE INPUT!!!!! ', event.onchange);
   }
 
   render(force = false, options = {}) {
@@ -8954,6 +8956,8 @@ class SvelteDocumentSheet extends SvelteApplication {
     if (!_classPrivateFieldGet(this, _storeUnsubscribe)) {
       _classPrivateFieldSet(this, _storeUnsubscribe, _classPrivateFieldGet(this, _storeDoc).subscribe(_classPrivateMethodGet(this, _handleDocUpdate, _handleDocUpdate2).bind(this)));
     }
+
+    this._onChangeInput.bind(this.element);
 
     super.render(force, options);
     return this;
