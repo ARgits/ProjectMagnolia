@@ -49,7 +49,7 @@
     let ind = 0; //starting index
 
     //create an array of variables/functions in formula field and their indexes
-    let checkArr = val.split(/[./+\*,^\s\(\)]+/).map((item) => {
+    let checkArr = val.split(/[-./+\*,^\s\(\)]+/).map((item) => {
       return { name: item, index: 0 };
     });
     for (let item of checkArr) {
