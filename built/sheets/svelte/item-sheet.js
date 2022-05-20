@@ -34,7 +34,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
         this.#storeDoc.set(document);
       },
     });
-    console.log(object, options, "constructor options");
     this.reactive.document = object;
     // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
@@ -84,7 +83,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
    * @param {object}                     options -
    */
   #handleDocUpdate(doc, options) {
-    console.log(doc, options, "handleDocUpdate");
     const { action, data, documentType } = options;
     console.log("HandleDocUpdate: action: ", action, " data: ", data, " documentType: ", documentType);
 
@@ -93,8 +91,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
       this.reactive.title = doc?.name ?? "No Document Assigned";
     }
   }
-  async _onChangeInput(event){
-    console.log('event ',event, ' CHANGE INPUT!!!!! ',event.onchange)
+  async _onChangeInput(){
+    console.log('event ',this._element, ' CHANGE INPUT!!!!! ',this._element.onchange)
   }
 
   render(force = false, options = {}) {
@@ -102,7 +100,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
-    this._onChangeInput.bind(this.element)
+    console.log(this._element)
+    this._element.addEventListener('change',()=>{
+      console.log(this.#storeDoc)
+    })
 
     super.render(force, options);
 

@@ -8894,7 +8894,6 @@ class SvelteDocumentSheet extends SvelteApplication {
         _classPrivateFieldGet(this, _storeDoc).set(document);
       }
     });
-    console.log(object, _options, "constructor options");
     this.reactive.document = object; // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
   /**
@@ -8946,8 +8945,8 @@ class SvelteDocumentSheet extends SvelteApplication {
    */
 
 
-  async _onChangeInput(event) {
-    console.log('event ', event, ' CHANGE INPUT!!!!! ', event.onchange);
+  async _onChangeInput() {
+    console.log('event ', this._element, ' CHANGE INPUT!!!!! ', this._element.onchange);
   }
 
   render(force = false, options = {}) {
@@ -8957,7 +8956,11 @@ class SvelteDocumentSheet extends SvelteApplication {
       _classPrivateFieldSet(this, _storeUnsubscribe, _classPrivateFieldGet(this, _storeDoc).subscribe(_classPrivateMethodGet(this, _handleDocUpdate, _handleDocUpdate2).bind(this)));
     }
 
-    this._onChangeInput.bind(this.element);
+    console.log(this._element);
+
+    this._element.addEventListener('change', () => {
+      console.log(_classPrivateFieldGet(this, _storeDoc));
+    });
 
     super.render(force, options);
     return this;
@@ -8966,7 +8969,6 @@ class SvelteDocumentSheet extends SvelteApplication {
 }
 
 function _handleDocUpdate2(doc, options) {
-  console.log(doc, options, "handleDocUpdate");
   const {
     action,
     data,
