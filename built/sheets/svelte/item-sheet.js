@@ -65,6 +65,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   }
 
   async close(options = {}) {
+    console.log("close ", options);
     await super.close(options);
 
     if (this.#storeUnsubscribe) {
@@ -89,6 +90,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if ((action === void 0 || action === "update") && doc) {
       this.reactive.title = doc?.name ?? "No Document Assigned";
     }
+  }
+  async _onChangeInput(event){
+    console.log('CHANGE INPUT!!!!!')
   }
 
   render(force = false, options = {}) {

@@ -8926,6 +8926,7 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   async close(options = {}) {
+    console.log("close ", options);
     await super.close(options);
 
     if (_classPrivateFieldGet(this, _storeUnsubscribe)) {
@@ -8942,6 +8943,10 @@ class SvelteDocumentSheet extends SvelteApplication {
    * @param {object}                     options -
    */
 
+
+  async _onChangeInput(event) {
+    console.log('CHANGE INPUT!!!!!');
+  }
 
   render(force = false, options = {}) {
     console.log(this, force, options, "render: this, force, options");
