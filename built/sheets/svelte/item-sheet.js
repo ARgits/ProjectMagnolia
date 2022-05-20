@@ -1,6 +1,6 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-import { element } from "svelte/internal";
+import ItemSheet from "./item-sheet.svelte"
 
 import DocumentShell from "./DocumentShell.svelte";
 
