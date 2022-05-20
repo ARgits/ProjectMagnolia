@@ -8709,8 +8709,8 @@ function create_fragment$3(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*input_input_handler*/ ctx[3]),
-					listen(input, "change", /*change_handler*/ ctx[4])
+					listen(input, "input", /*input_input_handler*/ ctx[4]),
+					listen(input, "change", /*change_handler*/ ctx[5])
 				];
 
 				mounted = true;
@@ -8732,9 +8732,11 @@ function create_fragment$3(ctx) {
 }
 
 function instance$3($$self, $$props, $$invalidate) {
+	let $document;
 	let { value } = $$props;
 	const document = getContext("DocumentSheetObject");
-	console.log(document);
+	component_subscribe($$self, document, value => $$invalidate(2, $document = value));
+	console.log($document);
 	let data;
 
 	function input_input_handler() {
@@ -8743,7 +8745,7 @@ function instance$3($$self, $$props, $$invalidate) {
 	}
 
 	const change_handler = () => {
-		document.update(data);
+		$document.update(data);
 	};
 
 	$$self.$$set = $$props => {
@@ -8751,12 +8753,13 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*data*/ 2) {
+		if ($$self.$$.dirty & /*$document, data*/ 6) {
 			{
 				$$invalidate(1, data = {
-					img: document.img,
-					system: document.system,
-					flags: document.flags
+					img: $document.img,
+					system: $document.system,
+					flags: $document.flags,
+					name: $document.name
 				});
 
 				console.log(data);
@@ -8764,7 +8767,7 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	};
 
-	return [value, data, document, input_input_handler, change_handler];
+	return [value, data, $document, document, input_input_handler, change_handler];
 }
 
 class InputForDocumentSheet extends SvelteComponent {
@@ -9093,7 +9096,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { storeDoc } = $$props;
 	$$subscribe_storeDoc();
 	const templates = { item: Item_sheet };
-	setContext('DocumentSheetObject', $storeDoc);
+	setContext('DocumentSheetObject', storeDoc);
 
 	function switch_instance_doc_binding(value) {
 		$storeDoc = value;
