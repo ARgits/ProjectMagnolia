@@ -11,7 +11,7 @@ import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
-import {SvelteItemSheet} from "../built/sheets/svelte/item-sheet.js"
+import {SvelteDocumentSheet} from "../built/sheets/svelte/item-sheet.js"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -73,7 +73,7 @@ Hooks.once("init", async function () {
     Items.unregisterSheet("core", ItemSheet);
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
-    Items.registerSheet("ard20", SvelteItemSheet, { makeDefault: false });
+    Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: false });
     registerSystemSettings();
 
 

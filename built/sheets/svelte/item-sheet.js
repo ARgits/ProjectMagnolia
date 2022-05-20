@@ -1,89 +1,108 @@
-import ItemShell from "../svelte/ItemShell.svelte";
-import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
-export class SvelteDocumentSheet extends SvelteApplication {
-  constructor(object = {}, options = {}) {
-    super(options);
-    this.object = object;
-  }
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["sheet"],
-      viewPermission: CONST.DOCUMENT_PERMISSION_LEVELS.LIMITED,
-      sheetConfig: true,
-      svelte: {
-        target: document.body,
-      },
-    });
-  }
-  get document() {
-    return this.object;
-  }
-  get id() {
-    const name = this.options.id || `${this.document.documentName.toLowerCase()}-sheet`;
-    return `${name}-${this.document.id}`;
-  }
-  get isEditable() {
-    let editable = this.options["editable"] && this.document.isOwner;
-    if (this.document.pack) {
-      const pack = game.packs.get(this.document.pack);
-      if (pack.locked) editable = false;
-    }
-    return editable;
-  }
-  get title() {
-    const name = this.document.name ?? this.document.id;
-    const reference = name ? `: ${name}` : "";
-    return `${game.i18n.localize(this.document.constructor.metadata.label)}}${reference}`;
-  }
-  getData(options) {
-    const data = this.document.data.toObject(false);
-    const isEditable = this.isEditable;
-    return {
-      cssClass: isEditable ? "editable" : "locked",
-      editable: isEditable,
-      document: this.document,
-      data: data,
-      limited: this.document.limited,
-      options: this.options,
-      owner: this.document.isOwner,
-      title: this.title,
-    };
-  }
-}
-export class SvelteItemSheet extends SvelteDocumentSheet {
-  get item(){
-    return this.object
-  }
-  get title(){
-    return this.item.name
-  }
-  get actor(){
-    return this.item.actor
-  }
-  
-  get id(){
-    if(this.actor) return `actor-${this.actor.id}-item-${this.item.id}`
-    else return super.id
-  }
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      minimizable: true,
-      resizable: true,
-      width: 600,
-      height: 600,
-      svelte: {
-        class: ItemShell,
-        target: document.body,
-      },
-      id:"item",
-    });
-  }
-  async close(options = {}){
-    super.close()
-    for(const app of Object.values(this.object.apps)){
-      app.close()
-    }
-  }
+import { SvelteApplication }  from '@typhonjs-fvtt/runtime/svelte/application';
+import { TJSDocument }        from '@typhonjs-fvtt/runtime/svelte/store';
 
+import DocumentShell           from './DocumentShell.svelte';
+
+export class SvelteDocumentSheet extends SvelteApplication
+{
+   /**
+    * Document store that monitors updates to any assigned document.
+    *
+    * @type {TJSDocument<foundry.abstract.Document>}
+    */
+   #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
+
+   /**
+    * Holds the document unsubscription function.
+    *
+    * @type {Function}
+    */
+   #storeUnsubscribe;
+
+   constructor(options)
+   {
+      super(options);
+
+      /**
+       * @member {object} document - Adds accessors to SvelteReactive to get / set the document associated with
+       *                             Document.
+       *
+       * @memberof SvelteReactive#
+       */
+      Object.defineProperty(this.reactive, 'document', {
+         get: () => this.#storeDoc.get(),
+         set: (document) => { this.#storeDoc.set(document); }
+      });
+
+      // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
+   }
+
+   /**
+    * Default Application options
+    *
+    * @returns {object} options - Application options.
+    * @see https://foundryvtt.com/api/Application.html#options
+    */
+   static get defaultOptions()
+   {
+      return foundry.utils.mergeObject(super.defaultOptions, {
+         title: 'No Document Assigned',
+         width: 450,
+         height: 'auto',
+         resizable: true,
+         minimizable: true,
+
+         svelte: {
+            class: DocumentShell,
+            target: document.body,
+
+            // You can assign a function that is invoked with MyItemApp instance as `this`.
+            props: function()
+            {
+               return { storeDoc: this.#storeDoc };
+            }
+         }
+      });
+   }
+
+   async close(options = {})
+   {
+      await super.close(options);
+
+      if (this.#storeUnsubscribe)
+      {
+         this.#storeUnsubscribe();
+         this.#storeUnsubscribe = void 0;
+      }
+   }
+
+   /**
+    * Handles any changes to document.
+    *
+    * @param {foundry.abstract.Document}  doc -
+    *
+    * @param {object}                     options -
+    */
+   #handleDocUpdate(doc, options)
+   {
+      const { action, data, documentType } = options;
+
+      // I need to add a 'subscribe' action to TJSDocument so must check void.
+      if ((action === void 0 || action === 'update') && doc)
+      {
+         this.reactive.title = doc?.name ?? 'No Document Assigned';
+      }
+   }
+
+   render(force = false, options = {})
+   {
+      if (!this.#storeUnsubscribe)
+      {
+         this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
+      }
+
+      super.render(force, options);
+
+      return this;
+   }
 }
