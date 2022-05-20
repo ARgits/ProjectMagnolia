@@ -2,6 +2,7 @@
 
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  import {setContext} from "svelte"
   import itemSheet from "./item-sheet.svelte";
   import BasicSheet from "./basic-sheet.svelte";
 
@@ -10,6 +11,7 @@
   const templates = {
     item: itemSheet,
   };
+  setContext('DocumentSheetObject',storeDoc)
 </script>
 
 <ApplicationShell bind:elementRoot>

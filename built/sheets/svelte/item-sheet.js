@@ -82,9 +82,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
-    const origDoc = game[`${doc.type}s`].get(doc.id); //reference to original DOcument
-    const updateData = { img: doc.img, system: doc.system, flags: doc.flags, name: doc.name }; //updateData
-    await origDoc?.update(updateData);
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update") && doc) {
