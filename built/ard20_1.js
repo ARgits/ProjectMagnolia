@@ -8738,6 +8738,7 @@ function create_fragment$3(ctx) {
 function instance$3($$self, $$props, $$invalidate) {
 	let { value } = $$props;
 	const document = getContext('DocumentSheetObject');
+	console.log(document);
 	let data;
 
 	function input_input_handler() {
@@ -9088,7 +9089,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { storeDoc } = $$props;
 	$$subscribe_storeDoc();
 	const templates = { item: Item_sheet };
-	setContext('DocumentSheetObject', storeDoc);
+	setContext('DocumentSheetObject', $storeDoc);
 
 	function switch_instance_doc_binding(value) {
 		$storeDoc = value;

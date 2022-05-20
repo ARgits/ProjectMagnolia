@@ -4,6 +4,7 @@
     import {getContext} from "svelte"
   export let value;
   const document = getContext('DocumentSheetObject')
+  console.log(document)
   let data;
   $:data = {img:document.img, system:document.system, flags:document.flags}
 </script>

@@ -11,7 +11,7 @@
   const templates = {
     item: itemSheet,
   };
-  setContext('DocumentSheetObject',storeDoc)
+  setContext('DocumentSheetObject',$storeDoc)
 </script>
 
 <ApplicationShell bind:elementRoot>
