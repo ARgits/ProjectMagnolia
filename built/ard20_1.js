@@ -8864,7 +8864,8 @@ class SvelteDocumentSheet extends SvelteApplication {
       set: document => {
         _classPrivateFieldGet(this, _storeDoc).set(document);
       }
-    }); // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
+    });
+    console.log(_options, 'constructor options'); // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
   /**
    * Default Application options
@@ -8924,6 +8925,7 @@ class SvelteDocumentSheet extends SvelteApplication {
 }
 
 function _handleDocUpdate2(doc, options) {
+  console.log(doc, options, 'handleDocUpdate');
   const {
     action,
     data,

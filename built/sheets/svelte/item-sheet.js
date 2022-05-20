@@ -33,6 +33,7 @@ export class SvelteDocumentSheet extends SvelteApplication
          get: () => this.#storeDoc.get(),
          set: (document) => { this.#storeDoc.set(document); }
       });
+      console.log(options,'constructor options')
 
       // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
    }
@@ -85,6 +86,7 @@ export class SvelteDocumentSheet extends SvelteApplication
     */
    #handleDocUpdate(doc, options)
    {
+     console.log(doc,options, 'handleDocUpdate')
       const { action, data, documentType } = options;
 
       // I need to add a 'subscribe' action to TJSDocument so must check void.
