@@ -19,9 +19,9 @@ export class SvelteDocumentSheet extends SvelteApplication
     */
    #storeUnsubscribe;
 
-   constructor(options)
+   constructor(object, options)
    {
-      super(options);
+      super(object ,options);
 
       /**
        * @member {object} document - Adds accessors to SvelteReactive to get / set the document associated with
@@ -33,7 +33,7 @@ export class SvelteDocumentSheet extends SvelteApplication
          get: () => this.#storeDoc.get(),
          set: (document) => { this.#storeDoc.set(document); }
       });
-      console.log(options,'constructor options')
+      console.log(object, options,'constructor options')
 
       // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
    }

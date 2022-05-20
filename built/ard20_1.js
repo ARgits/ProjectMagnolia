@@ -8836,8 +8836,8 @@ class SvelteDocumentSheet extends SvelteApplication {
    *
    * @type {Function}
    */
-  constructor(_options) {
-    super(_options);
+  constructor(object, _options) {
+    super(object, _options);
     /**
      * @member {object} document - Adds accessors to SvelteReactive to get / set the document associated with
      *                             Document.
@@ -8865,7 +8865,7 @@ class SvelteDocumentSheet extends SvelteApplication {
         _classPrivateFieldGet(this, _storeDoc).set(document);
       }
     });
-    console.log(_options, 'constructor options'); // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
+    console.log(object, _options, 'constructor options'); // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
   /**
    * Default Application options
