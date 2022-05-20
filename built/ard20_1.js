@@ -8820,19 +8820,31 @@ class Basic_sheet extends SvelteComponent {
 
 function create_default_slot(ctx) {
 	let switch_instance;
+	let updating_doc;
 	let switch_instance_anchor;
 	let current;
+
+	function switch_instance_doc_binding(value) {
+		/*switch_instance_doc_binding*/ ctx[4](value);
+	}
 
 	var switch_value = /*templates*/ ctx[3][/*$storeDoc*/ ctx[2].type]
 	? /*templates*/ ctx[3][/*$storeDoc*/ ctx[2].type]
 	: Basic_sheet;
 
 	function switch_props(ctx) {
-		return { props: { doc: /*$storeDoc*/ ctx[2] } };
+		let switch_instance_props = {};
+
+		if (/*$storeDoc*/ ctx[2] !== void 0) {
+			switch_instance_props.doc = /*$storeDoc*/ ctx[2];
+		}
+
+		return { props: switch_instance_props };
 	}
 
 	if (switch_value) {
 		switch_instance = new switch_value(switch_props(ctx));
+		binding_callbacks.push(() => bind(switch_instance, 'doc', switch_instance_doc_binding));
 	}
 
 	return {
@@ -8850,7 +8862,12 @@ function create_default_slot(ctx) {
 		},
 		p(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*$storeDoc*/ 4) switch_instance_changes.doc = /*$storeDoc*/ ctx[2];
+
+			if (!updating_doc && dirty & /*$storeDoc*/ 4) {
+				updating_doc = true;
+				switch_instance_changes.doc = /*$storeDoc*/ ctx[2];
+				add_flush_callback(() => updating_doc = false);
+			}
 
 			if (switch_value !== (switch_value = /*templates*/ ctx[3][/*$storeDoc*/ ctx[2].type]
 			? /*templates*/ ctx[3][/*$storeDoc*/ ctx[2].type]
@@ -8868,6 +8885,7 @@ function create_default_slot(ctx) {
 
 				if (switch_value) {
 					switch_instance = new switch_value(switch_props(ctx));
+					binding_callbacks.push(() => bind(switch_instance, 'doc', switch_instance_doc_binding));
 					create_component(switch_instance.$$.fragment);
 					transition_in(switch_instance.$$.fragment, 1);
 					mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
@@ -8900,7 +8918,7 @@ function create_fragment(ctx) {
 	let current;
 
 	function applicationshell_elementRoot_binding(value) {
-		/*applicationshell_elementRoot_binding*/ ctx[4](value);
+		/*applicationshell_elementRoot_binding*/ ctx[5](value);
 	}
 
 	let applicationshell_props = {
@@ -8926,7 +8944,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const applicationshell_changes = {};
 
-			if (dirty & /*$$scope, $storeDoc*/ 36) {
+			if (dirty & /*$$scope, $storeDoc*/ 68) {
 				applicationshell_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8964,6 +8982,11 @@ function instance($$self, $$props, $$invalidate) {
 	$$subscribe_storeDoc();
 	const templates = { item: Item_sheet };
 
+	function switch_instance_doc_binding(value) {
+		$storeDoc = value;
+		storeDoc.set($storeDoc);
+	}
+
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
 		$$invalidate(0, elementRoot);
@@ -8979,6 +9002,7 @@ function instance($$self, $$props, $$invalidate) {
 		storeDoc,
 		$storeDoc,
 		templates,
+		switch_instance_doc_binding,
 		applicationshell_elementRoot_binding
 	];
 }
@@ -9066,8 +9090,6 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   static get defaultOptions() {
-    let sheetThis = this;
-    console.log(sheetThis);
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: "No Document Assigned",
       width: 450,

@@ -1,6 +1,5 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-import ItemSheet from "./item-sheet.svelte"
 
 import DocumentShell from "./DocumentShell.svelte";
 
@@ -45,8 +44,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
    * @see https://foundryvtt.com/api/Application.html#options
    */
   static get defaultOptions() {
-    let sheetThis = this;
-    console.log(sheetThis)
     return foundry.utils.mergeObject(super.defaultOptions, {
       title: "No Document Assigned",
       width: 450,

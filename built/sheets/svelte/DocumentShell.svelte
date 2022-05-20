@@ -13,5 +13,5 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <svelte:component this={templates[$storeDoc.type] ? templates[$storeDoc.type] : BasicSheet} doc={$storeDoc} />
+  <svelte:component this={templates[$storeDoc.type] ? templates[$storeDoc.type] : BasicSheet} bind:doc={$storeDoc} />
 </ApplicationShell>
