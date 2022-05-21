@@ -76,7 +76,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   _onCofigureSheet(event) {
     console.log(event);
     if (event) event.preventDefault();
-    new SvelteDocumentSheetConfig(this.document, {
+    new DocumentSheetConfig(this.reactive.document, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - SvelteDocumentSheet.defaultOptions.width) / 2,
     }).render(true);
@@ -114,36 +114,5 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }
     super.render(force, options);
     return this;
-  }
-}
-class SvelteDocumentSheetConfig extends DocumentSheetConfig {
-  constructor(object, options) {
-    super(object, options);
-    console.log(object, options)
-  }
-
-  getData(options) {
-    console.log(this.object);
-    const config = CONFIG[this.object.documentName];
-    const type = this.object.type || CONST.BASE_DOCUMENT_TYPE;
-    let defaultClass = null;
-
-    // Classes which can be chosen
-    const classes = Object.values(config.sheetClasses[type]).reduce((obj, c) => {
-      obj[c.id] = c.label;
-      if (c.default && !defaultClass) defaultClass = c.id;
-      return obj;
-    }, {});
-
-    // Return data
-    return {
-      isGM: game.user.isGM,
-      object: this.object.toObject(),
-      options: this.options,
-      sheetClass: this.object.getFlag("core", "sheetClass") ?? "",
-      sheetClasses: classes,
-      defaultClass: defaultClass,
-      blankLabel: game.i18n.localize("SHEETS.DefaultSheet"),
-    };
   }
 }

@@ -9263,7 +9263,7 @@ class SvelteDocumentSheet extends SvelteApplication {
   _onCofigureSheet(event) {
     console.log(event);
     if (event) event.preventDefault();
-    new SvelteDocumentSheetConfig(this.document, {
+    new DocumentSheetConfig(this.reactive.document, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - SvelteDocumentSheet.defaultOptions.width) / 2
     }).render(true);
@@ -9313,39 +9313,6 @@ async function _handleDocUpdate2(doc, options) {
 
     this.reactive.title = (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : "No Document Assigned";
   }
-}
-
-class SvelteDocumentSheetConfig extends DocumentSheetConfig {
-  constructor(object, options) {
-    super(object, options);
-    console.log(object, options);
-  }
-
-  getData(options) {
-    var _this$object$getFlag;
-
-    console.log(this.object);
-    const config = CONFIG[this.object.documentName];
-    const type = this.object.type || CONST.BASE_DOCUMENT_TYPE;
-    let defaultClass = null; // Classes which can be chosen
-
-    const classes = Object.values(config.sheetClasses[type]).reduce((obj, c) => {
-      obj[c.id] = c.label;
-      if (c.default && !defaultClass) defaultClass = c.id;
-      return obj;
-    }, {}); // Return data
-
-    return {
-      isGM: game.user.isGM,
-      object: this.object.toObject(),
-      options: this.options,
-      sheetClass: (_this$object$getFlag = this.object.getFlag("core", "sheetClass")) !== null && _this$object$getFlag !== void 0 ? _this$object$getFlag : "",
-      sheetClasses: classes,
-      defaultClass: defaultClass,
-      blankLabel: game.i18n.localize("SHEETS.DefaultSheet")
-    };
-  }
-
 }
 
 // Import document classes.
