@@ -1,6 +1,6 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-import { SessionStorage }     from '@typhonjs-fvtt/runtime/svelte/store'
+import { SessionStorage } from "@typhonjs-fvtt/runtime/svelte/store";
 import DocumentShell from "./DocumentShell.svelte";
 const storage = new SessionStorage();
 export class SvelteDocumentSheet extends SvelteApplication {
@@ -74,8 +74,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
     return buttons;
   }
   _onCofigureSheet(event) {
-    event.preventDefault();
-    console.log(calling)
+    console.log(event);
+    if (event) event.preventDefault();
     new DocumentSheetConfig(this.document, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - SvelteDocumentSheet.defaultOptions.width) / 2,

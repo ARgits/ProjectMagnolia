@@ -9261,8 +9261,8 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   _onCofigureSheet(event) {
-    event.preventDefault();
-    console.log(calling);
+    console.log(event);
+    if (event) event.preventDefault();
     new DocumentSheetConfig(this.document, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - SvelteDocumentSheet.defaultOptions.width) / 2
