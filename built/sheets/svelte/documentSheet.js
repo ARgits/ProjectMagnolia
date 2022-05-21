@@ -62,7 +62,25 @@ export class SvelteDocumentSheet extends SvelteApplication {
       },
     });
   }
-
+  _getHeaderButtons() {
+    super._getHeaderButtons();
+    let sheetConfig = storage.getItem("sheetConfig");
+    buttons.unshift({
+      class: "configure-sheet",
+      icon: "fas fa-cog",
+      title: "open sheet configurator",
+      onclick: (ev) => this._onCofigureSheet(ev),
+    });
+    return buttons;
+  }
+  _onCofigureSheet(event) {
+    event.preventDefault();
+    console.log(calling)
+    new DocumentSheetConfig(this.document, {
+      top: this.position.top + 40,
+      left: this.position.left + (this.position.width - SvelteDocumentSheet.defaultOptions.width) / 2,
+    }).render(true);
+  }
   async close(options = {}) {
     console.log("close ", options);
     await super.close(options);
