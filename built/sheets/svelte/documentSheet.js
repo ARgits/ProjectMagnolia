@@ -117,6 +117,11 @@ export class SvelteDocumentSheet extends SvelteApplication {
   }
 }
 class SvelteDocumentSheetConfig extends DocumentSheetConfig {
+  constructor(object, options) {
+    super(object, options);
+    console.log(object, options)
+  }
+
   getData(options) {
     console.log(this.object);
     const config = CONFIG[this.object.documentName];

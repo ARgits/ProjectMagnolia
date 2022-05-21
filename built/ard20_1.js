@@ -9316,6 +9316,11 @@ async function _handleDocUpdate2(doc, options) {
 }
 
 class SvelteDocumentSheetConfig extends DocumentSheetConfig {
+  constructor(object, options) {
+    super(object, options);
+    console.log(object, options);
+  }
+
   getData(options) {
     var _this$object$getFlag;
 
