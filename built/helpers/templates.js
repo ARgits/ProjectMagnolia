@@ -1,3 +1,5 @@
+import EmptySheet from "../sheets/svelte/EmptySheet.svelte"
+import ItemItemSheet from "../sheets/svelte/ItemItemSheet.svelte"
 /**
  * Define a set of template paths to pre-load
  * Pre-loaded templates are compiled and cached for fast access when rendering
@@ -20,3 +22,36 @@ export const preloadHandlebarsTemplates = async function () {
         "systems/ard20/templates/app/feat_req.hbs",
     ]);
 };
+/**
+ * Class for defining and extracting svelte templates for actor/item types
+ */
+ export class DocTemplate
+ {
+    static #map = new Map();
+ 
+    static delete(type)
+    {
+       return this.#map.delete(type);
+    }
+ 
+    static get(doc)
+    {
+       const component = this.#map.get(doc?.type);
+       return component ? component : EmptySheet;
+    }
+ 
+    static getByType(type)
+    {
+       const component = this.#map.get(type);
+       return component ? component : EmptySheet;
+    }
+ 
+    static set(type, component) 
+    {
+       this.#map.set(type, component); 
+    }
+ }
+ //set your components 
+ export const setSvelteComponents = ()=>{
+     DocTemplate.set('item', ItemItemSheet)
+ }

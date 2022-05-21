@@ -1,7 +1,7 @@
 <svelte:options accessors={true} />
 
 <script>
-  import InputForDocumentSheet from "../../general svelte components/InputForDocumentSheet.svelte";
+  import InputForDocumentSheet from "./InputForDocumentSheet.svelte";
   export let doc;
 </script>
 

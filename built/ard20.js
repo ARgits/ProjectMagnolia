@@ -5,13 +5,13 @@ import { ARd20Item } from "./documents/item.js";
 import { ARd20ActorSheet } from "./sheets/legacy/actor-sheet.js";
 import { ARd20ItemSheet } from "./sheets/legacy/item-sheet.js";
 // Import helper/utility classes and constants.
-import { preloadHandlebarsTemplates } from "./helpers/templates.js";
+import { preloadHandlebarsTemplates, setSvelteComponents } from "./helpers/templates.js";
 import { ARd20 } from "./helpers/config.js";
 import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./helpers/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
-import {SvelteDocumentSheet} from "../built/sheets/svelte/item-sheet.js"
+import {SvelteDocumentSheet} from "../built/sheets/svelte/documentSheet.js"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -76,6 +76,8 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: false });
     registerSystemSettings();
 
+    //register Svelte components for Actor/Item types
+    setSvelteComponents()
 
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();
