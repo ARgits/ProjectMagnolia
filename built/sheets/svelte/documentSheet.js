@@ -1,8 +1,8 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-
+import { SessionStorage }     from '@typhonjs-fvtt/runtime/svelte/store'
 import DocumentShell from "./DocumentShell.svelte";
-
+const storage = new SessionStorage();
 export class SvelteDocumentSheet extends SvelteApplication {
   /**
    * Document store that monitors updates to any assigned document.
@@ -63,7 +63,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     });
   }
   _getHeaderButtons() {
-    super._getHeaderButtons();
+    const buttons = super._getHeaderButtons();
     let sheetConfig = storage.getItem("sheetConfig");
     buttons.unshift({
       class: "configure-sheet",
