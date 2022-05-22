@@ -9188,8 +9188,8 @@ class SvelteDocumentSheet extends SvelteApplication {
    *
    * @type {Function}
    */
-  constructor(object, _options) {
-    super(object, _options);
+  constructor(object) {
+    super(object);
     /**
      * @member {object} document - Adds accessors to SvelteReactive to get / set the document associated with
      *                             Document.
@@ -9259,7 +9259,7 @@ class SvelteDocumentSheet extends SvelteApplication {
     });
     const canConfigure = game.user.isGM || this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE");
 
-    if (this.options.editable && canConfigure && this.reactive.document.documentName === "Actor") {
+    if (canConfigure && this.reactive.document.documentName === "Actor") {
       buttons.splice(1, 0, {
         label: this.token ? "Token" : "TOKEN.TitlePrototype",
         class: "configure-token",
