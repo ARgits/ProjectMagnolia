@@ -80,11 +80,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
         onclick: (ev) => this._onConfigureToken(ev),
       });
     }
-    console.log(buttons)
+    console.log(buttons);
     return buttons;
   }
   _onCofigureSheet(event) {
-    console.log(event);
     if (event) event.preventDefault();
     new DocumentSheetConfig(this.reactive.document, {
       top: this.position.top + 40,
@@ -92,7 +91,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }).render(true);
   }
   _onConfigureToken(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const actor = this.reactive.document;
     const token = actor.isToken ? actor.token : actor.prototypeToken;
     new CONFIG.Token.prototypeSheetClass(token, {

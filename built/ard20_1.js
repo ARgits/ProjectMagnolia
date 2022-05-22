@@ -9273,7 +9273,6 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   _onCofigureSheet(event) {
-    console.log(event);
     if (event) event.preventDefault();
     new DocumentSheetConfig(this.reactive.document, {
       top: this.position.top + 40,
@@ -9282,7 +9281,7 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   _onConfigureToken(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const actor = this.reactive.document;
     const token = actor.isToken ? actor.token : actor.prototypeToken;
     new CONFIG.Token.prototypeSheetClass(token, {
