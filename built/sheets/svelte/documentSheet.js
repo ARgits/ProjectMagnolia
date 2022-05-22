@@ -71,7 +71,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       title: "open sheet configurator",
       onclick: (ev) => this._onCofigureSheet(ev),
     });
-    const canConfigure = game.user.isGM || (this.actor.isOwner && game.user.can("TOKEN_CONFIGURE"));
+    const canConfigure = game.user.isGM || (this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE"));
     if (this.options.editable && canConfigure && this.reactive.document.documentName === "Actor") {
       buttons.splice(1, 0, {
         label: this.token ? "Token" : "TOKEN.TitlePrototype",
@@ -80,6 +80,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
         onclick: (ev) => this._onConfigureToken(ev),
       });
     }
+    console.log(buttons)
     return buttons;
   }
   _onCofigureSheet(event) {
