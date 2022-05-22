@@ -1,5 +1,4 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
-import CharacterAdvancementShell from "../../helpers/Character Advancement/cha-adv-shell.svelte";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
 import { SessionStorage } from "@typhonjs-fvtt/runtime/svelte/store";
 import DocumentShell from "./DocumentShell.svelte";
@@ -254,8 +253,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       id: actor.id,
       aditionalData: await createAditionalData(),
     };
-    app = new CharacterAdvancement(document);
-    app?.render(true);
+  new CharacterAdvancement(document).render(true, { focus: true });
   }
   async close(options = {}) {
     console.log("close ", options);
@@ -292,25 +290,4 @@ export class SvelteDocumentSheet extends SvelteApplication {
     return this;
   }
 }
-class CharacterAdvancement extends TJSDialog {
-  constructor(document) {
-    super(
-      {
-        title: "Character advancement",
-        id: "cha-adv",
-        modal: true,
-        draggable: false,
-        content: {
-          class: CharacterAdvancementShell,
-          props: {
-            document,
-          },
-        },
-      },
-      {
-        width: 800,
-        height: 600,
-      }
-    );
-  }
-}
+

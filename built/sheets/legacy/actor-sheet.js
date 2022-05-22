@@ -1,5 +1,3 @@
-import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
-import CharacterAdvancementShell from "../../helpers/Character Advancement/cha-adv-shell.svelte";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js";
 import { getValues, obj_entries } from "../../ard20.js";
 /**
@@ -492,27 +490,5 @@ export class ARd20ActorSheet extends ActorSheet {
       case "Folder":
         return this._onDropFolder(event, data);
     }
-  }
-}
-class CharacterAdvancement extends TJSDialog {
-  constructor(document) {
-    super(
-      {
-        title: "Character advancement",
-        id: "cha-adv",
-        modal: true,
-        draggable: false,
-        content: {
-          class: CharacterAdvancementShell,
-          props: {
-            document,
-          },
-        },
-      },
-      {
-        width: 800,
-        height: 600,
-      }
-    );
   }
 }
