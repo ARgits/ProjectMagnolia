@@ -1,5 +1,6 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js";
 import { getValues, obj_entries } from "../../ard20.js";
+import { CharacterAdvancement } from "../../helpers/Character Advancement/characterAdvancement.js";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}

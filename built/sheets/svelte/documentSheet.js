@@ -2,6 +2,7 @@ import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
 import { SessionStorage } from "@typhonjs-fvtt/runtime/svelte/store";
 import DocumentShell from "./DocumentShell.svelte";
+import { CharacterAdvancement } from "../../helpers/Character Advancement/characterAdvancement.js";
 const storage = new SessionStorage();
 export class SvelteDocumentSheet extends SvelteApplication {
   /**
