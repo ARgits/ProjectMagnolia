@@ -93,7 +93,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   _onConfigureToken(event) {
     event.preventDefault();
     const actor = this.reactive.document;
-    const token = actor.isToken ? this.token : actor.prototypeToken;
+    const token = actor.isToken ? actor.token : actor.prototypeToken;
     new CONFIG.Token.prototypeSheetClass(token, {
       left: Math.max(this.position.left - 560 - 10, 10),
       top: this.position.top,
