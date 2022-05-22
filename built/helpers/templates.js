@@ -40,6 +40,7 @@ export class DocTemplate {
 
   static getByType(type) {
     const component = this.#map.get(type);
+    console.log(type)
     return component ? component : EmptySheet;
   }
 
@@ -51,5 +52,4 @@ export class DocTemplate {
 export const setSvelteComponents = () => {
   DocTemplate.set("item", ItemItemSheet);
   DocTemplate.set("character", ActorSheet);
-  console.log(DocTemplate)
 };

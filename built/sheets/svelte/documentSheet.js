@@ -86,8 +86,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
         class: "character-progress",
         title: "Character Advancement",
         label: "Character Advancement",
-        icon:"fa-solid fa-book-sparkles",
-        onclick: (ev) => this._onCharacterAdvancement(ev),
+        icon: "fa-solid fa-book-sparkles",
+        onclick: async (ev) => await this._onCharacterAdvancement(ev),
       });
     }
     console.log(buttons);
@@ -109,9 +109,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
       top: this.position.top,
     }).render(true);
   }
-  _onCharacterAdvancement(event){
-    if(event)event.preventDefault();
-    const actor = this.reactive.document
+  async _onCharacterAdvancement(event) {
+    if (event) event.preventDefault();
+    const actor = this.reactive.document;
     async function createAditionalData() {
       //functions to get lists of available features and lists
       async function getPacks() {
@@ -120,16 +120,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
         for (const val of game.settings.get("ard20", "feat").packs) {
           if (game.packs.filter((pack) => pack.metadata.label === val.name).length !== 0) {
             let feat_list = [];
-            feat_list.push(
-              Array.from(
-                game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0]
-                  .index
-              )
-            );
+            feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0].index));
             feat_list = feat_list.flat();
             for (const feat of feat_list) {
-              const new_key =
-                game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
+              const new_key = game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
               const doc = await game.packs.get(new_key).getDocument(feat.id);
               const item = doc.toObject();
               item.data = foundry.utils.deepClone(doc.system);
@@ -150,10 +144,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
         for (let val of game.settings.get("ard20", "feat").folders) {
           if (game.folders.filter((folder) => folder.data.name === val.name).length !== 0) {
             let feat_list = [];
-            feat_list.push(
-              game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0]
-                .contents
-            );
+            feat_list.push(game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents);
             feat_list = feat_list.flat();
             for (let feat of feat_list) {
               console.log("item added from folder ", feat);
@@ -216,9 +207,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
             feat_folder_list.push(FeatureItem);
           }
         });
-        let temp_feat_list = feat_pack_list.concat(
-          feat_folder_list.filter((item) => !pack_name.includes(item.name))
-        );
+        let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
         let learnedFeatures = [];
         actor.itemTypes.feature.forEach((item) => {
           if (item.data.type === "feature") {
@@ -231,19 +220,16 @@ export class SvelteDocumentSheet extends SvelteApplication {
       for (let i of featList.learnedFeatures) {
         name_array.push(i.name);
       }
-      console.log(featList.temp_feat_list, "featList.temp_feat_list")
+      console.log(featList.temp_feat_list, "featList.temp_feat_list");
       featList.temp_feat_list.forEach((v, k) => {
         console.log(k, v);
         if (name_array.includes(v.name)) {
           console.log("this item is already learned", featList.temp_feat_list[k]);
-          featList.temp_feat_list[k] = foundry.utils.deepClone(
-            featList.learnedFeatures.filter((item) => item.name === v.name)[0]
-          );
+          featList.temp_feat_list[k] = foundry.utils.deepClone(featList.learnedFeatures.filter((item) => item.name === v.name)[0]);
         }
       });
       featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
-        if (item.type === "feature")
-          return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+        if (item.type === "feature") return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
       });
       const obj = {
         races: { list: raceList, chosen: "" },
@@ -270,7 +256,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
     };
     app = new CharacterAdvancement(document);
     app?.render(true);
-
   }
   async close(options = {}) {
     console.log("close ", options);
