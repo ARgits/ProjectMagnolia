@@ -6382,9 +6382,9 @@ function create_each_block$3(ctx) {
 			t4 = space();
 			br = element("br");
 			attr(label, "for", "Attribute Formula");
-			attr(input, "class", "transparent svelte-1j2il8b");
+			attr(input, "class", "transparent svelte-1bqd4zz");
 			attr(input, "type", "text");
-			attr(div0, "class", "span svelte-1j2il8b");
+			attr(div0, "class", "span svelte-1bqd4zz");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);

@@ -1,5 +1,6 @@
 import EmptySheet from "../sheets/svelte/EmptySheet.svelte"
-import ItemItemSheet from "../sheets/svelte/ItemItemSheet.svelte"
+import ItemItemSheet from "../sheets/svelte/item/ItemItemSheet.svelte"
+import ActorSheet from "../sheets/svelte/actor/ActorSheet.svelte"
 /**
  * Define a set of template paths to pre-load
  * Pre-loaded templates are compiled and cached for fast access when rendering
@@ -54,4 +55,5 @@ export const preloadHandlebarsTemplates = async function () {
  //set your components 
  export const setSvelteComponents = ()=>{
      DocTemplate.set('item', ItemItemSheet)
+     DocTemplate.set('character', ActorSheet)
  }

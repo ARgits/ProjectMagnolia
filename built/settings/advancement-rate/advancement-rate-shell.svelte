@@ -173,5 +173,6 @@
   }
   div.span {
     position: absolute;
+    pointer-events:none;
   }
 </style>
