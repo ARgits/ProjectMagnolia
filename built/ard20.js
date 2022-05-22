@@ -70,6 +70,7 @@ Hooks.once("init", async function () {
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
+    Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: false });
     Items.unregisterSheet("core", ItemSheet);
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });

@@ -9257,6 +9257,17 @@ class SvelteDocumentSheet extends SvelteApplication {
       title: "open sheet configurator",
       onclick: ev => this._onCofigureSheet(ev)
     });
+    const canConfigure = game.user.isGM || this.actor.isOwner && game.user.can("TOKEN_CONFIGURE");
+
+    if (this.options.editable && canConfigure && this.reactive.document.documentName === "Actor") {
+      buttons.splice(1, 0, {
+        label: this.token ? "Token" : "TOKEN.TitlePrototype",
+        class: "configure-token",
+        icon: "fas fa-user-circle",
+        onclick: ev => this._onConfigureToken(ev)
+      });
+    }
+
     return buttons;
   }
 
@@ -9266,6 +9277,15 @@ class SvelteDocumentSheet extends SvelteApplication {
     new DocumentSheetConfig(this.reactive.document, {
       top: this.position.top + 40,
       left: this.position.left + (this.position.width - SvelteDocumentSheet.defaultOptions.width) / 2
+    }).render(true);
+  }
+
+  _onConfigureToken(event) {
+    event.preventDefault();
+    const token = this.actor.isToken ? this.token : this.actor.prototypeToken;
+    new CONFIG.Token.prototypeSheetClass(token, {
+      left: Math.max(this.position.left - 560 - 10, 10),
+      top: this.position.top
     }).render(true);
   }
 
@@ -9377,6 +9397,9 @@ Hooks.once("init", async function () {
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, {
       makeDefault: true
+    });
+    Actors.registerSheet("ard20", SvelteDocumentSheet, {
+      makeDefault: false
     });
     Items.unregisterSheet("core", ItemSheet); //@ts-expect-error
 
