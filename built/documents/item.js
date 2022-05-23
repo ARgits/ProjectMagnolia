@@ -95,7 +95,7 @@ export class ARd20Item extends Item {
     if (flags.core?.sourceId) {
       const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
       const item = game.items?.get(id);
-      if (item?.data.type === "weapon") {
+      if (item?.type === "weapon") {
         data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
       }
     }
@@ -201,7 +201,7 @@ export class ARd20Item extends Item {
     //@ts-expect-error
     const abil = (itemData.abil = {});
     for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
-      abil[k] = this.isOwned ? getProperty(this.actor.data, `data.attributes.${k}.mod`) : null;
+      abil[k] = this.isOwned ? getProperty(this.actor.system, `data.attributes.${k}.mod`) : null;
     }
     let prof_bonus = 0;
     if (itemData.type === "weapon") {
@@ -583,9 +583,9 @@ export class ARd20Item extends Item {
     let templateState = targets.size !== 0 ? (mRoll ? "multiAttack" : "oneAttack") : "noTarget";
     const templateData = {
       //@ts-expect-error
-      actor: this.actor.data,
+      actor: this.actor.system,
       tokenId: token?.uuid || null,
-      item: this.data,
+      item: this,
       data: this.getChatData(),
       //@ts-expect-error
       labels: this.labels,
@@ -673,7 +673,7 @@ export class ARd20Item extends Item {
     console.log(canMult);
     const itemData = this.system;
     //@ts-expect-error
-    const flags = this.actor.data.flags.ard20 || {};
+    const flags = this.actor.flags.ard20 || {};
     let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
     const { parts, rollData } = this.getAttackToHit();
     const targets = game.user.targets;
