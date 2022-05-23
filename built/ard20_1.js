@@ -5995,7 +5995,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	let data;
 
 	function onEditImage(event) {
-		console.log(event);
+		console.log(application.position);
 		const current = src;
 
 		const fp = new FilePicker({
@@ -6011,7 +6011,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		return fp.browse();
 	}
 
-	const click_handler = event => onEditImage(event);
+	const click_handler = event => onEditImage();
 
 	$$self.$$set = $$props => {
 		if ('src' in $$props) $$invalidate(0, src = $$props.src);
