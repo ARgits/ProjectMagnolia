@@ -4,7 +4,7 @@
   import { getContext } from "svelte";
   export let src;
   export let alt;
-  const {application} = getContext("external") //get sheet document
+  const { application } = getContext("external"); //get sheet document
   const document = getContext("DocumentSheetObject");
   let data;
   $: {
@@ -15,8 +15,10 @@
     const fp = new FilePicker({
       type: "image",
       current: current,
-      callback: async(path) => {
-        src = path; await $document.update(data);
+      callback: async (path) => {
+        console.log(data);
+        src = path;
+        await $document.update(data);
       },
       top: application.position.top + 40,
       left: application.position.left + 10,

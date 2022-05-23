@@ -6001,6 +6001,7 @@ function instance$7($$self, $$props, $$invalidate) {
 				type: "image",
 				current,
 				callback: async path => {
+					console.log(data);
 					$$invalidate(0, src = path);
 					await $document.update(data);
 				},
