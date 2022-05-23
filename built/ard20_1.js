@@ -6000,8 +6000,9 @@ function instance$7($$self, $$props, $$invalidate) {
 		const fp = new FilePicker({
 				type: "image",
 				current,
-				callback: path => {
-					($$invalidate(0, src = path), document.update(data));
+				callback: async path => {
+					$$invalidate(0, src = path);
+					await $document.update(data);
 				},
 				top: application.position.top + 40,
 				left: application.position.left + 10

@@ -15,8 +15,8 @@
     const fp = new FilePicker({
       type: "image",
       current: current,
-      callback: (path) => {
-        (src = path), document.update(data);
+      callback: async(path) => {
+        src = path; await $document.update(data);
       },
       top: application.position.top + 40,
       left: application.position.left + 10,
