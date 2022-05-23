@@ -5962,7 +5962,11 @@ function create_fragment$7(ctx) {
 			insert(target, img, anchor);
 
 			if (!mounted) {
-				dispose = listen(img, "click", /*click_handler*/ ctx[5]);
+				dispose = [
+					listen(img, "click", /*click_handler*/ ctx[5]),
+					listen(img, "load", /*updateDocument*/ ctx[4])
+				];
+
 				mounted = true;
 			}
 		},
@@ -5980,7 +5984,7 @@ function create_fragment$7(ctx) {
 		d(detaching) {
 			if (detaching) detach(img);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
@@ -5991,7 +5995,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	let { alt } = $$props;
 	const { application } = getContext("external"); //get sheet document
 	const document = getContext("DocumentSheetObject");
-	component_subscribe($$self, document, value => $$invalidate(4, $document = value));
+	component_subscribe($$self, document, value => $$invalidate(7, $document = value));
 	let data;
 
 	function onEditImage(event) {
@@ -6001,15 +6005,24 @@ function instance$7($$self, $$props, $$invalidate) {
 				type: "image",
 				current,
 				callback: async path => {
-					console.log(data);
 					$$invalidate(0, src = path);
-					await $document.update(data);
 				},
 				top: application.position.top + 40,
 				left: application.position.left + 10
 			});
 
 		return fp.browse();
+	}
+
+	async function updateDocument() {
+		data = {
+			img: $document.img,
+			system: $document.system,
+			flags: $document.flags,
+			name: $document.name
+		};
+
+		await $document.update(data);
 	}
 
 	const click_handler = event => onEditImage();
@@ -6019,20 +6032,7 @@ function instance$7($$self, $$props, $$invalidate) {
 		if ('alt' in $$props) $$invalidate(1, alt = $$props.alt);
 	};
 
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$document*/ 16) {
-			{
-				data = {
-					img: $document.img,
-					system: $document.system,
-					flags: $document.flags,
-					name: $document.name
-				};
-			}
-		}
-	};
-
-	return [src, alt, document, onEditImage, $document, click_handler];
+	return [src, alt, document, onEditImage, updateDocument, click_handler];
 }
 
 class ImageWithFilePicker extends SvelteComponent {

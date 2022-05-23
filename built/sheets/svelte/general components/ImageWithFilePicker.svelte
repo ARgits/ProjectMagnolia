@@ -7,24 +7,23 @@
   const { application } = getContext("external"); //get sheet document
   const document = getContext("DocumentSheetObject");
   let data;
-  $: {
-    data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
-  }
   function onEditImage(event) {
     const current = src;
     const fp = new FilePicker({
       type: "image",
       current: current,
       callback: async (path) => {
-        console.log(data);
         src = path;
-        await $document.update(data);
       },
       top: application.position.top + 40,
       left: application.position.left + 10,
     });
     return fp.browse();
   }
+  async function updateDocument() {
+    data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
+    await $document.update(data);
+  }
 </script>
 
-<img {alt} {src} on:click={(event) => onEditImage(event)} />
+<img {alt} {src} on:click={(event) => onEditImage(event)} on:load={updateDocument} />
