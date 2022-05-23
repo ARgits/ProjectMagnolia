@@ -5779,8 +5779,8 @@ function create_fragment$9(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*input_input_handler*/ ctx[4]),
-					listen(input, "change", /*change_handler*/ ctx[5])
+					listen(input, "input", /*input_input_handler*/ ctx[5]),
+					listen(input, "change", /*change_handler*/ ctx[6])
 				];
 
 				mounted = true;
@@ -5804,13 +5804,14 @@ function create_fragment$9(ctx) {
 function instance$9($$self, $$props, $$invalidate) {
 	let $document;
 	let { value } = $$props;
+	let { type = "text" } = $$props;
 	const document = getContext("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(1, $document = value));
 	let data;
 
 	function input_input_handler() {
 		value = this.value;
-		$$invalidate(0, value);
+		($$invalidate(0, value), $$invalidate(4, type));
 	}
 
 	const change_handler = () => {
@@ -5819,9 +5820,14 @@ function instance$9($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ('value' in $$props) $$invalidate(0, value = $$props.value);
+		if ('type' in $$props) $$invalidate(4, type = $$props.type);
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*type, value*/ 17) {
+			$$invalidate(0, value = type === "number" ? parseInt(value) : value);
+		}
+
 		if ($$self.$$.dirty & /*$document*/ 2) {
 			{
 				$$invalidate(2, data = {
@@ -5834,13 +5840,13 @@ function instance$9($$self, $$props, $$invalidate) {
 		}
 	};
 
-	return [value, $document, data, document, input_input_handler, change_handler];
+	return [value, $document, data, document, type, input_input_handler, change_handler];
 }
 
 class InputForDocumentSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { value: 0 });
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, { value: 0, type: 4 });
 	}
 
 	get value() {
@@ -5849,6 +5855,15 @@ class InputForDocumentSheet extends SvelteComponent {
 
 	set value(value) {
 		this.$$set({ value });
+		flush();
+	}
+
+	get type() {
+		return this.$$.ctx[4];
+	}
+
+	set type(type) {
+		this.$$set({ type });
 		flush();
 	}
 }
@@ -5957,6 +5972,7 @@ function create_fragment$7(ctx) {
 			img = element("img");
 			attr(img, "alt", /*alt*/ ctx[0]);
 			if (!src_url_equal(img.src, img_src_value = /*src*/ ctx[1])) attr(img, "src", img_src_value);
+			attr(img, "class", "svelte-ozc50d");
 		},
 		m(target, anchor) {
 			insert(target, img, anchor);
@@ -6052,20 +6068,20 @@ class ImageWithFilePicker extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[2] = list[i];
+	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
-// (25:2) {#each Object.values(doc.system.attributes) as attribute}
+// (39:2) {#each Object.values(doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
-	let t0_value = /*attribute*/ ctx[2].Label + "";
+	let t0_value = /*attribute*/ ctx[3].Label + "";
 	let t0;
 	let t1;
-	let t2_value = /*attribute*/ ctx[2].value + "";
+	let t2_value = /*attribute*/ ctx[3].value + "";
 	let t2;
 	let t3;
-	let t4_value = /*attribute*/ ctx[2].mod + "";
+	let t4_value = /*attribute*/ ctx[3].mod + "";
 	let t4;
 	let t5;
 
@@ -6089,9 +6105,9 @@ function create_each_block$4(ctx) {
 			append(div, t5);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[2].Label + "")) set_data(t0, t0_value);
-			if (dirty & /*doc*/ 1 && t2_value !== (t2_value = /*attribute*/ ctx[2].value + "")) set_data(t2, t2_value);
-			if (dirty & /*doc*/ 1 && t4_value !== (t4_value = /*attribute*/ ctx[2].mod + "")) set_data(t4, t4_value);
+			if (dirty & /*doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[3].Label + "")) set_data(t0, t0_value);
+			if (dirty & /*doc*/ 1 && t2_value !== (t2_value = /*attribute*/ ctx[3].value + "")) set_data(t2, t2_value);
+			if (dirty & /*doc*/ 1 && t4_value !== (t4_value = /*attribute*/ ctx[3].mod + "")) set_data(t4, t4_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -6107,34 +6123,64 @@ function create_fragment$6(ctx) {
 	let div3;
 	let div1;
 	let t1;
-	let inputfordocumentsheet;
+	let inputfordocumentsheet0;
 	let updating_value;
 	let t2;
 	let div2;
 	let t3;
-	let t4_value = /*doc*/ ctx[0].system.advancement.level + "";
+	let t4_value = (/*doc*/ ctx[0].itemTypes.race?.[0].name || "none") + "";
 	let t4;
 	let t5;
+	let div8;
 	let div4;
 	let t6;
+	let t7_value = /*doc*/ ctx[0].system.advancement.level + "";
+	let t7;
+	let t8;
+	let div7;
+	let div5;
+	let t9;
+	let t10_value = /*doc*/ ctx[0].system.advancement.xp.used + "";
+	let t10;
+	let t11;
+	let div6;
+	let t12;
+	let inputfordocumentsheet1;
+	let updating_value_1;
+	let t13;
+	let div9;
+	let t14;
 	let current;
 
 	imagewithfilepicker = new ImageWithFilePicker({
 			props: { path: "img", alt: "character portrait" }
 		});
 
-	function inputfordocumentsheet_value_binding(value) {
-		/*inputfordocumentsheet_value_binding*/ ctx[1](value);
+	function inputfordocumentsheet0_value_binding(value) {
+		/*inputfordocumentsheet0_value_binding*/ ctx[1](value);
 	}
 
-	let inputfordocumentsheet_props = {};
+	let inputfordocumentsheet0_props = { type: "number" };
 
 	if (/*doc*/ ctx[0].name !== void 0) {
-		inputfordocumentsheet_props.value = /*doc*/ ctx[0].name;
+		inputfordocumentsheet0_props.value = /*doc*/ ctx[0].name;
 	}
 
-	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
-	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
+	inputfordocumentsheet0 = new InputForDocumentSheet({ props: inputfordocumentsheet0_props });
+	binding_callbacks.push(() => bind(inputfordocumentsheet0, 'value', inputfordocumentsheet0_value_binding));
+
+	function inputfordocumentsheet1_value_binding(value) {
+		/*inputfordocumentsheet1_value_binding*/ ctx[2](value);
+	}
+
+	let inputfordocumentsheet1_props = { type: "number" };
+
+	if (/*doc*/ ctx[0].system.advancement.xp.get !== void 0) {
+		inputfordocumentsheet1_props.value = /*doc*/ ctx[0].system.advancement.xp.get;
+	}
+
+	inputfordocumentsheet1 = new InputForDocumentSheet({ props: inputfordocumentsheet1_props });
+	binding_callbacks.push(() => bind(inputfordocumentsheet1, 'value', inputfordocumentsheet1_value_binding));
 	let each_value = Object.values(/*doc*/ ctx[0].system.attributes);
 	let each_blocks = [];
 
@@ -6151,14 +6197,28 @@ function create_fragment$6(ctx) {
 			div3 = element("div");
 			div1 = element("div");
 			t1 = text("Name: ");
-			create_component(inputfordocumentsheet.$$.fragment);
+			create_component(inputfordocumentsheet0.$$.fragment);
 			t2 = space();
 			div2 = element("div");
-			t3 = text("Level:");
+			t3 = text("Race: ");
 			t4 = text(t4_value);
 			t5 = space();
+			div8 = element("div");
 			div4 = element("div");
-			t6 = text("Attributes:\r\n  ");
+			t6 = text("Level:");
+			t7 = text(t7_value);
+			t8 = space();
+			div7 = element("div");
+			div5 = element("div");
+			t9 = text("XP used: ");
+			t10 = text(t10_value);
+			t11 = space();
+			div6 = element("div");
+			t12 = text("XP earned: ");
+			create_component(inputfordocumentsheet1.$$.fragment);
+			t13 = space();
+			div9 = element("div");
+			t14 = text("Attributes:\r\n  ");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -6166,10 +6226,12 @@ function create_fragment$6(ctx) {
 
 			attr(div0, "class", "cha-img svelte-1ivczjk");
 			attr(div1, "class", "name");
-			attr(div2, "class", "level");
+			attr(div2, "class", "race");
 			attr(div3, "class", "svelte-1ivczjk");
+			attr(div7, "class", "XP");
+			attr(div8, "class", "level svelte-1ivczjk");
 			attr(header, "class", "svelte-1ivczjk");
-			attr(div4, "class", "attributes svelte-1ivczjk");
+			attr(div9, "class", "attributes svelte-1ivczjk");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
@@ -6179,32 +6241,57 @@ function create_fragment$6(ctx) {
 			append(header, div3);
 			append(div3, div1);
 			append(div1, t1);
-			mount_component(inputfordocumentsheet, div1, null);
+			mount_component(inputfordocumentsheet0, div1, null);
 			append(div3, t2);
 			append(div3, div2);
 			append(div2, t3);
 			append(div2, t4);
-			insert(target, t5, anchor);
-			insert(target, div4, anchor);
+			append(header, t5);
+			append(header, div8);
+			append(div8, div4);
 			append(div4, t6);
+			append(div4, t7);
+			append(div8, t8);
+			append(div8, div7);
+			append(div7, div5);
+			append(div5, t9);
+			append(div5, t10);
+			append(div7, t11);
+			append(div7, div6);
+			append(div6, t12);
+			mount_component(inputfordocumentsheet1, div6, null);
+			insert(target, t13, anchor);
+			insert(target, div9, anchor);
+			append(div9, t14);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div4, null);
+				each_blocks[i].m(div9, null);
 			}
 
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			const inputfordocumentsheet_changes = {};
+			const inputfordocumentsheet0_changes = {};
 
 			if (!updating_value && dirty & /*doc*/ 1) {
 				updating_value = true;
-				inputfordocumentsheet_changes.value = /*doc*/ ctx[0].name;
+				inputfordocumentsheet0_changes.value = /*doc*/ ctx[0].name;
 				add_flush_callback(() => updating_value = false);
 			}
 
-			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
-			if ((!current || dirty & /*doc*/ 1) && t4_value !== (t4_value = /*doc*/ ctx[0].system.advancement.level + "")) set_data(t4, t4_value);
+			inputfordocumentsheet0.$set(inputfordocumentsheet0_changes);
+			if ((!current || dirty & /*doc*/ 1) && t4_value !== (t4_value = (/*doc*/ ctx[0].itemTypes.race?.[0].name || "none") + "")) set_data(t4, t4_value);
+			if ((!current || dirty & /*doc*/ 1) && t7_value !== (t7_value = /*doc*/ ctx[0].system.advancement.level + "")) set_data(t7, t7_value);
+			if ((!current || dirty & /*doc*/ 1) && t10_value !== (t10_value = /*doc*/ ctx[0].system.advancement.xp.used + "")) set_data(t10, t10_value);
+			const inputfordocumentsheet1_changes = {};
+
+			if (!updating_value_1 && dirty & /*doc*/ 1) {
+				updating_value_1 = true;
+				inputfordocumentsheet1_changes.value = /*doc*/ ctx[0].system.advancement.xp.get;
+				add_flush_callback(() => updating_value_1 = false);
+			}
+
+			inputfordocumentsheet1.$set(inputfordocumentsheet1_changes);
 
 			if (dirty & /*Object, doc*/ 1) {
 				each_value = Object.values(/*doc*/ ctx[0].system.attributes);
@@ -6218,7 +6305,7 @@ function create_fragment$6(ctx) {
 					} else {
 						each_blocks[i] = create_each_block$4(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(div4, null);
+						each_blocks[i].m(div9, null);
 					}
 				}
 
@@ -6232,20 +6319,23 @@ function create_fragment$6(ctx) {
 		i(local) {
 			if (current) return;
 			transition_in(imagewithfilepicker.$$.fragment, local);
-			transition_in(inputfordocumentsheet.$$.fragment, local);
+			transition_in(inputfordocumentsheet0.$$.fragment, local);
+			transition_in(inputfordocumentsheet1.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
 			transition_out(imagewithfilepicker.$$.fragment, local);
-			transition_out(inputfordocumentsheet.$$.fragment, local);
+			transition_out(inputfordocumentsheet0.$$.fragment, local);
+			transition_out(inputfordocumentsheet1.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(header);
 			destroy_component(imagewithfilepicker);
-			destroy_component(inputfordocumentsheet);
-			if (detaching) detach(t5);
-			if (detaching) detach(div4);
+			destroy_component(inputfordocumentsheet0);
+			destroy_component(inputfordocumentsheet1);
+			if (detaching) detach(t13);
+			if (detaching) detach(div9);
 			destroy_each(each_blocks, detaching);
 		}
 	};
@@ -6255,9 +6345,16 @@ function instance$6($$self, $$props, $$invalidate) {
 	let { doc } = $$props;
 	console.log(doc);
 
-	function inputfordocumentsheet_value_binding(value) {
+	function inputfordocumentsheet0_value_binding(value) {
 		if ($$self.$$.not_equal(doc.name, value)) {
 			doc.name = value;
+			$$invalidate(0, doc);
+		}
+	}
+
+	function inputfordocumentsheet1_value_binding(value) {
+		if ($$self.$$.not_equal(doc.system.advancement.xp.get, value)) {
+			doc.system.advancement.xp.get = value;
 			$$invalidate(0, doc);
 		}
 	}
@@ -6266,7 +6363,11 @@ function instance$6($$self, $$props, $$invalidate) {
 		if ('doc' in $$props) $$invalidate(0, doc = $$props.doc);
 	};
 
-	return [doc, inputfordocumentsheet_value_binding];
+	return [
+		doc,
+		inputfordocumentsheet0_value_binding,
+		inputfordocumentsheet1_value_binding
+	];
 }
 
 class ActorSheet$1 extends SvelteComponent {

@@ -27,3 +27,9 @@
 </script>
 
 <img {alt} {src} on:click={(event) => onEditImage(event)} />
+
+<style>
+  img {
+    max-height: 100%;
+  }
+</style>
