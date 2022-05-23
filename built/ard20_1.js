@@ -992,15 +992,14 @@ class ARd20Actor extends Actor {
 
     if (actorData.type !== "character") return; // Make modifications to data here. For example:
 
-    const data = actorData;
-    const attributes = data.attributes;
-    const advancement = data.advancement;
-    const def_stats = data.defences.stats;
-    const def_dam = data.defences.damage;
-    const proficiencies = data.proficiencies;
-    data.mobility.value = 0;
+    const attributes = actorData.attributes;
+    const advancement = actorData.advancement;
+    const def_stats = actorData.defences.stats;
+    const def_dam = actorData.defences.damage;
+    const proficiencies = actorData.proficiencies;
+    actorData.mobility.value = 0;
     this.itemTypes.armor.forEach(item => {
-      if (item.data.type === "armor") {
+      if (item.type === "armor") {
         if (item.system.equipped) {
           for (let key of obj_keys(def_dam.phys)) {
             let ph = item.system.res.phys[key];
@@ -1012,11 +1011,11 @@ class ARd20Actor extends Actor {
             def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
           }
 
-          data.mobility.value += item.system.mobility.value;
+          actorData.mobility.value += item.system.mobility.value;
         }
       }
     });
-    data.mobility.value += data.mobility.bonus; // Loop through ability scores, and add their modifiers to our sheet output.
+    actorData.mobility.value += actorData.mobility.bonus; // Loop through ability scores, and add their modifiers to our sheet output.
 
     for (let ability of Object.values(attributes)) {
       // Calculate the modifier using d20 rules.
@@ -1024,7 +1023,7 @@ class ARd20Actor extends Actor {
       ability.mod = Math.floor((ability.value - 10) / 2);
     }
 
-    let dexMod = data.mobility.value < 10 ? attributes.dex.mod : data.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
+    let dexMod = actorData.mobility.value < 10 ? attributes.dex.mod : actorData.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
 
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
 
@@ -1068,7 +1067,7 @@ class ARd20Actor extends Actor {
     const profLevelSetting = game.settings.get("ard20", "profLevel");
     const maxProfLevel = profLevelSetting.length - 1; //calculate rolls for character's skills
 
-    for (let [key, skill] of obj_entries(data.skills)) {
+    for (let [key, skill] of obj_entries(actorData.skills)) {
       var _game$i18n$localize3;
 
       skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
@@ -1087,8 +1086,8 @@ class ARd20Actor extends Actor {
         rankName: profLevelSetting[(_proficiencies$weapon3 = (_proficiencies$weapon4 = proficiencies.weapon[key]) === null || _proficiencies$weapon4 === void 0 ? void 0 : _proficiencies$weapon4.value) !== null && _proficiencies$weapon3 !== void 0 ? _proficiencies$weapon3 : 0].label
       };
     });
-    data.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.data.type) === "race" ? this.itemTypes.race[0].system.speed : 0;
-    data.speed.value += attributes.dex.mod + data.speed.bonus;
+    actorData.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.type) === "race" ? this.itemTypes.race[0].system.speed : 0;
+    actorData.speed.value += attributes.dex.mod + actorData.speed.bonus;
   }
   /**
    * Prepare NPC type specific data.
