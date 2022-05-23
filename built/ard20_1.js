@@ -6128,7 +6128,7 @@ function create_fragment$6(ctx) {
 	let t2;
 	let div2;
 	let t3;
-	let t4_value = (/*doc*/ ctx[0].itemTypes.race?.[0].name || "none") + "";
+	let t4_value = (/*doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "";
 	let t4;
 	let t5;
 	let div8;
@@ -6280,7 +6280,7 @@ function create_fragment$6(ctx) {
 			}
 
 			inputfordocumentsheet0.$set(inputfordocumentsheet0_changes);
-			if ((!current || dirty & /*doc*/ 1) && t4_value !== (t4_value = (/*doc*/ ctx[0].itemTypes.race?.[0].name || "none") + "")) set_data(t4, t4_value);
+			if ((!current || dirty & /*doc*/ 1) && t4_value !== (t4_value = (/*doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "")) set_data(t4, t4_value);
 			if ((!current || dirty & /*doc*/ 1) && t7_value !== (t7_value = /*doc*/ ctx[0].system.advancement.level + "")) set_data(t7, t7_value);
 			if ((!current || dirty & /*doc*/ 1) && t10_value !== (t10_value = /*doc*/ ctx[0].system.advancement.xp.used + "")) set_data(t10, t10_value);
 			const inputfordocumentsheet1_changes = {};

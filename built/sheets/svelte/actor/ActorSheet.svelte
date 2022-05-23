@@ -17,7 +17,7 @@
       Name: <InputForDocumentSheet bind:value={doc.name} type="number" />
     </div>
     <div class="race">
-      Race: {doc.itemTypes.race?.[0].name || "none"}
+      Race: {doc.itemTypes.race[0]?.name || "none"}
     </div>
   </div>
   <div class="level">
