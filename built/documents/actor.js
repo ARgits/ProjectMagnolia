@@ -60,12 +60,18 @@ export class ARd20Actor extends Actor {
     });
     actorData.mobility.value += actorData.mobility.bonus;
     // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let ability of Object.values(attributes)) {
+    for (let [ability, key] of Object.entries(attributes)) {
       // Calculate the modifier using d20 rules.
       ability.total = ability.value + ability.bonus;
       ability.mod = Math.floor((ability.value - 10) / 2);
+      ability.label = game.i18n.localize(CONFIG.ARd20.Attributes, key) ?? key;
     }
-    let dexMod = actorData.mobility.value < 10 ? attributes.dex.mod : actorData.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod);
+    let dexMod =
+      actorData.mobility.value < 10
+        ? attributes.dex.mod
+        : actorData.mobility.value < 16
+        ? Math.min(2, attributes.dex.mod)
+        : Math.min(0, attributes.dex.mod);
     //calculate level and expierence
     const levels = CONFIG.ARd20.CHARACTER_EXP_LEVELS;
     if (advancement.xp.used) {
@@ -82,16 +88,25 @@ export class ARd20Actor extends Actor {
     advancement.xp.bar_min = advancement.xp.used - advancement.xp.level_min;
     def_stats.reflex.value = 10 + 4 * def_stats.reflex.level + dexMod + attributes.int.mod + def_stats.reflex.bonus;
     def_stats.reflex.label = "Reflex";
-    def_stats.fortitude.value = 10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
+    def_stats.fortitude.value =
+      10 + 4 * def_stats.fortitude.level + attributes.str.mod + attributes.con.mod + def_stats.fortitude.bonus;
     def_stats.fortitude.label = "Fortitude";
-    def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
+    def_stats.will.value =
+      10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        def_dam.phys[key].value = def_dam.phys[key]?.value || !def_dam.phys[key]?.immune ? Math.max(isNaN(def_dam.phys[key]?.value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key]?.bonus : 0;
-        def_dam.phys[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
+        def_dam.phys[key].value =
+          def_dam.phys[key]?.value || !def_dam.phys[key]?.immune
+            ? Math.max(isNaN(def_dam.phys[key]?.value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key]?.bonus
+            : 0;
+        def_dam.phys[key].name =
+          game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
       }
-      def_dam.mag[key].value = def_dam.mag[key]?.value || !def_dam.mag[key]?.immune ? Math.max(isNaN(def_dam.mag[key]?.value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key]?.bonus : 0;
+      def_dam.mag[key].value =
+        def_dam.mag[key]?.value || !def_dam.mag[key]?.immune
+          ? Math.max(isNaN(def_dam.mag[key]?.value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key]?.bonus
+          : 0;
       def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     const profLevelSetting = game.settings.get("ard20", "profLevel");
