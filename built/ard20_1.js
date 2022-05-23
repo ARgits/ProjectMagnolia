@@ -6003,6 +6003,7 @@ function instance$7($$self, $$props, $$invalidate) {
 	let $document;
 	let { src } = $$props;
 	let { alt } = $$props;
+	console.log(src, alt);
 	const document = getContext("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(3, $document = value));
 	const click_handler = event => onEditImage(event);
@@ -6081,7 +6082,7 @@ function create_fragment$6(ctx) {
 
 	imagewithfilepicker = new ImageWithFilePicker({
 			props: {
-				src: /*doc*/ ctx[0].image,
+				src: /*doc*/ ctx[0].img,
 				alt: "character portrait"
 			}
 		});
@@ -6119,7 +6120,7 @@ function create_fragment$6(ctx) {
 
 			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
 			const imagewithfilepicker_changes = {};
-			if (dirty & /*doc*/ 1) imagewithfilepicker_changes.src = /*doc*/ ctx[0].image;
+			if (dirty & /*doc*/ 1) imagewithfilepicker_changes.src = /*doc*/ ctx[0].img;
 			imagewithfilepicker.$set(imagewithfilepicker_changes);
 		},
 		i(local) {

@@ -4,6 +4,7 @@
   import { getContext } from "svelte";
   export let src;
   export let alt;
+  console.log(src, alt);
   const document = getContext("DocumentSheetObject");
   let data;
   $: {

@@ -11,6 +11,6 @@
     Name: <InputForDocumentSheet bind:value={doc.name} />
   </div>
   <div class="cha-img">
-    <ImageWithFilePicker src={doc.image} alt={"character portrait"} />
+    <ImageWithFilePicker src={doc.img} alt={"character portrait"} />
   </div>
 </header>
