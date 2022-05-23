@@ -6056,7 +6056,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (20:2) {#each Object.values(doc.system.attributes) as attribute}
+// (25:2) {#each Object.values(doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let t0_value = /*attribute*/ ctx[2].Label + "";
@@ -6102,16 +6102,26 @@ function create_each_block$4(ctx) {
 function create_fragment$6(ctx) {
 	let header;
 	let div0;
+	let imagewithfilepicker;
 	let t0;
+	let div3;
+	let div1;
+	let t1;
 	let inputfordocumentsheet;
 	let updating_value;
-	let t1;
-	let div1;
-	let imagewithfilepicker;
 	let t2;
 	let div2;
 	let t3;
+	let t4_value = /*doc*/ ctx[0].system.advancement.level + "";
+	let t4;
+	let t5;
+	let div4;
+	let t6;
 	let current;
+
+	imagewithfilepicker = new ImageWithFilePicker({
+			props: { path: "img", alt: "character portrait" }
+		});
 
 	function inputfordocumentsheet_value_binding(value) {
 		/*inputfordocumentsheet_value_binding*/ ctx[1](value);
@@ -6125,11 +6135,6 @@ function create_fragment$6(ctx) {
 
 	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
 	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
-
-	imagewithfilepicker = new ImageWithFilePicker({
-			props: { path: "img", alt: "character portrait" }
-		});
-
 	let each_value = Object.values(/*doc*/ ctx[0].system.attributes);
 	let each_blocks = [];
 
@@ -6141,37 +6146,50 @@ function create_fragment$6(ctx) {
 		c() {
 			header = element("header");
 			div0 = element("div");
-			t0 = text("Name: ");
-			create_component(inputfordocumentsheet.$$.fragment);
-			t1 = space();
-			div1 = element("div");
 			create_component(imagewithfilepicker.$$.fragment);
+			t0 = space();
+			div3 = element("div");
+			div1 = element("div");
+			t1 = text("Name: ");
+			create_component(inputfordocumentsheet.$$.fragment);
 			t2 = space();
 			div2 = element("div");
-			t3 = text("Attributes:\r\n  ");
+			t3 = text("Level:");
+			t4 = text(t4_value);
+			t5 = space();
+			div4 = element("div");
+			t6 = text("Attributes:\r\n  ");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(div0, "class", "name");
-			attr(div1, "class", "cha-img");
-			attr(div2, "class", "attributes svelte-1ptz6w8");
+			attr(div0, "class", "cha-img svelte-1ivczjk");
+			attr(div1, "class", "name");
+			attr(div2, "class", "level");
+			attr(div3, "class", "svelte-1ivczjk");
+			attr(header, "class", "svelte-1ivczjk");
+			attr(div4, "class", "attributes svelte-1ivczjk");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
 			append(header, div0);
-			append(div0, t0);
-			mount_component(inputfordocumentsheet, div0, null);
-			append(header, t1);
-			append(header, div1);
-			mount_component(imagewithfilepicker, div1, null);
-			insert(target, t2, anchor);
-			insert(target, div2, anchor);
+			mount_component(imagewithfilepicker, div0, null);
+			append(header, t0);
+			append(header, div3);
+			append(div3, div1);
+			append(div1, t1);
+			mount_component(inputfordocumentsheet, div1, null);
+			append(div3, t2);
+			append(div3, div2);
 			append(div2, t3);
+			append(div2, t4);
+			insert(target, t5, anchor);
+			insert(target, div4, anchor);
+			append(div4, t6);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div2, null);
+				each_blocks[i].m(div4, null);
 			}
 
 			current = true;
@@ -6186,6 +6204,7 @@ function create_fragment$6(ctx) {
 			}
 
 			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
+			if ((!current || dirty & /*doc*/ 1) && t4_value !== (t4_value = /*doc*/ ctx[0].system.advancement.level + "")) set_data(t4, t4_value);
 
 			if (dirty & /*Object, doc*/ 1) {
 				each_value = Object.values(/*doc*/ ctx[0].system.attributes);
@@ -6199,7 +6218,7 @@ function create_fragment$6(ctx) {
 					} else {
 						each_blocks[i] = create_each_block$4(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(div2, null);
+						each_blocks[i].m(div4, null);
 					}
 				}
 
@@ -6212,21 +6231,21 @@ function create_fragment$6(ctx) {
 		},
 		i(local) {
 			if (current) return;
-			transition_in(inputfordocumentsheet.$$.fragment, local);
 			transition_in(imagewithfilepicker.$$.fragment, local);
+			transition_in(inputfordocumentsheet.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
-			transition_out(inputfordocumentsheet.$$.fragment, local);
 			transition_out(imagewithfilepicker.$$.fragment, local);
+			transition_out(inputfordocumentsheet.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(header);
-			destroy_component(inputfordocumentsheet);
 			destroy_component(imagewithfilepicker);
-			if (detaching) detach(t2);
-			if (detaching) detach(div2);
+			destroy_component(inputfordocumentsheet);
+			if (detaching) detach(t5);
+			if (detaching) detach(div4);
 			destroy_each(each_blocks, detaching);
 		}
 	};
