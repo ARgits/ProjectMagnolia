@@ -990,7 +990,7 @@ class ARd20Actor extends Actor {
   _prepareCharacterData(actorData) {
     var _this$itemTypes$race$;
 
-    if (actorData.type !== "character") return; // Make modifications to data here. For example:
+    if (this.type !== "character") return; // Make modifications to data here. For example:
 
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
@@ -1096,7 +1096,7 @@ class ARd20Actor extends Actor {
 
   _prepareNpcData(actorData) {
     //@ts-expect-error
-    if (actorData.type !== "npc") return; // Make modifications to data here. For example:
+    if (this.type !== "npc") return; // Make modifications to data here. For example:
 
     const data = actorData; //@ts-expect-error
 

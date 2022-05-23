@@ -35,7 +35,7 @@ export class ARd20Actor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    if (actorData.type !== "character") return;
+    if (this.type !== "character") return;
     // Make modifications to data here. For example:
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
@@ -119,7 +119,7 @@ export class ARd20Actor extends Actor {
    */
   _prepareNpcData(actorData) {
     //@ts-expect-error
-    if (actorData.type !== "npc") return;
+    if (this.type !== "npc") return;
     // Make modifications to data here. For example:
     const data = actorData;
     //@ts-expect-error
