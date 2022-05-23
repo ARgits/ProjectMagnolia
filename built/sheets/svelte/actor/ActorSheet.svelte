@@ -4,6 +4,7 @@
   import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte";
   import ImageWithFilePicker from "../general components/ImageWithFilePicker.svelte";
   export let doc;
+  console.log(doc)
 </script>
 
 <header>
@@ -16,7 +17,7 @@
 </header>
 <div class="attributes">
   Attributes:
-  {#each doc.system.attributes as attribute, key}
+  {#each Object.values(doc.system.attributes) as attribute}
     <div>
       {attribute.Label}: <InputForDocumentSheet bind:value={attribute.value} />; Mod: {attribute.mod};
     </div>

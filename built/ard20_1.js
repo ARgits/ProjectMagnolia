@@ -6058,7 +6058,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (19:2) {#each doc.system.attributes as attribute, key}
+// (20:2) {#each Object.values(doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let t0_value = /*attribute*/ ctx[3].Label + "";
@@ -6110,7 +6110,7 @@ function create_each_block$4(ctx) {
 			if ((!current || dirty & /*doc*/ 1) && t0_value !== (t0_value = /*attribute*/ ctx[3].Label + "")) set_data(t0, t0_value);
 			const inputfordocumentsheet_changes = {};
 
-			if (!updating_value && dirty & /*doc*/ 1) {
+			if (!updating_value && dirty & /*Object, doc*/ 1) {
 				updating_value = true;
 				inputfordocumentsheet_changes.value = /*attribute*/ ctx[3].value;
 				add_flush_callback(() => updating_value = false);
@@ -6166,7 +6166,7 @@ function create_fragment$6(ctx) {
 			props: { path: "img", alt: "character portrait" }
 		});
 
-	let each_value = /*doc*/ ctx[0].system.attributes;
+	let each_value = Object.values(/*doc*/ ctx[0].system.attributes);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -6227,8 +6227,8 @@ function create_fragment$6(ctx) {
 
 			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
 
-			if (dirty & /*doc*/ 1) {
-				each_value = /*doc*/ ctx[0].system.attributes;
+			if (dirty & /*Object, doc*/ 1) {
+				each_value = Object.values(/*doc*/ ctx[0].system.attributes);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -6289,6 +6289,7 @@ function create_fragment$6(ctx) {
 
 function instance$6($$self, $$props, $$invalidate) {
 	let { doc } = $$props;
+	console.log(doc);
 
 	function inputfordocumentsheet_value_binding(value) {
 		if ($$self.$$.not_equal(doc.name, value)) {
@@ -6300,7 +6301,6 @@ function instance$6($$self, $$props, $$invalidate) {
 	function inputfordocumentsheet_value_binding_1(value, attribute) {
 		if ($$self.$$.not_equal(attribute.value, value)) {
 			attribute.value = value;
-			$$invalidate(0, doc);
 		}
 	}
 
@@ -9672,7 +9672,6 @@ class SvelteDocumentSheet extends SvelteApplication {
       });
     }
 
-    console.log(buttons);
     return buttons;
   }
 

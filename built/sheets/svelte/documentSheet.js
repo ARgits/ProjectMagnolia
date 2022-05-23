@@ -90,7 +90,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
         onclick: async (ev) => await this._onCharacterAdvancement(ev),
       });
     }
-    console.log(buttons);
     return buttons;
   }
   _onCofigureSheet(event) {
