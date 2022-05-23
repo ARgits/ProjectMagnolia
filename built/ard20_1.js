@@ -6003,7 +6003,8 @@ function instance$7($$self, $$props, $$invalidate) {
 	let $document;
 	let { src } = $$props;
 	let { alt } = $$props;
-	console.log(src, alt);
+	const { application } = getContext("external");
+	console.log('imageWithFilePicker', application);
 	const document = getContext("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(3, $document = value));
 	const click_handler = event => onEditImage(event);

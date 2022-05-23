@@ -4,7 +4,8 @@
   import { getContext } from "svelte";
   export let src;
   export let alt;
-  console.log(src, alt);
+  const {application} = getContext("external")
+  console.log('imageWithFilePicker', application)
   const document = getContext("DocumentSheetObject");
   let data;
   $: {
