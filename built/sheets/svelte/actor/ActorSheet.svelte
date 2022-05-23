@@ -19,7 +19,7 @@
   Attributes:
   {#each Object.values(doc.system.attributes) as attribute}
     <div>
-      {attribute.Label}: <InputForDocumentSheet bind:value={attribute.value} />; Mod: {attribute.mod};
+      {attribute.Label}: {attribute.value}; Mod: {attribute.mod};
     </div>
   {/each}
 </div>

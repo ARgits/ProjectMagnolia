@@ -6052,85 +6052,49 @@ class ImageWithFilePicker extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
-	child_ctx[4] = list;
-	child_ctx[5] = i;
+	child_ctx[2] = list[i];
 	return child_ctx;
 }
 
 // (20:2) {#each Object.values(doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
-	let t0_value = /*attribute*/ ctx[3].Label + "";
+	let t0_value = /*attribute*/ ctx[2].Label + "";
 	let t0;
 	let t1;
-	let inputfordocumentsheet;
-	let updating_value;
+	let t2_value = /*attribute*/ ctx[2].value + "";
 	let t2;
-	let t3_value = /*attribute*/ ctx[3].mod + "";
 	let t3;
+	let t4_value = /*attribute*/ ctx[2].mod + "";
 	let t4;
-	let current;
-
-	function inputfordocumentsheet_value_binding_1(value) {
-		/*inputfordocumentsheet_value_binding_1*/ ctx[2](value, /*attribute*/ ctx[3]);
-	}
-
-	let inputfordocumentsheet_props = {};
-
-	if (/*attribute*/ ctx[3].value !== void 0) {
-		inputfordocumentsheet_props.value = /*attribute*/ ctx[3].value;
-	}
-
-	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
-	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding_1));
+	let t5;
 
 	return {
 		c() {
 			div = element("div");
 			t0 = text(t0_value);
 			t1 = text(": ");
-			create_component(inputfordocumentsheet.$$.fragment);
-			t2 = text("; Mod: ");
-			t3 = text(t3_value);
-			t4 = text(";\r\n    ");
+			t2 = text(t2_value);
+			t3 = text("; Mod: ");
+			t4 = text(t4_value);
+			t5 = text(";\r\n    ");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, t0);
 			append(div, t1);
-			mount_component(inputfordocumentsheet, div, null);
 			append(div, t2);
 			append(div, t3);
 			append(div, t4);
-			current = true;
+			append(div, t5);
 		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			if ((!current || dirty & /*doc*/ 1) && t0_value !== (t0_value = /*attribute*/ ctx[3].Label + "")) set_data(t0, t0_value);
-			const inputfordocumentsheet_changes = {};
-
-			if (!updating_value && dirty & /*Object, doc*/ 1) {
-				updating_value = true;
-				inputfordocumentsheet_changes.value = /*attribute*/ ctx[3].value;
-				add_flush_callback(() => updating_value = false);
-			}
-
-			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
-			if ((!current || dirty & /*doc*/ 1) && t3_value !== (t3_value = /*attribute*/ ctx[3].mod + "")) set_data(t3, t3_value);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(inputfordocumentsheet.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(inputfordocumentsheet.$$.fragment, local);
-			current = false;
+		p(ctx, dirty) {
+			if (dirty & /*doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[2].Label + "")) set_data(t0, t0_value);
+			if (dirty & /*doc*/ 1 && t2_value !== (t2_value = /*attribute*/ ctx[2].value + "")) set_data(t2, t2_value);
+			if (dirty & /*doc*/ 1 && t4_value !== (t4_value = /*attribute*/ ctx[2].mod + "")) set_data(t4, t4_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
-			destroy_component(inputfordocumentsheet);
 		}
 	};
 }
@@ -6172,10 +6136,6 @@ function create_fragment$6(ctx) {
 	for (let i = 0; i < each_value.length; i += 1) {
 		each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
 	}
-
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
 
 	return {
 		c() {
@@ -6236,44 +6196,29 @@ function create_fragment$6(ctx) {
 
 					if (each_blocks[i]) {
 						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
 					} else {
 						each_blocks[i] = create_each_block$4(child_ctx);
 						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
 						each_blocks[i].m(div2, null);
 					}
 				}
 
-				group_outros();
-
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
-					out(i);
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
 				}
 
-				check_outros();
+				each_blocks.length = each_value.length;
 			}
 		},
 		i(local) {
 			if (current) return;
 			transition_in(inputfordocumentsheet.$$.fragment, local);
 			transition_in(imagewithfilepicker.$$.fragment, local);
-
-			for (let i = 0; i < each_value.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
-
 			current = true;
 		},
 		o(local) {
 			transition_out(inputfordocumentsheet.$$.fragment, local);
 			transition_out(imagewithfilepicker.$$.fragment, local);
-			each_blocks = each_blocks.filter(Boolean);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
-
 			current = false;
 		},
 		d(detaching) {
@@ -6298,21 +6243,11 @@ function instance$6($$self, $$props, $$invalidate) {
 		}
 	}
 
-	function inputfordocumentsheet_value_binding_1(value, attribute) {
-		if ($$self.$$.not_equal(attribute.value, value)) {
-			attribute.value = value;
-		}
-	}
-
 	$$self.$$set = $$props => {
 		if ('doc' in $$props) $$invalidate(0, doc = $$props.doc);
 	};
 
-	return [
-		doc,
-		inputfordocumentsheet_value_binding,
-		inputfordocumentsheet_value_binding_1
-	];
+	return [doc, inputfordocumentsheet_value_binding];
 }
 
 class ActorSheet$1 extends SvelteComponent {
