@@ -6070,6 +6070,7 @@ function create_fragment$6(ctx) {
 	let t1;
 	let div1;
 	let imagewithfilepicker;
+	let updating_src;
 	let current;
 
 	function inputfordocumentsheet_value_binding(value) {
@@ -6085,12 +6086,18 @@ function create_fragment$6(ctx) {
 	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
 	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
 
-	imagewithfilepicker = new ImageWithFilePicker({
-			props: {
-				src: /*doc*/ ctx[0].img,
-				alt: "character portrait"
-			}
-		});
+	function imagewithfilepicker_src_binding(value) {
+		/*imagewithfilepicker_src_binding*/ ctx[2](value);
+	}
+
+	let imagewithfilepicker_props = { alt: "character portrait" };
+
+	if (/*doc*/ ctx[0].img !== void 0) {
+		imagewithfilepicker_props.src = /*doc*/ ctx[0].img;
+	}
+
+	imagewithfilepicker = new ImageWithFilePicker({ props: imagewithfilepicker_props });
+	binding_callbacks.push(() => bind(imagewithfilepicker, 'src', imagewithfilepicker_src_binding));
 
 	return {
 		c() {
@@ -6125,7 +6132,13 @@ function create_fragment$6(ctx) {
 
 			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
 			const imagewithfilepicker_changes = {};
-			if (dirty & /*doc*/ 1) imagewithfilepicker_changes.src = /*doc*/ ctx[0].img;
+
+			if (!updating_src && dirty & /*doc*/ 1) {
+				updating_src = true;
+				imagewithfilepicker_changes.src = /*doc*/ ctx[0].img;
+				add_flush_callback(() => updating_src = false);
+			}
+
 			imagewithfilepicker.$set(imagewithfilepicker_changes);
 		},
 		i(local) {
@@ -6157,11 +6170,18 @@ function instance$6($$self, $$props, $$invalidate) {
 		}
 	}
 
+	function imagewithfilepicker_src_binding(value) {
+		if ($$self.$$.not_equal(doc.img, value)) {
+			doc.img = value;
+			$$invalidate(0, doc);
+		}
+	}
+
 	$$self.$$set = $$props => {
 		if ('doc' in $$props) $$invalidate(0, doc = $$props.doc);
 	};
 
-	return [doc, inputfordocumentsheet_value_binding];
+	return [doc, inputfordocumentsheet_value_binding, imagewithfilepicker_src_binding];
 }
 
 class ActorSheet$1 extends SvelteComponent {
