@@ -1,7 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
-  import InputForDocumentSheet from "../InputForDocumentSheet.svelte"
+  import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte"
+  import ImageWithFilePicker from "../general components/ImageWithFilePicker.svelte";
   export let doc;
 </script>
 
@@ -9,5 +10,7 @@
   <div class="name">
     Name: <InputForDocumentSheet bind:value={doc.name} />
   </div>
-  <div class="cha-img"><img src={doc.img} alt="characer portrait" /></div>
+  <div class="cha-img">
+    <ImageWithFilePicker bind:src={doc.image} alt={"character portrait"} />
+  </div>
 </header>

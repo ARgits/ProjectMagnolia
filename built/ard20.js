@@ -69,12 +69,12 @@ Hooks.once("init", async function () {
     CONFIG.Item.documentClass = ARd20Item;
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: true });
-    Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: false });
+    Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: false });
+    Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
     //@ts-expect-error
-    Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: true });
-    Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: false });
+    Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: false });
+    Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
     registerSystemSettings();
 
     //register Svelte components for Actor/Item types
