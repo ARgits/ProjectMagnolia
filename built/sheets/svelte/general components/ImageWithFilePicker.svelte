@@ -4,8 +4,7 @@
   import { getContext } from "svelte";
   export let src;
   export let alt;
-  const {application} = getContext("external")
-  console.log('imageWithFilePicker', application)
+  const {application} = getContext("external") //get sheet document
   const document = getContext("DocumentSheetObject");
   let data;
   $: {
@@ -13,17 +12,17 @@
   }
   function onEditImage(event) {
     console.log(event);
-    /*const current = src;
+    const current = src;
     const fp = new FilePicker({
       type: "image",
       current: current,
       callback: (path) => {
         (src = path), document.update(data);
       },
-      top: sheet.position.top + 40,
-      left: sheet.posiiton.left + 10,
+      top: application.position.top + 40,
+      left: application.posiiton.left + 10,
     });
-    return fp.browse();*/
+    return fp.browse();
   }
 </script>
 
