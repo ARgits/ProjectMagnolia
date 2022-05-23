@@ -11,7 +11,6 @@
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
   function onEditImage(event) {
-    console.log(application.position);
     const current = src;
     const fp = new FilePicker({
       type: "image",
@@ -20,7 +19,7 @@
         (src = path), document.update(data);
       },
       top: application.position.top + 40,
-      left: application.posiiton.left + 10,
+      left: application.position.left + 10,
     });
     return fp.browse();
   }

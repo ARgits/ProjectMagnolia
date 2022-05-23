@@ -5995,7 +5995,6 @@ function instance$7($$self, $$props, $$invalidate) {
 	let data;
 
 	function onEditImage(event) {
-		console.log(application.position);
 		const current = src;
 
 		const fp = new FilePicker({
@@ -6005,7 +6004,7 @@ function instance$7($$self, $$props, $$invalidate) {
 					($$invalidate(0, src = path), document.update(data));
 				},
 				top: application.position.top + 40,
-				left: application.posiiton.left + 10
+				left: application.position.left + 10
 			});
 
 		return fp.browse();
