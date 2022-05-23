@@ -1,4 +1,4 @@
-import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, src_url_equal, update_keyed_each, destroy_block, select_value, is_function, select_option, subscribe } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, is_function, run_all, src_url_equal, update_keyed_each, destroy_block, select_value, select_option, subscribe } from '/modules/typhonjs/svelte/internal.js';
 import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
@@ -5780,13 +5780,17 @@ function create_fragment$9(ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(input, "input", /*input_input_handler*/ ctx[4]),
-					listen(input, "change", /*change_handler*/ ctx[5])
+					listen(input, "change", function () {
+						if (is_function(/*updateDocument*/ ctx[2](/*value*/ ctx[0]))) /*updateDocument*/ ctx[2](/*value*/ ctx[0]).apply(this, arguments);
+					})
 				];
 
 				mounted = true;
 			}
 		},
-		p(ctx, [dirty]) {
+		p(new_ctx, [dirty]) {
+			ctx = new_ctx;
+
 			if (dirty & /*value*/ 1 && input.value !== /*value*/ ctx[0]) {
 				set_input_value(input, /*value*/ ctx[0]);
 			}
@@ -5803,52 +5807,41 @@ function create_fragment$9(ctx) {
 
 function instance$9($$self, $$props, $$invalidate) {
 	let $document;
-	let { value } = $$props;
+	let { path } = $$props;
 	const document = getContext("DocumentSheetObject");
-	component_subscribe($$self, document, value => $$invalidate(1, $document = value));
-	let data;
+	component_subscribe($$self, document, value => $$invalidate(5, $document = value));
+	let value = getProperty($document, path);
+
+	async function updateDocument(value) {
+		const updateData = {};
+		updateData[path] = value;
+		await $document.update(updateData);
+	}
 
 	function input_input_handler() {
 		value = this.value;
 		$$invalidate(0, value);
 	}
 
-	const change_handler = () => {
-		$document.update(data);
-	};
-
 	$$self.$$set = $$props => {
-		if ('value' in $$props) $$invalidate(0, value = $$props.value);
+		if ('path' in $$props) $$invalidate(3, path = $$props.path);
 	};
 
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$document*/ 2) {
-			{
-				$$invalidate(2, data = {
-					img: $document.img,
-					system: $document.system,
-					flags: $document.flags,
-					name: $document.name
-				});
-			}
-		}
-	};
-
-	return [value, $document, data, document, input_input_handler, change_handler];
+	return [value, document, updateDocument, path, input_input_handler];
 }
 
 class InputForDocumentSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { value: 0 });
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, { path: 3 });
 	}
 
-	get value() {
-		return this.$$.ctx[0];
+	get path() {
+		return this.$$.ctx[3];
 	}
 
-	set value(value) {
-		this.$$set({ value });
+	set path(path) {
+		this.$$set({ path });
 		flush();
 	}
 }
@@ -5858,21 +5851,8 @@ class InputForDocumentSheet extends SvelteComponent {
 function create_fragment$8(ctx) {
 	let t;
 	let inputfordocumentsheet;
-	let updating_value;
 	let current;
-
-	function inputfordocumentsheet_value_binding(value) {
-		/*inputfordocumentsheet_value_binding*/ ctx[1](value);
-	}
-
-	let inputfordocumentsheet_props = {};
-
-	if (/*doc*/ ctx[0].name !== void 0) {
-		inputfordocumentsheet_props.value = /*doc*/ ctx[0].name;
-	}
-
-	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
-	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
+	inputfordocumentsheet = new InputForDocumentSheet({ props: { path: "name" } });
 
 	return {
 		c() {
@@ -5884,17 +5864,7 @@ function create_fragment$8(ctx) {
 			mount_component(inputfordocumentsheet, target, anchor);
 			current = true;
 		},
-		p(ctx, [dirty]) {
-			const inputfordocumentsheet_changes = {};
-
-			if (!updating_value && dirty & /*doc*/ 1) {
-				updating_value = true;
-				inputfordocumentsheet_changes.value = /*doc*/ ctx[0].name;
-				add_flush_callback(() => updating_value = false);
-			}
-
-			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
-		},
+		p: noop,
 		i(local) {
 			if (current) return;
 			transition_in(inputfordocumentsheet.$$.fragment, local);
@@ -5914,18 +5884,11 @@ function create_fragment$8(ctx) {
 function instance$8($$self, $$props, $$invalidate) {
 	let { doc } = $$props;
 
-	function inputfordocumentsheet_value_binding(value) {
-		if ($$self.$$.not_equal(doc.name, value)) {
-			doc.name = value;
-			$$invalidate(0, doc);
-		}
-	}
-
 	$$self.$$set = $$props => {
 		if ('doc' in $$props) $$invalidate(0, doc = $$props.doc);
 	};
 
-	return [doc, inputfordocumentsheet_value_binding];
+	return [doc];
 }
 
 class ItemItemSheet extends SvelteComponent {
@@ -5955,27 +5918,23 @@ function create_fragment$7(ctx) {
 	return {
 		c() {
 			img = element("img");
-			attr(img, "alt", /*alt*/ ctx[1]);
-			if (!src_url_equal(img.src, img_src_value = /*src*/ ctx[0])) attr(img, "src", img_src_value);
+			attr(img, "alt", /*alt*/ ctx[0]);
+			if (!src_url_equal(img.src, img_src_value = /*src*/ ctx[1])) attr(img, "src", img_src_value);
 		},
 		m(target, anchor) {
 			insert(target, img, anchor);
 
 			if (!mounted) {
-				dispose = [
-					listen(img, "click", /*click_handler*/ ctx[5]),
-					listen(img, "load", /*updateDocument*/ ctx[4])
-				];
-
+				dispose = listen(img, "click", /*click_handler*/ ctx[5]);
 				mounted = true;
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*alt*/ 2) {
-				attr(img, "alt", /*alt*/ ctx[1]);
+			if (dirty & /*alt*/ 1) {
+				attr(img, "alt", /*alt*/ ctx[0]);
 			}
 
-			if (dirty & /*src*/ 1 && !src_url_equal(img.src, img_src_value = /*src*/ ctx[0])) {
+			if (dirty & /*src*/ 2 && !src_url_equal(img.src, img_src_value = /*src*/ ctx[1])) {
 				attr(img, "src", img_src_value);
 			}
 		},
@@ -5984,19 +5943,19 @@ function create_fragment$7(ctx) {
 		d(detaching) {
 			if (detaching) detach(img);
 			mounted = false;
-			run_all(dispose);
+			dispose();
 		}
 	};
 }
 
 function instance$7($$self, $$props, $$invalidate) {
 	let $document;
-	let { src } = $$props;
+	let { path } = $$props;
 	let { alt } = $$props;
 	const { application } = getContext("external"); //get sheet document
 	const document = getContext("DocumentSheetObject");
-	component_subscribe($$self, document, value => $$invalidate(7, $document = value));
-	let data;
+	component_subscribe($$self, document, value => $$invalidate(6, $document = value));
+	let src = getProperty($document, path);
 
 	function onEditImage(event) {
 		const current = src;
@@ -6004,8 +5963,11 @@ function instance$7($$self, $$props, $$invalidate) {
 		const fp = new FilePicker({
 				type: "image",
 				current,
-				callback: async path => {
-					$$invalidate(0, src = path);
+				callback: async newVal => {
+					$$invalidate(1, src = newVal);
+					let updateData = {};
+					updateData[path] = src;
+					await $document.update(updateData);
 				},
 				top: application.position.top + 40,
 				left: application.position.left + 10
@@ -6014,44 +5976,33 @@ function instance$7($$self, $$props, $$invalidate) {
 		return fp.browse();
 	}
 
-	async function updateDocument() {
-		data = {
-			img: $document.img,
-			system: $document.system,
-			flags: $document.flags,
-			name: $document.name
-		};
-
-		await $document.update(data);
-	}
-
 	const click_handler = event => onEditImage();
 
 	$$self.$$set = $$props => {
-		if ('src' in $$props) $$invalidate(0, src = $$props.src);
-		if ('alt' in $$props) $$invalidate(1, alt = $$props.alt);
+		if ('path' in $$props) $$invalidate(4, path = $$props.path);
+		if ('alt' in $$props) $$invalidate(0, alt = $$props.alt);
 	};
 
-	return [src, alt, document, onEditImage, updateDocument, click_handler];
+	return [alt, src, document, onEditImage, path, click_handler];
 }
 
 class ImageWithFilePicker extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$7, create_fragment$7, safe_not_equal, { src: 0, alt: 1 });
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, { path: 4, alt: 0 });
 	}
 
-	get src() {
-		return this.$$.ctx[0];
+	get path() {
+		return this.$$.ctx[4];
 	}
 
-	set src(src) {
-		this.$$set({ src });
+	set path(path) {
+		this.$$set({ path });
 		flush();
 	}
 
 	get alt() {
-		return this.$$.ctx[1];
+		return this.$$.ctx[0];
 	}
 
 	set alt(alt) {
@@ -6067,38 +6018,15 @@ function create_fragment$6(ctx) {
 	let div0;
 	let t0;
 	let inputfordocumentsheet;
-	let updating_value;
 	let t1;
 	let div1;
 	let imagewithfilepicker;
-	let updating_src;
 	let current;
+	inputfordocumentsheet = new InputForDocumentSheet({ props: { path: "name" } });
 
-	function inputfordocumentsheet_value_binding(value) {
-		/*inputfordocumentsheet_value_binding*/ ctx[1](value);
-	}
-
-	let inputfordocumentsheet_props = {};
-
-	if (/*doc*/ ctx[0].name !== void 0) {
-		inputfordocumentsheet_props.value = /*doc*/ ctx[0].name;
-	}
-
-	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
-	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
-
-	function imagewithfilepicker_src_binding(value) {
-		/*imagewithfilepicker_src_binding*/ ctx[2](value);
-	}
-
-	let imagewithfilepicker_props = { alt: "character portrait" };
-
-	if (/*doc*/ ctx[0].img !== void 0) {
-		imagewithfilepicker_props.src = /*doc*/ ctx[0].img;
-	}
-
-	imagewithfilepicker = new ImageWithFilePicker({ props: imagewithfilepicker_props });
-	binding_callbacks.push(() => bind(imagewithfilepicker, 'src', imagewithfilepicker_src_binding));
+	imagewithfilepicker = new ImageWithFilePicker({
+			props: { path: "img", alt: "character portrait" }
+		});
 
 	return {
 		c() {
@@ -6122,26 +6050,7 @@ function create_fragment$6(ctx) {
 			mount_component(imagewithfilepicker, div1, null);
 			current = true;
 		},
-		p(ctx, [dirty]) {
-			const inputfordocumentsheet_changes = {};
-
-			if (!updating_value && dirty & /*doc*/ 1) {
-				updating_value = true;
-				inputfordocumentsheet_changes.value = /*doc*/ ctx[0].name;
-				add_flush_callback(() => updating_value = false);
-			}
-
-			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
-			const imagewithfilepicker_changes = {};
-
-			if (!updating_src && dirty & /*doc*/ 1) {
-				updating_src = true;
-				imagewithfilepicker_changes.src = /*doc*/ ctx[0].img;
-				add_flush_callback(() => updating_src = false);
-			}
-
-			imagewithfilepicker.$set(imagewithfilepicker_changes);
-		},
+		p: noop,
 		i(local) {
 			if (current) return;
 			transition_in(inputfordocumentsheet.$$.fragment, local);
@@ -6164,25 +6073,11 @@ function create_fragment$6(ctx) {
 function instance$6($$self, $$props, $$invalidate) {
 	let { doc } = $$props;
 
-	function inputfordocumentsheet_value_binding(value) {
-		if ($$self.$$.not_equal(doc.name, value)) {
-			doc.name = value;
-			$$invalidate(0, doc);
-		}
-	}
-
-	function imagewithfilepicker_src_binding(value) {
-		if ($$self.$$.not_equal(doc.img, value)) {
-			doc.img = value;
-			$$invalidate(0, doc);
-		}
-	}
-
 	$$self.$$set = $$props => {
 		if ('doc' in $$props) $$invalidate(0, doc = $$props.doc);
 	};
 
-	return [doc, inputfordocumentsheet_value_binding, imagewithfilepicker_src_binding];
+	return [doc];
 }
 
 class ActorSheet$1 extends SvelteComponent {

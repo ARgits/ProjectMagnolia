@@ -5,4 +5,4 @@
   export let doc;
 </script>
 
-Name: <InputForDocumentSheet bind:value={doc.name}/>
+Name: <InputForDocumentSheet path={"name"}/>

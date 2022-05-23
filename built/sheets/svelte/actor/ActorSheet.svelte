@@ -8,9 +8,9 @@
 
 <header>
   <div class="name">
-    Name: <InputForDocumentSheet bind:value={doc.name} />
+    Name: <InputForDocumentSheet path={"name"} />
   </div>
   <div class="cha-img">
-    <ImageWithFilePicker bind:src={doc.img} alt={"character portrait"} />
+    <ImageWithFilePicker path={"img"} alt={"character portrait"} />
   </div>
 </header>

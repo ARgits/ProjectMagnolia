@@ -2,17 +2,14 @@
 
 <script>
   import { getContext } from "svelte";
-  export let value;
+  export let path;
   const document = getContext("DocumentSheetObject");
-  let data;
-  $: {
-    data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
+  let value = getProperty($document, path);
+  async function updateDocument(value) {
+    const updateData = {};
+    updateData[path] = value;
+    await $document.update(updateData);
   }
 </script>
 
-<input
-  bind:value
-  on:change={() => {
-    $document.update(data);
-  }}
-/>
+<input bind:value on:change={updateDocument(value)} />
