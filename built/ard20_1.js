@@ -6626,6 +6626,7 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet1;
 	let updating_value_1;
 	let t13;
+	let div9;
 	let tabs_1;
 	let current;
 
@@ -6692,6 +6693,7 @@ function create_fragment$6(ctx) {
 			t12 = text("XP earned: ");
 			create_component(inputfordocumentsheet1.$$.fragment);
 			t13 = space();
+			div9 = element("div");
 			create_component(tabs_1.$$.fragment);
 			attr(div0, "class", "cha-img svelte-8lgp9p");
 			attr(div1, "class", "name");
@@ -6700,6 +6702,7 @@ function create_fragment$6(ctx) {
 			attr(div7, "class", "XP");
 			attr(div8, "class", "level svelte-8lgp9p");
 			attr(header, "class", "svelte-8lgp9p");
+			attr(div9, "class", "content");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
@@ -6729,7 +6732,8 @@ function create_fragment$6(ctx) {
 			append(div6, t12);
 			mount_component(inputfordocumentsheet1, div6, null);
 			insert(target, t13, anchor);
-			mount_component(tabs_1, target, anchor);
+			insert(target, div9, anchor);
+			mount_component(tabs_1, div9, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -6776,7 +6780,8 @@ function create_fragment$6(ctx) {
 			destroy_component(inputfordocumentsheet0);
 			destroy_component(inputfordocumentsheet1);
 			if (detaching) detach(t13);
-			destroy_component(tabs_1, detaching);
+			if (detaching) detach(div9);
+			destroy_component(tabs_1);
 		}
 	};
 }

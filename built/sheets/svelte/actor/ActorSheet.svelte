@@ -6,13 +6,13 @@
   import ProgressBar from "../../../general svelte components/ProgressBar.svelte";
   import Tabs from "../general components/Tabs.svelte";
   import AttributeTab from "./AttributeTab.svelte";
-import InventoryTab from "./InventoryTab.svelte";
-import FeaturesTab from "./FeaturesTab.svelte";
-import SpellsTab from "./SpellsTab.svelte";
-import EffectsTab from "./EffectsTab.svelte";
-import BiographyTab from "./BiographyTab.svelte";
-import {getContext} from "svelte"
-const doc = getContext("DocumentSheetObject")
+  import InventoryTab from "./InventoryTab.svelte";
+  import FeaturesTab from "./FeaturesTab.svelte";
+  import SpellsTab from "./SpellsTab.svelte";
+  import EffectsTab from "./EffectsTab.svelte";
+  import BiographyTab from "./BiographyTab.svelte";
+  import { getContext } from "svelte";
+  const doc = getContext("DocumentSheetObject");
   let tabs = [
     { label: "Attributes", id: "attributes", component: AttributeTab },
     { label: "Inventory", id: "inventory", component: InventoryTab },
@@ -51,7 +51,9 @@ const doc = getContext("DocumentSheetObject")
     </div>
   </div>
 </header>
-<Tabs {tabs} {activeTab} />
+<div class="content">
+  <Tabs {tabs} {activeTab} />
+</div>
 
 <style lang="scss">
   header {
