@@ -6463,7 +6463,7 @@ function create_each_block$4(ctx) {
 			t4 = text("; Mod: ");
 			t5 = text(t5_value);
 			t6 = text(";\r\n    ");
-			attr(span, "class", "svelte-1e57u1i");
+			attr(span, "class", "svelte-106lspj");
 			toggle_class(span, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[6][0]);
 		},
 		m(target, anchor) {
@@ -6525,7 +6525,7 @@ function create_fragment$7(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "attributes svelte-1e57u1i");
+			attr(div, "class", "attributes svelte-106lspj");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);

@@ -31,6 +31,6 @@
     flex-direction: column;
   }
   .highlight {
-    background-color: red;
+    text-shadow: red 0px 0px 0.5em;
   }
 </style>
