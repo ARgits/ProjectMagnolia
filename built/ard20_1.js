@@ -6423,29 +6423,29 @@ class Tabs extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[5] = list[i];
 	return child_ctx;
 }
 
-// (17:2) {#each Object.entries($doc.system.attributes) as attribute}
+// (16:2) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let span;
-	let t0_value = /*attribute*/ ctx[3][1].label + "";
+	let t0_value = /*attribute*/ ctx[5][1].label + "";
 	let t0;
 	let t1;
 	let t2;
-	let t3_value = /*attribute*/ ctx[3][1].value + "";
+	let t3_value = /*attribute*/ ctx[5][1].value + "";
 	let t3;
 	let t4;
-	let t5_value = /*attribute*/ ctx[3][1].mod + "";
+	let t5_value = /*attribute*/ ctx[5][1].mod + "";
 	let t5;
 	let t6;
 	let mounted;
 	let dispose;
 
 	function click_handler(...args) {
-		return /*click_handler*/ ctx[2](/*attribute*/ ctx[3], ...args);
+		return /*click_handler*/ ctx[4](/*attribute*/ ctx[5], ...args);
 	}
 
 	return {
@@ -6473,8 +6473,8 @@ function create_each_block$4(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(span, "mouseenter", HighlightLabel),
-					listen(span, "mouseleave", HighlightLabel),
+					listen(span, "mouseenter", /*mouseenter_handler*/ ctx[2]),
+					listen(span, "mouseleave", /*mouseleave_handler*/ ctx[3]),
 					listen(span, "click", click_handler)
 				];
 
@@ -6483,9 +6483,9 @@ function create_each_block$4(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[3][1].label + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[3][1].value + "")) set_data(t3, t3_value);
-			if (dirty & /*$doc*/ 1 && t5_value !== (t5_value = /*attribute*/ ctx[3][1].mod + "")) set_data(t5, t5_value);
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[5][1].label + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[5][1].value + "")) set_data(t3, t3_value);
+			if (dirty & /*$doc*/ 1 && t5_value !== (t5_value = /*attribute*/ ctx[5][1].mod + "")) set_data(t5, t5_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -6567,13 +6567,15 @@ function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
+	const mouseenter_handler = event => HighlightLabel(event);
+	const mouseleave_handler = event => HighlightLabel(event);
 
 	const click_handler = (attribute, event) => {
 		event.preventDefault;
 		return $doc.rollAttributeTest(attribute[0], { event });
 	};
 
-	return [$doc, doc, click_handler];
+	return [$doc, doc, mouseenter_handler, mouseleave_handler, click_handler];
 }
 
 class AttributeTab extends SvelteComponent {
