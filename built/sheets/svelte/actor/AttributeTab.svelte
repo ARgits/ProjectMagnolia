@@ -6,6 +6,7 @@
   let highlight = "";
 </script>
 
+<label for="attributes">Attributes</label>
 <div class="attributes">
   {#each Object.entries($doc.system.attributes) as attribute}
     <div
@@ -25,6 +26,7 @@
     </div>
   {/each}
 </div>
+<label for="skills">Skills</label>
 <div class="skills">
   {#each Object.entries($doc.system.skills) as skill}
     <div
@@ -63,8 +65,15 @@
       display: flex;
       flex-direction: column;
       border: 1px solid black;
-      flex: 1 0 calc(100% / 6);
+      flex: 1 0 calc(100% / 6 - 1.2em);
+      align-items: center;
+      margin: 0.6em;
     }
+  }
+  label {
+    text-align: center;
+    border: 1px solid black;
+    width: 100%;
   }
   .highlight {
     text-shadow: red 0px 0px 0.5em;

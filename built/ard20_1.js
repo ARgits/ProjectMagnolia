@@ -6433,7 +6433,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (10:2) {#each Object.entries($doc.system.attributes) as attribute}
+// (11:2) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block_1$3(ctx) {
 	let div;
 	let span0;
@@ -6475,7 +6475,7 @@ function create_each_block_1$3(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "svelte-ewgxvh");
+			attr(div, "class", "svelte-4w9dw6");
 			toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[12][0]);
 		},
 		m(target, anchor) {
@@ -6520,7 +6520,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (47:15) {#if skill[1].value > 0}
+// (49:15) {#if skill[1].value > 0}
 function create_if_block$2(ctx) {
 	let t;
 
@@ -6537,7 +6537,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (29:2) {#each Object.entries($doc.system.skills) as skill}
+// (31:2) {#each Object.entries($doc.system.skills) as skill}
 function create_each_block$4(ctx) {
 	let div;
 	let span0;
@@ -6581,7 +6581,7 @@ function create_each_block$4(ctx) {
 			t5 = space();
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "skill svelte-ewgxvh");
+			attr(div, "class", "skill svelte-4w9dw6");
 			toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*skill*/ ctx[9][0]);
 		},
 		m(target, anchor) {
@@ -6641,8 +6641,12 @@ function create_each_block$4(ctx) {
 }
 
 function create_fragment$7(ctx) {
+	let label0;
+	let t1;
 	let div0;
-	let t;
+	let t2;
+	let label1;
+	let t4;
 	let div1;
 	let each_value_1 = Object.entries(/*$doc*/ ctx[1].system.attributes);
 	let each_blocks_1 = [];
@@ -6660,30 +6664,44 @@ function create_fragment$7(ctx) {
 
 	return {
 		c() {
+			label0 = element("label");
+			label0.textContent = "Attributes";
+			t1 = space();
 			div0 = element("div");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].c();
 			}
 
-			t = space();
+			t2 = space();
+			label1 = element("label");
+			label1.textContent = "Skills";
+			t4 = space();
 			div1 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(div0, "class", "attributes svelte-ewgxvh");
-			attr(div1, "class", "skills svelte-ewgxvh");
+			attr(label0, "for", "attributes");
+			attr(label0, "class", "svelte-4w9dw6");
+			attr(div0, "class", "attributes svelte-4w9dw6");
+			attr(label1, "for", "skills");
+			attr(label1, "class", "svelte-4w9dw6");
+			attr(div1, "class", "skills svelte-4w9dw6");
 		},
 		m(target, anchor) {
+			insert(target, label0, anchor);
+			insert(target, t1, anchor);
 			insert(target, div0, anchor);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].m(div0, null);
 			}
 
-			insert(target, t, anchor);
+			insert(target, t2, anchor);
+			insert(target, label1, anchor);
+			insert(target, t4, anchor);
 			insert(target, div1, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -6740,9 +6758,13 @@ function create_fragment$7(ctx) {
 		i: noop,
 		o: noop,
 		d(detaching) {
+			if (detaching) detach(label0);
+			if (detaching) detach(t1);
 			if (detaching) detach(div0);
 			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t);
+			if (detaching) detach(t2);
+			if (detaching) detach(label1);
+			if (detaching) detach(t4);
 			if (detaching) detach(div1);
 			destroy_each(each_blocks, detaching);
 		}
