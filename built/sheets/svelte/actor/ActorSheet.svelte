@@ -51,6 +51,7 @@
     </div>
   </div>
 </header>
+<hr>
 <div class="content">
   <Tabs {tabs} {activeTab} />
 </div>

@@ -7,9 +7,14 @@
 
 <div class="attributes">
   Attributes:
-  {#each Object.values($doc.system.attributes) as attribute}
+  {#each Object.entries($doc.system.attributes) as attribute}
     <div>
-      {attribute.label}: {attribute.value}; Mod: {attribute.mod};
+      <span
+        on:click={(event) => {
+          event.preventDefault;
+          return $doc.rollAttributeTest(attribute[0]);
+        }}>{attribute[1].label}</span
+      >: {attribute[1].value}; Mod: {attribute[1].mod};
     </div>
   {/each}
 </div>

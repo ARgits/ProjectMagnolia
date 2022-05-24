@@ -6423,26 +6423,34 @@ class Tabs extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[2] = list[i];
+	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
-// (10:2) {#each Object.values($doc.system.attributes) as attribute}
+// (10:2) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
-	let t0_value = /*attribute*/ ctx[2].label + "";
+	let span;
+	let t0_value = /*attribute*/ ctx[3][1].label + "";
 	let t0;
 	let t1;
-	let t2_value = /*attribute*/ ctx[2].value + "";
+	let t2_value = /*attribute*/ ctx[3][1].value + "";
 	let t2;
 	let t3;
-	let t4_value = /*attribute*/ ctx[2].mod + "";
+	let t4_value = /*attribute*/ ctx[3][1].mod + "";
 	let t4;
 	let t5;
+	let mounted;
+	let dispose;
+
+	function click_handler(...args) {
+		return /*click_handler*/ ctx[2](/*attribute*/ ctx[3], ...args);
+	}
 
 	return {
 		c() {
 			div = element("div");
+			span = element("span");
 			t0 = text(t0_value);
 			t1 = text(": ");
 			t2 = text(t2_value);
@@ -6452,20 +6460,29 @@ function create_each_block$4(ctx) {
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
-			append(div, t0);
+			append(div, span);
+			append(span, t0);
 			append(div, t1);
 			append(div, t2);
 			append(div, t3);
 			append(div, t4);
 			append(div, t5);
+
+			if (!mounted) {
+				dispose = listen(span, "click", click_handler);
+				mounted = true;
+			}
 		},
-		p(ctx, dirty) {
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[2].label + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*attribute*/ ctx[2].value + "")) set_data(t2, t2_value);
-			if (dirty & /*$doc*/ 1 && t4_value !== (t4_value = /*attribute*/ ctx[2].mod + "")) set_data(t4, t4_value);
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[3][1].label + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*attribute*/ ctx[3][1].value + "")) set_data(t2, t2_value);
+			if (dirty & /*$doc*/ 1 && t4_value !== (t4_value = /*attribute*/ ctx[3][1].mod + "")) set_data(t4, t4_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
+			mounted = false;
+			dispose();
 		}
 	};
 }
@@ -6473,7 +6490,7 @@ function create_each_block$4(ctx) {
 function create_fragment$7(ctx) {
 	let div;
 	let t;
-	let each_value = Object.values(/*$doc*/ ctx[0].system.attributes);
+	let each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -6501,7 +6518,7 @@ function create_fragment$7(ctx) {
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*Object, $doc*/ 1) {
-				each_value = Object.values(/*$doc*/ ctx[0].system.attributes);
+				each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -6536,7 +6553,13 @@ function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
-	return [$doc, doc];
+
+	const click_handler = (attribute, event) => {
+		event.preventDefault;
+		return $doc.rollAttributeTest(attribute[0]);
+	};
+
+	return [$doc, doc, click_handler];
 }
 
 class AttributeTab extends SvelteComponent {
@@ -6626,6 +6649,8 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet1;
 	let updating_value_1;
 	let t13;
+	let hr;
+	let t14;
 	let div9;
 	let tabs_1;
 	let current;
@@ -6693,6 +6718,8 @@ function create_fragment$6(ctx) {
 			t12 = text("XP earned: ");
 			create_component(inputfordocumentsheet1.$$.fragment);
 			t13 = space();
+			hr = element("hr");
+			t14 = space();
 			div9 = element("div");
 			create_component(tabs_1.$$.fragment);
 			attr(div0, "class", "cha-img svelte-8lgp9p");
@@ -6732,6 +6759,8 @@ function create_fragment$6(ctx) {
 			append(div6, t12);
 			mount_component(inputfordocumentsheet1, div6, null);
 			insert(target, t13, anchor);
+			insert(target, hr, anchor);
+			insert(target, t14, anchor);
 			insert(target, div9, anchor);
 			mount_component(tabs_1, div9, null);
 			current = true;
@@ -6780,6 +6809,8 @@ function create_fragment$6(ctx) {
 			destroy_component(inputfordocumentsheet0);
 			destroy_component(inputfordocumentsheet1);
 			if (detaching) detach(t13);
+			if (detaching) detach(hr);
+			if (detaching) detach(t14);
 			if (detaching) detach(div9);
 			destroy_component(tabs_1);
 		}
