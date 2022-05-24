@@ -31,7 +31,7 @@
   </div>
   <div>
     <div class="name">
-      Name: <InputForDocumentSheet bind:value={$doc.name} type="number" />
+      Name: <InputForDocumentSheet bind:value={$doc.name} />
     </div>
     <div class="race">
       Race: {$doc.itemTypes.race[0]?.name || "none"}
@@ -64,8 +64,17 @@
     & > div {
       flex-direction: column;
       background-image: url("../css/background-scroll.webp");
-      &:not(:first) {
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      &:not(:first-child) {
         margin-left: 10px;
+      }
+      & > div {
+        mix-blend-mode: difference;
+        color: grey;
+        text-align: center;
       }
     }
   }
