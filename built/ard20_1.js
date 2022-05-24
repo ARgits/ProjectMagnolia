@@ -6427,19 +6427,20 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (10:2) {#each Object.entries($doc.system.attributes) as attribute}
+// (17:2) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let span;
 	let t0_value = /*attribute*/ ctx[3][1].label + "";
 	let t0;
 	let t1;
-	let t2_value = /*attribute*/ ctx[3][1].value + "";
 	let t2;
+	let t3_value = /*attribute*/ ctx[3][1].value + "";
 	let t3;
-	let t4_value = /*attribute*/ ctx[3][1].mod + "";
 	let t4;
+	let t5_value = /*attribute*/ ctx[3][1].mod + "";
 	let t5;
+	let t6;
 	let mounted;
 	let dispose;
 
@@ -6452,37 +6453,44 @@ function create_each_block$4(ctx) {
 			div = element("div");
 			span = element("span");
 			t0 = text(t0_value);
-			t1 = text(": ");
-			t2 = text(t2_value);
-			t3 = text("; Mod: ");
-			t4 = text(t4_value);
-			t5 = text(";\r\n    ");
+			t1 = space();
+			t2 = text(": ");
+			t3 = text(t3_value);
+			t4 = text("; Mod: ");
+			t5 = text(t5_value);
+			t6 = text(";\r\n    ");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, span);
 			append(span, t0);
-			append(div, t1);
+			append(span, t1);
 			append(div, t2);
 			append(div, t3);
 			append(div, t4);
 			append(div, t5);
+			append(div, t6);
 
 			if (!mounted) {
-				dispose = listen(span, "click", click_handler);
+				dispose = [
+					listen(span, "mouseenter", HighlightLabel),
+					listen(span, "mouseleave", HighlightLabel),
+					listen(span, "click", click_handler)
+				];
+
 				mounted = true;
 			}
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[3][1].label + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*attribute*/ ctx[3][1].value + "")) set_data(t2, t2_value);
-			if (dirty & /*$doc*/ 1 && t4_value !== (t4_value = /*attribute*/ ctx[3][1].mod + "")) set_data(t4, t4_value);
+			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[3][1].value + "")) set_data(t3, t3_value);
+			if (dirty & /*$doc*/ 1 && t5_value !== (t5_value = /*attribute*/ ctx[3][1].mod + "")) set_data(t5, t5_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
@@ -6506,7 +6514,7 @@ function create_fragment$7(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "attributes svelte-1636idu");
+			attr(div, "class", "attributes svelte-1e57u1i");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6517,7 +6525,7 @@ function create_fragment$7(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*Object, $doc*/ 1) {
+			if (dirty & /*Object, $doc, HighlightLabel*/ 1) {
 				each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 				let i;
 
@@ -6547,6 +6555,12 @@ function create_fragment$7(ctx) {
 			destroy_each(each_blocks, detaching);
 		}
 	};
+}
+
+function HighlightLabel(event) {
+	event.preventDefault();
+	const target = event.target;
+	if (event.type === "mouseenter") target.classList.add("highlight"); else if (event.type === "mouseleave") target.classList.remove("highlight");
 }
 
 function instance$7($$self, $$props, $$invalidate) {
@@ -6649,8 +6663,6 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet1;
 	let updating_value_1;
 	let t13;
-	let hr;
-	let t14;
 	let div9;
 	let tabs_1;
 	let current;
@@ -6718,17 +6730,15 @@ function create_fragment$6(ctx) {
 			t12 = text("XP earned: ");
 			create_component(inputfordocumentsheet1.$$.fragment);
 			t13 = space();
-			hr = element("hr");
-			t14 = space();
 			div9 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img svelte-8lgp9p");
+			attr(div0, "class", "cha-img svelte-1jntjff");
 			attr(div1, "class", "name");
 			attr(div2, "class", "race");
-			attr(div3, "class", "svelte-8lgp9p");
+			attr(div3, "class", "svelte-1jntjff");
 			attr(div7, "class", "XP");
-			attr(div8, "class", "level svelte-8lgp9p");
-			attr(header, "class", "svelte-8lgp9p");
+			attr(div8, "class", "level svelte-1jntjff");
+			attr(header, "class", "svelte-1jntjff");
 			attr(div9, "class", "content");
 		},
 		m(target, anchor) {
@@ -6759,8 +6769,6 @@ function create_fragment$6(ctx) {
 			append(div6, t12);
 			mount_component(inputfordocumentsheet1, div6, null);
 			insert(target, t13, anchor);
-			insert(target, hr, anchor);
-			insert(target, t14, anchor);
 			insert(target, div9, anchor);
 			mount_component(tabs_1, div9, null);
 			current = true;
@@ -6809,8 +6817,6 @@ function create_fragment$6(ctx) {
 			destroy_component(inputfordocumentsheet0);
 			destroy_component(inputfordocumentsheet1);
 			if (detaching) detach(t13);
-			if (detaching) detach(hr);
-			if (detaching) detach(t14);
 			if (detaching) detach(div9);
 			destroy_component(tabs_1);
 		}

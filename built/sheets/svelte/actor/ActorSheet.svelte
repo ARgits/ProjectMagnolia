@@ -51,7 +51,6 @@
     </div>
   </div>
 </header>
-<hr>
 <div class="content">
   <Tabs {tabs} {activeTab} />
 </div>
@@ -60,6 +59,7 @@
   header {
     display: flex;
     flex-direction: row;
+    border-bottom: 1px solid black;
     & > :not(.cha-img) {
       flex-direction: column;
     }
