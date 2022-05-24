@@ -3,12 +3,7 @@
 <script>
   import { getContext } from "svelte";
   const doc = getContext("DocumentSheetObject");
-  function HighlightLabel(event) {
-    event.preventDefault();
-    const target = event.target;
-    if (event.type === "mouseenter") target.classList.add("highlight");
-    else if (event.type === "mouseleave") target.classList.remove("highlight");
-  }
+  let highlight = "";
 </script>
 
 <div class="attributes">
@@ -16,8 +11,9 @@
   {#each Object.entries($doc.system.attributes) as attribute}
     <div>
       <span
-        on:mouseenter={(event)=>HighlightLabel(event)}
-        on:mouseleave={(event)=>HighlightLabel(event)}
+        class:highlight={highlight === attribute[0]}
+        on:mouseenter={() => (highlight = attribute[0])}
+        on:mouseleave={() => (highlight = "")}
         on:click={(event) => {
           event.preventDefault;
           return $doc.rollAttributeTest(attribute[0], { event: event });
