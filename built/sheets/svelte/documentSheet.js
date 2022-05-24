@@ -92,6 +92,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }
     return buttons;
   }
+  _onDrop(event){
+    console.log(event, 'onDrop event')
+  }
   _onCofigureSheet(event) {
     if (event) event.preventDefault();
     new DocumentSheetConfig(this.reactive.document, {

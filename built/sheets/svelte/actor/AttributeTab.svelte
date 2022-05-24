@@ -11,8 +11,6 @@
   {#each Object.entries($doc.system.attributes) as attribute}
     <div
       class:highlight={highlight === attribute[0]}
-      on:mouseenter={() => (highlight = attribute[0])}
-      on:mouseleave={() => (highlight = "")}
       on:click={(event) => {
         event.preventDefault;
         return $doc.rollAttributeTest(attribute[0], { event: event });
@@ -31,9 +29,6 @@
   {#each Object.entries($doc.system.skills) as skill}
     <div
       class="skill"
-      class:highlight={highlight === skill[0]}
-      on:mouseenter={() => (highlight = skill[0])}
-      on:mouseleave={() => (highlight = "")}
       on:click={(event) => {
         event.preventDefault();
         return $doc.rollSkill(skill[0], { event: event });
@@ -61,6 +56,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 10px;
     & > div {
       display: flex;
       flex-direction: column;
@@ -68,15 +64,16 @@
       flex: 1 0 calc(100% / 6 - 1.2em);
       align-items: center;
       margin: 0.6em;
+      &:hover {
+        text-shadow: red 0px 0px 0.5em;
+        cursor: pointer;
+      }
     }
   }
   label {
     text-align: center;
     border: 1px solid black;
     width: 100%;
-  }
-  .highlight {
-    text-shadow: red 0px 0px 0.5em;
-    cursor: pointer;
+    display: inline-block;
   }
 </style>
