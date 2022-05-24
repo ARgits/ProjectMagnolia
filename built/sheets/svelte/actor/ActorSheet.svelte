@@ -60,12 +60,13 @@
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid black;
-    & > :not(.cha-img) {
-      flex-direction: column;
-    }
     max-height: 155px;
-  }
-  .level{
-    border:1px outset black;
+    & > div {
+      flex-direction: column;
+      background-image: url("../css/background-scroll.webp");
+      &:not(:first) {
+        margin-left: 10px;
+      }
+    }
   }
 </style>
