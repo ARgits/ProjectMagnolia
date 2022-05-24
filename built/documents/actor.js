@@ -65,7 +65,7 @@ export class ARd20Actor extends Actor {
       // Calculate the modifier using d20 rules.
       attribute.total = attribute.value + attribute.bonus;
       attribute.mod = Math.floor((attribute.value - 10) / 2);
-      attribute.label = game.i18n.localize(CONFIG.ARd20.Attributes, key) ?? key;
+      attribute.label = game.i18n.localize(CONFIG.ARd20.Attributes[key]) ?? key;
     }
     let dexMod =
       actorData.mobility.value < 10
@@ -157,10 +157,10 @@ export class ARd20Actor extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
   rollAttributeTest(attributeId, options) {
-    const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
+    const label = game.i18n.localize(CONFIG.ARd20.Attributes[attributeId]);
     const actorData = this.system;
     const attributes = actorData.attributes;
-    const attr = getValues(attributes, attributeId);
+    const attr = attributes[attributeId];
     // Construct parts
     const parts = ["@mod"];
     const data = { mod: attr.mod };

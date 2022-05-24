@@ -1024,7 +1024,7 @@ class ARd20Actor extends Actor {
 
       attribute.total = attribute.value + attribute.bonus;
       attribute.mod = Math.floor((attribute.value - 10) / 2);
-      attribute.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, key)) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : key;
+      attribute.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes[key])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : key;
     }
 
     let dexMod = actorData.mobility.value < 10 ? attributes.dex.mod : actorData.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
@@ -1128,10 +1128,10 @@ class ARd20Actor extends Actor {
   rollAttributeTest(attributeId, options) {
     var _options$parts;
 
-    const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
+    const label = game.i18n.localize(CONFIG.ARd20.Attributes[attributeId]);
     const actorData = this.system;
     const attributes = actorData.attributes;
-    const attr = getValues(attributes, attributeId); // Construct parts
+    const attr = attributes[attributeId]; // Construct parts
 
     const parts = ["@mod"];
     const data = {
