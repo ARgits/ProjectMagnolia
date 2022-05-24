@@ -65,4 +65,7 @@
     }
     max-height: 155px;
   }
+  .level{
+    border:1px outset black;
+  }
 </style>

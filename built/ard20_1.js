@@ -6924,13 +6924,13 @@ function create_fragment$6(ctx) {
 			t13 = space();
 			div9 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img svelte-1jntjff");
+			attr(div0, "class", "cha-img svelte-1l6clq0");
 			attr(div1, "class", "name");
 			attr(div2, "class", "race");
-			attr(div3, "class", "svelte-1jntjff");
+			attr(div3, "class", "svelte-1l6clq0");
 			attr(div7, "class", "XP");
-			attr(div8, "class", "level svelte-1jntjff");
-			attr(header, "class", "svelte-1jntjff");
+			attr(div8, "class", "level svelte-1l6clq0");
+			attr(header, "class", "svelte-1l6clq0");
 			attr(div9, "class", "content");
 		},
 		m(target, anchor) {
