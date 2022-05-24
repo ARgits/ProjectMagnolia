@@ -59,11 +59,11 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    flex-basis: calc(100% / 6);
     & > div {
       display: flex;
       flex-direction: column;
       border: 1px solid black;
+      flex: 1 0 calc(100% / 6);
     }
   }
   .highlight {

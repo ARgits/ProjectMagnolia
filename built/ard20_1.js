@@ -6475,7 +6475,7 @@ function create_each_block_1$3(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "svelte-4t68zj");
+			attr(div, "class", "svelte-ewgxvh");
 			toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[12][0]);
 		},
 		m(target, anchor) {
@@ -6581,7 +6581,7 @@ function create_each_block$4(ctx) {
 			t5 = space();
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "skill svelte-4t68zj");
+			attr(div, "class", "skill svelte-ewgxvh");
 			toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*skill*/ ctx[9][0]);
 		},
 		m(target, anchor) {
@@ -6673,8 +6673,8 @@ function create_fragment$7(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div0, "class", "attributes svelte-4t68zj");
-			attr(div1, "class", "skills svelte-4t68zj");
+			attr(div0, "class", "attributes svelte-ewgxvh");
+			attr(div1, "class", "skills svelte-ewgxvh");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
