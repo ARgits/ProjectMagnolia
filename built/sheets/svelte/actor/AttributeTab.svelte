@@ -20,17 +20,45 @@
         }}
       >
         {attribute[1].label}
-      </span>: {attribute[1].value}; Mod: {attribute[1].mod};
+      </span>
+      <span>{attribute[1].value}</span>
+      <span>{attribute[1].mod}</span>
+    </div>
+  {/each}
+</div>
+<div class="skills">
+  {#each Object.entries($doc.system.skills) as skill}
+    <div class="skill">
+      <span
+        class:highlight={highlight === skill[0]}
+        on:mouseenter={() => (highlight = skill[0])}
+        on:mouseleave={() => (highlight = "")}
+        on:click={(event) => {
+          event.preventDefault();
+          return $doc.rollSkill(skill[0], { event: event });
+        }}
+      >
+        {skill[1].rankName}
+        {skill[1].name}
+      </span>
+      <span>
+        {#if skill[1].value > 0}+{/if} {skill[1].value}
+      </span>
     </div>
   {/each}
 </div>
 
 <style lang="scss">
-  .attributes {
+  .attributes, .skills {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    & > div {
+      flex-direction: column;
+      border:1px solid black
+    }
   }
   .highlight {
     text-shadow: red 0px 0px 0.5em;
+    cursor: pointer;
   }
 </style>
