@@ -6433,7 +6433,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (11:2) {#each Object.entries($doc.system.attributes) as attribute}
+// (10:2) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block_1$3(ctx) {
 	let div;
 	let span0;
@@ -6441,13 +6441,15 @@ function create_each_block_1$3(ctx) {
 	let t0;
 	let t1;
 	let span1;
-	let t2_value = /*attribute*/ ctx[12][1].value + "";
 	let t2;
+	let t3_value = /*attribute*/ ctx[12][1].value + "";
 	let t3;
-	let span2;
-	let t4_value = /*attribute*/ ctx[12][1].mod + "";
 	let t4;
+	let span2;
 	let t5;
+	let t6_value = /*attribute*/ ctx[12][1].mod + "";
+	let t6;
+	let t7;
 	let mounted;
 	let dispose;
 
@@ -6466,14 +6468,15 @@ function create_each_block_1$3(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			span1 = element("span");
-			t2 = text(t2_value);
-			t3 = space();
+			t2 = text("Value: ");
+			t3 = text(t3_value);
+			t4 = space();
 			span2 = element("span");
-			t4 = text(t4_value);
-			t5 = space();
-			attr(span0, "class", "svelte-66rgbs");
-			toggle_class(span0, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[12][0]);
-			attr(div, "class", "svelte-66rgbs");
+			t5 = text("Mod: ");
+			t6 = text(t6_value);
+			t7 = space();
+			attr(div, "class", "svelte-4t68zj");
+			toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[12][0]);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6482,16 +6485,18 @@ function create_each_block_1$3(ctx) {
 			append(div, t1);
 			append(div, span1);
 			append(span1, t2);
-			append(div, t3);
+			append(span1, t3);
+			append(div, t4);
 			append(div, span2);
-			append(span2, t4);
-			append(div, t5);
+			append(span2, t5);
+			append(span2, t6);
+			append(div, t7);
 
 			if (!mounted) {
 				dispose = [
-					listen(span0, "mouseenter", mouseenter_handler),
-					listen(span0, "mouseleave", /*mouseleave_handler*/ ctx[4]),
-					listen(span0, "click", click_handler)
+					listen(div, "mouseenter", mouseenter_handler),
+					listen(div, "mouseleave", /*mouseleave_handler*/ ctx[4]),
+					listen(div, "click", click_handler)
 				];
 
 				mounted = true;
@@ -6500,13 +6505,12 @@ function create_each_block_1$3(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			if (dirty & /*$doc*/ 2 && t0_value !== (t0_value = /*attribute*/ ctx[12][1].label + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 2 && t3_value !== (t3_value = /*attribute*/ ctx[12][1].value + "")) set_data(t3, t3_value);
+			if (dirty & /*$doc*/ 2 && t6_value !== (t6_value = /*attribute*/ ctx[12][1].mod + "")) set_data(t6, t6_value);
 
 			if (dirty & /*highlight, Object, $doc*/ 3) {
-				toggle_class(span0, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[12][0]);
+				toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*attribute*/ ctx[12][0]);
 			}
-
-			if (dirty & /*$doc*/ 2 && t2_value !== (t2_value = /*attribute*/ ctx[12][1].value + "")) set_data(t2, t2_value);
-			if (dirty & /*$doc*/ 2 && t4_value !== (t4_value = /*attribute*/ ctx[12][1].mod + "")) set_data(t4, t4_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -6516,7 +6520,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (45:8) {#if skill[1].value > 0}
+// (47:15) {#if skill[1].value > 0}
 function create_if_block$2(ctx) {
 	let t;
 
@@ -6533,23 +6537,26 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (30:2) {#each Object.entries($doc.system.skills) as skill}
+// (29:2) {#each Object.entries($doc.system.skills) as skill}
 function create_each_block$4(ctx) {
 	let div;
 	let span0;
 	let t0_value = /*skill*/ ctx[9][1].rankName + "";
 	let t0;
 	let t1;
+	let span1;
 	let t2_value = /*skill*/ ctx[9][1].name + "";
 	let t2;
 	let t3;
-	let span1;
+	let span2;
 	let t4;
-	let t5_value = /*skill*/ ctx[9][1].value + "";
 	let t5;
+	let t6_value = /*skill*/ ctx[9][1].value + "";
 	let t6;
+	let t7;
 	let mounted;
 	let dispose;
+	let if_block = /*skill*/ ctx[9][1].value > 0 && create_if_block$2();
 
 	function mouseenter_handler_1() {
 		return /*mouseenter_handler_1*/ ctx[6](/*skill*/ ctx[9]);
@@ -6559,43 +6566,44 @@ function create_each_block$4(ctx) {
 		return /*click_handler_1*/ ctx[8](/*skill*/ ctx[9], ...args);
 	}
 
-	let if_block = /*skill*/ ctx[9][1].value > 0 && create_if_block$2();
-
 	return {
 		c() {
 			div = element("div");
 			span0 = element("span");
 			t0 = text(t0_value);
 			t1 = space();
+			span1 = element("span");
 			t2 = text(t2_value);
 			t3 = space();
-			span1 = element("span");
+			span2 = element("span");
+			t4 = text("Bonus: ");
 			if (if_block) if_block.c();
-			t4 = space();
-			t5 = text(t5_value);
-			t6 = space();
-			attr(span0, "class", "svelte-66rgbs");
-			toggle_class(span0, "highlight", /*highlight*/ ctx[0] === /*skill*/ ctx[9][0]);
-			attr(div, "class", "skill svelte-66rgbs");
+			t5 = space();
+			t6 = text(t6_value);
+			t7 = space();
+			attr(div, "class", "skill svelte-4t68zj");
+			toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*skill*/ ctx[9][0]);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, span0);
 			append(span0, t0);
-			append(span0, t1);
-			append(span0, t2);
-			append(div, t3);
+			append(div, t1);
 			append(div, span1);
-			if (if_block) if_block.m(span1, null);
-			append(span1, t4);
-			append(span1, t5);
-			append(div, t6);
+			append(span1, t2);
+			append(div, t3);
+			append(div, span2);
+			append(span2, t4);
+			if (if_block) if_block.m(span2, null);
+			append(span2, t5);
+			append(span2, t6);
+			append(div, t7);
 
 			if (!mounted) {
 				dispose = [
-					listen(span0, "mouseenter", mouseenter_handler_1),
-					listen(span0, "mouseleave", /*mouseleave_handler_1*/ ctx[7]),
-					listen(span0, "click", click_handler_1)
+					listen(div, "mouseenter", mouseenter_handler_1),
+					listen(div, "mouseleave", /*mouseleave_handler_1*/ ctx[7]),
+					listen(div, "click", click_handler_1)
 				];
 
 				mounted = true;
@@ -6606,22 +6614,22 @@ function create_each_block$4(ctx) {
 			if (dirty & /*$doc*/ 2 && t0_value !== (t0_value = /*skill*/ ctx[9][1].rankName + "")) set_data(t0, t0_value);
 			if (dirty & /*$doc*/ 2 && t2_value !== (t2_value = /*skill*/ ctx[9][1].name + "")) set_data(t2, t2_value);
 
-			if (dirty & /*highlight, Object, $doc*/ 3) {
-				toggle_class(span0, "highlight", /*highlight*/ ctx[0] === /*skill*/ ctx[9][0]);
-			}
-
 			if (/*skill*/ ctx[9][1].value > 0) {
 				if (if_block) ; else {
 					if_block = create_if_block$2();
 					if_block.c();
-					if_block.m(span1, t4);
+					if_block.m(span2, t5);
 				}
 			} else if (if_block) {
 				if_block.d(1);
 				if_block = null;
 			}
 
-			if (dirty & /*$doc*/ 2 && t5_value !== (t5_value = /*skill*/ ctx[9][1].value + "")) set_data(t5, t5_value);
+			if (dirty & /*$doc*/ 2 && t6_value !== (t6_value = /*skill*/ ctx[9][1].value + "")) set_data(t6, t6_value);
+
+			if (dirty & /*highlight, Object, $doc*/ 3) {
+				toggle_class(div, "highlight", /*highlight*/ ctx[0] === /*skill*/ ctx[9][0]);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -6634,8 +6642,7 @@ function create_each_block$4(ctx) {
 
 function create_fragment$7(ctx) {
 	let div0;
-	let t0;
-	let t1;
+	let t;
 	let div1;
 	let each_value_1 = Object.entries(/*$doc*/ ctx[1].system.attributes);
 	let each_blocks_1 = [];
@@ -6654,31 +6661,29 @@ function create_fragment$7(ctx) {
 	return {
 		c() {
 			div0 = element("div");
-			t0 = text("Attributes:\r\n  ");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].c();
 			}
 
-			t1 = space();
+			t = space();
 			div1 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(div0, "class", "attributes svelte-66rgbs");
-			attr(div1, "class", "skills svelte-66rgbs");
+			attr(div0, "class", "attributes svelte-4t68zj");
+			attr(div1, "class", "skills svelte-4t68zj");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
-			append(div0, t0);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].m(div0, null);
 			}
 
-			insert(target, t1, anchor);
+			insert(target, t, anchor);
 			insert(target, div1, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -6686,7 +6691,7 @@ function create_fragment$7(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*Object, $doc, highlight*/ 3) {
+			if (dirty & /*highlight, Object, $doc*/ 3) {
 				each_value_1 = Object.entries(/*$doc*/ ctx[1].system.attributes);
 				let i;
 
@@ -6709,7 +6714,7 @@ function create_fragment$7(ctx) {
 				each_blocks_1.length = each_value_1.length;
 			}
 
-			if (dirty & /*Object, $doc, highlight*/ 3) {
+			if (dirty & /*highlight, Object, $doc*/ 3) {
 				each_value = Object.entries(/*$doc*/ ctx[1].system.skills);
 				let i;
 
@@ -6737,7 +6742,7 @@ function create_fragment$7(ctx) {
 		d(detaching) {
 			if (detaching) detach(div0);
 			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t1);
+			if (detaching) detach(t);
 			if (detaching) detach(div1);
 			destroy_each(each_blocks, detaching);
 		}
