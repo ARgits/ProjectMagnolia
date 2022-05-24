@@ -174,7 +174,7 @@ export class ARd20Actor extends Actor {
       data: data,
       title: game.i18n.format("ARd20.AttributePromptTitle", { attribute: label }),
       messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
+        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }) || this.name,
         "flags.ard20.roll": { type: "attribute", attributeId },
       },
     });

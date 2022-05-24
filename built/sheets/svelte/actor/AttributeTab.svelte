@@ -12,7 +12,7 @@
       <span
         on:click={(event) => {
           event.preventDefault;
-          return $doc.rollAttributeTest(attribute[0]);
+          return $doc.rollAttributeTest(attribute[0], {event:event});
         }}>{attribute[1].label}</span
       >: {attribute[1].value}; Mod: {attribute[1].mod};
     </div>

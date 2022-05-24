@@ -1152,7 +1152,7 @@ class ARd20Actor extends Actor {
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({
           actor: this
-        }),
+        }) || this.name,
         "flags.ard20.roll": {
           type: "attribute",
           attributeId
@@ -6556,7 +6556,7 @@ function instance$7($$self, $$props, $$invalidate) {
 
 	const click_handler = (attribute, event) => {
 		event.preventDefault;
-		return $doc.rollAttributeTest(attribute[0]);
+		return $doc.rollAttributeTest(attribute[0], { event });
 	};
 
 	return [$doc, doc, click_handler];
