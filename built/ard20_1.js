@@ -1020,7 +1020,8 @@ class ARd20Actor extends Actor {
     for (let [key, attribute] of Object.entries(attributes)) {
       var _game$i18n$localize;
 
-      // Calculate the modifier using d20 rules.
+      console.log(key, attribute); // Calculate the modifier using d20 rules.
+
       attribute.total = attribute.value + attribute.bonus;
       attribute.mod = Math.floor((attribute.value - 10) / 2);
       attribute.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, key)) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : key;

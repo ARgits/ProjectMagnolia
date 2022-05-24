@@ -61,6 +61,7 @@ export class ARd20Actor extends Actor {
     actorData.mobility.value += actorData.mobility.bonus;
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key,attribute] of Object.entries(attributes)) {
+      console.log(key,attribute)
       // Calculate the modifier using d20 rules.
       attribute.total = attribute.value + attribute.bonus;
       attribute.mod = Math.floor((attribute.value - 10) / 2);
