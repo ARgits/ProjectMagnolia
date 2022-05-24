@@ -51,7 +51,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       height: 600,
       resizable: true,
       minimizable: true,
-
+      dragDrop: [{dragSelector: ".item-list .item", dropSelector: null}],
       svelte: {
         class: DocumentShell,
         target: document.body,

@@ -64,6 +64,7 @@
       flex: 1 0 calc(100% / 6 - 1.2em);
       align-items: center;
       margin: 0.6em;
+      border-radius: 10px;
       &:hover {
         text-shadow: red 0px 0px 0.5em;
         cursor: pointer;

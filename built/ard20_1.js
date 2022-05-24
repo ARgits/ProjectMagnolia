@@ -6471,7 +6471,7 @@ function create_each_block_1$3(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "svelte-1wghvmu");
+			attr(div, "class", "svelte-fhxry9");
 			toggle_class(div, "highlight", highlight === /*attribute*/ ctx[7][0]);
 		},
 		m(target, anchor) {
@@ -6568,7 +6568,7 @@ function create_each_block$4(ctx) {
 			t5 = space();
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "skill svelte-1wghvmu");
+			attr(div, "class", "skill svelte-fhxry9");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6661,11 +6661,11 @@ function create_fragment$7(ctx) {
 			}
 
 			attr(label0, "for", "attributes");
-			attr(label0, "class", "svelte-1wghvmu");
-			attr(div0, "class", "attributes svelte-1wghvmu");
+			attr(label0, "class", "svelte-fhxry9");
+			attr(div0, "class", "attributes svelte-fhxry9");
 			attr(label1, "for", "skills");
-			attr(label1, "class", "svelte-1wghvmu");
-			attr(div1, "class", "skills svelte-1wghvmu");
+			attr(label1, "class", "svelte-fhxry9");
+			attr(div1, "class", "skills svelte-fhxry9");
 		},
 		m(target, anchor) {
 			insert(target, label0, anchor);
@@ -10345,6 +10345,10 @@ class SvelteDocumentSheet extends SvelteApplication {
       height: 600,
       resizable: true,
       minimizable: true,
+      dragDrop: [{
+        dragSelector: ".item-list .item",
+        dropSelector: null
+      }],
       svelte: {
         class: DocumentShell,
         target: document.body,
