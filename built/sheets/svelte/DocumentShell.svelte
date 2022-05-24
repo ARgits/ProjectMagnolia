@@ -11,5 +11,5 @@
 </script>
 
 <ApplicationShell bind:elementRoot>
-  <svelte:component this={DocTemplate.get($storeDoc)} bind:doc={$storeDoc} />
+  <svelte:component this={DocTemplate.get($storeDoc)} />
 </ApplicationShell>
