@@ -1017,13 +1017,13 @@ class ARd20Actor extends Actor {
     });
     actorData.mobility.value += actorData.mobility.bonus; // Loop through ability scores, and add their modifiers to our sheet output.
 
-    for (let [ability, key] of Object.entries(attributes)) {
+    for (let [key, attribute] of Object.entries(attributes)) {
       var _game$i18n$localize;
 
       // Calculate the modifier using d20 rules.
-      ability.total = ability.value + ability.bonus;
-      ability.mod = Math.floor((ability.value - 10) / 2);
-      ability.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, key)) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : key;
+      attribute.total = attribute.value + attribute.bonus;
+      attribute.mod = Math.floor((attribute.value - 10) / 2);
+      attribute.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, key)) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : key;
     }
 
     let dexMod = actorData.mobility.value < 10 ? attributes.dex.mod : actorData.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
