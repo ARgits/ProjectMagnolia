@@ -27,7 +27,7 @@
 
 <header>
   <div class="cha-img">
-    <ImageWithFilePicker path={"img"} alt={"character portrait"} />
+    <ImageWithFilePicker path={"img"} alt={"character portrait"} heightPriority={true} />
   </div>
   <div>
     <div class="name">
@@ -64,15 +64,15 @@
       background-image: url("../css/background-scroll.webp");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-
       display: flex;
       align-items: center;
       justify-content: space-evenly;
+      box-sizing: border-box;
+      padding: 3%;
+      min-height: fit-content;
+      max-height: 100%;
       &:not(:first-child) {
         margin-left: 10px;
-        padding-left: 10%;
-        padding-right: 10%;
-        width: 80%;
       }
       & > div {
         mix-blend-mode: difference;

@@ -4,7 +4,11 @@
   import { getContext } from "svelte";
   export let path;
   export let alt;
-
+  export let heightPriority;
+  let img;
+  $: img.style.width = heightPriority
+    ? img.parentElement.clientHeight - parseFloat(getComputedStyle(img.parentElement).padding) * 2
+    : img.style.width;
   const { application } = getContext("external"); //get sheet document
   const document = getContext("DocumentSheetObject");
   let src = getProperty($document, path);
@@ -26,7 +30,7 @@
   }
 </script>
 
-<img {alt} {src} on:click={(event) => onEditImage(event)} />
+<img bind:this={img} {alt} {src} on:click={(event) => onEditImage(event)} />
 
 <style>
   img {
