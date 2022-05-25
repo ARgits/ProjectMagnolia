@@ -6073,14 +6073,8 @@ function instance$9($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*heightPriority, img*/ 66) {
-			$$invalidate(
-				1,
-				img.style.width = heightPriority
-				? img.parentElement.clientHeight - parseFloat(getComputedStyle(img.parentElement).padding) * 2
-				: img.style.width,
-				img
-			);
+		if ($$self.$$.dirty & /*img, heightPriority*/ 66) {
+			if (img && heightPriority) $$invalidate(1, img.style.width = img.parentElement.clientHeight - parseFloat(getComputedStyle(img.parentElement).padding) * 2, img);
 		}
 	};
 
