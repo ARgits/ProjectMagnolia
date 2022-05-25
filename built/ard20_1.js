@@ -6859,13 +6859,12 @@ function create_fragment$6(ctx) {
 	let t4_value = (/*$doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "";
 	let t4;
 	let t5;
-	let div8;
+	let div7;
 	let div4;
 	let t6;
 	let t7_value = /*$doc*/ ctx[0].system.advancement.level + "";
 	let t7;
 	let t8;
-	let div7;
 	let div5;
 	let t9;
 	let t10_value = /*$doc*/ ctx[0].system.advancement.xp.used + "";
@@ -6876,7 +6875,7 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet1;
 	let updating_value_1;
 	let t13;
-	let div9;
+	let div8;
 	let tabs_1;
 	let current;
 
@@ -6929,12 +6928,11 @@ function create_fragment$6(ctx) {
 			t3 = text("Race: ");
 			t4 = text(t4_value);
 			t5 = space();
-			div8 = element("div");
+			div7 = element("div");
 			div4 = element("div");
 			t6 = text("Level:");
 			t7 = text(t7_value);
 			t8 = space();
-			div7 = element("div");
 			div5 = element("div");
 			t9 = text("XP used: ");
 			t10 = text(t10_value);
@@ -6943,17 +6941,18 @@ function create_fragment$6(ctx) {
 			t12 = text("XP earned: ");
 			create_component(inputfordocumentsheet1.$$.fragment);
 			t13 = space();
-			div9 = element("div");
+			div8 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img svelte-1dmluon");
-			attr(div1, "class", "name svelte-1dmluon");
-			attr(div2, "class", "race svelte-1dmluon");
-			attr(div3, "class", "svelte-1dmluon");
-			attr(div4, "class", "svelte-1dmluon");
-			attr(div7, "class", "XP svelte-1dmluon");
-			attr(div8, "class", "level svelte-1dmluon");
-			attr(header, "class", "svelte-1dmluon");
-			attr(div9, "class", "content");
+			attr(div0, "class", "cha-img svelte-1d43okd");
+			attr(div1, "class", "name svelte-1d43okd");
+			attr(div2, "class", "race svelte-1d43okd");
+			attr(div3, "class", "svelte-1d43okd");
+			attr(div4, "class", "svelte-1d43okd");
+			attr(div5, "class", "svelte-1d43okd");
+			attr(div6, "class", "svelte-1d43okd");
+			attr(div7, "class", "level svelte-1d43okd");
+			attr(header, "class", "svelte-1d43okd");
+			attr(div8, "class", "content");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
@@ -6969,12 +6968,11 @@ function create_fragment$6(ctx) {
 			append(div2, t3);
 			append(div2, t4);
 			append(header, t5);
-			append(header, div8);
-			append(div8, div4);
+			append(header, div7);
+			append(div7, div4);
 			append(div4, t6);
 			append(div4, t7);
-			append(div8, t8);
-			append(div8, div7);
+			append(div7, t8);
 			append(div7, div5);
 			append(div5, t9);
 			append(div5, t10);
@@ -6983,8 +6981,8 @@ function create_fragment$6(ctx) {
 			append(div6, t12);
 			mount_component(inputfordocumentsheet1, div6, null);
 			insert(target, t13, anchor);
-			insert(target, div9, anchor);
-			mount_component(tabs_1, div9, null);
+			insert(target, div8, anchor);
+			mount_component(tabs_1, div8, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -7031,7 +7029,7 @@ function create_fragment$6(ctx) {
 			destroy_component(inputfordocumentsheet0);
 			destroy_component(inputfordocumentsheet1);
 			if (detaching) detach(t13);
-			if (detaching) detach(div9);
+			if (detaching) detach(div8);
 			destroy_component(tabs_1);
 		}
 	};
