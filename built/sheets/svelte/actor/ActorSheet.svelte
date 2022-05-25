@@ -41,13 +41,11 @@
     <div>
       Level:{$doc.system.advancement.level}
     </div>
-    <div class="XP">
-      <div>
-        XP used: {$doc.system.advancement.xp.used}
-      </div>
-      <div>
-        XP earned: <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" />
-      </div>
+    <div>
+      XP used: {$doc.system.advancement.xp.used}
+    </div>
+    <div>
+      XP earned: <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" />
     </div>
   </div>
 </header>
@@ -65,16 +63,25 @@
       flex-direction: column;
       background-image: url("../css/background-scroll.webp");
       background-repeat: no-repeat;
+      background-size: 100% 100%;
+
       display: flex;
       align-items: center;
       justify-content: space-evenly;
       &:not(:first-child) {
         margin-left: 10px;
+        padding-left: 10%;
+        padding-right: 10%;
+        width: 80%;
       }
       & > div {
         mix-blend-mode: difference;
         color: grey;
         text-align: center;
+        display: flex;
+        & input {
+          color: grey;
+        }
       }
     }
   }
