@@ -4,9 +4,8 @@
   import { getContext } from "svelte";
   export let path;
   export let alt;
-  export let heightPriority;
   let img;
-  $: if (img && heightPriority)
+  $: if (img)
     img.style.width = img.parentElement.clientHeight - parseFloat(getComputedStyle(img.parentElement).padding) * 2;
 
   const { application } = getContext("external"); //get sheet document
@@ -31,9 +30,3 @@
 </script>
 
 <img bind:this={img} {alt} {src} on:click={(event) => onEditImage(event)} />
-
-<style>
-  img {
-    max-height: 100%;
-  }
-</style>

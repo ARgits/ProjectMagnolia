@@ -27,11 +27,11 @@
 
 <header>
   <div class="cha-img">
-    <ImageWithFilePicker path={"img"} alt={"character portrait"} heightPriority={true} />
+    <ImageWithFilePicker path={"img"} alt={"character portrait"} />
   </div>
   <div>
     <div class="name">
-      Name: <InputForDocumentSheet bind:value={$doc.name} />
+      <InputForDocumentSheet bind:value={$doc.name} label="name" />
     </div>
     <div class="race">
       Race: {$doc.itemTypes.race[0]?.name || "none"}
@@ -45,7 +45,7 @@
       XP used: {$doc.system.advancement.xp.used}
     </div>
     <div>
-      XP earned: <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" />
+      <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned" />
     </div>
   </div>
 </header>
@@ -79,9 +79,6 @@
         color: grey;
         text-align: center;
         display: flex;
-        & input {
-          color: grey;
-        }
       }
     }
   }
