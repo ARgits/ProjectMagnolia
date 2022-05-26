@@ -5859,7 +5859,7 @@ function instance$b($$self, $$props, $$invalidate) {
 	let { type = "text" } = $$props;
 	let { label } = $$props;
 	const document = getContext("DocumentSheetObject");
-	component_subscribe($$self, document, value => $$invalidate(3, $document = value));
+	component_subscribe($$self, document, value => $$invalidate(4, $document = value));
 	let data;
 	let labelElem;
 	let input;
@@ -5874,7 +5874,7 @@ function instance$b($$self, $$props, $$invalidate) {
 	function input_1_binding($$value) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			input = $$value;
-			(($$invalidate(5, input), $$invalidate(1, label)), $$invalidate(2, labelElem));
+			(($$invalidate(3, input), $$invalidate(1, label)), $$invalidate(2, labelElem));
 		});
 	}
 
@@ -5894,17 +5894,17 @@ function instance$b($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*label, labelElem*/ 6) {
-			if (label) $$invalidate(5, input.style.width = `calc(100% - ${labelElem.clientWidth}px)`, input);
+		if ($$self.$$.dirty & /*label, input, labelElem*/ 14) {
+			if (label && input) $$invalidate(3, input.style.width = `calc(100% - ${labelElem.clientWidth}px)`, input);
 		}
 
 		if ($$self.$$.dirty & /*type, value*/ 129) {
 			$$invalidate(0, value = type === "number" ? parseInt(value) : value);
 		}
 
-		if ($$self.$$.dirty & /*$document*/ 8) {
+		if ($$self.$$.dirty & /*$document*/ 16) {
 			{
-				$$invalidate(4, data = {
+				$$invalidate(5, data = {
 					img: $document.img,
 					system: $document.system,
 					flags: $document.flags,
@@ -5918,9 +5918,9 @@ function instance$b($$self, $$props, $$invalidate) {
 		value,
 		label,
 		labelElem,
+		input,
 		$document,
 		data,
-		input,
 		document,
 		type,
 		span_binding,
