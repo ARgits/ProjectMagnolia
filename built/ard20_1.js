@@ -10538,7 +10538,7 @@ class SvelteDocumentSheet extends SvelteApplication {
               const new_key = game.packs.filter(pack => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
               const doc = await game.packs.get(new_key).getDocument(feat.id);
               const item = doc.toObject();
-              item.data = foundry.utils.deepClone(doc.system);
+              item.system = foundry.utils.deepClone(doc.system);
               pack_list.push(item);
               pack_name.push(item.name);
             }
@@ -10567,7 +10567,7 @@ class SvelteDocumentSheet extends SvelteApplication {
             for (let feat of feat_list) {
               console.log("item added from folder ", feat);
               const item = feat.toObject();
-              item.data = foundry.utils.deepClone(feat.system);
+              item.system = foundry.utils.deepClone(feat.system);
               folder_list.push(item);
               folder_name.push(item.name);
             }
