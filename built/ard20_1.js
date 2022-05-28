@@ -3561,14 +3561,14 @@ function get_each_context$8(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$6(ctx, list, i) {
+function get_each_context_1$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[17] = list[i];
 	return child_ctx;
 }
 
 // (52:8) {#each thead as th}
-function create_each_block_1$6(ctx) {
+function create_each_block_1$5(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[17] + "";
 	let t0;
@@ -3682,7 +3682,7 @@ function create_fragment$f(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$6(get_each_context_1$6(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$5(get_each_context_1$5(ctx, each_value_1, i));
 	}
 
 	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
@@ -3764,12 +3764,12 @@ function create_fragment$f(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$6(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$5(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$6(child_ctx);
+						each_blocks_1[i] = create_each_block_1$5(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(tr, null);
 					}
@@ -3949,14 +3949,14 @@ function get_each_context$7(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$5(ctx, list, i) {
+function get_each_context_1$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[9] = list[i];
 	return child_ctx;
 }
 
 // (14:2) {#each tabs as tab}
-function create_each_block_1$5(ctx) {
+function create_each_block_1$4(ctx) {
 	let li;
 	let span;
 	let t0_value = /*tab*/ ctx[9].label + "";
@@ -4149,7 +4149,7 @@ function create_fragment$e(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$5(get_each_context_1$5(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$4(get_each_context_1$4(ctx, each_value_1, i));
 	}
 
 	let each_value = /*tabs*/ ctx[1];
@@ -4206,12 +4206,12 @@ function create_fragment$e(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$5(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$4(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$5(child_ctx);
+						each_blocks_1[i] = create_each_block_1$4(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(ul, null);
 					}
@@ -6177,14 +6177,14 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$4(ctx, list, i) {
+function get_each_context_1$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
 // (8:4) {#each tabs as tab}
-function create_each_block_1$4(ctx) {
+function create_each_block_1$3(ctx) {
 	let li;
 	let span;
 	let t0_value = /*tab*/ ctx[3].label + "";
@@ -6371,7 +6371,7 @@ function create_fragment$8(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$4(get_each_context_1$4(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
 	}
 
 	let each_value = /*tabs*/ ctx[1];
@@ -6425,12 +6425,12 @@ function create_fragment$8(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$4(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$3(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$4(child_ctx);
+						each_blocks_1[i] = create_each_block_1$3(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(ul, null);
 					}
@@ -6525,95 +6525,11 @@ class Tabs extends SvelteComponent {
 
 function get_each_context$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[4] = list[i];
+	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
-function get_each_context_1$3(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[7] = list[i];
-	return child_ctx;
-}
-
-// (11:2) {#each Object.entries($doc.system.attributes) as attribute}
-function create_each_block_1$3(ctx) {
-	let div;
-	let span0;
-	let t0_value = /*attribute*/ ctx[7][1].label + "";
-	let t0;
-	let t1;
-	let span1;
-	let t2;
-	let t3_value = /*attribute*/ ctx[7][1].value + "";
-	let t3;
-	let t4;
-	let span2;
-	let t5;
-	let t6_value = /*attribute*/ ctx[7][1].mod + "";
-	let t6;
-	let t7;
-	let mounted;
-	let dispose;
-
-	function click_handler(...args) {
-		return /*click_handler*/ ctx[2](/*attribute*/ ctx[7], ...args);
-	}
-
-	return {
-		c() {
-			div = element("div");
-			span0 = element("span");
-			t0 = text(t0_value);
-			t1 = space();
-			span1 = element("span");
-			t2 = text("Value: ");
-			t3 = text(t3_value);
-			t4 = space();
-			span2 = element("span");
-			t5 = text("Mod: ");
-			t6 = text(t6_value);
-			t7 = space();
-			attr(div, "class", "svelte-fhxry9");
-			toggle_class(div, "highlight", highlight === /*attribute*/ ctx[7][0]);
-		},
-		m(target, anchor) {
-			insert(target, div, anchor);
-			append(div, span0);
-			append(span0, t0);
-			append(div, t1);
-			append(div, span1);
-			append(span1, t2);
-			append(span1, t3);
-			append(div, t4);
-			append(div, span2);
-			append(span2, t5);
-			append(span2, t6);
-			append(div, t7);
-
-			if (!mounted) {
-				dispose = listen(div, "click", click_handler);
-				mounted = true;
-			}
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[7][1].label + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[7][1].value + "")) set_data(t3, t3_value);
-			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[7][1].mod + "")) set_data(t6, t6_value);
-
-			if (dirty & /*highlight, Object, $doc*/ 1) {
-				toggle_class(div, "highlight", highlight === /*attribute*/ ctx[7][0]);
-			}
-		},
-		d(detaching) {
-			if (detaching) detach(div);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (44:15) {#if skill[1].value > 0}
+// (27:15) {#if skill[1].value > 0}
 function create_if_block$2(ctx) {
 	let t;
 
@@ -6630,29 +6546,29 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (29:2) {#each Object.entries($doc.system.skills) as skill}
+// (12:2) {#each Object.entries($doc.system.skills) as skill}
 function create_each_block$5(ctx) {
 	let div;
 	let span0;
-	let t0_value = /*skill*/ ctx[4][1].rankName + "";
+	let t0_value = /*skill*/ ctx[3][1].rankName + "";
 	let t0;
 	let t1;
 	let span1;
-	let t2_value = /*skill*/ ctx[4][1].name + "";
+	let t2_value = /*skill*/ ctx[3][1].name + "";
 	let t2;
 	let t3;
 	let span2;
 	let t4;
 	let t5;
-	let t6_value = /*skill*/ ctx[4][1].value + "";
+	let t6_value = /*skill*/ ctx[3][1].value + "";
 	let t6;
 	let t7;
 	let mounted;
 	let dispose;
-	let if_block = /*skill*/ ctx[4][1].value > 0 && create_if_block$2();
+	let if_block = /*skill*/ ctx[3][1].value > 0 && create_if_block$2();
 
-	function click_handler_1(...args) {
-		return /*click_handler_1*/ ctx[3](/*skill*/ ctx[4], ...args);
+	function click_handler(...args) {
+		return /*click_handler*/ ctx[2](/*skill*/ ctx[3], ...args);
 	}
 
 	return {
@@ -6670,7 +6586,7 @@ function create_each_block$5(ctx) {
 			t5 = space();
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "skill svelte-fhxry9");
+			attr(div, "class", "skill svelte-1rodq98");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6688,16 +6604,16 @@ function create_each_block$5(ctx) {
 			append(div, t7);
 
 			if (!mounted) {
-				dispose = listen(div, "click", click_handler_1);
+				dispose = listen(div, "click", click_handler);
 				mounted = true;
 			}
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*skill*/ ctx[4][1].rankName + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*skill*/ ctx[4][1].name + "")) set_data(t2, t2_value);
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*skill*/ ctx[3][1].rankName + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*skill*/ ctx[3][1].name + "")) set_data(t2, t2_value);
 
-			if (/*skill*/ ctx[4][1].value > 0) {
+			if (/*skill*/ ctx[3][1].value > 0) {
 				if (if_block) ; else {
 					if_block = create_if_block$2();
 					if_block.c();
@@ -6708,7 +6624,7 @@ function create_each_block$5(ctx) {
 				if_block = null;
 			}
 
-			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*skill*/ ctx[4][1].value + "")) set_data(t6, t6_value);
+			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*skill*/ ctx[3][1].value + "")) set_data(t6, t6_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -6720,20 +6636,9 @@ function create_each_block$5(ctx) {
 }
 
 function create_fragment$7(ctx) {
-	let label0;
+	let label;
 	let t1;
-	let div0;
-	let t2;
-	let label1;
-	let t4;
-	let div1;
-	let each_value_1 = Object.entries(/*$doc*/ ctx[0].system.attributes);
-	let each_blocks_1 = [];
-
-	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
-	}
-
+	let div;
 	let each_value = Object.entries(/*$doc*/ ctx[0].system.skills);
 	let each_blocks = [];
 
@@ -6743,74 +6648,29 @@ function create_fragment$7(ctx) {
 
 	return {
 		c() {
-			label0 = element("label");
-			label0.textContent = "Attributes";
+			label = element("label");
+			label.textContent = "Skills";
 			t1 = space();
-			div0 = element("div");
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].c();
-			}
-
-			t2 = space();
-			label1 = element("label");
-			label1.textContent = "Skills";
-			t4 = space();
-			div1 = element("div");
+			div = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(label0, "for", "attributes");
-			attr(label0, "class", "svelte-fhxry9");
-			attr(div0, "class", "attributes svelte-fhxry9");
-			attr(label1, "for", "skills");
-			attr(label1, "class", "svelte-fhxry9");
-			attr(div1, "class", "skills svelte-fhxry9");
+			attr(label, "for", "skills");
+			attr(label, "class", "svelte-1rodq98");
+			attr(div, "class", "skills svelte-1rodq98");
 		},
 		m(target, anchor) {
-			insert(target, label0, anchor);
+			insert(target, label, anchor);
 			insert(target, t1, anchor);
-			insert(target, div0, anchor);
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].m(div0, null);
-			}
-
-			insert(target, t2, anchor);
-			insert(target, label1, anchor);
-			insert(target, t4, anchor);
-			insert(target, div1, anchor);
+			insert(target, div, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div1, null);
+				each_blocks[i].m(div, null);
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*highlight, Object, $doc*/ 1) {
-				each_value_1 = Object.entries(/*$doc*/ ctx[0].system.attributes);
-				let i;
-
-				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$3(ctx, each_value_1, i);
-
-					if (each_blocks_1[i]) {
-						each_blocks_1[i].p(child_ctx, dirty);
-					} else {
-						each_blocks_1[i] = create_each_block_1$3(child_ctx);
-						each_blocks_1[i].c();
-						each_blocks_1[i].m(div0, null);
-					}
-				}
-
-				for (; i < each_blocks_1.length; i += 1) {
-					each_blocks_1[i].d(1);
-				}
-
-				each_blocks_1.length = each_value_1.length;
-			}
-
 			if (dirty & /*$doc, Object*/ 1) {
 				each_value = Object.entries(/*$doc*/ ctx[0].system.skills);
 				let i;
@@ -6823,7 +6683,7 @@ function create_fragment$7(ctx) {
 					} else {
 						each_blocks[i] = create_each_block$5(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(div1, null);
+						each_blocks[i].m(div, null);
 					}
 				}
 
@@ -6837,37 +6697,25 @@ function create_fragment$7(ctx) {
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(label0);
+			if (detaching) detach(label);
 			if (detaching) detach(t1);
-			if (detaching) detach(div0);
-			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t2);
-			if (detaching) detach(label1);
-			if (detaching) detach(t4);
-			if (detaching) detach(div1);
+			if (detaching) detach(div);
 			destroy_each(each_blocks, detaching);
 		}
 	};
 }
-
-let highlight = "";
 
 function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 
-	const click_handler = (attribute, event) => {
-		event.preventDefault;
-		return $doc.rollAttributeTest(attribute[0], { event });
-	};
-
-	const click_handler_1 = (skill, event) => {
+	const click_handler = (skill, event) => {
 		event.preventDefault();
 		return $doc.rollSkill(skill[0], { event });
 	};
 
-	return [$doc, doc, click_handler, click_handler_1];
+	return [$doc, doc, click_handler];
 }
 
 class AttributeTab extends SvelteComponent {
@@ -6926,32 +6774,32 @@ class BiographyTab extends SvelteComponent {
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[6] = list[i];
+	child_ctx[7] = list[i];
 	return child_ctx;
 }
 
-// (55:6) {#each Object.entries($doc.system.attributes) as attribute}
+// (56:6) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let span0;
-	let t0_value = /*attribute*/ ctx[6][1].label + "";
+	let t0_value = /*attribute*/ ctx[7][1].label + "";
 	let t0;
 	let t1;
 	let span1;
 	let t2;
-	let t3_value = /*attribute*/ ctx[6][1].value + "";
+	let t3_value = /*attribute*/ ctx[7][1].value + "";
 	let t3;
 	let t4;
 	let span2;
 	let t5;
-	let t6_value = /*attribute*/ ctx[6][1].mod + "";
+	let t6_value = /*attribute*/ ctx[7][1].mod + "";
 	let t6;
 	let t7;
 	let mounted;
 	let dispose;
 
 	function click_handler(...args) {
-		return /*click_handler*/ ctx[5](/*attribute*/ ctx[6], ...args);
+		return /*click_handler*/ ctx[6](/*attribute*/ ctx[7], ...args);
 	}
 
 	return {
@@ -6968,7 +6816,7 @@ function create_each_block$4(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "svelte-180pk74");
+			attr(div, "class", "svelte-iwliaj");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6991,9 +6839,9 @@ function create_each_block$4(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[6][1].label + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[6][1].value + "")) set_data(t3, t3_value);
-			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[6][1].mod + "")) set_data(t6, t6_value);
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[7][1].label + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[7][1].value + "")) set_data(t3, t3_value);
+			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[7][1].mod + "")) set_data(t6, t6_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -7020,20 +6868,23 @@ function create_fragment$6(ctx) {
 	let t3_value = (/*$doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "";
 	let t3;
 	let t4;
-	let div7;
 	let div4;
-	let t5;
-	let t6_value = /*$doc*/ ctx[0].system.advancement.level + "";
-	let t6;
-	let t7;
-	let div5;
-	let t8;
-	let t9_value = /*$doc*/ ctx[0].system.advancement.xp.used + "";
-	let t9;
-	let t10;
-	let div6;
 	let inputfordocumentsheet1;
 	let updating_value_1;
+	let t5;
+	let span;
+	let t6_value = /*$doc*/ ctx[0].system.health.max + "";
+	let t6;
+	let t7;
+	let div7;
+	let div5;
+	let inputfordocumentsheet2;
+	let updating_value_2;
+	let t8;
+	let div6;
+	let t9;
+	let t10_value = /*$doc*/ ctx[0].system.advancement.xp.used + "";
+	let t10;
 	let t11;
 	let div9;
 	let t12;
@@ -7062,14 +6913,27 @@ function create_fragment$6(ctx) {
 		/*inputfordocumentsheet1_value_binding*/ ctx[4](value);
 	}
 
-	let inputfordocumentsheet1_props = { type: "number", label: "XP earned" };
+	let inputfordocumentsheet1_props = { label: "health" };
 
-	if (/*$doc*/ ctx[0].system.advancement.xp.get !== void 0) {
-		inputfordocumentsheet1_props.value = /*$doc*/ ctx[0].system.advancement.xp.get;
+	if (/*$doc*/ ctx[0].system.health.value !== void 0) {
+		inputfordocumentsheet1_props.value = /*$doc*/ ctx[0].system.health.value;
 	}
 
 	inputfordocumentsheet1 = new InputForDocumentSheet({ props: inputfordocumentsheet1_props });
 	binding_callbacks.push(() => bind(inputfordocumentsheet1, 'value', inputfordocumentsheet1_value_binding));
+
+	function inputfordocumentsheet2_value_binding(value) {
+		/*inputfordocumentsheet2_value_binding*/ ctx[5](value);
+	}
+
+	let inputfordocumentsheet2_props = { type: "number", label: "XP earned" };
+
+	if (/*$doc*/ ctx[0].system.advancement.xp.get !== void 0) {
+		inputfordocumentsheet2_props.value = /*$doc*/ ctx[0].system.advancement.xp.get;
+	}
+
+	inputfordocumentsheet2 = new InputForDocumentSheet({ props: inputfordocumentsheet2_props });
+	binding_callbacks.push(() => bind(inputfordocumentsheet2, 'value', inputfordocumentsheet2_value_binding));
 	let each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 	let each_blocks = [];
 
@@ -7097,17 +6961,19 @@ function create_fragment$6(ctx) {
 			t2 = text("Race: ");
 			t3 = text(t3_value);
 			t4 = space();
-			div7 = element("div");
 			div4 = element("div");
-			t5 = text("Level:");
+			create_component(inputfordocumentsheet1.$$.fragment);
+			t5 = space();
+			span = element("span");
 			t6 = text(t6_value);
 			t7 = space();
+			div7 = element("div");
 			div5 = element("div");
-			t8 = text("XP used: ");
-			t9 = text(t9_value);
-			t10 = space();
+			create_component(inputfordocumentsheet2.$$.fragment);
+			t8 = space();
 			div6 = element("div");
-			create_component(inputfordocumentsheet1.$$.fragment);
+			t9 = text("XP used: ");
+			t10 = text(t10_value);
 			t11 = space();
 			div9 = element("div");
 
@@ -7118,15 +6984,16 @@ function create_fragment$6(ctx) {
 			t12 = space();
 			div11 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img svelte-180pk74");
+			attr(div0, "class", "cha-img svelte-iwliaj");
 			attr(div1, "class", "name");
 			attr(div2, "class", "race");
 			attr(div3, "class", "nameAndRace");
+			attr(div4, "class", "health");
 			attr(div7, "class", "level");
-			attr(div8, "class", "svelte-180pk74");
-			attr(div9, "class", "attributes svelte-180pk74");
-			attr(div10, "class", "main-info svelte-180pk74");
-			attr(header, "class", "svelte-180pk74");
+			attr(div8, "class", "svelte-iwliaj");
+			attr(div9, "class", "attributes svelte-iwliaj");
+			attr(div10, "class", "main-info svelte-iwliaj");
+			attr(header, "class", "svelte-iwliaj");
 			attr(div11, "class", "content");
 		},
 		m(target, anchor) {
@@ -7144,17 +7011,19 @@ function create_fragment$6(ctx) {
 			append(div2, t2);
 			append(div2, t3);
 			append(div8, t4);
-			append(div8, div7);
-			append(div7, div4);
+			append(div8, div4);
+			mount_component(inputfordocumentsheet1, div4, null);
 			append(div4, t5);
-			append(div4, t6);
-			append(div7, t7);
+			append(div4, span);
+			append(span, t6);
+			append(div8, t7);
+			append(div8, div7);
 			append(div7, div5);
-			append(div5, t8);
-			append(div5, t9);
-			append(div7, t10);
+			mount_component(inputfordocumentsheet2, div5, null);
+			append(div7, t8);
 			append(div7, div6);
-			mount_component(inputfordocumentsheet1, div6, null);
+			append(div6, t9);
+			append(div6, t10);
 			append(div10, t11);
 			append(div10, div9);
 
@@ -7178,17 +7047,26 @@ function create_fragment$6(ctx) {
 
 			inputfordocumentsheet0.$set(inputfordocumentsheet0_changes);
 			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = (/*$doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "")) set_data(t3, t3_value);
-			if ((!current || dirty & /*$doc*/ 1) && t6_value !== (t6_value = /*$doc*/ ctx[0].system.advancement.level + "")) set_data(t6, t6_value);
-			if ((!current || dirty & /*$doc*/ 1) && t9_value !== (t9_value = /*$doc*/ ctx[0].system.advancement.xp.used + "")) set_data(t9, t9_value);
 			const inputfordocumentsheet1_changes = {};
 
 			if (!updating_value_1 && dirty & /*$doc*/ 1) {
 				updating_value_1 = true;
-				inputfordocumentsheet1_changes.value = /*$doc*/ ctx[0].system.advancement.xp.get;
+				inputfordocumentsheet1_changes.value = /*$doc*/ ctx[0].system.health.value;
 				add_flush_callback(() => updating_value_1 = false);
 			}
 
 			inputfordocumentsheet1.$set(inputfordocumentsheet1_changes);
+			if ((!current || dirty & /*$doc*/ 1) && t6_value !== (t6_value = /*$doc*/ ctx[0].system.health.max + "")) set_data(t6, t6_value);
+			const inputfordocumentsheet2_changes = {};
+
+			if (!updating_value_2 && dirty & /*$doc*/ 1) {
+				updating_value_2 = true;
+				inputfordocumentsheet2_changes.value = /*$doc*/ ctx[0].system.advancement.xp.get;
+				add_flush_callback(() => updating_value_2 = false);
+			}
+
+			inputfordocumentsheet2.$set(inputfordocumentsheet2_changes);
+			if ((!current || dirty & /*$doc*/ 1) && t10_value !== (t10_value = /*$doc*/ ctx[0].system.advancement.xp.used + "")) set_data(t10, t10_value);
 
 			if (dirty & /*$doc, Object*/ 1) {
 				each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
@@ -7218,6 +7096,7 @@ function create_fragment$6(ctx) {
 			transition_in(imagewithfilepicker.$$.fragment, local);
 			transition_in(inputfordocumentsheet0.$$.fragment, local);
 			transition_in(inputfordocumentsheet1.$$.fragment, local);
+			transition_in(inputfordocumentsheet2.$$.fragment, local);
 			transition_in(tabs_1.$$.fragment, local);
 			current = true;
 		},
@@ -7225,6 +7104,7 @@ function create_fragment$6(ctx) {
 			transition_out(imagewithfilepicker.$$.fragment, local);
 			transition_out(inputfordocumentsheet0.$$.fragment, local);
 			transition_out(inputfordocumentsheet1.$$.fragment, local);
+			transition_out(inputfordocumentsheet2.$$.fragment, local);
 			transition_out(tabs_1.$$.fragment, local);
 			current = false;
 		},
@@ -7233,6 +7113,7 @@ function create_fragment$6(ctx) {
 			destroy_component(imagewithfilepicker);
 			destroy_component(inputfordocumentsheet0);
 			destroy_component(inputfordocumentsheet1);
+			destroy_component(inputfordocumentsheet2);
 			destroy_each(each_blocks, detaching);
 			if (detaching) detach(t12);
 			if (detaching) detach(div11);
@@ -7291,6 +7172,13 @@ function instance$6($$self, $$props, $$invalidate) {
 	}
 
 	function inputfordocumentsheet1_value_binding(value) {
+		if ($$self.$$.not_equal($doc.system.health.value, value)) {
+			$doc.system.health.value = value;
+			doc.set($doc);
+		}
+	}
+
+	function inputfordocumentsheet2_value_binding(value) {
 		if ($$self.$$.not_equal($doc.system.advancement.xp.get, value)) {
 			$doc.system.advancement.xp.get = value;
 			doc.set($doc);
@@ -7308,6 +7196,7 @@ function instance$6($$self, $$props, $$invalidate) {
 		tabs,
 		inputfordocumentsheet0_value_binding,
 		inputfordocumentsheet1_value_binding,
+		inputfordocumentsheet2_value_binding,
 		click_handler
 	];
 }

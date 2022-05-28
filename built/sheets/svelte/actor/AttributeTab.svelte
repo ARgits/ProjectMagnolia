@@ -6,24 +6,7 @@
   let highlight = "";
 </script>
 
-<label for="attributes">Attributes</label>
-<div class="attributes">
-  {#each Object.entries($doc.system.attributes) as attribute}
-    <div
-      class:highlight={highlight === attribute[0]}
-      on:click={(event) => {
-        event.preventDefault;
-        return $doc.rollAttributeTest(attribute[0], { event: event });
-      }}
-    >
-      <span>
-        {attribute[1].label}
-      </span>
-      <span> Value: {attribute[1].value}</span>
-      <span> Mod: {attribute[1].mod}</span>
-    </div>
-  {/each}
-</div>
+
 <label for="skills">Skills</label>
 <div class="skills">
   {#each Object.entries($doc.system.skills) as skill}
@@ -49,7 +32,7 @@
 </div>
 
 <style lang="scss">
-  .attributes,
+
   .skills {
     display: flex;
     flex-direction: row;

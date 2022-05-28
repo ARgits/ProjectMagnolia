@@ -39,15 +39,16 @@
           Race: {$doc.itemTypes.race[0]?.name || "none"}
         </div>
       </div>
+      <div class="health">
+        <InputForDocumentSheet bind:value={$doc.system.health.value} label="health"/>
+        <span>{$doc.system.health.max}</span>
+      </div>
       <div class="level">
         <div>
-          Level:{$doc.system.advancement.level}
+          <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned" />
         </div>
         <div>
           XP used: {$doc.system.advancement.xp.used}
-        </div>
-        <div>
-          <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned" />
         </div>
       </div>
     </div>
@@ -83,9 +84,11 @@
     & .main-info {
       display: flex;
       flex-direction: column;
+
       & > :not(.attributes){
         display: flex;
-        flex-direction: column
+        flex-direction: row;
+        justify-content: space-around;
       }
       & > .attributes {
         display: flex;
