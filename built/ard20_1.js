@@ -2713,7 +2713,7 @@ function create_if_block_10(ctx) {
 // (71:2) {#if thead.includes("Source")}
 function create_if_block_9(ctx) {
 	let td;
-	let raw_value = /*val*/ ctx[2][1].data.source.label + "";
+	let raw_value = /*val*/ ctx[2][1].system.source.label + "";
 	let td_class_value;
 	let mounted;
 	let dispose;
@@ -2733,7 +2733,7 @@ function create_if_block_9(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && raw_value !== (raw_value = /*val*/ ctx[2][1].data.source.label + "")) td.innerHTML = raw_value;		},
+			if (dirty & /*val*/ 4 && raw_value !== (raw_value = /*val*/ ctx[2][1].system.source.label + "")) td.innerHTML = raw_value;		},
 		d(detaching) {
 			if (detaching) detach(td);
 			mounted = false;
@@ -2804,7 +2804,7 @@ function create_if_block_8(ctx) {
 // (81:2) {#if thead.includes("Level")}
 function create_if_block_7(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[2][1].data.level.initial + "";
+	let t_value = /*val*/ ctx[2][1].system.level.initial + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2826,7 +2826,7 @@ function create_if_block_7(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].data.level.initial + "")) set_data(t, t_value);
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].system.level.initial + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -2839,7 +2839,7 @@ function create_if_block_7(ctx) {
 // (87:2) {#if thead.includes("Max Level")}
 function create_if_block_6(ctx) {
 	let td;
-	let t_value = /*val*/ ctx[2][1].data.level.max + "";
+	let t_value = /*val*/ ctx[2][1].system.level.max + "";
 	let t;
 	let td_class_value;
 	let mounted;
@@ -2861,7 +2861,7 @@ function create_if_block_6(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].data.level.max + "")) set_data(t, t_value);
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].system.level.max + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(td);
@@ -3431,8 +3431,8 @@ function instance$f($$self, $$props, $$invalidate) {
 			break;
 		case "features":
 			console.log(aditionalData, val[0]);
-			min = aditionalData.feats.awail[val[0]].data.level.current;
-			max = aditionalData.feats.awail[val[0]].data.level.max;
+			min = aditionalData.feats.awail[val[0]].system.level.current;
+			max = aditionalData.feats.awail[val[0]].system.level.max;
 			break;
 	}
 
@@ -3483,7 +3483,7 @@ function instance$f($$self, $$props, $$invalidate) {
 							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
 							break;
 						case "features":
-							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].data.level.initial : 0, variables);
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].system.level.initial : 0, variables);
 							break;
 						case "skillsCount":
 							$$invalidate(15, variables[variable.shortName] = 1, variables);
