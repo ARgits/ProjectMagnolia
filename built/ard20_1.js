@@ -6574,7 +6574,7 @@ function create_each_block_1$3(ctx) {
 			t6 = text(t6_value);
 			t7 = space();
 			attr(div, "class", "svelte-fhxry9");
-			toggle_class(div, "highlight", highlight$1 === /*attribute*/ ctx[7][0]);
+			toggle_class(div, "highlight", highlight === /*attribute*/ ctx[7][0]);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6602,7 +6602,7 @@ function create_each_block_1$3(ctx) {
 			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[7][1].mod + "")) set_data(t6, t6_value);
 
 			if (dirty & /*highlight, Object, $doc*/ 1) {
-				toggle_class(div, "highlight", highlight$1 === /*attribute*/ ctx[7][0]);
+				toggle_class(div, "highlight", highlight === /*attribute*/ ctx[7][0]);
 			}
 		},
 		d(detaching) {
@@ -6850,7 +6850,7 @@ function create_fragment$7(ctx) {
 	};
 }
 
-let highlight$1 = "";
+let highlight = "";
 
 function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
@@ -6930,7 +6930,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (53:4) {#each Object.entries($doc.system.attributes) as attribute}
+// (56:6) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let span0;
@@ -6968,8 +6968,7 @@ function create_each_block$4(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "svelte-1a4egj0");
-			toggle_class(div, "highlight", highlight === /*attribute*/ ctx[6][0]);
+			attr(div, "class", "svelte-14x7ghm");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6995,10 +6994,6 @@ function create_each_block$4(ctx) {
 			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[6][1].label + "")) set_data(t0, t0_value);
 			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[6][1].value + "")) set_data(t3, t3_value);
 			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[6][1].mod + "")) set_data(t6, t6_value);
-
-			if (dirty & /*highlight, Object, $doc*/ 1) {
-				toggle_class(div, "highlight", highlight === /*attribute*/ ctx[6][0]);
-			}
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -7013,11 +7008,13 @@ function create_fragment$6(ctx) {
 	let div0;
 	let imagewithfilepicker;
 	let t0;
-	let div3;
+	let div10;
+	let div8;
 	let div1;
 	let inputfordocumentsheet0;
 	let updating_value;
 	let t1;
+	let div3;
 	let div2;
 	let t2;
 	let t3_value = (/*$doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "";
@@ -7038,9 +7035,9 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet1;
 	let updating_value_1;
 	let t11;
-	let div8;
-	let t12;
 	let div9;
+	let t12;
+	let div11;
 	let tabs_1;
 	let current;
 
@@ -7090,10 +7087,12 @@ function create_fragment$6(ctx) {
 			div0 = element("div");
 			create_component(imagewithfilepicker.$$.fragment);
 			t0 = space();
-			div3 = element("div");
+			div10 = element("div");
+			div8 = element("div");
 			div1 = element("div");
 			create_component(inputfordocumentsheet0.$$.fragment);
 			t1 = space();
+			div3 = element("div");
 			div2 = element("div");
 			t2 = text("Race: ");
 			t3 = text(t3_value);
@@ -7110,41 +7109,40 @@ function create_fragment$6(ctx) {
 			div6 = element("div");
 			create_component(inputfordocumentsheet1.$$.fragment);
 			t11 = space();
-			div8 = element("div");
+			div9 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
 			t12 = space();
-			div9 = element("div");
+			div11 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img svelte-1a4egj0");
-			attr(div1, "class", "name svelte-1a4egj0");
-			attr(div2, "class", "race svelte-1a4egj0");
-			attr(div3, "class", "svelte-1a4egj0");
-			attr(div4, "class", "svelte-1a4egj0");
-			attr(div5, "class", "svelte-1a4egj0");
-			attr(div6, "class", "svelte-1a4egj0");
-			attr(div7, "class", "level svelte-1a4egj0");
-			attr(div8, "class", "attributes svelte-1a4egj0");
-			attr(header, "class", "svelte-1a4egj0");
-			attr(div9, "class", "content");
+			attr(div0, "class", "cha-img");
+			attr(div1, "class", "name");
+			attr(div2, "class", "race");
+			attr(div7, "class", "level");
+			attr(div9, "class", "attributes svelte-14x7ghm");
+			attr(div10, "class", "main-info svelte-14x7ghm");
+			attr(header, "class", "svelte-14x7ghm");
+			attr(div11, "class", "content");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
 			append(header, div0);
 			mount_component(imagewithfilepicker, div0, null);
 			append(header, t0);
-			append(header, div3);
-			append(div3, div1);
+			append(header, div10);
+			append(div10, div8);
+			append(div8, div1);
 			mount_component(inputfordocumentsheet0, div1, null);
-			append(div3, t1);
+			append(div8, t1);
+			append(div8, div3);
 			append(div3, div2);
 			append(div2, t2);
 			append(div2, t3);
-			append(header, t4);
-			append(header, div7);
+			append(div8, t4);
+			append(div8, div7);
 			append(div7, div4);
 			append(div4, t5);
 			append(div4, t6);
@@ -7155,16 +7153,16 @@ function create_fragment$6(ctx) {
 			append(div7, t10);
 			append(div7, div6);
 			mount_component(inputfordocumentsheet1, div6, null);
-			append(header, t11);
-			append(header, div8);
+			append(div10, t11);
+			append(div10, div9);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div8, null);
+				each_blocks[i].m(div9, null);
 			}
 
 			insert(target, t12, anchor);
-			insert(target, div9, anchor);
-			mount_component(tabs_1, div9, null);
+			insert(target, div11, anchor);
+			mount_component(tabs_1, div11, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -7190,7 +7188,7 @@ function create_fragment$6(ctx) {
 
 			inputfordocumentsheet1.$set(inputfordocumentsheet1_changes);
 
-			if (dirty & /*highlight, Object, $doc*/ 1) {
+			if (dirty & /*$doc, Object*/ 1) {
 				each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 				let i;
 
@@ -7202,7 +7200,7 @@ function create_fragment$6(ctx) {
 					} else {
 						each_blocks[i] = create_each_block$4(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(div8, null);
+						each_blocks[i].m(div9, null);
 					}
 				}
 
@@ -7235,14 +7233,13 @@ function create_fragment$6(ctx) {
 			destroy_component(inputfordocumentsheet1);
 			destroy_each(each_blocks, detaching);
 			if (detaching) detach(t12);
-			if (detaching) detach(div9);
+			if (detaching) detach(div11);
 			destroy_component(tabs_1);
 		}
 	};
 }
 
 let activeTab = "attributes";
-let highlight = "";
 
 function instance$6($$self, $$props, $$invalidate) {
 	let $doc;

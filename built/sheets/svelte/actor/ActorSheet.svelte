@@ -22,7 +22,7 @@
     { label: "Biography", id: "biography", component: BiographyTab },
   ];
   let activeTab = "attributes";
-  let highlight = ""
+  let highlight = "";
   console.log($doc);
 </script>
 
@@ -30,41 +30,44 @@
   <div class="cha-img">
     <ImageWithFilePicker path={"img"} alt={"character portrait"} />
   </div>
-  <div>
-    <div class="name">
-      <InputForDocumentSheet bind:value={$doc.name} label="name" />
-    </div>
-    <div class="race">
-      Race: {$doc.itemTypes.race[0]?.name || "none"}
-    </div>
-  </div>
-  <div class="level">
+  <div class="main-info">
     <div>
-      Level:{$doc.system.advancement.level}
-    </div>
-    <div>
-      XP used: {$doc.system.advancement.xp.used}
-    </div>
-    <div>
-      <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned" />
-    </div>
-  </div>
-  <div class="attributes">
-    {#each Object.entries($doc.system.attributes) as attribute}
-      <div
-        class:highlight={highlight === attribute[0]}
-        on:click={(event) => {
-          event.preventDefault;
-          return $doc.rollAttributeTest(attribute[0], { event: event });
-        }}
-      >
-        <span>
-          {attribute[1].label}
-        </span>
-        <span> Value: {attribute[1].value}</span>
-        <span> Mod: {attribute[1].mod}</span>
+      <div class="name">
+        <InputForDocumentSheet bind:value={$doc.name} label="name" />
       </div>
-    {/each}
+      <div>
+        <div class="race">
+          Race: {$doc.itemTypes.race[0]?.name || "none"}
+        </div>
+      </div>
+      <div class="level">
+        <div>
+          Level:{$doc.system.advancement.level}
+        </div>
+        <div>
+          XP used: {$doc.system.advancement.xp.used}
+        </div>
+        <div>
+          <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned" />
+        </div>
+      </div>
+    </div>
+    <div class="attributes">
+      {#each Object.entries($doc.system.attributes) as attribute}
+        <div
+          on:click={(event) => {
+            event.preventDefault;
+            return $doc.rollAttributeTest(attribute[0], { event: event });
+          }}
+        >
+          <span>
+            {attribute[1].label}
+          </span>
+          <span> Value: {attribute[1].value}</span>
+          <span> Mod: {attribute[1].mod}</span>
+        </div>
+      {/each}
+    </div>
   </div>
 </header>
 <div class="content">
@@ -77,26 +80,30 @@
     flex-direction: row;
     border-bottom: 1px solid black;
     max-height: 155px;
-    & > div {
-      flex-direction: column;
-      background-image: url("../css/background-scroll.webp");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
+
+    & .main-info {
       display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      box-sizing: border-box;
-      padding: 3%;
-      min-height: fit-content;
-      max-height: 100%;
-      &:not(:first-child) {
-        margin-left: 10px;
-      }
-      & > div {
-        mix-blend-mode: difference;
-        color: grey;
-        text-align: center;
+      flex-direction: column;
+      & > .attributes {
         display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        & > div {
+          display: flex;
+          flex-direction: column;
+          border: 1px solid black;
+          flex: 1 0 calc(100% / 6 - 1.2em);
+          align-items: center;
+          margin: 0.6em;
+          border-radius: 10px;
+          &:hover {
+            text-shadow: red 0px 0px 0.5em;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
