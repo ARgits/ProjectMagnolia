@@ -5889,7 +5889,7 @@ function instance$b($$self, $$props, $$invalidate) {
 
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*label, input, labelElem*/ 14) {
-			if (label && input) $$invalidate(3, input.style.width = `calc(100% - ${getComputedStyle(labelElem).width}px)`, input);
+			if (label && input) $$invalidate(3, input.style.width = `calc(100% - ${labelElem.offsetWidth * 1.1}px)`, input);
 		}
 
 		if ($$self.$$.dirty & /*type, value*/ 129) {

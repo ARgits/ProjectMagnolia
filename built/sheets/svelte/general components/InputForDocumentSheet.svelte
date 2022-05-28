@@ -9,7 +9,7 @@
   let data;
   let labelElem;
   let input;
-  $: if (label && input) input.style.width = `calc(100% - ${getComputedStyle(labelElem).width}px)`;
+  $: if (label && input) input.style.width = `calc(100% - ${labelElem.offsetWidth*1.1}px)`;
   $: value = type === "number" ? parseInt(value) : value;
   $: {
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
