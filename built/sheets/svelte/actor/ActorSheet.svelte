@@ -22,6 +22,7 @@
     { label: "Biography", id: "biography", component: BiographyTab },
   ];
   let activeTab = "attributes";
+  let highlight = ""
   console.log($doc);
 </script>
 
@@ -47,6 +48,23 @@
     <div>
       <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned" />
     </div>
+  </div>
+  <div class="attributes">
+    {#each Object.entries($doc.system.attributes) as attribute}
+      <div
+        class:highlight={highlight === attribute[0]}
+        on:click={(event) => {
+          event.preventDefault;
+          return $doc.rollAttributeTest(attribute[0], { event: event });
+        }}
+      >
+        <span>
+          {attribute[1].label}
+        </span>
+        <span> Value: {attribute[1].value}</span>
+        <span> Mod: {attribute[1].mod}</span>
+      </div>
+    {/each}
   </div>
 </header>
 <div class="content">
