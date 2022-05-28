@@ -4498,16 +4498,16 @@ function instance$c($$self, $$props, $$invalidate) {
 	//update actor and do other stuff when click 'submit' button
 	async function submitData() {
 		const updateObj = {};
-		updateObj["data.attributes"] = $actorData.attributes;
-		updateObj["data.skills"] = $actorData.skills;
-		updateObj["data.advancement.xp"] = $actorData.advancement.xp;
-		updateObj["data.isReady"] = true;
+		updateObj["system.attributes"] = $actorData.attributes;
+		updateObj["system.skills"] = $actorData.skills;
+		updateObj["system.advancement.xp"] = $actorData.advancement.xp;
+		updateObj["system.isReady"] = true;
 		console.log($actorData.features);
 		let feats = { new: [], exist: [] };
 
 		$actorData.features.forEach(element => {
-			const initLevel = element.data.level.initial;
-			const currentLevel = element.data.level.current;
+			const initLevel = element.system.level.initial;
+			const currentLevel = element.system.level.current;
 
 			if (initLevel > currentLevel) {
 				if (currentLevel > 0) {
