@@ -22,7 +22,6 @@
     { label: "Biography", id: "biography", component: BiographyTab },
   ];
   let activeTab = "attributes";
-  let highlight = "";
   console.log($doc);
 </script>
 
@@ -32,10 +31,10 @@
   </div>
   <div class="main-info">
     <div>
-      <div class="name">
-        <InputForDocumentSheet bind:value={$doc.name} label="name" />
-      </div>
-      <div>
+      <div class="nameAndRace">
+        <div class="name">
+          <InputForDocumentSheet bind:value={$doc.name} label="name" />
+        </div>
         <div class="race">
           Race: {$doc.itemTypes.race[0]?.name || "none"}
         </div>
@@ -84,6 +83,10 @@
     & .main-info {
       display: flex;
       flex-direction: column;
+      & > :not(.attributes){
+        display: flex;
+        flex-direction: column
+      }
       & > .attributes {
         display: flex;
         flex-direction: row;
@@ -106,5 +109,8 @@
         }
       }
     }
+  }
+  .cha-img{
+    max-width: 150px;
   }
 </style>

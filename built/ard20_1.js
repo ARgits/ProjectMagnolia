@@ -6930,7 +6930,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (56:6) {#each Object.entries($doc.system.attributes) as attribute}
+// (55:6) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let span0;
@@ -6968,7 +6968,7 @@ function create_each_block$4(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "class", "svelte-14x7ghm");
+			attr(div, "class", "svelte-180pk74");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -7010,11 +7010,11 @@ function create_fragment$6(ctx) {
 	let t0;
 	let div10;
 	let div8;
+	let div3;
 	let div1;
 	let inputfordocumentsheet0;
 	let updating_value;
 	let t1;
-	let div3;
 	let div2;
 	let t2;
 	let t3_value = (/*$doc*/ ctx[0].itemTypes.race[0]?.name || "none") + "";
@@ -7089,10 +7089,10 @@ function create_fragment$6(ctx) {
 			t0 = space();
 			div10 = element("div");
 			div8 = element("div");
+			div3 = element("div");
 			div1 = element("div");
 			create_component(inputfordocumentsheet0.$$.fragment);
 			t1 = space();
-			div3 = element("div");
 			div2 = element("div");
 			t2 = text("Race: ");
 			t3 = text(t3_value);
@@ -7118,13 +7118,15 @@ function create_fragment$6(ctx) {
 			t12 = space();
 			div11 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img");
+			attr(div0, "class", "cha-img svelte-180pk74");
 			attr(div1, "class", "name");
 			attr(div2, "class", "race");
+			attr(div3, "class", "nameAndRace");
 			attr(div7, "class", "level");
-			attr(div9, "class", "attributes svelte-14x7ghm");
-			attr(div10, "class", "main-info svelte-14x7ghm");
-			attr(header, "class", "svelte-14x7ghm");
+			attr(div8, "class", "svelte-180pk74");
+			attr(div9, "class", "attributes svelte-180pk74");
+			attr(div10, "class", "main-info svelte-180pk74");
+			attr(header, "class", "svelte-180pk74");
 			attr(div11, "class", "content");
 		},
 		m(target, anchor) {
@@ -7134,10 +7136,10 @@ function create_fragment$6(ctx) {
 			append(header, t0);
 			append(header, div10);
 			append(div10, div8);
-			append(div8, div1);
-			mount_component(inputfordocumentsheet0, div1, null);
-			append(div8, t1);
 			append(div8, div3);
+			append(div3, div1);
+			mount_component(inputfordocumentsheet0, div1, null);
+			append(div3, t1);
 			append(div3, div2);
 			append(div2, t2);
 			append(div2, t3);
