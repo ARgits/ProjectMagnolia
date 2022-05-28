@@ -1,4 +1,4 @@
-import { SvelteComponent, init, safe_not_equal, element, text, attr, insert, append, listen, detach, space, empty, noop, component_subscribe, null_to_empty, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, src_url_equal, toggle_class, update_keyed_each, destroy_block, select_value, is_function, select_option, subscribe } from '/modules/typhonjs/svelte/internal.js';
+import { SvelteComponent, init, safe_not_equal, element, attr, insert, listen, detach, space, empty, noop, component_subscribe, text, null_to_empty, append, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, src_url_equal, toggle_class, update_keyed_each, destroy_block, select_value, is_function, select_option, subscribe } from '/modules/typhonjs/svelte/internal.js';
 import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
@@ -2401,20 +2401,17 @@ function prepareActiveEffectCategories(effects) {
 
 function create_if_block_1$1(ctx) {
 	let button;
-	let t;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
 			button = element("button");
-			t = text("+");
-			attr(button, "class", "change svelte-k3tpp9");
+			attr(button, "class", "change fa-solid fa-square-plus svelte-k3tpp9");
 			button.disabled = /*disabled*/ ctx[4];
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
-			append(button, t);
 
 			if (!mounted) {
 				dispose = listen(button, "click", /*click_handler*/ ctx[12]);
@@ -2437,20 +2434,17 @@ function create_if_block_1$1(ctx) {
 // (94:0) {#if min !== undefined}
 function create_if_block$7(ctx) {
 	let button;
-	let t;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
 			button = element("button");
-			t = text("-");
-			attr(button, "class", "change svelte-k3tpp9");
+			attr(button, "class", "change fa-solid fa-square-minus svelte-k3tpp9");
 			button.disabled = /*disabled*/ ctx[4];
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
-			append(button, t);
 
 			if (!mounted) {
 				dispose = listen(button, "click", /*click_handler_1*/ ctx[13]);

@@ -89,10 +89,10 @@
 </script>
 
 {#if max !== undefined}
-  <button class="change" {disabled} on:click={() => increase(type, subtype)}> + </button>
+  <button class="change fa-solid fa-square-plus" {disabled} on:click={() => increase(type, subtype)} />
 {/if}
 {#if min !== undefined}
-  <button class="change" {disabled} on:click={() => decrease(type, subtype)}> - </button>
+  <button class="change fa-solid fa-square-minus" {disabled} on:click={() => decrease(type, subtype)}/> 
 {/if}
 
 <style>
