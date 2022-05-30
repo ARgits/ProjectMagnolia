@@ -694,6 +694,9 @@ async function d20Roll({
   // Handle input arguments
   const isD20 = game.settings.get("ard20", "mainDiceType"); //check if main dice still d20 or it was changed to 3d6 in settings
 
+  fumble = isD20 ? 3 : 1;
+  critical = isD20 ? 18 : 20;
+
   const {
     advantageMode,
     isFF
