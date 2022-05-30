@@ -146,11 +146,11 @@ export async function d20Roll({
   //@ts-expect-error
 } = {}) {
   // Handle input arguments
-  const isD20 = game.settings.get("ard20", "mainDiceType"); //check if main dice still d20 or it was changed to 3d6 in settings
-  fumble = isD20 ? 3 : 1;
-  critical = isD20 ? 18 : 20;
+  const mainDie = new Die(game.settings.get("ard20", "mainDiceType")); //check if main dice still d20 or it was changed to 3d6 in settings
+  fumble = mainDie.number
+  critical = mainDie.number * mainDie.faces
   const { advantageMode, isFF } = _determineAdvantageMode({ advantage, disadvantage, fastForward, event });
-  const formula = !isD20 ? ["1d20"].concat(parts).join(" + ") : ["3d6"].concat(parts).join(" + ");
+  const formula = [mainDie.formula].concat(parts).join(" + ") 
 
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
   if (chooseModifier && !isFF) {

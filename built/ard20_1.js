@@ -692,10 +692,10 @@ async function d20Roll({
 
 } = {}) {
   // Handle input arguments
-  const isD20 = game.settings.get("ard20", "mainDiceType"); //check if main dice still d20 or it was changed to 3d6 in settings
+  const mainDie = new Die(game.settings.get("ard20", "mainDiceType")); //check if main dice still d20 or it was changed to 3d6 in settings
 
-  fumble = isD20 ? 3 : 1;
-  critical = isD20 ? 18 : 20;
+  fumble = mainDie.number;
+  critical = mainDie.number * mainDie.faces;
 
   const {
     advantageMode,
@@ -707,7 +707,7 @@ async function d20Roll({
     event
   });
 
-  const formula = !isD20 ? ["1d20"].concat(parts).join(" + ") : ["3d6"].concat(parts).join(" + ");
+  const formula = [mainDie.formula].concat(parts).join(" + ");
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
 
   if (chooseModifier && !isFF) {
@@ -10027,13 +10027,13 @@ const registerSystemSettings = function registerSystemSettings() {
   game.settings.register("ard20", "mainDiceType", {
     scope: "world",
     choices: {
-      0: '1d20',
-      1: '2d10',
-      3: '3d6'
+      '1d20': '1d20',
+      '2d10': '2d10',
+      '3d6': '3d6'
     },
     config: true,
     default: 0,
-    type: Number,
+    type: String,
     name: "Main dice-roll type",
     hint: "chose main dice mechanic between 1d20, 2d10 and 3d6"
   });

@@ -124,13 +124,13 @@ export const registerSystemSettings = function () {
   game.settings.register("ard20", "mainDiceType", {
     scope: "world",
     choices:{
-      0:'1d20',
-      1:'2d10',
-      3:'3d6'
+      '1d20':'1d20',
+      '2d10':'2d10',
+      '3d6':'3d6'
     },
     config: true,
     default: 0,
-    type: Number,
+    type: String,
     name: "Main dice-roll type",
     hint: "chose main dice mechanic between 1d20, 2d10 and 3d6",
   });
