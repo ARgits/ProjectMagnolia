@@ -24,8 +24,8 @@ class D20Roll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
     /*if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
-        throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
-    }*/
+            throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
+        }*/
 
     this.configureModifiers();
   }
@@ -70,14 +70,12 @@ class D20Roll extends Roll {
     d20.modifiers = []; // Handle Advantage or Disadvantage
 
     if (this.hasAdvantage) {
-      if (!isD20) {
-        //@ts-expect-error
-        d20.number = isD20 ? 6 : 2; //@ts-expect-error
+      //@ts-expect-error
+      d20.number = isD20 ? 6 : 2; //@ts-expect-error
 
-        d20.modifiers.push(`kh${d20.number / 2}`); //@ts-expect-error
+      d20.modifiers.push(`kh${d20.number / 2}`); //@ts-expect-error
 
-        d20.options.advantage = true;
-      }
+      d20.options.advantage = true;
     } else if (this.hasDisadvantage) {
       //@ts-expect-error
       d20.number = isD20 ? 6 : 2; //@ts-expect-error
@@ -85,7 +83,7 @@ class D20Roll extends Roll {
       d20.modifiers.push(`kl${d20.number / 2}`); //@ts-expect-error
 
       d20.options.disadvantage = true; //@ts-expect-error
-    } else d20.number = 1; // Assign critical and fumble thresholds
+    } else d20.number = 3; // Assign critical and fumble thresholds
     //@ts-expect-error
 
 
@@ -242,11 +240,11 @@ class D20Roll extends Roll {
       this.options.flavor += ` (${game.i18n.localize(CONFIG.ARd20.Attributes[form.attribute.value])})`;
     }
     /* if (form.prof_type?.value) {
-       const pr = this.data[form.prof_type.value][form.prof_value.value];
-       console.log(pr);
-       this.terms.findSplice((t) => t.term === "@prof_die", new Die({ number: 1, faces: pr.prof_die }));
-       this.terms.findSplice((t) => t.term === "@prof_bonus", new NumericTerm({ number: pr.prof_bonus }));
-     }*/
+           const pr = this.data[form.prof_type.value][form.prof_value.value];
+           console.log(pr);
+           this.terms.findSplice((t) => t.term === "@prof_die", new Die({ number: 1, faces: pr.prof_die }));
+           this.terms.findSplice((t) => t.term === "@prof_bonus", new NumericTerm({ number: pr.prof_bonus }));
+         }*/
     // Apply advantage or disadvantage
     //@ts-expect-error
 
@@ -941,12 +939,12 @@ function _determineCriticalMode({
 }
 
 var dice = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    simplifyRollFormula: simplifyRollFormula,
-    d20Roll: d20Roll,
-    damageRoll: damageRoll,
-    D20Roll: D20Roll,
-    DamageRoll: DamageRoll
+  __proto__: null,
+  simplifyRollFormula: simplifyRollFormula,
+  d20Roll: d20Roll,
+  damageRoll: damageRoll,
+  D20Roll: D20Roll,
+  DamageRoll: DamageRoll
 });
 
 /**
