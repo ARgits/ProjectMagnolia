@@ -692,8 +692,8 @@ async function d20Roll({
 
 } = {}) {
   // Handle input arguments
-  const mainDie = new Die(game.settings.get("ard20", "mainDiceType")); //check if main dice still d20 or it was changed to 3d6 in settings
-
+  const mainDie = new Die(game.settings.get("ard20", "mainDiceType"));
+  console.log(mainDie, game.settings.get("ard20", "mainDiceType"));
   fumble = mainDie.number;
   critical = mainDie.number * mainDie.faces;
 
