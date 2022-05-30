@@ -8,7 +8,7 @@ import { ARd20ItemSheet } from "./sheets/legacy/item-sheet.js";
 import { preloadHandlebarsTemplates, setSvelteComponents } from "./helpers/templates.js";
 import { ARd20 } from "./helpers/config.js";
 import ARd20SocketHandler from "./helpers/socket.js";
-import { registerSystemSettings } from "./helpers/settings.js";
+import { registerSystemSettings } from "./settings/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
 import {SvelteDocumentSheet} from "../built/sheets/svelte/documentSheet.js"

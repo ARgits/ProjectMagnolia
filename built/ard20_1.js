@@ -23,10 +23,9 @@ import { SessionStorage, TJSDocument } from '/modules/typhonjs/svelte/store.js';
 class D20Roll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
-
-    if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
-      throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
-    }
+    /*if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
+        throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
+    }*/
 
     this.configureModifiers();
   }
@@ -65,22 +64,25 @@ class D20Roll extends Roll {
 
 
   configureModifiers() {
-    const d20 = this.terms[0]; //@ts-expect-error
+    const d20 = this.terms[0];
+    const isD20 = game.settings.get("ard20", "mainDiceType"); //@ts-expect-error
 
     d20.modifiers = []; // Handle Advantage or Disadvantage
 
     if (this.hasAdvantage) {
-      //@ts-expect-error
-      d20.number = 2; //@ts-expect-error
+      if (!isD20) {
+        //@ts-expect-error
+        d20.number = isD20 ? 6 : 2; //@ts-expect-error
 
-      d20.modifiers.push("kh"); //@ts-expect-error
+        d20.modifiers.push(`kh${d20.number / 2}`); //@ts-expect-error
 
-      d20.options.advantage = true;
+        d20.options.advantage = true;
+      }
     } else if (this.hasDisadvantage) {
       //@ts-expect-error
-      d20.number = 2; //@ts-expect-error
+      d20.number = isD20 ? 6 : 2; //@ts-expect-error
 
-      d20.modifiers.push("kl"); //@ts-expect-error
+      d20.modifiers.push(`kl${d20.number / 2}`); //@ts-expect-error
 
       d20.options.disadvantage = true; //@ts-expect-error
     } else d20.number = 1; // Assign critical and fumble thresholds
@@ -692,7 +694,7 @@ async function d20Roll({
 
 } = {}) {
   // Handle input arguments
-  const formula = ["1d20"].concat(parts).join(" + ");
+  const isD20 = game.settings.get("ard20", "mainDiceType"); //check if main dice still d20 or it was changed to 3d6 in settings
 
   const {
     advantageMode,
@@ -704,6 +706,7 @@ async function d20Roll({
     event
   });
 
+  const formula = !isD20 ? ["1d20"].concat(parts).join(" + ") : ["3d6"].concat(parts).join(" + ");
   const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
 
   if (chooseModifier && !isFF) {
@@ -10019,6 +10022,14 @@ const registerSystemSettings = function registerSystemSettings() {
     label: "SETTINGS.profLevel",
     type: ProfLevelSettingShim,
     restricted: false
+  });
+  game.settings.register("ard20", "mainDiceType", {
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    name: "Main dice-roll type",
+    hint: "change 1d20 to 3d6"
   });
 };
 

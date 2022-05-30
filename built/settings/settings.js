@@ -1,7 +1,7 @@
-import { AdvRateSettingsShim } from "../settings/advancement-rate/advancement-rate.js";
-import { FeatSettingsShim } from "../settings/FeatSetting/featSetting.js";
-import { ProfSettingsShim } from "../settings/ProfSetting/profSetting.js";
-import { ProfLevelSettingShim } from "../settings/ProfLevelsSetting/profLevelSetting.js";
+import { AdvRateSettingsShim } from "./advancement-rate/advancement-rate.js";
+import { FeatSettingsShim } from "./FeatSetting/featSetting.js";
+import { ProfSettingsShim } from "./ProfSetting/profSetting.js";
+import { ProfLevelSettingShim } from "./ProfLevelsSetting/profLevelSetting.js";
 export const registerSystemSettings = function () {
   game.settings.register("ard20", "proficiencies", {
     scope: "world",
@@ -55,6 +55,7 @@ export const registerSystemSettings = function () {
       console.log("Настройка изменилась", value);
     },
   });
+
   game.settings.registerMenu("ard20", "featManage", {
     name: "SETTINGS.FeatureManage",
     label: "SETTINGS.FeatureManage",
@@ -119,6 +120,14 @@ export const registerSystemSettings = function () {
     label: "SETTINGS.profLevel",
     type: ProfLevelSettingShim,
     restricted: false,
+  });
+  game.settings.register("ard20", "mainDiceType", {
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    name: "Main dice-roll type",
+    hint: "change 1d20 to 3d6",
   });
 };
 class ProfFormApp extends FormApplication {

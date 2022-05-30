@@ -149,8 +149,10 @@ mRoll,
 //@ts-expect-error
  } = {}) {
     // Handle input arguments
-    const formula = ["1d20"].concat(parts).join(" + ");
+    const isD20 = game.settings.get("ard20","mainDiceType") //check if main dice still d20 or it was changed to 3d6 in settings
     const { advantageMode, isFF } = _determineAdvantageMode({ advantage, disadvantage, fastForward, event });
+    const formula = !isD20?["1d20"].concat(parts).join(" + "):["3d6"].concat(parts).join(" + ");
+    
     const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
     if (chooseModifier && !isFF) {
         data["mod"] = "@mod";

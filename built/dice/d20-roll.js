@@ -14,9 +14,9 @@
 export default class D20Roll extends Roll {
     constructor(formula, data, options = {}) {
         super(formula, data, options);
-        if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
+        /*if (!(this.terms[0] instanceof Die && this.terms[0].faces === 20)) {
             throw new Error(`Invalid D20Roll formula provided ${this._formula}`);
-        }
+        }*/
         this.configureModifiers();
     }
     /* -------------------------------------------- */
@@ -45,22 +45,24 @@ export default class D20Roll extends Roll {
      */
     configureModifiers() {
         const d20 = this.terms[0];
+        const isD20 = game.settings.get("ard20","mainDiceType")
         //@ts-expect-error
         d20.modifiers = [];
         // Handle Advantage or Disadvantage
         if (this.hasAdvantage) {
+            if(!isD20){
             //@ts-expect-error
-            d20.number = 2;
+            d20.number = isD20? 6:2;
             //@ts-expect-error
-            d20.modifiers.push("kh");
+            d20.modifiers.push(`kh${d20.number/2}`);
             //@ts-expect-error
-            d20.options.advantage = true;
+            d20.options.advantage = true;}
         }
         else if (this.hasDisadvantage) {
             //@ts-expect-error
-            d20.number = 2;
+            d20.number = isD20? 6:2;
             //@ts-expect-error
-            d20.modifiers.push("kl");
+            d20.modifiers.push(`kl${d20.number/2}`);
             //@ts-expect-error
             d20.options.disadvantage = true;
             //@ts-expect-error
