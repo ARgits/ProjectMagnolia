@@ -10032,7 +10032,7 @@ const registerSystemSettings = function registerSystemSettings() {
       '3d6': '3d6'
     },
     config: true,
-    default: 0,
+    default: "1d20",
     type: String,
     name: "Main dice-roll type",
     hint: "chose main dice mechanic between 1d20, 2d10 and 3d6"
