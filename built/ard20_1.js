@@ -83,7 +83,7 @@ class D20Roll extends Roll {
       d20.modifiers.push(`kl${d20.number / 2}`); //@ts-expect-error
 
       d20.options.disadvantage = true; //@ts-expect-error
-    } else d20.number = 3; // Assign critical and fumble thresholds
+    } else d20.number = isD20 ? 3 : 1; // Assign critical and fumble thresholds
     //@ts-expect-error
 
 
