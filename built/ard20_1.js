@@ -65,25 +65,25 @@ class D20Roll extends Roll {
 
   configureModifiers() {
     const d20 = this.terms[0];
-    const isD20 = game.settings.get("ard20", "mainDiceType"); //@ts-expect-error
+    const mainDice = game.settings.get("ard20", "mainDiceType"); //@ts-expect-error
 
     d20.modifiers = []; // Handle Advantage or Disadvantage
 
     if (this.hasAdvantage) {
       //@ts-expect-error
-      d20.number = isD20 ? 6 : 2; //@ts-expect-error
+      d20.number = mainDice[0] * 2; //@ts-expect-error
 
       d20.modifiers.push(`kh${d20.number / 2}`); //@ts-expect-error
 
       d20.options.advantage = true;
     } else if (this.hasDisadvantage) {
       //@ts-expect-error
-      d20.number = isD20 ? 6 : 2; //@ts-expect-error
+      d20.number = mainDice[0] * 2; //@ts-expect-error
 
       d20.modifiers.push(`kl${d20.number / 2}`); //@ts-expect-error
 
       d20.options.disadvantage = true; //@ts-expect-error
-    } else d20.number = isD20 ? 3 : 1; // Assign critical and fumble thresholds
+    } else d20.number = mainDice[0] * 1; // Assign critical and fumble thresholds
     //@ts-expect-error
 
 
@@ -10026,11 +10026,16 @@ const registerSystemSettings = function registerSystemSettings() {
   });
   game.settings.register("ard20", "mainDiceType", {
     scope: "world",
+    choices: {
+      0: '1d20',
+      1: '2d10',
+      3: '3d6'
+    },
     config: true,
-    default: false,
-    type: Boolean,
+    default: 0,
+    type: Number,
     name: "Main dice-roll type",
-    hint: "change 1d20 to 3d6"
+    hint: "chose main dice mechanic between 1d20, 2d10 and 3d6"
   });
 };
 

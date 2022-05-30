@@ -123,11 +123,16 @@ export const registerSystemSettings = function () {
   });
   game.settings.register("ard20", "mainDiceType", {
     scope: "world",
+    choices:{
+      0:'1d20',
+      1:'2d10',
+      3:'3d6'
+    },
     config: true,
-    default: false,
-    type: Boolean,
+    default: 0,
+    type: Number,
     name: "Main dice-roll type",
-    hint: "change 1d20 to 3d6",
+    hint: "chose main dice mechanic between 1d20, 2d10 and 3d6",
   });
 };
 class ProfFormApp extends FormApplication {
