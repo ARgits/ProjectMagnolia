@@ -692,8 +692,7 @@ async function d20Roll({
 
 } = {}) {
   // Handle input arguments
-  const mainDie = new Die(game.settings.get("ard20", "mainDiceType"));
-  console.log(mainDie, game.settings.get("ard20", "mainDiceType"));
+  const mainDie = new Roll(game.settings.get("ard20", "mainDiceType")).terms[0];
   fumble = mainDie.number;
   critical = mainDie.number * mainDie.faces;
 
