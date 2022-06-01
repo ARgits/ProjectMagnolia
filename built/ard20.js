@@ -53,7 +53,6 @@ Hooks.once("init", async function () {
     CONFIG.Dice.D20Roll = dice.D20Roll;
     CONFIG.Dice.rolls.push(dice.D20Roll);
     CONFIG.Dice.rolls.push(dice.DamageRoll);
-    CONFIG.Item.SystemDataModels.race = RaceDataModel
     game.socket.on("system.ard20", (data) => {
       if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
     });
