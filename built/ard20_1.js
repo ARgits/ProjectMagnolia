@@ -2197,6 +2197,75 @@ class ARd20Item extends Item {
 
 }
 
+class RaceDataModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    return {
+      description: new foundry.data.fields.StringField({
+        nullable: false,
+        required: true,
+        initial: ""
+      }),
+      speed: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 6,
+        required: true,
+        integer: true,
+        positive: true
+      }),
+      health: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 4,
+        required: true,
+        integer: true,
+        positive: true
+      }),
+      strength: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 0,
+        required: true,
+        integer: true,
+        positive: false
+      }),
+      dexterity: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 0,
+        required: true,
+        integer: true,
+        positive: false
+      }),
+      constitution: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 0,
+        required: true,
+        integer: true,
+        positive: false
+      }),
+      intelligence: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 0,
+        required: true,
+        integer: true,
+        positive: false
+      }),
+      wisdom: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 0,
+        required: true,
+        integer: true,
+        positive: false
+      }),
+      charisma: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 0,
+        required: true,
+        integer: true,
+        positive: false
+      })
+    };
+  }
+
+}
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
 
@@ -10125,7 +10194,7 @@ class ProfFormApp extends FormApplication {
 const highlightCriticalSuccessFailure = function highlightCriticalSuccessFailure(message, html, data) {
   if (!message.isRoll || !message.isContentVisible) return; // Highlight rolls where the first part is a d20 roll
 
-  const roll = message.roll;
+  const roll = message.rolls;
   if (!roll.dice.length) return;
   const d = roll.dice[0]; // Ensure it is an un-modified d20 roll
 
@@ -10843,6 +10912,7 @@ Hooks.once("init", async function () {
     CONFIG.Dice.D20Roll = D20Roll;
     CONFIG.Dice.rolls.push(D20Roll);
     CONFIG.Dice.rolls.push(DamageRoll);
+    CONFIG.Item.SystemDataModels.race = RaceDataModel;
     game.socket.on("system.ard20", data => {
       if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
     });

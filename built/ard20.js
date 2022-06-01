@@ -1,6 +1,7 @@
 // Import document classes.
 import { ARd20Actor } from "./documents/actor.js";
 import { ARd20Item } from "./documents/item.js";
+import {RaceDataModel} from "./documents/RaceDataModel.js"
 // Import sheet classes.
 import { ARd20ActorSheet } from "./sheets/legacy/actor-sheet.js";
 import { ARd20ItemSheet } from "./sheets/legacy/item-sheet.js";
@@ -52,6 +53,7 @@ Hooks.once("init", async function () {
     CONFIG.Dice.D20Roll = dice.D20Roll;
     CONFIG.Dice.rolls.push(dice.D20Roll);
     CONFIG.Dice.rolls.push(dice.DamageRoll);
+    CONFIG.Item.SystemDataModels.race = RaceDataModel
     game.socket.on("system.ard20", (data) => {
       if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
     });
