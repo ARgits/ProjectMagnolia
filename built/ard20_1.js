@@ -2220,48 +2220,52 @@ class RaceDataModel extends foundry.abstract.DataModel {
         positive: true
       }),
       attributes: new foundry.data.fields.ObjectField({
-        strength: new foundry.data.fields.NumberField({
-          nullable: false,
-          initial: 0,
-          required: true,
-          integer: true,
-          positive: false
-        }),
-        dexterity: new foundry.data.fields.NumberField({
-          nullable: false,
-          initial: 0,
-          required: true,
-          integer: true,
-          positive: false
-        }),
-        constitution: new foundry.data.fields.NumberField({
-          nullable: false,
-          initial: 0,
-          required: true,
-          integer: true,
-          positive: false
-        }),
-        intelligence: new foundry.data.fields.NumberField({
-          nullable: false,
-          initial: 0,
-          required: true,
-          integer: true,
-          positive: false
-        }),
-        wisdom: new foundry.data.fields.NumberField({
-          nullable: false,
-          initial: 0,
-          required: true,
-          integer: true,
-          positive: false
-        }),
-        charisma: new foundry.data.fields.NumberField({
-          nullable: false,
-          initial: 0,
-          required: true,
-          integer: true,
-          positive: false
-        })
+        nullable: false,
+        required: true,
+        initial: {
+          strength: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }),
+          dexterity: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }),
+          constitution: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }),
+          intelligence: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }),
+          wisdom: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }),
+          charisma: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          })
+        }
       })
     };
   }
