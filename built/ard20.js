@@ -76,6 +76,9 @@ Hooks.once("init", async function () {
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: false });
     Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
+
+    CONFIG.Item.systemDataModels['race'] = RaceDataModel
+    //register settings
     registerSystemSettings();
 
     //register Svelte components for Actor/Item types

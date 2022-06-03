@@ -10943,6 +10943,8 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", SvelteDocumentSheet, {
       makeDefault: true
     });
+    CONFIG.Item.systemDataModels['race'] = RaceDataModel; //register settings
+
     registerSystemSettings(); //register Svelte components for Actor/Item types
 
     setSvelteComponents(); // Preload Handlebars templates.
