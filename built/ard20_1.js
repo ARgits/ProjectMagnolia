@@ -2229,42 +2229,42 @@ class RaceDataModel extends foundry.abstract.DataModel {
             required: true,
             integer: true,
             positive: false
-          }),
+          }).getInitialValue(),
           dexterity: new foundry.data.fields.NumberField({
             nullable: false,
             initial: 0,
             required: true,
             integer: true,
             positive: false
-          }),
+          }).getInitialValue(),
           constitution: new foundry.data.fields.NumberField({
             nullable: false,
             initial: 0,
             required: true,
             integer: true,
             positive: false
-          }),
+          }).getInitialValue(),
           intelligence: new foundry.data.fields.NumberField({
             nullable: false,
             initial: 0,
             required: true,
             integer: true,
             positive: false
-          }),
+          }).getInitialValue(),
           wisdom: new foundry.data.fields.NumberField({
             nullable: false,
             initial: 0,
             required: true,
             integer: true,
             positive: false
-          }),
+          }).getInitialValue(),
           charisma: new foundry.data.fields.NumberField({
             nullable: false,
             initial: 0,
             required: true,
             integer: true,
             positive: false
-          })
+          }).getInitialValue()
         }
       })
     };
