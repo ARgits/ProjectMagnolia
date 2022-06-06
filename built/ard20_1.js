@@ -1254,7 +1254,7 @@ class ARd20Item extends Item {
 
 
   _prepareSpellData(itemData) {
-    if (itemData.type !== "spell") return;
+    if (this.type !== "spell") return;
   }
   /**
    *Prepare data for weapons
@@ -1262,7 +1262,7 @@ class ARd20Item extends Item {
 
 
   _prepareWeaponData(itemData) {
-    if (itemData.type !== "weapon") return;
+    if (this.type !== "weapon") return;
     const data = itemData;
     const flags = this.flags;
     data.hasAttack = data.hasAttack || true;
@@ -1346,7 +1346,7 @@ class ARd20Item extends Item {
 
 
   _prepareFeatureData(itemData) {
-    if (itemData.type !== "feature") return;
+    if (this.type !== "feature") return;
     const data = itemData; // Handle Source of the feature
 
     data.source.label = "";
@@ -1420,7 +1420,8 @@ class ARd20Item extends Item {
 
 
   _prepareRaceData(itemData) {
-    if (itemData.type !== "race") return;
+    if (this.type !== "race") return;
+    itemData.foo = "bar";
   }
   /**
    * Prepare data for "armor" type item
@@ -1430,7 +1431,7 @@ class ARd20Item extends Item {
   _prepareArmorData(itemData) {
     var _data$mobility$value;
 
-    if (itemData.type !== "armor") return;
+    if (this.type !== "armor") return;
     const data = itemData;
 
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {

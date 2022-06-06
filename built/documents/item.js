@@ -30,14 +30,14 @@ export class ARd20Item extends Item {
    *Prepare data for Spells
    */
   _prepareSpellData(itemData) {
-    if (itemData.type !== "spell") return;
+    if (this.type !== "spell") return;
     const data = itemData;
   }
   /**
    *Prepare data for weapons
    */
   _prepareWeaponData(itemData) {
-    if (itemData.type !== "weapon") return;
+    if (this.type !== "weapon") return;
     const data = itemData;
     const flags = this.flags;
     data.hasAttack = data.hasAttack || true;
@@ -114,7 +114,7 @@ export class ARd20Item extends Item {
    *Prepare data for features
    */
   _prepareFeatureData(itemData) {
-    if (itemData.type !== "feature") return;
+    if (this.type !== "feature") return;
     const data = itemData;
     // Handle Source of the feature
     data.source.label = "";
@@ -174,13 +174,14 @@ export class ARd20Item extends Item {
    * Prepare data for 'race' type of item
    */
   _prepareRaceData(itemData) {
-    if (itemData.type !== "race") return;
+    if (this.type !== "race") return;
+    itemData.foo = "bar";
   }
   /**
    * Prepare data for "armor" type item
    */
   _prepareArmorData(itemData) {
-    if (itemData.type !== "armor") return;
+    if (this.type !== "armor") return;
     const data = itemData;
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
