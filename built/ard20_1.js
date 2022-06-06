@@ -5888,7 +5888,7 @@ function create_fragment$c(ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(input_1, "input", /*input_1_input_handler*/ ctx[11]),
-					listen(input_1, "keydown", /*keydown_handler*/ ctx[12]),
+					listen(input_1, "keypress", /*keypress_handler*/ ctx[12]),
 					listen(input_1, "change", /*change_handler*/ ctx[13])
 				];
 
@@ -5939,7 +5939,11 @@ function instance$c($$self, $$props, $$invalidate) {
 
 	function checkInput(e) {
 		if (type !== "number") return;
-		console.log(e);
+
+		if ((/[0-9\.,-]/).test(e.key)) {
+			console.log((/[0-9\.,]/).test(e.key), e);
+			e.preventDefault();
+		}
 	}
 
 	function span_binding($$value) {
@@ -5961,7 +5965,7 @@ function instance$c($$self, $$props, $$invalidate) {
 		$$invalidate(0, value);
 	}
 
-	const keydown_handler = e => checkInput(e);
+	const keypress_handler = e => checkInput(e);
 
 	const change_handler = () => {
 		$document.update(data);
@@ -6003,7 +6007,7 @@ function instance$c($$self, $$props, $$invalidate) {
 		span_binding,
 		input_1_binding,
 		input_1_input_handler,
-		keydown_handler,
+		keypress_handler,
 		change_handler
 	];
 }

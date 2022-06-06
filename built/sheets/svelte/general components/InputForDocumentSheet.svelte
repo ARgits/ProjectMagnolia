@@ -15,7 +15,10 @@
   }
   function checkInput(e){
     if(type!=="number") return
-    console.log(e)
+    if(/[0-9\.,-]/.test(e.key)){
+      console.log(/[0-9\.,]/.test(e.key), e)
+      e.preventDefault();
+    }
   }
 </script>
 
@@ -25,7 +28,7 @@
 <input
   bind:this={input}
   bind:value
-  on:keydown={(e)=>checkInput(e)}
+  on:keypress={(e)=>checkInput(e)}
   on:change={() => {
     $document.update(data);
   }}
