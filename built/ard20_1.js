@@ -2,7 +2,6 @@ import { SvelteComponent, init, safe_not_equal, element, attr, toggle_class, ins
 import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
-import '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/fields.mjs';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { uuidv4 } from '/modules/typhonjs/svelte/util.js';
 import { localize } from '/modules/typhonjs/svelte/helper.js';
@@ -7297,7 +7296,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (24:4) {#each Object.entries($doc.system.attributes) as attribute}
+// (23:4) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let inputfordocumentsheet;

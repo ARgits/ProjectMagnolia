@@ -3,7 +3,6 @@
 <script>
   import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte";
   import ImageWithFilePicker from "../general components/ImageWithFilePicker.svelte";
-  import { systemDataField } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/fields.mjs";
   export let doc;
 </script>
 
