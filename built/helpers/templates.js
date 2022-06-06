@@ -1,6 +1,7 @@
 import EmptySheet from "../sheets/svelte/EmptySheet.svelte";
 import ItemItemSheet from "../sheets/svelte/item/ItemItemSheet.svelte";
 import ActorSheet from "../sheets/svelte/actor/ActorSheet.svelte";
+import RaceSheet from "../sheets/svelte/item/RaceSheet.svelte";
 /**
  * Define a set of template paths to pre-load
  * Pre-loaded templates are compiled and cached for fast access when rendering
@@ -40,7 +41,7 @@ export class DocTemplate {
 
   static getByType(type) {
     const component = this.#map.get(type);
-    console.log(type)
+    console.log(type);
     return component ? component : EmptySheet;
   }
 
@@ -52,4 +53,5 @@ export class DocTemplate {
 export const setSvelteComponents = () => {
   DocTemplate.set("item", ItemItemSheet);
   DocTemplate.set("character", ActorSheet);
+  DocTemplate.set("race", RaceSheet);
 };
