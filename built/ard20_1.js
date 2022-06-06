@@ -7308,10 +7308,13 @@ function create_each_block$4(ctx) {
 		/*inputfordocumentsheet_value_binding*/ ctx[5](value, /*attribute*/ ctx[6]);
 	}
 
-	let inputfordocumentsheet_props = { label: /*attribute*/ ctx[6][0] };
+	let inputfordocumentsheet_props = {
+		label: /*attribute*/ ctx[6][0],
+		type: "number"
+	};
 
-	if (/*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][1]] !== void 0) {
-		inputfordocumentsheet_props.value = /*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][1]];
+	if (/*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][0]] !== void 0) {
+		inputfordocumentsheet_props.value = /*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][0]];
 	}
 
 	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
@@ -7336,7 +7339,7 @@ function create_each_block$4(ctx) {
 
 			if (!updating_value && dirty & /*$doc, Object*/ 1) {
 				updating_value = true;
-				inputfordocumentsheet_changes.value = /*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][1]];
+				inputfordocumentsheet_changes.value = /*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][0]];
 				add_flush_callback(() => updating_value = false);
 			}
 
@@ -7602,8 +7605,8 @@ function instance$6($$self, $$props, $$invalidate) {
 	}
 
 	function inputfordocumentsheet_value_binding(value, attribute) {
-		if ($$self.$$.not_equal($doc.system.attributes[attribute[1]], value)) {
-			$doc.system.attributes[attribute[1]] = value;
+		if ($$self.$$.not_equal($doc.system.attributes[attribute[0]], value)) {
+			$doc.system.attributes[attribute[0]] = value;
 			doc.set($doc);
 		}
 	}
