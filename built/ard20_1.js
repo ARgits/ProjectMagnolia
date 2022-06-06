@@ -5852,14 +5852,14 @@ function create_if_block$4(ctx) {
 		m(target, anchor) {
 			insert(target, span, anchor);
 			append(span, t);
-			/*span_binding*/ ctx[8](span);
+			/*span_binding*/ ctx[9](span);
 		},
 		p(ctx, dirty) {
 			if (dirty & /*label*/ 2) set_data(t, /*label*/ ctx[1]);
 		},
 		d(detaching) {
 			if (detaching) detach(span);
-			/*span_binding*/ ctx[8](null);
+			/*span_binding*/ ctx[9](null);
 		}
 	};
 }
@@ -5882,13 +5882,14 @@ function create_fragment$c(ctx) {
 			if (if_block) if_block.m(target, anchor);
 			insert(target, t, anchor);
 			insert(target, input_1, anchor);
-			/*input_1_binding*/ ctx[9](input_1);
+			/*input_1_binding*/ ctx[10](input_1);
 			set_input_value(input_1, /*value*/ ctx[0]);
 
 			if (!mounted) {
 				dispose = [
-					listen(input_1, "input", /*input_1_input_handler*/ ctx[10]),
-					listen(input_1, "change", /*change_handler*/ ctx[11])
+					listen(input_1, "input", /*input_1_input_handler*/ ctx[11]),
+					listen(input_1, "keydown", /*keydown_handler*/ ctx[12]),
+					listen(input_1, "change", /*change_handler*/ ctx[13])
 				];
 
 				mounted = true;
@@ -5918,7 +5919,7 @@ function create_fragment$c(ctx) {
 			if (if_block) if_block.d(detaching);
 			if (detaching) detach(t);
 			if (detaching) detach(input_1);
-			/*input_1_binding*/ ctx[9](null);
+			/*input_1_binding*/ ctx[10](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -5936,6 +5937,11 @@ function instance$c($$self, $$props, $$invalidate) {
 	let labelElem;
 	let input;
 
+	function checkInput(e) {
+		if (type !== "number") return;
+		console.log(e);
+	}
+
 	function span_binding($$value) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			labelElem = $$value;
@@ -5952,8 +5958,10 @@ function instance$c($$self, $$props, $$invalidate) {
 
 	function input_1_input_handler() {
 		value = this.value;
-		($$invalidate(0, value), $$invalidate(7, type));
+		$$invalidate(0, value);
 	}
+
+	const keydown_handler = e => checkInput(e);
 
 	const change_handler = () => {
 		$document.update(data);
@@ -5961,17 +5969,13 @@ function instance$c($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ('value' in $$props) $$invalidate(0, value = $$props.value);
-		if ('type' in $$props) $$invalidate(7, type = $$props.type);
+		if ('type' in $$props) $$invalidate(8, type = $$props.type);
 		if ('label' in $$props) $$invalidate(1, label = $$props.label);
 	};
 
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*label, input, labelElem*/ 14) {
 			if (label && input) $$invalidate(3, input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px)`, input);
-		}
-
-		if ($$self.$$.dirty & /*type, value*/ 129) {
-			$$invalidate(0, value = type === "number" ? parseInt(value) : value);
 		}
 
 		if ($$self.$$.dirty & /*$document*/ 16) {
@@ -5994,10 +5998,12 @@ function instance$c($$self, $$props, $$invalidate) {
 		$document,
 		data,
 		document,
+		checkInput,
 		type,
 		span_binding,
 		input_1_binding,
 		input_1_input_handler,
+		keydown_handler,
 		change_handler
 	];
 }
@@ -6005,7 +6011,7 @@ function instance$c($$self, $$props, $$invalidate) {
 class InputForDocumentSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$c, create_fragment$c, safe_not_equal, { value: 0, type: 7, label: 1 });
+		init(this, options, instance$c, create_fragment$c, safe_not_equal, { value: 0, type: 8, label: 1 });
 	}
 
 	get value() {
@@ -6018,7 +6024,7 @@ class InputForDocumentSheet extends SvelteComponent {
 	}
 
 	get type() {
-		return this.$$.ctx[7];
+		return this.$$.ctx[8];
 	}
 
 	set type(type) {
