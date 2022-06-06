@@ -175,7 +175,6 @@ export class ARd20Item extends Item {
    */
   _prepareRaceData(itemData) {
     if (this.type !== "race") return;
-    itemData.foo = "bar";
   }
   /**
    * Prepare data for "armor" type item

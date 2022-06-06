@@ -99,21 +99,21 @@ export class ARd20Actor extends Actor {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         def_dam.phys[key].value =
           def_dam.phys[key]?.value || !def_dam.phys[key]?.immune
-            ? Math.max(isNaN(def_dam.phys[key]?.value) ? 0 : def_dam.phys[key].value) + def_dam.phys[key]?.bonus
+            ? def_dam.phys[key]?.value + def_dam.phys[key]?.bonus
             : 0;
         def_dam.phys[key].name =
           game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
       }
       def_dam.mag[key].value =
         def_dam.mag[key]?.value || !def_dam.mag[key]?.immune
-          ? Math.max(isNaN(def_dam.mag[key]?.value) ? 0 : def_dam.mag[key].value) + def_dam.mag[key]?.bonus
+          ? def_dam.mag[key]?.value + def_dam.mag[key]?.bonus
           : 0;
       def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     const profLevelSetting = game.settings.get("ard20", "profLevel");
     const maxProfLevel = profLevelSetting.length - 1;
     //calculate rolls for character's skills
-    for (let [key, skill] of obj_entries(actorData.skills)) {
+    for (let [key, skill] of Object.entries(actorData.skills)) {
       skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
       skill.value = skill.level * 4 + skill.bonus;
       skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
