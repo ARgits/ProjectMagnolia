@@ -1,5 +1,5 @@
-import { SvelteComponent, init, safe_not_equal, element, attr, toggle_class, insert, listen, detach, space, empty, noop, component_subscribe, text, null_to_empty, append, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, src_url_equal, subscribe, update_keyed_each, destroy_block, select_value, is_function, select_option } from '/modules/typhonjs/svelte/internal.js';
-import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
+import { SvelteComponent, init, safe_not_equal, element, attr, toggle_class, insert, listen, detach, space, empty, noop, component_subscribe, text, null_to_empty, append, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, src_url_equal, update_keyed_each, destroy_block, select_value, is_function, select_option, subscribe } from '/modules/typhonjs/svelte/internal.js';
+import { getContext as getContext$1, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
@@ -2607,9 +2607,9 @@ function instance$h($$self, $$props, $$invalidate) {
 	let { type } = $$props;
 	let { subtype } = $$props;
 	let { cost } = $$props;
-	const doc = getContext("chaAdvActorData");
+	const doc = getContext$1("chaAdvActorData");
 	component_subscribe($$self, doc, value => $$invalidate(11, $doc = value));
-	const changes = getContext("chaAdvXpChanges");
+	const changes = getContext$1("chaAdvXpChanges");
 	component_subscribe($$self, changes, value => $$invalidate(14, $changes = value));
 	let disabled;
 	let { costLabel } = $$props;
@@ -3489,12 +3489,12 @@ function instance$g($$self, $$props, $$invalidate) {
 	let { thead } = $$props;
 
 	//export let cellWidth;
-	const originalData = getContext("chaAdvActorOriginalData");
+	const originalData = getContext$1("chaAdvActorOriginalData");
 
-	const aditionalData = getContext("chaAdvAditionalData");
-	const element = getContext("chaAdvElementParameters");
+	const aditionalData = getContext$1("chaAdvAditionalData");
+	const element = getContext$1("chaAdvElementParameters");
 	component_subscribe($$self, element, value => $$invalidate(9, $element = value));
-	const formulas = getContext("chaAdvXpFormulas").formulas;
+	const formulas = getContext$1("chaAdvXpFormulas").formulas;
 	let variables = {};
 	let cost;
 	let min;
@@ -3552,7 +3552,7 @@ function instance$g($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*typeStr, val, variables*/ 32788) {
 			{
-				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
+				for (let [key, variable] of Object.entries(getContext$1("chaAdvXpFormulas").variables)) {
 					switch (key) {
 						case "attributes":
 							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
@@ -3928,9 +3928,9 @@ function instance$f($$self, $$props, $$invalidate) {
 	let $data;
 	let $element;
 	let { tabData } = $$props;
-	const element = getContext("chaAdvElementParameters");
+	const element = getContext$1("chaAdvElementParameters");
 	component_subscribe($$self, element, value => $$invalidate(6, $element = value));
-	const data = getContext("chaAdvActorData");
+	const data = getContext$1("chaAdvActorData");
 	component_subscribe($$self, data, value => $$invalidate(1, $data = value));
 	const settings = game.settings.get("ard20", "profLevel");
 	let typeStr;
@@ -4367,9 +4367,9 @@ function instance$e($$self, $$props, $$invalidate) {
 	let $data;
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
-	const data = getContext("chaAdvActorData");
+	const data = getContext$1("chaAdvActorData");
 	component_subscribe($$self, data, value => $$invalidate(6, $data = value));
-	const element = getContext("chaAdvElementParameters");
+	const element = getContext$1("chaAdvElementParameters");
 	component_subscribe($$self, element, value => $$invalidate(2, $element = value));
 	let minBoxSize;
 
@@ -4510,7 +4510,7 @@ function instance$d($$self, $$props, $$invalidate) {
 	//
 	const actor = game.actors.get(document.id);
 
-	const { application } = getContext("external");
+	const { application } = getContext$1("external");
 
 	//create list of changes and context for it
 	const changes = writable([]);
@@ -4570,8 +4570,8 @@ function instance$d($$self, $$props, $$invalidate) {
 		}
 	];
 
-	getContext("chaAdvActorID");
-	getContext("chaAdvAditionalData");
+	getContext$1("chaAdvActorID");
+	getContext$1("chaAdvAditionalData");
 
 	//update actor and do other stuff when click 'submit' button
 	async function submitData() {
@@ -5930,7 +5930,7 @@ function instance$c($$self, $$props, $$invalidate) {
 	let { value } = $$props;
 	let { type = "text" } = $$props;
 	let { label } = $$props;
-	const document = getContext("DocumentSheetObject");
+	const document = getContext$1("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(4, $document = value));
 	let data;
 	let labelElem;
@@ -6175,8 +6175,8 @@ function instance$a($$self, $$props, $$invalidate) {
 	let { path } = $$props;
 	let { alt } = $$props;
 	let img;
-	const { application } = getContext("external"); //get sheet document
-	const document = getContext("DocumentSheetObject");
+	const { application } = getContext$1("external"); //get sheet document
+	const document = getContext$1("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(8, $document = value));
 	let src = getProperty($document, path);
 
@@ -6785,7 +6785,7 @@ function create_fragment$8(ctx) {
 
 function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
-	const doc = getContext("DocumentSheetObject");
+	const doc = getContext$1("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 
 	const click_handler = (skill, event) => {
@@ -7204,7 +7204,7 @@ let activeTab = "attributes";
 
 function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
-	const doc = getContext("DocumentSheetObject");
+	const doc = getContext$1("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 
 	let tabs = [
@@ -7332,9 +7332,9 @@ function create_each_block$4(ctx) {
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
 			const inputfordocumentsheet_changes = {};
-			if (dirty & /*$doc*/ 2) inputfordocumentsheet_changes.label = /*attribute*/ ctx[6][0];
+			if (dirty & /*$doc*/ 1) inputfordocumentsheet_changes.label = /*attribute*/ ctx[6][0];
 
-			if (!updating_value && dirty & /*Object, $doc*/ 2) {
+			if (!updating_value && dirty & /*Object, $doc*/ 1) {
 				updating_value = true;
 				inputfordocumentsheet_changes.value = /*attribute*/ ctx[6][1];
 				add_flush_callback(() => updating_value = false);
@@ -7388,8 +7388,8 @@ function create_fragment$6(ctx) {
 
 	let inputfordocumentsheet0_props = { label: "name" };
 
-	if (/*$doc*/ ctx[1].name !== void 0) {
-		inputfordocumentsheet0_props.value = /*$doc*/ ctx[1].name;
+	if (/*$doc*/ ctx[0].name !== void 0) {
+		inputfordocumentsheet0_props.value = /*$doc*/ ctx[0].name;
 	}
 
 	inputfordocumentsheet0 = new InputForDocumentSheet({ props: inputfordocumentsheet0_props });
@@ -7401,8 +7401,8 @@ function create_fragment$6(ctx) {
 
 	let inputfordocumentsheet1_props = { label: "speed" };
 
-	if (/*$doc*/ ctx[1].system.speed !== void 0) {
-		inputfordocumentsheet1_props.value = /*$doc*/ ctx[1].system.speed;
+	if (/*$doc*/ ctx[0].system.speed !== void 0) {
+		inputfordocumentsheet1_props.value = /*$doc*/ ctx[0].system.speed;
 	}
 
 	inputfordocumentsheet1 = new InputForDocumentSheet({ props: inputfordocumentsheet1_props });
@@ -7414,13 +7414,13 @@ function create_fragment$6(ctx) {
 
 	let inputfordocumentsheet2_props = { label: "health" };
 
-	if (/*$doc*/ ctx[1].system.health !== void 0) {
-		inputfordocumentsheet2_props.value = /*$doc*/ ctx[1].system.health;
+	if (/*$doc*/ ctx[0].system.health !== void 0) {
+		inputfordocumentsheet2_props.value = /*$doc*/ ctx[0].system.health;
 	}
 
 	inputfordocumentsheet2 = new InputForDocumentSheet({ props: inputfordocumentsheet2_props });
 	binding_callbacks.push(() => bind(inputfordocumentsheet2, 'value', inputfordocumentsheet2_value_binding));
-	let each_value = Object.entries(/*$doc*/ ctx[1].system.attributes);
+	let each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -7483,34 +7483,34 @@ function create_fragment$6(ctx) {
 		p(ctx, [dirty]) {
 			const inputfordocumentsheet0_changes = {};
 
-			if (!updating_value && dirty & /*$doc*/ 2) {
+			if (!updating_value && dirty & /*$doc*/ 1) {
 				updating_value = true;
-				inputfordocumentsheet0_changes.value = /*$doc*/ ctx[1].name;
+				inputfordocumentsheet0_changes.value = /*$doc*/ ctx[0].name;
 				add_flush_callback(() => updating_value = false);
 			}
 
 			inputfordocumentsheet0.$set(inputfordocumentsheet0_changes);
 			const inputfordocumentsheet1_changes = {};
 
-			if (!updating_value_1 && dirty & /*$doc*/ 2) {
+			if (!updating_value_1 && dirty & /*$doc*/ 1) {
 				updating_value_1 = true;
-				inputfordocumentsheet1_changes.value = /*$doc*/ ctx[1].system.speed;
+				inputfordocumentsheet1_changes.value = /*$doc*/ ctx[0].system.speed;
 				add_flush_callback(() => updating_value_1 = false);
 			}
 
 			inputfordocumentsheet1.$set(inputfordocumentsheet1_changes);
 			const inputfordocumentsheet2_changes = {};
 
-			if (!updating_value_2 && dirty & /*$doc*/ 2) {
+			if (!updating_value_2 && dirty & /*$doc*/ 1) {
 				updating_value_2 = true;
-				inputfordocumentsheet2_changes.value = /*$doc*/ ctx[1].system.health;
+				inputfordocumentsheet2_changes.value = /*$doc*/ ctx[0].system.health;
 				add_flush_callback(() => updating_value_2 = false);
 			}
 
 			inputfordocumentsheet2.$set(inputfordocumentsheet2_changes);
 
-			if (dirty & /*Object, $doc*/ 2) {
-				each_value = Object.entries(/*$doc*/ ctx[1].system.attributes);
+			if (dirty & /*Object, $doc*/ 1) {
+				each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -7576,13 +7576,9 @@ function create_fragment$6(ctx) {
 }
 
 function instance$6($$self, $$props, $$invalidate) {
-	let $doc,
-		$$unsubscribe_doc = noop,
-		$$subscribe_doc = () => ($$unsubscribe_doc(), $$unsubscribe_doc = subscribe(doc, $$value => $$invalidate(1, $doc = $$value)), doc);
-
-	$$self.$$.on_destroy.push(() => $$unsubscribe_doc());
-	let { doc } = $$props;
-	$$subscribe_doc();
+	let $doc;
+	const doc = getContext("DocumentSheetObject");
+	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 
 	function inputfordocumentsheet0_value_binding(value) {
 		if ($$self.$$.not_equal($doc.name, value)) {
@@ -7611,13 +7607,9 @@ function instance$6($$self, $$props, $$invalidate) {
 		}
 	}
 
-	$$self.$$set = $$props => {
-		if ('doc' in $$props) $$subscribe_doc($$invalidate(0, doc = $$props.doc));
-	};
-
 	return [
-		doc,
 		$doc,
+		doc,
 		inputfordocumentsheet0_value_binding,
 		inputfordocumentsheet1_value_binding,
 		inputfordocumentsheet2_value_binding,
@@ -7628,16 +7620,7 @@ function instance$6($$self, $$props, $$invalidate) {
 class RaceSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$6, create_fragment$6, safe_not_equal, { doc: 0 });
-	}
-
-	get doc() {
-		return this.$$.ctx[0];
-	}
-
-	set doc(doc) {
-		this.$$set({ doc });
-		flush();
+		init(this, options, instance$6, create_fragment$6, safe_not_equal, {});
 	}
 }
 
