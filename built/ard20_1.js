@@ -1,5 +1,5 @@
 import { SvelteComponent, init, safe_not_equal, element, attr, toggle_class, insert, listen, detach, space, empty, noop, component_subscribe, text, null_to_empty, append, set_data, create_component, mount_component, transition_in, transition_out, destroy_component, set_style, add_render_callback, add_resize_listener, group_outros, check_outros, add_flush_callback, destroy_each, binding_callbacks, bind, flush, set_input_value, run_all, src_url_equal, update_keyed_each, destroy_block, select_value, is_function, select_option, subscribe } from '/modules/typhonjs/svelte/internal.js';
-import { getContext as getContext$1, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
+import { getContext, setContext, onMount, tick } from '/modules/typhonjs/svelte/index.js';
 import { writable } from '/modules/typhonjs/svelte/store.js';
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
@@ -2607,9 +2607,9 @@ function instance$h($$self, $$props, $$invalidate) {
 	let { type } = $$props;
 	let { subtype } = $$props;
 	let { cost } = $$props;
-	const doc = getContext$1("chaAdvActorData");
+	const doc = getContext("chaAdvActorData");
 	component_subscribe($$self, doc, value => $$invalidate(11, $doc = value));
-	const changes = getContext$1("chaAdvXpChanges");
+	const changes = getContext("chaAdvXpChanges");
 	component_subscribe($$self, changes, value => $$invalidate(14, $changes = value));
 	let disabled;
 	let { costLabel } = $$props;
@@ -3489,12 +3489,12 @@ function instance$g($$self, $$props, $$invalidate) {
 	let { thead } = $$props;
 
 	//export let cellWidth;
-	const originalData = getContext$1("chaAdvActorOriginalData");
+	const originalData = getContext("chaAdvActorOriginalData");
 
-	const aditionalData = getContext$1("chaAdvAditionalData");
-	const element = getContext$1("chaAdvElementParameters");
+	const aditionalData = getContext("chaAdvAditionalData");
+	const element = getContext("chaAdvElementParameters");
 	component_subscribe($$self, element, value => $$invalidate(9, $element = value));
-	const formulas = getContext$1("chaAdvXpFormulas").formulas;
+	const formulas = getContext("chaAdvXpFormulas").formulas;
 	let variables = {};
 	let cost;
 	let min;
@@ -3552,7 +3552,7 @@ function instance$g($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*typeStr, val, variables*/ 32788) {
 			{
-				for (let [key, variable] of Object.entries(getContext$1("chaAdvXpFormulas").variables)) {
+				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
 					switch (key) {
 						case "attributes":
 							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
@@ -3928,9 +3928,9 @@ function instance$f($$self, $$props, $$invalidate) {
 	let $data;
 	let $element;
 	let { tabData } = $$props;
-	const element = getContext$1("chaAdvElementParameters");
+	const element = getContext("chaAdvElementParameters");
 	component_subscribe($$self, element, value => $$invalidate(6, $element = value));
-	const data = getContext$1("chaAdvActorData");
+	const data = getContext("chaAdvActorData");
 	component_subscribe($$self, data, value => $$invalidate(1, $data = value));
 	const settings = game.settings.get("ard20", "profLevel");
 	let typeStr;
@@ -4367,9 +4367,9 @@ function instance$e($$self, $$props, $$invalidate) {
 	let $data;
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
-	const data = getContext$1("chaAdvActorData");
+	const data = getContext("chaAdvActorData");
 	component_subscribe($$self, data, value => $$invalidate(6, $data = value));
-	const element = getContext$1("chaAdvElementParameters");
+	const element = getContext("chaAdvElementParameters");
 	component_subscribe($$self, element, value => $$invalidate(2, $element = value));
 	let minBoxSize;
 
@@ -4510,7 +4510,7 @@ function instance$d($$self, $$props, $$invalidate) {
 	//
 	const actor = game.actors.get(document.id);
 
-	const { application } = getContext$1("external");
+	const { application } = getContext("external");
 
 	//create list of changes and context for it
 	const changes = writable([]);
@@ -4570,8 +4570,8 @@ function instance$d($$self, $$props, $$invalidate) {
 		}
 	];
 
-	getContext$1("chaAdvActorID");
-	getContext$1("chaAdvAditionalData");
+	getContext("chaAdvActorID");
+	getContext("chaAdvAditionalData");
 
 	//update actor and do other stuff when click 'submit' button
 	async function submitData() {
@@ -5930,7 +5930,7 @@ function instance$c($$self, $$props, $$invalidate) {
 	let { value } = $$props;
 	let { type = "text" } = $$props;
 	let { label } = $$props;
-	const document = getContext$1("DocumentSheetObject");
+	const document = getContext("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(4, $document = value));
 	let data;
 	let labelElem;
@@ -6175,8 +6175,8 @@ function instance$a($$self, $$props, $$invalidate) {
 	let { path } = $$props;
 	let { alt } = $$props;
 	let img;
-	const { application } = getContext$1("external"); //get sheet document
-	const document = getContext$1("DocumentSheetObject");
+	const { application } = getContext("external"); //get sheet document
+	const document = getContext("DocumentSheetObject");
 	component_subscribe($$self, document, value => $$invalidate(8, $document = value));
 	let src = getProperty($document, path);
 
@@ -6785,7 +6785,7 @@ function create_fragment$8(ctx) {
 
 function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
-	const doc = getContext$1("DocumentSheetObject");
+	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 
 	const click_handler = (skill, event) => {
@@ -7204,7 +7204,7 @@ let activeTab = "attributes";
 
 function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
-	const doc = getContext$1("DocumentSheetObject");
+	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 
 	let tabs = [
@@ -7296,7 +7296,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (23:4) {#each Object.entries($doc.system.attributes) as attribute}
+// (24:4) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let inputfordocumentsheet;

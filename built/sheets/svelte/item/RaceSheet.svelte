@@ -3,6 +3,7 @@
 <script>
   import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte";
   import ImageWithFilePicker from "../general components/ImageWithFilePicker.svelte";
+  import { getContext } from "svelte";
   const doc = getContext("DocumentSheetObject");
 </script>
 
