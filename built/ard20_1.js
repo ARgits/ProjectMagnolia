@@ -7310,8 +7310,8 @@ function create_each_block$4(ctx) {
 
 	let inputfordocumentsheet_props = { label: /*attribute*/ ctx[6][0] };
 
-	if (/*attribute*/ ctx[6][1] !== void 0) {
-		inputfordocumentsheet_props.value = /*attribute*/ ctx[6][1];
+	if (/*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][1]] !== void 0) {
+		inputfordocumentsheet_props.value = /*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][1]];
 	}
 
 	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
@@ -7334,9 +7334,9 @@ function create_each_block$4(ctx) {
 			const inputfordocumentsheet_changes = {};
 			if (dirty & /*$doc*/ 1) inputfordocumentsheet_changes.label = /*attribute*/ ctx[6][0];
 
-			if (!updating_value && dirty & /*Object, $doc*/ 1) {
+			if (!updating_value && dirty & /*$doc, Object*/ 1) {
 				updating_value = true;
-				inputfordocumentsheet_changes.value = /*attribute*/ ctx[6][1];
+				inputfordocumentsheet_changes.value = /*$doc*/ ctx[0].system.attributes[/*attribute*/ ctx[6][1]];
 				add_flush_callback(() => updating_value = false);
 			}
 
@@ -7602,8 +7602,9 @@ function instance$6($$self, $$props, $$invalidate) {
 	}
 
 	function inputfordocumentsheet_value_binding(value, attribute) {
-		if ($$self.$$.not_equal(attribute[1], value)) {
-			attribute[1] = value;
+		if ($$self.$$.not_equal($doc.system.attributes[attribute[1]], value)) {
+			$doc.system.attributes[attribute[1]] = value;
+			doc.set($doc);
 		}
 	}
 

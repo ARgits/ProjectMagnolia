@@ -23,7 +23,7 @@
   <div class="attributes">
     {#each Object.entries($doc.system.attributes) as attribute}
       <div>
-        <InputForDocumentSheet bind:value={attribute[1]} label={attribute[0]} />
+        <InputForDocumentSheet bind:value={$doc.system.attributes[attribute[1]]} label={attribute[0]} />
       </div>
     {/each}
   </div>
