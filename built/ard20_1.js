@@ -5939,7 +5939,7 @@ function instance$c($$self, $$props, $$invalidate) {
 
 	function checkInput(e) {
 		console.log(type);
-		if (type !== "number" || type !== "integer") return;
+		if (type !== "number" && type !== "integer") return;
 		console.log('клавиша нажата в "цифровом" инпуте', e);
 		const input = e.target.value;
 		console.log('значение инпута:', input);
