@@ -9,16 +9,16 @@
   let data;
   let labelElem;
   let input;
-  $: if (label && input) input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth*1.5)}px)`;
+  $: if (label && input) input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px)`;
   $: {
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
-  function checkInput(e){
-    if(type!=="number") return
-    if(/[0-9\.,-]/.test(e.key)){
-      console.log(/[0-9\.,]/.test(e.key), e)
-      e.preventDefault();
-    }
+  function checkInput(e) {
+    if (type !== "number" || type !== "integer") return;
+    const input = e.target.value;
+    if (!/[0-9\.,-]/.test(e.key)) e.preventDefault();
+    else if (e.key === "-" && input.length > 0) e.preventDefault();
+    else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(e.key))) e.preventDefault();
   }
 </script>
 
@@ -28,7 +28,7 @@
 <input
   bind:this={input}
   bind:value
-  on:keypress={(e)=>checkInput(e)}
+  on:keypress={(e) => checkInput(e)}
   on:change={() => {
     $document.update(data);
   }}

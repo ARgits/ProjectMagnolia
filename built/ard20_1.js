@@ -5938,12 +5938,9 @@ function instance$c($$self, $$props, $$invalidate) {
 	let input;
 
 	function checkInput(e) {
-		if (type !== "number") return;
-
-		if ((/[0-9\.,-]/).test(e.key)) {
-			console.log((/[0-9\.,]/).test(e.key), e);
-			e.preventDefault();
-		}
+		if (type !== "number" || type !== "integer") return;
+		const input = e.target.value;
+		if (!(/[0-9\.,-]/).test(e.key)) e.preventDefault(); else if (e.key === "-" && input.length > 0) e.preventDefault(); else if ((/[\.,]/).test(e.key) && (type === "integer" || input.includes(e.key))) e.preventDefault();
 	}
 
 	function span_binding($$value) {
