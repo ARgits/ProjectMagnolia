@@ -15,10 +15,10 @@
 </header>
 <div class="main">
   <div class="speed">
-    <InputForDocumentSheet bind:value={$doc.system.speed} label="speed" />
+    <InputForDocumentSheet bind:value={$doc.system.speed} label="speed" type="integer"/>
   </div>
   <div class="health">
-    <InputForDocumentSheet bind:value={$doc.system.health} label="health" />
+    <InputForDocumentSheet bind:value={$doc.system.health} label="health" type="integer"/>
   </div>
   <br />
   <div class="attributes">
@@ -29,7 +29,7 @@
     {/each}
   </div>
   <br />
-  <div class="skills"></div>
+  <div class="skills" />
 </div>
 
 <style lang="scss">
@@ -40,13 +40,13 @@
   .main {
     display: flex;
     flex-direction: row;
-    &>div{
+    & > div {
       flex-basis: 50%;
     }
-  }
-  .attributes {
-    display: flex;
-    flex-direction: column;
-    flex-basis:100%;
+    & > div.attributes {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 100%;
+    }
   }
 </style>

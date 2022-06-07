@@ -993,7 +993,11 @@ class ARd20Actor extends Actor {
   _prepareCharacterData(actorData) {
     var _this$itemTypes$race$;
 
-    if (this.type !== "character") return; // Make modifications to data here. For example:
+    if (this.type !== "character") return;
+    this.prepareAttributes(actorData);
+    this.prepareSkills(actorData);
+    this.prepareResistances(actorData);
+    this.prepareProficiencies(actorData); // Make modifications to data here. For example:
 
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
@@ -1019,16 +1023,6 @@ class ARd20Actor extends Actor {
       }
     });
     actorData.mobility.value += actorData.mobility.bonus; // Loop through ability scores, and add their modifiers to our sheet output.
-
-    for (let [key, attribute] of Object.entries(attributes)) {
-      var _game$i18n$localize;
-
-      console.log(key, attribute); // Calculate the modifier using d20 rules.
-
-      attribute.total = attribute.value + attribute.bonus;
-      attribute.mod = Math.floor((attribute.value - 10) / 2);
-      attribute.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes[key])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : key;
-    }
 
     let dexMod = actorData.mobility.value < 10 ? attributes.dex.mod : actorData.mobility.value < 16 ? Math.min(2, attributes.dex.mod) : Math.min(0, attributes.dex.mod); //calculate level and expierence
 
@@ -1058,30 +1052,19 @@ class ARd20Actor extends Actor {
     def_stats.will.label = "Will";
 
     for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
-      var _def_dam$mag$key, _def_dam$mag$key2, _def_dam$mag$key3, _def_dam$mag$key4, _game$i18n$localize3;
+      var _def_dam$mag$key, _def_dam$mag$key2, _def_dam$mag$key3, _def_dam$mag$key4, _game$i18n$localize2;
 
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        var _def_dam$phys$key, _def_dam$phys$key2, _def_dam$phys$key3, _def_dam$phys$key4, _game$i18n$localize2;
+        var _def_dam$phys$key, _def_dam$phys$key2, _def_dam$phys$key3, _def_dam$phys$key4, _game$i18n$localize;
 
         def_dam.phys[key].value = (_def_dam$phys$key = def_dam.phys[key]) !== null && _def_dam$phys$key !== void 0 && _def_dam$phys$key.value || !((_def_dam$phys$key2 = def_dam.phys[key]) !== null && _def_dam$phys$key2 !== void 0 && _def_dam$phys$key2.immune) ? ((_def_dam$phys$key3 = def_dam.phys[key]) === null || _def_dam$phys$key3 === void 0 ? void 0 : _def_dam$phys$key3.value) + ((_def_dam$phys$key4 = def_dam.phys[key]) === null || _def_dam$phys$key4 === void 0 ? void 0 : _def_dam$phys$key4.bonus) : 0;
-        def_dam.phys[key].name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.DamageSubTypes[key];
+        def_dam.phys[key].name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.DamageSubTypes[key];
       }
 
       def_dam.mag[key].value = (_def_dam$mag$key = def_dam.mag[key]) !== null && _def_dam$mag$key !== void 0 && _def_dam$mag$key.value || !((_def_dam$mag$key2 = def_dam.mag[key]) !== null && _def_dam$mag$key2 !== void 0 && _def_dam$mag$key2.immune) ? ((_def_dam$mag$key3 = def_dam.mag[key]) === null || _def_dam$mag$key3 === void 0 ? void 0 : _def_dam$mag$key3.value) + ((_def_dam$mag$key4 = def_dam.mag[key]) === null || _def_dam$mag$key4 === void 0 ? void 0 : _def_dam$mag$key4.bonus) : 0;
-      def_dam.mag[key].name = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : CONFIG.ARd20.DamageSubTypes[key];
-    }
+      def_dam.mag[key].name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.DamageSubTypes[key];
+    } //calculate rolls for character's skills
 
-    const profLevelSetting = game.settings.get("ard20", "profLevel");
-    const maxProfLevel = profLevelSetting.length - 1; //calculate rolls for character's skills
-
-    for (let [key, skill] of Object.entries(actorData.skills)) {
-      var _game$i18n$localize4;
-
-      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
-      skill.value = skill.level * 4 + skill.bonus;
-      skill.name = (_game$i18n$localize4 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : CONFIG.ARd20.Skills[key];
-      skill.rankName = profLevelSetting[skill.level].label;
-    }
 
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
       var _proficiencies$weapon, _proficiencies$weapon2, _proficiencies$weapon3, _proficiencies$weapon4;
@@ -1095,6 +1078,34 @@ class ARd20Actor extends Actor {
     });
     actorData.speed.value = ((_this$itemTypes$race$ = this.itemTypes.race[0]) === null || _this$itemTypes$race$ === void 0 ? void 0 : _this$itemTypes$race$.type) === "race" ? this.itemTypes.race[0].system.speed : 0;
     actorData.speed.value += attributes.dex.mod + actorData.speed.bonus;
+  }
+
+  prepareAttributes(actorData) {
+    const attributes = actorData.attributes;
+
+    for (let [key, attribute] of Object.entries(attributes)) {
+      var _game$i18n$localize3;
+
+      // Calculate the modifier using d20 rules.
+      attribute.total = attribute.value + attribute.bonus;
+      attribute.mod = attribute.value - 10;
+      attribute.label = (_game$i18n$localize3 = game.i18n.localize(CONFIG.ARd20.Attributes[key])) !== null && _game$i18n$localize3 !== void 0 ? _game$i18n$localize3 : key;
+    }
+  }
+
+  prepareSkills(actorData) {
+    const profLevelSetting = game.settings.get("ard20", "profLevel");
+    const maxProfLevel = profLevelSetting.length - 1;
+    const skills = actorData.skills;
+
+    for (let [key, skill] of Object.entries(skills)) {
+      var _game$i18n$localize4;
+
+      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
+      skill.value = skill.level * 4 + skill.bonus;
+      skill.name = (_game$i18n$localize4 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : CONFIG.ARd20.Skills[key];
+      skill.rankName = profLevelSetting[skill.level].label;
+    }
   }
   /**
    * Prepare NPC type specific data.
@@ -5847,7 +5858,7 @@ function create_if_block$4(ctx) {
 		c() {
 			span = element("span");
 			t = text(/*label*/ ctx[1]);
-			attr(span, "class", "svelte-1cfh9u0");
+			attr(span, "class", "svelte-9lwybx");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
@@ -5865,8 +5876,10 @@ function create_if_block$4(ctx) {
 }
 
 function create_fragment$c(ctx) {
-	let t;
+	let t0;
 	let input_1;
+	let t1;
+	let i;
 	let mounted;
 	let dispose;
 	let if_block = /*label*/ ctx[1] && create_if_block$4(ctx);
@@ -5874,16 +5887,21 @@ function create_fragment$c(ctx) {
 	return {
 		c() {
 			if (if_block) if_block.c();
-			t = space();
+			t0 = space();
 			input_1 = element("input");
-			attr(input_1, "class", "svelte-1cfh9u0");
+			t1 = space();
+			i = element("i");
+			attr(input_1, "class", "svelte-9lwybx");
+			attr(i, "class", "fa-solid fa-feather-pointed");
 		},
 		m(target, anchor) {
 			if (if_block) if_block.m(target, anchor);
-			insert(target, t, anchor);
+			insert(target, t0, anchor);
 			insert(target, input_1, anchor);
 			/*input_1_binding*/ ctx[10](input_1);
 			set_input_value(input_1, /*value*/ ctx[0]);
+			insert(target, t1, anchor);
+			insert(target, i, anchor);
 
 			if (!mounted) {
 				dispose = [
@@ -5902,7 +5920,7 @@ function create_fragment$c(ctx) {
 				} else {
 					if_block = create_if_block$4(ctx);
 					if_block.c();
-					if_block.m(t.parentNode, t);
+					if_block.m(t0.parentNode, t0);
 				}
 			} else if (if_block) {
 				if_block.d(1);
@@ -5917,9 +5935,11 @@ function create_fragment$c(ctx) {
 		o: noop,
 		d(detaching) {
 			if (if_block) if_block.d(detaching);
-			if (detaching) detach(t);
+			if (detaching) detach(t0);
 			if (detaching) detach(input_1);
 			/*input_1_binding*/ ctx[10](null);
+			if (detaching) detach(t1);
+			if (detaching) detach(i);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -7418,7 +7438,7 @@ function create_fragment$6(ctx) {
 		/*inputfordocumentsheet1_value_binding*/ ctx[3](value);
 	}
 
-	let inputfordocumentsheet1_props = { label: "speed" };
+	let inputfordocumentsheet1_props = { label: "speed", type: "integer" };
 
 	if (/*$doc*/ ctx[0].system.speed !== void 0) {
 		inputfordocumentsheet1_props.value = /*$doc*/ ctx[0].system.speed;
@@ -7431,7 +7451,7 @@ function create_fragment$6(ctx) {
 		/*inputfordocumentsheet2_value_binding*/ ctx[4](value);
 	}
 
-	let inputfordocumentsheet2_props = { label: "health" };
+	let inputfordocumentsheet2_props = { label: "health", type: "integer" };
 
 	if (/*$doc*/ ctx[0].system.health !== void 0) {
 		inputfordocumentsheet2_props.value = /*$doc*/ ctx[0].system.health;
@@ -7477,12 +7497,12 @@ function create_fragment$6(ctx) {
 			br1 = element("br");
 			t6 = space();
 			div3 = element("div");
-			attr(header, "class", "svelte-1qjpbbt");
-			attr(div0, "class", "speed svelte-1qjpbbt");
-			attr(div1, "class", "health svelte-1qjpbbt");
-			attr(div2, "class", "attributes svelte-1qjpbbt");
-			attr(div3, "class", "skills svelte-1qjpbbt");
-			attr(div4, "class", "main svelte-1qjpbbt");
+			attr(header, "class", "svelte-1izel0t");
+			attr(div0, "class", "speed svelte-1izel0t");
+			attr(div1, "class", "health svelte-1izel0t");
+			attr(div2, "class", "attributes svelte-1izel0t");
+			attr(div3, "class", "skills svelte-1izel0t");
+			attr(div4, "class", "main svelte-1izel0t");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);

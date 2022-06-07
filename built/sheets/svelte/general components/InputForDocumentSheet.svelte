@@ -37,11 +37,16 @@
     $document.update(data);
   }}
 />
+<i class="fa-solid fa-feather-pointed"></i>
 
 <style lang="scss">
   input,
   span {
     background-color: inherit;
     color: inherit;
+  }
+  input{
+    border:0 0 0 0 solid black
+    
   }
 </style>

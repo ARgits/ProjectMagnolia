@@ -36,6 +36,10 @@ export class ARd20Actor extends Actor {
    */
   _prepareCharacterData(actorData) {
     if (this.type !== "character") return;
+    this.prepareAttributes(actorData);
+    this.prepareSkills(actorData);
+    this.prepareResistances(actorData);
+    this.prepareProficiencies(actorData);
     // Make modifications to data here. For example:
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
@@ -60,13 +64,7 @@ export class ARd20Actor extends Actor {
     });
     actorData.mobility.value += actorData.mobility.bonus;
     // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key,attribute] of Object.entries(attributes)) {
-      console.log(key,attribute)
-      // Calculate the modifier using d20 rules.
-      attribute.total = attribute.value + attribute.bonus;
-      attribute.mod = Math.floor((attribute.value - 10) / 2);
-      attribute.label = game.i18n.localize(CONFIG.ARd20.Attributes[key]) ?? key;
-    }
+    
     let dexMod =
       actorData.mobility.value < 10
         ? attributes.dex.mod
@@ -110,15 +108,8 @@ export class ARd20Actor extends Actor {
           : 0;
       def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
-    const profLevelSetting = game.settings.get("ard20", "profLevel");
-    const maxProfLevel = profLevelSetting.length - 1;
+    
     //calculate rolls for character's skills
-    for (let [key, skill] of Object.entries(actorData.skills)) {
-      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
-      skill.value = skill.level * 4 + skill.bonus;
-      skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
-      skill.rankName = profLevelSetting[skill.level].label;
-    }
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
       return {
         name: setting.name,
@@ -129,6 +120,26 @@ export class ARd20Actor extends Actor {
     });
     actorData.speed.value = this.itemTypes.race[0]?.type === "race" ? this.itemTypes.race[0].system.speed : 0;
     actorData.speed.value += attributes.dex.mod + actorData.speed.bonus;
+  }
+  prepareAttributes(actorData){
+    const attributes = actorData.attributes
+    for (let [key,attribute] of Object.entries(attributes)) {
+      // Calculate the modifier using d20 rules.
+      attribute.total = attribute.value + attribute.bonus;
+      attribute.mod = (attribute.value - 10)
+      attribute.label = game.i18n.localize(CONFIG.ARd20.Attributes[key]) ?? key;
+    }
+  }
+  prepareSkills(actorData){
+    const profLevelSetting = game.settings.get("ard20", "profLevel");
+    const maxProfLevel = profLevelSetting.length - 1;
+    const skills = actorData.skills
+    for (let [key, skill] of Object.entries(skills)) {
+      skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
+      skill.value = skill.level * 4 + skill.bonus;
+      skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
+      skill.rankName = profLevelSetting[skill.level].label;
+    }
   }
   /**
    * Prepare NPC type specific data.
