@@ -68,6 +68,11 @@
         </div>
       {/each}
     </div>
+    <div class="resources">
+      {#each Object.entries($doc.system.resources) as resource}
+        <span>{resource[0]}</span>: <span>{resource[1]}</span>
+      {/each}
+    </div>
   </div>
 </header>
 <div class="content">

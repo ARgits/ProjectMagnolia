@@ -38,6 +38,7 @@ export class ARd20Actor extends Actor {
     if (this.type !== "character") return;
     this.prepareAttributes(actorData);
     this.prepareSkills(actorData);
+    this.prepareResources(actorData);
     /*this.prepareResistances(actorData);
     this.prepareProficiencies(actorData);*/
     // Make modifications to data here. For example:
@@ -140,6 +141,11 @@ export class ARd20Actor extends Actor {
       skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
       skill.rankName = profLevelSetting[skill.level].label;
     }
+  }
+  prepareResources(actorData){
+    actorData.resources = {}
+    actorData.resources.stamina = actorData.resources.stamina || 0
+    actorData.resources.mana = actorData.resources.mana || 0
   }
   /**
    * Prepare NPC type specific data.

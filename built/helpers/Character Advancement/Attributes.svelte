@@ -34,7 +34,7 @@
   let thWidth = 100 / thead.length;
   $: {
     for (let [key, attr] of Object.entries($data.attributes)) {
-      attr.mod = Math.floor((attr.value - 10) / 2);
+      attr.mod = attr.value - 10;
     }
   }
   const rankName = settings.map((setting) => {

@@ -39,7 +39,7 @@
           store.skills[subtype].level += 1;
           break;
         case "features":
-          store.features[subtype].data.level.initial += 1;
+          store.features[subtype].system.level.initial += 1;
           break;
       }
       store.advancement.xp.used += cost;

@@ -996,6 +996,7 @@ class ARd20Actor extends Actor {
     if (this.type !== "character") return;
     this.prepareAttributes(actorData);
     this.prepareSkills(actorData);
+    this.prepareResources(actorData);
     /*this.prepareResistances(actorData);
     this.prepareProficiencies(actorData);*/
     // Make modifications to data here. For example:
@@ -1107,6 +1108,12 @@ class ARd20Actor extends Actor {
       skill.name = (_game$i18n$localize4 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : CONFIG.ARd20.Skills[key];
       skill.rankName = profLevelSetting[skill.level].label;
     }
+  }
+
+  prepareResources(actorData) {
+    actorData.resources = {};
+    actorData.resources.stamina = actorData.resources.stamina || 0;
+    actorData.resources.mana = actorData.resources.mana || 0;
   }
   /**
    * Prepare NPC type specific data.
@@ -2636,7 +2643,7 @@ function instance$h($$self, $$props, $$invalidate) {
 					store.skills[subtype].level += 1;
 					break;
 				case "features":
-					store.features[subtype].data.level.initial += 1;
+					store.features[subtype].system.level.initial += 1;
 					break;
 			}
 
@@ -3651,14 +3658,14 @@ function get_each_context$9(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$5(ctx, list, i) {
+function get_each_context_1$6(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[17] = list[i];
 	return child_ctx;
 }
 
 // (52:8) {#each thead as th}
-function create_each_block_1$5(ctx) {
+function create_each_block_1$6(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[17] + "";
 	let t0;
@@ -3772,7 +3779,7 @@ function create_fragment$g(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$5(get_each_context_1$5(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$6(get_each_context_1$6(ctx, each_value_1, i));
 	}
 
 	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
@@ -3854,12 +3861,12 @@ function create_fragment$g(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$5(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$6(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$5(child_ctx);
+						each_blocks_1[i] = create_each_block_1$6(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(tr, null);
 					}
@@ -3996,7 +4003,7 @@ function instance$f($$self, $$props, $$invalidate) {
 		if ($$self.$$.dirty & /*$data*/ 2) {
 			{
 				for (let [key, attr] of Object.entries($data.attributes)) {
-					attr.mod = Math.floor((attr.value - 10) / 2);
+					attr.mod = attr.value - 10;
 				}
 			}
 		}
@@ -4039,14 +4046,14 @@ function get_each_context$8(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$4(ctx, list, i) {
+function get_each_context_1$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[9] = list[i];
 	return child_ctx;
 }
 
 // (14:2) {#each tabs as tab}
-function create_each_block_1$4(ctx) {
+function create_each_block_1$5(ctx) {
 	let li;
 	let span;
 	let t0_value = /*tab*/ ctx[9].label + "";
@@ -4239,7 +4246,7 @@ function create_fragment$f(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$4(get_each_context_1$4(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$5(get_each_context_1$5(ctx, each_value_1, i));
 	}
 
 	let each_value = /*tabs*/ ctx[1];
@@ -4296,12 +4303,12 @@ function create_fragment$f(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$4(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$5(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$4(child_ctx);
+						each_blocks_1[i] = create_each_block_1$5(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(ul, null);
 					}
@@ -6286,14 +6293,14 @@ function get_each_context$7(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$3(ctx, list, i) {
+function get_each_context_1$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
 // (8:4) {#each tabs as tab}
-function create_each_block_1$3(ctx) {
+function create_each_block_1$4(ctx) {
 	let li;
 	let span;
 	let t0_value = /*tab*/ ctx[3].label + "";
@@ -6480,7 +6487,7 @@ function create_fragment$9(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$4(get_each_context_1$4(ctx, each_value_1, i));
 	}
 
 	let each_value = /*tabs*/ ctx[1];
@@ -6534,12 +6541,12 @@ function create_fragment$9(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$3(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$4(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$3(child_ctx);
+						each_blocks_1[i] = create_each_block_1$4(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(ul, null);
 					}
@@ -6887,28 +6894,34 @@ function get_each_context$5(ctx, list, i) {
 	return child_ctx;
 }
 
+function get_each_context_1$3(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[10] = list[i];
+	return child_ctx;
+}
+
 // (56:6) {#each Object.entries($doc.system.attributes) as attribute}
-function create_each_block$5(ctx) {
+function create_each_block_1$3(ctx) {
 	let div;
 	let span0;
-	let t0_value = /*attribute*/ ctx[7][1].label + "";
+	let t0_value = /*attribute*/ ctx[10][1].label + "";
 	let t0;
 	let t1;
 	let span1;
 	let t2;
-	let t3_value = /*attribute*/ ctx[7][1].value + "";
+	let t3_value = /*attribute*/ ctx[10][1].value + "";
 	let t3;
 	let t4;
 	let span2;
 	let t5;
-	let t6_value = /*attribute*/ ctx[7][1].mod + "";
+	let t6_value = /*attribute*/ ctx[10][1].mod + "";
 	let t6;
 	let t7;
 	let mounted;
 	let dispose;
 
 	function click_handler(...args) {
-		return /*click_handler*/ ctx[6](/*attribute*/ ctx[7], ...args);
+		return /*click_handler*/ ctx[6](/*attribute*/ ctx[10], ...args);
 	}
 
 	return {
@@ -6948,9 +6961,9 @@ function create_each_block$5(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[7][1].label + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[7][1].value + "")) set_data(t3, t3_value);
-			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[7][1].mod + "")) set_data(t6, t6_value);
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[10][1].label + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[10][1].value + "")) set_data(t3, t3_value);
+			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[10][1].mod + "")) set_data(t6, t6_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -6960,12 +6973,49 @@ function create_each_block$5(ctx) {
 	};
 }
 
+// (72:6) {#each Object.entries($doc.system.resources) as resource}
+function create_each_block$5(ctx) {
+	let span0;
+	let t0_value = /*resource*/ ctx[7][0] + "";
+	let t0;
+	let t1;
+	let span1;
+	let t2_value = /*resource*/ ctx[7][1] + "";
+	let t2;
+
+	return {
+		c() {
+			span0 = element("span");
+			t0 = text(t0_value);
+			t1 = text(": ");
+			span1 = element("span");
+			t2 = text(t2_value);
+		},
+		m(target, anchor) {
+			insert(target, span0, anchor);
+			append(span0, t0);
+			insert(target, t1, anchor);
+			insert(target, span1, anchor);
+			append(span1, t2);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*resource*/ ctx[7][0] + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*resource*/ ctx[7][1] + "")) set_data(t2, t2_value);
+		},
+		d(detaching) {
+			if (detaching) detach(span0);
+			if (detaching) detach(t1);
+			if (detaching) detach(span1);
+		}
+	};
+}
+
 function create_fragment$7(ctx) {
 	let header;
 	let div0;
 	let imagewithfilepicker;
 	let t0;
-	let div10;
+	let div11;
 	let div8;
 	let div3;
 	let div1;
@@ -6997,7 +7047,9 @@ function create_fragment$7(ctx) {
 	let t11;
 	let div9;
 	let t12;
-	let div11;
+	let div10;
+	let t13;
+	let div12;
 	let tabs_1;
 	let current;
 
@@ -7043,7 +7095,14 @@ function create_fragment$7(ctx) {
 
 	inputfordocumentsheet2 = new InputForDocumentSheet({ props: inputfordocumentsheet2_props });
 	binding_callbacks.push(() => bind(inputfordocumentsheet2, 'value', inputfordocumentsheet2_value_binding));
-	let each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
+	let each_value_1 = Object.entries(/*$doc*/ ctx[0].system.attributes);
+	let each_blocks_1 = [];
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		each_blocks_1[i] = create_each_block_1$3(get_each_context_1$3(ctx, each_value_1, i));
+	}
+
+	let each_value = Object.entries(/*$doc*/ ctx[0].system.resources);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -7060,7 +7119,7 @@ function create_fragment$7(ctx) {
 			div0 = element("div");
 			create_component(imagewithfilepicker.$$.fragment);
 			t0 = space();
-			div10 = element("div");
+			div11 = element("div");
 			div8 = element("div");
 			div3 = element("div");
 			div1 = element("div");
@@ -7086,12 +7145,19 @@ function create_fragment$7(ctx) {
 			t11 = space();
 			div9 = element("div");
 
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t12 = space();
+			div10 = element("div");
+
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t12 = space();
-			div11 = element("div");
+			t13 = space();
+			div12 = element("div");
 			create_component(tabs_1.$$.fragment);
 			attr(div0, "class", "cha-img svelte-iwliaj");
 			attr(div1, "class", "name");
@@ -7101,17 +7167,18 @@ function create_fragment$7(ctx) {
 			attr(div7, "class", "level");
 			attr(div8, "class", "svelte-iwliaj");
 			attr(div9, "class", "attributes svelte-iwliaj");
-			attr(div10, "class", "main-info svelte-iwliaj");
+			attr(div10, "class", "resources svelte-iwliaj");
+			attr(div11, "class", "main-info svelte-iwliaj");
 			attr(header, "class", "svelte-iwliaj");
-			attr(div11, "class", "content");
+			attr(div12, "class", "content");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
 			append(header, div0);
 			mount_component(imagewithfilepicker, div0, null);
 			append(header, t0);
-			append(header, div10);
-			append(div10, div8);
+			append(header, div11);
+			append(div11, div8);
 			append(div8, div3);
 			append(div3, div1);
 			mount_component(inputfordocumentsheet0, div1, null);
@@ -7133,16 +7200,23 @@ function create_fragment$7(ctx) {
 			append(div7, div6);
 			append(div6, t9);
 			append(div6, t10);
-			append(div10, t11);
-			append(div10, div9);
+			append(div11, t11);
+			append(div11, div9);
 
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div9, null);
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].m(div9, null);
 			}
 
-			insert(target, t12, anchor);
-			insert(target, div11, anchor);
-			mount_component(tabs_1, div11, null);
+			append(div11, t12);
+			append(div11, div10);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(div10, null);
+			}
+
+			insert(target, t13, anchor);
+			insert(target, div12, anchor);
+			mount_component(tabs_1, div12, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -7178,7 +7252,30 @@ function create_fragment$7(ctx) {
 			if ((!current || dirty & /*$doc*/ 1) && t10_value !== (t10_value = /*$doc*/ ctx[0].system.advancement.xp.used + "")) set_data(t10, t10_value);
 
 			if (dirty & /*$doc, Object*/ 1) {
-				each_value = Object.entries(/*$doc*/ ctx[0].system.attributes);
+				each_value_1 = Object.entries(/*$doc*/ ctx[0].system.attributes);
+				let i;
+
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1$3(ctx, each_value_1, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(child_ctx, dirty);
+					} else {
+						each_blocks_1[i] = create_each_block_1$3(child_ctx);
+						each_blocks_1[i].c();
+						each_blocks_1[i].m(div9, null);
+					}
+				}
+
+				for (; i < each_blocks_1.length; i += 1) {
+					each_blocks_1[i].d(1);
+				}
+
+				each_blocks_1.length = each_value_1.length;
+			}
+
+			if (dirty & /*Object, $doc*/ 1) {
+				each_value = Object.entries(/*$doc*/ ctx[0].system.resources);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -7189,7 +7286,7 @@ function create_fragment$7(ctx) {
 					} else {
 						each_blocks[i] = create_each_block$5(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(div9, null);
+						each_blocks[i].m(div10, null);
 					}
 				}
 
@@ -7223,9 +7320,10 @@ function create_fragment$7(ctx) {
 			destroy_component(inputfordocumentsheet0);
 			destroy_component(inputfordocumentsheet1);
 			destroy_component(inputfordocumentsheet2);
+			destroy_each(each_blocks_1, detaching);
 			destroy_each(each_blocks, detaching);
-			if (detaching) detach(t12);
-			if (detaching) detach(div11);
+			if (detaching) detach(t13);
+			if (detaching) detach(div12);
 			destroy_component(tabs_1);
 		}
 	};
