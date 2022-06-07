@@ -14,6 +14,7 @@
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
   function checkInput(e) {
+    console.log(type)
     if (type !== "number" || type !== "integer") return;
     console.log('клавиша нажата в "цифровом" инпуте', e)
     const input = e.target.value;

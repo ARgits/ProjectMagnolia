@@ -5938,6 +5938,7 @@ function instance$c($$self, $$props, $$invalidate) {
 	let input;
 
 	function checkInput(e) {
+		console.log(type);
 		if (type !== "number" || type !== "integer") return;
 		console.log('клавиша нажата в "цифровом" инпуте', e);
 		const input = e.target.value;
