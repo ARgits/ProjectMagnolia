@@ -6979,8 +6979,11 @@ function create_each_block$5(ctx) {
 	let t0;
 	let t1;
 	let span1;
-	let t2_value = /*resource*/ ctx[7][1] + "";
+	let t2_value = /*resource*/ ctx[7][1].value + "";
 	let t2;
+	let t3;
+	let t4_value = /*resource*/ ctx[7][1].max + "";
+	let t4;
 
 	return {
 		c() {
@@ -6989,6 +6992,8 @@ function create_each_block$5(ctx) {
 			t1 = text(": ");
 			span1 = element("span");
 			t2 = text(t2_value);
+			t3 = text(" / ");
+			t4 = text(t4_value);
 		},
 		m(target, anchor) {
 			insert(target, span0, anchor);
@@ -6996,10 +7001,13 @@ function create_each_block$5(ctx) {
 			insert(target, t1, anchor);
 			insert(target, span1, anchor);
 			append(span1, t2);
+			append(span1, t3);
+			append(span1, t4);
 		},
 		p(ctx, dirty) {
 			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*resource*/ ctx[7][0] + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*resource*/ ctx[7][1] + "")) set_data(t2, t2_value);
+			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*resource*/ ctx[7][1].value + "")) set_data(t2, t2_value);
+			if (dirty & /*$doc*/ 1 && t4_value !== (t4_value = /*resource*/ ctx[7][1].max + "")) set_data(t4, t4_value);
 		},
 		d(detaching) {
 			if (detaching) detach(span0);

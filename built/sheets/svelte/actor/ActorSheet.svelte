@@ -70,7 +70,7 @@
     </div>
     <div class="resources">
       {#each Object.entries($doc.system.resources) as resource}
-        <span>{resource[0]}</span>: <span>{resource[1]}</span>
+        <span>{resource[0]}</span>: <span>{resource[1].value} / {resource[1].max}</span>
       {/each}
     </div>
   </div>
