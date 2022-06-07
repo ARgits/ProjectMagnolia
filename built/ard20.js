@@ -1,7 +1,7 @@
 // Import document classes.
 import { ARd20Actor } from "./documents/actor.js";
 import { ARd20Item } from "./documents/item.js";
-import {RaceDataModel} from "./documents/RaceDataModel.js"
+import {RaceDataModel} from "./documents/DataModels/Items/RaceDataModel.js"
 // Import sheet classes.
 import { ARd20ActorSheet } from "./sheets/legacy/actor-sheet.js";
 import { ARd20ItemSheet } from "./sheets/legacy/item-sheet.js";

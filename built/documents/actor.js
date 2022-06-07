@@ -143,9 +143,8 @@ export class ARd20Actor extends Actor {
     }
   }
   prepareResources(actorData){
-    actorData.resources = {}
-    actorData.resources.stamina = actorData.resources.stamina || 0
-    actorData.resources.mana = actorData.resources.mana || 0
+    actorData.resources.stamina.max = actorData.attributes.con.total
+    actorData.resources.mana.max = 0
   }
   /**
    * Prepare NPC type specific data.

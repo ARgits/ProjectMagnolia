@@ -175,6 +175,16 @@
         "weapon": [],
         "armor": [],
         "tool": []
+      },
+      "resources":{
+        "stamina":{
+          "value":0,
+          "bonus":0
+        },
+        "mana":{
+          "value":0,
+          "bonus":0
+        }
       }
     },
     "npc": {
