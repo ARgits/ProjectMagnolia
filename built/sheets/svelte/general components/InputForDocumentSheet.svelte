@@ -14,14 +14,15 @@
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
   function checkInput(e) {
-    console.log(type)
+    console.log(type);
     if (type !== "number" && type !== "integer") return;
-    console.log('клавиша нажата в "цифровом" инпуте', e)
+    console.log('клавиша нажата в "цифровом" инпуте', e);
     const input = e.target.value;
-    console.log('значение инпута:',input)
+    console.log("значение инпута:", input);
     if (!/[0-9\.,-]/.test(e.key)) e.preventDefault();
     else if (e.key === "-" && input.length > 0) e.preventDefault();
-    else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(e.key))) e.preventDefault();
+    else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(",") || input.includes(".")))
+      e.preventDefault();
   }
 </script>
 

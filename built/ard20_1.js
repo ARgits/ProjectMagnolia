@@ -5942,8 +5942,8 @@ function instance$c($$self, $$props, $$invalidate) {
 		if (type !== "number" && type !== "integer") return;
 		console.log('клавиша нажата в "цифровом" инпуте', e);
 		const input = e.target.value;
-		console.log('значение инпута:', input);
-		if (!(/[0-9\.,-]/).test(e.key)) e.preventDefault(); else if (e.key === "-" && input.length > 0) e.preventDefault(); else if ((/[\.,]/).test(e.key) && (type === "integer" || input.includes(e.key))) e.preventDefault();
+		console.log("значение инпута:", input);
+		if (!(/[0-9\.,-]/).test(e.key)) e.preventDefault(); else if (e.key === "-" && input.length > 0) e.preventDefault(); else if ((/[\.,]/).test(e.key) && (type === "integer" || input.includes(",") || input.includes("."))) e.preventDefault();
 	}
 
 	function span_binding($$value) {
@@ -7306,7 +7306,7 @@ function get_each_context$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (24:4) {#each Object.entries($doc.system.attributes) as attribute}
+// (25:4) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block$4(ctx) {
 	let div;
 	let inputfordocumentsheet;
@@ -7379,7 +7379,7 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet0;
 	let updating_value;
 	let t1;
-	let div3;
+	let div4;
 	let div0;
 	let inputfordocumentsheet1;
 	let updating_value_1;
@@ -7388,7 +7388,13 @@ function create_fragment$6(ctx) {
 	let inputfordocumentsheet2;
 	let updating_value_2;
 	let t3;
+	let br0;
+	let t4;
 	let div2;
+	let t5;
+	let br1;
+	let t6;
+	let div3;
 	let current;
 
 	imagewithfilepicker = new ImageWithFilePicker({
@@ -7452,24 +7458,31 @@ function create_fragment$6(ctx) {
 			h1 = element("h1");
 			create_component(inputfordocumentsheet0.$$.fragment);
 			t1 = space();
-			div3 = element("div");
+			div4 = element("div");
 			div0 = element("div");
 			create_component(inputfordocumentsheet1.$$.fragment);
 			t2 = space();
 			div1 = element("div");
 			create_component(inputfordocumentsheet2.$$.fragment);
 			t3 = space();
+			br0 = element("br");
+			t4 = space();
 			div2 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(header, "class", "svelte-rujeof");
-			attr(div0, "class", "speed");
-			attr(div1, "class", "health");
-			attr(div2, "class", "attributes svelte-rujeof");
-			attr(div3, "class", "main svelte-rujeof");
+			t5 = space();
+			br1 = element("br");
+			t6 = space();
+			div3 = element("div");
+			attr(header, "class", "svelte-1qjpbbt");
+			attr(div0, "class", "speed svelte-1qjpbbt");
+			attr(div1, "class", "health svelte-1qjpbbt");
+			attr(div2, "class", "attributes svelte-1qjpbbt");
+			attr(div3, "class", "skills svelte-1qjpbbt");
+			attr(div4, "class", "main svelte-1qjpbbt");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
@@ -7478,19 +7491,25 @@ function create_fragment$6(ctx) {
 			append(header, h1);
 			mount_component(inputfordocumentsheet0, h1, null);
 			insert(target, t1, anchor);
-			insert(target, div3, anchor);
-			append(div3, div0);
+			insert(target, div4, anchor);
+			append(div4, div0);
 			mount_component(inputfordocumentsheet1, div0, null);
-			append(div3, t2);
-			append(div3, div1);
+			append(div4, t2);
+			append(div4, div1);
 			mount_component(inputfordocumentsheet2, div1, null);
-			append(div3, t3);
-			append(div3, div2);
+			append(div4, t3);
+			append(div4, br0);
+			append(div4, t4);
+			append(div4, div2);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(div2, null);
 			}
 
+			append(div4, t5);
+			append(div4, br1);
+			append(div4, t6);
+			append(div4, div3);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -7580,7 +7599,7 @@ function create_fragment$6(ctx) {
 			destroy_component(imagewithfilepicker);
 			destroy_component(inputfordocumentsheet0);
 			if (detaching) detach(t1);
-			if (detaching) detach(div3);
+			if (detaching) detach(div4);
 			destroy_component(inputfordocumentsheet1);
 			destroy_component(inputfordocumentsheet2);
 			destroy_each(each_blocks, detaching);

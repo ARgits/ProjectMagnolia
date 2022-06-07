@@ -20,6 +20,7 @@
   <div class="health">
     <InputForDocumentSheet bind:value={$doc.system.health} label="health" />
   </div>
+  <br />
   <div class="attributes">
     {#each Object.entries($doc.system.attributes) as attribute}
       <div>
@@ -27,6 +28,8 @@
       </div>
     {/each}
   </div>
+  <br />
+  <div class="skills"></div>
 </div>
 
 <style lang="scss">
@@ -36,10 +39,14 @@
   }
   .main {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    &>div{
+      flex-basis: 50%;
+    }
   }
   .attributes {
     display: flex;
     flex-direction: column;
+    flex-basis:100%;
   }
 </style>
