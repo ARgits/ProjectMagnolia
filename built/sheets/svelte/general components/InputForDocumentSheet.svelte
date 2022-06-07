@@ -46,7 +46,8 @@
     color: inherit;
   }
   input{
-    border:0 0 0 0 solid black
-    
+    border:0 solid black;
+    border-bottom:1px solid black
+
   }
 </style>

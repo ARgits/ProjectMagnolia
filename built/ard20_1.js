@@ -5858,7 +5858,7 @@ function create_if_block$4(ctx) {
 		c() {
 			span = element("span");
 			t = text(/*label*/ ctx[1]);
-			attr(span, "class", "svelte-9lwybx");
+			attr(span, "class", "svelte-gjg5fj");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
@@ -5891,7 +5891,7 @@ function create_fragment$c(ctx) {
 			input_1 = element("input");
 			t1 = space();
 			i = element("i");
-			attr(input_1, "class", "svelte-9lwybx");
+			attr(input_1, "class", "svelte-gjg5fj");
 			attr(i, "class", "fa-solid fa-feather-pointed");
 		},
 		m(target, anchor) {
