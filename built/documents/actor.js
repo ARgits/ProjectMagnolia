@@ -109,7 +109,7 @@ export class ARd20Actor extends Actor {
       def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     
-    //calculate rolls for character's skills
+    const profLevelSetting = game.settings.get("ard20", "profLevel");
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.value.map((setting, key) => {
       return {
         name: setting.name,
