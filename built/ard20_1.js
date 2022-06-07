@@ -996,8 +996,9 @@ class ARd20Actor extends Actor {
     if (this.type !== "character") return;
     this.prepareAttributes(actorData);
     this.prepareSkills(actorData);
-    this.prepareResistances(actorData);
-    this.prepareProficiencies(actorData); // Make modifications to data here. For example:
+    /*this.prepareResistances(actorData);
+    this.prepareProficiencies(actorData);*/
+    // Make modifications to data here. For example:
 
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
