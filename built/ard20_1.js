@@ -6927,6 +6927,7 @@ function create_each_block_1$3(ctx) {
 	let t6_value = /*attribute*/ ctx[10][1].mod + "";
 	let t6;
 	let t7;
+	let div_data_tooltip_value;
 	let mounted;
 	let dispose;
 
@@ -6948,6 +6949,8 @@ function create_each_block_1$3(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
+			attr(div, "data-tooltip", div_data_tooltip_value = "roll $" + /*attribute*/ ctx[10][1].label);
+			attr(div, "data-tooltip-direction", "DOWN");
 			attr(div, "class", "svelte-iwliaj");
 		},
 		m(target, anchor) {
@@ -6974,6 +6977,10 @@ function create_each_block_1$3(ctx) {
 			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*attribute*/ ctx[10][1].label + "")) set_data(t0, t0_value);
 			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[10][1].value + "")) set_data(t3, t3_value);
 			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[10][1].mod + "")) set_data(t6, t6_value);
+
+			if (dirty & /*$doc*/ 1 && div_data_tooltip_value !== (div_data_tooltip_value = "roll $" + /*attribute*/ ctx[10][1].label)) {
+				attr(div, "data-tooltip", div_data_tooltip_value);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -7269,7 +7276,7 @@ function create_fragment$7(ctx) {
 			inputfordocumentsheet2.$set(inputfordocumentsheet2_changes);
 			if ((!current || dirty & /*$doc*/ 1) && t10_value !== (t10_value = /*$doc*/ ctx[0].system.advancement.xp.used + "")) set_data(t10, t10_value);
 
-			if (dirty & /*$doc, Object*/ 1) {
+			if (dirty & /*Object, $doc*/ 1) {
 				each_value_1 = Object.entries(/*$doc*/ ctx[0].system.attributes);
 				let i;
 
