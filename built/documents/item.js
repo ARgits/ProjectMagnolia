@@ -547,7 +547,7 @@ export class ARd20Item extends Item {
     if (cost && resource) {
       const costUpd = this.actor.system.resources[resource].value - cost;
       const update = {};
-      update[`system.resources.${resource}`] = costUpd;
+      update[`system.resources.${resource}.value`] = costUpd;
       await this.actor.update(update);
     }
     const token = this.actor.token;
