@@ -7,7 +7,7 @@
   import Tabs from "./Tabs.svelte";
   export let document;
   //
-  const actor = game.actors.get(document.id);
+  const actor = document.actor
   const { application } = getContext("external");
   //create list of changes and context for it
   const changes = writable([]);
@@ -16,7 +16,6 @@
   setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
   setContext("chaAdvCONFIG", CONFIG);
   setContext("chaAdvActorOriginalData", actor.system);
-  setContext("chaAdvActorID", document.id);
   setContext("chaAdvAditionalData", document.aditionalData);
 
   //create store and context for data
@@ -49,8 +48,6 @@
   //select first tab when app initialized
   const activeTab = "attributes";
   $: console.log($actorData, $changes);
-  const id = getContext("chaAdvActorID");
-  const aditionalData = getContext("chaAdvAditionalData");
   //update actor and do other stuff when click 'submit' button
   async function submitData() {
     const updateObj = {};

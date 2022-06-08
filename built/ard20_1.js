@@ -999,7 +999,6 @@ class ARd20Actor extends Actor {
     this.prepareResources(actorData);
     /*this.prepareResistances(actorData);
     this.prepareProficiencies(actorData);*/
-    // Make modifications to data here. For example:
 
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
@@ -4526,7 +4525,7 @@ function instance$d($$self, $$props, $$invalidate) {
 	let { document } = $$props;
 
 	//
-	const actor = game.actors.get(document.id);
+	const actor = document.actor;
 
 	const { application } = getContext("external");
 
@@ -4541,7 +4540,6 @@ function instance$d($$self, $$props, $$invalidate) {
 
 	setContext("chaAdvCONFIG", CONFIG);
 	setContext("chaAdvActorOriginalData", actor.system);
-	setContext("chaAdvActorID", document.id);
 	setContext("chaAdvAditionalData", document.aditionalData);
 
 	//create store and context for data
@@ -4587,9 +4585,6 @@ function instance$d($$self, $$props, $$invalidate) {
 			component: Attributes
 		}
 	];
-
-	getContext("chaAdvActorID");
-	getContext("chaAdvAditionalData");
 
 	//update actor and do other stuff when click 'submit' button
 	async function submitData() {
@@ -5082,7 +5077,7 @@ class ARd20ActorSheet extends ActorSheet {
         }
 
         const document = {
-          id: actor.id,
+          actor: this.actor,
           aditionalData: await createAditionalData()
         };
         app = new CharacterAdvancement(document);
@@ -11319,7 +11314,7 @@ class SvelteDocumentSheet extends SvelteApplication {
     }
 
     const document = {
-      id: actor.id,
+      actor: actor,
       aditionalData: await createAditionalData()
     };
     new CharacterAdvancement(document).render(true, {
@@ -11369,7 +11364,7 @@ async function _handleDocUpdate2(doc, options) {
   if ((action === void 0 || action === "update") && doc) {
     var _doc$name;
 
-    this.reactive.title = (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : "No Document Assigned";
+    this.reactive.title = doc !== null && doc !== void 0 && doc.isToken ? `[Token] ${doc === null || doc === void 0 ? void 0 : doc.name}` : (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : "No Document Assigned";
   }
 }
 

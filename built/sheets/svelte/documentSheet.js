@@ -253,7 +253,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       return obj;
     }
     const document = {
-      id: actor.id,
+      actor:actor,
       aditionalData: await createAditionalData(),
     };
   new CharacterAdvancement(document).render(true, { focus: true });
@@ -280,7 +280,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update") && doc) {
-      this.reactive.title = doc?.name ?? "No Document Assigned";
+      this.reactive.title = doc?.isToken? `[Token] ${doc?.name}`:doc?.name ?? "No Document Assigned";
     }
   }
 

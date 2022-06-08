@@ -41,7 +41,6 @@ export class ARd20Actor extends Actor {
     this.prepareResources(actorData);
     /*this.prepareResistances(actorData);
     this.prepareProficiencies(actorData);*/
-    // Make modifications to data here. For example:
     const attributes = actorData.attributes;
     const advancement = actorData.advancement;
     const def_stats = actorData.defences.stats;

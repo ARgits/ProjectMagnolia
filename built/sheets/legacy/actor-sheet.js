@@ -356,7 +356,7 @@ export class ARd20ActorSheet extends ActorSheet {
           return obj;
         }
         const document = {
-          id: actor.id,
+          actor:this.actor,
           aditionalData: await createAditionalData(),
         };
         app = new CharacterAdvancement(document);
