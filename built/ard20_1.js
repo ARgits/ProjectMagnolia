@@ -11442,11 +11442,26 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", SvelteDocumentSheet, {
       makeDefault: true
     });
-    CONFIG.Item.systemDataModels['race'] = RaceDataModel; //register settings
+    CONFIG.Item.systemDataModels["race"] = RaceDataModel; //register settings
 
     registerSystemSettings(); //register Svelte components for Actor/Item types
 
-    setSvelteComponents(); // Preload Handlebars templates.
+    setSvelteComponents();
+    game.keybindings.register("ard20", "showNotification", {
+      name: "my system keybinding",
+      hint: "some desc.",
+      uneditable: [],
+      editable: [{
+        key: "N"
+      }],
+      onDow: () => {
+        ui.notifications.info("Pressed N!");
+      },
+      onUp: () => {},
+      restricted: false,
+      reservedModifiers: [],
+      precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
+    }); // Preload Handlebars templates.
 
     return preloadHandlebarsTemplates();
   } else {
@@ -11489,9 +11504,9 @@ Hooks.once("ready", async function () {
     ui.notifications.error("typhonjs module is not install, please install it!");
   } else if (!game.modules.get("typhonjs").active) {
     ui.notifications.error("typhonjs module is not active!");
-    const moduleSettings = game.settings.get('core', 'moduleConfiguration');
+    const moduleSettings = game.settings.get("core", "moduleConfiguration");
     moduleSettings["typhonjs"] = true;
-    await game.settings.set('core', 'moduleConfiguration', moduleSettings);
+    await game.settings.set("core", "moduleConfiguration", moduleSettings);
   } // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
 
 

@@ -1,7 +1,7 @@
 // Import document classes.
 import { ARd20Actor } from "./documents/actor.js";
 import { ARd20Item } from "./documents/item.js";
-import {RaceDataModel} from "./documents/DataModels/Items/RaceDataModel.js"
+import { RaceDataModel } from "./documents/DataModels/Items/RaceDataModel.js";
 // Import sheet classes.
 import { ARd20ActorSheet } from "./sheets/legacy/actor-sheet.js";
 import { ARd20ItemSheet } from "./sheets/legacy/item-sheet.js";
@@ -12,7 +12,7 @@ import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./settings/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
-import {SvelteDocumentSheet} from "../built/sheets/svelte/documentSheet.js"
+import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -77,13 +77,25 @@ Hooks.once("init", async function () {
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: false });
     Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
 
-    CONFIG.Item.systemDataModels['race'] = RaceDataModel
+    CONFIG.Item.systemDataModels["race"] = RaceDataModel;
     //register settings
     registerSystemSettings();
 
     //register Svelte components for Actor/Item types
-    setSvelteComponents()
-
+    setSvelteComponents();
+    game.keybindings.register("ard20", "showNotification", {
+      name: "my system keybinding",
+      hint: "some desc.",
+      uneditable: [],
+      editable: [{ key: "N" }],
+      onDow: () => {
+        ui.notifications.info("Pressed N!");
+      },
+      onUp: () => {},
+      restricted: false,
+      reservedModifiers: [],
+      precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
+    });
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();
   } else {
@@ -118,9 +130,9 @@ Hooks.once("ready", async function () {
     ui.notifications.error("typhonjs module is not install, please install it!");
   } else if (!game.modules.get("typhonjs").active) {
     ui.notifications.error("typhonjs module is not active!");
-    const moduleSettings = game.settings.get('core','moduleConfiguration')
-    moduleSettings["typhonjs"] = true
-    await game.settings.set('core','moduleConfiguration',moduleSettings)
+    const moduleSettings = game.settings.get("core", "moduleConfiguration");
+    moduleSettings["typhonjs"] = true;
+    await game.settings.set("core", "moduleConfiguration", moduleSettings);
   }
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
@@ -139,7 +151,8 @@ async function createItemMacro(data, slot) {
   if (game instanceof Game) {
     //@ts-expect-error
     if (data.type !== "Item") return;
-    if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items");
+    if (!("data" in data) && ui.notifications instanceof Notifications)
+      return ui.notifications.warn("You can only create macro buttons for owned Items");
     //@ts-expect-error
     const item = data.data;
     // Create the macro command
