@@ -88,7 +88,7 @@ Hooks.once("init", async function () {
       hint: "some desc.",
       uneditable: [],
       editable: [{ key: "N" }],
-      onDow: () => {
+      onDown: () => {
         ui.notifications.info("Pressed N!");
       },
       onUp: () => {},
