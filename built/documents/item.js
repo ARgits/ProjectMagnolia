@@ -122,6 +122,12 @@ export class ARd20Item extends Item {
       let label = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
       data.source.label += key === 0 ? label : `</br>${label}`;
     });
+    data.passive;
+    data.active;
+    data.cost = {
+      resource: "stamina",
+      value: 1,
+    };
     //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
     //define levels
     data.level.has = data.level.has !== undefined ? data.level.has : false;
@@ -536,6 +542,14 @@ export class ARd20Item extends Item {
     let dieResultCss = {};
     //@ts-expect-error
     const def = this.system.attack?.def ?? "reflex";
+    const resource = this.system.cost.resource;
+    const cost = resource ? this.system.cost.value : null;
+    if (cost && resource) {
+      const costUpd = this.actor.system.cost[resource].value - cost;
+      const update = {};
+      update[`system.resources.${resource}`] = costUpd;
+      await this.actor.update(update);
+    }
     const token = this.actor.token;
     if (targets.length !== 0) {
       //@ts-expect-error
