@@ -6949,7 +6949,7 @@ function create_each_block_1$3(ctx) {
 			t5 = text("Mod: ");
 			t6 = text(t6_value);
 			t7 = space();
-			attr(div, "data-tooltip", div_data_tooltip_value = "roll $" + /*attribute*/ ctx[10][1].label);
+			attr(div, "data-tooltip", div_data_tooltip_value = "click to roll " + /*attribute*/ ctx[10][1].label);
 			attr(div, "data-tooltip-direction", "DOWN");
 			attr(div, "class", "svelte-iwliaj");
 		},
@@ -6978,7 +6978,7 @@ function create_each_block_1$3(ctx) {
 			if (dirty & /*$doc*/ 1 && t3_value !== (t3_value = /*attribute*/ ctx[10][1].value + "")) set_data(t3, t3_value);
 			if (dirty & /*$doc*/ 1 && t6_value !== (t6_value = /*attribute*/ ctx[10][1].mod + "")) set_data(t6, t6_value);
 
-			if (dirty & /*$doc*/ 1 && div_data_tooltip_value !== (div_data_tooltip_value = "roll $" + /*attribute*/ ctx[10][1].label)) {
+			if (dirty & /*$doc*/ 1 && div_data_tooltip_value !== (div_data_tooltip_value = "click to roll " + /*attribute*/ ctx[10][1].label)) {
 				attr(div, "data-tooltip", div_data_tooltip_value);
 			}
 		},

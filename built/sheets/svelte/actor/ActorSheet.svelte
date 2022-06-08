@@ -54,7 +54,7 @@
     </div>
     <div class="attributes">
       {#each Object.entries($doc.system.attributes) as attribute}
-        <div data-tooltip='roll ${attribute[1].label}' data-tooltip-direction='DOWN'
+        <div data-tooltip='click to roll {attribute[1].label}' data-tooltip-direction='DOWN'
           on:click={(event) => {
             event.preventDefault;
             return $doc.rollAttributeTest(attribute[0], { event: event });
