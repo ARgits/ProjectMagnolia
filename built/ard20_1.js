@@ -6876,7 +6876,7 @@ function create_if_block_2(ctx) {
 			insert(target, i, anchor);
 
 			if (!mounted) {
-				dispose = listen(i, "click", /*OpenItem*/ ctx[1]());
+				dispose = listen(i, "click", /*click_handler*/ ctx[7]);
 				mounted = true;
 			}
 		},
@@ -6904,7 +6904,7 @@ function create_if_block_1(ctx) {
 			insert(target, i, anchor);
 
 			if (!mounted) {
-				dispose = listen(i, "click", /*DeleteItem*/ ctx[2]());
+				dispose = listen(i, "click", /*click_handler_1*/ ctx[8]);
 				mounted = true;
 			}
 		},
@@ -6932,7 +6932,7 @@ function create_if_block$2(ctx) {
 			insert(target, i, anchor);
 
 			if (!mounted) {
-				dispose = listen(i, "click", /*CreateItem*/ ctx[3]());
+				dispose = listen(i, "click", /*click_handler_2*/ ctx[9]);
 				mounted = true;
 			}
 		},
@@ -7042,6 +7042,10 @@ function instance$9($$self, $$props, $$invalidate) {
 		await Item.create([{ name: `New ${type}`, type }], { parent: doc });
 	}
 
+	const click_handler = () => OpenItem();
+	const click_handler_1 = () => DeleteItem();
+	const click_handler_2 = () => CreateItem();
+
 	$$self.$$set = $$props => {
 		if ('item' in $$props) $$invalidate(4, item = $$props.item);
 		if ('action' in $$props) $$invalidate(0, action = $$props.action);
@@ -7049,7 +7053,18 @@ function instance$9($$self, $$props, $$invalidate) {
 		if ('type' in $$props) $$invalidate(6, type = $$props.type);
 	};
 
-	return [action, OpenItem, DeleteItem, CreateItem, item, doc, type];
+	return [
+		action,
+		OpenItem,
+		DeleteItem,
+		CreateItem,
+		item,
+		doc,
+		type,
+		click_handler,
+		click_handler_1,
+		click_handler_2
+	];
 }
 
 class ConfigureItemButton extends SvelteComponent {

@@ -18,13 +18,13 @@
 </script>
 
 {#if action === "edit"}
-  <i on:click={OpenItem()} class="fa-solid fa-pen-to-square" />
+  <i on:click={() => OpenItem()} class="fa-solid fa-pen-to-square" />
 {/if}
 {#if action === "delete"}
-  <i on:click={DeleteItem()} class="fa-solid fa-trash-can" />
+  <i on:click={() => DeleteItem()} class="fa-solid fa-trash-can" />
 {/if}
 {#if action === "create"}
-  <i on:click={CreateItem()} class="fa-solid fa-file-plus" />
+  <i on:click={() => CreateItem()} class="fa-solid fa-file-plus" />
 {/if}
 
 <style lang="scss">
