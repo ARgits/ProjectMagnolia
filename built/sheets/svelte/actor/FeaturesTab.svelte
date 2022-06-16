@@ -36,7 +36,7 @@
     &.config {
       width: 5%;
     }
-    &:not(.config) > i {
+    &:not(.config) > i:hover {
       cursor: pointer;
       text-shadow: 0px 0px 10px red;
     }

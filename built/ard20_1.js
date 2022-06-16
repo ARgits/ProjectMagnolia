@@ -7188,21 +7188,21 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t9 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-4letb9"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-26wfod"></i>`;
 			t10 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t11 = space();
-			attr(i0, "class", "fa-solid fa-dice-d20 svelte-4letb9");
-			attr(i1, "class", "fa-regular fa-dice-d20 svelte-4letb9");
-			attr(i2, "class", "fa-light fa-dice-d20 svelte-4letb9");
-			attr(i3, "class", "fa-thin fa-dice-d20 svelte-4letb9");
-			attr(i4, "class", "fa-duotone fa-dice-d20 svelte-4letb9");
-			attr(td0, "class", "svelte-4letb9");
-			attr(td1, "class", "svelte-4letb9");
-			attr(td2, "class", "config svelte-4letb9");
-			attr(td3, "class", "config svelte-4letb9");
-			attr(td4, "class", "config svelte-4letb9");
+			attr(i0, "class", "fa-solid fa-dice-d20 svelte-26wfod");
+			attr(i1, "class", "fa-regular fa-dice-d20 svelte-26wfod");
+			attr(i2, "class", "fa-light fa-dice-d20 svelte-26wfod");
+			attr(i3, "class", "fa-thin fa-dice-d20 svelte-26wfod");
+			attr(i4, "class", "fa-duotone fa-dice-d20 svelte-26wfod");
+			attr(td0, "class", "svelte-26wfod");
+			attr(td1, "class", "svelte-26wfod");
+			attr(td2, "class", "config svelte-26wfod");
+			attr(td3, "class", "config svelte-26wfod");
+			attr(td4, "class", "config svelte-26wfod");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
