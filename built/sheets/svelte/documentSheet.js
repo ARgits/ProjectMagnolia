@@ -97,21 +97,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
  * 
  * 
  */
-  _createDragDropHandlers() {
-    return this.options.dragDrop.map(d => {
-      d.permissions = {
-        dragstart: this._canDragStart.bind(this),
-        drop: this._canDragDrop.bind(this)
-      };
-      d.callbacks = {
-        dragstart: this._onDragStart.bind(this),
-        dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this)
-      };
-      return new DragDrop(d);
-    });
-  }
+
   _canDragStart(selector) {
+    console.log('candragStart')
     return true
   }
   _canDragDrop(selector) {
