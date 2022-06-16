@@ -18,10 +18,10 @@
 </script>
 
 {#if action === "edit"}
-  <i on:click={() => OpenItem()} class="fa-solid fa-pen-to-square" data-tooltip="edit {type}" />
+  <i on:click={() => OpenItem()} class="fa-solid fa-pen-to-square" data-tooltip="edit" />
 {/if}
 {#if action === "delete"}
-  <i on:click={() => DeleteItem()} class="fa-solid fa-trash-can" data-tooltip="delete {type}"/>
+  <i on:click={() => DeleteItem()} class="fa-solid fa-trash-can" data-tooltip="delete"/>
 {/if}
 {#if action === "create"}
   <i on:click={() => CreateItem()} class="fa-solid fa-file-plus" data-tooltip="create new {type}" />

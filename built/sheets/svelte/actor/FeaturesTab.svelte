@@ -12,12 +12,15 @@
   <thead>
     <th>Name</th>
     <th>Level</th>
-    <th colspan="3">Config. <ConfigureItemButton doc={$doc} type='feature' action="create" /></th>
+    <th colspan="3">Config. <ConfigureItemButton doc={$doc} type="feature" action="create" /></th>
   </thead>
   <tbody>
     {#each $doc.itemTypes.feature as item}
       <tr>
-        <td>{item.name}</td>
+        <td
+          >{item.name} <i class="fa-solid fa-dice-d20" /> <i class="fa-regular fa-dice-d20" />
+          <i class="fa-light fa-dice-d20" /> <i class="fa-thin fa-dice-d20" /> <i class="fa-duotone fa-dice-d20" /></td
+        >
         <td>{item.system.level.current}</td>
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>

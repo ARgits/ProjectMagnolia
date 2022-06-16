@@ -6864,7 +6864,6 @@ class InventoryTab extends SvelteComponent {
 
 function create_if_block_2(ctx) {
 	let i;
-	let i_data_tooltip_value;
 	let mounted;
 	let dispose;
 
@@ -6872,7 +6871,7 @@ function create_if_block_2(ctx) {
 		c() {
 			i = element("i");
 			attr(i, "class", "fa-solid fa-pen-to-square svelte-1xsdke5");
-			attr(i, "data-tooltip", i_data_tooltip_value = "edit " + /*type*/ ctx[1]);
+			attr(i, "data-tooltip", "edit");
 		},
 		m(target, anchor) {
 			insert(target, i, anchor);
@@ -6882,11 +6881,7 @@ function create_if_block_2(ctx) {
 				mounted = true;
 			}
 		},
-		p(ctx, dirty) {
-			if (dirty & /*type*/ 2 && i_data_tooltip_value !== (i_data_tooltip_value = "edit " + /*type*/ ctx[1])) {
-				attr(i, "data-tooltip", i_data_tooltip_value);
-			}
-		},
+		p: noop,
 		d(detaching) {
 			if (detaching) detach(i);
 			mounted = false;
@@ -6898,7 +6893,6 @@ function create_if_block_2(ctx) {
 // (23:0) {#if action === "delete"}
 function create_if_block_1(ctx) {
 	let i;
-	let i_data_tooltip_value;
 	let mounted;
 	let dispose;
 
@@ -6906,7 +6900,7 @@ function create_if_block_1(ctx) {
 		c() {
 			i = element("i");
 			attr(i, "class", "fa-solid fa-trash-can svelte-1xsdke5");
-			attr(i, "data-tooltip", i_data_tooltip_value = "delete " + /*type*/ ctx[1]);
+			attr(i, "data-tooltip", "delete");
 		},
 		m(target, anchor) {
 			insert(target, i, anchor);
@@ -6916,11 +6910,7 @@ function create_if_block_1(ctx) {
 				mounted = true;
 			}
 		},
-		p(ctx, dirty) {
-			if (dirty & /*type*/ 2 && i_data_tooltip_value !== (i_data_tooltip_value = "delete " + /*type*/ ctx[1])) {
-				attr(i, "data-tooltip", i_data_tooltip_value);
-			}
-		},
+		p: noop,
 		d(detaching) {
 			if (detaching) detach(i);
 			mounted = false;
@@ -7143,18 +7133,28 @@ function create_each_block$6(ctx) {
 	let t0_value = /*item*/ ctx[2].name + "";
 	let t0;
 	let t1;
-	let td1;
-	let t2_value = /*item*/ ctx[2].system.level.current + "";
+	let i0;
 	let t2;
+	let i1;
 	let t3;
+	let i2;
+	let t4;
+	let i3;
+	let t5;
+	let i4;
+	let t6;
+	let td1;
+	let t7_value = /*item*/ ctx[2].system.level.current + "";
+	let t7;
+	let t8;
 	let td2;
 	let configureitembutton0;
-	let t4;
+	let t9;
 	let td3;
-	let t5;
+	let t10;
 	let td4;
 	let configureitembutton1;
-	let t6;
+	let t11;
 	let current;
 
 	configureitembutton0 = new ConfigureItemButton({
@@ -7171,18 +7171,33 @@ function create_each_block$6(ctx) {
 			td0 = element("td");
 			t0 = text(t0_value);
 			t1 = space();
-			td1 = element("td");
-			t2 = text(t2_value);
+			i0 = element("i");
+			t2 = space();
+			i1 = element("i");
 			t3 = space();
+			i2 = element("i");
+			t4 = space();
+			i3 = element("i");
+			t5 = space();
+			i4 = element("i");
+			t6 = space();
+			td1 = element("td");
+			t7 = text(t7_value);
+			t8 = space();
 			td2 = element("td");
 			create_component(configureitembutton0.$$.fragment);
-			t4 = space();
+			t9 = space();
 			td3 = element("td");
 			td3.innerHTML = `<i class="fa-solid fa-stars"></i>`;
-			t5 = space();
+			t10 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
-			t6 = space();
+			t11 = space();
+			attr(i0, "class", "fa-solid fa-dice-d20");
+			attr(i1, "class", "fa-regular fa-dice-d20");
+			attr(i2, "class", "fa-light fa-dice-d20");
+			attr(i3, "class", "fa-thin fa-dice-d20");
+			attr(i4, "class", "fa-duotone fa-dice-d20");
 			attr(td0, "class", "svelte-wyrj9x");
 			attr(td1, "class", "svelte-wyrj9x");
 			attr(td2, "class", "config svelte-wyrj9x");
@@ -7193,23 +7208,33 @@ function create_each_block$6(ctx) {
 			insert(target, tr, anchor);
 			append(tr, td0);
 			append(td0, t0);
-			append(tr, t1);
+			append(td0, t1);
+			append(td0, i0);
+			append(td0, t2);
+			append(td0, i1);
+			append(td0, t3);
+			append(td0, i2);
+			append(td0, t4);
+			append(td0, i3);
+			append(td0, t5);
+			append(td0, i4);
+			append(tr, t6);
 			append(tr, td1);
-			append(td1, t2);
-			append(tr, t3);
+			append(td1, t7);
+			append(tr, t8);
 			append(tr, td2);
 			mount_component(configureitembutton0, td2, null);
-			append(tr, t4);
+			append(tr, t9);
 			append(tr, td3);
-			append(tr, t5);
+			append(tr, t10);
 			append(tr, td4);
 			mount_component(configureitembutton1, td4, null);
-			append(tr, t6);
+			append(tr, t11);
 			current = true;
 		},
 		p(ctx, dirty) {
 			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[2].name + "")) set_data(t0, t0_value);
-			if ((!current || dirty & /*$doc*/ 1) && t2_value !== (t2_value = /*item*/ ctx[2].system.level.current + "")) set_data(t2, t2_value);
+			if ((!current || dirty & /*$doc*/ 1) && t7_value !== (t7_value = /*item*/ ctx[2].system.level.current + "")) set_data(t7, t7_value);
 			const configureitembutton0_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[2];
 			configureitembutton0.$set(configureitembutton0_changes);
