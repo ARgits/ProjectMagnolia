@@ -6868,35 +6868,73 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (9:0) {#each $doc.items.contents as item}
+// (17:4) {#each $doc.items.contents as item}
 function create_each_block$6(ctx) {
-	let li;
+	let tr;
+	let td0;
+	let t0_value = /*item*/ ctx[2].name + "";
 	let t0;
-	let t1_value = /*item*/ ctx[2].name + "";
 	let t1;
+	let td1;
+	let t2_value = /*item*/ ctx[2].system.level.current + "";
+	let t2;
+	let t3;
+	let td2;
+	let t4;
+	let td3;
+	let t5;
+	let td4;
+	let t6;
 
 	return {
 		c() {
-			li = element("li");
-			t0 = text("Name: ");
-			t1 = text(t1_value);
+			tr = element("tr");
+			td0 = element("td");
+			t0 = text(t0_value);
+			t1 = space();
+			td1 = element("td");
+			t2 = text(t2_value);
+			t3 = space();
+			td2 = element("td");
+			td2.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
+			t4 = space();
+			td3 = element("td");
+			td3.innerHTML = `<i class="fa-solid fa-stars"></i>`;
+			t5 = space();
+			td4 = element("td");
+			td4.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+			t6 = space();
 		},
 		m(target, anchor) {
-			insert(target, li, anchor);
-			append(li, t0);
-			append(li, t1);
+			insert(target, tr, anchor);
+			append(tr, td0);
+			append(td0, t0);
+			append(tr, t1);
+			append(tr, td1);
+			append(td1, t2);
+			append(tr, t3);
+			append(tr, td2);
+			append(tr, t4);
+			append(tr, td3);
+			append(tr, t5);
+			append(tr, td4);
+			append(tr, t6);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$doc*/ 1 && t1_value !== (t1_value = /*item*/ ctx[2].name + "")) set_data(t1, t1_value);
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*item*/ ctx[2].name + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*item*/ ctx[2].system.level.current + "")) set_data(t2, t2_value);
 		},
 		d(detaching) {
-			if (detaching) detach(li);
+			if (detaching) detach(tr);
 		}
 	};
 }
 
 function create_fragment$8(ctx) {
-	let ul;
+	let table;
+	let thead;
+	let t5;
+	let tbody;
 	let each_value = /*$doc*/ ctx[0].items.contents;
 	let each_blocks = [];
 
@@ -6906,17 +6944,28 @@ function create_fragment$8(ctx) {
 
 	return {
 		c() {
-			ul = element("ul");
+			table = element("table");
+			thead = element("thead");
+
+			thead.innerHTML = `<th>Name</th> 
+    <th>Level</th> 
+    <th>Config.</th>`;
+
+			t5 = space();
+			tbody = element("tbody");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 		},
 		m(target, anchor) {
-			insert(target, ul, anchor);
+			insert(target, table, anchor);
+			append(table, thead);
+			append(table, t5);
+			append(table, tbody);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(ul, null);
+				each_blocks[i].m(tbody, null);
 			}
 		},
 		p(ctx, [dirty]) {
@@ -6932,7 +6981,7 @@ function create_fragment$8(ctx) {
 					} else {
 						each_blocks[i] = create_each_block$6(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(ul, null);
+						each_blocks[i].m(tbody, null);
 					}
 				}
 
@@ -6946,7 +6995,7 @@ function create_fragment$8(ctx) {
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(ul);
+			if (detaching) detach(table);
 			destroy_each(each_blocks, detaching);
 		}
 	};
@@ -6956,7 +7005,7 @@ function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
-	console.log($doc.items, 'actors items tab');
+	console.log($doc.items, "actors items tab");
 	return [$doc, doc];
 }
 
