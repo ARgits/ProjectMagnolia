@@ -7233,7 +7233,11 @@ function create_fragment$8(ctx) {
 	let current;
 
 	configureitembutton = new ConfigureItemButton({
-			props: { doc: /*$doc*/ ctx[0], type: "feature" }
+			props: {
+				doc: /*$doc*/ ctx[0],
+				type: "feature",
+				action: "create"
+			}
 		});
 
 	let each_value = /*$doc*/ ctx[0].itemTypes.feature;

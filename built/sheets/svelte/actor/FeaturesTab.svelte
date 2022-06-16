@@ -12,7 +12,7 @@
   <thead>
     <th>Name</th>
     <th>Level</th>
-    <th colspan="3">Config. <ConfigureItemButton doc={$doc} type='feature'/></th>
+    <th colspan="3">Config. <ConfigureItemButton doc={$doc} type='feature' action="create" /></th>
   </thead>
   <tbody>
     {#each $doc.itemTypes.feature as item}
