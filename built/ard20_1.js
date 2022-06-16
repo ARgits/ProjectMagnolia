@@ -6904,6 +6904,11 @@ function create_each_block$6(ctx) {
 			td4 = element("td");
 			td4.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
 			t6 = space();
+			attr(td0, "class", "svelte-18uu37l");
+			attr(td1, "class", "svelte-18uu37l");
+			attr(td2, "class", "config svelte-18uu37l");
+			attr(td3, "class", "config svelte-18uu37l");
+			attr(td4, "class", "config svelte-18uu37l");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -6949,7 +6954,7 @@ function create_fragment$8(ctx) {
 
 			thead.innerHTML = `<th>Name</th> 
     <th>Level</th> 
-    <th>Config.</th>`;
+    <th colspan="3">Config.</th>`;
 
 			t5 = space();
 			tbody = element("tbody");

@@ -11,19 +11,26 @@
   <thead>
     <th>Name</th>
     <th>Level</th>
-    <th>Config.</th>
+    <th colspan=3>Config.</th>
   </thead>
   <tbody>
     {#each $doc.items.contents as item}
       <tr>
         <td>{item.name}</td>
         <td>{item.system.level.current}</td>
-        <td><i class="fa-solid fa-pen-to-square"></i></td>
-        <td><i class="fa-solid fa-stars"></i></td>
-        <td><i class="fa-solid fa-trash-can"></i></td>
+        <td class="config"><i class="fa-solid fa-pen-to-square"></i></td>
+        <td class="config"><i class="fa-solid fa-stars"></i></td>
+        <td class="config"><i class="fa-solid fa-trash-can"></i></td>
       </tr>
     {/each}
   </tbody>
 </table>
 
-<style lang="scss"></style>
+<style lang="scss">
+  td{
+    text-align: center;
+    &.config{
+      width:10%
+    }
+  }
+</style>
