@@ -1,7 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { getContext } from "svelte";
+  
+import { getContext } from "svelte";
   import ConfigureItemButton from "../general components/ConfigureItemButton.svelte";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
@@ -17,10 +18,12 @@
   <tbody>
     {#each $doc.itemTypes.feature as item}
       <tr>
-        <td
-          >{item.name} <i class="fa-solid fa-dice-d20" /> <i class="fa-regular fa-dice-d20" />
-          <i class="fa-light fa-dice-d20" /> <i class="fa-thin fa-dice-d20" /> <i class="fa-duotone fa-dice-d20" /></td
-        >
+        <td>
+          {item.name}
+          {#if item.system.hasAttack || item.system.hasDamage}
+            <i class="fa-light fa-dice-d20" />
+          {/if}
+        </td>
         <td>{item.system.level.current}</td>
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
