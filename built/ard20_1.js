@@ -6868,7 +6868,7 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (8:0) {#each $doc.items as item}
+// (9:0) {#each $doc.items as item}
 function create_each_block$6(ctx) {
 	let li;
 	let t0;
@@ -6956,6 +6956,7 @@ function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
+	console.log($doc.items, 'actors items tab');
 	return [$doc, doc];
 }
 

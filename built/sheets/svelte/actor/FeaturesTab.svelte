@@ -3,6 +3,7 @@
   import { getContext } from "svelte";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
+  console.log($doc.items, 'actors items tab')
 </script>
 <ul>
 {#each $doc.items as item}
