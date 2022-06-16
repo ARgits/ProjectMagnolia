@@ -18,13 +18,13 @@
 </script>
 
 {#if action === "edit"}
-  <i on:click={() => OpenItem()} class="fa-solid fa-pen-to-square" />
+  <i on:click={() => OpenItem()} class="fa-solid fa-pen-to-square" data-tooltip="edit {type}" />
 {/if}
 {#if action === "delete"}
-  <i on:click={() => DeleteItem()} class="fa-solid fa-trash-can" />
+  <i on:click={() => DeleteItem()} class="fa-solid fa-trash-can" data-tooltip="delete {type}"/>
 {/if}
 {#if action === "create"}
-  <i on:click={() => CreateItem()} class="fa-solid fa-file-plus" />
+  <i on:click={() => CreateItem()} class="fa-solid fa-file-plus" data-tooltip="create new {type}" />
 {/if}
 
 <style lang="scss">

@@ -99,14 +99,12 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
 
   _canDragStart(selector) {
-    console.log("candragStart");
     return true;
   }
   _canDragDrop(selector) {
     return this.reactive.document.isOwner || game.user.isGM;
   }
   _onDragOver(event) {
-    console.log(event, "ondragOver");
   }
 
   _onDragStart(event) {

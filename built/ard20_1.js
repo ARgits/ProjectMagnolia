@@ -6864,6 +6864,7 @@ class InventoryTab extends SvelteComponent {
 
 function create_if_block_2(ctx) {
 	let i;
+	let i_data_tooltip_value;
 	let mounted;
 	let dispose;
 
@@ -6871,6 +6872,7 @@ function create_if_block_2(ctx) {
 		c() {
 			i = element("i");
 			attr(i, "class", "fa-solid fa-pen-to-square svelte-1xsdke5");
+			attr(i, "data-tooltip", i_data_tooltip_value = "edit " + /*type*/ ctx[1]);
 		},
 		m(target, anchor) {
 			insert(target, i, anchor);
@@ -6880,7 +6882,11 @@ function create_if_block_2(ctx) {
 				mounted = true;
 			}
 		},
-		p: noop,
+		p(ctx, dirty) {
+			if (dirty & /*type*/ 2 && i_data_tooltip_value !== (i_data_tooltip_value = "edit " + /*type*/ ctx[1])) {
+				attr(i, "data-tooltip", i_data_tooltip_value);
+			}
+		},
 		d(detaching) {
 			if (detaching) detach(i);
 			mounted = false;
@@ -6892,6 +6898,7 @@ function create_if_block_2(ctx) {
 // (23:0) {#if action === "delete"}
 function create_if_block_1(ctx) {
 	let i;
+	let i_data_tooltip_value;
 	let mounted;
 	let dispose;
 
@@ -6899,6 +6906,7 @@ function create_if_block_1(ctx) {
 		c() {
 			i = element("i");
 			attr(i, "class", "fa-solid fa-trash-can svelte-1xsdke5");
+			attr(i, "data-tooltip", i_data_tooltip_value = "delete " + /*type*/ ctx[1]);
 		},
 		m(target, anchor) {
 			insert(target, i, anchor);
@@ -6908,7 +6916,11 @@ function create_if_block_1(ctx) {
 				mounted = true;
 			}
 		},
-		p: noop,
+		p(ctx, dirty) {
+			if (dirty & /*type*/ 2 && i_data_tooltip_value !== (i_data_tooltip_value = "delete " + /*type*/ ctx[1])) {
+				attr(i, "data-tooltip", i_data_tooltip_value);
+			}
+		},
 		d(detaching) {
 			if (detaching) detach(i);
 			mounted = false;
@@ -6920,6 +6932,7 @@ function create_if_block_1(ctx) {
 // (26:0) {#if action === "create"}
 function create_if_block$2(ctx) {
 	let i;
+	let i_data_tooltip_value;
 	let mounted;
 	let dispose;
 
@@ -6927,6 +6940,7 @@ function create_if_block$2(ctx) {
 		c() {
 			i = element("i");
 			attr(i, "class", "fa-solid fa-file-plus svelte-1xsdke5");
+			attr(i, "data-tooltip", i_data_tooltip_value = "create new " + /*type*/ ctx[1]);
 		},
 		m(target, anchor) {
 			insert(target, i, anchor);
@@ -6936,7 +6950,11 @@ function create_if_block$2(ctx) {
 				mounted = true;
 			}
 		},
-		p: noop,
+		p(ctx, dirty) {
+			if (dirty & /*type*/ 2 && i_data_tooltip_value !== (i_data_tooltip_value = "create new " + /*type*/ ctx[1])) {
+				attr(i, "data-tooltip", i_data_tooltip_value);
+			}
+		},
 		d(detaching) {
 			if (detaching) detach(i);
 			mounted = false;
@@ -7047,20 +7065,20 @@ function instance$9($$self, $$props, $$invalidate) {
 	const click_handler_2 = () => CreateItem();
 
 	$$self.$$set = $$props => {
-		if ('item' in $$props) $$invalidate(4, item = $$props.item);
+		if ('item' in $$props) $$invalidate(5, item = $$props.item);
 		if ('action' in $$props) $$invalidate(0, action = $$props.action);
-		if ('doc' in $$props) $$invalidate(5, doc = $$props.doc);
-		if ('type' in $$props) $$invalidate(6, type = $$props.type);
+		if ('doc' in $$props) $$invalidate(6, doc = $$props.doc);
+		if ('type' in $$props) $$invalidate(1, type = $$props.type);
 	};
 
 	return [
 		action,
+		type,
 		OpenItem,
 		DeleteItem,
 		CreateItem,
 		item,
 		doc,
-		type,
 		click_handler,
 		click_handler_1,
 		click_handler_2
@@ -7070,11 +7088,11 @@ function instance$9($$self, $$props, $$invalidate) {
 class ConfigureItemButton extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { item: 4, action: 0, doc: 5, type: 6 });
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, { item: 5, action: 0, doc: 6, type: 1 });
 	}
 
 	get item() {
-		return this.$$.ctx[4];
+		return this.$$.ctx[5];
 	}
 
 	set item(item) {
@@ -7092,7 +7110,7 @@ class ConfigureItemButton extends SvelteComponent {
 	}
 
 	get doc() {
-		return this.$$.ctx[5];
+		return this.$$.ctx[6];
 	}
 
 	set doc(doc) {
@@ -7101,7 +7119,7 @@ class ConfigureItemButton extends SvelteComponent {
 	}
 
 	get type() {
-		return this.$$.ctx[6];
+		return this.$$.ctx[1];
 	}
 
 	set type(type) {
@@ -11633,7 +11651,6 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   _canDragStart(selector) {
-    console.log("candragStart");
     return true;
   }
 
@@ -11641,9 +11658,7 @@ class SvelteDocumentSheet extends SvelteApplication {
     return this.reactive.document.isOwner || game.user.isGM;
   }
 
-  _onDragOver(event) {
-    console.log(event, "ondragOver");
-  }
+  _onDragOver(event) {}
 
   _onDragStart(event) {
     {
