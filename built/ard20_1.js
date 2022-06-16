@@ -7030,7 +7030,7 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (18:4) {#each $doc.items.contents as item}
+// (18:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
@@ -7136,7 +7136,7 @@ function create_fragment$8(ctx) {
 	let t5;
 	let tbody;
 	let current;
-	let each_value = /*$doc*/ ctx[0].items.contents;
+	let each_value = /*$doc*/ ctx[0].itemTypes.feature;
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -7177,7 +7177,7 @@ function create_fragment$8(ctx) {
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*$doc*/ 1) {
-				each_value = /*$doc*/ ctx[0].items.contents;
+				each_value = /*$doc*/ ctx[0].itemTypes.feature;
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {

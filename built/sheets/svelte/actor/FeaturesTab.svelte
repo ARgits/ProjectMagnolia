@@ -15,7 +15,7 @@
     <th colspan="3">Config.</th>
   </thead>
   <tbody>
-    {#each $doc.items.contents as item}
+    {#each $doc.itemTypes.feature as item}
       <tr>
         <td>{item.name}</td>
         <td>{item.system.level.current}</td>
