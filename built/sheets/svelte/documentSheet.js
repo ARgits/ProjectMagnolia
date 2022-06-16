@@ -92,8 +92,37 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }
     return buttons;
   }
-  _onDragStart(event){
+  _canDragStart(selector) {
+    return this.isEditable;
+  }
+
+  _canDragDrop(selector) {
+    return this.isEditable;
+  }
+  _onDragStart(event) {
     console.log(event,'onDragStart event')
+    const li = event.currentTarget;
+    if ( event.target.classList.contains("content-link") ) return;
+
+    // Create drag data
+    let dragData;
+
+    // Owned Items
+    if ( li.dataset.itemId ) {
+      const item = this.actor.items.get(li.dataset.itemId);
+      dragData = item.toDragData();
+    }
+
+    // Active Effect
+    if ( li.dataset.effectId ) {
+      const effect = this.actor.effects.get(li.dataset.effectId);
+      dragData = effect.toDragData();
+    }
+
+    if ( !dragData ) return;
+
+    // Set data transfer
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
   _onDrop(event){
     console.log(event, 'onDrop event')
