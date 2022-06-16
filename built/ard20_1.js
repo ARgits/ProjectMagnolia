@@ -6864,27 +6864,39 @@ class InventoryTab extends SvelteComponent {
 
 function get_each_context$6(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[2] = list[i];
+	child_ctx[4] = list[i];
 	return child_ctx;
 }
 
-// (17:4) {#each $doc.items.contents as item}
+// (23:4) {#each $doc.items.contents as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
-	let t0_value = /*item*/ ctx[2].name + "";
+	let t0_value = /*item*/ ctx[4].name + "";
 	let t0;
 	let t1;
 	let td1;
-	let t2_value = /*item*/ ctx[2].system.level.current + "";
+	let t2_value = /*item*/ ctx[4].system.level.current + "";
 	let t2;
 	let t3;
 	let td2;
+	let i0;
 	let t4;
 	let td3;
 	let t5;
 	let td4;
+	let i2;
 	let t6;
+	let mounted;
+	let dispose;
+
+	function click_handler() {
+		return /*click_handler*/ ctx[2](/*item*/ ctx[4]);
+	}
+
+	function click_handler_1() {
+		return /*click_handler_1*/ ctx[3](/*item*/ ctx[4]);
+	}
 
 	return {
 		c() {
@@ -6896,19 +6908,22 @@ function create_each_block$6(ctx) {
 			t2 = text(t2_value);
 			t3 = space();
 			td2 = element("td");
-			td2.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
+			i0 = element("i");
 			t4 = space();
 			td3 = element("td");
 			td3.innerHTML = `<i class="fa-solid fa-stars"></i>`;
 			t5 = space();
 			td4 = element("td");
-			td4.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+			i2 = element("i");
 			t6 = space();
-			attr(td0, "class", "svelte-18uu37l");
-			attr(td1, "class", "svelte-18uu37l");
-			attr(td2, "class", "config svelte-18uu37l");
-			attr(td3, "class", "config svelte-18uu37l");
-			attr(td4, "class", "config svelte-18uu37l");
+			attr(td0, "class", "svelte-wyrj9x");
+			attr(td1, "class", "svelte-wyrj9x");
+			attr(i0, "class", "fa-solid fa-pen-to-square");
+			attr(i0, "on", "");
+			attr(td2, "class", "config svelte-wyrj9x");
+			attr(td3, "class", "config svelte-wyrj9x");
+			attr(i2, "class", "fa-solid fa-trash-can");
+			attr(td4, "class", "config svelte-wyrj9x");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -6919,18 +6934,28 @@ function create_each_block$6(ctx) {
 			append(td1, t2);
 			append(tr, t3);
 			append(tr, td2);
+			append(td2, i0);
 			append(tr, t4);
 			append(tr, td3);
 			append(tr, t5);
 			append(tr, td4);
+			append(td4, i2);
 			append(tr, t6);
+
+			if (!mounted) {
+				dispose = [listen(i0, "click", click_handler), listen(i2, "click", click_handler_1)];
+				mounted = true;
+			}
 		},
-		p(ctx, dirty) {
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*item*/ ctx[2].name + "")) set_data(t0, t0_value);
-			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*item*/ ctx[2].system.level.current + "")) set_data(t2, t2_value);
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*item*/ ctx[4].name + "")) set_data(t0, t0_value);
+			if (dirty & /*$doc*/ 1 && t2_value !== (t2_value = /*item*/ ctx[4].system.level.current + "")) set_data(t2, t2_value);
 		},
 		d(detaching) {
 			if (detaching) detach(tr);
+			mounted = false;
+			run_all(dispose);
 		}
 	};
 }
@@ -6974,7 +6999,7 @@ function create_fragment$8(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$doc*/ 1) {
+			if (dirty & /*DeleteItem, $doc, OpenItem*/ 1) {
 				each_value = /*$doc*/ ctx[0].items.contents;
 				let i;
 
@@ -7006,12 +7031,22 @@ function create_fragment$8(ctx) {
 	};
 }
 
+function DeleteItem(item) {
+	item.delete();
+}
+
+function OpenItem(item) {
+	item.sheet.render(true);
+}
+
 function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 	console.log($doc.items, "actors items tab");
-	return [$doc, doc];
+	const click_handler = item => OpenItem(item);
+	const click_handler_1 = item => DeleteItem(item);
+	return [$doc, doc, click_handler, click_handler_1];
 }
 
 class FeaturesTab extends SvelteComponent {
