@@ -93,11 +93,11 @@ export class SvelteDocumentSheet extends SvelteApplication {
     return buttons;
   }
   _canDragStart(selector) {
-    return this.isEditable;
+    return this.reactive.document.isOwner || game.user.isGM;
   }
 
   _canDragDrop(selector) {
-    return this.isEditable;
+    return this.reactive.document.isOwner || game.user.isGM;
   }
   _onDragStart(event) {
     console.log(event,'onDragStart event')
