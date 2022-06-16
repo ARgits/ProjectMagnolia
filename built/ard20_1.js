@@ -7103,7 +7103,7 @@ function create_each_block_1$3(ctx) {
 			t7 = space();
 			attr(div, "data-tooltip", div_data_tooltip_value = "click to roll " + /*attribute*/ ctx[10][1].label);
 			attr(div, "data-tooltip-direction", "DOWN");
-			attr(div, "class", "svelte-iwliaj");
+			attr(div, "class", "svelte-rm2f2e");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -7336,17 +7336,17 @@ function create_fragment$7(ctx) {
 			t13 = space();
 			div12 = element("div");
 			create_component(tabs_1.$$.fragment);
-			attr(div0, "class", "cha-img svelte-iwliaj");
+			attr(div0, "class", "cha-img svelte-rm2f2e");
 			attr(div1, "class", "name");
 			attr(div2, "class", "race");
 			attr(div3, "class", "nameAndRace");
 			attr(div4, "class", "health");
 			attr(div7, "class", "level");
-			attr(div8, "class", "svelte-iwliaj");
-			attr(div9, "class", "attributes svelte-iwliaj");
-			attr(div10, "class", "resources svelte-iwliaj");
-			attr(div11, "class", "main-info svelte-iwliaj");
-			attr(header, "class", "svelte-iwliaj");
+			attr(div8, "class", "svelte-rm2f2e");
+			attr(div9, "class", "attributes svelte-rm2f2e");
+			attr(div10, "class", "resources svelte-rm2f2e");
+			attr(div11, "class", "main-info svelte-rm2f2e");
+			attr(header, "class", "svelte-rm2f2e");
 			attr(div12, "class", "content");
 		},
 		m(target, anchor) {
@@ -11278,6 +11278,10 @@ class SvelteDocumentSheet extends SvelteApplication {
     }
 
     return buttons;
+  }
+
+  _onDragStart(event) {
+    console.log(event, 'onDragStart event');
   }
 
   _onDrop(event) {

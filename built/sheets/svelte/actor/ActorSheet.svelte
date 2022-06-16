@@ -98,7 +98,7 @@
       & > .attributes {
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         align-items: center;
         justify-content: space-between;
         padding-bottom: 10px;

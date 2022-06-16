@@ -92,6 +92,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }
     return buttons;
   }
+  _onDragStart(event){
+    console.log(event,'onDragStart event')
+  }
   _onDrop(event){
     console.log(event, 'onDrop event')
   }
