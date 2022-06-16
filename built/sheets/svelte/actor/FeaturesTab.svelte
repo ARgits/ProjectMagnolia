@@ -36,5 +36,9 @@
     &.config {
       width: 5%;
     }
+    &:not(.config) > i {
+      cursor: pointer;
+      text-shadow: 0px 0px 10px red;
+    }
   }
 </style>
