@@ -7,6 +7,9 @@ import { getContext } from "svelte";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
   console.log($doc.items, "actors items tab");
+  function ShowDescription(){
+    
+  }
 </script>
 
 <table>
@@ -19,9 +22,9 @@ import { getContext } from "svelte";
     {#each $doc.itemTypes.feature as item}
       <tr>
         <td>
-          {item.name}
+          <span on:click={()=>ShowDescription()}>{item.name} </span>
           {#if item.system.hasAttack || item.system.hasDamage}
-            <i class="fa-light fa-dice-d20" />
+            <i class="fa-light fa-dice-d20" data-tooltip="roll" />
           {/if}
         </td>
         <td>{item.system.level.current}</td>
