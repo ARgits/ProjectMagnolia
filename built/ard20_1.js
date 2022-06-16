@@ -11226,7 +11226,7 @@ class SvelteDocumentSheet extends SvelteApplication {
       resizable: true,
       minimizable: true,
       dragDrop: [{
-        dragSelector: ".item-list .item",
+        dragSelector: ".directory-list .item",
         dropSelector: null
       }],
       svelte: {
@@ -11281,13 +11281,13 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
   /**
    * Drag&Drop handling
-   * 
-   * 
+   *
+   *
    */
 
 
   _canDragStart(selector) {
-    console.log('candragStart');
+    console.log("candragStart");
     return true;
   }
 
@@ -11296,20 +11296,138 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   _onDragOver(event) {
-    console.log(event, 'ondragOver');
+    console.log(event, "ondragOver");
   }
 
   _onDragStart(event) {
-    console.log(event, 'onDragStart event');
+    {
+      const li = event.currentTarget;
+      if (event.target.classList.contains("content-link")) return; // Create drag data
+
+      let dragData; // Owned Items
+
+      if (li.dataset.itemId) {
+        const item = this.actor.items.get(li.dataset.itemId);
+        dragData = item.toDragData();
+      } // Active Effect
+
+
+      if (li.dataset.effectId) {
+        const effect = this.actor.effects.get(li.dataset.effectId);
+        dragData = effect.toDragData();
+      }
+
+      if (!dragData) return; // Set data transfer
+
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    }
   }
 
-  _onDrop(event) {
-    console.log(event, 'onDrop event');
+  async _onDrop(event) {
+    console.log("on drop event");
+    if (this.reactive.document.documentName !== "Actor") return;
+    const data = TextEditor.getDragEventData(event);
+    const actor = this.reactive.document;
+    /**
+     * A hook event that fires when some useful data is dropped onto an ActorSheet.
+     * @function dropActorSheetData
+     * @memberof hookEvents
+     * @param {Actor} actor      The Actor
+     * @param {ActorSheet} sheet The ActorSheet application
+     * @param {object} data      The data that has been dropped onto the sheet
+     */
+
+    const allowed = Hooks.call("dropActorSheetData", actor, this, data);
+    if (allowed === false) return; // Handle different data types
+
+    switch (data.type) {
+      case "ActiveEffect":
+        return this._onDropActiveEffect(event, data, actor);
+
+      case "Actor":
+        return this._onDropActor(event, data, actor);
+
+      case "Item":
+        return this._onDropItem(event, data, actor);
+
+      case "Folder":
+        return this._onDropFolder(event, data, actor);
+    }
+  }
+
+  async _onDropActiveEffect(event, data, actor) {
+    const effect = await ActiveEffect.implementation.fromDropData(data);
+    if (!actor.isOwner || !effect) return false;
+    if (actor.uuid === effect.parent.uuid) return false;
+    return ActiveEffect.create(effect.toObject(), {
+      parent: actor
+    });
+  }
+
+  async _onDropActor(event, data, actor) {
+    if (!actor.isOwner) return false;
+  }
+
+  async _onDropItem(event, data, actor) {
+    var _item$parent;
+
+    if (!actor.isOwner) return false;
+    const item = await Item.implementation.fromDropData(data);
+    const itemData = item.toObject(); // Handle item sorting within the same Actor
+
+    if (actor.uuid === ((_item$parent = item.parent) === null || _item$parent === void 0 ? void 0 : _item$parent.uuid)) return this._onSortItem(event, itemData, actor); // Create the owned item
+
+    return this._onDropItemCreate(itemData);
+  }
+
+  async _onDropFolder(event, data, actor) {
+    if (!actor.isOwner) return [];
+    if (data.documentName !== "Item") return [];
+    const folder = await Folder.implementation.fromDropData(data);
+    if (!folder) return [];
+    return this._onDropItemCreate(folder.contents.map(item => {
+      return game.items.fromCompendium(item);
+    }));
+  }
+
+  async _onDropItemCreate(itemData) {
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    return actor.createEmbeddedDocuments("Item", itemData);
+  }
+
+  _onSortItem(event, itemData, actor) {
+    // Get the drag source and drop target
+    const items = actor.items;
+    const source = items.get(itemData._id);
+    const dropTarget = event.target.closest("[data-item-id]");
+    const target = items.get(dropTarget.dataset.itemId); // Don't sort on yourself
+
+    if (source.id === target.id) return; // Identify sibling items based on adjacent HTML elements
+
+    const siblings = [];
+
+    for (let el of dropTarget.parentElement.children) {
+      const siblingId = el.dataset.itemId;
+      if (siblingId && siblingId !== source.id) siblings.push(items.get(el.dataset.itemId));
+    } // Perform the sort
+
+
+    const sortUpdates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings
+    });
+    const updateData = sortUpdates.map(u => {
+      const update = u.update;
+      update._id = u.target.data._id;
+      return update;
+    }); // Perform the update
+
+    return actor.updateEmbeddedDocuments("Item", updateData);
   }
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    */
 
 

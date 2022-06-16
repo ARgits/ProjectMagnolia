@@ -51,7 +51,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       height: 600,
       resizable: true,
       minimizable: true,
-      dragDrop:[{dragSelector: ".item-list .item", dropSelector: null}],
+      dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
         class: DocumentShell,
         target: document.body,
@@ -92,33 +92,145 @@ export class SvelteDocumentSheet extends SvelteApplication {
     return buttons;
   }
 
-/**
- * Drag&Drop handling
- * 
- * 
- */
+  /**
+   * Drag&Drop handling
+   *
+   *
+   */
 
   _canDragStart(selector) {
-    console.log('candragStart')
-    return true
+    console.log("candragStart");
+    return true;
   }
   _canDragDrop(selector) {
     return this.reactive.document.isOwner || game.user.isGM;
   }
   _onDragOver(event) {
-    console.log(event,'ondragOver')
+    console.log(event, "ondragOver");
   }
 
   _onDragStart(event) {
-    console.log(event,'onDragStart event')
+    {
+      const li = event.currentTarget;
+      if (event.target.classList.contains("content-link")) return;
+
+      // Create drag data
+      let dragData;
+
+      // Owned Items
+      if (li.dataset.itemId) {
+        const item = this.actor.items.get(li.dataset.itemId);
+        dragData = item.toDragData();
+      }
+
+      // Active Effect
+      if (li.dataset.effectId) {
+        const effect = this.actor.effects.get(li.dataset.effectId);
+        dragData = effect.toDragData();
+      }
+
+      if (!dragData) return;
+
+      // Set data transfer
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    }
   }
-  _onDrop(event){
-    console.log(event, 'onDrop event')
+  async _onDrop(event) {
+    console.log("on drop event");
+    if (this.reactive.document.documentName !== "Actor") return;
+    const data = TextEditor.getDragEventData(event);
+    const actor = this.reactive.document;
+
+    /**
+     * A hook event that fires when some useful data is dropped onto an ActorSheet.
+     * @function dropActorSheetData
+     * @memberof hookEvents
+     * @param {Actor} actor      The Actor
+     * @param {ActorSheet} sheet The ActorSheet application
+     * @param {object} data      The data that has been dropped onto the sheet
+     */
+    const allowed = Hooks.call("dropActorSheetData", actor, this, data);
+    if (allowed === false) return;
+
+    // Handle different data types
+    switch (data.type) {
+      case "ActiveEffect":
+        return this._onDropActiveEffect(event, data, actor);
+      case "Actor":
+        return this._onDropActor(event, data, actor);
+      case "Item":
+        return this._onDropItem(event, data, actor);
+      case "Folder":
+        return this._onDropFolder(event, data, actor);
+    }
+  }
+  async _onDropActiveEffect(event, data, actor) {
+    const effect = await ActiveEffect.implementation.fromDropData(data);
+    if (!actor.isOwner || !effect) return false;
+    if (actor.uuid === effect.parent.uuid) return false;
+    return ActiveEffect.create(effect.toObject(), { parent: actor });
+  }
+  async _onDropActor(event, data, actor) {
+    if (!actor.isOwner) return false;
+  }
+  async _onDropItem(event, data, actor) {
+    if (!actor.isOwner) return false;
+    const item = await Item.implementation.fromDropData(data);
+    const itemData = item.toObject();
+
+    // Handle item sorting within the same Actor
+    if (actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData, actor);
+
+    // Create the owned item
+    return this._onDropItemCreate(itemData);
+  }
+  async _onDropFolder(event, data, actor) {
+    if (!actor.isOwner) return [];
+    if (data.documentName !== "Item") return [];
+    const folder = await Folder.implementation.fromDropData(data);
+    if (!folder) return [];
+    return this._onDropItemCreate(
+      folder.contents.map((item) => {
+        return game.items.fromCompendium(item);
+      })
+    );
+  }
+  async _onDropItemCreate(itemData) {
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    return actor.createEmbeddedDocuments("Item", itemData);
+  }
+  _onSortItem(event, itemData, actor) {
+    // Get the drag source and drop target
+    const items = actor.items;
+    const source = items.get(itemData._id);
+    const dropTarget = event.target.closest("[data-item-id]");
+    const target = items.get(dropTarget.dataset.itemId);
+
+    // Don't sort on yourself
+    if (source.id === target.id) return;
+
+    // Identify sibling items based on adjacent HTML elements
+    const siblings = [];
+    for (let el of dropTarget.parentElement.children) {
+      const siblingId = el.dataset.itemId;
+      if (siblingId && siblingId !== source.id) siblings.push(items.get(el.dataset.itemId));
+    }
+
+    // Perform the sort
+    const sortUpdates = SortingHelpers.performIntegerSort(source, { target, siblings });
+    const updateData = sortUpdates.map((u) => {
+      const update = u.update;
+      update._id = u.target.data._id;
+      return update;
+    });
+
+    // Perform the update
+    return actor.updateEmbeddedDocuments("Item", updateData);
   }
   /**
-   * 
-   * 
-   * 
+   *
+   *
+   *
    */
   _onCofigureSheet(event) {
     if (event) event.preventDefault();
@@ -147,10 +259,15 @@ export class SvelteDocumentSheet extends SvelteApplication {
         for (const val of game.settings.get("ard20", "feat").packs) {
           if (game.packs.filter((pack) => pack.metadata.label === val.name).length !== 0) {
             let feat_list = [];
-            feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0].index));
+            feat_list.push(
+              Array.from(
+                game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0].index
+              )
+            );
             feat_list = feat_list.flat();
             for (const feat of feat_list) {
-              const new_key = game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
+              const new_key =
+                game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
               const doc = await game.packs.get(new_key).getDocument(feat.id);
               const item = doc.toObject();
               item.system = foundry.utils.deepClone(doc.system);
@@ -171,7 +288,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
         for (let val of game.settings.get("ard20", "feat").folders) {
           if (game.folders.filter((folder) => folder.data.name === val.name).length !== 0) {
             let feat_list = [];
-            feat_list.push(game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents);
+            feat_list.push(
+              game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents
+            );
             feat_list = feat_list.flat();
             for (let feat of feat_list) {
               console.log("item added from folder ", feat);
@@ -252,11 +371,14 @@ export class SvelteDocumentSheet extends SvelteApplication {
         console.log(k, v);
         if (name_array.includes(v.name)) {
           console.log("this item is already learned", featList.temp_feat_list[k]);
-          featList.temp_feat_list[k] = foundry.utils.deepClone(featList.learnedFeatures.filter((item) => item.name === v.name)[0]);
+          featList.temp_feat_list[k] = foundry.utils.deepClone(
+            featList.learnedFeatures.filter((item) => item.name === v.name)[0]
+          );
         }
       });
       featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
-        if (item.type === "feature") return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+        if (item.type === "feature")
+          return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
       });
       const obj = {
         races: { list: raceList, chosen: "" },
@@ -278,10 +400,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
       return obj;
     }
     const document = {
-      actor:actor,
+      actor: actor,
       aditionalData: await createAditionalData(),
     };
-  new CharacterAdvancement(document).render(true, { focus: true });
+    new CharacterAdvancement(document).render(true, { focus: true });
   }
   async close(options = {}) {
     console.log("close ", options);
@@ -305,7 +427,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update") && doc) {
-      this.reactive.title = doc?.isToken? `[Token] ${doc?.name}`:doc?.name ?? "No Document Assigned";
+      this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
     }
   }
 
@@ -318,4 +440,3 @@ export class SvelteDocumentSheet extends SvelteApplication {
     return this;
   }
 }
-
