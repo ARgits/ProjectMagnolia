@@ -182,7 +182,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
     if (actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData, actor);
 
     // Create the owned item
-    return this._onDropItemCreate(itemData);
+    return this._onDropItemCreate(itemData, actor);
   }
   async _onDropFolder(event, data, actor) {
     if (!actor.isOwner) return [];
@@ -195,7 +195,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
       })
     );
   }
-  async _onDropItemCreate(itemData) {
+  async _onDropItemCreate(itemData, actor) {
     itemData = itemData instanceof Array ? itemData : [itemData];
     return actor.createEmbeddedDocuments("Item", itemData);
   }
