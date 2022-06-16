@@ -6,7 +6,7 @@
   console.log($doc.items, 'actors items tab')
 </script>
 <ul>
-{#each $doc.items as item}
+{#each $doc.items.contents as item}
   <li>Name: {item.name}</li>
 {/each}
 </ul>
