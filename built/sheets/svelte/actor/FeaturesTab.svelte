@@ -2,15 +2,10 @@
 
 <script>
   import { getContext } from "svelte";
+  import ConfigureItemButton from "../general components/ConfigureItemButton.svelte";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
   console.log($doc.items, "actors items tab");
-  function DeleteItem(item) {
-    item.delete();
-  }
-  function OpenItem(item) {
-    item.sheet.render(true);
-  }
 </script>
 
 <table>
@@ -24,9 +19,9 @@
       <tr>
         <td>{item.name}</td>
         <td>{item.system.level.current}</td>
-        <td class="config"><i on:click={() => OpenItem(item)} class="fa-solid fa-pen-to-square" on /></td>
+        <td class="config"><ConfigureItemButton {item} type="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
-        <td class="config"><i on:click={() => DeleteItem(item)} class="fa-solid fa-trash-can" /></td>
+        <td class="config"><ConfigureItemButton {item} type="delete" /></td>
       </tr>
     {/each}
   </tbody>
