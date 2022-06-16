@@ -12,16 +12,16 @@
   <thead>
     <th>Name</th>
     <th>Level</th>
-    <th colspan="3">Config.</th>
+    <th colspan="3">Config. <ConfigureItemButton doc={$doc} type='feature'/></th>
   </thead>
   <tbody>
     {#each $doc.itemTypes.feature as item}
       <tr>
         <td>{item.name}</td>
         <td>{item.system.level.current}</td>
-        <td class="config"><ConfigureItemButton {item} type="edit" /></td>
+        <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
-        <td class="config"><ConfigureItemButton {item} type="delete" /></td>
+        <td class="config"><ConfigureItemButton {item} action="delete" /></td>
       </tr>
     {/each}
   </tbody>
