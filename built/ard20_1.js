@@ -7149,7 +7149,7 @@ function create_if_block$2(ctx) {
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
-	let span;
+	let span0;
 	let t0_value = /*item*/ ctx[3].name + "";
 	let t0;
 	let t1;
@@ -7166,6 +7166,8 @@ function create_each_block$6(ctx) {
 	let td4;
 	let configureitembutton1;
 	let t7;
+	let span1;
+	let raw_value = /*item*/ ctx[3].system.description + "";
 	let current;
 	let mounted;
 	let dispose;
@@ -7183,7 +7185,7 @@ function create_each_block$6(ctx) {
 		c() {
 			tr = element("tr");
 			td0 = element("td");
-			span = element("span");
+			span0 = element("span");
 			t0 = text(t0_value);
 			t1 = space();
 			if (if_block) if_block.c();
@@ -7200,6 +7202,7 @@ function create_each_block$6(ctx) {
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
+			span1 = element("span");
 			attr(td0, "class", "svelte-ktrjat");
 			attr(td1, "class", "svelte-ktrjat");
 			attr(td2, "class", "config svelte-ktrjat");
@@ -7210,8 +7213,8 @@ function create_each_block$6(ctx) {
 		m(target, anchor) {
 			insert(target, tr, anchor);
 			append(tr, td0);
-			append(td0, span);
-			append(span, t0);
+			append(td0, span0);
+			append(span0, t0);
 			append(td0, t1);
 			if (if_block) if_block.m(td0, null);
 			append(tr, t2);
@@ -7225,11 +7228,13 @@ function create_each_block$6(ctx) {
 			append(tr, t6);
 			append(tr, td4);
 			mount_component(configureitembutton1, td4, null);
-			append(tr, t7);
+			insert(target, t7, anchor);
+			insert(target, span1, anchor);
+			span1.innerHTML = raw_value;
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(span, "click", /*click_handler*/ ctx[2]);
+				dispose = listen(span0, "click", /*click_handler*/ ctx[2]);
 				mounted = true;
 			}
 		},
@@ -7254,7 +7259,7 @@ function create_each_block$6(ctx) {
 			const configureitembutton1_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[3];
 			configureitembutton1.$set(configureitembutton1_changes);
-		},
+			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[3].system.description + "")) span1.innerHTML = raw_value;		},
 		i(local) {
 			if (current) return;
 			transition_in(configureitembutton0.$$.fragment, local);
@@ -7271,6 +7276,8 @@ function create_each_block$6(ctx) {
 			if (if_block) if_block.d();
 			destroy_component(configureitembutton0);
 			destroy_component(configureitembutton1);
+			if (detaching) detach(t7);
+			if (detaching) detach(span1);
 			mounted = false;
 			dispose();
 		}

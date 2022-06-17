@@ -28,6 +28,7 @@
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
       </tr>
+      <span>{@html item.system.description}</span>
     {/each}
   </tbody>
 </table>
