@@ -28,7 +28,7 @@
     {#each $doc.itemTypes.feature as item}
       <tr>
         <td>
-          <span on:click={(event) => ShowDescription(event)}>
+          <span>
             {item.name}
           </span>
           {#if item.system.hasAttack || item.system.hasDamage}

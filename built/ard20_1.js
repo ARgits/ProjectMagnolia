@@ -7122,7 +7122,7 @@ class ConfigureItemButton extends SvelteComponent {
 
 function get_each_context$6(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[2] = list[i];
 	return child_ctx;
 }
 
@@ -7150,12 +7150,12 @@ function create_each_block$6(ctx) {
 	let tr;
 	let td0;
 	let span;
-	let t0_value = /*item*/ ctx[3].name + "";
+	let t0_value = /*item*/ ctx[2].name + "";
 	let t0;
 	let t1;
 	let t2;
 	let td1;
-	let t3_value = /*item*/ ctx[3].system.level.current + "";
+	let t3_value = /*item*/ ctx[2].system.level.current + "";
 	let t3;
 	let t4;
 	let td2;
@@ -7169,16 +7169,14 @@ function create_each_block$6(ctx) {
 	let div;
 	let t9;
 	let current;
-	let mounted;
-	let dispose;
-	let if_block = (/*item*/ ctx[3].system.hasAttack || /*item*/ ctx[3].system.hasDamage) && create_if_block$2();
+	let if_block = (/*item*/ ctx[2].system.hasAttack || /*item*/ ctx[2].system.hasDamage) && create_if_block$2();
 
 	configureitembutton0 = new ConfigureItemButton({
-			props: { item: /*item*/ ctx[3], action: "edit" }
+			props: { item: /*item*/ ctx[2], action: "edit" }
 		});
 
 	configureitembutton1 = new ConfigureItemButton({
-			props: { item: /*item*/ ctx[3], action: "delete" }
+			props: { item: /*item*/ ctx[2], action: "delete" }
 		});
 
 	return {
@@ -7235,16 +7233,11 @@ function create_each_block$6(ctx) {
 			append(tr, div);
 			append(tr, t9);
 			current = true;
-
-			if (!mounted) {
-				dispose = listen(span, "click", /*click_handler*/ ctx[2]);
-				mounted = true;
-			}
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[3].name + "")) set_data(t0, t0_value);
+			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[2].name + "")) set_data(t0, t0_value);
 
-			if (/*item*/ ctx[3].system.hasAttack || /*item*/ ctx[3].system.hasDamage) {
+			if (/*item*/ ctx[2].system.hasAttack || /*item*/ ctx[2].system.hasDamage) {
 				if (if_block) ; else {
 					if_block = create_if_block$2();
 					if_block.c();
@@ -7255,12 +7248,12 @@ function create_each_block$6(ctx) {
 				if_block = null;
 			}
 
-			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = /*item*/ ctx[3].system.level.current + "")) set_data(t3, t3_value);
+			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = /*item*/ ctx[2].system.level.current + "")) set_data(t3, t3_value);
 			const configureitembutton0_changes = {};
-			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[3];
+			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[2];
 			configureitembutton0.$set(configureitembutton0_changes);
 			const configureitembutton1_changes = {};
-			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[3];
+			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[2];
 			configureitembutton1.$set(configureitembutton1_changes);
 		},
 		i(local) {
@@ -7279,8 +7272,6 @@ function create_each_block$6(ctx) {
 			if (if_block) if_block.d();
 			destroy_component(configureitembutton0);
 			destroy_component(configureitembutton1);
-			mounted = false;
-			dispose();
 		}
 	};
 }
@@ -7364,7 +7355,7 @@ function create_fragment$8(ctx) {
 			if (dirty & /*$doc*/ 1) configureitembutton_changes.doc = /*$doc*/ ctx[0];
 			configureitembutton.$set(configureitembutton_changes);
 
-			if (dirty & /*$doc, ShowDescription*/ 1) {
+			if (dirty & /*$doc*/ 1) {
 				each_value = /*$doc*/ ctx[0].itemTypes.feature;
 				let i;
 
@@ -7419,28 +7410,11 @@ function create_fragment$8(ctx) {
 	};
 }
 
-function ShowDescription(event) {
-	const parent = event.target.parentNode.parentNode;
-	const div = parent.getElementsByClassName("description")[0];
-	const divHeight = div.offsetHeight;
-	const parentHeight = parent.offsetHeight;
-	if (!parent.style.height) parent.style.height = parentHeight + "px";
-	const isHidden = getComputedStyle(div).opacity == 0;
-	div.style.opacity = isHidden ? 1 : 0;
-
-	parent.style.height = isHidden
-	? parentHeight + divHeight + "px"
-	: parentHeight - divHeight + "px";
-
-	div.style.top = isHidden ? parentHeight + "px" : div.style.top;
-}
-
 function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
-	const click_handler = event => ShowDescription(event);
-	return [$doc, doc, click_handler];
+	return [$doc, doc];
 }
 
 class FeaturesTab extends SvelteComponent {
