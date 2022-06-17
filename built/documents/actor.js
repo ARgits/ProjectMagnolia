@@ -131,6 +131,8 @@ export class ARd20Actor extends Actor {
     }
   }
   prepareSkills(actorData){
+    const mainDie = game.settings.get("ard20", "mainDiceType")
+    const skillLevelBonus = mainDie==="2d10"?3:4
     const profLevelSetting = game.settings.get("ard20", "profLevel");
     const maxProfLevel = profLevelSetting.length - 1;
     const skills = actorData.skills

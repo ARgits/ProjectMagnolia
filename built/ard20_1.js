@@ -1095,6 +1095,7 @@ class ARd20Actor extends Actor {
   }
 
   prepareSkills(actorData) {
+    game.settings.get("ard20", "mainDiceType");
     const profLevelSetting = game.settings.get("ard20", "profLevel");
     const maxProfLevel = profLevelSetting.length - 1;
     const skills = actorData.skills;
