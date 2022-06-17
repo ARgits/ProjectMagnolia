@@ -9,10 +9,20 @@
     const parent = event.target.parentNode.parentNode;
     const div = parent.getElementsByClassName("description")[0];
     const isHidden = getComputedStyle(div).opacity == 0;
-    div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s width 1.1"; //set width transition a little longer so we can't see some dirty things
+    div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s width 1.1"; //width transition little bit longer so you can't see that
+    let divHeight;
+    let parentHeight;
+    //depend on <div> state we need different order of setting properties
+    if (isHidden) {
+      div.style.width = "100%";
+      divHeight = div.offsetHeight;
+      parentHeight = parent.offsetHeight;
+    } else {
+      divHeight = div.offsetHeight;
+      parentHeight = parent.offsetHeight;
+      div.style.width = "0%";
+    }
     div.style.width = isHidden ? "100%" : "0%";
-    const divHeight = div.offsetHeight;
-    const parentHeight = parent.offsetHeight;
     if (!parent.style.height) parent.style.height = parentHeight + "px";
     div.style.opacity = isHidden ? 1 : 0;
     parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
