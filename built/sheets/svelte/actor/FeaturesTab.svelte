@@ -6,11 +6,12 @@
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
   function ShowDescription(event) {
-    const parent = event.target.parentElement; //get <tr> element
-    const div = parent.getElementsByClassName("description")[0]; //get div child from <tr> element
-    console.log(div)
+    const parent = event.target.parentNode.parentNode;
+    console.log(parent);
+    const div = parent.getElementsByClassName("description")[0];
     const divHeight = div.offsetHeight;
     const parentHeight = parent.offsetHeight;
+    if (!parent.style.height) parent.style.height = parentHeight + "px";
     const isHidden = getComputedStyle(div).opacity == 0;
     div.style.opacity = isHidden ? 1 : 0;
     parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
@@ -45,7 +46,7 @@
 
 <style lang="scss">
   tr {
-    position:relative;
+    position: relative;
     width: 100%;
     transition: height 1s;
     &:nth-of-type(odd) {
@@ -67,7 +68,7 @@
   }
   div.description {
     left: 0px;
-    background-color: rgb(255,255,255);
+    background-color: rgb(255, 255, 255);
     border: 1px solid black;
     border-bottom: none;
     border-radius: 0px 0px 5px 5px;
