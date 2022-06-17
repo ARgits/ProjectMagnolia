@@ -28,7 +28,9 @@
     {#each $doc.itemTypes.feature as item}
       <tr>
         <td>
-          <span on:click={(event) => ShowDescription(event)}>{item.name} </span>
+          <span on:click={(event) => ShowDescription(event)}>
+            {item.name}
+          </span>
           {#if item.system.hasAttack || item.system.hasDamage}
             <i class="fa-light fa-dice-d20" data-tooltip="roll" />
           {/if}
@@ -37,7 +39,9 @@
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
-        <div class="description"><p>placeholder for description</p></div>
+        <div class="description">
+          <p>placeholder for description</p>
+        </div>
       </tr>
     {/each}
   </tbody>
@@ -55,7 +59,7 @@
     }
   }
   td {
-    vertical-align:top;
+    vertical-align: top;
     text-align: center;
     &.config {
       width: 5%;
@@ -66,7 +70,7 @@
     }
   }
   div.description {
-    width:100%;
+    width: 100%;
     left: 0px;
     background-color: rgb(255, 255, 255);
     border: 1px solid black;

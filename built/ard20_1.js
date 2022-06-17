@@ -7126,7 +7126,7 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (32:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (34:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
