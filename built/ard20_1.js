@@ -7126,7 +7126,7 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (33:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (32:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
@@ -7145,7 +7145,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (29:4) {#each $doc.itemTypes.feature as item}
+// (28:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
@@ -7426,7 +7426,6 @@ function ShowDescription(event) {
 	const parentHeight = parent.offsetHeight;
 	if (!parent.style.height) parent.style.height = parentHeight + "px";
 	const isHidden = getComputedStyle(div).opacity == 0;
-	div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s";
 	div.style.opacity = isHidden ? 1 : 0;
 
 	parent.style.height = isHidden
