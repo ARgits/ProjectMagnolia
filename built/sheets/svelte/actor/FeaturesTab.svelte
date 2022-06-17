@@ -44,6 +44,7 @@
 
 <style lang="scss">
   tr {
+    position:relative;
     width: 100%;
     transition: height 1s;
     &:nth-of-type(odd) {
