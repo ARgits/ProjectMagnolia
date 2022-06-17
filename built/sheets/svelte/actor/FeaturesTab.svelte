@@ -12,6 +12,7 @@
     const parentHeight = parent.offsetHeight;
     if (!parent.style.height) parent.style.height = parentHeight + "px";
     const isHidden = getComputedStyle(div).opacity == 0;
+    div.style.zIndex = isHidden ? "initial" : -1;
     div.style.opacity = isHidden ? 1 : 0;
     parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
     div.style.top = isHidden ? parentHeight + "px" : div.style.top;
@@ -27,9 +28,6 @@
   <tbody>
     {#each $doc.itemTypes.feature as item}
       <tr>
-        <div class="description">
-          <p>placeholder for description</p>
-        </div>
         <td>
           <span on:click={(event) => ShowDescription(event)}>
             {item.name}
@@ -42,7 +40,9 @@
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
-
+        <div class="description">
+          <p>placeholder for description</p>
+        </div>
       </tr>
     {/each}
   </tbody>
@@ -71,6 +71,7 @@
     }
   }
   div.description {
+    z-index: -1;
     width: 100%;
     left: 0px;
     background-color: rgb(255, 255, 255);

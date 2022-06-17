@@ -7126,14 +7126,14 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (37:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (35:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-1co2ymp");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-1t0f3b3");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7145,28 +7145,28 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (28:4) {#each $doc.itemTypes.feature as item}
+// (29:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
-	let div;
-	let t1;
 	let td0;
 	let span;
-	let t2_value = /*item*/ ctx[3].name + "";
+	let t0_value = /*item*/ ctx[3].name + "";
+	let t0;
+	let t1;
 	let t2;
+	let td1;
+	let t3_value = /*item*/ ctx[3].system.level.current + "";
 	let t3;
 	let t4;
-	let td1;
-	let t5_value = /*item*/ ctx[3].system.level.current + "";
-	let t5;
-	let t6;
 	let td2;
 	let configureitembutton0;
-	let t7;
+	let t5;
 	let td3;
-	let t8;
+	let t6;
 	let td4;
 	let configureitembutton1;
+	let t7;
+	let div;
 	let t9;
 	let current;
 	let mounted;
@@ -7184,55 +7184,55 @@ function create_each_block$6(ctx) {
 	return {
 		c() {
 			tr = element("tr");
-			div = element("div");
-			div.innerHTML = `<p>placeholder for description</p>`;
-			t1 = space();
 			td0 = element("td");
 			span = element("span");
-			t2 = text(t2_value);
-			t3 = space();
+			t0 = text(t0_value);
+			t1 = space();
 			if (if_block) if_block.c();
-			t4 = space();
+			t2 = space();
 			td1 = element("td");
-			t5 = text(t5_value);
-			t6 = space();
+			t3 = text(t3_value);
+			t4 = space();
 			td2 = element("td");
 			create_component(configureitembutton0.$$.fragment);
-			t7 = space();
+			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-1co2ymp"></i>`;
-			t8 = space();
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-1t0f3b3"></i>`;
+			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
+			t7 = space();
+			div = element("div");
+			div.innerHTML = `<p>placeholder for description</p>`;
 			t9 = space();
-			attr(div, "class", "description svelte-1co2ymp");
-			attr(td0, "class", "svelte-1co2ymp");
-			attr(td1, "class", "svelte-1co2ymp");
-			attr(td2, "class", "config svelte-1co2ymp");
-			attr(td3, "class", "config svelte-1co2ymp");
-			attr(td4, "class", "config svelte-1co2ymp");
-			attr(tr, "class", "svelte-1co2ymp");
+			attr(td0, "class", "svelte-1t0f3b3");
+			attr(td1, "class", "svelte-1t0f3b3");
+			attr(td2, "class", "config svelte-1t0f3b3");
+			attr(td3, "class", "config svelte-1t0f3b3");
+			attr(td4, "class", "config svelte-1t0f3b3");
+			attr(div, "class", "description svelte-1t0f3b3");
+			attr(tr, "class", "svelte-1t0f3b3");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
-			append(tr, div);
-			append(tr, t1);
 			append(tr, td0);
 			append(td0, span);
-			append(span, t2);
-			append(td0, t3);
+			append(span, t0);
+			append(td0, t1);
 			if (if_block) if_block.m(td0, null);
-			append(tr, t4);
+			append(tr, t2);
 			append(tr, td1);
-			append(td1, t5);
-			append(tr, t6);
+			append(td1, t3);
+			append(tr, t4);
 			append(tr, td2);
 			mount_component(configureitembutton0, td2, null);
-			append(tr, t7);
+			append(tr, t5);
 			append(tr, td3);
-			append(tr, t8);
+			append(tr, t6);
 			append(tr, td4);
 			mount_component(configureitembutton1, td4, null);
+			append(tr, t7);
+			append(tr, div);
 			append(tr, t9);
 			current = true;
 
@@ -7242,7 +7242,7 @@ function create_each_block$6(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*$doc*/ 1) && t2_value !== (t2_value = /*item*/ ctx[3].name + "")) set_data(t2, t2_value);
+			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[3].name + "")) set_data(t0, t0_value);
 
 			if (/*item*/ ctx[3].system.hasAttack || /*item*/ ctx[3].system.hasDamage) {
 				if (if_block) ; else {
@@ -7255,7 +7255,7 @@ function create_each_block$6(ctx) {
 				if_block = null;
 			}
 
-			if ((!current || dirty & /*$doc*/ 1) && t5_value !== (t5_value = /*item*/ ctx[3].system.level.current + "")) set_data(t5, t5_value);
+			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = /*item*/ ctx[3].system.level.current + "")) set_data(t3, t3_value);
 			const configureitembutton0_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[3];
 			configureitembutton0.$set(configureitembutton0_changes);
@@ -7426,6 +7426,7 @@ function ShowDescription(event) {
 	const parentHeight = parent.offsetHeight;
 	if (!parent.style.height) parent.style.height = parentHeight + "px";
 	const isHidden = getComputedStyle(div).opacity == 0;
+	div.style.zIndex = isHidden ? "initial" : -1;
 	div.style.opacity = isHidden ? 1 : 0;
 
 	parent.style.height = isHidden
