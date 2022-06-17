@@ -14,7 +14,7 @@
     const isHidden = getComputedStyle(div).opacity == 0;
     div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s";
     div.style.opacity = isHidden ? 1 : 0;
-    div.style.zIndex = isHidden ? "initial" : -1;
+    div.style.width = isHidden ? "100%" : "0%";
     parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
     div.style.top = isHidden ? parentHeight + "px" : div.style.top;
   }
@@ -72,8 +72,7 @@
     }
   }
   div.description {
-    z-index: -1;
-    width: 100%;
+    width: 0%;
     left: 0px;
     background-color: rgb(255, 255, 255);
     border: 1px solid black;

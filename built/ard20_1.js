@@ -7133,7 +7133,7 @@ function create_if_block$2(ctx) {
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-1t0f3b3");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-oqd170");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7197,7 +7197,7 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-1t0f3b3"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-oqd170"></i>`;
 			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
@@ -7205,13 +7205,13 @@ function create_each_block$6(ctx) {
 			div = element("div");
 			div.innerHTML = `<p>placeholder for description</p>`;
 			t9 = space();
-			attr(td0, "class", "svelte-1t0f3b3");
-			attr(td1, "class", "svelte-1t0f3b3");
-			attr(td2, "class", "config svelte-1t0f3b3");
-			attr(td3, "class", "config svelte-1t0f3b3");
-			attr(td4, "class", "config svelte-1t0f3b3");
-			attr(div, "class", "description svelte-1t0f3b3");
-			attr(tr, "class", "svelte-1t0f3b3");
+			attr(td0, "class", "svelte-oqd170");
+			attr(td1, "class", "svelte-oqd170");
+			attr(td2, "class", "config svelte-oqd170");
+			attr(td3, "class", "config svelte-oqd170");
+			attr(td4, "class", "config svelte-oqd170");
+			attr(div, "class", "description svelte-oqd170");
+			attr(tr, "class", "svelte-oqd170");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -7428,7 +7428,7 @@ function ShowDescription(event) {
 	const isHidden = getComputedStyle(div).opacity == 0;
 	div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s";
 	div.style.opacity = isHidden ? 1 : 0;
-	div.style.zIndex = isHidden ? "initial" : -1;
+	div.style.width = isHidden ? "100%" : "0%";
 
 	parent.style.height = isHidden
 	? parentHeight + divHeight + "px"
