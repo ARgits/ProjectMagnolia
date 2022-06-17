@@ -7122,13 +7122,19 @@ class ConfigureItemButton extends SvelteComponent {
 
 function get_each_context$6(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[4] = list[i];
 	return child_ctx;
 }
 
-// (39:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (42:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
+	let mounted;
+	let dispose;
+
+	function click_handler_1() {
+		return /*click_handler_1*/ ctx[3](/*item*/ ctx[4]);
+	}
 
 	return {
 		c() {
@@ -7138,24 +7144,34 @@ function create_if_block$2(ctx) {
 		},
 		m(target, anchor) {
 			insert(target, i, anchor);
+
+			if (!mounted) {
+				dispose = listen(i, "click", click_handler_1);
+				mounted = true;
+			}
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
 		},
 		d(detaching) {
 			if (detaching) detach(i);
+			mounted = false;
+			dispose();
 		}
 	};
 }
 
-// (33:4) {#each $doc.itemTypes.feature as item}
+// (36:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
 	let span;
-	let t0_value = /*item*/ ctx[3].name + "";
+	let t0_value = /*item*/ ctx[4].name + "";
 	let t0;
 	let t1;
 	let t2;
 	let td1;
-	let t3_value = /*item*/ ctx[3].system.level.current + "";
+	let t3_value = /*item*/ ctx[4].system.level.current + "";
 	let t3;
 	let t4;
 	let td2;
@@ -7167,19 +7183,19 @@ function create_each_block$6(ctx) {
 	let configureitembutton1;
 	let t7;
 	let div;
-	let raw_value = /*item*/ ctx[3].system.description + "";
+	let raw_value = /*item*/ ctx[4].system.description + "";
 	let t8;
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = (/*item*/ ctx[3].system.hasAttack || /*item*/ ctx[3].system.hasDamage) && create_if_block$2();
+	let if_block = (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) && create_if_block$2(ctx);
 
 	configureitembutton0 = new ConfigureItemButton({
-			props: { item: /*item*/ ctx[3], action: "edit" }
+			props: { item: /*item*/ ctx[4], action: "edit" }
 		});
 
 	configureitembutton1 = new ConfigureItemButton({
-			props: { item: /*item*/ ctx[3], action: "delete" }
+			props: { item: /*item*/ ctx[4], action: "delete" }
 		});
 
 	return {
@@ -7243,11 +7259,13 @@ function create_each_block$6(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[3].name + "")) set_data(t0, t0_value);
+			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[4].name + "")) set_data(t0, t0_value);
 
-			if (/*item*/ ctx[3].system.hasAttack || /*item*/ ctx[3].system.hasDamage) {
-				if (if_block) ; else {
-					if_block = create_if_block$2();
+			if (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block$2(ctx);
 					if_block.c();
 					if_block.m(td0, null);
 				}
@@ -7256,14 +7274,14 @@ function create_each_block$6(ctx) {
 				if_block = null;
 			}
 
-			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = /*item*/ ctx[3].system.level.current + "")) set_data(t3, t3_value);
+			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = /*item*/ ctx[4].system.level.current + "")) set_data(t3, t3_value);
 			const configureitembutton0_changes = {};
-			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[3];
+			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[4];
 			configureitembutton0.$set(configureitembutton0_changes);
 			const configureitembutton1_changes = {};
-			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[3];
+			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[4];
 			configureitembutton1.$set(configureitembutton1_changes);
-			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[3].system.description + "")) div.innerHTML = raw_value;		},
+			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[4].system.description + "")) div.innerHTML = raw_value;		},
 		i(local) {
 			if (current) return;
 			transition_in(configureitembutton0.$$.fragment, local);
@@ -7365,7 +7383,7 @@ function create_fragment$8(ctx) {
 			if (dirty & /*$doc*/ 1) configureitembutton_changes.doc = /*$doc*/ ctx[0];
 			configureitembutton.$set(configureitembutton_changes);
 
-			if (dirty & /*$doc, ShowDescription*/ 1) {
+			if (dirty & /*$doc, itemRoll, ShowDescription*/ 1) {
 				each_value = /*$doc*/ ctx[0].itemTypes.feature;
 				let i;
 
@@ -7441,12 +7459,21 @@ function ShowDescription(event) {
 	div.style.width = isHidden ? "100%" : "0%"; //if div was visible, change width
 }
 
+function itemRoll(item) {
+	item.roll();
+}
+
 function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
 	const click_handler = event => ShowDescription(event);
-	return [$doc, doc, click_handler];
+
+	const click_handler_1 = item => {
+		itemRoll(item);
+	};
+
+	return [$doc, doc, click_handler, click_handler_1];
 }
 
 class FeaturesTab extends SvelteComponent {

@@ -21,6 +21,9 @@
     div.style.top = isHidden ? parentHeight + "px" : div.style.top;
     div.style.width = isHidden ? "100%" : "0%"; //if div was visible, change width
   }
+  function itemRoll(item) {
+    item.roll();
+  }
 </script>
 
 <table>
@@ -37,7 +40,13 @@
             {item.name}
           </span>
           {#if item.system.hasAttack || item.system.hasDamage}
-            <i class="fa-light fa-dice-d20" data-tooltip="roll" />
+            <i
+              on:click={() => {
+                itemRoll(item);
+              }}
+              class="fa-light fa-dice-d20"
+              data-tooltip="roll"
+            />
           {/if}
         </td>
         <td>{item.system.level.current}</td>
