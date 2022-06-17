@@ -1,15 +1,11 @@
 <svelte:options accessors={true} />
 
 <script>
-  
-import { getContext } from "svelte";
+  import { getContext } from "svelte";
   import ConfigureItemButton from "../general components/ConfigureItemButton.svelte";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
-  console.log($doc.items, "actors items tab");
-  function ShowDescription(){
-    
-  }
+  function ShowDescription() {}
 </script>
 
 <table>
@@ -22,7 +18,7 @@ import { getContext } from "svelte";
     {#each $doc.itemTypes.feature as item}
       <tr>
         <td>
-          <span on:click={()=>ShowDescription()}>{item.name} </span>
+          <span on:click={() => ShowDescription()}>{item.name} </span>
           {#if item.system.hasAttack || item.system.hasDamage}
             <i class="fa-light fa-dice-d20" data-tooltip="roll" />
           {/if}
@@ -37,6 +33,14 @@ import { getContext } from "svelte";
 </table>
 
 <style lang="scss">
+  tr {
+    &:nth-of-type(odd) {
+      background-color: transparent;
+    }
+    &:nth-of-type(even) {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
   td {
     text-align: center;
     &.config {

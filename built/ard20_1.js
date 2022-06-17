@@ -7126,14 +7126,14 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (26:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (22:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-26wfod");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-ktrjat");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7145,7 +7145,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (22:4) {#each $doc.itemTypes.feature as item}
+// (18:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
@@ -7195,16 +7195,17 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-26wfod"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-ktrjat"></i>`;
 			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
-			attr(td0, "class", "svelte-26wfod");
-			attr(td1, "class", "svelte-26wfod");
-			attr(td2, "class", "config svelte-26wfod");
-			attr(td3, "class", "config svelte-26wfod");
-			attr(td4, "class", "config svelte-26wfod");
+			attr(td0, "class", "svelte-ktrjat");
+			attr(td1, "class", "svelte-ktrjat");
+			attr(td2, "class", "config svelte-ktrjat");
+			attr(td3, "class", "config svelte-ktrjat");
+			attr(td4, "class", "config svelte-ktrjat");
+			attr(tr, "class", "svelte-ktrjat");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -7418,7 +7419,6 @@ function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
-	console.log($doc.items, "actors items tab");
 	const click_handler = () => ShowDescription();
 	return [$doc, doc, click_handler];
 }
