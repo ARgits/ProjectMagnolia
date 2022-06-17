@@ -9,11 +9,11 @@
     const parent = event.target.parentNode.parentNode;
     const div = parent.getElementsByClassName("description")[0];
     const isHidden = getComputedStyle(div).opacity == 0;
+    div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s width 1.1"; //set width transition a little longer so we can't see some dirty things
     div.style.width = isHidden ? "100%" : "0%";
     const divHeight = div.offsetHeight;
     const parentHeight = parent.offsetHeight;
     if (!parent.style.height) parent.style.height = parentHeight + "px";
-    div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s";
     div.style.opacity = isHidden ? 1 : 0;
     parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
     div.style.top = isHidden ? parentHeight + "px" : div.style.top;
