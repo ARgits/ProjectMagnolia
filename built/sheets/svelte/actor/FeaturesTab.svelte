@@ -12,6 +12,7 @@
     const parentHeight = parent.offsetHeight;
     if (!parent.style.height) parent.style.height = parentHeight + "px";
     const isHidden = getComputedStyle(div).opacity == 0;
+    div.style.webkitTransition = isHidden?"opacity 1.5s":"opacity 0.5s"
     div.style.opacity = isHidden ? 1 : 0;
     parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
     div.style.top = isHidden ? parentHeight + "px" : div.style.top;
