@@ -6,8 +6,9 @@
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
   function ShowDescription(event) {
-    const parent = event.target.parentNode; //get <tr> element
+    const parent = event.target.parentElement; //get <tr> element
     const div = parent.getElementsByClassName("description")[0]; //get div child from <tr> element
+    console.log(div)
     const divHeight = div.offsetHeight;
     const parentHeight = parent.offsetHeight;
     const isHidden = getComputedStyle(div).opacity == 0;

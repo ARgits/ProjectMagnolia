@@ -7126,7 +7126,7 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (31:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (32:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
@@ -7145,7 +7145,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (27:4) {#each $doc.itemTypes.feature as item}
+// (28:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
@@ -7421,8 +7421,9 @@ function create_fragment$8(ctx) {
 }
 
 function ShowDescription(event) {
-	const parent = event.target.parentNode; //get <tr> element
+	const parent = event.target.parentElement; //get <tr> element
 	const div = parent.getElementsByClassName("description")[0]; //get div child from <tr> element
+	console.log(div);
 	const divHeight = div.offsetHeight;
 	const parentHeight = parent.offsetHeight;
 	const isHidden = getComputedStyle(div).opacity == 0;
