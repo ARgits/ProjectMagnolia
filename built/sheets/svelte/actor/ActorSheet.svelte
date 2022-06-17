@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="health">
-        <InputForDocumentSheet bind:value={$doc.system.health.value} label="health"/>
+        <InputForDocumentSheet bind:value={$doc.system.health.value} label="health" type="integer"/>
         <span>{$doc.system.health.max}</span>
       </div>
       <div class="level">

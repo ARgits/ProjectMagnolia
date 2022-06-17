@@ -7717,7 +7717,7 @@ function create_fragment$7(ctx) {
 		/*inputfordocumentsheet1_value_binding*/ ctx[4](value);
 	}
 
-	let inputfordocumentsheet1_props = { label: "health" };
+	let inputfordocumentsheet1_props = { label: "health", type: "integer" };
 
 	if (/*$doc*/ ctx[0].system.health.value !== void 0) {
 		inputfordocumentsheet1_props.value = /*$doc*/ ctx[0].system.health.value;
