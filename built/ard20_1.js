@@ -7330,7 +7330,7 @@ function create_fragment$8(ctx) {
 			th1.textContent = "Level";
 			t3 = space();
 			th2 = element("th");
-			t4 = text("Config. ");
+			t4 = text("Config ");
 			create_component(configureitembutton.$$.fragment);
 			t5 = space();
 			tbody = element("tbody");
