@@ -7423,7 +7423,7 @@ function ShowDescription(event) {
 	const parent = event.target.parentNode.parentNode;
 	const div = parent.getElementsByClassName("description")[0];
 	const isHidden = getComputedStyle(div).opacity == 0;
-	div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s width 1.1"; //width transition little bit longer so you can't see that
+	div.style.webkitTransition = isHidden ? "opacity 1.5s" : "opacity 0.5s, width 1.1"; //width transition little bit longer so you can't see that
 	let divHeight;
 	let parentHeight;
 
