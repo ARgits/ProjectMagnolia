@@ -45,7 +45,7 @@
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
         <div class="description">
-          <p>placeholder for description</p>
+          {@html item.system.description}
         </div>
       </tr>
     {/each}
@@ -55,7 +55,7 @@
 <style lang="scss">
   tr {
     position: relative;
-    transition: height 1s;
+    transition: height 0.75s;
     &:nth-of-type(odd) {
       background-color: transparent;
     }

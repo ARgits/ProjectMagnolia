@@ -7133,7 +7133,7 @@ function create_if_block$2(ctx) {
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-oqd170");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-igiadz");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7167,7 +7167,8 @@ function create_each_block$6(ctx) {
 	let configureitembutton1;
 	let t7;
 	let div;
-	let t9;
+	let raw_value = /*item*/ ctx[3].system.description + "";
+	let t8;
 	let current;
 	let mounted;
 	let dispose;
@@ -7197,21 +7198,20 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-oqd170"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-igiadz"></i>`;
 			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
 			div = element("div");
-			div.innerHTML = `<p>placeholder for description</p>`;
-			t9 = space();
-			attr(td0, "class", "svelte-oqd170");
-			attr(td1, "class", "svelte-oqd170");
-			attr(td2, "class", "config svelte-oqd170");
-			attr(td3, "class", "config svelte-oqd170");
-			attr(td4, "class", "config svelte-oqd170");
-			attr(div, "class", "description svelte-oqd170");
-			attr(tr, "class", "svelte-oqd170");
+			t8 = space();
+			attr(td0, "class", "svelte-igiadz");
+			attr(td1, "class", "svelte-igiadz");
+			attr(td2, "class", "config svelte-igiadz");
+			attr(td3, "class", "config svelte-igiadz");
+			attr(td4, "class", "config svelte-igiadz");
+			attr(div, "class", "description svelte-igiadz");
+			attr(tr, "class", "svelte-igiadz");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -7233,7 +7233,8 @@ function create_each_block$6(ctx) {
 			mount_component(configureitembutton1, td4, null);
 			append(tr, t7);
 			append(tr, div);
-			append(tr, t9);
+			div.innerHTML = raw_value;
+			append(tr, t8);
 			current = true;
 
 			if (!mounted) {
@@ -7262,7 +7263,7 @@ function create_each_block$6(ctx) {
 			const configureitembutton1_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[3];
 			configureitembutton1.$set(configureitembutton1_changes);
-		},
+			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[3].system.description + "")) div.innerHTML = raw_value;		},
 		i(local) {
 			if (current) return;
 			transition_in(configureitembutton0.$$.fragment, local);
