@@ -55,7 +55,7 @@
 <style lang="scss">
   tr {
     position: relative;
-    transition: height 0.75s;
+    transition: height 0.7s;
     &:nth-of-type(odd) {
       background-color: transparent;
     }
@@ -84,8 +84,5 @@
     opacity: 0;
     position: absolute;
     transition: opacity 0.5s;
-    & :hover {
-      cursor: text;
-    }
   }
 </style>
