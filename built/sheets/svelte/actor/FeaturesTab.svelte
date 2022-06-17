@@ -64,6 +64,7 @@
     }
   }
   div.description {
+    left: 0px;
     background-color: rgb(255,255,255);
     border: 1px solid black;
     border-bottom: none;
