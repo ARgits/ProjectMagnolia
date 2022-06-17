@@ -138,7 +138,7 @@ export class ARd20Actor extends Actor {
     const skills = actorData.skills
     for (let [key, skill] of Object.entries(skills)) {
       skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
-      skill.value = skill.level * 4 + skill.bonus;
+      skill.value = skill.level * skillLevelBonus + skill.bonus;
       skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
       skill.rankName = profLevelSetting[skill.level].label;
     }

@@ -1095,7 +1095,8 @@ class ARd20Actor extends Actor {
   }
 
   prepareSkills(actorData) {
-    game.settings.get("ard20", "mainDiceType");
+    const mainDie = game.settings.get("ard20", "mainDiceType");
+    const skillLevelBonus = mainDie === "2d10" ? 3 : 4;
     const profLevelSetting = game.settings.get("ard20", "profLevel");
     const maxProfLevel = profLevelSetting.length - 1;
     const skills = actorData.skills;
@@ -1104,7 +1105,7 @@ class ARd20Actor extends Actor {
       var _game$i18n$localize4;
 
       skill.level = skill.level < maxProfLevel ? skill.level : maxProfLevel;
-      skill.value = skill.level * 4 + skill.bonus;
+      skill.value = skill.level * skillLevelBonus + skill.bonus;
       skill.name = (_game$i18n$localize4 = game.i18n.localize(CONFIG.ARd20.Skills[key])) !== null && _game$i18n$localize4 !== void 0 ? _game$i18n$localize4 : CONFIG.ARd20.Skills[key];
       skill.rankName = profLevelSetting[skill.level].label;
     }
