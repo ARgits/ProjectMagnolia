@@ -7126,7 +7126,7 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (42:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (44:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 	let mounted;
@@ -7161,7 +7161,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (36:4) {#each $doc.itemTypes.feature as item}
+// (38:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
@@ -7460,7 +7460,9 @@ function ShowDescription(event) {
 }
 
 function itemRoll(item) {
-	item.roll();
+	const hasAttack = item.system.hasAttack;
+	const hasDamage = item.system.hasDamage;
+	return item.roll({ hasAttack, hasDamage });
 }
 
 function instance$8($$self, $$props, $$invalidate) {

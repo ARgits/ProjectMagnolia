@@ -22,7 +22,9 @@
     div.style.width = isHidden ? "100%" : "0%"; //if div was visible, change width
   }
   function itemRoll(item) {
-    item.roll();
+    const hasAttack = item.system.hasAttack;
+    const hasDamage = item.system.hasDamage;
+    return item.roll({ hasAttack, hasDamage });
   }
 </script>
 
