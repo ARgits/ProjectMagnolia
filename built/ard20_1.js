@@ -7439,7 +7439,7 @@ function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
-	const click_handler = () => ShowDescription();
+	const click_handler = event => ShowDescription(event);
 	return [$doc, doc, click_handler];
 }
 
