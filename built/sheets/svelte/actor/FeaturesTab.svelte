@@ -7,7 +7,6 @@
   let highlight = "";
   function ShowDescription(event) {
     const parent = event.target.parentNode.parentNode;
-    console.log(parent);
     const div = parent.getElementsByClassName("description")[0];
     const divHeight = div.offsetHeight;
     const parentHeight = parent.offsetHeight;
@@ -47,7 +46,6 @@
 <style lang="scss">
   tr {
     position: relative;
-    width: 100%;
     transition: height 1s;
     &:nth-of-type(odd) {
       background-color: transparent;

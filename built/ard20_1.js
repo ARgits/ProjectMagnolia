@@ -7126,14 +7126,14 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (33:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (32:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-5fp7rc");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-1co2ymp");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7145,7 +7145,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (29:4) {#each $doc.itemTypes.feature as item}
+// (28:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
@@ -7198,20 +7198,20 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-5fp7rc"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-1co2ymp"></i>`;
 			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
 			div = element("div");
 			t8 = space();
-			attr(td0, "class", "svelte-5fp7rc");
-			attr(td1, "class", "svelte-5fp7rc");
-			attr(td2, "class", "config svelte-5fp7rc");
-			attr(td3, "class", "config svelte-5fp7rc");
-			attr(td4, "class", "config svelte-5fp7rc");
-			attr(div, "class", "description svelte-5fp7rc");
-			attr(tr, "class", "svelte-5fp7rc");
+			attr(td0, "class", "svelte-1co2ymp");
+			attr(td1, "class", "svelte-1co2ymp");
+			attr(td2, "class", "config svelte-1co2ymp");
+			attr(td3, "class", "config svelte-1co2ymp");
+			attr(td4, "class", "config svelte-1co2ymp");
+			attr(div, "class", "description svelte-1co2ymp");
+			attr(tr, "class", "svelte-1co2ymp");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -7422,7 +7422,6 @@ function create_fragment$8(ctx) {
 
 function ShowDescription(event) {
 	const parent = event.target.parentNode.parentNode;
-	console.log(parent);
 	const div = parent.getElementsByClassName("description")[0];
 	const divHeight = div.offsetHeight;
 	const parentHeight = parent.offsetHeight;
