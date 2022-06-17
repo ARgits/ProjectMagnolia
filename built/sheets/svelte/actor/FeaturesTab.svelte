@@ -27,8 +27,11 @@
   <tbody>
     {#each $doc.itemTypes.feature as item}
       <tr>
+        <div class="description">
+          <p>placeholder for description</p>
+        </div>
         <td>
-          <span>
+          <span on:click={(event) => ShowDescription(event)}>
             {item.name}
           </span>
           {#if item.system.hasAttack || item.system.hasDamage}
@@ -39,9 +42,7 @@
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
-        <div class="description">
-          <p>placeholder for description</p>
-        </div>
+
       </tr>
     {/each}
   </tbody>
