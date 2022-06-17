@@ -57,6 +57,7 @@
     }
   }
   td {
+    vertical-align:top;
     text-align: center;
     &.config {
       width: 5%;
@@ -67,6 +68,7 @@
     }
   }
   div.description {
+    width:100%;
     left: 0px;
     background-color: rgb(255, 255, 255);
     border: 1px solid black;
