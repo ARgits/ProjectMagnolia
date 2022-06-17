@@ -38,7 +38,7 @@
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
-        <div class="description">{@html item.system.description}</div>
+        <div class="description"><p>placeholder for description</p></div>
       </tr>
     {/each}
   </tbody>

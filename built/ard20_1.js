@@ -7167,8 +7167,7 @@ function create_each_block$6(ctx) {
 	let configureitembutton1;
 	let t7;
 	let div;
-	let raw_value = /*item*/ ctx[3].system.description + "";
-	let t8;
+	let t9;
 	let current;
 	let mounted;
 	let dispose;
@@ -7204,7 +7203,8 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
 			div = element("div");
-			t8 = space();
+			div.innerHTML = `<p>placeholder for description</p>`;
+			t9 = space();
 			attr(td0, "class", "svelte-1co2ymp");
 			attr(td1, "class", "svelte-1co2ymp");
 			attr(td2, "class", "config svelte-1co2ymp");
@@ -7233,8 +7233,7 @@ function create_each_block$6(ctx) {
 			mount_component(configureitembutton1, td4, null);
 			append(tr, t7);
 			append(tr, div);
-			div.innerHTML = raw_value;
-			append(tr, t8);
+			append(tr, t9);
 			current = true;
 
 			if (!mounted) {
@@ -7263,7 +7262,7 @@ function create_each_block$6(ctx) {
 			const configureitembutton1_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[3];
 			configureitembutton1.$set(configureitembutton1_changes);
-			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[3].system.description + "")) div.innerHTML = raw_value;		},
+		},
 		i(local) {
 			if (current) return;
 			transition_in(configureitembutton0.$$.fragment, local);
