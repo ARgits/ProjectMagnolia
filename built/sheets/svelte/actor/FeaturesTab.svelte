@@ -5,7 +5,16 @@
   import ConfigureItemButton from "../general components/ConfigureItemButton.svelte";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
-  function ShowDescription() {}
+  function ShowDescription(event) {
+    const parent = event.target.parentNode; //get <tr> element
+    const div = parent.getElementsByClassName("description")[0]; //get div child from <tr> element
+    const divHeight = div.offsetHeight;
+    const parentHeight = parent.offsetHeight;
+    const isHidden = getComputedStyle(div).opacity == 0;
+    div.style.opacity = isHidden ? 1 : 0;
+    parent.style.height = isHidden ? parentHeight + divHeight + "px" : parentHeight - divHeight + "px";
+    div.style.top = isHidden ? parentHeight + "px" : div.style.top;
+  }
 </script>
 
 <table>
@@ -27,14 +36,16 @@
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>
         <td class="config"><i class="fa-solid fa-stars" /></td>
         <td class="config"><ConfigureItemButton {item} action="delete" /></td>
+        <div class="description">{@html item.system.description}</div>
       </tr>
-      <span>{@html item.system.description}</span>
     {/each}
   </tbody>
 </table>
 
 <style lang="scss">
   tr {
+    width: 100%;
+    transition: height 1s;
     &:nth-of-type(odd) {
       background-color: transparent;
     }
@@ -51,5 +62,14 @@
       cursor: pointer;
       text-shadow: 0px 0px 10px red;
     }
+  }
+  div.description {
+    background-color: rgb(255,255,255);
+    border: 1px solid black;
+    border-bottom: none;
+    border-radius: 0px 0px 5px 5px;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.5s;
   }
 </style>

@@ -7126,14 +7126,14 @@ function get_each_context$6(ctx, list, i) {
 	return child_ctx;
 }
 
-// (22:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (31:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$2(ctx) {
 	let i;
 
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-ktrjat");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-1e0zd8h");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7145,11 +7145,11 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (18:4) {#each $doc.itemTypes.feature as item}
+// (27:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$6(ctx) {
 	let tr;
 	let td0;
-	let span0;
+	let span;
 	let t0_value = /*item*/ ctx[3].name + "";
 	let t0;
 	let t1;
@@ -7166,8 +7166,9 @@ function create_each_block$6(ctx) {
 	let td4;
 	let configureitembutton1;
 	let t7;
-	let span1;
+	let div;
 	let raw_value = /*item*/ ctx[3].system.description + "";
+	let t8;
 	let current;
 	let mounted;
 	let dispose;
@@ -7185,7 +7186,7 @@ function create_each_block$6(ctx) {
 		c() {
 			tr = element("tr");
 			td0 = element("td");
-			span0 = element("span");
+			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
 			if (if_block) if_block.c();
@@ -7197,24 +7198,26 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-ktrjat"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-1e0zd8h"></i>`;
 			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
-			span1 = element("span");
-			attr(td0, "class", "svelte-ktrjat");
-			attr(td1, "class", "svelte-ktrjat");
-			attr(td2, "class", "config svelte-ktrjat");
-			attr(td3, "class", "config svelte-ktrjat");
-			attr(td4, "class", "config svelte-ktrjat");
-			attr(tr, "class", "svelte-ktrjat");
+			div = element("div");
+			t8 = space();
+			attr(td0, "class", "svelte-1e0zd8h");
+			attr(td1, "class", "svelte-1e0zd8h");
+			attr(td2, "class", "config svelte-1e0zd8h");
+			attr(td3, "class", "config svelte-1e0zd8h");
+			attr(td4, "class", "config svelte-1e0zd8h");
+			attr(div, "class", "description svelte-1e0zd8h");
+			attr(tr, "class", "svelte-1e0zd8h");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
 			append(tr, td0);
-			append(td0, span0);
-			append(span0, t0);
+			append(td0, span);
+			append(span, t0);
 			append(td0, t1);
 			if (if_block) if_block.m(td0, null);
 			append(tr, t2);
@@ -7228,13 +7231,14 @@ function create_each_block$6(ctx) {
 			append(tr, t6);
 			append(tr, td4);
 			mount_component(configureitembutton1, td4, null);
-			insert(target, t7, anchor);
-			insert(target, span1, anchor);
-			span1.innerHTML = raw_value;
+			append(tr, t7);
+			append(tr, div);
+			div.innerHTML = raw_value;
+			append(tr, t8);
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(span0, "click", /*click_handler*/ ctx[2]);
+				dispose = listen(span, "click", /*click_handler*/ ctx[2]);
 				mounted = true;
 			}
 		},
@@ -7259,7 +7263,7 @@ function create_each_block$6(ctx) {
 			const configureitembutton1_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[3];
 			configureitembutton1.$set(configureitembutton1_changes);
-			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[3].system.description + "")) span1.innerHTML = raw_value;		},
+			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[3].system.description + "")) div.innerHTML = raw_value;		},
 		i(local) {
 			if (current) return;
 			transition_in(configureitembutton0.$$.fragment, local);
@@ -7276,8 +7280,6 @@ function create_each_block$6(ctx) {
 			if (if_block) if_block.d();
 			destroy_component(configureitembutton0);
 			destroy_component(configureitembutton1);
-			if (detaching) detach(t7);
-			if (detaching) detach(span1);
 			mounted = false;
 			dispose();
 		}
@@ -7418,8 +7420,19 @@ function create_fragment$8(ctx) {
 	};
 }
 
-function ShowDescription() {
-	
+function ShowDescription(event) {
+	const parent = event.target.parentNode; //get <tr> element
+	const div = parent.getElementsByClassName("description")[0]; //get div child from <tr> element
+	const divHeight = div.offsetHeight;
+	const parentHeight = parent.offsetHeight;
+	const isHidden = getComputedStyle(div).opacity == 0;
+	div.style.opacity = isHidden ? 1 : 0;
+
+	parent.style.height = isHidden
+	? parentHeight + divHeight + "px"
+	: parentHeight - divHeight + "px";
+
+	div.style.top = isHidden ? parentHeight + "px" : div.style.top;
 }
 
 function instance$8($$self, $$props, $$invalidate) {
