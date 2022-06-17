@@ -79,10 +79,13 @@
     left: 0px;
     background-color: rgb(255, 255, 255);
     border: 1px solid black;
-    border-bottom: none;
+    border-top: none;
     border-radius: 0px 0px 5px 5px;
     opacity: 0;
     position: absolute;
     transition: opacity 0.5s;
+    & :hover {
+      cursor: text;
+    }
   }
 </style>

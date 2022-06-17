@@ -7133,7 +7133,7 @@ function create_if_block$2(ctx) {
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-igiadz");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-wdrb7g");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -7198,20 +7198,20 @@ function create_each_block$6(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-igiadz"></i>`;
+			td3.innerHTML = `<i class="fa-solid fa-stars svelte-wdrb7g"></i>`;
 			t6 = space();
 			td4 = element("td");
 			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
 			div = element("div");
 			t8 = space();
-			attr(td0, "class", "svelte-igiadz");
-			attr(td1, "class", "svelte-igiadz");
-			attr(td2, "class", "config svelte-igiadz");
-			attr(td3, "class", "config svelte-igiadz");
-			attr(td4, "class", "config svelte-igiadz");
-			attr(div, "class", "description svelte-igiadz");
-			attr(tr, "class", "svelte-igiadz");
+			attr(td0, "class", "svelte-wdrb7g");
+			attr(td1, "class", "svelte-wdrb7g");
+			attr(td2, "class", "config svelte-wdrb7g");
+			attr(td3, "class", "config svelte-wdrb7g");
+			attr(td4, "class", "config svelte-wdrb7g");
+			attr(div, "class", "description svelte-wdrb7g");
+			attr(tr, "class", "svelte-wdrb7g");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
