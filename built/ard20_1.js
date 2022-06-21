@@ -5980,9 +5980,7 @@ function instance$e($$self, $$props, $$invalidate) {
 	function checkInput(e) {
 		console.log(type);
 		if (type !== "number" && type !== "integer") return;
-		console.log('клавиша нажата в "цифровом" инпуте', e);
 		const input = e.target.value;
-		console.log("значение инпута:", input);
 		if (!(/[0-9\.,-]/).test(e.key)) e.preventDefault(); else if (e.key === "-" && input.length > 0) e.preventDefault(); else if ((/[\.,]/).test(e.key) && (type === "integer" || input.includes(",") || input.includes("."))) e.preventDefault();
 	}
 
@@ -6002,7 +6000,7 @@ function instance$e($$self, $$props, $$invalidate) {
 
 	function input_1_input_handler() {
 		value = this.value;
-		$$invalidate(0, value);
+		($$invalidate(0, value), $$invalidate(8, type));
 	}
 
 	const keypress_handler = e => checkInput(e);
@@ -6031,6 +6029,10 @@ function instance$e($$self, $$props, $$invalidate) {
 					name: $document.name
 				});
 			}
+		}
+
+		if ($$self.$$.dirty & /*type, value*/ 257) {
+			if (type !== "text") $$invalidate(0, value = type === "integer" ? parseInt(value) : parseFloat(value));
 		}
 	};
 

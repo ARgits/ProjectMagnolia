@@ -13,12 +13,11 @@
   $: {
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
+  $: if (type !== "text") value = type === "integer" ? parseInt(value) : parseFloat(value);
   function checkInput(e) {
     console.log(type);
     if (type !== "number" && type !== "integer") return;
-    console.log('клавиша нажата в "цифровом" инпуте', e);
     const input = e.target.value;
-    console.log("значение инпута:", input);
     if (!/[0-9\.,-]/.test(e.key)) e.preventDefault();
     else if (e.key === "-" && input.length > 0) e.preventDefault();
     else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(",") || input.includes(".")))
@@ -37,7 +36,7 @@
     $document.update(data);
   }}
 />
-<i class="fa-solid fa-feather-pointed"></i>
+<i class="fa-solid fa-feather-pointed" />
 
 <style lang="scss">
   input,
@@ -45,9 +44,8 @@
     background-color: inherit;
     color: inherit;
   }
-  input{
-    border:0 solid black;
-    border-bottom:1px solid black
-
+  input {
+    border: 0 solid black;
+    border-bottom: 1px solid black;
   }
 </style>
