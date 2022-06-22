@@ -2545,7 +2545,7 @@ function create_if_block_1$2(ctx) {
 }
 
 // (94:0) {#if min !== undefined}
-function create_if_block$9(ctx) {
+function create_if_block$a(ctx) {
 	let i;
 	let mounted;
 	let dispose;
@@ -2577,11 +2577,11 @@ function create_if_block$9(ctx) {
 	};
 }
 
-function create_fragment$k(ctx) {
+function create_fragment$l(ctx) {
 	let t;
 	let if_block1_anchor;
 	let if_block0 = /*max*/ ctx[0] !== undefined && create_if_block_1$2(ctx);
-	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$9(ctx);
+	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$a(ctx);
 
 	return {
 		c() {
@@ -2614,7 +2614,7 @@ function create_fragment$k(ctx) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
-					if_block1 = create_if_block$9(ctx);
+					if_block1 = create_if_block$a(ctx);
 					if_block1.c();
 					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
 				}
@@ -2634,7 +2634,7 @@ function create_fragment$k(ctx) {
 	};
 }
 
-function instance$j($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
 	let $changes;
 	let $doc;
 	let { max } = $$props;
@@ -2776,7 +2776,7 @@ class ChangeButton extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$j, create_fragment$k, safe_not_equal, {
+		init(this, options, instance$k, create_fragment$l, safe_not_equal, {
 			max: 0,
 			min: 1,
 			type: 2,
@@ -3178,7 +3178,7 @@ function create_if_block_1$1(ctx) {
 }
 
 // (113:2) {#if key === 0 && thead.includes("Description")}
-function create_if_block$8(ctx) {
+function create_if_block$9(ctx) {
 	let td;
 	let t;
 	let td_rowspan_value;
@@ -3207,7 +3207,7 @@ function create_if_block$8(ctx) {
 	};
 }
 
-function create_fragment$j(ctx) {
+function create_fragment$k(ctx) {
 	let tr;
 	let show_if_10 = /*thead*/ ctx[5].includes("Name");
 	let t0;
@@ -3242,7 +3242,7 @@ function create_fragment$j(ctx) {
 	let if_block7 = show_if_3 && create_if_block_3(ctx);
 	let if_block8 = show_if_2 && create_if_block_2$1(ctx);
 	let if_block9 = show_if_1 && create_if_block_1$1(ctx);
-	let if_block10 = show_if && create_if_block$8(ctx);
+	let if_block10 = show_if && create_if_block$9(ctx);
 
 	return {
 		c() {
@@ -3475,7 +3475,7 @@ function create_fragment$j(ctx) {
 				if (if_block10) {
 					if_block10.p(ctx, dirty);
 				} else {
-					if_block10 = create_if_block$8(ctx);
+					if_block10 = create_if_block$9(ctx);
 					if_block10.c();
 					if_block10.m(tr, null);
 				}
@@ -3513,7 +3513,7 @@ function create_fragment$j(ctx) {
 	};
 }
 
-function instance$i($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
 	let $element;
 	let { max } = $$props;
 	let { val } = $$props;
@@ -3653,7 +3653,7 @@ class TDvariants extends SvelteComponent {
 	constructor(options) {
 		super();
 
-		init(this, options, instance$i, create_fragment$j, safe_not_equal, {
+		init(this, options, instance$j, create_fragment$k, safe_not_equal, {
 			max: 0,
 			val: 2,
 			key: 3,
@@ -3775,7 +3775,7 @@ function create_each_block$a(ctx) {
 	};
 }
 
-function create_fragment$i(ctx) {
+function create_fragment$j(ctx) {
 	let div2;
 	let table;
 	let thead_1;
@@ -3959,7 +3959,7 @@ function create_fragment$i(ctx) {
 	};
 }
 
-function instance$h($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
 	let $data;
 	let $element;
 	let { tabData } = $$props;
@@ -4050,7 +4050,7 @@ function instance$h($$self, $$props, $$invalidate) {
 class Attributes extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$h, create_fragment$i, safe_not_equal, { tabData: 0 });
+		init(this, options, instance$i, create_fragment$j, safe_not_equal, { tabData: 0 });
 	}
 }
 
@@ -4125,7 +4125,7 @@ function create_each_block_1$5(ctx) {
 }
 
 // (28:4) {#if tab.id === activeTab}
-function create_if_block$7(ctx) {
+function create_if_block$8(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
@@ -4200,7 +4200,7 @@ function create_if_block$7(ctx) {
 function create_each_block$9(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*tab*/ ctx[9].id === /*activeTab*/ ctx[0] && create_if_block$7(ctx);
+	let if_block = /*tab*/ ctx[9].id === /*activeTab*/ ctx[0] && create_if_block$8(ctx);
 
 	return {
 		c() {
@@ -4221,7 +4221,7 @@ function create_each_block$9(ctx) {
 						transition_in(if_block, 1);
 					}
 				} else {
-					if_block = create_if_block$7(ctx);
+					if_block = create_if_block$8(ctx);
 					if_block.c();
 					transition_in(if_block, 1);
 					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -4252,7 +4252,7 @@ function create_each_block$9(ctx) {
 	};
 }
 
-function create_fragment$h(ctx) {
+function create_fragment$i(ctx) {
 	let ul;
 	let t;
 	let div;
@@ -4397,7 +4397,7 @@ function create_fragment$h(ctx) {
 	};
 }
 
-function instance$g($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
 	let $element;
 	let $data;
 	let { tabs = [] } = $$props;
@@ -4446,13 +4446,13 @@ function instance$g($$self, $$props, $$invalidate) {
 class Tabs$1 extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$g, create_fragment$h, safe_not_equal, { tabs: 1, activeTab: 0 });
+		init(this, options, instance$h, create_fragment$i, safe_not_equal, { tabs: 1, activeTab: 0 });
 	}
 }
 
 /* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.46.4 */
 
-function create_fragment$g(ctx) {
+function create_fragment$h(ctx) {
 	let div0;
 	let t0;
 	let t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "";
@@ -4537,7 +4537,7 @@ function create_fragment$g(ctx) {
 
 const activeTab$1 = "attributes";
 
-function instance$f($$self, $$props, $$invalidate) {
+function instance$g($$self, $$props, $$invalidate) {
 	let $actorData;
 	let $changes;
 	let { document } = $$props;
@@ -4650,7 +4650,7 @@ function instance$f($$self, $$props, $$invalidate) {
 class Cha_adv_shell extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$f, create_fragment$g, safe_not_equal, { document: 5 });
+		init(this, options, instance$g, create_fragment$h, safe_not_equal, { document: 5 });
 	}
 
 	get document() {
@@ -5842,7 +5842,7 @@ class ARd20ItemSheet extends ItemSheet {
 
 /* built\sheets\svelte\EmptySheet.svelte generated by Svelte v3.46.4 */
 
-function create_fragment$f(ctx) {
+function create_fragment$g(ctx) {
 	let t;
 
 	return {
@@ -5864,13 +5864,13 @@ function create_fragment$f(ctx) {
 class EmptySheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, null, create_fragment$f, safe_not_equal, {});
+		init(this, options, null, create_fragment$g, safe_not_equal, {});
 	}
 }
 
 /* built\sheets\svelte\general components\InputForDocumentSheet.svelte generated by Svelte v3.46.4 */
 
-function create_if_block$6(ctx) {
+function create_if_block$7(ctx) {
 	let span;
 	let t;
 
@@ -5895,14 +5895,14 @@ function create_if_block$6(ctx) {
 	};
 }
 
-function create_fragment$e(ctx) {
+function create_fragment$f(ctx) {
 	let t0;
 	let input_1;
 	let t1;
 	let i;
 	let mounted;
 	let dispose;
-	let if_block = /*label*/ ctx[1] && create_if_block$6(ctx);
+	let if_block = /*label*/ ctx[1] && create_if_block$7(ctx);
 
 	return {
 		c() {
@@ -5938,7 +5938,7 @@ function create_fragment$e(ctx) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 				} else {
-					if_block = create_if_block$6(ctx);
+					if_block = create_if_block$7(ctx);
 					if_block.c();
 					if_block.m(t0.parentNode, t0);
 				}
@@ -5966,7 +5966,7 @@ function create_fragment$e(ctx) {
 	};
 }
 
-function instance$e($$self, $$props, $$invalidate) {
+function instance$f($$self, $$props, $$invalidate) {
 	let $document;
 	let { value } = $$props;
 	let { type = "text" } = $$props;
@@ -5977,6 +5977,10 @@ function instance$e($$self, $$props, $$invalidate) {
 	let labelElem;
 	let input;
 
+	/**
+ * Forbid to type anything but digits
+ * @param e - input event
+ */
 	function checkInput(e) {
 		console.log(type);
 		if (type !== "number" && type !== "integer") return;
@@ -6057,7 +6061,7 @@ function instance$e($$self, $$props, $$invalidate) {
 class InputForDocumentSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$e, create_fragment$e, safe_not_equal, { value: 0, type: 8, label: 1 });
+		init(this, options, instance$f, create_fragment$f, safe_not_equal, { value: 0, type: 8, label: 1 });
 	}
 
 	get value() {
@@ -6090,7 +6094,7 @@ class InputForDocumentSheet extends SvelteComponent {
 
 /* built\sheets\svelte\item\ItemItemSheet.svelte generated by Svelte v3.46.4 */
 
-function create_fragment$d(ctx) {
+function create_fragment$e(ctx) {
 	let t;
 	let inputfordocumentsheet;
 	let updating_value;
@@ -6146,7 +6150,7 @@ function create_fragment$d(ctx) {
 	};
 }
 
-function instance$d($$self, $$props, $$invalidate) {
+function instance$e($$self, $$props, $$invalidate) {
 	let { doc } = $$props;
 
 	function inputfordocumentsheet_value_binding(value) {
@@ -6166,7 +6170,7 @@ function instance$d($$self, $$props, $$invalidate) {
 class ItemItemSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$d, create_fragment$d, safe_not_equal, { doc: 0 });
+		init(this, options, instance$e, create_fragment$e, safe_not_equal, { doc: 0 });
 	}
 
 	get doc() {
@@ -6181,7 +6185,7 @@ class ItemItemSheet extends SvelteComponent {
 
 /* built\sheets\svelte\general components\ImageWithFilePicker.svelte generated by Svelte v3.46.4 */
 
-function create_fragment$c(ctx) {
+function create_fragment$d(ctx) {
 	let img_1;
 	let img_1_src_value;
 	let mounted;
@@ -6222,7 +6226,7 @@ function create_fragment$c(ctx) {
 	};
 }
 
-function instance$c($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
 	let $document;
 	let { path } = $$props;
 	let { alt } = $$props;
@@ -6277,7 +6281,7 @@ function instance$c($$self, $$props, $$invalidate) {
 class ImageWithFilePicker extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$c, create_fragment$c, safe_not_equal, { path: 5, alt: 0 });
+		init(this, options, instance$d, create_fragment$d, safe_not_equal, { path: 5, alt: 0 });
 	}
 
 	get path() {
@@ -6370,7 +6374,7 @@ function create_each_block_1$4(ctx) {
 }
 
 // (22:6) {#if tab.id === activeTab}
-function create_if_block$5(ctx) {
+function create_if_block$6(ctx) {
 	let switch_instance;
 	let switch_instance_anchor;
 	let current;
@@ -6440,7 +6444,7 @@ function create_if_block$5(ctx) {
 function create_each_block$8(ctx) {
 	let if_block_anchor;
 	let current;
-	let if_block = /*tab*/ ctx[3].id === /*activeTab*/ ctx[0] && create_if_block$5(ctx);
+	let if_block = /*tab*/ ctx[3].id === /*activeTab*/ ctx[0] && create_if_block$6(ctx);
 
 	return {
 		c() {
@@ -6461,7 +6465,7 @@ function create_each_block$8(ctx) {
 						transition_in(if_block, 1);
 					}
 				} else {
-					if_block = create_if_block$5(ctx);
+					if_block = create_if_block$6(ctx);
 					if_block.c();
 					transition_in(if_block, 1);
 					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -6492,7 +6496,7 @@ function create_each_block$8(ctx) {
 	};
 }
 
-function create_fragment$b(ctx) {
+function create_fragment$c(ctx) {
 	let ul;
 	let t;
 	let div;
@@ -6628,7 +6632,7 @@ function create_fragment$b(ctx) {
 	};
 }
 
-function instance$b($$self, $$props, $$invalidate) {
+function instance$c($$self, $$props, $$invalidate) {
 	let { tabs = [] } = $$props;
 	let { activeTab } = $$props;
 
@@ -6647,7 +6651,7 @@ function instance$b($$self, $$props, $$invalidate) {
 class Tabs extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$b, create_fragment$b, safe_not_equal, { tabs: 1, activeTab: 0 });
+		init(this, options, instance$c, create_fragment$c, safe_not_equal, { tabs: 1, activeTab: 0 });
 	}
 }
 
@@ -6660,7 +6664,7 @@ function get_each_context$7(ctx, list, i) {
 }
 
 // (27:15) {#if skill[1].value > 0}
-function create_if_block$4(ctx) {
+function create_if_block$5(ctx) {
 	let t;
 
 	return {
@@ -6695,7 +6699,7 @@ function create_each_block$7(ctx) {
 	let t7;
 	let mounted;
 	let dispose;
-	let if_block = /*skill*/ ctx[3][1].value > 0 && create_if_block$4();
+	let if_block = /*skill*/ ctx[3][1].value > 0 && create_if_block$5();
 
 	function click_handler(...args) {
 		return /*click_handler*/ ctx[2](/*skill*/ ctx[3], ...args);
@@ -6745,7 +6749,7 @@ function create_each_block$7(ctx) {
 
 			if (/*skill*/ ctx[3][1].value > 0) {
 				if (if_block) ; else {
-					if_block = create_if_block$4();
+					if_block = create_if_block$5();
 					if_block.c();
 					if_block.m(span2, t5);
 				}
@@ -6765,7 +6769,7 @@ function create_each_block$7(ctx) {
 	};
 }
 
-function create_fragment$a(ctx) {
+function create_fragment$b(ctx) {
 	let label;
 	let t1;
 	let div;
@@ -6835,7 +6839,7 @@ function create_fragment$a(ctx) {
 	};
 }
 
-function instance$a($$self, $$props, $$invalidate) {
+function instance$b($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
@@ -6851,7 +6855,7 @@ function instance$a($$self, $$props, $$invalidate) {
 class AttributeTab extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$a, create_fragment$a, safe_not_equal, {});
+		init(this, options, instance$b, create_fragment$b, safe_not_equal, {});
 	}
 }
 
@@ -6924,7 +6928,7 @@ function create_if_block_1(ctx) {
 }
 
 // (26:0) {#if action === "create"}
-function create_if_block$3(ctx) {
+function create_if_block$4(ctx) {
 	let i;
 	let i_data_tooltip_value;
 	let mounted;
@@ -6957,13 +6961,13 @@ function create_if_block$3(ctx) {
 	};
 }
 
-function create_fragment$9(ctx) {
+function create_fragment$a(ctx) {
 	let t0;
 	let t1;
 	let if_block2_anchor;
 	let if_block0 = /*action*/ ctx[0] === "edit" && create_if_block_2(ctx);
 	let if_block1 = /*action*/ ctx[0] === "delete" && create_if_block_1(ctx);
-	let if_block2 = /*action*/ ctx[0] === "create" && create_if_block$3(ctx);
+	let if_block2 = /*action*/ ctx[0] === "create" && create_if_block$4(ctx);
 
 	return {
 		c() {
@@ -7013,7 +7017,7 @@ function create_fragment$9(ctx) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 				} else {
-					if_block2 = create_if_block$3(ctx);
+					if_block2 = create_if_block$4(ctx);
 					if_block2.c();
 					if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
 				}
@@ -7035,7 +7039,7 @@ function create_fragment$9(ctx) {
 	};
 }
 
-function instance$9($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
 	let { item = null } = $$props;
 	let { action } = $$props;
 	let { doc = null } = $$props;
@@ -7082,7 +7086,7 @@ function instance$9($$self, $$props, $$invalidate) {
 class ConfigureItemButton extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { item: 5, action: 0, doc: 6, type: 1 });
+		init(this, options, instance$a, create_fragment$a, safe_not_equal, { item: 5, action: 0, doc: 6, type: 1 });
 	}
 
 	get item() {
@@ -7131,7 +7135,7 @@ function get_each_context$6(ctx, list, i) {
 }
 
 // (44:10) {#if item.system.hasAttack || item.system.hasDamage}
-function create_if_block$2(ctx) {
+function create_if_block$3(ctx) {
 	let i;
 	let mounted;
 	let dispose;
@@ -7192,7 +7196,7 @@ function create_each_block$6(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) && create_if_block$2(ctx);
+	let if_block = (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) && create_if_block$3(ctx);
 
 	configureitembutton0 = new ConfigureItemButton({
 			props: { item: /*item*/ ctx[4], action: "edit" }
@@ -7269,7 +7273,7 @@ function create_each_block$6(ctx) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 				} else {
-					if_block = create_if_block$2(ctx);
+					if_block = create_if_block$3(ctx);
 					if_block.c();
 					if_block.m(td0, null);
 				}
@@ -7308,7 +7312,7 @@ function create_each_block$6(ctx) {
 	};
 }
 
-function create_fragment$8(ctx) {
+function create_fragment$9(ctx) {
 	let table;
 	let thead;
 	let th0;
@@ -7469,7 +7473,7 @@ function itemRoll(item) {
 	return item.roll({ hasAttack, hasDamage });
 }
 
-function instance$8($$self, $$props, $$invalidate) {
+function instance$9($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
@@ -7485,7 +7489,7 @@ function instance$8($$self, $$props, $$invalidate) {
 class FeaturesTab extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$8, create_fragment$8, safe_not_equal, {});
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, {});
 	}
 }
 
@@ -7655,7 +7659,7 @@ function create_each_block$5(ctx) {
 	};
 }
 
-function create_fragment$7(ctx) {
+function create_fragment$8(ctx) {
 	let header;
 	let div0;
 	let imagewithfilepicker;
@@ -7976,7 +7980,7 @@ function create_fragment$7(ctx) {
 
 let activeTab = "attributes";
 
-function instance$7($$self, $$props, $$invalidate) {
+function instance$8($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
@@ -8056,7 +8060,7 @@ function instance$7($$self, $$props, $$invalidate) {
 class ActorSheet$1 extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$7, create_fragment$7, safe_not_equal, {});
+		init(this, options, instance$8, create_fragment$8, safe_not_equal, {});
 	}
 }
 
@@ -8135,7 +8139,7 @@ function create_each_block$4(ctx) {
 	};
 }
 
-function create_fragment$6(ctx) {
+function create_fragment$7(ctx) {
 	let header;
 	let imagewithfilepicker;
 	let t0;
@@ -8371,7 +8375,7 @@ function create_fragment$6(ctx) {
 	};
 }
 
-function instance$6($$self, $$props, $$invalidate) {
+function instance$7($$self, $$props, $$invalidate) {
 	let $doc;
 	const doc = getContext("DocumentSheetObject");
 	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
@@ -8415,6 +8419,248 @@ function instance$6($$self, $$props, $$invalidate) {
 }
 
 class RaceSheet extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, {});
+	}
+}
+
+/* built\sheets\svelte\item\FeatureSheet.svelte generated by Svelte v3.46.4 */
+
+function create_if_block$2(ctx) {
+	let inputfordocumentsheet0;
+	let t;
+	let inputfordocumentsheet1;
+	let current;
+
+	inputfordocumentsheet0 = new InputForDocumentSheet({
+			props: {
+				value: /*$doc*/ ctx[0].system.level.current,
+				type: "integer"
+			}
+		});
+
+	inputfordocumentsheet1 = new InputForDocumentSheet({
+			props: {
+				value: /*$doc*/ ctx[0].system.level.max,
+				type: "integer"
+			}
+		});
+
+	return {
+		c() {
+			create_component(inputfordocumentsheet0.$$.fragment);
+			t = text("\r\n      /\r\n      ");
+			create_component(inputfordocumentsheet1.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(inputfordocumentsheet0, target, anchor);
+			insert(target, t, anchor);
+			mount_component(inputfordocumentsheet1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const inputfordocumentsheet0_changes = {};
+			if (dirty & /*$doc*/ 1) inputfordocumentsheet0_changes.value = /*$doc*/ ctx[0].system.level.current;
+			inputfordocumentsheet0.$set(inputfordocumentsheet0_changes);
+			const inputfordocumentsheet1_changes = {};
+			if (dirty & /*$doc*/ 1) inputfordocumentsheet1_changes.value = /*$doc*/ ctx[0].system.level.max;
+			inputfordocumentsheet1.$set(inputfordocumentsheet1_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(inputfordocumentsheet0.$$.fragment, local);
+			transition_in(inputfordocumentsheet1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(inputfordocumentsheet0.$$.fragment, local);
+			transition_out(inputfordocumentsheet1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(inputfordocumentsheet0, detaching);
+			if (detaching) detach(t);
+			destroy_component(inputfordocumentsheet1, detaching);
+		}
+	};
+}
+
+function create_fragment$6(ctx) {
+	let header;
+	let imagewithfilepicker;
+	let t0;
+	let h1;
+	let inputfordocumentsheet;
+	let updating_value;
+	let t1;
+	let main;
+	let fieldset;
+	let legend;
+	let t3;
+	let input;
+	let t4;
+	let current;
+	let mounted;
+	let dispose;
+
+	imagewithfilepicker = new ImageWithFilePicker({
+			props: { path: "img", alt: "item portrait" }
+		});
+
+	function inputfordocumentsheet_value_binding(value) {
+		/*inputfordocumentsheet_value_binding*/ ctx[2](value);
+	}
+
+	let inputfordocumentsheet_props = { label: "name" };
+
+	if (/*$doc*/ ctx[0].name !== void 0) {
+		inputfordocumentsheet_props.value = /*$doc*/ ctx[0].name;
+	}
+
+	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
+	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
+	let if_block = /*$doc*/ ctx[0].system.level.has && create_if_block$2(ctx);
+
+	return {
+		c() {
+			header = element("header");
+			create_component(imagewithfilepicker.$$.fragment);
+			t0 = space();
+			h1 = element("h1");
+			create_component(inputfordocumentsheet.$$.fragment);
+			t1 = space();
+			main = element("main");
+			fieldset = element("fieldset");
+			legend = element("legend");
+			legend.textContent = "Level";
+			t3 = space();
+			input = element("input");
+			t4 = space();
+			if (if_block) if_block.c();
+			attr(input, "type", "checkbox");
+		},
+		m(target, anchor) {
+			insert(target, header, anchor);
+			mount_component(imagewithfilepicker, header, null);
+			append(header, t0);
+			append(header, h1);
+			mount_component(inputfordocumentsheet, h1, null);
+			insert(target, t1, anchor);
+			insert(target, main, anchor);
+			append(main, fieldset);
+			append(fieldset, legend);
+			append(fieldset, t3);
+			append(fieldset, input);
+			input.checked = /*$doc*/ ctx[0].system.level.has;
+			append(fieldset, t4);
+			if (if_block) if_block.m(fieldset, null);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					listen(input, "change", /*input_change_handler*/ ctx[3]),
+					listen(input, "change", /*change_handler*/ ctx[4])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			const inputfordocumentsheet_changes = {};
+
+			if (!updating_value && dirty & /*$doc*/ 1) {
+				updating_value = true;
+				inputfordocumentsheet_changes.value = /*$doc*/ ctx[0].name;
+				add_flush_callback(() => updating_value = false);
+			}
+
+			inputfordocumentsheet.$set(inputfordocumentsheet_changes);
+
+			if (dirty & /*$doc*/ 1) {
+				input.checked = /*$doc*/ ctx[0].system.level.has;
+			}
+
+			if (/*$doc*/ ctx[0].system.level.has) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty & /*$doc*/ 1) {
+						transition_in(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block$2(ctx);
+					if_block.c();
+					transition_in(if_block, 1);
+					if_block.m(fieldset, null);
+				}
+			} else if (if_block) {
+				group_outros();
+
+				transition_out(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				check_outros();
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(imagewithfilepicker.$$.fragment, local);
+			transition_in(inputfordocumentsheet.$$.fragment, local);
+			transition_in(if_block);
+			current = true;
+		},
+		o(local) {
+			transition_out(imagewithfilepicker.$$.fragment, local);
+			transition_out(inputfordocumentsheet.$$.fragment, local);
+			transition_out(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(header);
+			destroy_component(imagewithfilepicker);
+			destroy_component(inputfordocumentsheet);
+			if (detaching) detach(t1);
+			if (detaching) detach(main);
+			if (if_block) if_block.d();
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$6($$self, $$props, $$invalidate) {
+	let $doc;
+	const doc = getContext("DocumentSheetObject");
+	component_subscribe($$self, doc, value => $$invalidate(0, $doc = value));
+
+	function inputfordocumentsheet_value_binding(value) {
+		if ($$self.$$.not_equal($doc.name, value)) {
+			$doc.name = value;
+			doc.set($doc);
+		}
+	}
+
+	function input_change_handler() {
+		$doc.system.level.has = this.checked;
+		doc.set($doc);
+	}
+
+	const change_handler = () => {
+		$doc.update({ system: $doc.system });
+	};
+
+	return [
+		$doc,
+		doc,
+		inputfordocumentsheet_value_binding,
+		input_change_handler,
+		change_handler
+	];
+}
+
+class FeatureSheet extends SvelteComponent {
 	constructor(options) {
 		super();
 		init(this, options, instance$6, create_fragment$6, safe_not_equal, {});
@@ -8470,6 +8716,7 @@ const setSvelteComponents = () => {
   DocTemplate.set("item", ItemItemSheet);
   DocTemplate.set("character", ActorSheet$1);
   DocTemplate.set("race", RaceSheet);
+  DocTemplate.set("feature", FeatureSheet);
 };
 
 //@ts-expect-error

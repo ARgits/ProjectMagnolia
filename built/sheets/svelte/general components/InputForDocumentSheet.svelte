@@ -14,6 +14,11 @@
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
   $: if (type !== "text") value = type === "integer" ? parseInt(value) : parseFloat(value);
+
+  /**
+   * Forbid to type anything but digits
+   * @param e - input event
+   */
   function checkInput(e) {
     console.log(type);
     if (type !== "number" && type !== "integer") return;
