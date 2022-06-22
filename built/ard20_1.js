@@ -5878,19 +5878,19 @@ function create_if_block$7(ctx) {
 		c() {
 			span = element("span");
 			t = text(/*label*/ ctx[1]);
-			attr(span, "class", "svelte-gjg5fj");
+			attr(span, "class", "svelte-jvtels");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
 			append(span, t);
-			/*span_binding*/ ctx[9](span);
+			/*span_binding*/ ctx[10](span);
 		},
 		p(ctx, dirty) {
 			if (dirty & /*label*/ 2) set_data(t, /*label*/ ctx[1]);
 		},
 		d(detaching) {
 			if (detaching) detach(span);
-			/*span_binding*/ ctx[9](null);
+			/*span_binding*/ ctx[10](null);
 		}
 	};
 }
@@ -5911,23 +5911,24 @@ function create_fragment$f(ctx) {
 			input_1 = element("input");
 			t1 = space();
 			i = element("i");
-			attr(input_1, "class", "svelte-gjg5fj");
+			attr(input_1, "class", "svelte-jvtels");
 			attr(i, "class", "fa-solid fa-feather-pointed");
 		},
 		m(target, anchor) {
 			if (if_block) if_block.m(target, anchor);
 			insert(target, t0, anchor);
 			insert(target, input_1, anchor);
-			/*input_1_binding*/ ctx[10](input_1);
+			/*input_1_binding*/ ctx[11](input_1);
 			set_input_value(input_1, /*value*/ ctx[0]);
 			insert(target, t1, anchor);
 			insert(target, i, anchor);
+			/*i_binding*/ ctx[15](i);
 
 			if (!mounted) {
 				dispose = [
-					listen(input_1, "input", /*input_1_input_handler*/ ctx[11]),
-					listen(input_1, "keypress", /*keypress_handler*/ ctx[12]),
-					listen(input_1, "change", /*change_handler*/ ctx[13])
+					listen(input_1, "input", /*input_1_input_handler*/ ctx[12]),
+					listen(input_1, "keypress", /*keypress_handler*/ ctx[13]),
+					listen(input_1, "change", /*change_handler*/ ctx[14])
 				];
 
 				mounted = true;
@@ -5957,9 +5958,10 @@ function create_fragment$f(ctx) {
 			if (if_block) if_block.d(detaching);
 			if (detaching) detach(t0);
 			if (detaching) detach(input_1);
-			/*input_1_binding*/ ctx[10](null);
+			/*input_1_binding*/ ctx[11](null);
 			if (detaching) detach(t1);
 			if (detaching) detach(i);
+			/*i_binding*/ ctx[15](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -5972,10 +5974,11 @@ function instance$f($$self, $$props, $$invalidate) {
 	let { type = "text" } = $$props;
 	let { label } = $$props;
 	const document = getContext("DocumentSheetObject");
-	component_subscribe($$self, document, value => $$invalidate(4, $document = value));
+	component_subscribe($$self, document, value => $$invalidate(5, $document = value));
 	let data;
 	let labelElem;
 	let input;
+	let feather;
 
 	/**
  * Forbid to type anything but digits
@@ -5998,13 +6001,13 @@ function instance$f($$self, $$props, $$invalidate) {
 	function input_1_binding($$value) {
 		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			input = $$value;
-			(($$invalidate(3, input), $$invalidate(1, label)), $$invalidate(2, labelElem));
+			((($$invalidate(3, input), $$invalidate(1, label)), $$invalidate(4, feather)), $$invalidate(2, labelElem));
 		});
 	}
 
 	function input_1_input_handler() {
 		value = this.value;
-		($$invalidate(0, value), $$invalidate(8, type));
+		($$invalidate(0, value), $$invalidate(9, type));
 	}
 
 	const keypress_handler = e => checkInput(e);
@@ -6013,20 +6016,27 @@ function instance$f($$self, $$props, $$invalidate) {
 		$document.update(data);
 	};
 
+	function i_binding($$value) {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			feather = $$value;
+			$$invalidate(4, feather);
+		});
+	}
+
 	$$self.$$set = $$props => {
 		if ('value' in $$props) $$invalidate(0, value = $$props.value);
-		if ('type' in $$props) $$invalidate(8, type = $$props.type);
+		if ('type' in $$props) $$invalidate(9, type = $$props.type);
 		if ('label' in $$props) $$invalidate(1, label = $$props.label);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*label, input, labelElem*/ 14) {
-			if (label && input) $$invalidate(3, input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px)`, input);
+		if ($$self.$$.dirty & /*label, input, feather, labelElem*/ 30) {
+			if (label && input && feather) $$invalidate(3, input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(feather.offsetWidth * 1.5)}px)`, input);
 		}
 
-		if ($$self.$$.dirty & /*$document*/ 16) {
+		if ($$self.$$.dirty & /*$document*/ 32) {
 			{
-				$$invalidate(5, data = {
+				$$invalidate(6, data = {
 					img: $document.img,
 					system: $document.system,
 					flags: $document.flags,
@@ -6035,7 +6045,7 @@ function instance$f($$self, $$props, $$invalidate) {
 			}
 		}
 
-		if ($$self.$$.dirty & /*type, value*/ 257) {
+		if ($$self.$$.dirty & /*type, value*/ 513) {
 			if (type !== "text") $$invalidate(0, value = type === "integer" ? parseInt(value) : parseFloat(value));
 		}
 	};
@@ -6045,6 +6055,7 @@ function instance$f($$self, $$props, $$invalidate) {
 		label,
 		labelElem,
 		input,
+		feather,
 		$document,
 		data,
 		document,
@@ -6054,14 +6065,15 @@ function instance$f($$self, $$props, $$invalidate) {
 		input_1_binding,
 		input_1_input_handler,
 		keypress_handler,
-		change_handler
+		change_handler,
+		i_binding
 	];
 }
 
 class InputForDocumentSheet extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$f, create_fragment$f, safe_not_equal, { value: 0, type: 8, label: 1 });
+		init(this, options, instance$f, create_fragment$f, safe_not_equal, { value: 0, type: 9, label: 1 });
 	}
 
 	get value() {
@@ -6074,7 +6086,7 @@ class InputForDocumentSheet extends SvelteComponent {
 	}
 
 	get type() {
-		return this.$$.ctx[8];
+		return this.$$.ctx[9];
 	}
 
 	set type(type) {

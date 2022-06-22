@@ -9,7 +9,11 @@
   let data;
   let labelElem;
   let input;
-  $: if (label && input) input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px)`;
+  let feather;
+  $: if (label && input && feather)
+    input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(
+      feather.offsetWidth * 1.5
+    )}px)`;
   $: {
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
@@ -41,7 +45,7 @@
     $document.update(data);
   }}
 />
-<i class="fa-solid fa-feather-pointed" />
+<i bind:this={feather} class="fa-solid fa-feather-pointed" />
 
 <style lang="scss">
   input,
@@ -50,6 +54,7 @@
     color: inherit;
   }
   input {
+    font-size: inherit;
     border: 0 solid black;
     border-bottom: 1px solid black;
   }
