@@ -24,9 +24,9 @@
       }}
     />
     {#if $doc.system.level.has}
-      <InputForDocumentSheet value={$doc.system.level.current} type="integer" />
+      <InputForDocumentSheet bind:value={$doc.system.level.current} type="integer" />
       /
-      <InputForDocumentSheet value={$doc.system.level.max} type="integer" />
+      <InputForDocumentSheet bind:value={$doc.system.level.max} type="integer" />
     {/if}
   </fieldset>
 </main>

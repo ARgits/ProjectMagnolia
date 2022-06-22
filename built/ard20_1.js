@@ -8429,23 +8429,37 @@ class RaceSheet extends SvelteComponent {
 
 function create_if_block$2(ctx) {
 	let inputfordocumentsheet0;
+	let updating_value;
 	let t;
 	let inputfordocumentsheet1;
+	let updating_value_1;
 	let current;
 
-	inputfordocumentsheet0 = new InputForDocumentSheet({
-			props: {
-				value: /*$doc*/ ctx[0].system.level.current,
-				type: "integer"
-			}
-		});
+	function inputfordocumentsheet0_value_binding(value) {
+		/*inputfordocumentsheet0_value_binding*/ ctx[5](value);
+	}
 
-	inputfordocumentsheet1 = new InputForDocumentSheet({
-			props: {
-				value: /*$doc*/ ctx[0].system.level.max,
-				type: "integer"
-			}
-		});
+	let inputfordocumentsheet0_props = { type: "integer" };
+
+	if (/*$doc*/ ctx[0].system.level.current !== void 0) {
+		inputfordocumentsheet0_props.value = /*$doc*/ ctx[0].system.level.current;
+	}
+
+	inputfordocumentsheet0 = new InputForDocumentSheet({ props: inputfordocumentsheet0_props });
+	binding_callbacks.push(() => bind(inputfordocumentsheet0, 'value', inputfordocumentsheet0_value_binding));
+
+	function inputfordocumentsheet1_value_binding(value) {
+		/*inputfordocumentsheet1_value_binding*/ ctx[6](value);
+	}
+
+	let inputfordocumentsheet1_props = { type: "integer" };
+
+	if (/*$doc*/ ctx[0].system.level.max !== void 0) {
+		inputfordocumentsheet1_props.value = /*$doc*/ ctx[0].system.level.max;
+	}
+
+	inputfordocumentsheet1 = new InputForDocumentSheet({ props: inputfordocumentsheet1_props });
+	binding_callbacks.push(() => bind(inputfordocumentsheet1, 'value', inputfordocumentsheet1_value_binding));
 
 	return {
 		c() {
@@ -8461,10 +8475,22 @@ function create_if_block$2(ctx) {
 		},
 		p(ctx, dirty) {
 			const inputfordocumentsheet0_changes = {};
-			if (dirty & /*$doc*/ 1) inputfordocumentsheet0_changes.value = /*$doc*/ ctx[0].system.level.current;
+
+			if (!updating_value && dirty & /*$doc*/ 1) {
+				updating_value = true;
+				inputfordocumentsheet0_changes.value = /*$doc*/ ctx[0].system.level.current;
+				add_flush_callback(() => updating_value = false);
+			}
+
 			inputfordocumentsheet0.$set(inputfordocumentsheet0_changes);
 			const inputfordocumentsheet1_changes = {};
-			if (dirty & /*$doc*/ 1) inputfordocumentsheet1_changes.value = /*$doc*/ ctx[0].system.level.max;
+
+			if (!updating_value_1 && dirty & /*$doc*/ 1) {
+				updating_value_1 = true;
+				inputfordocumentsheet1_changes.value = /*$doc*/ ctx[0].system.level.max;
+				add_flush_callback(() => updating_value_1 = false);
+			}
+
 			inputfordocumentsheet1.$set(inputfordocumentsheet1_changes);
 		},
 		i(local) {
@@ -8651,12 +8677,28 @@ function instance$6($$self, $$props, $$invalidate) {
 		$doc.update({ system: $doc.system });
 	};
 
+	function inputfordocumentsheet0_value_binding(value) {
+		if ($$self.$$.not_equal($doc.system.level.current, value)) {
+			$doc.system.level.current = value;
+			doc.set($doc);
+		}
+	}
+
+	function inputfordocumentsheet1_value_binding(value) {
+		if ($$self.$$.not_equal($doc.system.level.max, value)) {
+			$doc.system.level.max = value;
+			doc.set($doc);
+		}
+	}
+
 	return [
 		$doc,
 		doc,
 		inputfordocumentsheet_value_binding,
 		input_change_handler,
-		change_handler
+		change_handler,
+		inputfordocumentsheet0_value_binding,
+		inputfordocumentsheet1_value_binding
 	];
 }
 
