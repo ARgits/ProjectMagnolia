@@ -30,3 +30,10 @@
     {/if}
   </fieldset>
 </main>
+
+<style lang="scss">
+  header {
+    max-height: 25%;
+    display: flex;
+  }
+</style>

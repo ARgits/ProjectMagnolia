@@ -8564,6 +8564,7 @@ function create_fragment$6(ctx) {
 			input = element("input");
 			t4 = space();
 			if (if_block) if_block.c();
+			attr(header, "class", "svelte-zqww4b");
 			attr(input, "type", "checkbox");
 		},
 		m(target, anchor) {
