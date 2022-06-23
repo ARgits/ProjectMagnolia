@@ -828,5 +828,9 @@ export class ARd20Item extends Item {
       }).length > 0;
     newAction.id = itemId + "." + uuidv4();
     newAction.name = check ? newAction.name + " (Copy)" : newAction.name ?? "New Action #" + numberOfNewActions;
+    newAction.template={
+      has:false,
+      type:'cube'
+    }
   }
 }
