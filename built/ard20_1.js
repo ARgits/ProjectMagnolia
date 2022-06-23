@@ -2229,6 +2229,28 @@ class ARd20Item extends Item {
       parts
     };
   }
+  /**
+   * Creates new Action for Item
+   * @param {object} action - action data, that can be passed
+   */
+
+
+  addAction(action = null) {
+    var _structuredClone, _newAction$name;
+
+    let actions = this.system.actions;
+    const itemId = this.system.id;
+    let newAction = (_structuredClone = structuredClone(action)) !== null && _structuredClone !== void 0 ? _structuredClone : {}; //get number of actions with name pattern 'New Action #'
+
+    const numberOfNewActions = actions.filter(act => {
+      act.slice(0, 10) === "New Action";
+    }).length + 1;
+    const check = actions.filter(act => {
+      newAction.id === act.id;
+    }).length > 0;
+    newAction.id = itemId + "." + uuidv4();
+    newAction.name = check ? newAction.name + " (Copy)" : (_newAction$name = newAction.name) !== null && _newAction$name !== void 0 ? _newAction$name : "New Action #" + numberOfNewActions;
+  }
 
 }
 

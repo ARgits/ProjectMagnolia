@@ -90,9 +90,7 @@ export class ARd20Item extends Item {
     */
   //@ts-expect-error
   _setTypeAndSubtype(data, flags) {
-    data.sub_type_array = game.settings
-      .get("ard20", "proficiencies")
-      .weapon.value.filter((prof) => prof.type === data.type.value);
+    data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.value.filter((prof) => prof.type === data.type.value);
     if (flags.core?.sourceId) {
       const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
       const item = game.items?.get(id);
@@ -100,16 +98,9 @@ export class ARd20Item extends Item {
         data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
       }
     }
-    data.sub_type =
-      data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0
-        ? data.sub_type_array[0].name
-        : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name =
-      game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ??
-      getValues(CONFIG.ARd20.Rank, data.proficiency.level);
-    data.type.name =
-      game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ??
-      getValues(CONFIG.ARd20.Rank, data.type.value);
+    data.sub_type = data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
+    data.proficiency.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ?? getValues(CONFIG.ARd20.Rank, data.proficiency.level);
+    data.type.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ?? getValues(CONFIG.ARd20.Rank, data.type.value);
   }
   /**
    *Prepare data for features
@@ -213,9 +204,7 @@ export class ARd20Item extends Item {
     let prof_bonus = 0;
     if (itemData.type === "weapon") {
       const data = itemData;
-      data.proficiency.level = this.isOwned
-        ? this.actor?.system.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value
-        : 0;
+      data.proficiency.level = this.isOwned ? this.actor?.system.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value : 0;
       data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
       data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
       prof_bonus = data.proficiency.level * 4;
@@ -250,9 +239,7 @@ export class ARd20Item extends Item {
       //@ts-expect-error
       data.damage.current.formula += part[0] + `[`;
       part[1].forEach((subPart, subKey) => {
-        data.damage.current.formula +=
-          game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) +
-          ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
+        data.damage.current.formula += game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) + ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
         data.damage.current.formula += subKey === part[1].length - 1 ? "]" : " or<br/>";
       });
       data.damage.current.formula += key === baseDamage.length - 1 ? "" : "<br/>+<br/>";
@@ -352,9 +339,7 @@ export class ARd20Item extends Item {
     //@ts-expect-error
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications.error(
-        game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name })
-      );
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
     // Handle different actions
@@ -468,9 +453,7 @@ export class ARd20Item extends Item {
     //@ts-expect-error
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications.error(
-        game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name })
-      );
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
     }
     const dam = await item.rollDamage({
       event: event,
@@ -572,8 +555,7 @@ export class ARd20Item extends Item {
           //@ts-expect-error
           atk[key] = atk[key].total;
           //@ts-expect-error
-          dieResultCss[key] =
-            d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
+          dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal";
           //@ts-expect-error
           result[key] = atk[key] > dc[key] ? "hit" : "miss";
           //@ts-expect-error
@@ -721,15 +703,7 @@ export class ARd20Item extends Item {
     if (roll === false) return null;
     return roll;
   }
-  rollDamage({
-    critical = false,
-    event = null,
-    spellLevel = null,
-    versatile = false,
-    options = {},
-    mRoll = Boolean(),
-    canMult = Boolean(),
-  } = {}) {
+  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean() } = {}) {
     console.log(canMult);
     const iData = this.system;
     const aData = this.actor.system;
@@ -835,5 +809,24 @@ export class ARd20Item extends Item {
     this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula;
     // Update labels and return the prepared roll data
     return { rollData, parts };
+  }
+  /**
+   * Creates new Action for Item
+   * @param {object} action - action data, that can be passed
+   */
+  addAction(action = null) {
+    let actions = this.system.actions;
+    const itemId = this.system.id;
+    let newAction = structuredClone(action) ?? {};
+    //get number of actions with name pattern 'New Action #'
+    const numberOfNewActions = actions.filter((act) => {
+      act.slice(0, 10) === "New Action";
+    }).length+1;
+    const check =
+      actions.filter((act) => {
+        newAction.id === act.id;
+      }).length > 0;
+    newAction.id = itemId + "." + uuidv4();
+    newAction.name = check ? newAction.name + " (Copy)" : newAction.name ?? "New Action #" + numberOfNewActions;
   }
 }
