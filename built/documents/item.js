@@ -1,5 +1,6 @@
 import { getValues, obj_entries } from "../ard20.js";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
+import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
