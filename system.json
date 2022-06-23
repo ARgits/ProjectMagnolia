@@ -45,8 +45,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
-  "url": "https://gitlab.com/ARgits/ard20",
-  "manifest": "https://gitlab.com/ARgits/ard20/-/raw/svelte/system.json",
-  "download": "https://gitlab.com/ARgits/ard20/-/archive/svelte/ard20-svelte.zip",
+  "url": "https://github.com/ARgits/ProjectMagnolia",
+  "manifest": "https://github.com/ARgits/ProjectMagnolia/raw/svelte/system.json",
+  "download": "https://github.com/ARgits/ProjectMagnolia/releases/download/0.1/latest.zip",
   "license": "LICENSE.txt"
 }
