@@ -1,7 +1,4 @@
 {
-  "compilerOptions": {
-    "types": ["@league-of-foundry-developers/foundry-vtt-types"]
-  },
   "scripts": {
     "cypress:open": "cypress open"
   },

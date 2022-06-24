@@ -819,18 +819,30 @@ export class ARd20Item extends Item {
     const itemId = this.system.id;
     let newAction = structuredClone(action) ?? {};
     //get number of actions with name pattern 'New Action #'
-    const numberOfNewActions = actions.filter((act) => {
-      act.slice(0, 10) === "New Action";
-    }).length+1;
+    const numberOfNewActions =
+      actions.filter((act) => {
+        act.slice(0, 10) === "New Action";
+      }).length + 1;
     const check =
       actions.filter((act) => {
         newAction.id === act.id;
       }).length > 0;
     newAction.id = itemId + "." + uuidv4();
+    newAction.type = "attack";
     newAction.name = check ? newAction.name + " (Copy)" : newAction.name ?? "New Action #" + numberOfNewActions;
-    newAction.template={
-      has:false,
-      type:'cube'
-    }
+    newAction.template = {
+      has: false,
+      type: "cube",
+    };
+    newAction.attack = {
+      has: true,
+      agaisnt: "reflex",
+      bonus: 0,
+    };
+    newAction.damage = {
+      has: true,
+      formula: "1d6 fire",
+      parts: [{ value: "1d6", type: "fire" }],
+    };
   }
 }
