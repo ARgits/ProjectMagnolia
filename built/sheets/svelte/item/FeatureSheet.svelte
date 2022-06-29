@@ -29,6 +29,12 @@
       <InputForDocumentSheet bind:value={$doc.system.level.max} type="integer" />
     {/if}
   </fieldset>
+  <fieldset>
+    <legend>Actions <i on:click={()=>{$doc.addAction()}} class="fa-solid fa-file-plus"></i></legend>
+    {#each $doc.actionList as action }
+      {action.name}
+    {/each}
+  </fieldset>
 </main>
 
 <style lang="scss">

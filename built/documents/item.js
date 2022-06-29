@@ -1,6 +1,7 @@
 import { getValues, obj_entries } from "../ard20.js";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
+import { Action } from "./action.js";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -814,35 +815,11 @@ export class ARd20Item extends Item {
    * Creates new Action for Item
    * @param {object} action - action data, that can be passed
    */
-  addAction(action = null) {
-    let actions = this.system.actions;
-    const itemId = this.system.id;
-    let newAction = structuredClone(action) ?? {};
-    //get number of actions with name pattern 'New Action #'
-    const numberOfNewActions =
-      actions.filter((act) => {
-        act.slice(0, 10) === "New Action";
-      }).length + 1;
-    const check =
-      actions.filter((act) => {
-        newAction.id === act.id;
-      }).length > 0;
-    newAction.id = itemId + "." + uuidv4();
-    newAction.type = "attack";
-    newAction.name = check ? newAction.name + " (Copy)" : newAction.name ?? "New Action #" + numberOfNewActions;
-    newAction.template = {
-      has: false,
-      type: "cube",
-    };
-    newAction.attack = {
-      has: true,
-      agaisnt: "reflex",
-      bonus: 0,
-    };
-    newAction.damage = {
-      has: true,
-      formula: "1d6 fire",
-      parts: [{ value: "1d6", type: "fire" }],
-    };
+  addAction(object){
+    let actionList = [...this.system.actionList]
+    let action = new Action()
+    console.log('new Action', action)
+    actionList.push(action)
+    this.update({actionList})
   }
 }

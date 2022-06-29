@@ -1,5 +1,4 @@
 <script>
-    import { getContext } from "svelte";
     export let tabs = [];
     export let activeTab;
   </script>
