@@ -69,6 +69,7 @@ Hooks.once("init", async function () {
     CONFIG.Actor.documentClass = ARd20Actor;
     CONFIG.Item.documentClass = ARd20Item;
     // Register sheet application classes
+    console.log('register sheets')
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: false });
     Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
