@@ -1460,8 +1460,8 @@ class ARd20Item extends Item {
     }
 
     data.sub_type = data.sub_type_array.filter(prof => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank, data.proficiency.level);
-    data.type.name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Rank, data.type.value))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.Rank, data.type.value);
+    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank[data.proficiency.level];
+    data.type.name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Rank[data.type.value])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.Rank[data.type.value];
   }
   /**
    *Prepare data for features
@@ -1474,7 +1474,7 @@ class ARd20Item extends Item {
 
     data.source.label = "";
     data.source.value.forEach((value, key) => {
-      let label = game.i18n.localize(CONFIG.ARd20.Source, value));
+      let label = game.i18n.localize(CONFIG.ARd20.Source[value]);
       data.source.label += key === 0 ? label : `</br>${label}`;
     });
     data.passive;
@@ -4890,7 +4890,7 @@ class ARd20ActorSheet extends ActorSheet {
       var _game$i18n$localize;
 
       //@ts-expect-error
-      v.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
+      v.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes[k])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
     /*for (let [k, v] of Object.entries(context.data.skills)) {
       //@ts-expect-error
@@ -5487,7 +5487,7 @@ class FeatRequirements extends FormApplication {
       var _game$i18n$localize;
 
       data.push({
-        name: (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k,
+        name: (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes[k])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k,
         value: k,
         type: "attribute"
       });
@@ -5497,7 +5497,7 @@ class FeatRequirements extends FormApplication {
       var _game$i18n$localize2;
 
       data.push({
-        name: (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Skills, k))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k,
+        name: (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Skills[k])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k,
         value: k,
         type: "skill"
       });
@@ -12691,7 +12691,7 @@ async function _handleDocUpdate2(doc, options) {
 /* -------------------------------------------- */
 
 Hooks.once("init", function () {
-  console.log('init hoo'); // Add utility classes to the global game object so that they're more easily
+  console.log('init ho'); // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
 
   if (game instanceof Game) {
@@ -12879,5 +12879,5 @@ Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); /
 
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
 
-export { arr_entries, array_keys, getValues, Object.entries, Object.keys, rollItemMacro };
+export { rollItemMacro };
 //# sourceMappingURL=ard20_1.js.map

@@ -18,7 +18,7 @@ import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 Hooks.once("init", function () {
-  console.log('init hoo')
+  console.log('init ho')
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   if (game instanceof Game) {

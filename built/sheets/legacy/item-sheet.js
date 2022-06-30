@@ -1,4 +1,3 @@
-import { Object.entries } from "../../ard20.js";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js";
 import { FeatRequirements } from "../../helpers/feat_req.js";
 /**
