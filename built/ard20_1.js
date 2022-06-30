@@ -12706,8 +12706,9 @@ function array_keys(obj) {
   return Object.keys(obj);
 }
 Hooks.once("init", async function () {
-  // Add utility classes to the global game object so that they're more easily
+  console.log('init hook'); // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
+
   if (game instanceof Game) {
     game.ard20 = {
       documents: {
