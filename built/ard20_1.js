@@ -5,7 +5,7 @@ import { writable } from '/modules/typhonjs/svelte/store.js';
 import { TJSDialog, SvelteApplication } from '/modules/typhonjs/svelte/application.js';
 import { ApplicationShell } from '/modules/typhonjs/svelte/component/core.js';
 import { localize } from '/modules/typhonjs/svelte/helper.js';
-import { SessionStorage, TJSDocument } from '/modules/typhonjs/svelte/store.js';
+import { TJSDocument } from '/modules/typhonjs/svelte/store.js';
 
 /**
  * A type of Roll specific to a d20-based check, save, or attack roll in the 5e system.
@@ -12157,8 +12157,6 @@ class DocumentShell extends SvelteComponent {
 	}
 }
 
-const storage = new SessionStorage();
-
 var _storeDoc = /*#__PURE__*/new WeakMap();
 
 var _storeUnsubscribe = /*#__PURE__*/new WeakMap();
@@ -12246,7 +12244,6 @@ class SvelteDocumentSheet extends SvelteApplication {
 
     const buttons = super._getHeaderButtons();
 
-    storage.getItem("sheetConfig");
     buttons.unshift({
       class: "configure-sheet",
       icon: "fas fa-cog",
