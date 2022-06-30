@@ -1252,6 +1252,7 @@ class Action {
       max: 5,
       min: 0
     };
+    this.sheet = ActionSheet(this);
   }
   /**
    * Icon and text hint for action
@@ -7664,7 +7665,7 @@ function get_each_context_1$3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (56:6) {#each Object.entries($doc.system.attributes) as attribute}
+// (55:6) {#each Object.entries($doc.system.attributes) as attribute}
 function create_each_block_1$3(ctx) {
 	let div;
 	let span0;
@@ -7744,7 +7745,7 @@ function create_each_block_1$3(ctx) {
 	};
 }
 
-// (72:6) {#each Object.entries($doc.system.resources) as resource}
+// (71:6) {#each Object.entries($doc.system.resources) as resource}
 function create_each_block$6(ctx) {
 	let span0;
 	let t0_value = /*resource*/ ctx[7][0] + "";
@@ -8147,8 +8148,6 @@ function instance$8($$self, $$props, $$invalidate) {
 			component: BiographyTab
 		}
 	];
-
-	console.log($doc);
 
 	function inputfordocumentsheet0_value_binding(value) {
 		if ($$self.$$.not_equal($doc.name, value)) {
@@ -8649,23 +8648,41 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (34:4) {#each $doc.actionList as action }
+// (41:4) {#each $doc.actionList as action}
 function create_each_block$4(ctx) {
-	let t_value = /*action*/ ctx[8].name + "";
-	let t;
+	let div2;
+	let div0;
+	let t0_value = /*action*/ ctx[8].name + "";
+	let t0;
+	let t1;
+	let div1;
+	let t2;
 
 	return {
 		c() {
-			t = text(t_value);
+			div2 = element("div");
+			div0 = element("div");
+			t0 = text(t0_value);
+			t1 = space();
+			div1 = element("div");
+			t2 = space();
+			attr(div0, "class", "name");
+			attr(div1, "class", "control");
+			attr(div2, "class", "action");
 		},
 		m(target, anchor) {
-			insert(target, t, anchor);
+			insert(target, div2, anchor);
+			append(div2, div0);
+			append(div0, t0);
+			append(div2, t1);
+			append(div2, div1);
+			append(div2, t2);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$doc*/ 1 && t_value !== (t_value = /*action*/ ctx[8].name + "")) set_data(t, t_value);
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*action*/ ctx[8].name + "")) set_data(t0, t0_value);
 		},
 		d(detaching) {
-			if (detaching) detach(t);
+			if (detaching) detach(div2);
 		}
 	};
 }
@@ -12168,6 +12185,7 @@ class SvelteDocumentSheet extends SvelteApplication {
      *
      * @memberof SvelteReactive#
      */
+    //TODO #2 
 
     _classPrivateMethodInitSpec(this, _handleDocUpdate);
 

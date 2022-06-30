@@ -11,6 +11,7 @@ export class Action {
     this.isRoll = true;
     this.setTargetLimit(object);
     this.range = { max: 5, min: 0 };
+    this.sheet = ActionSheet(this)
   }
   /**
    * Icon and text hint for action

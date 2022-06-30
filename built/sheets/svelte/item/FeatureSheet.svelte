@@ -30,9 +30,23 @@
     {/if}
   </fieldset>
   <fieldset>
-    <legend>Actions <i on:click={()=>{$doc.addAction()}} class="fa-solid fa-file-plus"></i></legend>
-    {#each $doc.actionList as action }
-      {action.name}
+    <legend
+      >Actions <i
+        on:click={() => {
+          $doc.addAction();
+        }}
+        class="fa-solid fa-file-plus"
+      /></legend
+    >
+    {#each $doc.actionList as action}
+      <div class="action">
+        <div class="name">
+          {action.name}
+        </div>
+        <div class="control">
+          
+        </div>
+      </div>
     {/each}
   </fieldset>
 </main>
