@@ -12691,69 +12691,65 @@ async function _handleDocUpdate2(doc, options) {
 /* -------------------------------------------- */
 
 Hooks.once("init", function () {
-  console.log('init ho'); // Add utility classes to the global game object so that they're more easily
+  console.log("init hook"); // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
 
-  if (game instanceof Game) {
-    game.ard20 = {
-      documents: {
-        ARd20Actor,
-        ARd20Item
-      },
-      rollItemMacro,
-      config: ARd20,
-      dice: dice
-    }; // Add custom constants for configuration.
+  game.ard20 = {
+    documents: {
+      ARd20Actor,
+      ARd20Item
+    },
+    rollItemMacro,
+    config: ARd20,
+    dice: dice
+  }; // Add custom constants for configuration.
 
-    CONFIG.ARd20 = ARd20; //@ts-expect-error
+  CONFIG.ARd20 = ARd20; //@ts-expect-error
 
-    CONFIG.Dice.DamageRoll = DamageRoll; //@ts-expect-error
+  CONFIG.Dice.DamageRoll = DamageRoll; //@ts-expect-error
 
-    CONFIG.Dice.D20Roll = D20Roll;
-    CONFIG.Dice.rolls.push(D20Roll);
-    CONFIG.Dice.rolls.push(DamageRoll);
-    game.socket.on("system.ard20", data => {
-      if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
-    });
-    /**
-     * Set an initiative formula for the system
-     * @type {String}
-     */
+  CONFIG.Dice.D20Roll = D20Roll;
+  CONFIG.Dice.rolls.push(D20Roll);
+  CONFIG.Dice.rolls.push(DamageRoll);
+  game.socket.on("system.ard20", data => {
+    if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
+  });
+  /**
+   * Set an initiative formula for the system
+   * @type {String}
+   */
 
-    CONFIG.Combat.initiative = {
-      formula: "1d20 + @abilities.dex.mod",
-      decimals: 2
-    }; // Define custom Document classes
+  CONFIG.Combat.initiative = {
+    formula: "1d20 + @abilities.dex.mod",
+    decimals: 2
+  }; // Define custom Document classes
 
-    CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
+  CONFIG.Actor.documentClass = ARd20Actor;
+  CONFIG.Item.documentClass = ARd20Item; // Register sheet application classes
 
-    console.log('register sheets');
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("ard20", ARd20ActorSheet, {
-      makeDefault: false
-    });
-    Actors.registerSheet("ard20", SvelteDocumentSheet, {
-      makeDefault: true
-    });
-    Items.unregisterSheet("core", ItemSheet); //@ts-expect-error
+  console.log("register sheets");
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("ard20", ARd20ActorSheet, {
+    makeDefault: false
+  });
+  Actors.registerSheet("ard20", SvelteDocumentSheet, {
+    makeDefault: true
+  });
+  Items.unregisterSheet("core", ItemSheet); //@ts-expect-error
 
-    Items.registerSheet("ard20", ARd20ItemSheet, {
-      makeDefault: false
-    });
-    Items.registerSheet("ard20", SvelteDocumentSheet, {
-      makeDefault: true
-    });
-    CONFIG.Item.systemDataModels["race"] = RaceDataModel; //register settings
+  Items.registerSheet("ard20", ARd20ItemSheet, {
+    makeDefault: false
+  });
+  Items.registerSheet("ard20", SvelteDocumentSheet, {
+    makeDefault: true
+  });
+  CONFIG.Item.systemDataModels["race"] = RaceDataModel; //register settings
 
-    registerSystemSettings(); //register Svelte components for Actor/Item types
+  registerSystemSettings(); //register Svelte components for Actor/Item types
 
-    setSvelteComponents(); // Preload Handlebars templates.
+  setSvelteComponents(); // Preload Handlebars templates.
 
-    return preloadHandlebarsTemplates();
-  } else {
-    throw new Error("game not initialized yet!");
-  }
+  preloadHandlebarsTemplates();
 });
 /* -------------------------------------------- */
 

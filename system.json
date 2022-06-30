@@ -1,14 +1,13 @@
 {
-  "name": "ard20",
-  "title": "Project Magnolia (test)",
-  "description": "Попытки сделать свою систему",
-  "version": "0.0.1.14.0.237",
+  "id": "ard20",
+  "title":"Project Magnolia (test)",
+  "version": "0.0.1.14.0.238",
   "compatibility": {
     "minimum": 10,
     "verified": 10,
     "maximum": 10
   },
-  "author": "ARgits",
+  "authors": [{ "name": "ARgits" }],
   "esmodules": ["built/ard20_1.js"],
   "styles": ["css/select2.css", "built/ard20_1.css", "css/ard20.css"],
   "relationships": {
@@ -31,7 +30,9 @@
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "lang/en.json",
+      "title": "Project Magnolia (test)",
+      "description": "Попытки сделать свою систему"
     }
   ],
   "socket": true,

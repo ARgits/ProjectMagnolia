@@ -18,63 +18,59 @@ import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 Hooks.once("init", function () {
-  console.log('init ho')
+  console.log("init hook");
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  if (game instanceof Game) {
-    game.ard20 = {
-      documents: {
-        ARd20Actor,
-        ARd20Item,
-      },
-      rollItemMacro,
-      config: ARd20,
-      dice: dice,
-    };
-    // Add custom constants for configuration.
-    CONFIG.ARd20 = ARd20;
-    //@ts-expect-error
-    CONFIG.Dice.DamageRoll = dice.DamageRoll;
-    //@ts-expect-error
-    CONFIG.Dice.D20Roll = dice.D20Roll;
-    CONFIG.Dice.rolls.push(dice.D20Roll);
-    CONFIG.Dice.rolls.push(dice.DamageRoll);
-    game.socket.on("system.ard20", (data) => {
-      if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
-    });
+  game.ard20 = {
+    documents: {
+      ARd20Actor,
+      ARd20Item,
+    },
+    rollItemMacro,
+    config: ARd20,
+    dice: dice,
+  };
+  // Add custom constants for configuration.
+  CONFIG.ARd20 = ARd20;
+  //@ts-expect-error
+  CONFIG.Dice.DamageRoll = dice.DamageRoll;
+  //@ts-expect-error
+  CONFIG.Dice.D20Roll = dice.D20Roll;
+  CONFIG.Dice.rolls.push(dice.D20Roll);
+  CONFIG.Dice.rolls.push(dice.DamageRoll);
+  game.socket.on("system.ard20", (data) => {
+    if (data.operation === "updateActorData") ARd20SocketHandler.updateActorData(data);
+  });
 
-    /**
-     * Set an initiative formula for the system
-     * @type {String}
-     */
-    CONFIG.Combat.initiative = {
-      formula: "1d20 + @abilities.dex.mod",
-      decimals: 2,
-    };
-    // Define custom Document classes
-    CONFIG.Actor.documentClass = ARd20Actor;
-    CONFIG.Item.documentClass = ARd20Item;
-    // Register sheet application classes
-    console.log('register sheets')
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: false });
-    Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
-    Items.unregisterSheet("core", ItemSheet);
-    //@ts-expect-error
-    Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: false });
-    Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
+  /**
+   * Set an initiative formula for the system
+   * @type {String}
+   */
+  CONFIG.Combat.initiative = {
+    formula: "1d20 + @abilities.dex.mod",
+    decimals: 2,
+  };
+  // Define custom Document classes
+  CONFIG.Actor.documentClass = ARd20Actor;
+  CONFIG.Item.documentClass = ARd20Item;
+  // Register sheet application classes
+  console.log("register sheets");
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: false });
+  Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
+  Items.unregisterSheet("core", ItemSheet);
+  //@ts-expect-error
+  Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: false });
+  Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
 
-    CONFIG.Item.systemDataModels["race"] = RaceDataModel;
-    //register settings
-    registerSystemSettings();
+  CONFIG.Item.systemDataModels["race"] = RaceDataModel;
+  //register settings
+  registerSystemSettings();
 
-    //register Svelte components for Actor/Item types
-    setSvelteComponents();
-    // Preload Handlebars templates.
-    return preloadHandlebarsTemplates();
-  } else {
-    throw new Error("game not initialized yet!");
-  }
+  //register Svelte components for Actor/Item types
+  setSvelteComponents();
+  // Preload Handlebars templates.
+  preloadHandlebarsTemplates();
 });
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
@@ -125,8 +121,7 @@ async function createItemMacro(data, slot) {
   if (game instanceof Game) {
     //@ts-expect-error
     if (data.type !== "Item") return;
-    if (!("data" in data) && ui.notifications instanceof Notifications)
-      return ui.notifications.warn("You can only create macro buttons for owned Items");
+    if (!("data" in data) && ui.notifications instanceof Notifications) return ui.notifications.warn("You can only create macro buttons for owned Items");
     //@ts-expect-error
     const item = data.data;
     // Create the macro command
