@@ -12705,7 +12705,7 @@ function obj_keys(obj) {
 function array_keys(obj) {
   return Object.keys(obj);
 }
-Hooks.once("init", async function () {
+Hooks.once("init", function () {
   console.log('init hoo'); // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
 
