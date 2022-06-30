@@ -1,5 +1,5 @@
 import { ItemDataSource } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/itemData";
-import { getValues, obj_entries } from "../ard20.js";
+import { getValues, Object.entries } from "../ard20.js";
 import { ARd20Item } from "../documents/item.js";
 
 //@ts-expect-error
@@ -103,14 +103,14 @@ export class FeatRequirements extends FormApplication<
     const data: FeatReqData[] = []; //list of attributes, skills and feats that user can use as requirement
     for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
       data.push({
-        name: game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k,
+        name: game.i18n.localize(CONFIG.ARd20.Attributes, k)) ?? k,
         value: k,
         type: "attribute",
       });
     }
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Skills)) {
       data.push({
-        name: game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k,
+        name: game.i18n.localize(CONFIG.ARd20.Skills, k)) ?? k,
         value: k,
         type: "skill",
       });
@@ -240,7 +240,7 @@ export class FeatRequirements extends FormApplication<
     event.preventDefault();
     const req = this.options.data.req;
     let sub_list: string[] = []; //temporary list with attributes
-    for (let [k, i] of obj_entries(CONFIG.ARd20.Attributes)) {
+    for (let [k, i] of Object.entries(CONFIG.ARd20.Attributes)) {
       sub_list.push(k);
     }
     //create varible for easier access to maximum level of feature

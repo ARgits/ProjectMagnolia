@@ -1,4 +1,4 @@
-import { obj_entries } from "../../ard20.js";
+import { Object.entries } from "../../ard20.js";
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../../helpers/effects.js";
 import { FeatRequirements } from "../../helpers/feat_req.js";
 /**
@@ -74,8 +74,8 @@ export class ARd20ItemSheet extends ItemSheet {
           return [d[0] || "", a];
         });
       } else {
-        for (let [key, type] of obj_entries(damage)) {
-          for (let [k, prof] of obj_entries(type)) {
+        for (let [key, type] of Object.entries(damage)) {
+          for (let [k, prof] of Object.entries(type)) {
             prof.damType = Object.values(prof?.damType || {});
             prof.parts = Object.values(prof?.parts || {}).map(function (d, ind) {
               let a = [];

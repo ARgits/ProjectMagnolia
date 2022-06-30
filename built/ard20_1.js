@@ -1009,12 +1009,12 @@ class ARd20Actor extends Actor {
     this.itemTypes.armor.forEach(item => {
       if (item.type === "armor") {
         if (item.system.equipped) {
-          for (let key of obj_keys(def_dam.phys)) {
+          for (let key of Object.keys(def_dam.phys)) {
             let ph = item.system.res.phys[key];
             def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
           }
 
-          for (let key of obj_keys(def_dam.mag)) {
+          for (let key of Object.keys(def_dam.mag)) {
             let mg = item.system.res.mag[key];
             def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
           }
@@ -1052,7 +1052,7 @@ class ARd20Actor extends Actor {
     def_stats.will.value = 10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
 
-    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       var _def_dam$mag$key, _def_dam$mag$key2, _def_dam$mag$key3, _def_dam$mag$key4, _game$i18n$localize2;
 
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
@@ -1197,7 +1197,7 @@ class ARd20Actor extends Actor {
     var _options$parts2;
 
     console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
-    const skl = getValues(this.system.skills, skillId); // Compose roll parts and data
+    const skl = this.system.skills[skillId]; // Compose roll parts and data
 
     const parts = ["@proficiency", "@mod"];
     const data = {
@@ -1214,7 +1214,7 @@ class ARd20Actor extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("ARd20.SkillPromptTitle", {
-        skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId))
+        skill: game.i18n.localize(CONFIG.ARd20.Skills[skillId])
       }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({
@@ -1401,9 +1401,9 @@ class ARd20Item extends Item {
         parts: [["", ["", ""]]]
       };
     }
-    /*for (let [key, type] of obj_entries(data.damage)) {
+    /*for (let [key, type] of Object.entries(data.damage)) {
             if (key !== "current") {
-                for (let [key, prof] of obj_entries(type)) {
+                for (let [key, prof] of Object.entries(type)) {
                     prof.formula = "";
                     prof.parts.forEach((part) => {
                         if (Array.isArray(part[1])) {
@@ -1433,7 +1433,7 @@ class ARd20Item extends Item {
 
   /* TODO:
     _setDeflect(data: object & WeaponDataPropertiesData) {
-      for (let [k, v] of obj_entries(CONFIG.ARd20.Rank)) {
+      for (let [k, v] of Object.entries(CONFIG.ARd20.Rank)) {
         v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
         v = v.toLowerCase();
         data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
@@ -1460,8 +1460,8 @@ class ARd20Item extends Item {
     }
 
     data.sub_type = data.sub_type_array.filter(prof => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : getValues(CONFIG.ARd20.Rank, data.proficiency.level);
-    data.type.name = (_game$i18n$localize2 = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : getValues(CONFIG.ARd20.Rank, data.type.value);
+    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank, data.proficiency.level);
+    data.type.name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Rank, data.type.value))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.Rank, data.type.value);
   }
   /**
    *Prepare data for features
@@ -1474,7 +1474,7 @@ class ARd20Item extends Item {
 
     data.source.label = "";
     data.source.value.forEach((value, key) => {
-      let label = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
+      let label = game.i18n.localize(CONFIG.ARd20.Source, value));
       data.source.label += key === 0 ? label : `</br>${label}`;
     });
     data.passive;
@@ -1516,14 +1516,14 @@ class ARd20Item extends Item {
 
       switch (req.type) {
         case "ability":
-          for (let [_key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+          for (let [_key, v] of Object.entries(CONFIG.ARd20.Attributes)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[_key])) req.value = _key;
           }
 
           break;
 
         case "skill":
-          for (let [_key2, v] of obj_entries(CONFIG.ARd20.Skills)) {
+          for (let [_key2, v] of Object.entries(CONFIG.ARd20.Skills)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[_key2])) req.value = _key2;
           }
 
@@ -1562,7 +1562,7 @@ class ARd20Item extends Item {
     if (this.type !== "armor") return;
     const data = itemData;
 
-    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
         data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
@@ -1585,7 +1585,7 @@ class ARd20Item extends Item {
 
     const abil = itemData.abil = {};
 
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
       abil[k] = this.isOwned ? getProperty(this.actor.system, `data.attributes.${k}.mod`) : null;
     }
 
@@ -4886,16 +4886,16 @@ class ARd20ActorSheet extends ActorSheet {
 
   _prepareCharacterData(context) {
     // Handle attribute scores.
-    for (let [k, v] of obj_entries(context.data.attributes)) {
+    for (let [k, v] of Object.entries(context.data.attributes)) {
       var _game$i18n$localize;
 
       //@ts-expect-error
-      v.label = (_game$i18n$localize = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
+      v.label = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k;
     }
-    /*for (let [k, v] of obj_entries(context.data.skills)) {
+    /*for (let [k, v] of Object.entries(context.data.skills)) {
       //@ts-expect-error
-      v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
-      v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
+      v.name = game.i18n.localize(CONFIG.ARd20.Skills, k)) ?? k;
+      v.rank_name = game.i18n.localize(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
     }*/
 
   }
@@ -5487,17 +5487,17 @@ class FeatRequirements extends FormApplication {
       var _game$i18n$localize;
 
       data.push({
-        name: (_game$i18n$localize = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k,
+        name: (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Attributes, k))) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : k,
         value: k,
         type: "attribute"
       });
     }
 
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Skills)) {
       var _game$i18n$localize2;
 
       data.push({
-        name: (_game$i18n$localize2 = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k,
+        name: (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Skills, k))) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : k,
         value: k,
         type: "skill"
       });
@@ -5642,7 +5642,7 @@ class FeatRequirements extends FormApplication {
     const req = this.options.data.req;
     let sub_list = []; //temporary list with attributes
 
-    for (let [k, i] of obj_entries(CONFIG.ARd20.Attributes)) {
+    for (let [k, i] of Object.entries(CONFIG.ARd20.Attributes)) {
       sub_list.push(k);
     } //create varible for easier access to maximum level of feature
 
@@ -5811,8 +5811,8 @@ class ARd20ItemSheet extends ItemSheet {
           return [d[0] || "", a];
         });
       } else {
-        for (let [key, type] of obj_entries(damage)) {
-          for (let [k, prof] of obj_entries(type)) {
+        for (let [key, type] of Object.entries(damage)) {
+          for (let [k, prof] of Object.entries(type)) {
             prof.damType = Object.values((prof === null || prof === void 0 ? void 0 : prof.damType) || {});
             prof.parts = Object.values((prof === null || prof === void 0 ? void 0 : prof.parts) || {}).map(function (d, ind) {
               let a = [];
@@ -12690,21 +12690,6 @@ async function _handleDocUpdate2(doc, options) {
 
 /* -------------------------------------------- */
 
-function obj_entries(obj) {
-  return Object.entries(obj);
-}
-function arr_entries(arr) {
-  return Object.entries(arr);
-}
-function getValues(SourceObject, key) {
-  return SourceObject[key];
-}
-function obj_keys(obj) {
-  return Object.keys(obj);
-}
-function array_keys(obj) {
-  return Object.keys(obj);
-}
 Hooks.once("init", function () {
   console.log('init hoo'); // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
@@ -12894,5 +12879,5 @@ Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html)); /
 
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
 
-export { arr_entries, array_keys, getValues, obj_entries, obj_keys, rollItemMacro };
+export { arr_entries, array_keys, getValues, Object.entries, Object.keys, rollItemMacro };
 //# sourceMappingURL=ard20_1.js.map

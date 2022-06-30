@@ -1,6 +1,6 @@
 import { ActorData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs";
 import { d20Roll } from "../dice/dice.js";
-import { obj_entries, obj_keys, getValues, array_keys } from "../ard20.js";
+import { Object.entries, Object.keys, getValues, array_keys } from "../ard20.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -54,12 +54,12 @@ export class ARd20Actor extends Actor {
     this.itemTypes.armor.forEach((item) => {
       if (item.data.type === "armor") {
         if (item.data.data.equipped) {
-          for (let key of obj_keys(def_dam.phys)) {
+          for (let key of Object.keys(def_dam.phys)) {
             let ph = item.data.data.res.phys[key];
             def_dam.phys[key].bonus += ph.type !== "imm" ? ph.value : 0;
             def_dam.phys[key].type = ph.type === "imm" ? "imm" : def_dam.phys[key].type;
           }
-          for (let key of obj_keys(def_dam.mag)) {
+          for (let key of Object.keys(def_dam.mag)) {
             let mg = item.data.data.res.mag[key];
             def_dam.mag[key].bonus += mg.type !== "imm" ? mg.value : 0;
             def_dam.mag[key].type = mg.type === "imm" ? "imm" : def_dam.mag[key].type;
@@ -104,7 +104,7 @@ export class ARd20Actor extends Actor {
     def_stats.will.value =
       10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
-    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         def_dam.phys[key].value =
           def_dam.phys[key]?.value || def_dam.phys[key]?.type !== "imm"
@@ -120,12 +120,12 @@ export class ARd20Actor extends Actor {
       def_dam.mag[key].name = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[key]) ?? CONFIG.ARd20.DamageSubTypes[key];
     }
     //calculate rolls for character's skills
-    for (let [key, skill] of obj_entries(data.skills)) {
+    for (let [key, skill] of Object.entries(data.skills)) {
       skill.level = skill.level < 4 ? skill.level : 4;
       skill.value = skill.level * 4 + skill.bonus;
       skill.name = game.i18n.localize(CONFIG.ARd20.Skills[key]) ?? CONFIG.ARd20.Skills[key];
       skill.rankName =
-        game.i18n.localize(getValues(CONFIG.ARd20.Rank, skill.level)) ?? getValues(CONFIG.ARd20.Rank, skill.level);
+        game.i18n.localize(CONFIG.ARd20.Rank, skill.level)) ?? CONFIG.ARd20.Rank, skill.level);
     }
     proficiencies.weapon = game.settings.get("ard20", "proficiencies").weapon.map((setting, key) => {
       return { ...setting, value: proficiencies.weapon[key]?.value ?? 0 };
@@ -165,10 +165,10 @@ export class ARd20Actor extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
   rollAbilityTest(attributeId: string, options: RollOptions): Promise<Roll> {
-    const label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, attributeId));
+    const label = game.i18n.localize(CONFIG.ARd20.Attributes, attributeId));
     const actorData = this.data.data;
     const attributes = actorData.attributes;
-    const attr = getValues(attributes, attributeId);
+    const attr = attributes, attributeId);
 
     // Construct parts
     const parts = ["@mod"];
@@ -200,7 +200,7 @@ export class ARd20Actor extends Actor {
    * @return {Promise<Roll>}      A Promise which resolves to the created Roll instance
    */
   rollSkill(skillId: string, options: RollOptions) {
-    const skl = getValues(this.data.data.skills, skillId);
+    const skl = this.data.data.skills, skillId);
 
     // Compose roll parts and data
     const parts = ["@proficiency", "@mod"];
@@ -215,7 +215,7 @@ export class ARd20Actor extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("ARd20.SkillPromptTitle", {
-        skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId)),
+        skill: game.i18n.localize(CONFIG.ARd20.Skills, skillId)),
       }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),

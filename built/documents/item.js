@@ -1,4 +1,3 @@
-import { getValues, obj_entries } from "../ard20.js";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 import { Action } from "./action.js";
@@ -52,9 +51,9 @@ export class ARd20Item extends Item {
         parts: [["", ["", ""]]],
       };
     }
-    /*for (let [key, type] of obj_entries(data.damage)) {
+    /*for (let [key, type] of Object.entries(data.damage)) {
             if (key !== "current") {
-                for (let [key, prof] of obj_entries(type)) {
+                for (let [key, prof] of Object.entries(type)) {
                     prof.formula = "";
                     prof.parts.forEach((part) => {
                         if (Array.isArray(part[1])) {
@@ -82,7 +81,7 @@ export class ARd20Item extends Item {
    */
   /* TODO:
     _setDeflect(data: object & WeaponDataPropertiesData) {
-      for (let [k, v] of obj_entries(CONFIG.ARd20.Rank)) {
+      for (let [k, v] of Object.entries(CONFIG.ARd20.Rank)) {
         v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
         v = v.toLowerCase();
         data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
@@ -100,8 +99,8 @@ export class ARd20Item extends Item {
       }
     }
     data.sub_type = data.sub_type_array.filter((prof) => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ?? getValues(CONFIG.ARd20.Rank, data.proficiency.level);
-    data.type.name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ?? getValues(CONFIG.ARd20.Rank, data.type.value);
+    data.proficiency.name = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level]) ?? CONFIG.ARd20.Rank[data.proficiency.level];
+    data.type.name = game.i18n.localize(CONFIG.ARd20.Rank[data.type.value]) ?? CONFIG.ARd20.Rank[data.type.value];
   }
   /**
    *Prepare data for features
@@ -112,7 +111,7 @@ export class ARd20Item extends Item {
     // Handle Source of the feature
     data.source.label = "";
     data.source.value.forEach((value, key) => {
-      let label = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
+      let label = game.i18n.localize(CONFIG.ARd20.Source[value]);
       data.source.label += key === 0 ? label : `</br>${label}`;
     });
     data.passive;
@@ -147,12 +146,12 @@ export class ARd20Item extends Item {
       req.pass = Array.from({ length: data.level.max }, (i) => (i = false));
       switch (req.type) {
         case "ability":
-          for (let [key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+          for (let [key, v] of Object.entries(CONFIG.ARd20.Attributes)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key])) req.value = key;
           }
           break;
         case "skill":
-          for (let [key, v] of obj_entries(CONFIG.ARd20.Skills)) {
+          for (let [key, v] of Object.entries(CONFIG.ARd20.Skills)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key])) req.value = key;
           }
           break;
@@ -181,7 +180,7 @@ export class ARd20Item extends Item {
   _prepareArmorData(itemData) {
     if (this.type !== "armor") return;
     const data = itemData;
-    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
         data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
@@ -199,7 +198,7 @@ export class ARd20Item extends Item {
     const itemData = this.system;
     //@ts-expect-error
     const abil = (itemData.abil = {});
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
       abil[k] = this.isOwned ? getProperty(this.actor.system, `data.attributes.${k}.mod`) : null;
     }
     let prof_bonus = 0;

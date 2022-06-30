@@ -16,16 +16,16 @@ import {SvelteItemSheet} from "../built/sheets/svelte/item-sheet"
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
-export function obj_entries(obj) {
+export function Object.entries(obj) {
   return Object.entries(obj);
 }
 export function arr_entries(arr) {
   return Object.entries(arr);
 }
-export function getValues(SourceObject, key) {
+export function SourceObject, key) {
   return SourceObject[key];
 }
-export function obj_keys(obj) {
+export function Object.keys(obj) {
   return Object.keys(obj);
 }
 export function array_keys(obj) {

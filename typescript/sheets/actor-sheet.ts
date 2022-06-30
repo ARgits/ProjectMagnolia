@@ -1,7 +1,7 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.js";
 import { CharacterAdvancement } from "../helpers/cha-adv.js";
 import { ActorData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/actorData";
-import { getValues, obj_entries } from "../ard20.js";
+import { getValues, Object.entries } from "../ard20.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -82,14 +82,14 @@ export class ARd20ActorSheet extends ActorSheet {
   //@ts-expect-error
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of obj_entries(context.data.attributes)) {
+    for (let [k, v] of Object.entries(context.data.attributes)) {
       //@ts-expect-error
-      v.label = game.i18n.localize(getValues(CONFIG.ARd20.Attributes, k)) ?? k;
+      v.label = game.i18n.localize(CONFIG.ARd20.Attributes, k)) ?? k;
     }
-    for (let [k, v] of obj_entries(context.data.skills)) {
+    for (let [k, v] of Object.entries(context.data.skills)) {
       //@ts-expect-error
-      v.name = game.i18n.localize(getValues(CONFIG.ARd20.Skills, k)) ?? k;
-      v.rank_name = game.i18n.localize(getValues(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
+      v.name = game.i18n.localize(CONFIG.ARd20.Skills, k)) ?? k;
+      v.rank_name = game.i18n.localize(CONFIG.ARd20.Rank, v.rank)) ?? v.rank;
     }
   }
 

@@ -1,5 +1,5 @@
 import { ItemData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/module.mjs";
-import { getValues, obj_entries, obj_keys } from "../ard20.js";
+import { getValues, Object.entries, Object.keys } from "../ard20.js";
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 
 /**
@@ -45,9 +45,9 @@ export class ARd20Item extends Item {
     data.hasDamage = data.hasDamage || true;
     //TODO: this._setDeflect(data);
     this._setTypeAndSubtype(data, flags);
-    for (let [key, type] of obj_entries(data.damage)) {
+    for (let [key, type] of Object.entries(data.damage)) {
       if (key !== "current") {
-        for (let [key, prof] of obj_entries(type)) {
+        for (let [key, prof] of Object.entries(type)) {
           prof.formula = "";
           prof.parts.forEach((part: any[]) => {
             if (Array.isArray(part[1])) {
@@ -72,7 +72,7 @@ export class ARd20Item extends Item {
    */
   /* TODO:
   _setDeflect(data: object & WeaponDataPropertiesData) {
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Rank)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Rank)) {
       v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
       v = v.toLowerCase();
       data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
@@ -96,11 +96,11 @@ export class ARd20Item extends Item {
         ? data.sub_type_array[0].name
         : data.sub_type || data.sub_type_array[0].name;
     data.proficiency.name =
-      game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.proficiency.level)) ??
-      getValues(CONFIG.ARd20.Rank, data.proficiency.level);
+      game.i18n.localize(CONFIG.ARd20.Rank, data.proficiency.level)) ??
+      CONFIG.ARd20.Rank, data.proficiency.level);
     data.type.name =
-      game.i18n.localize(getValues(CONFIG.ARd20.Rank, data.type.value)) ??
-      getValues(CONFIG.ARd20.Rank, data.type.value);
+      game.i18n.localize(CONFIG.ARd20.Rank, data.type.value)) ??
+      CONFIG.ARd20.Rank, data.type.value);
   }
   /**
    *Prepare data for features
@@ -111,7 +111,7 @@ export class ARd20Item extends Item {
     // Handle Source of the feature
     data.source.label = "";
     data.source.value.forEach((value: string, key: number) => {
-      let label: string = game.i18n.localize(getValues(CONFIG.ARd20.Source, value));
+      let label: string = game.i18n.localize(CONFIG.ARd20.Source, value));
       data.source.label += key === 0 ? label : `, ${label}`;
     });
     //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
@@ -141,12 +141,12 @@ export class ARd20Item extends Item {
       req.pass = Array.from({ length: data.level.max }, (i) => (i = false));
       switch (req.type) {
         case "ability":
-          for (let [key, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+          for (let [key, v] of Object.entries(CONFIG.ARd20.Attributes)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key])) req.value = key;
           }
           break;
         case "skill":
-          for (let [key, v] of obj_entries(CONFIG.ARd20.Skills)) {
+          for (let [key, v] of Object.entries(CONFIG.ARd20.Skills)) {
             if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key])) req.value = key;
           }
           break;
@@ -175,7 +175,7 @@ export class ARd20Item extends Item {
   _prepareArmorData(itemData: ItemData) {
     if (itemData.type !== "armor") return;
     const data = itemData.data;
-    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         data.res.phys[key] = data.res.phys[key] ?? 0;
       }
@@ -191,7 +191,7 @@ export class ARd20Item extends Item {
     const itemData = this.data;
     //@ts-expect-error
     const abil: { [index: string]: number } = (itemData.abil = {});
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
       abil[k] = this.isOwned ? getProperty(this.actor!.data, `data.attributes.${k}.mod`) : null;
     }
     let prof_bonus: number = 0;

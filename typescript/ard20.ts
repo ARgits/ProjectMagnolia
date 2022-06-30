@@ -15,7 +15,7 @@ import * as chat from "./helpers/chat.js";
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
-export function obj_entries<Obj extends object>(obj: Obj) {
+export function Object.entries<Obj extends object>(obj: Obj) {
   return Object.entries(obj) as [keyof Obj, Obj[keyof Obj]][];
 }
 export function arr_entries<Arr extends Array<any>>(arr: Arr) {
@@ -24,7 +24,7 @@ export function arr_entries<Arr extends Array<any>>(arr: Arr) {
 export function getValues<Obj extends object>(SourceObject: Obj, key: keyof Obj | string | number) {
   return SourceObject[key as keyof Obj];
 }
-export function obj_keys<Obj extends object>(obj: Obj) {
+export function Object.keys<Obj extends object>(obj: Obj) {
   return Object.keys(obj) as unknown as Array<keyof Obj>;
 }
 export function array_keys<Obj extends Array<any>>(obj: Obj) {

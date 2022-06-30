@@ -17,21 +17,6 @@ import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
-export function obj_entries(obj) {
-  return Object.entries(obj);
-}
-export function arr_entries(arr) {
-  return Object.entries(arr);
-}
-export function getValues(SourceObject, key) {
-  return SourceObject[key];
-}
-export function obj_keys(obj) {
-  return Object.keys(obj);
-}
-export function array_keys(obj) {
-  return Object.keys(obj);
-}
 Hooks.once("init", function () {
   console.log('init hoo')
   // Add utility classes to the global game object so that they're more easily

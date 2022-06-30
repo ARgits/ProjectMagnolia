@@ -1,4 +1,4 @@
-import { obj_entries } from "../../ard20.js";
+import { Object.entries } from "../../ard20.js";
 import { ARd20Item } from "../../documents/item.js";
 //@ts-expect-error
 export class CharacterAdvancement extends FormApplication {
@@ -93,7 +93,7 @@ export class CharacterAdvancement extends FormApplication {
     });
     startingData.feats.awail = awailFeats;
     // count skills by rank
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Skills)) {
       if (startingData.skills[k].level === 0) {
         startingData.count.skills[0] += 1;
       } else if (startingData.skills[k].level === 1) {
@@ -239,7 +239,7 @@ export class CharacterAdvancement extends FormApplication {
     /*
      * Calculate attributes' modifiers and xp cost
      */
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Attributes)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
       const race_abil = raceList.filter((race) => race.chosen === true)?.[0]?.data.bonus.attributes[k].value ?? 0;
       attributes[k].mod = Math.floor((attributes[k].value - 10) / 2);
       attributes[k].xp = CONFIG.ARd20.AbilXP[attributes[k].value - 5];
@@ -251,7 +251,7 @@ export class CharacterAdvancement extends FormApplication {
     /*
      * Calculate skills' xp cost
      */
-    for (let [k, v] of obj_entries(CONFIG.ARd20.Skills)) {
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Skills)) {
       templateData.skills[k].rankName =
         game.i18n.localize(CONFIG.ARd20.Rank[templateData.skills[k].level]) ??
         CONFIG.ARd20.Rank[templateData.skills[k].level];
@@ -347,13 +347,13 @@ export class CharacterAdvancement extends FormApplication {
     // At character creation, check all conditions
     if (!this.object.data.data.isReady) {
       let abil_sum = 0;
-      for (let [key, abil] of obj_entries(templateData.attributes)) {
+      for (let [key, abil] of Object.entries(templateData.attributes)) {
         abil_sum += abil.value;
       }
       templateData.allow.attribute = abil_sum >= 60 && abil_sum <= 80 ? true : false;
       templateData.allow.race = Boolean(templateData.races.chosen) ? true : false;
       let allow_list = [];
-      for (let [key, item] of obj_entries(templateData.allow)) {
+      for (let [key, item] of Object.entries(templateData.allow)) {
         if (key === "final") {
           continue;
         }
@@ -538,7 +538,7 @@ export class CharacterAdvancement extends FormApplication {
     const data = this.options.data;
     this.render();
     const obj = {};
-    for (let [key, abil] of obj_entries(data.attributes)) {
+    for (let [key, abil] of Object.entries(data.attributes)) {
       obj[`data.attributes.${key}.value`] = data.attributes[key].total;
     }
     obj["data.health.max"] = data.health.max;

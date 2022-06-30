@@ -1,5 +1,4 @@
 import { d20Roll } from "../dice/dice.js";
-import { obj_entries, obj_keys, getValues } from "../ard20.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -50,11 +49,11 @@ export class ARd20Actor extends Actor {
     this.itemTypes.armor.forEach((item) => {
       if (item.type === "armor") {
         if (item.system.equipped) {
-          for (let key of obj_keys(def_dam.phys)) {
+          for (let key of Object.keys(def_dam.phys)) {
             let ph = item.system.res.phys[key];
             def_dam.phys[key].bonus += !ph.immune ? parseInt(ph.value) : 0;
           }
-          for (let key of obj_keys(def_dam.mag)) {
+          for (let key of Object.keys(def_dam.mag)) {
             let mg = item.system.res.mag[key];
             def_dam.mag[key].bonus += !mg.immune ? parseInt(mg.value) : 0;
           }
@@ -93,7 +92,7 @@ export class ARd20Actor extends Actor {
     def_stats.will.value =
       10 + 4 * def_stats.will.level + attributes.wis.mod + attributes.cha.mod + def_stats.will.bonus;
     def_stats.will.label = "Will";
-    for (let [key, dr] of obj_entries(CONFIG.ARd20.DamageSubTypes)) {
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
         def_dam.phys[key].value =
           def_dam.phys[key]?.value || !def_dam.phys[key]?.immune
@@ -207,7 +206,7 @@ export class ARd20Actor extends Actor {
    */
   rollSkill(skillId, options) {
     console.log("rollSkill event:", skillId, "skillID;   ", options, "options;   ");
-    const skl = getValues(this.system.skills, skillId);
+    const skl = this.system.skills[skillId];
     // Compose roll parts and data
     const parts = ["@proficiency", "@mod"];
     const data = { attributes: this.getRollData().attributes, proficiency: skl.value };
@@ -220,7 +219,7 @@ export class ARd20Actor extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("ARd20.SkillPromptTitle", {
-        skill: game.i18n.localize(getValues(CONFIG.ARd20.Skills, skillId)),
+        skill: game.i18n.localize(CONFIG.ARd20.Skills[skillId]),
       }),
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
