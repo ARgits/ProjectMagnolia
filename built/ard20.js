@@ -33,7 +33,7 @@ export function array_keys(obj) {
   return Object.keys(obj);
 }
 Hooks.once("init", async function () {
-  console.log('init hook')
+  console.log('init hoo')
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   if (game instanceof Game) {
@@ -85,19 +85,6 @@ Hooks.once("init", async function () {
 
     //register Svelte components for Actor/Item types
     setSvelteComponents();
-    game.keybindings.register("ard20", "showNotification", {
-      name: "my system keybinding",
-      hint: "some desc.",
-      uneditable: [],
-      editable: [{ key: "N" }],
-      onDown: () => {
-        ui.notifications.info("Pressed N!");
-      },
-      onUp: () => {},
-      restricted: false,
-      reservedModifiers: [],
-      precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
-    });
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();
   } else {
