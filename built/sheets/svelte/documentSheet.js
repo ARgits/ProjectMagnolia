@@ -28,13 +28,14 @@ export class SvelteDocumentSheet extends SvelteApplication {
      *
      * @memberof SvelteReactive#
      */
+    //TODO #2 
     Object.defineProperty(this.reactive, "document", {
       get: () => this.#storeDoc.get(),
       set: (document) => {
         this.#storeDoc.set(document);
       },
     });
-    this.reactive.document = object;
+    this.reactive.document = object 
     // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
 

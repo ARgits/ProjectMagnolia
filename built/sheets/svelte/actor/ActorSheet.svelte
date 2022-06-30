@@ -22,7 +22,6 @@
     { label: "Biography", id: "biography", component: BiographyTab },
   ];
   let activeTab = "attributes";
-  console.log($doc);
 </script>
 
 <header>
