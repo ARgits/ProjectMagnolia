@@ -69,5 +69,3 @@ export class Action {
     console.log('Phase: validatig targets')
   }
 }
-let act = new Action();
-console.log(act);

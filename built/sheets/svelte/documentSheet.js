@@ -26,14 +26,19 @@ export class SvelteDocumentSheet extends SvelteApplication {
      *
      * @memberof SvelteReactive#
      */
-    //TODO #2 
+    //TODO #2
     Object.defineProperty(this.reactive, "document", {
       get: () => this.#storeDoc.get(),
       set: (document) => {
+        console.log(`! SvelteDocumentSheet - reactive.document setter - document: `, document);
+        console.trace();
         this.#storeDoc.set(document);
       },
     });
-    this.reactive.document = object 
+
+    console.log(`! SvelteDocumentSheet - ctor - 0 - object: `, object);
+    console.trace();
+    this.reactive.document = object;
     // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
 
@@ -102,8 +107,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
   _canDragDrop(selector) {
     return this.reactive.document.isOwner || game.user.isGM;
   }
-  _onDragOver(event) {
-  }
+  _onDragOver(event) {}
 
   _onDragStart(event) {
     {
@@ -255,15 +259,10 @@ export class SvelteDocumentSheet extends SvelteApplication {
         for (const val of game.settings.get("ard20", "feat").packs) {
           if (game.packs.filter((pack) => pack.metadata.label === val.name).length !== 0) {
             let feat_list = [];
-            feat_list.push(
-              Array.from(
-                game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0].index
-              )
-            );
+            feat_list.push(Array.from(game.packs.filter((pack) => pack.metadata.label === val.name && pack.documentName === "Item")[0].index));
             feat_list = feat_list.flat();
             for (const feat of feat_list) {
-              const new_key =
-                game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
+              const new_key = game.packs.filter((pack) => pack.metadata.label === val.name)[0].metadata.package + "." + val.name;
               const doc = await game.packs.get(new_key).getDocument(feat.id);
               const item = doc.toObject();
               item.system = foundry.utils.deepClone(doc.system);
@@ -284,9 +283,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
         for (let val of game.settings.get("ard20", "feat").folders) {
           if (game.folders.filter((folder) => folder.data.name === val.name).length !== 0) {
             let feat_list = [];
-            feat_list.push(
-              game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents
-            );
+            feat_list.push(game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents);
             feat_list = feat_list.flat();
             for (let feat of feat_list) {
               console.log("item added from folder ", feat);
@@ -367,14 +364,11 @@ export class SvelteDocumentSheet extends SvelteApplication {
         console.log(k, v);
         if (name_array.includes(v.name)) {
           console.log("this item is already learned", featList.temp_feat_list[k]);
-          featList.temp_feat_list[k] = foundry.utils.deepClone(
-            featList.learnedFeatures.filter((item) => item.name === v.name)[0]
-          );
+          featList.temp_feat_list[k] = foundry.utils.deepClone(featList.learnedFeatures.filter((item) => item.name === v.name)[0]);
         }
       });
       featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
-        if (item.type === "feature")
-          return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+        if (item.type === "feature") return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
       });
       const obj = {
         races: { list: raceList, chosen: "" },
@@ -402,7 +396,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
     new CharacterAdvancement(document).render(true, { focus: true });
   }
   async close(options = {}) {
-    console.log("close ", options);
+    console.log("closeeee ", options);
+    console.log(`! SvelteDocumentSheet close `, structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
+    console.trace();
     await super.close(options);
 
     if (this.#storeUnsubscribe) {
@@ -420,6 +416,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
+    console.log(`! SvelteDocumentSheet #handleDocUpdate `, doc, structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
+    console.trace();
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update") && doc) {
@@ -429,9 +427,13 @@ export class SvelteDocumentSheet extends SvelteApplication {
 
   render(force = false, options = {}) {
     console.log(this, force, options, "render: this, force, options");
+    console.log(`! SvelteDocumentSheet render before subscribe `,structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
+    console.trace();
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
+    console.log(`! SvelteDocumentSheet render after subscribe `,structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
+    console.trace();
     super.render(force, options);
     return this;
   }

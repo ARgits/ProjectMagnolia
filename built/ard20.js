@@ -18,7 +18,7 @@ import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 Hooks.once("init", function () {
-  console.log("init hook");
+  console.log("init hoook");
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.ard20 = {
@@ -96,14 +96,14 @@ Handlebars.registerHelper("add", function (value1, value2) {
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
   //check if typhonjs module is installed and activated
-  if (!game.modules.get("typhonjs")) {
+  /*if (!game.modules.get("typhonjs")) {
     ui.notifications.error("typhonjs module is not install, please install it!");
   } else if (!game.modules.get("typhonjs").active) {
     ui.notifications.error("typhonjs module is not active!");
     const moduleSettings = game.settings.get("core", "moduleConfiguration");
     moduleSettings["typhonjs"] = true;
     await game.settings.set("core", "moduleConfiguration", moduleSettings);
-  }
+  }*/
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 });

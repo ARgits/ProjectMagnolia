@@ -176,14 +176,14 @@
         "armor": [],
         "tool": []
       },
-      "resources":{
-        "stamina":{
-          "value":0,
-          "bonus":0
+      "resources": {
+        "stamina": {
+          "value": 0,
+          "bonus": 0
         },
-        "mana":{
-          "value":0,
-          "bonus":0
+        "mana": {
+          "value": 0,
+          "bonus": 0
         }
       }
     },
@@ -197,8 +197,7 @@
     "templates": {
       "base": {
         "description": "",
-        "hasAttack": false,
-        "hasDamage": false
+        "actions": []
       }
     },
     "item": {
