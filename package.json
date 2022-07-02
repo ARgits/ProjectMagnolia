@@ -15,13 +15,8 @@
   "dependencies": {
     "@typhonjs-fvtt/runtime": "0.0.14",
     "filtrex": "^2.2.3",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-sourcemaps": "^2.6.5",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.5.2",
-    "node-sass": "^7.0.1",
-    "postcss": "^8.4.14",
     "select2": "^4.1.0-rc.0",
     "svelte": "^3.48.0",
     "svelte-preprocess": "^4.10.7"
@@ -31,14 +26,10 @@
     "@babel/preset-env": "^7.18.6",
     "@league-of-foundry-developers/foundry-vtt-types": "^9.269.0",
     "@rollup/plugin-babel": "^5",
-    "@types/gulp-sass": "^5.0.0",
-    "@types/sass": "^1.43.1",
     "@typhonjs-config/eslint-config": "^0.3.4",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "cypress": "^9.7.0",
     "eslint": "^8.18.0",
-    "gulp-sass": "^5.1.0",
-    "rollup": "^2.75.7",
-    "sass": "^1.53.0"
+    "rollup": "^2.75.7"
   }
 }
