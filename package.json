@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
+  "name": "project_magnolia",
   "version": "1.0.0",
-  "description": "CSS compiler for the Boilerplate system",
+  "description": "Compiler for the Project Magnolia system",
   "scripts": {
     "build": "rollup --config",
     "build-watch": "rollup --watch --config"
@@ -14,9 +14,9 @@
   "private": true,
   "dependencies": {
     "@typhonjs-fvtt/runtime": "0.0.14",
-    "filtrex": "^2.2.3",
+    "filtrex": "^3.0.0",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
-    "mathjs": "^9.5.2",
+    "mathjs": "^10.6.4",
     "select2": "^4.1.0-rc.0",
     "svelte": "^3.48.0",
     "svelte-preprocess": "^4.10.7"
@@ -28,8 +28,8 @@
     "@rollup/plugin-babel": "^5",
     "@typhonjs-config/eslint-config": "^0.3.4",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
-    "cypress": "^9.7.0",
-    "eslint": "^8.18.0",
+    "cypress": "^10.3.0",
+    "eslint": "^8.19.0",
     "rollup": "^2.75.7"
   }
 }

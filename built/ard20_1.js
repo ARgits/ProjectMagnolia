@@ -7008,6 +7008,23 @@ class TJSDocument {
    * @returns {Promise<void>}
    */
 
+  /*async #deleted()
+  {
+     if (this.#document instanceof foundry.abstract.Document)
+     {
+        delete this.#document.apps[this.#uuidv4];
+        this.#document = void 0;
+     }
+      this.#updateOptions = void 0;
+      if (typeof this.#options.delete === 'function') { await this.#options.delete(); }
+      if (this.#options.notifyOnDelete) { this.#notify(); }
+  }
+     /**
+   * Handles cleanup when the document is deleted. Invoking any optional delete function set in the constructor.
+   *
+   * @returns {Promise<void>}
+   */
+
 
   /**
    * @returns {T | undefined} Current document
@@ -7163,20 +7180,26 @@ class TJSDocument {
 
 
 async function _deleted2() {
-  if (_classPrivateFieldGet(this, _document) instanceof foundry.abstract.Document) {
-    delete _classPrivateFieldGet(this, _document).apps[_classPrivateFieldGet(this, _uuidv)];
+  var _doc$collection;
+
+  const doc = _classPrivateFieldGet(this, _document); // Check to see if the document is still in the associated collection to determine if actually deleted.
+
+
+  if (doc instanceof foundry.abstract.Document && !(doc !== null && doc !== void 0 && (_doc$collection = doc.collection) !== null && _doc$collection !== void 0 && _doc$collection.has(doc.id))) {
+    delete doc.apps[_classPrivateFieldGet(this, _uuidv)];
 
     _classPrivateFieldSet(this, _document, void 0);
-  }
 
-  _classPrivateFieldSet(this, _updateOptions, void 0);
+    if (typeof _classPrivateFieldGet(this, _options$1).delete === 'function') {
+      await _classPrivateFieldGet(this, _options$1).delete();
+    }
 
-  if (typeof _classPrivateFieldGet(this, _options$1).delete === 'function') {
-    await _classPrivateFieldGet(this, _options$1).delete();
-  }
+    _classPrivateMethodGet(this, _notify3, _notify4).call(this, false, {
+      action: 'delete',
+      data: void 0
+    });
 
-  if (_classPrivateFieldGet(this, _options$1).notifyOnDelete) {
-    _classPrivateMethodGet(this, _notify3, _notify4).call(this);
+    _classPrivateFieldSet(this, _updateOptions, void 0);
   }
 }
 
