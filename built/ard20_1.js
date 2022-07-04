@@ -5710,14 +5710,14 @@ function get_each_context$c(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$6(ctx, list, i) {
+function get_each_context_1$7(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[17] = list[i];
 	return child_ctx;
 }
 
 // (52:8) {#each thead as th}
-function create_each_block_1$6(ctx) {
+function create_each_block_1$7(ctx) {
 	let th;
 	let t0_value = /*th*/ ctx[17] + "";
 	let t0;
@@ -5831,7 +5831,7 @@ function create_fragment$k(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$6(get_each_context_1$6(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$7(get_each_context_1$7(ctx, each_value_1, i));
 	}
 
 	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
@@ -5913,12 +5913,12 @@ function create_fragment$k(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$6(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$7(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$6(child_ctx);
+						each_blocks_1[i] = create_each_block_1$7(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(tr, null);
 					}
@@ -6098,14 +6098,14 @@ function get_each_context$b(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$5(ctx, list, i) {
+function get_each_context_1$6(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[9] = list[i];
 	return child_ctx;
 }
 
 // (14:2) {#each tabs as tab}
-function create_each_block_1$5(ctx) {
+function create_each_block_1$6(ctx) {
 	let li;
 	let span;
 	let t0_value = /*tab*/ ctx[9].label + "";
@@ -6298,7 +6298,7 @@ function create_fragment$j(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$5(get_each_context_1$5(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$6(get_each_context_1$6(ctx, each_value_1, i));
 	}
 
 	let each_value = /*tabs*/ ctx[1];
@@ -6355,12 +6355,12 @@ function create_fragment$j(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$5(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$6(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$5(child_ctx);
+						each_blocks_1[i] = create_each_block_1$6(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(ul, null);
 					}
@@ -26854,6 +26854,7 @@ function instance$f($$self, $$props, $$invalidate) {
 	let labelElem;
 	let input;
 	let feather;
+	console.log(input);
 
 	/**
  * Forbid to type anything but digits
@@ -26921,7 +26922,7 @@ function instance$f($$self, $$props, $$invalidate) {
 		}
 
 		if ($$self.$$.dirty & /*type, value*/ 513) {
-			if (type !== "text") $$invalidate(0, value = type === "integer" ? parseInt(value) : parseFloat(value));
+			if (type !== "text" && value) $$invalidate(0, value = type === "integer" ? parseInt(value) : parseFloat(value));
 		}
 	};
 
@@ -27198,14 +27199,14 @@ function get_each_context$9(ctx, list, i) {
 	return child_ctx;
 }
 
-function get_each_context_1$4(ctx, list, i) {
+function get_each_context_1$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[3] = list[i];
 	return child_ctx;
 }
 
 // (7:4) {#each tabs as tab}
-function create_each_block_1$4(ctx) {
+function create_each_block_1$5(ctx) {
 	let li;
 	let span;
 	let t0_value = /*tab*/ ctx[3].label + "";
@@ -27392,7 +27393,7 @@ function create_fragment$c(ctx) {
 	let each_blocks_1 = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$4(get_each_context_1$4(ctx, each_value_1, i));
+		each_blocks_1[i] = create_each_block_1$5(get_each_context_1$5(ctx, each_value_1, i));
 	}
 
 	let each_value = /*tabs*/ ctx[1];
@@ -27446,12 +27447,12 @@ function create_fragment$c(ctx) {
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$4(ctx, each_value_1, i);
+					const child_ctx = get_each_context_1$5(ctx, each_value_1, i);
 
 					if (each_blocks_1[i]) {
 						each_blocks_1[i].p(child_ctx, dirty);
 					} else {
-						each_blocks_1[i] = create_each_block_1$4(child_ctx);
+						each_blocks_1[i] = create_each_block_1$5(child_ctx);
 						each_blocks_1[i].c();
 						each_blocks_1[i].m(ul, null);
 					}
@@ -27785,7 +27786,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (23:0) {#if action === "delete"}
+// (25:0) {#if action === "delete"}
 function create_if_block_1(ctx) {
 	let i;
 	let mounted;
@@ -27814,7 +27815,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (26:0) {#if action === "create"}
+// (28:0) {#if action === "create"}
 function create_if_block$4(ctx) {
 	let i;
 	let i_data_tooltip_value;
@@ -27942,7 +27943,20 @@ function instance$a($$self, $$props, $$invalidate) {
 
 	async function CreateItem() {
 		if (!doc) return;
-		await Item.create([{ name: `New ${type}`, type }], { parent: doc });
+
+		let itemNumber = doc.itemTypes[type].filter(item => {
+			return item.name.slice(0, type.length + 6) === `New ${type} #`;
+		}).length;
+
+		await Item.create(
+			[
+				{
+					name: `New ${type} #${itemNumber + 1}`,
+					type
+				}
+			],
+			{ parent: doc }
+		);
 	}
 
 	const click_handler = () => OpenItem();
@@ -28021,7 +28035,13 @@ function get_each_context$7(ctx, list, i) {
 	return child_ctx;
 }
 
-// (44:10) {#if item.system.hasAttack || item.system.hasDamage}
+function get_each_context_1$4(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[7] = list[i];
+	return child_ctx;
+}
+
+// (45:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$3(ctx) {
 	let i;
 	let mounted;
@@ -28056,7 +28076,34 @@ function create_if_block$3(ctx) {
 	};
 }
 
-// (38:4) {#each $doc.itemTypes.feature as item}
+// (56:10) {#each item.system.actionList as action }
+function create_each_block_1$4(ctx) {
+	let span;
+	let t0_value = /*action*/ ctx[7].name + "";
+	let t0;
+	let t1;
+
+	return {
+		c() {
+			span = element("span");
+			t0 = text(t0_value);
+			t1 = space();
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t0);
+			append(span, t1);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*action*/ ctx[7].name + "")) set_data(t0, t0_value);
+		},
+		d(detaching) {
+			if (detaching) detach(span);
+		}
+	};
+}
+
+// (39:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$7(ctx) {
 	let tr;
 	let td0;
@@ -28066,24 +28113,32 @@ function create_each_block$7(ctx) {
 	let t1;
 	let t2;
 	let td1;
-	let t3_value = /*item*/ ctx[4].system.level.current + "";
 	let t3;
-	let t4;
 	let td2;
-	let configureitembutton0;
+	let t4_value = /*item*/ ctx[4].system.level.current + "";
+	let t4;
 	let t5;
 	let td3;
+	let configureitembutton0;
 	let t6;
 	let td4;
-	let configureitembutton1;
 	let t7;
+	let td5;
+	let configureitembutton1;
+	let t8;
 	let div;
 	let raw_value = /*item*/ ctx[4].system.description + "";
-	let t8;
+	let t9;
 	let current;
 	let mounted;
 	let dispose;
 	let if_block = (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) && create_if_block$3(ctx);
+	let each_value_1 = /*item*/ ctx[4].system.actionList;
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		each_blocks[i] = create_each_block_1$4(get_each_context_1$4(ctx, each_value_1, i));
+	}
 
 	configureitembutton0 = new ConfigureItemButton({
 			props: { item: /*item*/ ctx[4], action: "edit" }
@@ -28103,24 +28158,32 @@ function create_each_block$7(ctx) {
 			if (if_block) if_block.c();
 			t2 = space();
 			td1 = element("td");
-			t3 = text(t3_value);
-			t4 = space();
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			t3 = space();
 			td2 = element("td");
-			create_component(configureitembutton0.$$.fragment);
+			t4 = text(t4_value);
 			t5 = space();
 			td3 = element("td");
-			td3.innerHTML = `<i class="fa-solid fa-stars svelte-1213ocr"></i>`;
+			create_component(configureitembutton0.$$.fragment);
 			t6 = space();
 			td4 = element("td");
-			create_component(configureitembutton1.$$.fragment);
+			td4.innerHTML = `<i class="fa-solid fa-stars svelte-1213ocr"></i>`;
 			t7 = space();
-			div = element("div");
+			td5 = element("td");
+			create_component(configureitembutton1.$$.fragment);
 			t8 = space();
+			div = element("div");
+			t9 = space();
 			attr(td0, "class", "svelte-1213ocr");
-			attr(td1, "class", "svelte-1213ocr");
-			attr(td2, "class", "config svelte-1213ocr");
+			attr(td1, "class", "actions svelte-1213ocr");
+			attr(td2, "class", "svelte-1213ocr");
 			attr(td3, "class", "config svelte-1213ocr");
 			attr(td4, "class", "config svelte-1213ocr");
+			attr(td5, "class", "config svelte-1213ocr");
 			attr(div, "class", "description svelte-1213ocr");
 			attr(tr, "class", "svelte-1213ocr");
 		},
@@ -28133,19 +28196,26 @@ function create_each_block$7(ctx) {
 			if (if_block) if_block.m(td0, null);
 			append(tr, t2);
 			append(tr, td1);
-			append(td1, t3);
-			append(tr, t4);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(td1, null);
+			}
+
+			append(tr, t3);
 			append(tr, td2);
-			mount_component(configureitembutton0, td2, null);
+			append(td2, t4);
 			append(tr, t5);
 			append(tr, td3);
+			mount_component(configureitembutton0, td3, null);
 			append(tr, t6);
 			append(tr, td4);
-			mount_component(configureitembutton1, td4, null);
 			append(tr, t7);
+			append(tr, td5);
+			mount_component(configureitembutton1, td5, null);
+			append(tr, t8);
 			append(tr, div);
 			div.innerHTML = raw_value;
-			append(tr, t8);
+			append(tr, t9);
 			current = true;
 
 			if (!mounted) {
@@ -28169,7 +28239,30 @@ function create_each_block$7(ctx) {
 				if_block = null;
 			}
 
-			if ((!current || dirty & /*$doc*/ 1) && t3_value !== (t3_value = /*item*/ ctx[4].system.level.current + "")) set_data(t3, t3_value);
+			if (dirty & /*$doc*/ 1) {
+				each_value_1 = /*item*/ ctx[4].system.actionList;
+				let i;
+
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1$4(ctx, each_value_1, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+					} else {
+						each_blocks[i] = create_each_block_1$4(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(td1, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+
+				each_blocks.length = each_value_1.length;
+			}
+
+			if ((!current || dirty & /*$doc*/ 1) && t4_value !== (t4_value = /*item*/ ctx[4].system.level.current + "")) set_data(t4, t4_value);
 			const configureitembutton0_changes = {};
 			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[4];
 			configureitembutton0.$set(configureitembutton0_changes);
@@ -28191,6 +28284,7 @@ function create_each_block$7(ctx) {
 		d(detaching) {
 			if (detaching) detach(tr);
 			if (if_block) if_block.d();
+			destroy_each(each_blocks, detaching);
 			destroy_component(configureitembutton0);
 			destroy_component(configureitembutton1);
 			mounted = false;
@@ -28207,9 +28301,11 @@ function create_fragment$9(ctx) {
 	let th1;
 	let t3;
 	let th2;
-	let t4;
-	let configureitembutton;
 	let t5;
+	let th3;
+	let t6;
+	let configureitembutton;
+	let t7;
 	let tbody;
 	let current;
 
@@ -28243,16 +28339,19 @@ function create_fragment$9(ctx) {
 			th1.textContent = "Level";
 			t3 = space();
 			th2 = element("th");
-			t4 = text("Config ");
-			create_component(configureitembutton.$$.fragment);
+			th2.textContent = "Actions";
 			t5 = space();
+			th3 = element("th");
+			t6 = text("Config ");
+			create_component(configureitembutton.$$.fragment);
+			t7 = space();
 			tbody = element("tbody");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			attr(th2, "colspan", "3");
+			attr(th3, "colspan", "3");
 		},
 		m(target, anchor) {
 			insert(target, table, anchor);
@@ -28262,9 +28361,11 @@ function create_fragment$9(ctx) {
 			append(thead, th1);
 			append(thead, t3);
 			append(thead, th2);
-			append(th2, t4);
-			mount_component(configureitembutton, th2, null);
-			append(table, t5);
+			append(thead, t5);
+			append(thead, th3);
+			append(th3, t6);
+			mount_component(configureitembutton, th3, null);
+			append(table, t7);
 			append(table, tbody);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -29404,7 +29505,7 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (41:4) {#each $doc.actionList as action}
+// (41:4) {#each $doc.system.actionList as action}
 function create_each_block$4(ctx) {
 	let div2;
 	let div0;
@@ -29484,7 +29585,7 @@ function create_fragment$6(ctx) {
 	inputfordocumentsheet = new InputForDocumentSheet({ props: inputfordocumentsheet_props });
 	binding_callbacks.push(() => bind(inputfordocumentsheet, 'value', inputfordocumentsheet_value_binding));
 	let if_block = /*$doc*/ ctx[0].system.level.has && create_if_block$2(ctx);
-	let each_value = /*$doc*/ ctx[0].actionList;
+	let each_value = /*$doc*/ ctx[0].system.actionList;
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -29599,7 +29700,7 @@ function create_fragment$6(ctx) {
 			}
 
 			if (dirty & /*$doc*/ 1) {
-				each_value = /*$doc*/ ctx[0].actionList;
+				each_value = /*$doc*/ ctx[0].system.actionList;
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -32871,7 +32972,6 @@ function instance($$self, $$props, $$invalidate) {
 	let { storeDoc } = $$props;
 	$$subscribe_storeDoc();
 	setContext("DocumentSheetObject", storeDoc);
-	console.log("document type: ", $storeDoc.type);
 
 	function applicationshell_elementRoot_binding(value) {
 		elementRoot = value;
@@ -32881,15 +32981,6 @@ function instance($$self, $$props, $$invalidate) {
 	$$self.$$set = $$props => {
 		if ('elementRoot' in $$props) $$invalidate(0, elementRoot = $$props.elementRoot);
 		if ('storeDoc' in $$props) $$subscribe_storeDoc($$invalidate(1, storeDoc = $$props.storeDoc));
-	};
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$storeDoc*/ 4) {
-			{
-				console.log(`! DocumentShell - $storeDoc: `, $storeDoc);
-				console.trace();
-			}
-		}
 	};
 
 	return [elementRoot, storeDoc, $storeDoc, applicationshell_elementRoot_binding];
@@ -32946,7 +33037,6 @@ class SvelteDocumentSheet extends SvelteApplication {
      *
      * @memberof SvelteReactive#
      */
-    //TODO #2
 
     _classPrivateMethodInitSpec(this, _handleDocUpdate);
 
@@ -32965,15 +33055,10 @@ class SvelteDocumentSheet extends SvelteApplication {
     Object.defineProperty(this.reactive, "document", {
       get: () => _classPrivateFieldGet(this, _storeDoc).get(),
       set: document => {
-        console.log(`! SvelteDocumentSheet - reactive.document setter - document: `, document);
-        console.trace();
-
         _classPrivateFieldGet(this, _storeDoc).set(document);
       }
     });
-    console.log(`! SvelteDocumentSheet - ctor - 0 - object: `, object);
-    console.trace();
-    this.reactive.document = object; // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
+    this.reactive.document = object;
   }
   /**
    * Default Application options
@@ -33406,9 +33491,6 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   async close(options = {}) {
-    console.log("closeeee ", options);
-    console.log(`! SvelteDocumentSheet close `, structuredClone(_classPrivateFieldGet(this, _storeDoc).get()), structuredClone(_classPrivateFieldGet(this, _storeDoc)));
-    console.trace();
     await super.close(options);
 
     if (_classPrivateFieldGet(this, _storeUnsubscribe)) {
@@ -33427,16 +33509,10 @@ class SvelteDocumentSheet extends SvelteApplication {
 
 
   render(force = false, options = {}) {
-    console.log(this, force, options, "render: this, force, options");
-    console.log(`! SvelteDocumentSheet render before subscribe `, structuredClone(_classPrivateFieldGet(this, _storeDoc).get()), structuredClone(_classPrivateFieldGet(this, _storeDoc)));
-    console.trace();
-
     if (!_classPrivateFieldGet(this, _storeUnsubscribe)) {
       _classPrivateFieldSet(this, _storeUnsubscribe, _classPrivateFieldGet(this, _storeDoc).subscribe(_classPrivateMethodGet(this, _handleDocUpdate, _handleDocUpdate2).bind(this)));
     }
 
-    console.log(`! SvelteDocumentSheet render after subscribe `, structuredClone(_classPrivateFieldGet(this, _storeDoc).get()), structuredClone(_classPrivateFieldGet(this, _storeDoc)));
-    console.trace();
     super.render(force, options);
     return this;
   }
@@ -33449,12 +33525,13 @@ async function _handleDocUpdate2(doc, options) {
     data,
     documentType
   } = options;
-  console.log(`! SvelteDocumentSheet #handleDocUpdate `, doc, structuredClone(_classPrivateFieldGet(this, _storeDoc).get()), structuredClone(_classPrivateFieldGet(this, _storeDoc)));
-  console.trace(); // I need to add a 'subscribe' action to TJSDocument so must check void.
+  console.log(structuredClone(doc));
+  console.log(action); // I need to add a 'subscribe' action to TJSDocument so must check void.
 
-  if ((action === void 0 || action === "update") && doc) {
+  if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
     var _doc$name;
 
+    console.log("doc name: ", doc === null || doc === void 0 ? void 0 : doc.name);
     this.reactive.title = doc !== null && doc !== void 0 && doc.isToken ? `[Token] ${doc === null || doc === void 0 ? void 0 : doc.name}` : (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : "No Document Assigned";
   }
 }

@@ -26,20 +26,13 @@ export class SvelteDocumentSheet extends SvelteApplication {
      *
      * @memberof SvelteReactive#
      */
-    //TODO #2
     Object.defineProperty(this.reactive, "document", {
       get: () => this.#storeDoc.get(),
       set: (document) => {
-        console.log(`! SvelteDocumentSheet - reactive.document setter - document: `, document);
-        console.trace();
         this.#storeDoc.set(document);
       },
     });
-
-    console.log(`! SvelteDocumentSheet - ctor - 0 - object: `, object);
-    console.trace();
     this.reactive.document = object;
-    // By doing the above you can now easily set a new document by `this.reactive.document = <A DOCUMENT>`
   }
 
   /**
@@ -396,9 +389,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
     new CharacterAdvancement(document).render(true, { focus: true });
   }
   async close(options = {}) {
-    console.log("closeeee ", options);
-    console.log(`! SvelteDocumentSheet close `, structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
-    console.trace();
     await super.close(options);
 
     if (this.#storeUnsubscribe) {
@@ -416,24 +406,20 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
-    console.log(`! SvelteDocumentSheet #handleDocUpdate `, doc, structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
-    console.trace();
+    console.log(structuredClone(doc));
+    console.log(action);
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
-    if ((action === void 0 || action === "update") && doc) {
+    if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
+      console.log("doc name: ", doc?.name);
       this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
     }
   }
 
   render(force = false, options = {}) {
-    console.log(this, force, options, "render: this, force, options");
-    console.log(`! SvelteDocumentSheet render before subscribe `,structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
-    console.trace();
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
     }
-    console.log(`! SvelteDocumentSheet render after subscribe `,structuredClone(this.#storeDoc.get()), structuredClone(this.#storeDoc));
-    console.trace();
     super.render(force, options);
     return this;
   }

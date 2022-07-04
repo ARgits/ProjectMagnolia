@@ -10,14 +10,12 @@
   let labelElem;
   let input;
   let feather;
-  $: if (label && input && feather)
-    input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(
-      feather.offsetWidth * 1.5
-    )}px)`;
+  console.log(input)
+  $: if (label && input && feather) input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(feather.offsetWidth * 1.5)}px)`;
   $: {
     data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
   }
-  $: if (type !== "text") value = type === "integer" ? parseInt(value) : parseFloat(value);
+  $: if (type !== "text" && value) value = type === "integer" ? parseInt(value) : parseFloat(value);
 
   /**
    * Forbid to type anything but digits
@@ -29,8 +27,7 @@
     const input = e.target.value;
     if (!/[0-9\.,-]/.test(e.key)) e.preventDefault();
     else if (e.key === "-" && input.length > 0) e.preventDefault();
-    else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(",") || input.includes(".")))
-      e.preventDefault();
+    else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(",") || input.includes("."))) e.preventDefault();
   }
 </script>
 

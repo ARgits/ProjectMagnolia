@@ -32,6 +32,7 @@
   <thead>
     <th>Name</th>
     <th>Level</th>
+    <th>Actions</th>
     <th colspan="3">Config <ConfigureItemButton doc={$doc} type="feature" action="create" /></th>
   </thead>
   <tbody>
@@ -50,6 +51,11 @@
               data-tooltip="roll"
             />
           {/if}
+        </td>
+        <td class="actions">
+          {#each item.system.actionList as action }
+            <span> {action.name} </span>
+          {/each}
         </td>
         <td>{item.system.level.current}</td>
         <td class="config"><ConfigureItemButton {item} action="edit" /></td>

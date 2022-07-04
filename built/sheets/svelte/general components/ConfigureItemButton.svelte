@@ -13,7 +13,9 @@
   }
   async function CreateItem() {
     if (!doc) return;
-    await Item.create([{ name: `New ${type}`, type: type }], { parent: doc });
+    let itemNumber = doc.itemTypes[type].filter((item)=>{return item.name.slice(0,type.length+6)===`New ${type} #`}).length
+
+    await Item.create([{ name: `New ${type} #${itemNumber+1}`, type: type }], { parent: doc });
   }
 </script>
 

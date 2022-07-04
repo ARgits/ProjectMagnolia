@@ -7,11 +7,6 @@
   export let elementRoot;
   export let storeDoc;
   setContext("DocumentSheetObject", storeDoc);
-  console.log("document type: ", $storeDoc.type);
-  $: {
-    console.log(`! DocumentShell - $storeDoc: `, $storeDoc);
-    console.trace();
-  }
 </script>
 
 <ApplicationShell bind:elementRoot>

@@ -38,7 +38,7 @@
         class="fa-solid fa-file-plus"
       /></legend
     >
-    {#each $doc.actionList as action}
+    {#each $doc.system.actionList as action}
       <div class="action">
         <div class="name">
           {action.name}
