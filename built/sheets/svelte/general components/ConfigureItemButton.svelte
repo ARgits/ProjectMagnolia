@@ -14,8 +14,13 @@
   async function CreateItem() {
     if (!doc) return;
     let itemNumber = doc.itemTypes[type].filter((item)=>{return item.name.slice(0,type.length+6)===`New ${type} #`}).length
-
     await Item.create([{ name: `New ${type} #${itemNumber+1}`, type: type }], { parent: doc });
+  }
+  async function addToFavorite(){
+    if(!doc) return;
+    let favorites = doc.system.favorites
+    favorites.push(item)
+    doc.update({'system.favorites':favorites})
   }
 </script>
 
@@ -27,6 +32,9 @@
 {/if}
 {#if action === "create"}
   <i on:click={() => CreateItem()} class="fa-solid fa-file-plus" data-tooltip="create new {type}" />
+{/if}
+{#if action === 'favorite'}
+    <i on:click={()=> addToFavorite()} class="fa-solid fa-stars" data-tooltip='add to favorite'/>
 {/if}
 
 <style lang="scss">

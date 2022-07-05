@@ -31,8 +31,8 @@
 <table>
   <thead>
     <th>Name</th>
-    <th>Level</th>
     <th>Actions</th>
+    <th>Level</th>
     <th colspan="3">Config <ConfigureItemButton doc={$doc} type="feature" action="create" /></th>
   </thead>
   <tbody>
@@ -53,14 +53,31 @@
           {/if}
         </td>
         <td class="actions">
-          {#each item.system.actionList as action }
-            <span> {action.name} </span>
-          {/each}
+          <div class="actions">
+            {#each item.system.actionList as action}
+              <div class="action">
+                <span
+                  on:click={() => {
+                    action.use();
+                  }}
+                >
+                  {action.name}
+                </span>
+                <i on:click={() => action.sheet.render(true, { focus: true })} class="fa-solid fa-pen-to-square" data-tooltip="edit" />
+              </div>
+            {/each}
+          </div>
         </td>
         <td>{item.system.level.current}</td>
-        <td class="config"><ConfigureItemButton {item} action="edit" /></td>
-        <td class="config"><i class="fa-solid fa-stars" /></td>
-        <td class="config"><ConfigureItemButton {item} action="delete" /></td>
+        <td class="config">
+          <ConfigureItemButton {item} action="edit" />
+        </td>
+        <td class="config">
+          <ConfigureItemButton {item} doc={$doc} type="feature" action="favorite" />
+        </td>
+        <td class="config">
+          <ConfigureItemButton {item} action="delete" />
+        </td>
         <div class="description">
           {@html item.system.description}
         </div>
@@ -90,6 +107,10 @@
       cursor: pointer;
       text-shadow: 0px 0px 10px red;
     }
+  }
+  div.actions {
+    display: flex;
+    flex-direction: column;
   }
   div.description {
     width: 0%;

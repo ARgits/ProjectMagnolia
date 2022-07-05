@@ -1,17 +1,19 @@
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
+import ActionSheet from "../sheets/svelte/action/actionSheet.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
-export class Action {
-  constructor(object = {}) {
+export default class ARd20Action {
+  constructor(object = {}, options = {}) {
     this.name = object.name ?? "New Action";
     this.type = object.type ?? "Attack";
     this.formula = object?.formula ?? "2d10";
     this.bonus = object?.bonus ?? 0;
     this.dc = object?.dc ?? { type: "parameter", value: "reflex" };
-    this.id = uuidv4();
-    this.isRoll = true;
-    this.setTargetLimit(object);
-    this.range = { max: 5, min: 0 };
-    this.sheet = ActionSheet(this)
+    this.id = options?.keepId ? object?.id ?? uuidv4() : uuidv4();
+    this.isRoll = object?.isRoll ?? true;
+    this.setTargetLimit(object?.type);
+    this.range = object?.range ?? { max: 5, min: 0 };
+    this.sheet = new ActionSheet(this);
+    this.parent = options?.parent ?? null;
   }
   /**
    * Icon and text hint for action
@@ -25,7 +27,7 @@ export class Action {
    * How many characters can you target with that action
    */
   setTargetLimit(target) {
-    let type = target.type ?? "single";
+    let type = target?.type ?? "single";
     let number;
     switch (type) {
       case "single" || "self":
@@ -52,20 +54,30 @@ export class Action {
    * 3.
    *
    */
-  use() {
-    console.log('ACTION USE', this)
+  async use() {
+    console.log("ACTION USE", this);
     this.placeTemplate();
+    this.validateTargets();
+    await this.roll();
   }
   placeTemplate() {
-    console.log('Phase: placing template')
-    if (!this.template) this.validateTargets();
+    console.log("Phase: placing template");
+    if (!this.template) return;
     /*TODO: look at 5e https://github.com/foundryvtt/dnd5e/blob/master/module/pixi/ability-template.js
     and then change handlers.mm and handlers.lc events, so it will tell you, that your template "out of the range"
     for measrement use canvas.grid.measureDistance
     */
-   this.validateTargets();
   }
   validateTargets() {
-    console.log('Phase: validatig targets')
+    console.log("Phase: validatig targets");
+  }
+  async roll() {
+    console.log("Phase: rolling");
+    if (!this.isRoll) return;
+    let bonus = this.bonus;
+    let formula = this.formula;
+    let roll = new Roll(this.formula);
+    await roll.evaluate();
+    await roll.toMessage({ speaker: { alias: `${this.parent.parent.name}: ${this.parent.name}(${this.name})` } });
   }
 }

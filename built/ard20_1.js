@@ -3160,1271 +3160,6 @@ function getUUIDFromDataTransfer(data, {
   return uuid;
 }
 
-class Action {
-  constructor(object = {}) {
-    var _object$name, _object$type, _object$formula, _object$bonus, _object$dc;
-
-    this.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "New Action";
-    this.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : "Attack";
-    this.formula = (_object$formula = object === null || object === void 0 ? void 0 : object.formula) !== null && _object$formula !== void 0 ? _object$formula : "2d10";
-    this.bonus = (_object$bonus = object === null || object === void 0 ? void 0 : object.bonus) !== null && _object$bonus !== void 0 ? _object$bonus : 0;
-    this.dc = (_object$dc = object === null || object === void 0 ? void 0 : object.dc) !== null && _object$dc !== void 0 ? _object$dc : {
-      type: "parameter",
-      value: "reflex"
-    };
-    this.id = uuidv4();
-    this.isRoll = true;
-    this.setTargetLimit(object);
-    this.range = {
-      max: 5,
-      min: 0
-    };
-    this.sheet = ActionSheet(this);
-  }
-  /**
-   * Icon and text hint for action
-   */
-
-
-  setHint(object) {
-    var _object$icon, _object$text;
-
-    let icon = (_object$icon = object === null || object === void 0 ? void 0 : object.icon) !== null && _object$icon !== void 0 ? _object$icon : "";
-    let text = (_object$text = object === null || object === void 0 ? void 0 : object.text) !== null && _object$text !== void 0 ? _object$text : "";
-    this.hint = {
-      icon,
-      text
-    };
-  }
-  /**
-   * How many characters can you target with that action
-   */
-
-
-  setTargetLimit(target) {
-    var _target$type, _target$number;
-
-    let type = (_target$type = target.type) !== null && _target$type !== void 0 ? _target$type : "single";
-    let number;
-
-    switch (type) {
-      case "single" :
-        number = 1;
-        break;
-
-      case "all":
-        number = Infinity;
-        break;
-
-      case "custom":
-        number = (_target$number = target === null || target === void 0 ? void 0 : target.number) !== null && _target$number !== void 0 ? _target$number : 1;
-        break;
-    }
-
-    this.targetLimit = {
-      number,
-      type
-    };
-  }
-  /**
-   * Use action
-   * Workflow: TODO: maybe add way to configure steps
-   * 1. Check Template - check if there is Measured Template
-   * 1a. Place Template
-   * 1b. If not template - check if token have targets
-   * 2. Validate targets (if action has Measured Template and it affect all tokens in it - skip this step)
-   * 2a. If there is no targets (and no template) - ask user to target tokens (highlight possible)
-   * 2b. If user has targets before - check if you can use action on them (maybe highlight wrong or just throw an error)
-   * 3.
-   *
-   */
-
-
-  use() {
-    console.log('ACTION USE', this);
-    this.placeTemplate();
-  }
-
-  placeTemplate() {
-    console.log('Phase: placing template');
-    if (!this.template) this.validateTargets();
-    /*TODO: look at 5e https://github.com/foundryvtt/dnd5e/blob/master/module/pixi/ability-template.js
-    and then change handlers.mm and handlers.lc events, so it will tell you, that your template "out of the range"
-    for measrement use canvas.grid.measureDistance
-    */
-
-    this.validateTargets();
-  }
-
-  validateTargets() {
-    console.log('Phase: validatig targets');
-  }
-
-}
-
-/**
- * Extend the basic Item with some very simple modifications.
- * @extends {Item}
- */
-
-class ARd20Item extends Item {
-  /**
-   * Augment the basic Item data model with additional dynamic data.
-   */
-  prepareData() {
-    // As with the actor class, items are documents that can have their data
-    // preparation methods overridden (such as prepareBaseData()).
-    super.prepareData();
-  }
-
-  prepareDerivedData() {
-    super.prepareDerivedData();
-    const itemData = this.system;
-    this.labels = {};
-
-    this._prepareSpellData(itemData);
-
-    this._prepareWeaponData(itemData);
-
-    this._prepareFeatureData(itemData);
-
-    this._prepareRaceData(itemData);
-
-    this._prepareArmorData(itemData);
-
-    if (itemData.hasAttack) this._prepareAttack(itemData);
-    if (itemData.hasDamage) this._prepareDamage(itemData);
-    if (!this.isOwned) this.prepareFinalAttributes();
-  }
-  /**
-   *Prepare data for Spells
-   */
-
-
-  _prepareSpellData(itemData) {
-    if (this.type !== "spell") return;
-  }
-  /**
-   *Prepare data for weapons
-   */
-
-
-  _prepareWeaponData(itemData) {
-    if (this.type !== "weapon") return;
-    const data = itemData;
-    const flags = this.flags;
-    data.hasAttack = data.hasAttack || true;
-    data.hasDamage = data.hasDamage || true; //TODO: this._setDeflect(data);
-
-    this._setTypeAndSubtype(data, flags);
-
-    for (const level of game.settings.get("ard20", "profLevel")) {
-      var _data$damage$common$l;
-
-      data.damage.common[level.key] = (_data$damage$common$l = data.damage.common[level.key]) !== null && _data$damage$common$l !== void 0 ? _data$damage$common$l : {
-        formula: "",
-        parts: [["", ["", ""]]]
-      };
-    }
-    /*for (let [key, type] of Object.entries(data.damage)) {
-            if (key !== "current") {
-                for (let [key, prof] of Object.entries(type)) {
-                    prof.formula = "";
-                    prof.parts.forEach((part) => {
-                        if (Array.isArray(part[1])) {
-                            prof.formula += `${part[0]}`;
-                            part[1].forEach((sub, ind) => {
-                                if (ind === 0) {
-                                    prof.formula += ` {${sub[0]} ${sub[1]}`;
-                                    prof.formula += ind === part[1].length - 1 ? "}" : "";
-                                }
-                                else {
-                                    prof.formula += ` or ${sub[0]} ${sub[1]}`;
-                                    prof.formula += ind === part[1].length - 1 ? "}" : "";
-                                }
-                            });
-                        }
-                        else
-                            prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `;
-                    });
-                }
-            }
-        }*/
-
-  }
-  /**
-   *Set deflect die equal to damage die, if not
-   */
-
-  /* TODO:
-    _setDeflect(data: object & WeaponDataPropertiesData) {
-      for (let [k, v] of Object.entries(CONFIG.ARd20.Rank)) {
-        v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
-        v = v.toLowerCase();
-        data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
-      }
-    }
-    */
-  //@ts-expect-error
-
-
-  _setTypeAndSubtype(data, flags) {
-    var _flags$core, _game$i18n$localize, _game$i18n$localize2;
-
-    data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.value.filter(prof => prof.type === data.type.value);
-
-    if ((_flags$core = flags.core) !== null && _flags$core !== void 0 && _flags$core.sourceId) {
-      var _game$items;
-
-      const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
-      const item = (_game$items = game.items) === null || _game$items === void 0 ? void 0 : _game$items.get(id);
-
-      if ((item === null || item === void 0 ? void 0 : item.type) === "weapon") {
-        data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
-      }
-    }
-
-    data.sub_type = data.sub_type_array.filter(prof => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
-    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank[data.proficiency.level];
-    data.type.name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Rank[data.type.value])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.Rank[data.type.value];
-  }
-  /**
-   *Prepare data for features
-   */
-
-
-  _prepareFeatureData(itemData) {
-    if (this.type !== "feature") return;
-    const data = itemData; // Handle Source of the feature
-
-    data.source.label = "";
-    data.source.value.forEach((value, key) => {
-      let label = game.i18n.localize(CONFIG.ARd20.Source[value]);
-      data.source.label += key === 0 ? label : `</br>${label}`;
-    });
-    data.passive;
-    data.active;
-    data.cost = {
-      resource: "stamina",
-      value: 1
-    }; //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
-    //define levels
-
-    data.level.has = data.level.has !== undefined ? data.level.has : false;
-    data.level.max = data.level.has ? data.level.max || 4 : 1;
-    data.level.initial = Math.min(data.level.max, data.level.initial);
-    data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0; //define exp cost
-
-    if (data.level.max > 1) {
-      let n = (10 - data.level.max) / data.level.max;
-      let k = 1.7 + Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100 * Math.sign(n);
-
-      if (data.xp.basicCost.length < data.level.max) {
-        for (let i = 1; i < data.level.max; i++) {
-          data.xp.basicCost.push(Math.round(data.xp.basicCost[i - 1] * k / 5) * 5);
-          data.xp.AdvancedCost.push(data.xp.basicCost[i]);
-        }
-      } else {
-        for (let i = 1; i < data.level.max; i++) {
-          var _data$xp$AdvancedCost;
-
-          data.xp.basicCost[i] = Math.round(data.xp.basicCost[i - 1] * k / 5) * 5;
-          data.xp.AdvancedCost[i] = (_data$xp$AdvancedCost = data.xp.AdvancedCost[i]) !== null && _data$xp$AdvancedCost !== void 0 ? _data$xp$AdvancedCost : data.xp.basicCost[i];
-        }
-      }
-    }
-
-    for (let [key, req] of Object.entries(data.req.values)) {
-      req.pass = Array.from({
-        length: data.level.max
-      }, i => false);
-
-      switch (req.type) {
-        case "ability":
-          for (let [_key, v] of Object.entries(CONFIG.ARd20.Attributes)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[_key])) req.value = _key;
-          }
-
-          break;
-
-        case "skill":
-          for (let [_key2, v] of Object.entries(CONFIG.ARd20.Skills)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[_key2])) req.value = _key2;
-          }
-
-          break;
-      }
-    }
-
-    for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
-      if (i === 0) {
-        data.req.logic.push("1");
-      } else {
-        data.req.logic.push(data.req.logic[i - 1]);
-      }
-    }
-
-    for (let i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
-      data.req.logic.splice(data.req.logic.length - 1, 1);
-    }
-  }
-  /**
-   * Prepare data for 'race' type of item
-   */
-
-
-  _prepareRaceData(itemData) {
-    if (this.type !== "race") return;
-  }
-  /**
-   * Prepare data for "armor" type item
-   */
-
-
-  _prepareArmorData(itemData) {
-    var _data$mobility$value;
-
-    if (this.type !== "armor") return;
-    const data = itemData;
-
-    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
-      if (!(key === "force" || key === "radiant" || key === "psychic")) {
-        data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
-        data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
-      }
-
-      data.res.mag[key].value = parseInt(data.res.mag[key].value) || 0;
-      data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
-    }
-
-    data.mobility.value = (_data$mobility$value = data.mobility.value) !== null && _data$mobility$value !== void 0 ? _data$mobility$value : CONFIG.ARd20.HeavyPoints[data.type][data.slot];
-    data.mobility.value += data.mobility.bonus;
-  }
-  /**
-    Prepare Data that uses actor's data
-    */
-
-
-  prepareFinalAttributes() {
-    const itemData = this.system; //@ts-expect-error
-
-    const abil = itemData.abil = {};
-
-    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
-      abil[k] = this.isOwned ? getProperty(this.actor.system, `data.attributes.${k}.mod`) : null;
-    }
-
-    let prof_bonus = 0;
-
-    if (itemData.type === "weapon") {
-      var _this$actor;
-
-      const data = itemData;
-      data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.system.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
-      data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
-      data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
-      prof_bonus = data.proficiency.level * 4;
-    }
-
-    if (itemData.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
-    if (itemData.hasDamage) this._prepareDamage(itemData, abil);
-  }
-
-  _prepareAttack(itemData, prof_bonus, abil) {
-    const data = itemData;
-    if (!data.hasAttack) return; //@ts-expect-error
-
-    let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod; //@ts-expect-error
-
-    data.attack = {
-      formula: "1d20+" + prof_bonus + "+" + mod,
-      parts: [mod, prof_bonus]
-    };
-  }
-
-  _prepareDamage(itemData, abil) {
-    const data = itemData;
-    if (!data.hasDamage) return;
-    itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
-    const prop = itemData.type === "weapon" ? `damage.common.${data.proficiency.key}.parts` : "damage.parts";
-    let baseDamage = getProperty(data, prop); //@ts-expect-error
-
-    data.damage.current = {
-      formula: "",
-      parts: baseDamage
-    };
-    baseDamage === null || baseDamage === void 0 ? void 0 : baseDamage.forEach((part, key) => {
-      console.log("baseDamage for current damage", part); //@ts-expect-error
-
-      data.damage.current.formula += part[0] + `[`;
-      part[1].forEach((subPart, subKey) => {
-        data.damage.current.formula += game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) + ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
-        data.damage.current.formula += subKey === part[1].length - 1 ? "]" : " or<br/>";
-      });
-      data.damage.current.formula += key === baseDamage.length - 1 ? "" : "<br/>+<br/>";
-    });
-  }
-  /**
-   * Prepare a data object which is passed to any Roll formulas which are created related to this Item
-   * @private
-   */
-  //@ts-expect-error
-
-
-  getRollData() {
-    // If present, return the actor's roll data.
-    if (!this.actor) return null;
-    const rollData = this.actor.getRollData();
-    const hasDamage = this.system.hasDamage;
-    const hasAttack = this.system.hasAttack; //@ts-expect-error
-
-    rollData.item = foundry.utils.deepClone(this.system); //@ts-expect-error
-
-    rollData.damageDie = hasDamage ? this.system.damage.current.parts[0] : null; //@ts-expect-error
-
-    rollData.mod = hasAttack ? //@ts-expect-error
-    this.system.attack.parts[0] : hasDamage ? //@ts-expect-error
-    this.system.damage.current.parts[1] : null; //@ts-expect-error
-
-    rollData.prof = hasAttack ? this.system.attack.parts[1] : null;
-    return rollData;
-  }
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  //@ts-expect-error
-
-
-  async roll({
-    configureDialog = true,
-    rollMode,
-    hasDamage = false,
-    hasAttack = false,
-    createMessage = true
-  }) {
-    let item = this;
-    item.id;
-    const iData = this.system; //Item data
-
-    const actor = this.actor;
-    actor === null || actor === void 0 ? void 0 : actor.system;
-    hasDamage = iData.hasDamage || hasDamage;
-    hasAttack = iData.hasAttack || hasAttack; // Initialize chat data.
-
-    ChatMessage.getSpeaker({
-      actor: actor
-    });
-    this.name; // Otherwise, create a roll and send a chat message from it.
-
-    const targets = Array.from(game.user.targets); //@ts-expect-error
-
-    const mRoll = this.system.mRoll || false; //@ts-expect-error
-
-    return item.displayCard({
-      rollMode,
-      createMessage,
-      hasAttack,
-      hasDamage,
-      targets,
-      mRoll
-    });
-  }
-  /* -------------------------------------------- */
-
-  /*  Chat Message Helpers                        */
-
-  /* -------------------------------------------- */
-
-
-  static chatListeners(html) {
-    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
-    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
-    html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
-    html.trigger("click");
-    html.on("hover", ".attack-roll .flexrow .value", function (event) {
-      var _element$querySelecto;
-
-      event.preventDefault();
-      const element = this.closest("li.flexrow");
-      (_element$querySelecto = element.querySelector(".attack-roll .hover-roll")) === null || _element$querySelecto === void 0 ? void 0 : _element$querySelecto.classList.toggle("shown", event.type == "mouseenter");
-    });
-  }
-  /* -------------------------------------------- */
-
-  /**
-   * Handle execution of a chat card action via a click event on one of the card buttons
-   * @param {Event} event       The originating click event
-   * @returns {Promise}         A promise which resolves once the handler workflow is complete
-   * @private
-   */
-  //@ts-expect-error
-
-
-  static async _onChatCardAction(event) {
-    console.log(event);
-    event.stopImmediatePropagation(); // Extract card data
-
-    const button = event.currentTarget;
-    const card = button.closest(".chat-card");
-    const messageId = card.closest(".message").dataset.messageId;
-    const message = game.messages.get(messageId);
-    const action = button.dataset.action;
-    const targetUuid = button.closest(".flexrow").dataset.targetId; // Validate permission to proceed with the roll
-
-    const isTargetted = action === "save";
-    if (!(isTargetted || game.user.isGM || message.isAuthor)) return; // Recover the actor for the chat card
-
-    const actor = await this._getChatCardActor(card);
-    if (!actor) return; // Get the Item from stored flag data or by the item ID on the Actor
-
-    const storedData = message.getFlag("ard20", "itemData"); //@ts-expect-error
-
-    const item = storedData ? new this(storedData, {
-      parent: actor
-    }) : actor.items.get(card.dataset.itemId);
-
-    if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {
-        item: card.dataset.itemId,
-        name: actor.name
-      }));
-    }
-
-    const spellLevel = parseInt(card.dataset.spellLevel) || null; // Handle different actions
-
-    switch (action) {
-      case "damage":
-      case "versatile":
-        let dam = await item.rollDamage({
-          critical: event.altKey,
-          event: event,
-          spellLevel: spellLevel,
-          versatile: action === "versatile"
-        }); //const dom = new DOMParser().parseFromString(message.data.content,"text/html")
-
-        const html = $(message.data.content);
-        dam = await dam.render(); //dom.querySelector('button').replaceWith(dam)
-
-        if (targetUuid) {
-          html.find(`[data-targetId="${targetUuid}"]`).find("button").replaceWith(dam);
-        } else {
-          html.find(".damage-roll").find("button").replaceWith(dam);
-        } //console.log(dom)
-
-
-        await message.update({
-          content: html[0].outerHTML
-        });
-        break;
-
-      case "formula":
-        await item.rollFormula({
-          event,
-          spellLevel
-        });
-        break;
-
-      case "save":
-        const targets = this._getChatCardTargets(card);
-
-        for (let token of targets) {
-          //@ts-expect-error
-          const speaker = ChatMessage.getSpeaker({
-            scene: canvas.scene,
-            token: token
-          }); //@ts-expect-error
-
-          await token.actor.rollAbilitySave(button.dataset.ability, {
-            event,
-            speaker
-          });
-        }
-
-        break;
-
-      case "toolCheck":
-        await item.rollToolCheck({
-          event
-        });
-        break;
-
-      case "placeTemplate":
-        ///@ts-expect-error
-        const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
-        if (template) template.drawPreview();
-        break;
-    } // Re-enable the button
-
-
-    button.disabled = false;
-  }
-  /* -------------------------------------------- */
-
-  /**
-   * Handle toggling the visibility of chat card content when the name is clicked
-   * @param {Event} event   The originating click event
-   * @private
-   */
-
-
-  static _onChatCardToggleContent(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    const card = header.closest(".chat-card");
-    const content = card.querySelector(".card-content");
-    content.style.display = content.style.display === "none" ? "block" : "none";
-  }
-
-  async _applyDamage(dam, tData, tHealth, tActor, tokenId) {
-    let value = dam.total;
-    console.log("урон до резистов: ", value);
-    dam.terms.forEach(term => {
-      if (!(term instanceof OperatorTerm)) {
-        let damageType = term.options.damageType;
-        let res = tData.defences.damage[damageType[0]][damageType[1]];
-        if (res.type === "imm") console.log("Иммунитет");
-        console.log("урон уменьшился с ", value);
-        value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
-        console.log("до", value);
-      }
-    });
-    console.log(value, "итоговый урон");
-    tHealth -= value;
-    console.log("хп стало", tHealth);
-    let obj = {};
-    obj["data.health.value"] = tHealth;
-
-    if (game.user.isGM) {
-      console.log("GM applying damage");
-      console.log(tActor);
-      await tActor.update(obj);
-    } else {
-      console.log("not GM applying damage");
-      game.socket.emit("system.ard20", {
-        operation: "updateActorData",
-        tokenId: tokenId,
-        update: obj,
-        value: value
-      });
-    }
-  }
-
-  static async _rollDamage(event) {
-    event.stopImmediatePropagation();
-    const element = event.currentTarget;
-    const card = element.closest(".chat-card");
-    const message = game.messages.get(card.closest(".message").dataset.messageId);
-    const targetUuid = element.closest("li.flexrow").dataset.targetId;
-    const token = await fromUuid(targetUuid); //@ts-expect-error
-
-    const tActor = token === null || token === void 0 ? void 0 : token.actor;
-    const tData = tActor.system;
-    let tHealth = tData.health.value;
-    console.log(tHealth, "здоровье цели"); // Recover the actor for the chat card
-
-    const actor = await this._getChatCardActor(card);
-    if (!actor) return; // Get the Item from stored flag data or by the item ID on the Actor
-
-    const storedData = message.getFlag("ard20", "itemData"); //@ts-expect-error
-
-    const item = storedData ? new this(storedData, {
-      parent: actor
-    }) : actor.items.get(card.dataset.itemId);
-
-    if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {
-        item: card.dataset.itemId,
-        name: actor.name
-      }));
-    }
-
-    const dam = await item.rollDamage({
-      event: event,
-      canMult: false
-    });
-    const html = $(message.data.content);
-    let damHTML = await dam.render();
-    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
-    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
-    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
-    console.log(html[0]);
-    await message.update({
-      content: html[0].outerHTML
-    });
-    await item._applyDamage(dam, tData, tHealth, tActor, targetUuid);
-  }
-  /* -------------------------------------------- */
-
-  /**
-   * Get the Actor which is the author of a chat card
-   * @param {HTMLElement} card    The chat card being used
-   * @return {Actor|null}         The Actor entity or null
-   * @private
-   */
-
-
-  static async _getChatCardActor(card) {
-    // Case 1 - a synthetic actor from a Token
-    if (card.dataset.tokenId) {
-      const token = await fromUuid(card.dataset.tokenId);
-      if (!token) return null; //@ts-expect-error
-
-      return token.actor;
-    } // Case 2 - use Actor ID directory
-
-
-    const actorId = card.dataset.actorId;
-    return game.actors.get(actorId) || null;
-  }
-  /* -------------------------------------------- */
-
-  /**
-   * Get the Actor which is the author of a chat card
-   * @param {HTMLElement} card    The chat card being used
-   * @return {Actor[]}            An Array of Actor entities, if any
-   * @private
-   */
-
-
-  static _getChatCardTargets(card) {
-    let targets = canvas.tokens.controlled.filter(t => !!t.actor); //@ts-expect-error
-
-    if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
-    if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
-    return targets;
-  }
-  /*showRollDetail(event){
-      event.preventDefault();
-      const elem = event.currentTarget;
-      const
-    }*/
-
-
-  async displayCard({
-    //@ts-expect-error
-    rollMode,
-    createMessage = true,
-    hasAttack = Boolean(),
-    hasDamage = Boolean(),
-    targets = [],
-    mRoll = Boolean()
-  } = {}) {
-    var _this$system$attack$d, _this$system$attack;
-
-    // Render the chat card template
-    let atk = {};
-    let dc = {};
-    let atkHTML = {};
-    let dmgHTML = {};
-    let result = {};
-    let hit = {};
-    let dmg = {};
-    let dieResultCss = {}; //@ts-expect-error
-
-    const def = (_this$system$attack$d = (_this$system$attack = this.system.attack) === null || _this$system$attack === void 0 ? void 0 : _this$system$attack.def) !== null && _this$system$attack$d !== void 0 ? _this$system$attack$d : "reflex";
-    const resource = this.system.cost.resource;
-    const cost = resource ? this.system.cost.value : null;
-
-    if (cost && resource) {
-      const costUpd = this.actor.system.resources[resource].value - cost;
-      const update = {};
-      update[`system.resources.${resource}.value`] = costUpd;
-      await this.actor.update(update);
-    }
-
-    const token = this.actor.token;
-
-    if (targets.length !== 0) {
-      //@ts-expect-error
-      let atkRoll = hasAttack ? await this.rollAttack(mRoll, {
-        canMult: true
-      }) : null;
-      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage({
-        canMult: true
-      }) : null;
-
-      for (let [key, target] of Object.entries(targets)) {
-        if (atkRoll) {
-          mRoll = atkRoll.options.mRoll; //@ts-expect-error
-
-          dc[key] = target.actor.system.defences.stats[def].value; //@ts-expect-error
-
-          atk[key] = hasAttack ? Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll() : null; //@ts-expect-error
-
-          console.log(atk[key]); //@ts-expect-error
-
-          atkHTML[key] = hasAttack ? await atk[key].render() : null; //@ts-expect-error
-
-          let d20 = atk[key] ? atk[key].terms[0] : null; //@ts-expect-error
-
-          atk[key] = atk[key].total; //@ts-expect-error
-
-          dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal"; //@ts-expect-error
-
-          result[key] = atk[key] > dc[key] ? "hit" : "miss"; //@ts-expect-error
-
-          hit[key] = result[key] === "hit" ? true : false;
-        } else {
-          mRoll = dmgRoll.options.mRoll; //@ts-expect-error
-
-          dmg[key] = hasDamage ? Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : await dmgRoll.reroll() : null; //@ts-expect-error
-
-          dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
-        }
-      }
-    } else {
-      //@ts-expect-error
-      atk[0] = hasAttack ? await this.rollAttack(mRoll) : null; //@ts-expect-error
-
-      mRoll = atk[0] ? atk[0].options.mRoll : false; //@ts-expect-error
-
-      atkHTML[0] = hasAttack ? await atk[0].render() : null;
-    } //@ts-expect-error
-
-
-    targets.size !== 0 ? mRoll ? "multiAttack" : "oneAttack" : "noTarget";
-    const templateData = {
-      //@ts-expect-error
-      actor: this.actor.system,
-      tokenId: (token === null || token === void 0 ? void 0 : token.uuid) || null,
-      item: this,
-      data: this.getChatData(),
-      //@ts-expect-error
-      labels: this.labels,
-      hasAttack,
-      hasDamage,
-      atk,
-      atkHTML,
-      targets,
-      //@ts-expect-error
-      owner: this.actor.isOwner || game.user.isGM,
-      dc,
-      result,
-      hit,
-      dmgHTML,
-      dieResultCss
-    };
-    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData); // Create the ChatMessage data object
-
-    const chatData = {
-      user: game.user.data._id,
-      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      content: html,
-      //@ts-expect-error
-      flavor: this.system.chatFlavor || this.name,
-      //@ts-expect-error
-      speaker: ChatMessage.getSpeaker({
-        actor: this.actor,
-        token
-      }),
-      flags: {
-        "core.canPopout": true
-      }
-    }; // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
-
-    /*
-        if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
-          chatData.flags["ard20.itemData"] = this.data;
-        }*/
-    // Apply the roll mode to adjust message visibility
-
-    ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode")); // Create the Chat Message or return its data
-
-    return createMessage ? ChatMessage.create(chatData) : chatData;
-  }
-  /**
-   * Prepare an object of chat data used to display a card for the Item in the chat log.
-   * @param {object} htmlOptions    Options used by the TextEditor.enrichHTML function.
-   * @returns {object}              An object of chat data to render.
-   */
-
-
-  getChatData(htmlOptions = {}) {
-    const data = foundry.utils.deepClone(this.system); // Rich text description
-
-    /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
-          /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
-            props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
-          }*/
-
-    /*props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
-        }
-    
-        // Ability activation properties
-        if (data.hasOwnProperty("activation")) {
-          props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
-        }
-    
-        // Filter properties and return
-        data.properties = props.filter((p) => !!p);
-        */
-
-    return data;
-  }
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare chat card data for weapon type items.
-   * @param {object} data     Copy of item data being use to display the chat message.
-   * @param {object} labels   Specially prepared item labels.
-   * @param {string[]} props  Existing list of properties to be displayed. *Will be mutated.*
-   * @private
-   */
-
-  /* -------------------------------------------- */
-
-  /**
-   * Place an attack roll using an item (weapon, feat, spell, or equipment)
-   * Rely upon the d20Roll logic for the core implementation
-   *
-   * @param {object} options        Roll options which are configured and provided to the d20Roll function
-   * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
-   */
-
-
-  async rollAttack(mRoll = Boolean(), canMult = Boolean(), options = {}) {
-    var _options$parts;
-
-    console.log(canMult);
-    this.system; //@ts-expect-error
-
-    this.actor.flags.ard20 || {};
-    let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
-    const {
-      parts,
-      rollData
-    } = this.getAttackToHit();
-    const targets = game.user.targets; //@ts-expect-error
-
-    if (((_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
-      //@ts-expect-error
-      parts.push(...options.parts);
-    }
-
-    let rollConfig = {
-      parts: parts,
-      actor: this.actor,
-      data: rollData,
-      title: title,
-      flavor: title,
-      dialogOptions: {
-        width: 400
-      },
-      chatMessage: true,
-      options: {
-        create: false
-      },
-      targetValue: targets,
-      canMult: canMult,
-      mRoll: mRoll
-    }; //@ts-expect-error
-
-    rollConfig = mergeObject(rollConfig, options); //@ts-expect-error
-
-    const roll = await d20Roll(rollConfig);
-    if (roll === false) return null;
-    return roll;
-  }
-
-  rollDamage({
-    critical = false,
-    event = null,
-    spellLevel = null,
-    versatile = false,
-    options = {},
-    mRoll = Boolean(),
-    canMult = Boolean()
-  } = {}) {
-    var _ref;
-
-    console.log(canMult);
-    const iData = this.system;
-    this.actor.system; //@ts-expect-error
-
-    const parts = iData.damage.current.parts.map(d => d[0]); //@ts-expect-error
-
-    const damType = iData.damage.current.parts.map(d => d[1].map((c, ind) => {
-      //@ts-expect-error
-      let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]); //@ts-expect-error
-
-      let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
-      let obj = {
-        key: ind,
-        label: `${a} ${b}`
-      };
-      return obj;
-    })); //@ts-expect-error
-
-    options.damageType = iData.damage.current.parts.map(d => d[1]);
-    const hasAttack = false;
-    const hasDamage = true; //@ts-expect-error
-
-    const rollData = this.getRollData(hasAttack, hasDamage);
-    const rollConfig = {
-      actor: this.actor,
-      //@ts-expect-error
-      critical: (_ref = critical !== null && critical !== void 0 ? critical : event === null || event === void 0 ? void 0 : event.altkey) !== null && _ref !== void 0 ? _ref : false,
-      data: rollData,
-      event: event,
-      parts: parts,
-      canMult: canMult,
-      damType: damType,
-      mRoll: mRoll
-    }; //@ts-expect-error
-
-    return damageRoll(mergeObject(rollConfig, options));
-  }
-  /**
-   * Update a label to the Item detailing its total to hit bonus.
-   * Sources:
-   * - item entity's innate attack bonus
-   * - item's actor's proficiency bonus if applicable
-   * - item's actor's global bonuses to the given item type
-   * - item's ammunition if applicable
-   *
-   * @returns {{rollData: object, parts: string[]}|null}  Data used in the item's Attack roll.
-   */
-
-
-  getAttackToHit() {
-    const itemData = this.system;
-    const hasAttack = true;
-    const hasDamage = false; //if (!this.hasAttack || !itemData) return;
-    //@ts-expect-error
-
-    const rollData = this.getRollData(hasAttack, hasDamage);
-    console.log("ROLL DATA", rollData); // Define Roll bonuses
-
-    const parts = []; // Include the item's innate attack bonus as the initial value and label
-    //@ts-expect-error
-
-    if (itemData.attackBonus) {
-      //@ts-expect-error
-      parts.push(itemData.attackBonus); //@ts-expect-error
-
-      this.labels.toHit = itemData.attackBonus;
-    } // Take no further action for un-owned items
-
-
-    if (!this.isOwned) return {
-      rollData,
-      parts
-    }; // Ability score modifier
-
-    parts.push("@prof", "@mod");
-    /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
-        if ( !["weapon", "consumable"].includes(this.data.type)) {
-          parts.push("@prof");
-          if ( this.system.prof?.hasProficiency ) {
-            rollData.prof = this.system.prof.term;
-          }
-        }
-        */
-
-    /* Actor-level global bonus to attack rolls
-        const actorBonus = this.actor.system.bonuses?.[itemData.actionType] || {};
-        if (actorBonus.attack) parts.push(actorBonus.attack);
-        */
-
-    /* One-time bonus provided by consumed ammunition
-        if (itemData.consume?.type === "ammo" && this.actor.items) {
-          const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
-    
-          if (ammoItemData) {
-            const ammoItemQuantity = ammoItemData.data.quantity;
-            const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
-            const ammoItemAttackBonus = ammoItemData.data.attackBonus;
-            const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
-            if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
-              parts.push("@ammo");
-              rollData.ammo = ammoItemAttackBonus;
-            }
-          }
-        }
-        */
-    // Condense the resulting attack bonus formula into a simplified label
-    //@ts-expect-error
-
-    const roll = new Roll(parts.join("+"), rollData); //@ts-expect-error
-
-    const formula = simplifyRollFormula(roll.formula); //@ts-expect-error
-
-    this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula; // Update labels and return the prepared roll data
-
-    return {
-      rollData,
-      parts
-    };
-  }
-  /**
-   * Creates new Action for Item
-   * @param {object} action - action data, that can be passed
-   */
-
-
-  addAction(object) {
-    let actionList = [...this.system.actionList];
-    let action = new Action();
-    console.log('new Action', action);
-    actionList.push(action);
-    this.update({
-      actionList
-    });
-  }
-
-}
-
-class RaceDataModel extends foundry.abstract.DataModel {
-  static defineSchema() {
-    return {
-      description: new foundry.data.fields.StringField({
-        nullable: false,
-        required: true,
-        initial: ""
-      }),
-      speed: new foundry.data.fields.NumberField({
-        nullable: false,
-        initial: 6,
-        required: true,
-        integer: true,
-        positive: true
-      }),
-      health: new foundry.data.fields.NumberField({
-        nullable: false,
-        initial: 4,
-        required: true,
-        integer: true,
-        positive: true
-      }),
-      attributes: new foundry.data.fields.ObjectField({
-        nullable: false,
-        required: true,
-        initial: {
-          strength: new foundry.data.fields.NumberField({
-            nullable: false,
-            initial: 0,
-            required: true,
-            integer: true,
-            positive: false
-          }).getInitialValue(),
-          dexterity: new foundry.data.fields.NumberField({
-            nullable: false,
-            initial: 0,
-            required: true,
-            integer: true,
-            positive: false
-          }).getInitialValue(),
-          constitution: new foundry.data.fields.NumberField({
-            nullable: false,
-            initial: 0,
-            required: true,
-            integer: true,
-            positive: false
-          }).getInitialValue(),
-          intelligence: new foundry.data.fields.NumberField({
-            nullable: false,
-            initial: 0,
-            required: true,
-            integer: true,
-            positive: false
-          }).getInitialValue(),
-          wisdom: new foundry.data.fields.NumberField({
-            nullable: false,
-            initial: 0,
-            required: true,
-            integer: true,
-            positive: false
-          }).getInitialValue(),
-          charisma: new foundry.data.fields.NumberField({
-            nullable: false,
-            initial: 0,
-            required: true,
-            integer: true,
-            positive: false
-          }).getInitialValue()
-        }
-      })
-    };
-  }
-
-}
-
-/**
- * Manage Active Effect instances through the Actor Sheet via effect control buttons.
- * @param {MouseEvent} event      The left-click event on the effect control
- * @param {Actor|Item} owner      The owning entity which manages this effect
- */
-function onManageActiveEffect(event, owner) {
-  event.preventDefault();
-  const a = event.currentTarget; //@ts-expect-error
-
-  const li = a.closest("li");
-  const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null; //@ts-expect-error
-
-  switch (a.dataset.action) {
-    case "create":
-      return owner.createEmbeddedDocuments("ActiveEffect", [{
-        label: "New Effect",
-        icon: "icons/svg/aura.svg",
-        origin: owner.uuid,
-        "duration.rounds": li.dataset.effectType === "temporary" ? 1 : undefined,
-        disabled: li.dataset.effectType === "inactive"
-      }]);
-
-    case "edit":
-      return effect.sheet.render(true);
-
-    case "delete":
-      return effect.delete();
-
-    case "toggle":
-      return effect.update({
-        disabled: !effect.data.disabled
-      });
-  }
-}
-/**
- * Prepare the data structure for Active Effects which are currently applied to an Actor or Item.
- * @param {ActiveEffect[]} effects    The array of Active Effect instances to prepare sheet data for
- * @return {object}                   Data for rendering
- */
-
-function prepareActiveEffectCategories(effects) {
-  // Define effect header categories
-  const categories = {
-    temporary: {
-      type: "temporary",
-      label: "Temporary Effects",
-      effects: []
-    },
-    passive: {
-      type: "passive",
-      label: "Passive Effects",
-      effects: []
-    },
-    inactive: {
-      type: "inactive",
-      label: "Inactive Effects",
-      effects: []
-    }
-  }; // Iterate over active effects, classifying them into categories
-
-  for (let e of effects) {
-    //@ts-expect-error
-    e._getSourceName(); // Trigger a lookup for the source name
-    //@ts-expect-error
-
-
-    if (e.data.disabled) categories.inactive.effects.push(e); //@ts-expect-error
-    else if (e.isTemporary) categories.temporary.effects.push(e); //@ts-expect-error
-    else categories.passive.effects.push(e);
-  }
-
-  return categories;
-}
-
 const subscriber_queue = [];
 /**
  * Creates a `Readable` store that allows reading by subscription.
@@ -4544,2159 +3279,6 @@ function derived(stores, fn, initial_value) {
       cleanup();
     };
   });
-}
-
-/* built\helpers\Character Advancement\ChangeButton.svelte generated by Svelte v3.48.0 */
-
-function create_if_block_1$4(ctx) {
-	let i;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			i = element("i");
-			attr(i, "class", "change fa-light fa-square-plus svelte-87fh0g");
-			toggle_class(i, "disabled", /*disabled*/ ctx[4]);
-		},
-		m(target, anchor) {
-			insert(target, i, anchor);
-
-			if (!mounted) {
-				dispose = listen(i, "click", /*click_handler*/ ctx[12]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*disabled*/ 16) {
-				toggle_class(i, "disabled", /*disabled*/ ctx[4]);
-			}
-		},
-		d(detaching) {
-			if (detaching) detach(i);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (94:0) {#if min !== undefined}
-function create_if_block$b(ctx) {
-	let i;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			i = element("i");
-			attr(i, "class", "change fa-light fa-square-minus svelte-87fh0g");
-			toggle_class(i, "disabled", /*disabled*/ ctx[4]);
-		},
-		m(target, anchor) {
-			insert(target, i, anchor);
-
-			if (!mounted) {
-				dispose = listen(i, "click", /*click_handler_1*/ ctx[13]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*disabled*/ 16) {
-				toggle_class(i, "disabled", /*disabled*/ ctx[4]);
-			}
-		},
-		d(detaching) {
-			if (detaching) detach(i);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-function create_fragment$m(ctx) {
-	let t;
-	let if_block1_anchor;
-	let if_block0 = /*max*/ ctx[0] !== undefined && create_if_block_1$4(ctx);
-	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$b(ctx);
-
-	return {
-		c() {
-			if (if_block0) if_block0.c();
-			t = space();
-			if (if_block1) if_block1.c();
-			if_block1_anchor = empty();
-		},
-		m(target, anchor) {
-			if (if_block0) if_block0.m(target, anchor);
-			insert(target, t, anchor);
-			if (if_block1) if_block1.m(target, anchor);
-			insert(target, if_block1_anchor, anchor);
-		},
-		p(ctx, [dirty]) {
-			if (/*max*/ ctx[0] !== undefined) {
-				if (if_block0) {
-					if_block0.p(ctx, dirty);
-				} else {
-					if_block0 = create_if_block_1$4(ctx);
-					if_block0.c();
-					if_block0.m(t.parentNode, t);
-				}
-			} else if (if_block0) {
-				if_block0.d(1);
-				if_block0 = null;
-			}
-
-			if (/*min*/ ctx[1] !== undefined) {
-				if (if_block1) {
-					if_block1.p(ctx, dirty);
-				} else {
-					if_block1 = create_if_block$b(ctx);
-					if_block1.c();
-					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
-				}
-			} else if (if_block1) {
-				if_block1.d(1);
-				if_block1 = null;
-			}
-		},
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (if_block0) if_block0.d(detaching);
-			if (detaching) detach(t);
-			if (if_block1) if_block1.d(detaching);
-			if (detaching) detach(if_block1_anchor);
-		}
-	};
-}
-
-function instance$l($$self, $$props, $$invalidate) {
-	let $changes;
-	let $doc;
-	let { max } = $$props;
-	let { min } = $$props;
-	let { type } = $$props;
-	let { subtype } = $$props;
-	let { cost } = $$props;
-	const doc = getContext("chaAdvActorData");
-	component_subscribe($$self, doc, value => $$invalidate(11, $doc = value));
-	const changes = getContext("chaAdvXpChanges");
-	component_subscribe($$self, changes, value => $$invalidate(14, $changes = value));
-	let disabled;
-	let { costLabel } = $$props;
-
-	function increase(type, subtype) {
-		doc.update(store => {
-			switch (type) {
-				case "attributes":
-					store.attributes[subtype].value += 1;
-					break;
-				case "skills":
-					store.skills[subtype].level += 1;
-					break;
-				case "features":
-					store.features[subtype].system.level.initial += 1;
-					break;
-			}
-
-			store.advancement.xp.used += cost;
-			store.advancement.xp.get -= cost;
-			return store;
-		});
-
-		changes.update(changeArr => {
-			changeArr.push({ type, subtype, value: cost });
-			return changeArr;
-		});
-	}
-
-	function decrease(type, subtype) {
-		doc.update(store => {
-			switch (type) {
-				case "attributes":
-					store.attributes[subtype].value -= 1;
-					break;
-				case "skills":
-					store.skills[subtype].level -= 1;
-					break;
-				case "features":
-					store.features[subtype].system.level.initial -= 1;
-					break;
-			}
-
-			let index = -1;
-
-			$changes.forEach((change, key) => {
-				index = change.type === type && change.subtype === subtype && key > index
-				? key
-				: index;
-			});
-
-			if (index >= 0) {
-				store.advancement.xp.used -= $changes[index].value;
-				store.advancement.xp.get += $changes[index].value;
-				return store;
-			}
-		});
-
-		changes.update(changeArr => {
-			let index = -1;
-
-			changeArr.forEach((change, key) => {
-				index = change.type === type && change.subtype === subtype && key > index
-				? key
-				: index;
-			});
-
-			if (index >= 0) {
-				changeArr.splice(index, 1);
-				changeArr = changeArr;
-			}
-
-			return changeArr;
-		});
-	}
-
-	const click_handler = () => increase(type, subtype);
-	const click_handler_1 = () => decrease(type, subtype);
-
-	$$self.$$set = $$props => {
-		if ('max' in $$props) $$invalidate(0, max = $$props.max);
-		if ('min' in $$props) $$invalidate(1, min = $$props.min);
-		if ('type' in $$props) $$invalidate(2, type = $$props.type);
-		if ('subtype' in $$props) $$invalidate(3, subtype = $$props.subtype);
-		if ('cost' in $$props) $$invalidate(10, cost = $$props.cost);
-		if ('costLabel' in $$props) $$invalidate(9, costLabel = $$props.costLabel);
-	};
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*type, $doc, subtype, max, min, cost, disabled*/ 3103) {
-			{
-				switch (type) {
-					case "attributes":
-						$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
-						break;
-					case "skills":
-						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
-						break;
-					case "features":
-						console.log(max, min);
-						$$invalidate(4, disabled = $doc[type][subtype].system.level.initial === max || $doc[type][subtype].system.level.initial === min || $doc.advancement.xp.get < cost);
-						break;
-				}
-
-				$$invalidate(9, costLabel = disabled ? "-" : cost);
-			}
-		}
-	};
-
-	return [
-		max,
-		min,
-		type,
-		subtype,
-		disabled,
-		doc,
-		changes,
-		increase,
-		decrease,
-		costLabel,
-		cost,
-		$doc,
-		click_handler,
-		click_handler_1
-	];
-}
-
-class ChangeButton extends SvelteComponent {
-	constructor(options) {
-		super();
-
-		init(this, options, instance$l, create_fragment$m, safe_not_equal, {
-			max: 0,
-			min: 1,
-			type: 2,
-			subtype: 3,
-			cost: 10,
-			costLabel: 9
-		});
-	}
-}
-
-/* built\helpers\Character Advancement\TDvariants.svelte generated by Svelte v3.48.0 */
-
-function create_if_block_10(ctx) {
-	let td;
-	let t_value = /*val*/ ctx[2][0] + "";
-	let t;
-	let td_class_value;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler*/ ctx[16]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][0] + "")) set_data(t, t_value);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (71:2) {#if thead.includes("Source")}
-function create_if_block_9(ctx) {
-	let td;
-	let raw_value = /*val*/ ctx[2][1].system.source.label + "";
-	let td_class_value;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			td.innerHTML = raw_value;
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[17]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && raw_value !== (raw_value = /*val*/ ctx[2][1].system.source.label + "")) td.innerHTML = raw_value;		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (75:2) {#if thead.includes("Increase")}
-function create_if_block_8(ctx) {
-	let td;
-	let changebutton;
-	let current;
-	let mounted;
-	let dispose;
-
-	changebutton = new ChangeButton({
-			props: {
-				type: /*typeStr*/ ctx[4],
-				subtype: /*val*/ ctx[2][0],
-				max: /*max*/ ctx[0],
-				cost: /*cost*/ ctx[6]
-			}
-		});
-
-	return {
-		c() {
-			td = element("td");
-			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			mount_component(changebutton, td, null);
-			current = true;
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[18]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			const changebutton_changes = {};
-			if (dirty & /*typeStr*/ 16) changebutton_changes.type = /*typeStr*/ ctx[4];
-			if (dirty & /*val*/ 4) changebutton_changes.subtype = /*val*/ ctx[2][0];
-			if (dirty & /*max*/ 1) changebutton_changes.max = /*max*/ ctx[0];
-			if (dirty & /*cost*/ 64) changebutton_changes.cost = /*cost*/ ctx[6];
-			changebutton.$set(changebutton_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(changebutton.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(changebutton.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			destroy_component(changebutton);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (81:2) {#if thead.includes("Level")}
-function create_if_block_7(ctx) {
-	let td;
-	let t_value = /*val*/ ctx[2][1].system.level.initial + "";
-	let t;
-	let td_class_value;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[19]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].system.level.initial + "")) set_data(t, t_value);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (87:2) {#if thead.includes("Max Level")}
-function create_if_block_6(ctx) {
-	let td;
-	let t_value = /*val*/ ctx[2][1].system.level.max + "";
-	let t;
-	let td_class_value;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[20]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].system.level.max + "")) set_data(t, t_value);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (91:2) {#if thead.includes("Rank")}
-function create_if_block_5(ctx) {
-	let td;
-	let t_value = /*val*/ ctx[2][1].rankName + "";
-	let t;
-	let td_class_value;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[21]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].rankName + "")) set_data(t, t_value);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (95:2) {#if thead.includes("Value")}
-function create_if_block_4(ctx) {
-	let td;
-	let t_value = /*val*/ ctx[2][1].value + "";
-	let t;
-	let td_class_value;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(t_value);
-			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[22]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].value + "")) set_data(t, t_value);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (99:2) {#if thead.includes("Decrease")}
-function create_if_block_3$1(ctx) {
-	let td;
-	let changebutton;
-	let current;
-	let mounted;
-	let dispose;
-
-	changebutton = new ChangeButton({
-			props: {
-				type: /*typeStr*/ ctx[4],
-				subtype: /*val*/ ctx[2][0],
-				min: /*min*/ ctx[7]
-			}
-		});
-
-	return {
-		c() {
-			td = element("td");
-			create_component(changebutton.$$.fragment);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			mount_component(changebutton, td, null);
-			current = true;
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_7*/ ctx[23]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			const changebutton_changes = {};
-			if (dirty & /*typeStr*/ 16) changebutton_changes.type = /*typeStr*/ ctx[4];
-			if (dirty & /*val*/ 4) changebutton_changes.subtype = /*val*/ ctx[2][0];
-			if (dirty & /*min*/ 128) changebutton_changes.min = /*min*/ ctx[7];
-			changebutton.$set(changebutton_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(changebutton.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(changebutton.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			destroy_component(changebutton);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (105:2) {#if thead.includes("Mod")}
-function create_if_block_2$2(ctx) {
-	let td;
-	let t;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(/*strMod*/ ctx[8]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[24]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*strMod*/ 256) set_data(t, /*strMod*/ ctx[8]);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (109:2) {#if thead.includes("Cost")}
-function create_if_block_1$3(ctx) {
-	let td;
-	let t;
-	let mounted;
-	let dispose;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(/*cost*/ ctx[6]);
-			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-
-			if (!mounted) {
-				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[25]);
-				mounted = true;
-			}
-		},
-		p(ctx, dirty) {
-			if (dirty & /*cost*/ 64) set_data(t, /*cost*/ ctx[6]);
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (113:2) {#if key === 0 && thead.includes("Description")}
-function create_if_block$a(ctx) {
-	let td;
-	let t;
-	let td_rowspan_value;
-
-	return {
-		c() {
-			td = element("td");
-			t = text(/*description*/ ctx[1]);
-			attr(td, "class", "description svelte-uscx8i");
-			attr(td, "rowspan", td_rowspan_value = /*thead*/ ctx[5].length);
-		},
-		m(target, anchor) {
-			insert(target, td, anchor);
-			append(td, t);
-		},
-		p(ctx, dirty) {
-			if (dirty & /*description*/ 2) set_data(t, /*description*/ ctx[1]);
-
-			if (dirty & /*thead*/ 32 && td_rowspan_value !== (td_rowspan_value = /*thead*/ ctx[5].length)) {
-				attr(td, "rowspan", td_rowspan_value);
-			}
-		},
-		d(detaching) {
-			if (detaching) detach(td);
-		}
-	};
-}
-
-function create_fragment$l(ctx) {
-	let tr;
-	let show_if_10 = /*thead*/ ctx[5].includes("Name");
-	let t0;
-	let show_if_9 = /*thead*/ ctx[5].includes("Source");
-	let t1;
-	let show_if_8 = /*thead*/ ctx[5].includes("Increase");
-	let t2;
-	let show_if_7 = /*thead*/ ctx[5].includes("Level");
-	let t3;
-	let show_if_6 = /*thead*/ ctx[5].includes("Max Level");
-	let t4;
-	let show_if_5 = /*thead*/ ctx[5].includes("Rank");
-	let t5;
-	let show_if_4 = /*thead*/ ctx[5].includes("Value");
-	let t6;
-	let show_if_3 = /*thead*/ ctx[5].includes("Decrease");
-	let t7;
-	let show_if_2 = /*thead*/ ctx[5].includes("Mod");
-	let t8;
-	let show_if_1 = /*thead*/ ctx[5].includes("Cost");
-	let t9;
-	let show_if = /*key*/ ctx[3] === 0 && /*thead*/ ctx[5].includes("Description");
-	let tr_resize_listener;
-	let current;
-	let if_block0 = show_if_10 && create_if_block_10(ctx);
-	let if_block1 = show_if_9 && create_if_block_9(ctx);
-	let if_block2 = show_if_8 && create_if_block_8(ctx);
-	let if_block3 = show_if_7 && create_if_block_7(ctx);
-	let if_block4 = show_if_6 && create_if_block_6(ctx);
-	let if_block5 = show_if_5 && create_if_block_5(ctx);
-	let if_block6 = show_if_4 && create_if_block_4(ctx);
-	let if_block7 = show_if_3 && create_if_block_3$1(ctx);
-	let if_block8 = show_if_2 && create_if_block_2$2(ctx);
-	let if_block9 = show_if_1 && create_if_block_1$3(ctx);
-	let if_block10 = show_if && create_if_block$a(ctx);
-
-	return {
-		c() {
-			tr = element("tr");
-			if (if_block0) if_block0.c();
-			t0 = space();
-			if (if_block1) if_block1.c();
-			t1 = space();
-			if (if_block2) if_block2.c();
-			t2 = space();
-			if (if_block3) if_block3.c();
-			t3 = space();
-			if (if_block4) if_block4.c();
-			t4 = space();
-			if (if_block5) if_block5.c();
-			t5 = space();
-			if (if_block6) if_block6.c();
-			t6 = space();
-			if (if_block7) if_block7.c();
-			t7 = space();
-			if (if_block8) if_block8.c();
-			t8 = space();
-			if (if_block9) if_block9.c();
-			t9 = space();
-			if (if_block10) if_block10.c();
-			set_style(tr, "--cellWidth", /*widthPercent*/ ctx[11] + "%");
-			attr(tr, "class", "svelte-uscx8i");
-			add_render_callback(() => /*tr_elementresize_handler*/ ctx[26].call(tr));
-		},
-		m(target, anchor) {
-			insert(target, tr, anchor);
-			if (if_block0) if_block0.m(tr, null);
-			append(tr, t0);
-			if (if_block1) if_block1.m(tr, null);
-			append(tr, t1);
-			if (if_block2) if_block2.m(tr, null);
-			append(tr, t2);
-			if (if_block3) if_block3.m(tr, null);
-			append(tr, t3);
-			if (if_block4) if_block4.m(tr, null);
-			append(tr, t4);
-			if (if_block5) if_block5.m(tr, null);
-			append(tr, t5);
-			if (if_block6) if_block6.m(tr, null);
-			append(tr, t6);
-			if (if_block7) if_block7.m(tr, null);
-			append(tr, t7);
-			if (if_block8) if_block8.m(tr, null);
-			append(tr, t8);
-			if (if_block9) if_block9.m(tr, null);
-			append(tr, t9);
-			if (if_block10) if_block10.m(tr, null);
-			tr_resize_listener = add_resize_listener(tr, /*tr_elementresize_handler*/ ctx[26].bind(tr));
-			current = true;
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*thead*/ 32) show_if_10 = /*thead*/ ctx[5].includes("Name");
-
-			if (show_if_10) {
-				if (if_block0) {
-					if_block0.p(ctx, dirty);
-				} else {
-					if_block0 = create_if_block_10(ctx);
-					if_block0.c();
-					if_block0.m(tr, t0);
-				}
-			} else if (if_block0) {
-				if_block0.d(1);
-				if_block0 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_9 = /*thead*/ ctx[5].includes("Source");
-
-			if (show_if_9) {
-				if (if_block1) {
-					if_block1.p(ctx, dirty);
-				} else {
-					if_block1 = create_if_block_9(ctx);
-					if_block1.c();
-					if_block1.m(tr, t1);
-				}
-			} else if (if_block1) {
-				if_block1.d(1);
-				if_block1 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_8 = /*thead*/ ctx[5].includes("Increase");
-
-			if (show_if_8) {
-				if (if_block2) {
-					if_block2.p(ctx, dirty);
-
-					if (dirty & /*thead*/ 32) {
-						transition_in(if_block2, 1);
-					}
-				} else {
-					if_block2 = create_if_block_8(ctx);
-					if_block2.c();
-					transition_in(if_block2, 1);
-					if_block2.m(tr, t2);
-				}
-			} else if (if_block2) {
-				group_outros();
-
-				transition_out(if_block2, 1, 1, () => {
-					if_block2 = null;
-				});
-
-				check_outros();
-			}
-
-			if (dirty & /*thead*/ 32) show_if_7 = /*thead*/ ctx[5].includes("Level");
-
-			if (show_if_7) {
-				if (if_block3) {
-					if_block3.p(ctx, dirty);
-				} else {
-					if_block3 = create_if_block_7(ctx);
-					if_block3.c();
-					if_block3.m(tr, t3);
-				}
-			} else if (if_block3) {
-				if_block3.d(1);
-				if_block3 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_6 = /*thead*/ ctx[5].includes("Max Level");
-
-			if (show_if_6) {
-				if (if_block4) {
-					if_block4.p(ctx, dirty);
-				} else {
-					if_block4 = create_if_block_6(ctx);
-					if_block4.c();
-					if_block4.m(tr, t4);
-				}
-			} else if (if_block4) {
-				if_block4.d(1);
-				if_block4 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_5 = /*thead*/ ctx[5].includes("Rank");
-
-			if (show_if_5) {
-				if (if_block5) {
-					if_block5.p(ctx, dirty);
-				} else {
-					if_block5 = create_if_block_5(ctx);
-					if_block5.c();
-					if_block5.m(tr, t5);
-				}
-			} else if (if_block5) {
-				if_block5.d(1);
-				if_block5 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_4 = /*thead*/ ctx[5].includes("Value");
-
-			if (show_if_4) {
-				if (if_block6) {
-					if_block6.p(ctx, dirty);
-				} else {
-					if_block6 = create_if_block_4(ctx);
-					if_block6.c();
-					if_block6.m(tr, t6);
-				}
-			} else if (if_block6) {
-				if_block6.d(1);
-				if_block6 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_3 = /*thead*/ ctx[5].includes("Decrease");
-
-			if (show_if_3) {
-				if (if_block7) {
-					if_block7.p(ctx, dirty);
-
-					if (dirty & /*thead*/ 32) {
-						transition_in(if_block7, 1);
-					}
-				} else {
-					if_block7 = create_if_block_3$1(ctx);
-					if_block7.c();
-					transition_in(if_block7, 1);
-					if_block7.m(tr, t7);
-				}
-			} else if (if_block7) {
-				group_outros();
-
-				transition_out(if_block7, 1, 1, () => {
-					if_block7 = null;
-				});
-
-				check_outros();
-			}
-
-			if (dirty & /*thead*/ 32) show_if_2 = /*thead*/ ctx[5].includes("Mod");
-
-			if (show_if_2) {
-				if (if_block8) {
-					if_block8.p(ctx, dirty);
-				} else {
-					if_block8 = create_if_block_2$2(ctx);
-					if_block8.c();
-					if_block8.m(tr, t8);
-				}
-			} else if (if_block8) {
-				if_block8.d(1);
-				if_block8 = null;
-			}
-
-			if (dirty & /*thead*/ 32) show_if_1 = /*thead*/ ctx[5].includes("Cost");
-
-			if (show_if_1) {
-				if (if_block9) {
-					if_block9.p(ctx, dirty);
-				} else {
-					if_block9 = create_if_block_1$3(ctx);
-					if_block9.c();
-					if_block9.m(tr, t9);
-				}
-			} else if (if_block9) {
-				if_block9.d(1);
-				if_block9 = null;
-			}
-
-			if (dirty & /*key, thead*/ 40) show_if = /*key*/ ctx[3] === 0 && /*thead*/ ctx[5].includes("Description");
-
-			if (show_if) {
-				if (if_block10) {
-					if_block10.p(ctx, dirty);
-				} else {
-					if_block10 = create_if_block$a(ctx);
-					if_block10.c();
-					if_block10.m(tr, null);
-				}
-			} else if (if_block10) {
-				if_block10.d(1);
-				if_block10 = null;
-			}
-		},
-		i(local) {
-			if (current) return;
-			transition_in(if_block2);
-			transition_in(if_block7);
-			current = true;
-		},
-		o(local) {
-			transition_out(if_block2);
-			transition_out(if_block7);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(tr);
-			if (if_block0) if_block0.d();
-			if (if_block1) if_block1.d();
-			if (if_block2) if_block2.d();
-			if (if_block3) if_block3.d();
-			if (if_block4) if_block4.d();
-			if (if_block5) if_block5.d();
-			if (if_block6) if_block6.d();
-			if (if_block7) if_block7.d();
-			if (if_block8) if_block8.d();
-			if (if_block9) if_block9.d();
-			if (if_block10) if_block10.d();
-			tr_resize_listener();
-		}
-	};
-}
-
-function instance$k($$self, $$props, $$invalidate) {
-	let $element;
-	let { max } = $$props;
-	let { val } = $$props;
-	let { key } = $$props;
-	let { type } = $$props;
-	let { description } = $$props;
-	let { typeStr } = $$props;
-	let { thead } = $$props;
-
-	//export let cellWidth;
-	const originalData = getContext("chaAdvActorOriginalData");
-
-	const aditionalData = getContext("chaAdvAditionalData");
-	const element = getContext("chaAdvElementParameters");
-	component_subscribe($$self, element, value => $$invalidate(9, $element = value));
-	const formulas = getContext("chaAdvXpFormulas").formulas;
-	let variables = {};
-	let cost;
-	let min;
-	let widthPercent = 100 / thead.length;
-
-	switch (typeStr) {
-		case "attributes":
-			min = originalData[typeStr][val[0]].value;
-			break;
-		case "skills":
-			min = originalData[typeStr][val[0]].level;
-			break;
-		case "features":
-			console.log(aditionalData, val[0]);
-			min = aditionalData.feats.awail[val[0]].system.level.current;
-			max = aditionalData.feats.awail[val[0]].system.level.max;
-			break;
-	}
-
-	function changeDesc(val) {
-		if (!val[1].description) return "";
-		$$invalidate(1, description = val[1].description);
-	}
-
-	let strMod;
-	let last = key === Object.values(type).length - 1 ? "last" : "";
-	const mouseover_handler = () => changeDesc(val);
-	const mouseover_handler_1 = () => changeDesc(val);
-	const mouseover_handler_2 = () => changeDesc(val);
-	const mouseover_handler_3 = () => changeDesc(val);
-	const mouseover_handler_4 = () => changeDesc(val);
-	const mouseover_handler_5 = () => changeDesc(val);
-	const mouseover_handler_6 = () => changeDesc(val);
-	const mouseover_handler_7 = () => changeDesc(val);
-	const mouseover_handler_8 = () => changeDesc(val);
-	const mouseover_handler_9 = () => changeDesc(val);
-
-	function tr_elementresize_handler() {
-		$element.trHeight = this.offsetHeight;
-		element.set($element);
-		$element.trWidth = this.clientWidth;
-		element.set($element);
-	}
-
-	$$self.$$set = $$props => {
-		if ('max' in $$props) $$invalidate(0, max = $$props.max);
-		if ('val' in $$props) $$invalidate(2, val = $$props.val);
-		if ('key' in $$props) $$invalidate(3, key = $$props.key);
-		if ('type' in $$props) $$invalidate(14, type = $$props.type);
-		if ('description' in $$props) $$invalidate(1, description = $$props.description);
-		if ('typeStr' in $$props) $$invalidate(4, typeStr = $$props.typeStr);
-		if ('thead' in $$props) $$invalidate(5, thead = $$props.thead);
-	};
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*typeStr, val, variables*/ 32788) {
-			{
-				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
-					switch (key) {
-						case "attributes":
-							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
-							break;
-						case "skills":
-							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
-							break;
-						case "features":
-							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].system.level.initial : 0, variables);
-							break;
-						case "skillsCount":
-							$$invalidate(15, variables[variable.shortName] = 1, variables);
-							break;
-						case "featuresCount":
-							$$invalidate(15, variables[variable.shortName] = 1, variables);
-					} //TODO: rewrite
-					//TODO: rewrite
-				}
-
-				$$invalidate(6, cost = math.evaluate(formulas[typeStr], variables));
-			}
-		}
-
-		if ($$self.$$.dirty & /*val*/ 4) {
-			if (val[1].mod !== undefined) {
-				$$invalidate(8, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
-			}
-		}
-	};
-
-	return [
-		max,
-		description,
-		val,
-		key,
-		typeStr,
-		thead,
-		cost,
-		min,
-		strMod,
-		$element,
-		element,
-		widthPercent,
-		changeDesc,
-		last,
-		type,
-		variables,
-		mouseover_handler,
-		mouseover_handler_1,
-		mouseover_handler_2,
-		mouseover_handler_3,
-		mouseover_handler_4,
-		mouseover_handler_5,
-		mouseover_handler_6,
-		mouseover_handler_7,
-		mouseover_handler_8,
-		mouseover_handler_9,
-		tr_elementresize_handler
-	];
-}
-
-class TDvariants extends SvelteComponent {
-	constructor(options) {
-		super();
-
-		init(this, options, instance$k, create_fragment$l, safe_not_equal, {
-			max: 0,
-			val: 2,
-			key: 3,
-			type: 14,
-			description: 1,
-			typeStr: 4,
-			thead: 5
-		});
-	}
-}
-
-/* built\helpers\Character Advancement\Attributes.svelte generated by Svelte v3.48.0 */
-
-function get_each_context$c(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[14] = list[i];
-	child_ctx[16] = i;
-	return child_ctx;
-}
-
-function get_each_context_1$7(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[17] = list[i];
-	return child_ctx;
-}
-
-// (52:8) {#each thead as th}
-function create_each_block_1$7(ctx) {
-	let th;
-	let t0_value = /*th*/ ctx[17] + "";
-	let t0;
-	let t1;
-	let style_width = `${/*thWidth*/ ctx[9]}%`;
-
-	return {
-		c() {
-			th = element("th");
-			t0 = text(t0_value);
-			t1 = space();
-			attr(th, "class", "last svelte-1or51gx");
-			set_style(th, "width", style_width, false);
-		},
-		m(target, anchor) {
-			insert(target, th, anchor);
-			append(th, t0);
-			append(th, t1);
-		},
-		p(ctx, dirty) {
-			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[17] + "")) set_data(t0, t0_value);
-		},
-		d(detaching) {
-			if (detaching) detach(th);
-		}
-	};
-}
-
-// (58:6) {#each Object.entries($data[tabData]) as attr, key}
-function create_each_block$c(ctx) {
-	let tdvariants;
-	let updating_description;
-	let current;
-
-	function tdvariants_description_binding(value) {
-		/*tdvariants_description_binding*/ ctx[11](value);
-	}
-
-	let tdvariants_props = {
-		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
-		thead: /*thead*/ ctx[3],
-		typeStr: /*typeStr*/ ctx[2],
-		val: /*attr*/ ctx[14],
-		max: /*max*/ ctx[5],
-		key: /*key*/ ctx[16]
-	};
-
-	if (/*description*/ ctx[4] !== void 0) {
-		tdvariants_props.description = /*description*/ ctx[4];
-	}
-
-	tdvariants = new TDvariants({ props: tdvariants_props });
-	binding_callbacks.push(() => bind(tdvariants, 'description', tdvariants_description_binding));
-
-	return {
-		c() {
-			create_component(tdvariants.$$.fragment);
-		},
-		m(target, anchor) {
-			mount_component(tdvariants, target, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const tdvariants_changes = {};
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
-			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
-			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
-			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[14];
-			if (dirty & /*max*/ 32) tdvariants_changes.max = /*max*/ ctx[5];
-
-			if (!updating_description && dirty & /*description*/ 16) {
-				updating_description = true;
-				tdvariants_changes.description = /*description*/ ctx[4];
-				add_flush_callback(() => updating_description = false);
-			}
-
-			tdvariants.$set(tdvariants_changes);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(tdvariants.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(tdvariants.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			destroy_component(tdvariants, detaching);
-		}
-	};
-}
-
-function create_fragment$k(ctx) {
-	let div2;
-	let table;
-	let thead_1;
-	let tr;
-	let style_width = `${/*$element*/ ctx[6].trWidth}px`;
-	let thead_1_resize_listener;
-	let t0;
-	let tbody;
-	let t1;
-	let div1;
-	let label;
-	let t3;
-	let div0;
-	let t4;
-	let current;
-	let each_value_1 = /*thead*/ ctx[3];
-	let each_blocks_1 = [];
-
-	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$7(get_each_context_1$7(ctx, each_value_1, i));
-	}
-
-	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
-	let each_blocks = [];
-
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block$c(get_each_context$c(ctx, each_value, i));
-	}
-
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
-
-	return {
-		c() {
-			div2 = element("div");
-			table = element("table");
-			thead_1 = element("thead");
-			tr = element("tr");
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].c();
-			}
-
-			t0 = space();
-			tbody = element("tbody");
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
-
-			t1 = space();
-			div1 = element("div");
-			label = element("label");
-			label.textContent = "Description";
-			t3 = space();
-			div0 = element("div");
-			t4 = text(/*description*/ ctx[4]);
-			attr(tr, "class", "svelte-1or51gx");
-			set_style(tr, "width", style_width, false);
-			attr(thead_1, "class", "svelte-1or51gx");
-			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[10].call(thead_1));
-			set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
-			attr(tbody, "class", "svelte-1or51gx");
-			attr(table, "class", "svelte-1or51gx");
-			attr(label, "for", "description");
-			attr(div1, "class", "description svelte-1or51gx");
-			attr(div2, "class", "flex flexrow");
-		},
-		m(target, anchor) {
-			insert(target, div2, anchor);
-			append(div2, table);
-			append(table, thead_1);
-			append(thead_1, tr);
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].m(tr, null);
-			}
-
-			thead_1_resize_listener = add_resize_listener(thead_1, /*thead_1_elementresize_handler*/ ctx[10].bind(thead_1));
-			append(table, t0);
-			append(table, tbody);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(tbody, null);
-			}
-
-			append(div2, t1);
-			append(div2, div1);
-			append(div1, label);
-			append(div1, t3);
-			append(div1, div0);
-			append(div0, t4);
-			current = true;
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*thWidth, thead*/ 520) {
-				each_value_1 = /*thead*/ ctx[3];
-				let i;
-
-				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$7(ctx, each_value_1, i);
-
-					if (each_blocks_1[i]) {
-						each_blocks_1[i].p(child_ctx, dirty);
-					} else {
-						each_blocks_1[i] = create_each_block_1$7(child_ctx);
-						each_blocks_1[i].c();
-						each_blocks_1[i].m(tr, null);
-					}
-				}
-
-				for (; i < each_blocks_1.length; i += 1) {
-					each_blocks_1[i].d(1);
-				}
-
-				each_blocks_1.length = each_value_1.length;
-			}
-
-			if (dirty & /*$element*/ 64 && style_width !== (style_width = `${/*$element*/ ctx[6].trWidth}px`)) {
-				set_style(tr, "width", style_width, false);
-			}
-
-			if (dirty & /*$data, tabData, thead, typeStr, Object, max, description*/ 63) {
-				each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
-				let i;
-
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context$c(ctx, each_value, i);
-
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block$c(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(tbody, null);
-					}
-				}
-
-				group_outros();
-
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
-					out(i);
-				}
-
-				check_outros();
-			}
-
-			if (!current || dirty & /*$element*/ 64) {
-				set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
-			}
-
-			if (!current || dirty & /*description*/ 16) set_data(t4, /*description*/ ctx[4]);
-		},
-		i(local) {
-			if (current) return;
-
-			for (let i = 0; i < each_value.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
-
-			current = true;
-		},
-		o(local) {
-			each_blocks = each_blocks.filter(Boolean);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
-
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(div2);
-			destroy_each(each_blocks_1, detaching);
-			thead_1_resize_listener();
-			destroy_each(each_blocks, detaching);
-		}
-	};
-}
-
-function instance$j($$self, $$props, $$invalidate) {
-	let $data;
-	let $element;
-	let { tabData } = $$props;
-	const element = getContext("chaAdvElementParameters");
-	component_subscribe($$self, element, value => $$invalidate(6, $element = value));
-	const data = getContext("chaAdvActorData");
-	component_subscribe($$self, data, value => $$invalidate(1, $data = value));
-	const settings = game.settings.get("ard20", "profLevel");
-	let typeStr;
-	let thead;
-	let description;
-	let max;
-
-	//TODO: reconfigure thead for localization
-	switch (tabData) {
-		case "attributes":
-			typeStr = "attributes";
-			thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
-			description = "";
-			max = 30;
-			break;
-		case "skills":
-			typeStr = "skills";
-			thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
-			description = "";
-			max = settings.length - 1;
-			break;
-		case "features":
-			typeStr = "features";
-			thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
-			description = "";
-			max = 1;
-			break;
-	}
-
-	let thWidth = 100 / thead.length;
-
-	const rankName = settings.map(setting => {
-		return setting.label;
-	});
-
-	function thead_1_elementresize_handler() {
-		$element.theadHeight = this.offsetHeight;
-		element.set($element);
-	}
-
-	function tdvariants_description_binding(value) {
-		description = value;
-		$$invalidate(4, description);
-	}
-
-	$$self.$$set = $$props => {
-		if ('tabData' in $$props) $$invalidate(0, tabData = $$props.tabData);
-	};
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data*/ 2) {
-			{
-				for (let [key, attr] of Object.entries($data.attributes)) {
-					attr.mod = attr.value - 10;
-				}
-			}
-		}
-
-		if ($$self.$$.dirty & /*$data*/ 2) {
-			for (let [key, skill] of Object.entries($data.skills)) {
-				skill.rankName = rankName[skill.level];
-			}
-		}
-	};
-
-	return [
-		tabData,
-		$data,
-		typeStr,
-		thead,
-		description,
-		max,
-		$element,
-		element,
-		data,
-		thWidth,
-		thead_1_elementresize_handler,
-		tdvariants_description_binding
-	];
-}
-
-class Attributes extends SvelteComponent {
-	constructor(options) {
-		super();
-		init(this, options, instance$j, create_fragment$k, safe_not_equal, { tabData: 0 });
-	}
-}
-
-/* built\helpers\Character Advancement\Tabs.svelte generated by Svelte v3.48.0 */
-
-function get_each_context$b(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
-	return child_ctx;
-}
-
-function get_each_context_1$6(ctx, list, i) {
-	const child_ctx = ctx.slice();
-	child_ctx[9] = list[i];
-	return child_ctx;
-}
-
-// (14:2) {#each tabs as tab}
-function create_each_block_1$6(ctx) {
-	let li;
-	let span;
-	let t0_value = /*tab*/ ctx[9].label + "";
-	let t0;
-	let t1;
-	let li_class_value;
-	let mounted;
-	let dispose;
-
-	function click_handler() {
-		return /*click_handler*/ ctx[7](/*tab*/ ctx[9]);
-	}
-
-	return {
-		c() {
-			li = element("li");
-			span = element("span");
-			t0 = text(t0_value);
-			t1 = space();
-			attr(span, "class", "svelte-qwcpmp");
-
-			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
-			? "active"
-			: "") + " svelte-qwcpmp"));
-		},
-		m(target, anchor) {
-			insert(target, li, anchor);
-			append(li, span);
-			append(span, t0);
-			append(li, t1);
-
-			if (!mounted) {
-				dispose = listen(span, "click", click_handler);
-				mounted = true;
-			}
-		},
-		p(new_ctx, dirty) {
-			ctx = new_ctx;
-			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[9].label + "")) set_data(t0, t0_value);
-
-			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
-			? "active"
-			: "") + " svelte-qwcpmp"))) {
-				attr(li, "class", li_class_value);
-			}
-		},
-		d(detaching) {
-			if (detaching) detach(li);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-// (28:4) {#if tab.id === activeTab}
-function create_if_block$9(ctx) {
-	let switch_instance;
-	let switch_instance_anchor;
-	let current;
-	var switch_value = /*tab*/ ctx[9].component;
-
-	function switch_props(ctx) {
-		return { props: { tabData: /*tab*/ ctx[9].id } };
-	}
-
-	if (switch_value) {
-		switch_instance = new switch_value(switch_props(ctx));
-	}
-
-	return {
-		c() {
-			if (switch_instance) create_component(switch_instance.$$.fragment);
-			switch_instance_anchor = empty();
-		},
-		m(target, anchor) {
-			if (switch_instance) {
-				mount_component(switch_instance, target, anchor);
-			}
-
-			insert(target, switch_instance_anchor, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			const switch_instance_changes = {};
-			if (dirty & /*tabs*/ 2) switch_instance_changes.tabData = /*tab*/ ctx[9].id;
-
-			if (switch_value !== (switch_value = /*tab*/ ctx[9].component)) {
-				if (switch_instance) {
-					group_outros();
-					const old_component = switch_instance;
-
-					transition_out(old_component.$$.fragment, 1, 0, () => {
-						destroy_component(old_component, 1);
-					});
-
-					check_outros();
-				}
-
-				if (switch_value) {
-					switch_instance = new switch_value(switch_props(ctx));
-					create_component(switch_instance.$$.fragment);
-					transition_in(switch_instance.$$.fragment, 1);
-					mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
-				} else {
-					switch_instance = null;
-				}
-			} else if (switch_value) {
-				switch_instance.$set(switch_instance_changes);
-			}
-		},
-		i(local) {
-			if (current) return;
-			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(switch_instance_anchor);
-			if (switch_instance) destroy_component(switch_instance, detaching);
-		}
-	};
-}
-
-// (27:2) {#each tabs as tab}
-function create_each_block$b(ctx) {
-	let if_block_anchor;
-	let current;
-	let if_block = /*tab*/ ctx[9].id === /*activeTab*/ ctx[0] && create_if_block$9(ctx);
-
-	return {
-		c() {
-			if (if_block) if_block.c();
-			if_block_anchor = empty();
-		},
-		m(target, anchor) {
-			if (if_block) if_block.m(target, anchor);
-			insert(target, if_block_anchor, anchor);
-			current = true;
-		},
-		p(ctx, dirty) {
-			if (/*tab*/ ctx[9].id === /*activeTab*/ ctx[0]) {
-				if (if_block) {
-					if_block.p(ctx, dirty);
-
-					if (dirty & /*tabs, activeTab*/ 3) {
-						transition_in(if_block, 1);
-					}
-				} else {
-					if_block = create_if_block$9(ctx);
-					if_block.c();
-					transition_in(if_block, 1);
-					if_block.m(if_block_anchor.parentNode, if_block_anchor);
-				}
-			} else if (if_block) {
-				group_outros();
-
-				transition_out(if_block, 1, 1, () => {
-					if_block = null;
-				});
-
-				check_outros();
-			}
-		},
-		i(local) {
-			if (current) return;
-			transition_in(if_block);
-			current = true;
-		},
-		o(local) {
-			transition_out(if_block);
-			current = false;
-		},
-		d(detaching) {
-			if (if_block) if_block.d(detaching);
-			if (detaching) detach(if_block_anchor);
-		}
-	};
-}
-
-function create_fragment$j(ctx) {
-	let ul;
-	let t;
-	let div;
-	let div_resize_listener;
-	let current;
-	let each_value_1 = /*tabs*/ ctx[1];
-	let each_blocks_1 = [];
-
-	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks_1[i] = create_each_block_1$6(get_each_context_1$6(ctx, each_value_1, i));
-	}
-
-	let each_value = /*tabs*/ ctx[1];
-	let each_blocks = [];
-
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block$b(get_each_context$b(ctx, each_value, i));
-	}
-
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-		each_blocks[i] = null;
-	});
-
-	return {
-		c() {
-			ul = element("ul");
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].c();
-			}
-
-			t = space();
-			div = element("div");
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].c();
-			}
-
-			attr(ul, "class", "svelte-qwcpmp");
-			attr(div, "class", "box svelte-qwcpmp");
-			set_style(div, "--minBoxSize", /*minBoxSize*/ ctx[3] + "px");
-			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
-		},
-		m(target, anchor) {
-			insert(target, ul, anchor);
-
-			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].m(ul, null);
-			}
-
-			insert(target, t, anchor);
-			insert(target, div, anchor);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div, null);
-			}
-
-			div_resize_listener = add_resize_listener(div, /*div_elementresize_handler*/ ctx[8].bind(div));
-			current = true;
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*activeTab, tabs*/ 3) {
-				each_value_1 = /*tabs*/ ctx[1];
-				let i;
-
-				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1$6(ctx, each_value_1, i);
-
-					if (each_blocks_1[i]) {
-						each_blocks_1[i].p(child_ctx, dirty);
-					} else {
-						each_blocks_1[i] = create_each_block_1$6(child_ctx);
-						each_blocks_1[i].c();
-						each_blocks_1[i].m(ul, null);
-					}
-				}
-
-				for (; i < each_blocks_1.length; i += 1) {
-					each_blocks_1[i].d(1);
-				}
-
-				each_blocks_1.length = each_value_1.length;
-			}
-
-			if (dirty & /*tabs, activeTab*/ 3) {
-				each_value = /*tabs*/ ctx[1];
-				let i;
-
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context$b(ctx, each_value, i);
-
-					if (each_blocks[i]) {
-						each_blocks[i].p(child_ctx, dirty);
-						transition_in(each_blocks[i], 1);
-					} else {
-						each_blocks[i] = create_each_block$b(child_ctx);
-						each_blocks[i].c();
-						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(div, null);
-					}
-				}
-
-				group_outros();
-
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
-					out(i);
-				}
-
-				check_outros();
-			}
-
-			if (!current || dirty & /*minBoxSize*/ 8) {
-				set_style(div, "--minBoxSize", /*minBoxSize*/ ctx[3] + "px");
-			}
-		},
-		i(local) {
-			if (current) return;
-
-			for (let i = 0; i < each_value.length; i += 1) {
-				transition_in(each_blocks[i]);
-			}
-
-			current = true;
-		},
-		o(local) {
-			each_blocks = each_blocks.filter(Boolean);
-
-			for (let i = 0; i < each_blocks.length; i += 1) {
-				transition_out(each_blocks[i]);
-			}
-
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(ul);
-			destroy_each(each_blocks_1, detaching);
-			if (detaching) detach(t);
-			if (detaching) detach(div);
-			destroy_each(each_blocks, detaching);
-			div_resize_listener();
-		}
-	};
-}
-
-function instance$i($$self, $$props, $$invalidate) {
-	let $element;
-	let $data;
-	let { tabs = [] } = $$props;
-	let { activeTab } = $$props;
-	const data = getContext("chaAdvActorData");
-	component_subscribe($$self, data, value => $$invalidate(6, $data = value));
-	const element = getContext("chaAdvElementParameters");
-	component_subscribe($$self, element, value => $$invalidate(2, $element = value));
-	let minBoxSize;
-
-	const click_handler = tab => {
-		$$invalidate(0, activeTab = tab.id);
-	};
-
-	function div_elementresize_handler() {
-		$element.boxHeight = this.clientHeight;
-		element.set($element);
-	}
-
-	$$self.$$set = $$props => {
-		if ('tabs' in $$props) $$invalidate(1, tabs = $$props.tabs);
-		if ('activeTab' in $$props) $$invalidate(0, activeTab = $$props.activeTab);
-	};
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$data, activeTab, $element*/ 69) {
-			{
-				$$invalidate(3, minBoxSize = (Object.entries($data[activeTab]).length * $element.trHeight + $element.theadHeight) * 1.1);
-			}
-		}
-	};
-
-	return [
-		activeTab,
-		tabs,
-		$element,
-		minBoxSize,
-		data,
-		element,
-		$data,
-		click_handler,
-		div_elementresize_handler
-	];
-}
-
-class Tabs$1 extends SvelteComponent {
-	constructor(options) {
-		super();
-		init(this, options, instance$i, create_fragment$j, safe_not_equal, { tabs: 1, activeTab: 0 });
-	}
-}
-
-/* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.48.0 */
-
-function create_fragment$i(ctx) {
-	let div0;
-	let t0;
-	let t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "";
-	let t1;
-	let t2;
-	let div1;
-	let t3;
-	let t4_value = /*$actorData*/ ctx[0].advancement.xp.used + "";
-	let t4;
-	let t5;
-	let tabs_1;
-	let t6;
-	let button;
-	let current;
-	let mounted;
-	let dispose;
-
-	tabs_1 = new Tabs$1({
-			props: { tabs: /*tabs*/ ctx[3], activeTab: activeTab$1 }
-		});
-
-	return {
-		c() {
-			div0 = element("div");
-			t0 = text("XP get: ");
-			t1 = text(t1_value);
-			t2 = space();
-			div1 = element("div");
-			t3 = text("XP used: ");
-			t4 = text(t4_value);
-			t5 = space();
-			create_component(tabs_1.$$.fragment);
-			t6 = space();
-			button = element("button");
-			button.textContent = "SubmitData";
-		},
-		m(target, anchor) {
-			insert(target, div0, anchor);
-			append(div0, t0);
-			append(div0, t1);
-			insert(target, t2, anchor);
-			insert(target, div1, anchor);
-			append(div1, t3);
-			append(div1, t4);
-			insert(target, t5, anchor);
-			mount_component(tabs_1, target, anchor);
-			insert(target, t6, anchor);
-			insert(target, button, anchor);
-			current = true;
-
-			if (!mounted) {
-				dispose = listen(button, "click", /*submitData*/ ctx[4]);
-				mounted = true;
-			}
-		},
-		p(ctx, [dirty]) {
-			if ((!current || dirty & /*$actorData*/ 1) && t1_value !== (t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "")) set_data(t1, t1_value);
-			if ((!current || dirty & /*$actorData*/ 1) && t4_value !== (t4_value = /*$actorData*/ ctx[0].advancement.xp.used + "")) set_data(t4, t4_value);
-		},
-		i(local) {
-			if (current) return;
-			transition_in(tabs_1.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(tabs_1.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(div0);
-			if (detaching) detach(t2);
-			if (detaching) detach(div1);
-			if (detaching) detach(t5);
-			destroy_component(tabs_1, detaching);
-			if (detaching) detach(t6);
-			if (detaching) detach(button);
-			mounted = false;
-			dispose();
-		}
-	};
-}
-
-const activeTab$1 = "attributes";
-
-function instance$h($$self, $$props, $$invalidate) {
-	let $actorData;
-	let $changes;
-	let { document } = $$props;
-
-	//
-	const actor = document.actor;
-
-	const { application } = getContext("external");
-
-	//create list of changes and context for it
-	const changes = writable([]);
-
-	component_subscribe($$self, changes, value => $$invalidate(6, $changes = value));
-	setContext("chaAdvXpChanges", changes);
-
-	//create context for formulas from setting, CONFIG data, Actor's ID
-	setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
-
-	setContext("chaAdvCONFIG", CONFIG);
-	setContext("chaAdvActorOriginalData", actor.system);
-	setContext("chaAdvAditionalData", document.aditionalData);
-
-	//create store and context for data
-	//TODO: add features and other stuff
-	const actorData = writable({
-		attributes: duplicate(actor.system.attributes),
-		skills: duplicate(actor.system.skills),
-		advancement: duplicate(actor.system.advancement),
-		proficiencies: duplicate(actor.system.proficiencies),
-		health: duplicate(actor.system.health),
-		isReady: duplicate(actor.system.isReady),
-		features: duplicate(document.aditionalData.feats.awail)
-	});
-
-	component_subscribe($$self, actorData, value => $$invalidate(0, $actorData = value));
-
-	const elementParameters = writable({
-		boxHeight: 0,
-		trHeight: 0,
-		trWidth: 0,
-		theadHeight: 0
-	});
-
-	setContext("chaAdvElementParameters", elementParameters);
-	setContext("chaAdvActorData", actorData);
-
-	//create tabs
-	//TODO: create features, races and other tabs
-	const tabs = [
-		{
-			label: "attributes",
-			id: "attributes",
-			component: Attributes
-		},
-		{
-			label: "skills",
-			id: "skills",
-			component: Attributes
-		},
-		{
-			label: "Features",
-			id: "features",
-			component: Attributes
-		}
-	];
-
-	//update actor and do other stuff when click 'submit' button
-	async function submitData() {
-		const updateObj = {};
-		updateObj["system.attributes"] = $actorData.attributes;
-		updateObj["system.skills"] = $actorData.skills;
-		updateObj["system.advancement.xp"] = $actorData.advancement.xp;
-		updateObj["system.isReady"] = true;
-		console.log($actorData.features);
-		let feats = { new: [], exist: [] };
-
-		$actorData.features.forEach(element => {
-			const initLevel = element.system.level.initial;
-			const currentLevel = element.system.level.current;
-
-			if (initLevel > currentLevel) {
-				if (currentLevel > 0) {
-					feats.exist = [...feats.exist, element];
-				} else {
-					feats.new = [...feats.new, element];
-				}
-			}
-		});
-
-		console.log(feats, "feats on update");
-		await actor.update(updateObj);
-		if (feats.exist.length !== 0) await actor.updateEmbeddedDocuments("Item", feats.exist);
-		if (feats.new.length !== 0) await actor.createEmbeddedDocuments("Item", feats.new);
-		application.close();
-	}
-
-	$$self.$$set = $$props => {
-		if ('document' in $$props) $$invalidate(5, document = $$props.document);
-	};
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$actorData, $changes*/ 65) {
-			console.log($actorData, $changes);
-		}
-	};
-
-	return [$actorData, changes, actorData, tabs, submitData, document, $changes];
-}
-
-class Cha_adv_shell extends SvelteComponent {
-	constructor(options) {
-		super();
-		init(this, options, instance$h, create_fragment$i, safe_not_equal, { document: 5 });
-	}
-
-	get document() {
-		return this.$$.ctx[5];
-	}
-
-	set document(document) {
-		this.$$set({ document });
-		flush();
-	}
 }
 
 /**
@@ -20902,7 +17484,7 @@ function get_each_context$2$1(ctx, list, i) {
 } // (12:15) 
 
 
-function create_if_block_1$1(ctx) {
+function create_if_block_1$1$1(ctx) {
   let p;
   return {
     c() {
@@ -21122,7 +17704,7 @@ function create_fragment$a$1(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$5$1, create_if_block_1$1];
+  const if_block_creators = [create_if_block$5$1, create_if_block_1$1$1];
   const if_blocks = [];
 
   function select_block_type(ctx, dirty) {
@@ -23400,14 +19982,14 @@ function add_css(target) {
   append_styles(target, "svelte-14xg9ru", "div.dialog-buttons.svelte-14xg9ru{padding-top:8px}");
 }
 
-function get_each_context$a(ctx, list, i) {
+function get_each_context$c(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[15] = list[i];
   return child_ctx;
 } // (202:29) 
 
 
-function create_if_block_3(ctx) {
+function create_if_block_3$2(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -23509,7 +20091,7 @@ function create_if_block_3(ctx) {
 } // (200:3) {#if typeof content === 'string'}
 
 
-function create_if_block_2$1(ctx) {
+function create_if_block_2$2(ctx) {
   let html_tag;
   let html_anchor;
   return {
@@ -23559,9 +20141,9 @@ function create_if_block$1$1(ctx) {
   ctx[15].id;
 
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$a(ctx, each_value, i);
+    let child_ctx = get_each_context$c(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$a(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$c(key, child_ctx));
   }
 
   return {
@@ -23590,7 +20172,7 @@ function create_if_block$1$1(ctx) {
         each_value =
         /*buttons*/
         ctx[1];
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div, destroy_block, create_each_block$a, null, get_each_context$a);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div, destroy_block, create_each_block$c, null, get_each_context$c);
       }
     },
 
@@ -23606,7 +20188,7 @@ function create_if_block$1$1(ctx) {
 } // (214:33) {#if button.icon}
 
 
-function create_if_block_1$2(ctx) {
+function create_if_block_1$3(ctx) {
   let html_tag;
   let raw_value =
   /*button*/
@@ -23641,7 +20223,7 @@ function create_if_block_1$2(ctx) {
 } // (209:3) {#each buttons as button (button.id)}
 
 
-function create_each_block$a(key_1, ctx) {
+function create_each_block$c(key_1, ctx) {
   let button;
   let span;
   let t0_value =
@@ -23656,7 +20238,7 @@ function create_each_block$a(key_1, ctx) {
   let dispose;
   let if_block =
   /*button*/
-  ctx[15].icon && create_if_block_1$2(ctx);
+  ctx[15].icon && create_if_block_1$3(ctx);
 
   function click_handler() {
     return (
@@ -23715,7 +20297,7 @@ function create_each_block$a(key_1, ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block_1$2(ctx);
+          if_block = create_if_block_1$3(ctx);
           if_block.c();
           if_block.m(span, t0);
         }
@@ -23783,7 +20365,7 @@ function create_fragment$1$1(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block_2$1, create_if_block_3];
+  const if_block_creators = [create_if_block_2$2, create_if_block_3$2];
   const if_blocks = [];
 
   function select_block_type(ctx, dirty) {
@@ -24277,7 +20859,7 @@ function create_else_block(ctx) {
 } // (180:0) {#if modal}
 
 
-function create_if_block$8(ctx) {
+function create_if_block$b(ctx) {
   let tjsglasspane;
   let current;
   const tjsglasspane_spread_levels = [{
@@ -24702,12 +21284,12 @@ function create_default_slot$5(ctx) {
   };
 }
 
-function create_fragment$h(ctx) {
+function create_fragment$n(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$8, create_else_block];
+  const if_block_creators = [create_if_block$b, create_else_block];
   const if_blocks = [];
 
   function select_block_type(ctx, dirty) {
@@ -24778,7 +21360,7 @@ function create_fragment$h(ctx) {
 
 const s_MODAL_BACKGROUND = '#50505080';
 
-function instance$g($$self, $$props, $$invalidate) {
+function instance$m($$self, $$props, $$invalidate) {
   let {
     elementContent
   } = $$props;
@@ -25040,7 +21622,7 @@ function instance$g($$self, $$props, $$invalidate) {
 class DialogShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$g, create_fragment$h, safe_not_equal, {
+    init(this, options, instance$m, create_fragment$n, safe_not_equal, {
       elementContent: 0,
       elementRoot: 1,
       data: 3,
@@ -25534,6 +22116,3600 @@ class TJSDialog extends SvelteApplication {
  *
  * @property {number|null} [zIndex] - A specific z-index for the dialog.
  */
+
+/* built\sheets\svelte\action\ActionShell.svelte generated by Svelte v3.48.0 */
+
+function create_fragment$m(ctx) {
+	let div2;
+	let h2;
+	let t1;
+	let div0;
+	let t2;
+	let input0;
+	let t3;
+	let div1;
+	let t4;
+	let input1;
+	let t5;
+	let button;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div2 = element("div");
+			h2 = element("h2");
+			h2.textContent = "This is main tab";
+			t1 = space();
+			div0 = element("div");
+			t2 = text("Name: ");
+			input0 = element("input");
+			t3 = space();
+			div1 = element("div");
+			t4 = text("Formula: ");
+			input1 = element("input");
+			t5 = space();
+			button = element("button");
+			button.textContent = "Submit";
+			attr(div0, "class", "name");
+			attr(div2, "class", "main");
+		},
+		m(target, anchor) {
+			insert(target, div2, anchor);
+			append(div2, h2);
+			append(div2, t1);
+			append(div2, div0);
+			append(div0, t2);
+			append(div0, input0);
+			set_input_value(input0, /*action*/ ctx[0].name);
+			append(div2, t3);
+			append(div2, div1);
+			append(div1, t4);
+			append(div1, input1);
+			set_input_value(input1, /*action*/ ctx[0].formula);
+			append(div2, t5);
+			append(div2, button);
+
+			if (!mounted) {
+				dispose = [
+					listen(input0, "input", /*input0_input_handler*/ ctx[2]),
+					listen(input1, "input", /*input1_input_handler*/ ctx[3]),
+					listen(button, "click", /*click_handler*/ ctx[4])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (dirty & /*action*/ 1 && input0.value !== /*action*/ ctx[0].name) {
+				set_input_value(input0, /*action*/ ctx[0].name);
+			}
+
+			if (dirty & /*action*/ 1 && input1.value !== /*action*/ ctx[0].formula) {
+				set_input_value(input1, /*action*/ ctx[0].formula);
+			}
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(div2);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+function instance$l($$self, $$props, $$invalidate) {
+	let { action } = $$props;
+	const { application } = getContext("external");
+
+	async function submit() {
+		const parent = action.parent;
+		const actionList = [...parent.system.actionList];
+		await parent.update({ "system.actionList": actionList });
+		application.close();
+	}
+
+	function input0_input_handler() {
+		action.name = this.value;
+		$$invalidate(0, action);
+	}
+
+	function input1_input_handler() {
+		action.formula = this.value;
+		$$invalidate(0, action);
+	}
+
+	const click_handler = () => {
+		submit();
+	};
+
+	$$self.$$set = $$props => {
+		if ('action' in $$props) $$invalidate(0, action = $$props.action);
+	};
+
+	return [action, submit, input0_input_handler, input1_input_handler, click_handler];
+}
+
+class ActionShell extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$l, create_fragment$m, safe_not_equal, { action: 0 });
+	}
+
+	get action() {
+		return this.$$.ctx[0];
+	}
+
+	set action(action) {
+		this.$$set({ action });
+		flush();
+	}
+}
+
+class ActionSheet extends TJSDialog {
+  constructor(action) {
+    super({
+      title: "Action Config",
+      id: "act-config",
+      modal: false,
+      draggable: true,
+      content: {
+        class: ActionShell,
+        props: {
+          action
+        }
+      }
+    }, {
+      width: 800,
+      height: 600
+    });
+  }
+
+}
+
+class ARd20Action {
+  constructor(object = {}, options = {}) {
+    var _object$name, _object$type, _object$formula, _object$bonus, _object$dc, _object$id, _object$isRoll, _object$range, _options$parent;
+
+    this.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "New Action";
+    this.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : "Attack";
+    this.formula = (_object$formula = object === null || object === void 0 ? void 0 : object.formula) !== null && _object$formula !== void 0 ? _object$formula : "2d10";
+    this.bonus = (_object$bonus = object === null || object === void 0 ? void 0 : object.bonus) !== null && _object$bonus !== void 0 ? _object$bonus : 0;
+    this.dc = (_object$dc = object === null || object === void 0 ? void 0 : object.dc) !== null && _object$dc !== void 0 ? _object$dc : {
+      type: "parameter",
+      value: "reflex"
+    };
+    this.id = options !== null && options !== void 0 && options.keepId ? (_object$id = object === null || object === void 0 ? void 0 : object.id) !== null && _object$id !== void 0 ? _object$id : uuidv4() : uuidv4();
+    this.isRoll = (_object$isRoll = object === null || object === void 0 ? void 0 : object.isRoll) !== null && _object$isRoll !== void 0 ? _object$isRoll : true;
+    this.setTargetLimit(object === null || object === void 0 ? void 0 : object.type);
+    this.range = (_object$range = object === null || object === void 0 ? void 0 : object.range) !== null && _object$range !== void 0 ? _object$range : {
+      max: 5,
+      min: 0
+    };
+    this.sheet = new ActionSheet(this);
+    this.parent = (_options$parent = options === null || options === void 0 ? void 0 : options.parent) !== null && _options$parent !== void 0 ? _options$parent : null;
+  }
+  /**
+   * Icon and text hint for action
+   */
+
+
+  setHint(object) {
+    var _object$icon, _object$text;
+
+    let icon = (_object$icon = object === null || object === void 0 ? void 0 : object.icon) !== null && _object$icon !== void 0 ? _object$icon : "";
+    let text = (_object$text = object === null || object === void 0 ? void 0 : object.text) !== null && _object$text !== void 0 ? _object$text : "";
+    this.hint = {
+      icon,
+      text
+    };
+  }
+  /**
+   * How many characters can you target with that action
+   */
+
+
+  setTargetLimit(target) {
+    var _target$type, _target$number;
+
+    let type = (_target$type = target === null || target === void 0 ? void 0 : target.type) !== null && _target$type !== void 0 ? _target$type : "single";
+    let number;
+
+    switch (type) {
+      case "single" :
+        number = 1;
+        break;
+
+      case "all":
+        number = Infinity;
+        break;
+
+      case "custom":
+        number = (_target$number = target === null || target === void 0 ? void 0 : target.number) !== null && _target$number !== void 0 ? _target$number : 1;
+        break;
+    }
+
+    this.targetLimit = {
+      number,
+      type
+    };
+  }
+  /**
+   * Use action
+   * Workflow: TODO: maybe add way to configure steps
+   * 1. Check Template - check if there is Measured Template
+   * 1a. Place Template
+   * 1b. If not template - check if token have targets
+   * 2. Validate targets (if action has Measured Template and it affect all tokens in it - skip this step)
+   * 2a. If there is no targets (and no template) - ask user to target tokens (highlight possible)
+   * 2b. If user has targets before - check if you can use action on them (maybe highlight wrong or just throw an error)
+   * 3.
+   *
+   */
+
+
+  async use() {
+    console.log("ACTION USE", this);
+    this.placeTemplate();
+    this.validateTargets();
+    await this.roll();
+  }
+
+  placeTemplate() {
+    console.log("Phase: placing template");
+    if (!this.template) return;
+    /*TODO: look at 5e https://github.com/foundryvtt/dnd5e/blob/master/module/pixi/ability-template.js
+    and then change handlers.mm and handlers.lc events, so it will tell you, that your template "out of the range"
+    for measrement use canvas.grid.measureDistance
+    */
+  }
+
+  validateTargets() {
+    console.log("Phase: validatig targets");
+  }
+
+  async roll() {
+    console.log("Phase: rolling");
+    if (!this.isRoll) return;
+    this.bonus;
+    this.formula;
+    let roll = new Roll(this.formula);
+    await roll.evaluate();
+    await roll.toMessage({
+      speaker: {
+        alias: `${this.parent.parent.name}: ${this.parent.name}(${this.name})`
+      }
+    });
+  }
+
+}
+
+/**
+ * Extend the basic Item with some very simple modifications.
+ * @extends {Item}
+ */
+
+class ARd20Item extends Item {
+  /**
+   * Augment the basic Item data model with additional dynamic data.
+   */
+  prepareData() {
+    super.prepareData();
+  }
+
+  prepareBaseData() {
+    super.prepareBaseData();
+    const itemData = this.system;
+    itemData.actionList = itemData.actionList.map(action => {
+      return new ARd20Action(action, {
+        keepId: true,
+        parent: this
+      });
+    });
+  }
+
+  prepareDerivedData() {
+    super.prepareDerivedData();
+    const itemData = this.system;
+    this.labels = {};
+
+    this._prepareSpellData(itemData);
+
+    this._prepareWeaponData(itemData);
+
+    this._prepareFeatureData(itemData);
+
+    this._prepareRaceData(itemData);
+
+    this._prepareArmorData(itemData);
+
+    if (itemData.hasAttack) this._prepareAttack(itemData);
+    if (itemData.hasDamage) this._prepareDamage(itemData);
+    if (!this.isOwned) this.prepareFinalAttributes();
+  }
+  /**
+   *Prepare data for Spells
+   */
+
+
+  _prepareSpellData(itemData) {
+    if (this.type !== "spell") return;
+  }
+  /**
+   *Prepare data for weapons
+   */
+
+
+  _prepareWeaponData(itemData) {
+    if (this.type !== "weapon") return;
+    const data = itemData;
+    const flags = this.flags;
+    data.hasAttack = data.hasAttack || true;
+    data.hasDamage = data.hasDamage || true; //TODO: this._setDeflect(data);
+
+    this._setTypeAndSubtype(data, flags);
+
+    for (const level of game.settings.get("ard20", "profLevel")) {
+      var _data$damage$common$l;
+
+      data.damage.common[level.key] = (_data$damage$common$l = data.damage.common[level.key]) !== null && _data$damage$common$l !== void 0 ? _data$damage$common$l : {
+        formula: "",
+        parts: [["", ["", ""]]]
+      };
+    }
+    /*for (let [key, type] of Object.entries(data.damage)) {
+            if (key !== "current") {
+                for (let [key, prof] of Object.entries(type)) {
+                    prof.formula = "";
+                    prof.parts.forEach((part) => {
+                        if (Array.isArray(part[1])) {
+                            prof.formula += `${part[0]}`;
+                            part[1].forEach((sub, ind) => {
+                                if (ind === 0) {
+                                    prof.formula += ` {${sub[0]} ${sub[1]}`;
+                                    prof.formula += ind === part[1].length - 1 ? "}" : "";
+                                }
+                                else {
+                                    prof.formula += ` or ${sub[0]} ${sub[1]}`;
+                                    prof.formula += ind === part[1].length - 1 ? "}" : "";
+                                }
+                            });
+                        }
+                        else
+                            prof.formula += `${part[0]} {${part[1]} ${part[2]}}; `;
+                    });
+                }
+            }
+        }*/
+
+  }
+  /**
+   *Set deflect die equal to damage die, if not
+   */
+
+  /* TODO:
+    _setDeflect(data: object & WeaponDataPropertiesData) {
+      for (let [k, v] of Object.entries(CONFIG.ARd20.Rank)) {
+        v = game.i18n.localize(CONFIG.ARd20.prof[k]) ?? k;
+        v = v.toLowerCase();
+        data.deflect[v] = data.property[v].def ? data.deflect[v] || data.damage.common[v] : 0;
+      }
+    }
+    */
+  //@ts-expect-error
+
+
+  _setTypeAndSubtype(data, flags) {
+    var _flags$core, _game$i18n$localize, _game$i18n$localize2;
+
+    data.sub_type_array = game.settings.get("ard20", "proficiencies").weapon.value.filter(prof => prof.type === data.type.value);
+
+    if ((_flags$core = flags.core) !== null && _flags$core !== void 0 && _flags$core.sourceId) {
+      var _game$items;
+
+      const id = /Item.(.+)/.exec(flags.core.sourceId)[1];
+      const item = (_game$items = game.items) === null || _game$items === void 0 ? void 0 : _game$items.get(id);
+
+      if ((item === null || item === void 0 ? void 0 : item.type) === "weapon") {
+        data.sub_type = data.sub_type === undefined ? item.system.sub_type : data.sub_type;
+      }
+    }
+
+    data.sub_type = data.sub_type_array.filter(prof => prof.name === data.sub_type).length === 0 ? data.sub_type_array[0].name : data.sub_type || data.sub_type_array[0].name;
+    data.proficiency.name = (_game$i18n$localize = game.i18n.localize(CONFIG.ARd20.Rank[data.proficiency.level])) !== null && _game$i18n$localize !== void 0 ? _game$i18n$localize : CONFIG.ARd20.Rank[data.proficiency.level];
+    data.type.name = (_game$i18n$localize2 = game.i18n.localize(CONFIG.ARd20.Rank[data.type.value])) !== null && _game$i18n$localize2 !== void 0 ? _game$i18n$localize2 : CONFIG.ARd20.Rank[data.type.value];
+  }
+  /**
+   *Prepare data for features
+   */
+
+
+  _prepareFeatureData(itemData) {
+    if (this.type !== "feature") return;
+    const data = itemData; // Handle Source of the feature
+
+    data.source.label = "";
+    data.source.value.forEach((value, key) => {
+      let label = game.i18n.localize(CONFIG.ARd20.Source[value]);
+      data.source.label += key === 0 ? label : `</br>${label}`;
+    });
+    data.passive;
+    data.active;
+    data.cost = {
+      resource: "stamina",
+      value: 1
+    }; //labels.source = game.i18n.localize(CONFIG.ARd20.source[data.source.value]);
+    //define levels
+
+    data.level.has = data.level.has !== undefined ? data.level.has : false;
+    data.level.max = data.level.has ? data.level.max || 4 : 1;
+    data.level.initial = Math.min(data.level.max, data.level.initial);
+    data.level.current = this.isOwned ? Math.max(data.level.initial, 1) : 0; //define exp cost
+
+    if (data.level.max > 1) {
+      let n = (10 - data.level.max) / data.level.max;
+      let k = 1.7 + Math.round(Number((Math.abs(n) * 100).toPrecision(15))) / 100 * Math.sign(n);
+
+      if (data.xp.basicCost.length < data.level.max) {
+        for (let i = 1; i < data.level.max; i++) {
+          data.xp.basicCost.push(Math.round(data.xp.basicCost[i - 1] * k / 5) * 5);
+          data.xp.AdvancedCost.push(data.xp.basicCost[i]);
+        }
+      } else {
+        for (let i = 1; i < data.level.max; i++) {
+          var _data$xp$AdvancedCost;
+
+          data.xp.basicCost[i] = Math.round(data.xp.basicCost[i - 1] * k / 5) * 5;
+          data.xp.AdvancedCost[i] = (_data$xp$AdvancedCost = data.xp.AdvancedCost[i]) !== null && _data$xp$AdvancedCost !== void 0 ? _data$xp$AdvancedCost : data.xp.basicCost[i];
+        }
+      }
+    }
+
+    for (let [key, req] of Object.entries(data.req.values)) {
+      req.pass = Array.from({
+        length: data.level.max
+      }, i => false);
+
+      switch (req.type) {
+        case "ability":
+          for (let [_key, v] of Object.entries(CONFIG.ARd20.Attributes)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[_key])) req.value = _key;
+          }
+
+          break;
+
+        case "skill":
+          for (let [_key2, v] of Object.entries(CONFIG.ARd20.Skills)) {
+            if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[_key2])) req.value = _key2;
+          }
+
+          break;
+      }
+    }
+
+    for (let i = data.req.logic.length; data.level.max > data.req.logic.length; i++) {
+      if (i === 0) {
+        data.req.logic.push("1");
+      } else {
+        data.req.logic.push(data.req.logic[i - 1]);
+      }
+    }
+
+    for (let i = data.req.logic.length; data.level.max < data.req.logic.length; i--) {
+      data.req.logic.splice(data.req.logic.length - 1, 1);
+    }
+  }
+  /**
+   * Prepare data for 'race' type of item
+   */
+
+
+  _prepareRaceData(itemData) {
+    if (this.type !== "race") return;
+  }
+  /**
+   * Prepare data for "armor" type item
+   */
+
+
+  _prepareArmorData(itemData) {
+    var _data$mobility$value;
+
+    if (this.type !== "armor") return;
+    const data = itemData;
+
+    for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+      if (!(key === "force" || key === "radiant" || key === "psychic")) {
+        data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
+        data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
+      }
+
+      data.res.mag[key].value = parseInt(data.res.mag[key].value) || 0;
+      data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
+    }
+
+    data.mobility.value = (_data$mobility$value = data.mobility.value) !== null && _data$mobility$value !== void 0 ? _data$mobility$value : CONFIG.ARd20.HeavyPoints[data.type][data.slot];
+    data.mobility.value += data.mobility.bonus;
+  }
+  /**
+    Prepare Data that uses actor's data
+    */
+
+
+  prepareFinalAttributes() {
+    const itemData = this.system; //@ts-expect-error
+
+    const abil = itemData.abil = {};
+
+    for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
+      abil[k] = this.isOwned ? getProperty(this.actor.system, `data.attributes.${k}.mod`) : null;
+    }
+
+    let prof_bonus = 0;
+
+    if (itemData.type === "weapon") {
+      var _this$actor;
+
+      const data = itemData;
+      data.proficiency.level = this.isOwned ? (_this$actor = this.actor) === null || _this$actor === void 0 ? void 0 : _this$actor.system.proficiencies.weapon.filter(pr => pr.name === data.sub_type)[0].value : 0;
+      data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
+      data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
+      prof_bonus = data.proficiency.level * 4;
+    }
+
+    if (itemData.hasAttack) this._prepareAttack(itemData, prof_bonus, abil);
+    if (itemData.hasDamage) this._prepareDamage(itemData, abil);
+  }
+
+  _prepareAttack(itemData, prof_bonus, abil) {
+    const data = itemData;
+    if (!data.hasAttack) return; //@ts-expect-error
+
+    let mod = itemData.type === "weapon" && abil !== undefined ? abil.dex : data.atkMod; //@ts-expect-error
+
+    data.attack = {
+      formula: "1d20+" + prof_bonus + "+" + mod,
+      parts: [mod, prof_bonus]
+    };
+  }
+
+  _prepareDamage(itemData, abil) {
+    const data = itemData;
+    if (!data.hasDamage) return;
+    itemData.type === "weapon" && abil !== undefined ? abil.str : 0;
+    const prop = itemData.type === "weapon" ? `damage.common.${data.proficiency.key}.parts` : "damage.parts";
+    let baseDamage = getProperty(data, prop); //@ts-expect-error
+
+    data.damage.current = {
+      formula: "",
+      parts: baseDamage
+    };
+    baseDamage === null || baseDamage === void 0 ? void 0 : baseDamage.forEach((part, key) => {
+      console.log("baseDamage for current damage", part); //@ts-expect-error
+
+      data.damage.current.formula += part[0] + `[`;
+      part[1].forEach((subPart, subKey) => {
+        data.damage.current.formula += game.i18n.localize(CONFIG.ARd20.DamageTypes[subPart[0]]) + ` ${game.i18n.localize(CONFIG.ARd20.DamageSubTypes[subPart[1]])}`;
+        data.damage.current.formula += subKey === part[1].length - 1 ? "]" : " or<br/>";
+      });
+      data.damage.current.formula += key === baseDamage.length - 1 ? "" : "<br/>+<br/>";
+    });
+  }
+  /**
+   * Prepare a data object which is passed to any Roll formulas which are created related to this Item
+   * @private
+   */
+  //@ts-expect-error
+
+
+  getRollData() {
+    // If present, return the actor's roll data.
+    if (!this.actor) return null;
+    const rollData = this.actor.getRollData();
+    const hasDamage = this.system.hasDamage;
+    const hasAttack = this.system.hasAttack; //@ts-expect-error
+
+    rollData.item = foundry.utils.deepClone(this.system); //@ts-expect-error
+
+    rollData.damageDie = hasDamage ? this.system.damage.current.parts[0] : null; //@ts-expect-error
+
+    rollData.mod = hasAttack ? //@ts-expect-error
+    this.system.attack.parts[0] : hasDamage ? //@ts-expect-error
+    this.system.damage.current.parts[1] : null; //@ts-expect-error
+
+    rollData.prof = hasAttack ? this.system.attack.parts[1] : null;
+    return rollData;
+  }
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  //@ts-expect-error
+
+
+  async roll({
+    configureDialog = true,
+    rollMode,
+    hasDamage = false,
+    hasAttack = false,
+    createMessage = true
+  }) {
+    let item = this;
+    item.id;
+    const iData = this.system; //Item data
+
+    const actor = this.actor;
+    actor === null || actor === void 0 ? void 0 : actor.system;
+    hasDamage = iData.hasDamage || hasDamage;
+    hasAttack = iData.hasAttack || hasAttack; // Initialize chat data.
+
+    ChatMessage.getSpeaker({
+      actor: actor
+    });
+    this.name; // Otherwise, create a roll and send a chat message from it.
+
+    const targets = Array.from(game.user.targets); //@ts-expect-error
+
+    const mRoll = this.system.mRoll || false; //@ts-expect-error
+
+    return item.displayCard({
+      rollMode,
+      createMessage,
+      hasAttack,
+      hasDamage,
+      targets,
+      mRoll
+    });
+  }
+  /* -------------------------------------------- */
+
+  /*  Chat Message Helpers                        */
+
+  /* -------------------------------------------- */
+
+
+  static chatListeners(html) {
+    html.on("click", ".card-buttons button", this._onChatCardAction.bind(this));
+    html.on("click", ".item-name", this._onChatCardToggleContent.bind(this));
+    html.on("click", ".attack-roll .roll-controls .accept", this._rollDamage.bind(this));
+    html.trigger("click");
+    html.on("hover", ".attack-roll .flexrow .value", function (event) {
+      var _element$querySelecto;
+
+      event.preventDefault();
+      const element = this.closest("li.flexrow");
+      (_element$querySelecto = element.querySelector(".attack-roll .hover-roll")) === null || _element$querySelecto === void 0 ? void 0 : _element$querySelecto.classList.toggle("shown", event.type == "mouseenter");
+    });
+  }
+  /* -------------------------------------------- */
+
+  /**
+   * Handle execution of a chat card action via a click event on one of the card buttons
+   * @param {Event} event       The originating click event
+   * @returns {Promise}         A promise which resolves once the handler workflow is complete
+   * @private
+   */
+  //@ts-expect-error
+
+
+  static async _onChatCardAction(event) {
+    console.log(event);
+    event.stopImmediatePropagation(); // Extract card data
+
+    const button = event.currentTarget;
+    const card = button.closest(".chat-card");
+    const messageId = card.closest(".message").dataset.messageId;
+    const message = game.messages.get(messageId);
+    const action = button.dataset.action;
+    const targetUuid = button.closest(".flexrow").dataset.targetId; // Validate permission to proceed with the roll
+
+    const isTargetted = action === "save";
+    if (!(isTargetted || game.user.isGM || message.isAuthor)) return; // Recover the actor for the chat card
+
+    const actor = await this._getChatCardActor(card);
+    if (!actor) return; // Get the Item from stored flag data or by the item ID on the Actor
+
+    const storedData = message.getFlag("ard20", "itemData"); //@ts-expect-error
+
+    const item = storedData ? new this(storedData, {
+      parent: actor
+    }) : actor.items.get(card.dataset.itemId);
+
+    if (!item) {
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {
+        item: card.dataset.itemId,
+        name: actor.name
+      }));
+    }
+
+    const spellLevel = parseInt(card.dataset.spellLevel) || null; // Handle different actions
+
+    switch (action) {
+      case "damage":
+      case "versatile":
+        let dam = await item.rollDamage({
+          critical: event.altKey,
+          event: event,
+          spellLevel: spellLevel,
+          versatile: action === "versatile"
+        }); //const dom = new DOMParser().parseFromString(message.data.content,"text/html")
+
+        const html = $(message.data.content);
+        dam = await dam.render(); //dom.querySelector('button').replaceWith(dam)
+
+        if (targetUuid) {
+          html.find(`[data-targetId="${targetUuid}"]`).find("button").replaceWith(dam);
+        } else {
+          html.find(".damage-roll").find("button").replaceWith(dam);
+        } //console.log(dom)
+
+
+        await message.update({
+          content: html[0].outerHTML
+        });
+        break;
+
+      case "formula":
+        await item.rollFormula({
+          event,
+          spellLevel
+        });
+        break;
+
+      case "save":
+        const targets = this._getChatCardTargets(card);
+
+        for (let token of targets) {
+          //@ts-expect-error
+          const speaker = ChatMessage.getSpeaker({
+            scene: canvas.scene,
+            token: token
+          }); //@ts-expect-error
+
+          await token.actor.rollAbilitySave(button.dataset.ability, {
+            event,
+            speaker
+          });
+        }
+
+        break;
+
+      case "toolCheck":
+        await item.rollToolCheck({
+          event
+        });
+        break;
+
+      case "placeTemplate":
+        ///@ts-expect-error
+        const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
+        if (template) template.drawPreview();
+        break;
+    } // Re-enable the button
+
+
+    button.disabled = false;
+  }
+  /* -------------------------------------------- */
+
+  /**
+   * Handle toggling the visibility of chat card content when the name is clicked
+   * @param {Event} event   The originating click event
+   * @private
+   */
+
+
+  static _onChatCardToggleContent(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const card = header.closest(".chat-card");
+    const content = card.querySelector(".card-content");
+    content.style.display = content.style.display === "none" ? "block" : "none";
+  }
+
+  async _applyDamage(dam, tData, tHealth, tActor, tokenId) {
+    let value = dam.total;
+    console.log("урон до резистов: ", value);
+    dam.terms.forEach(term => {
+      if (!(term instanceof OperatorTerm)) {
+        let damageType = term.options.damageType;
+        let res = tData.defences.damage[damageType[0]][damageType[1]];
+        if (res.type === "imm") console.log("Иммунитет");
+        console.log("урон уменьшился с ", value);
+        value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
+        console.log("до", value);
+      }
+    });
+    console.log(value, "итоговый урон");
+    tHealth -= value;
+    console.log("хп стало", tHealth);
+    let obj = {};
+    obj["data.health.value"] = tHealth;
+
+    if (game.user.isGM) {
+      console.log("GM applying damage");
+      console.log(tActor);
+      await tActor.update(obj);
+    } else {
+      console.log("not GM applying damage");
+      game.socket.emit("system.ard20", {
+        operation: "updateActorData",
+        tokenId: tokenId,
+        update: obj,
+        value: value
+      });
+    }
+  }
+
+  static async _rollDamage(event) {
+    event.stopImmediatePropagation();
+    const element = event.currentTarget;
+    const card = element.closest(".chat-card");
+    const message = game.messages.get(card.closest(".message").dataset.messageId);
+    const targetUuid = element.closest("li.flexrow").dataset.targetId;
+    const token = await fromUuid(targetUuid); //@ts-expect-error
+
+    const tActor = token === null || token === void 0 ? void 0 : token.actor;
+    const tData = tActor.system;
+    let tHealth = tData.health.value;
+    console.log(tHealth, "здоровье цели"); // Recover the actor for the chat card
+
+    const actor = await this._getChatCardActor(card);
+    if (!actor) return; // Get the Item from stored flag data or by the item ID on the Actor
+
+    const storedData = message.getFlag("ard20", "itemData"); //@ts-expect-error
+
+    const item = storedData ? new this(storedData, {
+      parent: actor
+    }) : actor.items.get(card.dataset.itemId);
+
+    if (!item) {
+      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {
+        item: card.dataset.itemId,
+        name: actor.name
+      }));
+    }
+
+    const dam = await item.rollDamage({
+      event: event,
+      canMult: false
+    });
+    const html = $(message.data.content);
+    let damHTML = await dam.render();
+    console.log(html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll")[0]);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".damage-roll").append(damHTML);
+    html.find(`[data-target-id="${targetUuid}"]`).find(".accept").remove();
+    console.log(html[0]);
+    await message.update({
+      content: html[0].outerHTML
+    });
+    await item._applyDamage(dam, tData, tHealth, tActor, targetUuid);
+  }
+  /* -------------------------------------------- */
+
+  /**
+   * Get the Actor which is the author of a chat card
+   * @param {HTMLElement} card    The chat card being used
+   * @return {Actor|null}         The Actor entity or null
+   * @private
+   */
+
+
+  static async _getChatCardActor(card) {
+    // Case 1 - a synthetic actor from a Token
+    if (card.dataset.tokenId) {
+      const token = await fromUuid(card.dataset.tokenId);
+      if (!token) return null; //@ts-expect-error
+
+      return token.actor;
+    } // Case 2 - use Actor ID directory
+
+
+    const actorId = card.dataset.actorId;
+    return game.actors.get(actorId) || null;
+  }
+  /* -------------------------------------------- */
+
+  /**
+   * Get the Actor which is the author of a chat card
+   * @param {HTMLElement} card    The chat card being used
+   * @return {Actor[]}            An Array of Actor entities, if any
+   * @private
+   */
+
+
+  static _getChatCardTargets(card) {
+    let targets = canvas.tokens.controlled.filter(t => !!t.actor); //@ts-expect-error
+
+    if (!targets.length && game.user.character) targets = targets.concat(game.user.character.getActiveTokens());
+    if (!targets.length) ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
+    return targets;
+  }
+  /*showRollDetail(event){
+      event.preventDefault();
+      const elem = event.currentTarget;
+      const
+    }*/
+
+
+  async displayCard({
+    //@ts-expect-error
+    rollMode,
+    createMessage = true,
+    hasAttack = Boolean(),
+    hasDamage = Boolean(),
+    targets = [],
+    mRoll = Boolean()
+  } = {}) {
+    var _this$system$attack$d, _this$system$attack;
+
+    // Render the chat card template
+    let atk = {};
+    let dc = {};
+    let atkHTML = {};
+    let dmgHTML = {};
+    let result = {};
+    let hit = {};
+    let dmg = {};
+    let dieResultCss = {}; //@ts-expect-error
+
+    const def = (_this$system$attack$d = (_this$system$attack = this.system.attack) === null || _this$system$attack === void 0 ? void 0 : _this$system$attack.def) !== null && _this$system$attack$d !== void 0 ? _this$system$attack$d : "reflex";
+    const resource = this.system.cost.resource;
+    const cost = resource ? this.system.cost.value : null;
+
+    if (cost && resource) {
+      const costUpd = this.actor.system.resources[resource].value - cost;
+      const update = {};
+      update[`system.resources.${resource}.value`] = costUpd;
+      await this.actor.update(update);
+    }
+
+    const token = this.actor.token;
+
+    if (targets.length !== 0) {
+      //@ts-expect-error
+      let atkRoll = hasAttack ? await this.rollAttack(mRoll, {
+        canMult: true
+      }) : null;
+      let dmgRoll = hasDamage && !hasAttack ? await this.rollDamage({
+        canMult: true
+      }) : null;
+
+      for (let [key, target] of Object.entries(targets)) {
+        if (atkRoll) {
+          mRoll = atkRoll.options.mRoll; //@ts-expect-error
+
+          dc[key] = target.actor.system.defences.stats[def].value; //@ts-expect-error
+
+          atk[key] = hasAttack ? Object.keys(atk).length === 0 || !mRoll ? atkRoll : await atkRoll.reroll() : null; //@ts-expect-error
+
+          console.log(atk[key]); //@ts-expect-error
+
+          atkHTML[key] = hasAttack ? await atk[key].render() : null; //@ts-expect-error
+
+          let d20 = atk[key] ? atk[key].terms[0] : null; //@ts-expect-error
+
+          atk[key] = atk[key].total; //@ts-expect-error
+
+          dieResultCss[key] = d20.total >= d20.options.critical ? "d20crit" : d20.total <= d20.options.fumble ? "d20fumble" : "d20normal"; //@ts-expect-error
+
+          result[key] = atk[key] > dc[key] ? "hit" : "miss"; //@ts-expect-error
+
+          hit[key] = result[key] === "hit" ? true : false;
+        } else {
+          mRoll = dmgRoll.options.mRoll; //@ts-expect-error
+
+          dmg[key] = hasDamage ? Object.keys(dmg).length === 0 || !mRoll ? dmgRoll : await dmgRoll.reroll() : null; //@ts-expect-error
+
+          dmgHTML[key] = hasDamage ? await dmg[key].render() : null;
+        }
+      }
+    } else {
+      //@ts-expect-error
+      atk[0] = hasAttack ? await this.rollAttack(mRoll) : null; //@ts-expect-error
+
+      mRoll = atk[0] ? atk[0].options.mRoll : false; //@ts-expect-error
+
+      atkHTML[0] = hasAttack ? await atk[0].render() : null;
+    } //@ts-expect-error
+
+
+    targets.size !== 0 ? mRoll ? "multiAttack" : "oneAttack" : "noTarget";
+    const templateData = {
+      //@ts-expect-error
+      actor: this.actor.system,
+      tokenId: (token === null || token === void 0 ? void 0 : token.uuid) || null,
+      item: this,
+      data: this.getChatData(),
+      //@ts-expect-error
+      labels: this.labels,
+      hasAttack,
+      hasDamage,
+      atk,
+      atkHTML,
+      targets,
+      //@ts-expect-error
+      owner: this.actor.isOwner || game.user.isGM,
+      dc,
+      result,
+      hit,
+      dmgHTML,
+      dieResultCss
+    };
+    const html = await renderTemplate(`systems/ard20/templates/chat/item-card-multiAttack.html`, templateData); // Create the ChatMessage data object
+
+    const chatData = {
+      user: game.user.data._id,
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      content: html,
+      //@ts-expect-error
+      flavor: this.system.chatFlavor || this.name,
+      //@ts-expect-error
+      speaker: ChatMessage.getSpeaker({
+        actor: this.actor,
+        token
+      }),
+      flags: {
+        "core.canPopout": true
+      }
+    }; // If the Item was destroyed in the process of displaying its card - embed the item data in the chat message
+
+    /*
+        if (this.data.type === "consumable" && !this.actor.items.has(this.id)) {
+          chatData.flags["ard20.itemData"] = this.data;
+        }*/
+    // Apply the roll mode to adjust message visibility
+
+    ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode")); // Create the Chat Message or return its data
+
+    return createMessage ? ChatMessage.create(chatData) : chatData;
+  }
+  /**
+   * Prepare an object of chat data used to display a card for the Item in the chat log.
+   * @param {object} htmlOptions    Options used by the TextEditor.enrichHTML function.
+   * @returns {object}              An object of chat data to render.
+   */
+
+
+  getChatData(htmlOptions = {}) {
+    const data = foundry.utils.deepClone(this.system); // Rich text description
+
+    /*if (data.hasOwnProperty("equipped") && !["loot", "tool"].includes(this.data.type)) {
+          /*if (data.attunement === CONFIG.ARd20.attunementTypes.REQUIRED) {
+            props.push(game.i18n.localize(CONFIG.ARd20.attunements[CONFIG.ARd20.attunementTypes.REQUIRED]));
+          }*/
+
+    /*props.push(game.i18n.localize(data.equipped ? "ARd20.Equipped" : "ARd20.Unequipped"));
+        }
+    
+        // Ability activation properties
+        if (data.hasOwnProperty("activation")) {
+          props.push(labels.activation + (data.activation?.condition ? ` (${data.activation.condition})` : ""), labels.target, labels.range, labels.duration);
+        }
+    
+        // Filter properties and return
+        data.properties = props.filter((p) => !!p);
+        */
+
+    return data;
+  }
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare chat card data for weapon type items.
+   * @param {object} data     Copy of item data being use to display the chat message.
+   * @param {object} labels   Specially prepared item labels.
+   * @param {string[]} props  Existing list of properties to be displayed. *Will be mutated.*
+   * @private
+   */
+
+  /* -------------------------------------------- */
+
+  /**
+   * Place an attack roll using an item (weapon, feat, spell, or equipment)
+   * Rely upon the d20Roll logic for the core implementation
+   *
+   * @param {object} options        Roll options which are configured and provided to the d20Roll function
+   * @returns {Promise<Roll|null>}   A Promise which resolves to the created Roll instance
+   */
+
+
+  async rollAttack(mRoll = Boolean(), canMult = Boolean(), options = {}) {
+    var _options$parts;
+
+    console.log(canMult);
+    this.system; //@ts-expect-error
+
+    this.actor.flags.ard20 || {};
+    let title = `${this.name} - ${game.i18n.localize("ARd20.AttackRoll")}`;
+    const {
+      parts,
+      rollData
+    } = this.getAttackToHit();
+    const targets = game.user.targets; //@ts-expect-error
+
+    if (((_options$parts = options.parts) === null || _options$parts === void 0 ? void 0 : _options$parts.length) > 0) {
+      //@ts-expect-error
+      parts.push(...options.parts);
+    }
+
+    let rollConfig = {
+      parts: parts,
+      actor: this.actor,
+      data: rollData,
+      title: title,
+      flavor: title,
+      dialogOptions: {
+        width: 400
+      },
+      chatMessage: true,
+      options: {
+        create: false
+      },
+      targetValue: targets,
+      canMult: canMult,
+      mRoll: mRoll
+    }; //@ts-expect-error
+
+    rollConfig = mergeObject(rollConfig, options); //@ts-expect-error
+
+    const roll = await d20Roll(rollConfig);
+    if (roll === false) return null;
+    return roll;
+  }
+
+  rollDamage({
+    critical = false,
+    event = null,
+    spellLevel = null,
+    versatile = false,
+    options = {},
+    mRoll = Boolean(),
+    canMult = Boolean()
+  } = {}) {
+    var _ref;
+
+    console.log(canMult);
+    const iData = this.system;
+    this.actor.system; //@ts-expect-error
+
+    const parts = iData.damage.current.parts.map(d => d[0]); //@ts-expect-error
+
+    const damType = iData.damage.current.parts.map(d => d[1].map((c, ind) => {
+      //@ts-expect-error
+      let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]); //@ts-expect-error
+
+      let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
+      let obj = {
+        key: ind,
+        label: `${a} ${b}`
+      };
+      return obj;
+    })); //@ts-expect-error
+
+    options.damageType = iData.damage.current.parts.map(d => d[1]);
+    const hasAttack = false;
+    const hasDamage = true; //@ts-expect-error
+
+    const rollData = this.getRollData(hasAttack, hasDamage);
+    const rollConfig = {
+      actor: this.actor,
+      //@ts-expect-error
+      critical: (_ref = critical !== null && critical !== void 0 ? critical : event === null || event === void 0 ? void 0 : event.altkey) !== null && _ref !== void 0 ? _ref : false,
+      data: rollData,
+      event: event,
+      parts: parts,
+      canMult: canMult,
+      damType: damType,
+      mRoll: mRoll
+    }; //@ts-expect-error
+
+    return damageRoll(mergeObject(rollConfig, options));
+  }
+  /**
+   * Update a label to the Item detailing its total to hit bonus.
+   * Sources:
+   * - item entity's innate attack bonus
+   * - item's actor's proficiency bonus if applicable
+   * - item's actor's global bonuses to the given item type
+   * - item's ammunition if applicable
+   *
+   * @returns {{rollData: object, parts: string[]}|null}  Data used in the item's Attack roll.
+   */
+
+
+  getAttackToHit() {
+    const itemData = this.system;
+    const hasAttack = true;
+    const hasDamage = false; //if (!this.hasAttack || !itemData) return;
+    //@ts-expect-error
+
+    const rollData = this.getRollData(hasAttack, hasDamage);
+    console.log("ROLL DATA", rollData); // Define Roll bonuses
+
+    const parts = []; // Include the item's innate attack bonus as the initial value and label
+    //@ts-expect-error
+
+    if (itemData.attackBonus) {
+      //@ts-expect-error
+      parts.push(itemData.attackBonus); //@ts-expect-error
+
+      this.labels.toHit = itemData.attackBonus;
+    } // Take no further action for un-owned items
+
+
+    if (!this.isOwned) return {
+      rollData,
+      parts
+    }; // Ability score modifier
+
+    parts.push("@prof", "@mod");
+    /* Add proficiency bonus if an explicit proficiency flag is present or for non-item features
+        if ( !["weapon", "consumable"].includes(this.data.type)) {
+          parts.push("@prof");
+          if ( this.system.prof?.hasProficiency ) {
+            rollData.prof = this.system.prof.term;
+          }
+        }
+        */
+
+    /* Actor-level global bonus to attack rolls
+        const actorBonus = this.actor.system.bonuses?.[itemData.actionType] || {};
+        if (actorBonus.attack) parts.push(actorBonus.attack);
+        */
+
+    /* One-time bonus provided by consumed ammunition
+        if (itemData.consume?.type === "ammo" && this.actor.items) {
+          const ammoItemData = this.actor.items.get(itemData.consume.target)?.data;
+    
+          if (ammoItemData) {
+            const ammoItemQuantity = ammoItemData.data.quantity;
+            const ammoCanBeConsumed = ammoItemQuantity && ammoItemQuantity - (itemData.consume.amount ?? 0) >= 0;
+            const ammoItemAttackBonus = ammoItemData.data.attackBonus;
+            const ammoIsTypeConsumable = ammoItemData.type === "consumable" && ammoItemData.data.consumableType === "ammo";
+            if (ammoCanBeConsumed && ammoItemAttackBonus && ammoIsTypeConsumable) {
+              parts.push("@ammo");
+              rollData.ammo = ammoItemAttackBonus;
+            }
+          }
+        }
+        */
+    // Condense the resulting attack bonus formula into a simplified label
+    //@ts-expect-error
+
+    const roll = new Roll(parts.join("+"), rollData); //@ts-expect-error
+
+    const formula = simplifyRollFormula(roll.formula); //@ts-expect-error
+
+    this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula; // Update labels and return the prepared roll data
+
+    return {
+      rollData,
+      parts
+    };
+  }
+  /**
+   * Creates new Action for Item
+   * @param {object} action - Action data
+   */
+
+
+  addAction(object) {
+    let actionList = [...this.system.actionList];
+    actionList.push(new ARd20Action(object, {
+      parent: this
+    }));
+    console.log(actionList[actionList.length - 1].id);
+    this.update({
+      "system.actionList": actionList
+    });
+  }
+
+}
+
+class RaceDataModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    return {
+      description: new foundry.data.fields.StringField({
+        nullable: false,
+        required: true,
+        initial: ""
+      }),
+      speed: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 6,
+        required: true,
+        integer: true,
+        positive: true
+      }),
+      health: new foundry.data.fields.NumberField({
+        nullable: false,
+        initial: 4,
+        required: true,
+        integer: true,
+        positive: true
+      }),
+      attributes: new foundry.data.fields.ObjectField({
+        nullable: false,
+        required: true,
+        initial: {
+          strength: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }).getInitialValue(),
+          dexterity: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }).getInitialValue(),
+          constitution: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }).getInitialValue(),
+          intelligence: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }).getInitialValue(),
+          wisdom: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }).getInitialValue(),
+          charisma: new foundry.data.fields.NumberField({
+            nullable: false,
+            initial: 0,
+            required: true,
+            integer: true,
+            positive: false
+          }).getInitialValue()
+        }
+      })
+    };
+  }
+
+}
+
+/**
+ * Manage Active Effect instances through the Actor Sheet via effect control buttons.
+ * @param {MouseEvent} event      The left-click event on the effect control
+ * @param {Actor|Item} owner      The owning entity which manages this effect
+ */
+function onManageActiveEffect(event, owner) {
+  event.preventDefault();
+  const a = event.currentTarget; //@ts-expect-error
+
+  const li = a.closest("li");
+  const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null; //@ts-expect-error
+
+  switch (a.dataset.action) {
+    case "create":
+      return owner.createEmbeddedDocuments("ActiveEffect", [{
+        label: "New Effect",
+        icon: "icons/svg/aura.svg",
+        origin: owner.uuid,
+        "duration.rounds": li.dataset.effectType === "temporary" ? 1 : undefined,
+        disabled: li.dataset.effectType === "inactive"
+      }]);
+
+    case "edit":
+      return effect.sheet.render(true);
+
+    case "delete":
+      return effect.delete();
+
+    case "toggle":
+      return effect.update({
+        disabled: !effect.data.disabled
+      });
+  }
+}
+/**
+ * Prepare the data structure for Active Effects which are currently applied to an Actor or Item.
+ * @param {ActiveEffect[]} effects    The array of Active Effect instances to prepare sheet data for
+ * @return {object}                   Data for rendering
+ */
+
+function prepareActiveEffectCategories(effects) {
+  // Define effect header categories
+  const categories = {
+    temporary: {
+      type: "temporary",
+      label: "Temporary Effects",
+      effects: []
+    },
+    passive: {
+      type: "passive",
+      label: "Passive Effects",
+      effects: []
+    },
+    inactive: {
+      type: "inactive",
+      label: "Inactive Effects",
+      effects: []
+    }
+  }; // Iterate over active effects, classifying them into categories
+
+  for (let e of effects) {
+    //@ts-expect-error
+    e._getSourceName(); // Trigger a lookup for the source name
+    //@ts-expect-error
+
+
+    if (e.data.disabled) categories.inactive.effects.push(e); //@ts-expect-error
+    else if (e.isTemporary) categories.temporary.effects.push(e); //@ts-expect-error
+    else categories.passive.effects.push(e);
+  }
+
+  return categories;
+}
+
+/* built\helpers\Character Advancement\ChangeButton.svelte generated by Svelte v3.48.0 */
+
+function create_if_block_1$2(ctx) {
+	let i;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			i = element("i");
+			attr(i, "class", "change fa-light fa-square-plus svelte-87fh0g");
+			toggle_class(i, "disabled", /*disabled*/ ctx[4]);
+		},
+		m(target, anchor) {
+			insert(target, i, anchor);
+
+			if (!mounted) {
+				dispose = listen(i, "click", /*click_handler*/ ctx[12]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*disabled*/ 16) {
+				toggle_class(i, "disabled", /*disabled*/ ctx[4]);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(i);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (94:0) {#if min !== undefined}
+function create_if_block$a(ctx) {
+	let i;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			i = element("i");
+			attr(i, "class", "change fa-light fa-square-minus svelte-87fh0g");
+			toggle_class(i, "disabled", /*disabled*/ ctx[4]);
+		},
+		m(target, anchor) {
+			insert(target, i, anchor);
+
+			if (!mounted) {
+				dispose = listen(i, "click", /*click_handler_1*/ ctx[13]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*disabled*/ 16) {
+				toggle_class(i, "disabled", /*disabled*/ ctx[4]);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(i);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function create_fragment$l(ctx) {
+	let t;
+	let if_block1_anchor;
+	let if_block0 = /*max*/ ctx[0] !== undefined && create_if_block_1$2(ctx);
+	let if_block1 = /*min*/ ctx[1] !== undefined && create_if_block$a(ctx);
+
+	return {
+		c() {
+			if (if_block0) if_block0.c();
+			t = space();
+			if (if_block1) if_block1.c();
+			if_block1_anchor = empty();
+		},
+		m(target, anchor) {
+			if (if_block0) if_block0.m(target, anchor);
+			insert(target, t, anchor);
+			if (if_block1) if_block1.m(target, anchor);
+			insert(target, if_block1_anchor, anchor);
+		},
+		p(ctx, [dirty]) {
+			if (/*max*/ ctx[0] !== undefined) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+				} else {
+					if_block0 = create_if_block_1$2(ctx);
+					if_block0.c();
+					if_block0.m(t.parentNode, t);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (/*min*/ ctx[1] !== undefined) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block$a(ctx);
+					if_block1.c();
+					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (if_block0) if_block0.d(detaching);
+			if (detaching) detach(t);
+			if (if_block1) if_block1.d(detaching);
+			if (detaching) detach(if_block1_anchor);
+		}
+	};
+}
+
+function instance$k($$self, $$props, $$invalidate) {
+	let $changes;
+	let $doc;
+	let { max } = $$props;
+	let { min } = $$props;
+	let { type } = $$props;
+	let { subtype } = $$props;
+	let { cost } = $$props;
+	const doc = getContext("chaAdvActorData");
+	component_subscribe($$self, doc, value => $$invalidate(11, $doc = value));
+	const changes = getContext("chaAdvXpChanges");
+	component_subscribe($$self, changes, value => $$invalidate(14, $changes = value));
+	let disabled;
+	let { costLabel } = $$props;
+
+	function increase(type, subtype) {
+		doc.update(store => {
+			switch (type) {
+				case "attributes":
+					store.attributes[subtype].value += 1;
+					break;
+				case "skills":
+					store.skills[subtype].level += 1;
+					break;
+				case "features":
+					store.features[subtype].system.level.initial += 1;
+					break;
+			}
+
+			store.advancement.xp.used += cost;
+			store.advancement.xp.get -= cost;
+			return store;
+		});
+
+		changes.update(changeArr => {
+			changeArr.push({ type, subtype, value: cost });
+			return changeArr;
+		});
+	}
+
+	function decrease(type, subtype) {
+		doc.update(store => {
+			switch (type) {
+				case "attributes":
+					store.attributes[subtype].value -= 1;
+					break;
+				case "skills":
+					store.skills[subtype].level -= 1;
+					break;
+				case "features":
+					store.features[subtype].system.level.initial -= 1;
+					break;
+			}
+
+			let index = -1;
+
+			$changes.forEach((change, key) => {
+				index = change.type === type && change.subtype === subtype && key > index
+				? key
+				: index;
+			});
+
+			if (index >= 0) {
+				store.advancement.xp.used -= $changes[index].value;
+				store.advancement.xp.get += $changes[index].value;
+				return store;
+			}
+		});
+
+		changes.update(changeArr => {
+			let index = -1;
+
+			changeArr.forEach((change, key) => {
+				index = change.type === type && change.subtype === subtype && key > index
+				? key
+				: index;
+			});
+
+			if (index >= 0) {
+				changeArr.splice(index, 1);
+				changeArr = changeArr;
+			}
+
+			return changeArr;
+		});
+	}
+
+	const click_handler = () => increase(type, subtype);
+	const click_handler_1 = () => decrease(type, subtype);
+
+	$$self.$$set = $$props => {
+		if ('max' in $$props) $$invalidate(0, max = $$props.max);
+		if ('min' in $$props) $$invalidate(1, min = $$props.min);
+		if ('type' in $$props) $$invalidate(2, type = $$props.type);
+		if ('subtype' in $$props) $$invalidate(3, subtype = $$props.subtype);
+		if ('cost' in $$props) $$invalidate(10, cost = $$props.cost);
+		if ('costLabel' in $$props) $$invalidate(9, costLabel = $$props.costLabel);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*type, $doc, subtype, max, min, cost, disabled*/ 3103) {
+			{
+				switch (type) {
+					case "attributes":
+						$$invalidate(4, disabled = $doc[type][subtype].value === max || $doc[type][subtype].value === min || $doc.advancement.xp.get < cost);
+						break;
+					case "skills":
+						$$invalidate(4, disabled = $doc[type][subtype].level === max || $doc[type][subtype].level === min || $doc.advancement.xp.get < cost);
+						break;
+					case "features":
+						console.log(max, min);
+						$$invalidate(4, disabled = $doc[type][subtype].system.level.initial === max || $doc[type][subtype].system.level.initial === min || $doc.advancement.xp.get < cost);
+						break;
+				}
+
+				$$invalidate(9, costLabel = disabled ? "-" : cost);
+			}
+		}
+	};
+
+	return [
+		max,
+		min,
+		type,
+		subtype,
+		disabled,
+		doc,
+		changes,
+		increase,
+		decrease,
+		costLabel,
+		cost,
+		$doc,
+		click_handler,
+		click_handler_1
+	];
+}
+
+class ChangeButton extends SvelteComponent {
+	constructor(options) {
+		super();
+
+		init(this, options, instance$k, create_fragment$l, safe_not_equal, {
+			max: 0,
+			min: 1,
+			type: 2,
+			subtype: 3,
+			cost: 10,
+			costLabel: 9
+		});
+	}
+}
+
+/* built\helpers\Character Advancement\TDvariants.svelte generated by Svelte v3.48.0 */
+
+function create_if_block_10(ctx) {
+	let td;
+	let t_value = /*val*/ ctx[2][0] + "";
+	let t;
+	let td_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(t_value);
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler*/ ctx[16]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][0] + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (71:2) {#if thead.includes("Source")}
+function create_if_block_9(ctx) {
+	let td;
+	let raw_value = /*val*/ ctx[2][1].system.source.label + "";
+	let td_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			td.innerHTML = raw_value;
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_1*/ ctx[17]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*val*/ 4 && raw_value !== (raw_value = /*val*/ ctx[2][1].system.source.label + "")) td.innerHTML = raw_value;		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (75:2) {#if thead.includes("Increase")}
+function create_if_block_8(ctx) {
+	let td;
+	let changebutton;
+	let current;
+	let mounted;
+	let dispose;
+
+	changebutton = new ChangeButton({
+			props: {
+				type: /*typeStr*/ ctx[4],
+				subtype: /*val*/ ctx[2][0],
+				max: /*max*/ ctx[0],
+				cost: /*cost*/ ctx[6]
+			}
+		});
+
+	return {
+		c() {
+			td = element("td");
+			create_component(changebutton.$$.fragment);
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			mount_component(changebutton, td, null);
+			current = true;
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_2*/ ctx[18]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			const changebutton_changes = {};
+			if (dirty & /*typeStr*/ 16) changebutton_changes.type = /*typeStr*/ ctx[4];
+			if (dirty & /*val*/ 4) changebutton_changes.subtype = /*val*/ ctx[2][0];
+			if (dirty & /*max*/ 1) changebutton_changes.max = /*max*/ ctx[0];
+			if (dirty & /*cost*/ 64) changebutton_changes.cost = /*cost*/ ctx[6];
+			changebutton.$set(changebutton_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(changebutton.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(changebutton.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			destroy_component(changebutton);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (81:2) {#if thead.includes("Level")}
+function create_if_block_7(ctx) {
+	let td;
+	let t_value = /*val*/ ctx[2][1].system.level.initial + "";
+	let t;
+	let td_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(t_value);
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_3*/ ctx[19]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].system.level.initial + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (87:2) {#if thead.includes("Max Level")}
+function create_if_block_6(ctx) {
+	let td;
+	let t_value = /*val*/ ctx[2][1].system.level.max + "";
+	let t;
+	let td_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(t_value);
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_4*/ ctx[20]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].system.level.max + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (91:2) {#if thead.includes("Rank")}
+function create_if_block_5(ctx) {
+	let td;
+	let t_value = /*val*/ ctx[2][1].rankName + "";
+	let t;
+	let td_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(t_value);
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_5*/ ctx[21]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].rankName + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (95:2) {#if thead.includes("Value")}
+function create_if_block_4(ctx) {
+	let td;
+	let t_value = /*val*/ ctx[2][1].value + "";
+	let t;
+	let td_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(t_value);
+			attr(td, "class", td_class_value = "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_6*/ ctx[22]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*val*/ 4 && t_value !== (t_value = /*val*/ ctx[2][1].value + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (99:2) {#if thead.includes("Decrease")}
+function create_if_block_3$1(ctx) {
+	let td;
+	let changebutton;
+	let current;
+	let mounted;
+	let dispose;
+
+	changebutton = new ChangeButton({
+			props: {
+				type: /*typeStr*/ ctx[4],
+				subtype: /*val*/ ctx[2][0],
+				min: /*min*/ ctx[7]
+			}
+		});
+
+	return {
+		c() {
+			td = element("td");
+			create_component(changebutton.$$.fragment);
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			mount_component(changebutton, td, null);
+			current = true;
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_7*/ ctx[23]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			const changebutton_changes = {};
+			if (dirty & /*typeStr*/ 16) changebutton_changes.type = /*typeStr*/ ctx[4];
+			if (dirty & /*val*/ 4) changebutton_changes.subtype = /*val*/ ctx[2][0];
+			if (dirty & /*min*/ 128) changebutton_changes.min = /*min*/ ctx[7];
+			changebutton.$set(changebutton_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(changebutton.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(changebutton.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			destroy_component(changebutton);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (105:2) {#if thead.includes("Mod")}
+function create_if_block_2$1(ctx) {
+	let td;
+	let t;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(/*strMod*/ ctx[8]);
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_8*/ ctx[24]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*strMod*/ 256) set_data(t, /*strMod*/ ctx[8]);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (109:2) {#if thead.includes("Cost")}
+function create_if_block_1$1(ctx) {
+	let td;
+	let t;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(/*cost*/ ctx[6]);
+			attr(td, "class", "" + (null_to_empty(/*last*/ ctx[13]) + " svelte-uscx8i"));
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+
+			if (!mounted) {
+				dispose = listen(td, "mouseover", /*mouseover_handler_9*/ ctx[25]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*cost*/ 64) set_data(t, /*cost*/ ctx[6]);
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (113:2) {#if key === 0 && thead.includes("Description")}
+function create_if_block$9(ctx) {
+	let td;
+	let t;
+	let td_rowspan_value;
+
+	return {
+		c() {
+			td = element("td");
+			t = text(/*description*/ ctx[1]);
+			attr(td, "class", "description svelte-uscx8i");
+			attr(td, "rowspan", td_rowspan_value = /*thead*/ ctx[5].length);
+		},
+		m(target, anchor) {
+			insert(target, td, anchor);
+			append(td, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*description*/ 2) set_data(t, /*description*/ ctx[1]);
+
+			if (dirty & /*thead*/ 32 && td_rowspan_value !== (td_rowspan_value = /*thead*/ ctx[5].length)) {
+				attr(td, "rowspan", td_rowspan_value);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(td);
+		}
+	};
+}
+
+function create_fragment$k(ctx) {
+	let tr;
+	let show_if_10 = /*thead*/ ctx[5].includes("Name");
+	let t0;
+	let show_if_9 = /*thead*/ ctx[5].includes("Source");
+	let t1;
+	let show_if_8 = /*thead*/ ctx[5].includes("Increase");
+	let t2;
+	let show_if_7 = /*thead*/ ctx[5].includes("Level");
+	let t3;
+	let show_if_6 = /*thead*/ ctx[5].includes("Max Level");
+	let t4;
+	let show_if_5 = /*thead*/ ctx[5].includes("Rank");
+	let t5;
+	let show_if_4 = /*thead*/ ctx[5].includes("Value");
+	let t6;
+	let show_if_3 = /*thead*/ ctx[5].includes("Decrease");
+	let t7;
+	let show_if_2 = /*thead*/ ctx[5].includes("Mod");
+	let t8;
+	let show_if_1 = /*thead*/ ctx[5].includes("Cost");
+	let t9;
+	let show_if = /*key*/ ctx[3] === 0 && /*thead*/ ctx[5].includes("Description");
+	let tr_resize_listener;
+	let current;
+	let if_block0 = show_if_10 && create_if_block_10(ctx);
+	let if_block1 = show_if_9 && create_if_block_9(ctx);
+	let if_block2 = show_if_8 && create_if_block_8(ctx);
+	let if_block3 = show_if_7 && create_if_block_7(ctx);
+	let if_block4 = show_if_6 && create_if_block_6(ctx);
+	let if_block5 = show_if_5 && create_if_block_5(ctx);
+	let if_block6 = show_if_4 && create_if_block_4(ctx);
+	let if_block7 = show_if_3 && create_if_block_3$1(ctx);
+	let if_block8 = show_if_2 && create_if_block_2$1(ctx);
+	let if_block9 = show_if_1 && create_if_block_1$1(ctx);
+	let if_block10 = show_if && create_if_block$9(ctx);
+
+	return {
+		c() {
+			tr = element("tr");
+			if (if_block0) if_block0.c();
+			t0 = space();
+			if (if_block1) if_block1.c();
+			t1 = space();
+			if (if_block2) if_block2.c();
+			t2 = space();
+			if (if_block3) if_block3.c();
+			t3 = space();
+			if (if_block4) if_block4.c();
+			t4 = space();
+			if (if_block5) if_block5.c();
+			t5 = space();
+			if (if_block6) if_block6.c();
+			t6 = space();
+			if (if_block7) if_block7.c();
+			t7 = space();
+			if (if_block8) if_block8.c();
+			t8 = space();
+			if (if_block9) if_block9.c();
+			t9 = space();
+			if (if_block10) if_block10.c();
+			set_style(tr, "--cellWidth", /*widthPercent*/ ctx[11] + "%");
+			attr(tr, "class", "svelte-uscx8i");
+			add_render_callback(() => /*tr_elementresize_handler*/ ctx[26].call(tr));
+		},
+		m(target, anchor) {
+			insert(target, tr, anchor);
+			if (if_block0) if_block0.m(tr, null);
+			append(tr, t0);
+			if (if_block1) if_block1.m(tr, null);
+			append(tr, t1);
+			if (if_block2) if_block2.m(tr, null);
+			append(tr, t2);
+			if (if_block3) if_block3.m(tr, null);
+			append(tr, t3);
+			if (if_block4) if_block4.m(tr, null);
+			append(tr, t4);
+			if (if_block5) if_block5.m(tr, null);
+			append(tr, t5);
+			if (if_block6) if_block6.m(tr, null);
+			append(tr, t6);
+			if (if_block7) if_block7.m(tr, null);
+			append(tr, t7);
+			if (if_block8) if_block8.m(tr, null);
+			append(tr, t8);
+			if (if_block9) if_block9.m(tr, null);
+			append(tr, t9);
+			if (if_block10) if_block10.m(tr, null);
+			tr_resize_listener = add_resize_listener(tr, /*tr_elementresize_handler*/ ctx[26].bind(tr));
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			if (dirty & /*thead*/ 32) show_if_10 = /*thead*/ ctx[5].includes("Name");
+
+			if (show_if_10) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+				} else {
+					if_block0 = create_if_block_10(ctx);
+					if_block0.c();
+					if_block0.m(tr, t0);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_9 = /*thead*/ ctx[5].includes("Source");
+
+			if (show_if_9) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block_9(ctx);
+					if_block1.c();
+					if_block1.m(tr, t1);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_8 = /*thead*/ ctx[5].includes("Increase");
+
+			if (show_if_8) {
+				if (if_block2) {
+					if_block2.p(ctx, dirty);
+
+					if (dirty & /*thead*/ 32) {
+						transition_in(if_block2, 1);
+					}
+				} else {
+					if_block2 = create_if_block_8(ctx);
+					if_block2.c();
+					transition_in(if_block2, 1);
+					if_block2.m(tr, t2);
+				}
+			} else if (if_block2) {
+				group_outros();
+
+				transition_out(if_block2, 1, 1, () => {
+					if_block2 = null;
+				});
+
+				check_outros();
+			}
+
+			if (dirty & /*thead*/ 32) show_if_7 = /*thead*/ ctx[5].includes("Level");
+
+			if (show_if_7) {
+				if (if_block3) {
+					if_block3.p(ctx, dirty);
+				} else {
+					if_block3 = create_if_block_7(ctx);
+					if_block3.c();
+					if_block3.m(tr, t3);
+				}
+			} else if (if_block3) {
+				if_block3.d(1);
+				if_block3 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_6 = /*thead*/ ctx[5].includes("Max Level");
+
+			if (show_if_6) {
+				if (if_block4) {
+					if_block4.p(ctx, dirty);
+				} else {
+					if_block4 = create_if_block_6(ctx);
+					if_block4.c();
+					if_block4.m(tr, t4);
+				}
+			} else if (if_block4) {
+				if_block4.d(1);
+				if_block4 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_5 = /*thead*/ ctx[5].includes("Rank");
+
+			if (show_if_5) {
+				if (if_block5) {
+					if_block5.p(ctx, dirty);
+				} else {
+					if_block5 = create_if_block_5(ctx);
+					if_block5.c();
+					if_block5.m(tr, t5);
+				}
+			} else if (if_block5) {
+				if_block5.d(1);
+				if_block5 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_4 = /*thead*/ ctx[5].includes("Value");
+
+			if (show_if_4) {
+				if (if_block6) {
+					if_block6.p(ctx, dirty);
+				} else {
+					if_block6 = create_if_block_4(ctx);
+					if_block6.c();
+					if_block6.m(tr, t6);
+				}
+			} else if (if_block6) {
+				if_block6.d(1);
+				if_block6 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_3 = /*thead*/ ctx[5].includes("Decrease");
+
+			if (show_if_3) {
+				if (if_block7) {
+					if_block7.p(ctx, dirty);
+
+					if (dirty & /*thead*/ 32) {
+						transition_in(if_block7, 1);
+					}
+				} else {
+					if_block7 = create_if_block_3$1(ctx);
+					if_block7.c();
+					transition_in(if_block7, 1);
+					if_block7.m(tr, t7);
+				}
+			} else if (if_block7) {
+				group_outros();
+
+				transition_out(if_block7, 1, 1, () => {
+					if_block7 = null;
+				});
+
+				check_outros();
+			}
+
+			if (dirty & /*thead*/ 32) show_if_2 = /*thead*/ ctx[5].includes("Mod");
+
+			if (show_if_2) {
+				if (if_block8) {
+					if_block8.p(ctx, dirty);
+				} else {
+					if_block8 = create_if_block_2$1(ctx);
+					if_block8.c();
+					if_block8.m(tr, t8);
+				}
+			} else if (if_block8) {
+				if_block8.d(1);
+				if_block8 = null;
+			}
+
+			if (dirty & /*thead*/ 32) show_if_1 = /*thead*/ ctx[5].includes("Cost");
+
+			if (show_if_1) {
+				if (if_block9) {
+					if_block9.p(ctx, dirty);
+				} else {
+					if_block9 = create_if_block_1$1(ctx);
+					if_block9.c();
+					if_block9.m(tr, t9);
+				}
+			} else if (if_block9) {
+				if_block9.d(1);
+				if_block9 = null;
+			}
+
+			if (dirty & /*key, thead*/ 40) show_if = /*key*/ ctx[3] === 0 && /*thead*/ ctx[5].includes("Description");
+
+			if (show_if) {
+				if (if_block10) {
+					if_block10.p(ctx, dirty);
+				} else {
+					if_block10 = create_if_block$9(ctx);
+					if_block10.c();
+					if_block10.m(tr, null);
+				}
+			} else if (if_block10) {
+				if_block10.d(1);
+				if_block10 = null;
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block2);
+			transition_in(if_block7);
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block2);
+			transition_out(if_block7);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(tr);
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
+			if (if_block2) if_block2.d();
+			if (if_block3) if_block3.d();
+			if (if_block4) if_block4.d();
+			if (if_block5) if_block5.d();
+			if (if_block6) if_block6.d();
+			if (if_block7) if_block7.d();
+			if (if_block8) if_block8.d();
+			if (if_block9) if_block9.d();
+			if (if_block10) if_block10.d();
+			tr_resize_listener();
+		}
+	};
+}
+
+function instance$j($$self, $$props, $$invalidate) {
+	let $element;
+	let { max } = $$props;
+	let { val } = $$props;
+	let { key } = $$props;
+	let { type } = $$props;
+	let { description } = $$props;
+	let { typeStr } = $$props;
+	let { thead } = $$props;
+
+	//export let cellWidth;
+	const originalData = getContext("chaAdvActorOriginalData");
+
+	const aditionalData = getContext("chaAdvAditionalData");
+	const element = getContext("chaAdvElementParameters");
+	component_subscribe($$self, element, value => $$invalidate(9, $element = value));
+	const formulas = getContext("chaAdvXpFormulas").formulas;
+	let variables = {};
+	let cost;
+	let min;
+	let widthPercent = 100 / thead.length;
+
+	switch (typeStr) {
+		case "attributes":
+			min = originalData[typeStr][val[0]].value;
+			break;
+		case "skills":
+			min = originalData[typeStr][val[0]].level;
+			break;
+		case "features":
+			console.log(aditionalData, val[0]);
+			min = aditionalData.feats.awail[val[0]].system.level.current;
+			max = aditionalData.feats.awail[val[0]].system.level.max;
+			break;
+	}
+
+	function changeDesc(val) {
+		if (!val[1].description) return "";
+		$$invalidate(1, description = val[1].description);
+	}
+
+	let strMod;
+	let last = key === Object.values(type).length - 1 ? "last" : "";
+	const mouseover_handler = () => changeDesc(val);
+	const mouseover_handler_1 = () => changeDesc(val);
+	const mouseover_handler_2 = () => changeDesc(val);
+	const mouseover_handler_3 = () => changeDesc(val);
+	const mouseover_handler_4 = () => changeDesc(val);
+	const mouseover_handler_5 = () => changeDesc(val);
+	const mouseover_handler_6 = () => changeDesc(val);
+	const mouseover_handler_7 = () => changeDesc(val);
+	const mouseover_handler_8 = () => changeDesc(val);
+	const mouseover_handler_9 = () => changeDesc(val);
+
+	function tr_elementresize_handler() {
+		$element.trHeight = this.offsetHeight;
+		element.set($element);
+		$element.trWidth = this.clientWidth;
+		element.set($element);
+	}
+
+	$$self.$$set = $$props => {
+		if ('max' in $$props) $$invalidate(0, max = $$props.max);
+		if ('val' in $$props) $$invalidate(2, val = $$props.val);
+		if ('key' in $$props) $$invalidate(3, key = $$props.key);
+		if ('type' in $$props) $$invalidate(14, type = $$props.type);
+		if ('description' in $$props) $$invalidate(1, description = $$props.description);
+		if ('typeStr' in $$props) $$invalidate(4, typeStr = $$props.typeStr);
+		if ('thead' in $$props) $$invalidate(5, thead = $$props.thead);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*typeStr, val, variables*/ 32788) {
+			{
+				for (let [key, variable] of Object.entries(getContext("chaAdvXpFormulas").variables)) {
+					switch (key) {
+						case "attributes":
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].value : 0, variables);
+							break;
+						case "skills":
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].level : 0, variables);
+							break;
+						case "features":
+							$$invalidate(15, variables[variable.shortName] = typeStr === key ? val[1].system.level.initial : 0, variables);
+							break;
+						case "skillsCount":
+							$$invalidate(15, variables[variable.shortName] = 1, variables);
+							break;
+						case "featuresCount":
+							$$invalidate(15, variables[variable.shortName] = 1, variables);
+					} //TODO: rewrite
+					//TODO: rewrite
+				}
+
+				$$invalidate(6, cost = math.evaluate(formulas[typeStr], variables));
+			}
+		}
+
+		if ($$self.$$.dirty & /*val*/ 4) {
+			if (val[1].mod !== undefined) {
+				$$invalidate(8, strMod = val[1].mod < 0 ? `${val[1].mod}` : `+${val[1].mod}`);
+			}
+		}
+	};
+
+	return [
+		max,
+		description,
+		val,
+		key,
+		typeStr,
+		thead,
+		cost,
+		min,
+		strMod,
+		$element,
+		element,
+		widthPercent,
+		changeDesc,
+		last,
+		type,
+		variables,
+		mouseover_handler,
+		mouseover_handler_1,
+		mouseover_handler_2,
+		mouseover_handler_3,
+		mouseover_handler_4,
+		mouseover_handler_5,
+		mouseover_handler_6,
+		mouseover_handler_7,
+		mouseover_handler_8,
+		mouseover_handler_9,
+		tr_elementresize_handler
+	];
+}
+
+class TDvariants extends SvelteComponent {
+	constructor(options) {
+		super();
+
+		init(this, options, instance$j, create_fragment$k, safe_not_equal, {
+			max: 0,
+			val: 2,
+			key: 3,
+			type: 14,
+			description: 1,
+			typeStr: 4,
+			thead: 5
+		});
+	}
+}
+
+/* built\helpers\Character Advancement\Attributes.svelte generated by Svelte v3.48.0 */
+
+function get_each_context$b(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[14] = list[i];
+	child_ctx[16] = i;
+	return child_ctx;
+}
+
+function get_each_context_1$7(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[17] = list[i];
+	return child_ctx;
+}
+
+// (52:8) {#each thead as th}
+function create_each_block_1$7(ctx) {
+	let th;
+	let t0_value = /*th*/ ctx[17] + "";
+	let t0;
+	let t1;
+	let style_width = `${/*thWidth*/ ctx[9]}%`;
+
+	return {
+		c() {
+			th = element("th");
+			t0 = text(t0_value);
+			t1 = space();
+			attr(th, "class", "last svelte-1or51gx");
+			set_style(th, "width", style_width, false);
+		},
+		m(target, anchor) {
+			insert(target, th, anchor);
+			append(th, t0);
+			append(th, t1);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*thead*/ 8 && t0_value !== (t0_value = /*th*/ ctx[17] + "")) set_data(t0, t0_value);
+		},
+		d(detaching) {
+			if (detaching) detach(th);
+		}
+	};
+}
+
+// (58:6) {#each Object.entries($data[tabData]) as attr, key}
+function create_each_block$b(ctx) {
+	let tdvariants;
+	let updating_description;
+	let current;
+
+	function tdvariants_description_binding(value) {
+		/*tdvariants_description_binding*/ ctx[11](value);
+	}
+
+	let tdvariants_props = {
+		type: /*$data*/ ctx[1][/*tabData*/ ctx[0]],
+		thead: /*thead*/ ctx[3],
+		typeStr: /*typeStr*/ ctx[2],
+		val: /*attr*/ ctx[14],
+		max: /*max*/ ctx[5],
+		key: /*key*/ ctx[16]
+	};
+
+	if (/*description*/ ctx[4] !== void 0) {
+		tdvariants_props.description = /*description*/ ctx[4];
+	}
+
+	tdvariants = new TDvariants({ props: tdvariants_props });
+	binding_callbacks.push(() => bind(tdvariants, 'description', tdvariants_description_binding));
+
+	return {
+		c() {
+			create_component(tdvariants.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(tdvariants, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const tdvariants_changes = {};
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.type = /*$data*/ ctx[1][/*tabData*/ ctx[0]];
+			if (dirty & /*thead*/ 8) tdvariants_changes.thead = /*thead*/ ctx[3];
+			if (dirty & /*typeStr*/ 4) tdvariants_changes.typeStr = /*typeStr*/ ctx[2];
+			if (dirty & /*$data, tabData*/ 3) tdvariants_changes.val = /*attr*/ ctx[14];
+			if (dirty & /*max*/ 32) tdvariants_changes.max = /*max*/ ctx[5];
+
+			if (!updating_description && dirty & /*description*/ 16) {
+				updating_description = true;
+				tdvariants_changes.description = /*description*/ ctx[4];
+				add_flush_callback(() => updating_description = false);
+			}
+
+			tdvariants.$set(tdvariants_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(tdvariants.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(tdvariants.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(tdvariants, detaching);
+		}
+	};
+}
+
+function create_fragment$j(ctx) {
+	let div2;
+	let table;
+	let thead_1;
+	let tr;
+	let style_width = `${/*$element*/ ctx[6].trWidth}px`;
+	let thead_1_resize_listener;
+	let t0;
+	let tbody;
+	let t1;
+	let div1;
+	let label;
+	let t3;
+	let div0;
+	let t4;
+	let current;
+	let each_value_1 = /*thead*/ ctx[3];
+	let each_blocks_1 = [];
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		each_blocks_1[i] = create_each_block_1$7(get_each_context_1$7(ctx, each_value_1, i));
+	}
+
+	let each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$b(get_each_context$b(ctx, each_value, i));
+	}
+
+	const out = i => transition_out(each_blocks[i], 1, 1, () => {
+		each_blocks[i] = null;
+	});
+
+	return {
+		c() {
+			div2 = element("div");
+			table = element("table");
+			thead_1 = element("thead");
+			tr = element("tr");
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t0 = space();
+			tbody = element("tbody");
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			t1 = space();
+			div1 = element("div");
+			label = element("label");
+			label.textContent = "Description";
+			t3 = space();
+			div0 = element("div");
+			t4 = text(/*description*/ ctx[4]);
+			attr(tr, "class", "svelte-1or51gx");
+			set_style(tr, "width", style_width, false);
+			attr(thead_1, "class", "svelte-1or51gx");
+			add_render_callback(() => /*thead_1_elementresize_handler*/ ctx[10].call(thead_1));
+			set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
+			attr(tbody, "class", "svelte-1or51gx");
+			attr(table, "class", "svelte-1or51gx");
+			attr(label, "for", "description");
+			attr(div1, "class", "description svelte-1or51gx");
+			attr(div2, "class", "flex flexrow");
+		},
+		m(target, anchor) {
+			insert(target, div2, anchor);
+			append(div2, table);
+			append(table, thead_1);
+			append(thead_1, tr);
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].m(tr, null);
+			}
+
+			thead_1_resize_listener = add_resize_listener(thead_1, /*thead_1_elementresize_handler*/ ctx[10].bind(thead_1));
+			append(table, t0);
+			append(table, tbody);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(tbody, null);
+			}
+
+			append(div2, t1);
+			append(div2, div1);
+			append(div1, label);
+			append(div1, t3);
+			append(div1, div0);
+			append(div0, t4);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			if (dirty & /*thWidth, thead*/ 520) {
+				each_value_1 = /*thead*/ ctx[3];
+				let i;
+
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1$7(ctx, each_value_1, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(child_ctx, dirty);
+					} else {
+						each_blocks_1[i] = create_each_block_1$7(child_ctx);
+						each_blocks_1[i].c();
+						each_blocks_1[i].m(tr, null);
+					}
+				}
+
+				for (; i < each_blocks_1.length; i += 1) {
+					each_blocks_1[i].d(1);
+				}
+
+				each_blocks_1.length = each_value_1.length;
+			}
+
+			if (dirty & /*$element*/ 64 && style_width !== (style_width = `${/*$element*/ ctx[6].trWidth}px`)) {
+				set_style(tr, "width", style_width, false);
+			}
+
+			if (dirty & /*$data, tabData, thead, typeStr, Object, max, description*/ 63) {
+				each_value = Object.entries(/*$data*/ ctx[1][/*tabData*/ ctx[0]]);
+				let i;
+
+				for (i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$b(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+						transition_in(each_blocks[i], 1);
+					} else {
+						each_blocks[i] = create_each_block$b(child_ctx);
+						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
+						each_blocks[i].m(tbody, null);
+					}
+				}
+
+				group_outros();
+
+				for (i = each_value.length; i < each_blocks.length; i += 1) {
+					out(i);
+				}
+
+				check_outros();
+			}
+
+			if (!current || dirty & /*$element*/ 64) {
+				set_style(tbody, "--tbodyHeight", 0.95 * /*$element*/ ctx[6].boxHeight - /*$element*/ ctx[6].theadHeight + "px");
+			}
+
+			if (!current || dirty & /*description*/ 16) set_data(t4, /*description*/ ctx[4]);
+		},
+		i(local) {
+			if (current) return;
+
+			for (let i = 0; i < each_value.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			each_blocks = each_blocks.filter(Boolean);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(div2);
+			destroy_each(each_blocks_1, detaching);
+			thead_1_resize_listener();
+			destroy_each(each_blocks, detaching);
+		}
+	};
+}
+
+function instance$i($$self, $$props, $$invalidate) {
+	let $data;
+	let $element;
+	let { tabData } = $$props;
+	const element = getContext("chaAdvElementParameters");
+	component_subscribe($$self, element, value => $$invalidate(6, $element = value));
+	const data = getContext("chaAdvActorData");
+	component_subscribe($$self, data, value => $$invalidate(1, $data = value));
+	const settings = game.settings.get("ard20", "profLevel");
+	let typeStr;
+	let thead;
+	let description;
+	let max;
+
+	//TODO: reconfigure thead for localization
+	switch (tabData) {
+		case "attributes":
+			typeStr = "attributes";
+			thead = ["Name", "Increase", "Value", "Decrease", "Mod", "Cost"];
+			description = "";
+			max = 30;
+			break;
+		case "skills":
+			typeStr = "skills";
+			thead = ["Name", "Increase", "Rank", "Decrease", "Cost"];
+			description = "";
+			max = settings.length - 1;
+			break;
+		case "features":
+			typeStr = "features";
+			thead = ["Name", "Source", "Increase", "Level", "Max Level", "Decrease", "Cost"];
+			description = "";
+			max = 1;
+			break;
+	}
+
+	let thWidth = 100 / thead.length;
+
+	const rankName = settings.map(setting => {
+		return setting.label;
+	});
+
+	function thead_1_elementresize_handler() {
+		$element.theadHeight = this.offsetHeight;
+		element.set($element);
+	}
+
+	function tdvariants_description_binding(value) {
+		description = value;
+		$$invalidate(4, description);
+	}
+
+	$$self.$$set = $$props => {
+		if ('tabData' in $$props) $$invalidate(0, tabData = $$props.tabData);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$data*/ 2) {
+			{
+				for (let [key, attr] of Object.entries($data.attributes)) {
+					attr.mod = attr.value - 10;
+				}
+			}
+		}
+
+		if ($$self.$$.dirty & /*$data*/ 2) {
+			for (let [key, skill] of Object.entries($data.skills)) {
+				skill.rankName = rankName[skill.level];
+			}
+		}
+	};
+
+	return [
+		tabData,
+		$data,
+		typeStr,
+		thead,
+		description,
+		max,
+		$element,
+		element,
+		data,
+		thWidth,
+		thead_1_elementresize_handler,
+		tdvariants_description_binding
+	];
+}
+
+class Attributes extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$i, create_fragment$j, safe_not_equal, { tabData: 0 });
+	}
+}
+
+/* built\helpers\Character Advancement\Tabs.svelte generated by Svelte v3.48.0 */
+
+function get_each_context$a(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[9] = list[i];
+	return child_ctx;
+}
+
+function get_each_context_1$6(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[9] = list[i];
+	return child_ctx;
+}
+
+// (14:2) {#each tabs as tab}
+function create_each_block_1$6(ctx) {
+	let li;
+	let span;
+	let t0_value = /*tab*/ ctx[9].label + "";
+	let t0;
+	let t1;
+	let li_class_value;
+	let mounted;
+	let dispose;
+
+	function click_handler() {
+		return /*click_handler*/ ctx[7](/*tab*/ ctx[9]);
+	}
+
+	return {
+		c() {
+			li = element("li");
+			span = element("span");
+			t0 = text(t0_value);
+			t1 = space();
+			attr(span, "class", "svelte-qwcpmp");
+
+			attr(li, "class", li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
+			? "active"
+			: "") + " svelte-qwcpmp"));
+		},
+		m(target, anchor) {
+			insert(target, li, anchor);
+			append(li, span);
+			append(span, t0);
+			append(li, t1);
+
+			if (!mounted) {
+				dispose = listen(span, "click", click_handler);
+				mounted = true;
+			}
+		},
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			if (dirty & /*tabs*/ 2 && t0_value !== (t0_value = /*tab*/ ctx[9].label + "")) set_data(t0, t0_value);
+
+			if (dirty & /*activeTab, tabs*/ 3 && li_class_value !== (li_class_value = "" + (null_to_empty(/*activeTab*/ ctx[0] === /*tab*/ ctx[9].id
+			? "active"
+			: "") + " svelte-qwcpmp"))) {
+				attr(li, "class", li_class_value);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(li);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (28:4) {#if tab.id === activeTab}
+function create_if_block$8(ctx) {
+	let switch_instance;
+	let switch_instance_anchor;
+	let current;
+	var switch_value = /*tab*/ ctx[9].component;
+
+	function switch_props(ctx) {
+		return { props: { tabData: /*tab*/ ctx[9].id } };
+	}
+
+	if (switch_value) {
+		switch_instance = new switch_value(switch_props(ctx));
+	}
+
+	return {
+		c() {
+			if (switch_instance) create_component(switch_instance.$$.fragment);
+			switch_instance_anchor = empty();
+		},
+		m(target, anchor) {
+			if (switch_instance) {
+				mount_component(switch_instance, target, anchor);
+			}
+
+			insert(target, switch_instance_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const switch_instance_changes = {};
+			if (dirty & /*tabs*/ 2) switch_instance_changes.tabData = /*tab*/ ctx[9].id;
+
+			if (switch_value !== (switch_value = /*tab*/ ctx[9].component)) {
+				if (switch_instance) {
+					group_outros();
+					const old_component = switch_instance;
+
+					transition_out(old_component.$$.fragment, 1, 0, () => {
+						destroy_component(old_component, 1);
+					});
+
+					check_outros();
+				}
+
+				if (switch_value) {
+					switch_instance = new switch_value(switch_props(ctx));
+					create_component(switch_instance.$$.fragment);
+					transition_in(switch_instance.$$.fragment, 1);
+					mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+				} else {
+					switch_instance = null;
+				}
+			} else if (switch_value) {
+				switch_instance.$set(switch_instance_changes);
+			}
+		},
+		i(local) {
+			if (current) return;
+			if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(switch_instance_anchor);
+			if (switch_instance) destroy_component(switch_instance, detaching);
+		}
+	};
+}
+
+// (27:2) {#each tabs as tab}
+function create_each_block$a(ctx) {
+	let if_block_anchor;
+	let current;
+	let if_block = /*tab*/ ctx[9].id === /*activeTab*/ ctx[0] && create_if_block$8(ctx);
+
+	return {
+		c() {
+			if (if_block) if_block.c();
+			if_block_anchor = empty();
+		},
+		m(target, anchor) {
+			if (if_block) if_block.m(target, anchor);
+			insert(target, if_block_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (/*tab*/ ctx[9].id === /*activeTab*/ ctx[0]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty & /*tabs, activeTab*/ 3) {
+						transition_in(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block$8(ctx);
+					if_block.c();
+					transition_in(if_block, 1);
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				}
+			} else if (if_block) {
+				group_outros();
+
+				transition_out(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				check_outros();
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block);
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if (if_block) if_block.d(detaching);
+			if (detaching) detach(if_block_anchor);
+		}
+	};
+}
+
+function create_fragment$i(ctx) {
+	let ul;
+	let t;
+	let div;
+	let div_resize_listener;
+	let current;
+	let each_value_1 = /*tabs*/ ctx[1];
+	let each_blocks_1 = [];
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		each_blocks_1[i] = create_each_block_1$6(get_each_context_1$6(ctx, each_value_1, i));
+	}
+
+	let each_value = /*tabs*/ ctx[1];
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block$a(get_each_context$a(ctx, each_value, i));
+	}
+
+	const out = i => transition_out(each_blocks[i], 1, 1, () => {
+		each_blocks[i] = null;
+	});
+
+	return {
+		c() {
+			ul = element("ul");
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t = space();
+			div = element("div");
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			attr(ul, "class", "svelte-qwcpmp");
+			attr(div, "class", "box svelte-qwcpmp");
+			set_style(div, "--minBoxSize", /*minBoxSize*/ ctx[3] + "px");
+			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
+		},
+		m(target, anchor) {
+			insert(target, ul, anchor);
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].m(ul, null);
+			}
+
+			insert(target, t, anchor);
+			insert(target, div, anchor);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(div, null);
+			}
+
+			div_resize_listener = add_resize_listener(div, /*div_elementresize_handler*/ ctx[8].bind(div));
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			if (dirty & /*activeTab, tabs*/ 3) {
+				each_value_1 = /*tabs*/ ctx[1];
+				let i;
+
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1$6(ctx, each_value_1, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(child_ctx, dirty);
+					} else {
+						each_blocks_1[i] = create_each_block_1$6(child_ctx);
+						each_blocks_1[i].c();
+						each_blocks_1[i].m(ul, null);
+					}
+				}
+
+				for (; i < each_blocks_1.length; i += 1) {
+					each_blocks_1[i].d(1);
+				}
+
+				each_blocks_1.length = each_value_1.length;
+			}
+
+			if (dirty & /*tabs, activeTab*/ 3) {
+				each_value = /*tabs*/ ctx[1];
+				let i;
+
+				for (i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context$a(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+						transition_in(each_blocks[i], 1);
+					} else {
+						each_blocks[i] = create_each_block$a(child_ctx);
+						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
+						each_blocks[i].m(div, null);
+					}
+				}
+
+				group_outros();
+
+				for (i = each_value.length; i < each_blocks.length; i += 1) {
+					out(i);
+				}
+
+				check_outros();
+			}
+
+			if (!current || dirty & /*minBoxSize*/ 8) {
+				set_style(div, "--minBoxSize", /*minBoxSize*/ ctx[3] + "px");
+			}
+		},
+		i(local) {
+			if (current) return;
+
+			for (let i = 0; i < each_value.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			each_blocks = each_blocks.filter(Boolean);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(ul);
+			destroy_each(each_blocks_1, detaching);
+			if (detaching) detach(t);
+			if (detaching) detach(div);
+			destroy_each(each_blocks, detaching);
+			div_resize_listener();
+		}
+	};
+}
+
+function instance$h($$self, $$props, $$invalidate) {
+	let $element;
+	let $data;
+	let { tabs = [] } = $$props;
+	let { activeTab } = $$props;
+	const data = getContext("chaAdvActorData");
+	component_subscribe($$self, data, value => $$invalidate(6, $data = value));
+	const element = getContext("chaAdvElementParameters");
+	component_subscribe($$self, element, value => $$invalidate(2, $element = value));
+	let minBoxSize;
+
+	const click_handler = tab => {
+		$$invalidate(0, activeTab = tab.id);
+	};
+
+	function div_elementresize_handler() {
+		$element.boxHeight = this.clientHeight;
+		element.set($element);
+	}
+
+	$$self.$$set = $$props => {
+		if ('tabs' in $$props) $$invalidate(1, tabs = $$props.tabs);
+		if ('activeTab' in $$props) $$invalidate(0, activeTab = $$props.activeTab);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$data, activeTab, $element*/ 69) {
+			{
+				$$invalidate(3, minBoxSize = (Object.entries($data[activeTab]).length * $element.trHeight + $element.theadHeight) * 1.1);
+			}
+		}
+	};
+
+	return [
+		activeTab,
+		tabs,
+		$element,
+		minBoxSize,
+		data,
+		element,
+		$data,
+		click_handler,
+		div_elementresize_handler
+	];
+}
+
+class Tabs$1 extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$h, create_fragment$i, safe_not_equal, { tabs: 1, activeTab: 0 });
+	}
+}
+
+/* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.48.0 */
+
+function create_fragment$h(ctx) {
+	let div0;
+	let t0;
+	let t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "";
+	let t1;
+	let t2;
+	let div1;
+	let t3;
+	let t4_value = /*$actorData*/ ctx[0].advancement.xp.used + "";
+	let t4;
+	let t5;
+	let tabs_1;
+	let t6;
+	let button;
+	let current;
+	let mounted;
+	let dispose;
+
+	tabs_1 = new Tabs$1({
+			props: { tabs: /*tabs*/ ctx[3], activeTab: activeTab$1 }
+		});
+
+	return {
+		c() {
+			div0 = element("div");
+			t0 = text("XP get: ");
+			t1 = text(t1_value);
+			t2 = space();
+			div1 = element("div");
+			t3 = text("XP used: ");
+			t4 = text(t4_value);
+			t5 = space();
+			create_component(tabs_1.$$.fragment);
+			t6 = space();
+			button = element("button");
+			button.textContent = "SubmitData";
+		},
+		m(target, anchor) {
+			insert(target, div0, anchor);
+			append(div0, t0);
+			append(div0, t1);
+			insert(target, t2, anchor);
+			insert(target, div1, anchor);
+			append(div1, t3);
+			append(div1, t4);
+			insert(target, t5, anchor);
+			mount_component(tabs_1, target, anchor);
+			insert(target, t6, anchor);
+			insert(target, button, anchor);
+			current = true;
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*submitData*/ ctx[4]);
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if ((!current || dirty & /*$actorData*/ 1) && t1_value !== (t1_value = /*$actorData*/ ctx[0].advancement.xp.get + "")) set_data(t1, t1_value);
+			if ((!current || dirty & /*$actorData*/ 1) && t4_value !== (t4_value = /*$actorData*/ ctx[0].advancement.xp.used + "")) set_data(t4, t4_value);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(tabs_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(tabs_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(div0);
+			if (detaching) detach(t2);
+			if (detaching) detach(div1);
+			if (detaching) detach(t5);
+			destroy_component(tabs_1, detaching);
+			if (detaching) detach(t6);
+			if (detaching) detach(button);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+const activeTab$1 = "attributes";
+
+function instance$g($$self, $$props, $$invalidate) {
+	let $actorData;
+	let $changes;
+	let { document } = $$props;
+
+	//
+	const actor = document.actor;
+
+	const { application } = getContext("external");
+
+	//create list of changes and context for it
+	const changes = writable([]);
+
+	component_subscribe($$self, changes, value => $$invalidate(6, $changes = value));
+	setContext("chaAdvXpChanges", changes);
+
+	//create context for formulas from setting, CONFIG data, Actor's ID
+	setContext("chaAdvXpFormulas", game.settings.get("ard20", "advancement-rate"));
+
+	setContext("chaAdvCONFIG", CONFIG);
+	setContext("chaAdvActorOriginalData", actor.system);
+	setContext("chaAdvAditionalData", document.aditionalData);
+
+	//create store and context for data
+	//TODO: add features and other stuff
+	const actorData = writable({
+		attributes: duplicate(actor.system.attributes),
+		skills: duplicate(actor.system.skills),
+		advancement: duplicate(actor.system.advancement),
+		proficiencies: duplicate(actor.system.proficiencies),
+		health: duplicate(actor.system.health),
+		isReady: duplicate(actor.system.isReady),
+		features: duplicate(document.aditionalData.feats.awail)
+	});
+
+	component_subscribe($$self, actorData, value => $$invalidate(0, $actorData = value));
+
+	const elementParameters = writable({
+		boxHeight: 0,
+		trHeight: 0,
+		trWidth: 0,
+		theadHeight: 0
+	});
+
+	setContext("chaAdvElementParameters", elementParameters);
+	setContext("chaAdvActorData", actorData);
+
+	//create tabs
+	//TODO: create features, races and other tabs
+	const tabs = [
+		{
+			label: "attributes",
+			id: "attributes",
+			component: Attributes
+		},
+		{
+			label: "skills",
+			id: "skills",
+			component: Attributes
+		},
+		{
+			label: "Features",
+			id: "features",
+			component: Attributes
+		}
+	];
+
+	//update actor and do other stuff when click 'submit' button
+	async function submitData() {
+		const updateObj = {};
+		updateObj["system.attributes"] = $actorData.attributes;
+		updateObj["system.skills"] = $actorData.skills;
+		updateObj["system.advancement.xp"] = $actorData.advancement.xp;
+		updateObj["system.isReady"] = true;
+		console.log($actorData.features);
+		let feats = { new: [], exist: [] };
+
+		$actorData.features.forEach(element => {
+			const initLevel = element.system.level.initial;
+			const currentLevel = element.system.level.current;
+
+			if (initLevel > currentLevel) {
+				if (currentLevel > 0) {
+					feats.exist = [...feats.exist, element];
+				} else {
+					feats.new = [...feats.new, element];
+				}
+			}
+		});
+
+		console.log(feats, "feats on update");
+		await actor.update(updateObj);
+		if (feats.exist.length !== 0) await actor.updateEmbeddedDocuments("Item", feats.exist);
+		if (feats.new.length !== 0) await actor.createEmbeddedDocuments("Item", feats.new);
+		application.close();
+	}
+
+	$$self.$$set = $$props => {
+		if ('document' in $$props) $$invalidate(5, document = $$props.document);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$actorData, $changes*/ 65) {
+			console.log($actorData, $changes);
+		}
+	};
+
+	return [$actorData, changes, actorData, tabs, submitData, document, $changes];
+}
+
+class Cha_adv_shell extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$g, create_fragment$h, safe_not_equal, { document: 5 });
+	}
+
+	get document() {
+		return this.$$.ctx[5];
+	}
+
+	set document(document) {
+		this.$$set({ document });
+		flush();
+	}
+}
 
 class CharacterAdvancement extends TJSDialog {
   constructor(document) {
@@ -27758,7 +27934,7 @@ class InventoryTab extends SvelteComponent {
 
 /* built\sheets\svelte\general components\ConfigureItemButton.svelte generated by Svelte v3.48.0 */
 
-function create_if_block_2(ctx) {
+function create_if_block_3(ctx) {
 	let i;
 	let mounted;
 	let dispose;
@@ -27773,7 +27949,7 @@ function create_if_block_2(ctx) {
 			insert(target, i, anchor);
 
 			if (!mounted) {
-				dispose = listen(i, "click", /*click_handler*/ ctx[7]);
+				dispose = listen(i, "click", /*click_handler*/ ctx[8]);
 				mounted = true;
 			}
 		},
@@ -27786,8 +27962,8 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (25:0) {#if action === "delete"}
-function create_if_block_1(ctx) {
+// (30:0) {#if action === "delete"}
+function create_if_block_2(ctx) {
 	let i;
 	let mounted;
 	let dispose;
@@ -27802,7 +27978,7 @@ function create_if_block_1(ctx) {
 			insert(target, i, anchor);
 
 			if (!mounted) {
-				dispose = listen(i, "click", /*click_handler_1*/ ctx[8]);
+				dispose = listen(i, "click", /*click_handler_1*/ ctx[9]);
 				mounted = true;
 			}
 		},
@@ -27815,8 +27991,8 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (28:0) {#if action === "create"}
-function create_if_block$4(ctx) {
+// (33:0) {#if action === "create"}
+function create_if_block_1(ctx) {
 	let i;
 	let i_data_tooltip_value;
 	let mounted;
@@ -27832,7 +28008,7 @@ function create_if_block$4(ctx) {
 			insert(target, i, anchor);
 
 			if (!mounted) {
-				dispose = listen(i, "click", /*click_handler_2*/ ctx[9]);
+				dispose = listen(i, "click", /*click_handler_2*/ ctx[10]);
 				mounted = true;
 			}
 		},
@@ -27849,13 +28025,44 @@ function create_if_block$4(ctx) {
 	};
 }
 
+// (36:0) {#if action === 'favorite'}
+function create_if_block$4(ctx) {
+	let i;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			i = element("i");
+			attr(i, "class", "fa-solid fa-stars svelte-1xsdke5");
+			attr(i, "data-tooltip", "add to favorite");
+		},
+		m(target, anchor) {
+			insert(target, i, anchor);
+
+			if (!mounted) {
+				dispose = listen(i, "click", /*click_handler_3*/ ctx[11]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(i);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
 function create_fragment$a(ctx) {
 	let t0;
 	let t1;
-	let if_block2_anchor;
-	let if_block0 = /*action*/ ctx[0] === "edit" && create_if_block_2(ctx);
-	let if_block1 = /*action*/ ctx[0] === "delete" && create_if_block_1(ctx);
-	let if_block2 = /*action*/ ctx[0] === "create" && create_if_block$4(ctx);
+	let t2;
+	let if_block3_anchor;
+	let if_block0 = /*action*/ ctx[0] === "edit" && create_if_block_3(ctx);
+	let if_block1 = /*action*/ ctx[0] === "delete" && create_if_block_2(ctx);
+	let if_block2 = /*action*/ ctx[0] === "create" && create_if_block_1(ctx);
+	let if_block3 = /*action*/ ctx[0] === 'favorite' && create_if_block$4(ctx);
 
 	return {
 		c() {
@@ -27864,7 +28071,9 @@ function create_fragment$a(ctx) {
 			if (if_block1) if_block1.c();
 			t1 = space();
 			if (if_block2) if_block2.c();
-			if_block2_anchor = empty();
+			t2 = space();
+			if (if_block3) if_block3.c();
+			if_block3_anchor = empty();
 		},
 		m(target, anchor) {
 			if (if_block0) if_block0.m(target, anchor);
@@ -27872,14 +28081,16 @@ function create_fragment$a(ctx) {
 			if (if_block1) if_block1.m(target, anchor);
 			insert(target, t1, anchor);
 			if (if_block2) if_block2.m(target, anchor);
-			insert(target, if_block2_anchor, anchor);
+			insert(target, t2, anchor);
+			if (if_block3) if_block3.m(target, anchor);
+			insert(target, if_block3_anchor, anchor);
 		},
 		p(ctx, [dirty]) {
 			if (/*action*/ ctx[0] === "edit") {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
-					if_block0 = create_if_block_2(ctx);
+					if_block0 = create_if_block_3(ctx);
 					if_block0.c();
 					if_block0.m(t0.parentNode, t0);
 				}
@@ -27892,7 +28103,7 @@ function create_fragment$a(ctx) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
-					if_block1 = create_if_block_1(ctx);
+					if_block1 = create_if_block_2(ctx);
 					if_block1.c();
 					if_block1.m(t1.parentNode, t1);
 				}
@@ -27905,13 +28116,26 @@ function create_fragment$a(ctx) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 				} else {
-					if_block2 = create_if_block$4(ctx);
+					if_block2 = create_if_block_1(ctx);
 					if_block2.c();
-					if_block2.m(if_block2_anchor.parentNode, if_block2_anchor);
+					if_block2.m(t2.parentNode, t2);
 				}
 			} else if (if_block2) {
 				if_block2.d(1);
 				if_block2 = null;
+			}
+
+			if (/*action*/ ctx[0] === 'favorite') {
+				if (if_block3) {
+					if_block3.p(ctx, dirty);
+				} else {
+					if_block3 = create_if_block$4(ctx);
+					if_block3.c();
+					if_block3.m(if_block3_anchor.parentNode, if_block3_anchor);
+				}
+			} else if (if_block3) {
+				if_block3.d(1);
+				if_block3 = null;
 			}
 		},
 		i: noop,
@@ -27922,7 +28146,9 @@ function create_fragment$a(ctx) {
 			if (if_block1) if_block1.d(detaching);
 			if (detaching) detach(t1);
 			if (if_block2) if_block2.d(detaching);
-			if (detaching) detach(if_block2_anchor);
+			if (detaching) detach(t2);
+			if (if_block3) if_block3.d(detaching);
+			if (detaching) detach(if_block3_anchor);
 		}
 	};
 }
@@ -27959,14 +28185,22 @@ function instance$a($$self, $$props, $$invalidate) {
 		);
 	}
 
+	async function addToFavorite() {
+		if (!doc) return;
+		let favorites = doc.system.favorites;
+		favorites.push(item);
+		doc.update({ 'system.favorites': favorites });
+	}
+
 	const click_handler = () => OpenItem();
 	const click_handler_1 = () => DeleteItem();
 	const click_handler_2 = () => CreateItem();
+	const click_handler_3 = () => addToFavorite();
 
 	$$self.$$set = $$props => {
-		if ('item' in $$props) $$invalidate(5, item = $$props.item);
+		if ('item' in $$props) $$invalidate(6, item = $$props.item);
 		if ('action' in $$props) $$invalidate(0, action = $$props.action);
-		if ('doc' in $$props) $$invalidate(6, doc = $$props.doc);
+		if ('doc' in $$props) $$invalidate(7, doc = $$props.doc);
 		if ('type' in $$props) $$invalidate(1, type = $$props.type);
 	};
 
@@ -27976,22 +28210,24 @@ function instance$a($$self, $$props, $$invalidate) {
 		OpenItem,
 		DeleteItem,
 		CreateItem,
+		addToFavorite,
 		item,
 		doc,
 		click_handler,
 		click_handler_1,
-		click_handler_2
+		click_handler_2,
+		click_handler_3
 	];
 }
 
 class ConfigureItemButton extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$a, create_fragment$a, safe_not_equal, { item: 5, action: 0, doc: 6, type: 1 });
+		init(this, options, instance$a, create_fragment$a, safe_not_equal, { item: 6, action: 0, doc: 7, type: 1 });
 	}
 
 	get item() {
-		return this.$$.ctx[5];
+		return this.$$.ctx[6];
 	}
 
 	set item(item) {
@@ -28009,7 +28245,7 @@ class ConfigureItemButton extends SvelteComponent {
 	}
 
 	get doc() {
-		return this.$$.ctx[6];
+		return this.$$.ctx[7];
 	}
 
 	set doc(doc) {
@@ -28031,13 +28267,13 @@ class ConfigureItemButton extends SvelteComponent {
 
 function get_each_context$7(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[4] = list[i];
+	child_ctx[6] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[7] = list[i];
+	child_ctx[9] = list[i];
 	return child_ctx;
 }
 
@@ -28048,13 +28284,13 @@ function create_if_block$3(ctx) {
 	let dispose;
 
 	function click_handler_1() {
-		return /*click_handler_1*/ ctx[3](/*item*/ ctx[4]);
+		return /*click_handler_1*/ ctx[3](/*item*/ ctx[6]);
 	}
 
 	return {
 		c() {
 			i = element("i");
-			attr(i, "class", "fa-light fa-dice-d20 svelte-1213ocr");
+			attr(i, "class", "fa-light fa-dice-d20 svelte-1mjst87");
 			attr(i, "data-tooltip", "roll");
 		},
 		m(target, anchor) {
@@ -28076,29 +28312,63 @@ function create_if_block$3(ctx) {
 	};
 }
 
-// (56:10) {#each item.system.actionList as action }
+// (57:12) {#each item.system.actionList as action}
 function create_each_block_1$4(ctx) {
+	let div;
 	let span;
-	let t0_value = /*action*/ ctx[7].name + "";
+	let t0_value = /*action*/ ctx[9].name + "";
 	let t0;
 	let t1;
+	let i;
+	let t2;
+	let mounted;
+	let dispose;
+
+	function click_handler_2() {
+		return /*click_handler_2*/ ctx[4](/*action*/ ctx[9]);
+	}
+
+	function click_handler_3() {
+		return /*click_handler_3*/ ctx[5](/*action*/ ctx[9]);
+	}
 
 	return {
 		c() {
+			div = element("div");
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = space();
+			i = element("i");
+			t2 = space();
+			attr(i, "class", "fa-solid fa-pen-to-square");
+			attr(i, "data-tooltip", "edit");
+			attr(div, "class", "action");
 		},
 		m(target, anchor) {
-			insert(target, span, anchor);
+			insert(target, div, anchor);
+			append(div, span);
 			append(span, t0);
-			append(span, t1);
+			append(div, t1);
+			append(div, i);
+			append(div, t2);
+
+			if (!mounted) {
+				dispose = [
+					listen(span, "click", click_handler_2),
+					listen(i, "click", click_handler_3)
+				];
+
+				mounted = true;
+			}
 		},
-		p(ctx, dirty) {
-			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*action*/ ctx[7].name + "")) set_data(t0, t0_value);
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+			if (dirty & /*$doc*/ 1 && t0_value !== (t0_value = /*action*/ ctx[9].name + "")) set_data(t0, t0_value);
 		},
 		d(detaching) {
-			if (detaching) detach(span);
+			if (detaching) detach(div);
+			mounted = false;
+			run_all(dispose);
 		}
 	};
 }
@@ -28108,32 +28378,34 @@ function create_each_block$7(ctx) {
 	let tr;
 	let td0;
 	let span;
-	let t0_value = /*item*/ ctx[4].name + "";
+	let t0_value = /*item*/ ctx[6].name + "";
 	let t0;
 	let t1;
 	let t2;
 	let td1;
+	let div0;
 	let t3;
 	let td2;
-	let t4_value = /*item*/ ctx[4].system.level.current + "";
+	let t4_value = /*item*/ ctx[6].system.level.current + "";
 	let t4;
 	let t5;
 	let td3;
 	let configureitembutton0;
 	let t6;
 	let td4;
+	let configureitembutton1;
 	let t7;
 	let td5;
-	let configureitembutton1;
+	let configureitembutton2;
 	let t8;
-	let div;
-	let raw_value = /*item*/ ctx[4].system.description + "";
+	let div1;
+	let raw_value = /*item*/ ctx[6].system.description + "";
 	let t9;
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) && create_if_block$3(ctx);
-	let each_value_1 = /*item*/ ctx[4].system.actionList;
+	let if_block = (/*item*/ ctx[6].system.hasAttack || /*item*/ ctx[6].system.hasDamage) && create_if_block$3(ctx);
+	let each_value_1 = /*item*/ ctx[6].system.actionList;
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -28141,11 +28413,20 @@ function create_each_block$7(ctx) {
 	}
 
 	configureitembutton0 = new ConfigureItemButton({
-			props: { item: /*item*/ ctx[4], action: "edit" }
+			props: { item: /*item*/ ctx[6], action: "edit" }
 		});
 
 	configureitembutton1 = new ConfigureItemButton({
-			props: { item: /*item*/ ctx[4], action: "delete" }
+			props: {
+				item: /*item*/ ctx[6],
+				doc: /*$doc*/ ctx[0],
+				type: "feature",
+				action: "favorite"
+			}
+		});
+
+	configureitembutton2 = new ConfigureItemButton({
+			props: { item: /*item*/ ctx[6], action: "delete" }
 		});
 
 	return {
@@ -28158,6 +28439,7 @@ function create_each_block$7(ctx) {
 			if (if_block) if_block.c();
 			t2 = space();
 			td1 = element("td");
+			div0 = element("div");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
@@ -28171,21 +28453,22 @@ function create_each_block$7(ctx) {
 			create_component(configureitembutton0.$$.fragment);
 			t6 = space();
 			td4 = element("td");
-			td4.innerHTML = `<i class="fa-solid fa-stars svelte-1213ocr"></i>`;
+			create_component(configureitembutton1.$$.fragment);
 			t7 = space();
 			td5 = element("td");
-			create_component(configureitembutton1.$$.fragment);
+			create_component(configureitembutton2.$$.fragment);
 			t8 = space();
-			div = element("div");
+			div1 = element("div");
 			t9 = space();
-			attr(td0, "class", "svelte-1213ocr");
-			attr(td1, "class", "actions svelte-1213ocr");
-			attr(td2, "class", "svelte-1213ocr");
-			attr(td3, "class", "config svelte-1213ocr");
-			attr(td4, "class", "config svelte-1213ocr");
-			attr(td5, "class", "config svelte-1213ocr");
-			attr(div, "class", "description svelte-1213ocr");
-			attr(tr, "class", "svelte-1213ocr");
+			attr(td0, "class", "svelte-1mjst87");
+			attr(div0, "class", "actions svelte-1mjst87");
+			attr(td1, "class", "actions svelte-1mjst87");
+			attr(td2, "class", "svelte-1mjst87");
+			attr(td3, "class", "config svelte-1mjst87");
+			attr(td4, "class", "config svelte-1mjst87");
+			attr(td5, "class", "config svelte-1mjst87");
+			attr(div1, "class", "description svelte-1mjst87");
+			attr(tr, "class", "svelte-1mjst87");
 		},
 		m(target, anchor) {
 			insert(target, tr, anchor);
@@ -28196,9 +28479,10 @@ function create_each_block$7(ctx) {
 			if (if_block) if_block.m(td0, null);
 			append(tr, t2);
 			append(tr, td1);
+			append(td1, div0);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(td1, null);
+				each_blocks[i].m(div0, null);
 			}
 
 			append(tr, t3);
@@ -28209,12 +28493,13 @@ function create_each_block$7(ctx) {
 			mount_component(configureitembutton0, td3, null);
 			append(tr, t6);
 			append(tr, td4);
+			mount_component(configureitembutton1, td4, null);
 			append(tr, t7);
 			append(tr, td5);
-			mount_component(configureitembutton1, td5, null);
+			mount_component(configureitembutton2, td5, null);
 			append(tr, t8);
-			append(tr, div);
-			div.innerHTML = raw_value;
+			append(tr, div1);
+			div1.innerHTML = raw_value;
 			append(tr, t9);
 			current = true;
 
@@ -28224,9 +28509,9 @@ function create_each_block$7(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[4].name + "")) set_data(t0, t0_value);
+			if ((!current || dirty & /*$doc*/ 1) && t0_value !== (t0_value = /*item*/ ctx[6].name + "")) set_data(t0, t0_value);
 
-			if (/*item*/ ctx[4].system.hasAttack || /*item*/ ctx[4].system.hasDamage) {
+			if (/*item*/ ctx[6].system.hasAttack || /*item*/ ctx[6].system.hasDamage) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 				} else {
@@ -28240,7 +28525,7 @@ function create_each_block$7(ctx) {
 			}
 
 			if (dirty & /*$doc*/ 1) {
-				each_value_1 = /*item*/ ctx[4].system.actionList;
+				each_value_1 = /*item*/ ctx[6].system.actionList;
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
@@ -28251,7 +28536,7 @@ function create_each_block$7(ctx) {
 					} else {
 						each_blocks[i] = create_each_block_1$4(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(td1, null);
+						each_blocks[i].m(div0, null);
 					}
 				}
 
@@ -28262,23 +28547,29 @@ function create_each_block$7(ctx) {
 				each_blocks.length = each_value_1.length;
 			}
 
-			if ((!current || dirty & /*$doc*/ 1) && t4_value !== (t4_value = /*item*/ ctx[4].system.level.current + "")) set_data(t4, t4_value);
+			if ((!current || dirty & /*$doc*/ 1) && t4_value !== (t4_value = /*item*/ ctx[6].system.level.current + "")) set_data(t4, t4_value);
 			const configureitembutton0_changes = {};
-			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[4];
+			if (dirty & /*$doc*/ 1) configureitembutton0_changes.item = /*item*/ ctx[6];
 			configureitembutton0.$set(configureitembutton0_changes);
 			const configureitembutton1_changes = {};
-			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[4];
+			if (dirty & /*$doc*/ 1) configureitembutton1_changes.item = /*item*/ ctx[6];
+			if (dirty & /*$doc*/ 1) configureitembutton1_changes.doc = /*$doc*/ ctx[0];
 			configureitembutton1.$set(configureitembutton1_changes);
-			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[4].system.description + "")) div.innerHTML = raw_value;		},
+			const configureitembutton2_changes = {};
+			if (dirty & /*$doc*/ 1) configureitembutton2_changes.item = /*item*/ ctx[6];
+			configureitembutton2.$set(configureitembutton2_changes);
+			if ((!current || dirty & /*$doc*/ 1) && raw_value !== (raw_value = /*item*/ ctx[6].system.description + "")) div1.innerHTML = raw_value;		},
 		i(local) {
 			if (current) return;
 			transition_in(configureitembutton0.$$.fragment, local);
 			transition_in(configureitembutton1.$$.fragment, local);
+			transition_in(configureitembutton2.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
 			transition_out(configureitembutton0.$$.fragment, local);
 			transition_out(configureitembutton1.$$.fragment, local);
+			transition_out(configureitembutton2.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
@@ -28287,6 +28578,7 @@ function create_each_block$7(ctx) {
 			destroy_each(each_blocks, detaching);
 			destroy_component(configureitembutton0);
 			destroy_component(configureitembutton1);
+			destroy_component(configureitembutton2);
 			mounted = false;
 			dispose();
 		}
@@ -28336,10 +28628,10 @@ function create_fragment$9(ctx) {
 			th0.textContent = "Name";
 			t1 = space();
 			th1 = element("th");
-			th1.textContent = "Level";
+			th1.textContent = "Actions";
 			t3 = space();
 			th2 = element("th");
-			th2.textContent = "Actions";
+			th2.textContent = "Level";
 			t5 = space();
 			th3 = element("th");
 			t6 = text("Config ");
@@ -28471,7 +28763,12 @@ function instance$9($$self, $$props, $$invalidate) {
 		itemRoll(item);
 	};
 
-	return [$doc, doc, click_handler, click_handler_1];
+	const click_handler_2 = action => {
+		action.use();
+	};
+
+	const click_handler_3 = action => action.sheet.render(true, { focus: true });
+	return [$doc, doc, click_handler, click_handler_1, click_handler_2, click_handler_3];
 }
 
 class FeaturesTab extends SvelteComponent {
@@ -33170,7 +33467,6 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 
   async _onDrop(event) {
-    console.log("on drop event");
     if (this.reactive.document.documentName !== "Actor") return;
     const data = TextEditor.getDragEventData(event);
     const actor = this.reactive.document;
@@ -33343,7 +33639,6 @@ class SvelteDocumentSheet extends SvelteApplication {
             feat_list = feat_list.flat();
 
             for (let feat of feat_list) {
-              console.log("item added from folder ", feat);
               const item = feat.toObject();
               item.system = foundry.utils.deepClone(feat.system);
               folder_list.push(item);
@@ -33434,12 +33729,8 @@ class SvelteDocumentSheet extends SvelteApplication {
         name_array.push(i.name);
       }
 
-      console.log(featList.temp_feat_list, "featList.temp_feat_list");
       featList.temp_feat_list.forEach((v, k) => {
-        console.log(k, v);
-
         if (name_array.includes(v.name)) {
-          console.log("this item is already learned", featList.temp_feat_list[k]);
           featList.temp_feat_list[k] = foundry.utils.deepClone(featList.learnedFeatures.filter(item => item.name === v.name)[0]);
         }
       });
@@ -33524,14 +33815,11 @@ async function _handleDocUpdate2(doc, options) {
     action,
     data,
     documentType
-  } = options;
-  console.log(structuredClone(doc));
-  console.log(action); // I need to add a 'subscribe' action to TJSDocument so must check void.
+  } = options; // I need to add a 'subscribe' action to TJSDocument so must check void.
 
   if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
     var _doc$name;
 
-    console.log("doc name: ", doc === null || doc === void 0 ? void 0 : doc.name);
     this.reactive.title = doc !== null && doc !== void 0 && doc.isToken ? `[Token] ${doc === null || doc === void 0 ? void 0 : doc.name}` : (_doc$name = doc === null || doc === void 0 ? void 0 : doc.name) !== null && _doc$name !== void 0 ? _doc$name : "No Document Assigned";
   }
 }
@@ -33550,7 +33838,8 @@ Hooks.once("init", function () {
   game.ard20 = {
     documents: {
       ARd20Actor,
-      ARd20Item
+      ARd20Item,
+      ARd20Action
     },
     rollItemMacro,
     config: ARd20,

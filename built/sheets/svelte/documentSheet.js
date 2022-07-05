@@ -129,7 +129,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
     }
   }
   async _onDrop(event) {
-    console.log("on drop event");
     if (this.reactive.document.documentName !== "Actor") return;
     const data = TextEditor.getDragEventData(event);
     const actor = this.reactive.document;
@@ -279,7 +278,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
             feat_list.push(game.folders.filter((folder) => folder.data.name === val.name && folder.data.type === "Item")[0].contents);
             feat_list = feat_list.flat();
             for (let feat of feat_list) {
-              console.log("item added from folder ", feat);
               const item = feat.toObject();
               item.system = foundry.utils.deepClone(feat.system);
               folder_list.push(item);
@@ -352,11 +350,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
       for (let i of featList.learnedFeatures) {
         name_array.push(i.name);
       }
-      console.log(featList.temp_feat_list, "featList.temp_feat_list");
       featList.temp_feat_list.forEach((v, k) => {
-        console.log(k, v);
         if (name_array.includes(v.name)) {
-          console.log("this item is already learned", featList.temp_feat_list[k]);
           featList.temp_feat_list[k] = foundry.utils.deepClone(featList.learnedFeatures.filter((item) => item.name === v.name)[0]);
         }
       });
@@ -406,12 +401,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
    */
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
-    console.log(structuredClone(doc));
-    console.log(action);
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
-      console.log("doc name: ", doc?.name);
       this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
     }
   }

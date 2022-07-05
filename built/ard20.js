@@ -13,6 +13,7 @@ import { registerSystemSettings } from "./settings/settings.js";
 import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
 import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
+import ARd20Action from "../built/documents/action.js";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -25,6 +26,7 @@ Hooks.once("init", function () {
     documents: {
       ARd20Actor,
       ARd20Item,
+      ARd20Action,
     },
     rollItemMacro,
     config: ARd20,

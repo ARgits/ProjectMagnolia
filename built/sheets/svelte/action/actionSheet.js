@@ -1,17 +1,17 @@
 import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
-import {ActionShell} from "../action/ActionShell.svelte"
-export class ActionSheet extends TJSDialog {
-  constructor(document) {
+import ActionShell from "./ActionShell.svelte";
+export default class ActionSheet extends TJSDialog {
+  constructor(action) {
     super(
       {
-        title: "Character advancement",
-        id: "cha-adv",
-        modal: true,
-        draggable: false,
+        title: "Action Config",
+        id: "act-config",
+        modal: false,
+        draggable: true,
         content: {
           class: ActionShell,
           props: {
-            document,
+            action,
           },
         },
       },

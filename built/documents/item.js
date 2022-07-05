@@ -1,6 +1,6 @@
 import { d20Roll, damageRoll, simplifyRollFormula } from "../dice/dice.js";
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
-import { Action } from "./action.js";
+import ARd20Action from "./action.js";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -10,9 +10,14 @@ export class ARd20Item extends Item {
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
-    // As with the actor class, items are documents that can have their data
-    // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+  }
+  prepareBaseData() {
+    super.prepareBaseData();
+    const itemData = this.system;
+    itemData.actionList = itemData.actionList.map((action) => {
+      return new ARd20Action(action, { keepId: true, parent: this });
+    });
   }
   prepareDerivedData() {
     super.prepareDerivedData();
@@ -812,13 +817,12 @@ export class ARd20Item extends Item {
   }
   /**
    * Creates new Action for Item
-   * @param {object} action - action data, that can be passed
+   * @param {object} action - Action data
    */
-  addAction(object){
-    let actionList = [...this.system.actionList]
-    let action = new Action()
-    console.log('new Action', action)
-    actionList.push(action)
-    this.update({actionList})
+  addAction(object) {
+    let actionList = [...this.system.actionList];
+    actionList.push(new ARd20Action(object, { parent: this }));
+    console.log(actionList[actionList.length - 1].id);
+    this.update({ "system.actionList": actionList });
   }
 }
