@@ -13,7 +13,12 @@ export default class ARd20Action {
     this.setTargetLimit(object?.type);
     this.range = object?.range ?? { max: 5, min: 0 };
     this.sheet = new ActionSheet(this);
-    this.parent = options?.parent ?? null;
+    this.setParent(options?.parent);
+    /*this.actionList = object?.actionList
+      ? object.actionList.map((action) => {
+          return new ARd20Action(action);
+        })
+      : [];*/
   }
   /**
    * Icon and text hint for action
@@ -41,6 +46,14 @@ export default class ARd20Action {
         break;
     }
     this.targetLimit = { number, type };
+  }
+  setParent(object = {}) {
+    const { actor, item, action } = object;
+    this.parent = {
+      actor: actor ?? null,
+      item: item ?? null,
+      action: action ?? null,
+    };
   }
   /**
    * Use action
@@ -78,6 +91,6 @@ export default class ARd20Action {
     let formula = this.formula;
     let roll = new Roll(this.formula);
     await roll.evaluate();
-    await roll.toMessage({ speaker: { alias: `${this.parent.parent.name}: ${this.parent.name}(${this.name})` } });
+    await roll.toMessage({ speaker: { alias: `${this.parent.parent.name}: ${this.parent.name} (${this.name})` } });
   }
 }

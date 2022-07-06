@@ -16,7 +16,7 @@ export class ARd20Item extends Item {
     super.prepareBaseData();
     const itemData = this.system;
     itemData.actionList = itemData.actionList.map((action) => {
-      return new ARd20Action(action, { keepId: true, parent: this });
+      return new ARd20Action(action, { keepId: true, parent: { actor: this.actor, item: this } });
     });
   }
   prepareDerivedData() {
@@ -819,10 +819,9 @@ export class ARd20Item extends Item {
    * Creates new Action for Item
    * @param {object} action - Action data
    */
-  addAction(object) {
-    let actionList = [...this.system.actionList];
-    actionList.push(new ARd20Action(object, { parent: this }));
+  async addAction(object={}) {
+    const actionList = [...this.system.actionList, new ARd20Action(object, { parent: { actor: this.actor, item: this } })];
     console.log(actionList[actionList.length - 1].id);
-    this.update({ "system.actionList": actionList });
+    await this.update({ "system.actionList": actionList });
   }
 }

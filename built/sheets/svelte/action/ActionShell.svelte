@@ -5,8 +5,8 @@
   export let action;
   const { application } = getContext("external");
   async function submit() {
-    const parent = action.parent;
-    const actionList = [...parent.system.actionList];
+    const item = action.parent.item;
+    const actionList = [...item.system.actionList];
     await parent.update({ "system.actionList": actionList });
     application.close();
   }

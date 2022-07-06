@@ -22204,8 +22204,8 @@ function instance$l($$self, $$props, $$invalidate) {
 	const { application } = getContext("external");
 
 	async function submit() {
-		const parent = action.parent;
-		const actionList = [...parent.system.actionList];
+		const item = action.parent.item;
+		const actionList = [...item.system.actionList];
 		await parent.update({ "system.actionList": actionList });
 		application.close();
 	}
@@ -22270,7 +22270,7 @@ class ActionSheet extends TJSDialog {
 
 class ARd20Action {
   constructor(object = {}, options = {}) {
-    var _object$name, _object$type, _object$formula, _object$bonus, _object$dc, _object$id, _object$isRoll, _object$range, _options$parent;
+    var _object$name, _object$type, _object$formula, _object$bonus, _object$dc, _object$id, _object$isRoll, _object$range;
 
     this.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "New Action";
     this.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : "Attack";
@@ -22288,7 +22288,12 @@ class ARd20Action {
       min: 0
     };
     this.sheet = new ActionSheet(this);
-    this.parent = (_options$parent = options === null || options === void 0 ? void 0 : options.parent) !== null && _options$parent !== void 0 ? _options$parent : null;
+    this.setParent(options === null || options === void 0 ? void 0 : options.parent);
+    /*this.actionList = object?.actionList
+      ? object.actionList.map((action) => {
+          return new ARd20Action(action);
+        })
+      : [];*/
   }
   /**
    * Icon and text hint for action
@@ -22335,6 +22340,19 @@ class ARd20Action {
       type
     };
   }
+
+  setParent(object = {}) {
+    const {
+      actor,
+      item,
+      action
+    } = object;
+    this.parent = {
+      actor: actor !== null && actor !== void 0 ? actor : null,
+      item: item !== null && item !== void 0 ? item : null,
+      action: action !== null && action !== void 0 ? action : null
+    };
+  }
   /**
    * Use action
    * Workflow: TODO: maybe add way to configure steps
@@ -22378,7 +22396,7 @@ class ARd20Action {
     await roll.evaluate();
     await roll.toMessage({
       speaker: {
-        alias: `${this.parent.parent.name}: ${this.parent.name}(${this.name})`
+        alias: `${this.parent.parent.name}: ${this.parent.name} (${this.name})`
       }
     });
   }
@@ -22404,7 +22422,10 @@ class ARd20Item extends Item {
     itemData.actionList = itemData.actionList.map(action => {
       return new ARd20Action(action, {
         keepId: true,
-        parent: this
+        parent: {
+          actor: this.actor,
+          item: this
+        }
       });
     });
   }
@@ -23396,13 +23417,15 @@ class ARd20Item extends Item {
    */
 
 
-  addAction(object) {
-    let actionList = [...this.system.actionList];
-    actionList.push(new ARd20Action(object, {
-      parent: this
-    }));
+  async addAction(object = {}) {
+    const actionList = [...this.system.actionList, new ARd20Action(object, {
+      parent: {
+        actor: this.actor,
+        item: this
+      }
+    })];
     console.log(actionList[actionList.length - 1].id);
-    this.update({
+    await this.update({
       "system.actionList": actionList
     });
   }
