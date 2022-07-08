@@ -3,6 +3,7 @@ import ActionSheet from "../sheets/svelte/action/actionSheet.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
 export default class ARd20Action {
   constructor(object = {}, options = {}) {
+    console.log("creating action");
     this.name = object.name ?? "New Action";
     this.type = object.type ?? "Attack";
     this.formula = object?.formula ?? "2d10";
@@ -12,13 +13,14 @@ export default class ARd20Action {
     this.isRoll = object?.isRoll ?? true;
     this.setTargetLimit(object?.type);
     this.range = object?.range ?? { max: 5, min: 0 };
-    this.sheet = new ActionSheet(this);
     this.setParent(options?.parent);
+    this.sheet = new ActionSheet(this)
     /*this.actionList = object?.actionList
       ? object.actionList.map((action) => {
           return new ARd20Action(action);
         })
       : [];*/
+    console.log("Action created");
   }
   /**
    * Icon and text hint for action
@@ -91,6 +93,6 @@ export default class ARd20Action {
     let formula = this.formula;
     let roll = new Roll(this.formula);
     await roll.evaluate();
-    await roll.toMessage({ speaker: { alias: `${this.parent.parent.name}: ${this.parent.name} (${this.name})` } });
+    await roll.toMessage({ speaker: { alias: `${this.parent.actor.name}: ${this.parent.item.name} (${this.name})` } });
   }
 }

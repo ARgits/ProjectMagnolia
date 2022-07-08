@@ -14,10 +14,19 @@ export class ARd20Item extends Item {
   }
   prepareBaseData() {
     super.prepareBaseData();
+    console.log("mapping actions to our class");
     const itemData = this.system;
-    itemData.actionList = itemData.actionList.map((action) => {
+    console.log('action list before change', itemData.actionList)
+    const actionList = new Array(itemData.actionList.length);
+    for (let i = 0; i < actionList.length; i++) {
+      console.log(i,'ый элемент')
+      actionList[i] = Object.assign(new ARd20Action(), itemData.actionList[i], { keepId: true, parent: { actor: this.actor, item: this } });
+    }
+    itemData.actionList = actionList;
+    /*itemData.actionList = itemData.actionList.map((action, key) => {
+      console.log(`#${key} mapping`);
       return new ARd20Action(action, { keepId: true, parent: { actor: this.actor, item: this } });
-    });
+    });*/
   }
   prepareDerivedData() {
     super.prepareDerivedData();
@@ -819,9 +828,12 @@ export class ARd20Item extends Item {
    * Creates new Action for Item
    * @param {object} action - Action data
    */
-  async addAction(object={}) {
-    const actionList = [...this.system.actionList, new ARd20Action(object, { parent: { actor: this.actor, item: this } })];
-    console.log(actionList[actionList.length - 1].id);
+  async addAction(object = {}) {
+    const actionList = [...this.system.actionList, object];
     await this.update({ "system.actionList": actionList });
+  }
+  _preUpdate(changed, options, user){
+    console.log('Item _preUpdate, changed, options, user: ',changed, options, user)
+    super._preUpdate()
   }
 }

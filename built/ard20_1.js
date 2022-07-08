@@ -22206,7 +22206,7 @@ function instance$l($$self, $$props, $$invalidate) {
 	async function submit() {
 		const item = action.parent.item;
 		const actionList = [...item.system.actionList];
-		await parent.update({ "system.actionList": actionList });
+		await item.update({ "system.actionList": actionList });
 		application.close();
 	}
 
@@ -22272,6 +22272,7 @@ class ARd20Action {
   constructor(object = {}, options = {}) {
     var _object$name, _object$type, _object$formula, _object$bonus, _object$dc, _object$id, _object$isRoll, _object$range;
 
+    console.log("creating action");
     this.name = (_object$name = object.name) !== null && _object$name !== void 0 ? _object$name : "New Action";
     this.type = (_object$type = object.type) !== null && _object$type !== void 0 ? _object$type : "Attack";
     this.formula = (_object$formula = object === null || object === void 0 ? void 0 : object.formula) !== null && _object$formula !== void 0 ? _object$formula : "2d10";
@@ -22287,13 +22288,15 @@ class ARd20Action {
       max: 5,
       min: 0
     };
-    this.sheet = new ActionSheet(this);
     this.setParent(options === null || options === void 0 ? void 0 : options.parent);
+    this.sheet = new ActionSheet(this);
     /*this.actionList = object?.actionList
       ? object.actionList.map((action) => {
           return new ARd20Action(action);
         })
       : [];*/
+
+    console.log("Action created");
   }
   /**
    * Icon and text hint for action
@@ -22396,7 +22399,7 @@ class ARd20Action {
     await roll.evaluate();
     await roll.toMessage({
       speaker: {
-        alias: `${this.parent.parent.name}: ${this.parent.name} (${this.name})`
+        alias: `${this.parent.actor.name}: ${this.parent.item.name} (${this.name})`
       }
     });
   }
@@ -22418,16 +22421,27 @@ class ARd20Item extends Item {
 
   prepareBaseData() {
     super.prepareBaseData();
+    console.log("mapping actions to our class");
     const itemData = this.system;
-    itemData.actionList = itemData.actionList.map(action => {
-      return new ARd20Action(action, {
+    console.log('action list before change', itemData.actionList);
+    const actionList = new Array(itemData.actionList.length);
+
+    for (let i = 0; i < actionList.length; i++) {
+      console.log(i, 'ый элемент');
+      actionList[i] = Object.assign(new ARd20Action(), itemData.actionList[i], {
         keepId: true,
         parent: {
           actor: this.actor,
           item: this
         }
       });
-    });
+    }
+
+    itemData.actionList = actionList;
+    /*itemData.actionList = itemData.actionList.map((action, key) => {
+      console.log(`#${key} mapping`);
+      return new ARd20Action(action, { keepId: true, parent: { actor: this.actor, item: this } });
+    });*/
   }
 
   prepareDerivedData() {
@@ -23418,16 +23432,16 @@ class ARd20Item extends Item {
 
 
   async addAction(object = {}) {
-    const actionList = [...this.system.actionList, new ARd20Action(object, {
-      parent: {
-        actor: this.actor,
-        item: this
-      }
-    })];
-    console.log(actionList[actionList.length - 1].id);
+    const actionList = [...this.system.actionList, object];
     await this.update({
       "system.actionList": actionList
     });
+  }
+
+  _preUpdate(changed, options, user) {
+    console.log('Item _preUpdate, changed, options, user: ', changed, options, user);
+
+    super._preUpdate();
   }
 
 }

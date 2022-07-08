@@ -7,7 +7,7 @@
   async function submit() {
     const item = action.parent.item;
     const actionList = [...item.system.actionList];
-    await parent.update({ "system.actionList": actionList });
+    await item.update({ "system.actionList": actionList });
     application.close();
   }
 </script>
