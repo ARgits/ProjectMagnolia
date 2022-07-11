@@ -2145,6 +2145,8 @@ function transition_out(block, local, detach, callback) {
       }
     });
     block.o(local);
+  } else if (callback) {
+    callback();
   }
 }
 
@@ -2576,33 +2578,7 @@ class SvelteComponent {
 
 }
 
-/**
- * Provides a method to determine if the passed in Svelte component has a getter accessor.
- *
- * @param {*}        object - An object.
- *
- * @param {string}   accessor - Accessor to test.
- *
- * @returns {boolean} Whether the component has the getter for accessor.
- */
-
-
-function hasGetter(object, accessor) {
-  if (object === null || object === void 0) {
-    return false;
-  } // Walk parent prototype chain. Check for descriptor at each prototype level.
-
-
-  for (let o = Object.getPrototypeOf(object); o; o = Object.getPrototypeOf(o)) {
-    const descriptor = Object.getOwnPropertyDescriptor(o, accessor);
-
-    if (descriptor !== void 0 && descriptor.get !== void 0) {
-      return true;
-    }
-  }
-
-  return false;
-}
+const s_UUIDV4_REGEX = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
 /**
  * Generates a UUID v4 compliant ID. Please use a complete UUID generation package for guaranteed compliance.
  *
@@ -2615,12 +2591,28 @@ function hasGetter(object, accessor) {
  * @returns {string} UUIDv4
  */
 
-
 function uuidv4() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ (globalThis.crypto || globalThis.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
 }
+/**
+ * Validates that the given string is formatted as a UUIDv4 string.
+ *
+ * @param {string}   uuid - UUID string to test.
+ *
+ * @returns {boolean} Is UUIDv4 string.
+ */
 
-const s_REGEX$1 = /(\d+)\s*px/;
+
+uuidv4.isValid = uuid => s_UUIDV4_REGEX.test(uuid);
+/**
+ * @typedef {Object} StackingContext
+ *
+ * @property {Element} node          A DOM Element
+ * @property {string}  reason        Reason for why a stacking context was created
+ */
+
+
+const s_REGEX = /(\d+)\s*px/;
 /**
  * Parses a pixel string / computed styles. Ex. `100px` returns `100`.
  *
@@ -2629,12 +2621,12 @@ const s_REGEX$1 = /(\d+)\s*px/;
  * @returns {number|undefined} The integer component of a pixel string.
  */
 
-function styleParsePixels$1(value) {
+function styleParsePixels(value) {
   if (typeof value !== 'string') {
     return void 0;
   }
 
-  const isPixels = s_REGEX$1.test(value);
+  const isPixels = s_REGEX.test(value);
   const number = parseInt(value);
   return isPixels && Number.isFinite(number) ? number : void 0;
 }
@@ -2646,8 +2638,8 @@ function styleParsePixels$1(value) {
  */
 
 
-const applicationShellContract$1 = ['elementRoot'];
-Object.freeze(applicationShellContract$1);
+const applicationShellContract = ['elementRoot'];
+Object.freeze(applicationShellContract);
 /**
  * Provides a method to determine if the passed in object is ApplicationShell or TJSApplicationShell.
  *
@@ -2665,7 +2657,7 @@ function isApplicationShell(component) {
   const prototype = Object.getPrototypeOf(component); // Verify the application shell contract. If the accessors (getters / setters) are defined for
   // `applicationShellContract`.
 
-  for (const accessor of applicationShellContract$1) {
+  for (const accessor of applicationShellContract) {
     const descriptor = Object.getOwnPropertyDescriptor(prototype, accessor);
 
     if (descriptor === void 0 || descriptor.get === void 0 || descriptor.set === void 0) {
@@ -2880,6 +2872,33 @@ function s_PROCESS_PROPS(props, thisArg, config) {
   }
 
   return {};
+}
+/**
+ * Provides a method to determine if the passed in Svelte component has a getter accessor.
+ *
+ * @param {*}        object - An object.
+ *
+ * @param {string}   accessor - Accessor to test.
+ *
+ * @returns {boolean} Whether the component has the getter for accessor.
+ */
+
+
+function hasGetter(object, accessor) {
+  if (object === null || object === void 0) {
+    return false;
+  } // Walk parent prototype chain. Check for descriptor at each prototype level.
+
+
+  for (let o = Object.getPrototypeOf(object); o; o = Object.getPrototypeOf(o)) {
+    const descriptor = Object.getOwnPropertyDescriptor(o, accessor);
+
+    if (descriptor !== void 0 && descriptor.get !== void 0) {
+      return true;
+    }
+  }
+
+  return false;
 }
 /**
  * Provides common object manipulation utilities including depth traversal, obtaining accessors, safely setting values /
@@ -3282,6 +3301,31 @@ function derived(stores, fn, initial_value) {
 }
 
 /**
+ * Provides a basic test for a given variable to test if it has the shape of a writable store by having a `subscribe`
+ * function and an `update` function.
+ *
+ * Note: functions are also objects, so test that the variable might be a function w/ a `subscribe` function.
+ *
+ * @param {*}  store - variable to test that might be a store.
+ *
+ * @returns {boolean} Whether the variable tested has the shape of a store.
+ */
+
+
+function isUpdatableStore(store) {
+  if (store === null || store === void 0) {
+    return false;
+  }
+
+  switch (typeof store) {
+    case 'function':
+    case 'object':
+      return typeof store.subscribe === 'function' && typeof store.update === 'function';
+  }
+
+  return false;
+}
+/**
  * Subscribes to the given store with the update function provided and ignores the first automatic
  * update. All future updates are dispatched to the update function.
  *
@@ -3304,34 +3348,11 @@ function subscribeIgnoreFirst(store, update) {
     }
   });
 }
-/**
- * @external Store
- * @see [Svelte stores](https://svelte.dev/docs#Store_contract)
- */
-
-/**
- * Create a store similar to [Svelte's `derived`](https://svelte.dev/docs#derived), but which
- * has its own `set` and `update` methods and can send values back to the origin stores.
- * [Read more...](https://github.com/PixievoltNo1/svelte-writable-derived#default-export-writablederived)
- * 
- * @param {Store|Store[]} origins One or more stores to derive from. Same as
- * [`derived`](https://svelte.dev/docs#derived)'s 1st parameter.
- * @param {!Function} derive The callback to determine the derived value. Same as
- * [`derived`](https://svelte.dev/docs#derived)'s 2nd parameter.
- * @param {!Function|{withOld: !Function}} reflect Called when the
- * derived store gets a new value via its `set` or `update` methods, and determines new values for
- * the origin stores. [Read more...](https://github.com/PixievoltNo1/svelte-writable-derived#new-parameter-reflect)
- * @param [initial] The new store's initial value. Same as
- * [`derived`](https://svelte.dev/docs#derived)'s 3rd parameter.
- * 
- * @returns {Store} A writable store.
- */
-
 
 function writableDerived(origins, derive, reflect, initial) {
   var childDerivedSetter,
       originValues,
-      allowDerive = true;
+      blockNextDerive = false;
   var reflectOldValues = ("withOld" in reflect);
 
   var wrappedDerive = (got, set) => {
@@ -3341,7 +3362,7 @@ function writableDerived(origins, derive, reflect, initial) {
       originValues = got;
     }
 
-    if (allowDerive) {
+    if (!blockNextDerive) {
       let returned = derive(got, set);
 
       if (derive.length < 2) {
@@ -3350,23 +3371,25 @@ function writableDerived(origins, derive, reflect, initial) {
         return returned;
       }
     }
+
+    blockNextDerive = false;
   };
 
   var childDerived = derived(origins, wrappedDerive, initial);
   var singleOrigin = !Array.isArray(origins);
 
   var sendUpstream = setWith => {
-    allowDerive = false;
-
     if (singleOrigin) {
+      blockNextDerive = true;
       origins.set(setWith);
     } else {
       setWith.forEach((value, i) => {
+        blockNextDerive = true;
         origins[i].set(value);
       });
     }
 
-    allowDerive = true;
+    blockNextDerive = false;
   };
 
   if (reflectOldValues) {
@@ -3537,8 +3560,7 @@ class TJSDocument {
     _classPrivateFieldInitSpec(this, _options$1, {
       writable: true,
       value: {
-        delete: void 0,
-        notifyOnDelete: false
+        delete: void 0
       }
     });
 
@@ -3570,9 +3592,9 @@ class TJSDocument {
 
 
   get updateOptions() {
-    var _classPrivateFieldGet3;
+    var _classPrivateFieldGet2;
 
-    return (_classPrivateFieldGet3 = _classPrivateFieldGet(this, _updateOptions)) !== null && _classPrivateFieldGet3 !== void 0 ? _classPrivateFieldGet3 : {};
+    return (_classPrivateFieldGet2 = _classPrivateFieldGet(this, _updateOptions)) !== null && _classPrivateFieldGet2 !== void 0 ? _classPrivateFieldGet2 : {};
   }
   /**
    * Returns the UUID assigned to this store.
@@ -3590,21 +3612,27 @@ class TJSDocument {
    * @returns {Promise<void>}
    */
 
-  /*async #deleted()
-  {
-     if (this.#document instanceof foundry.abstract.Document)
-     {
-        delete this.#document.apps[this.#uuidv4];
-        this.#document = void 0;
-     }
-      this.#updateOptions = void 0;
-      if (typeof this.#options.delete === 'function') { await this.#options.delete(); }
-      if (this.#options.notifyOnDelete) { this.#notify(); }
+
+  /**
+   * Completely removes all internal subscribers, any optional delete callback, and unregisters from the
+   * ClientDocumentMixin `apps` tracking object.
+   */
+  destroy() {
+    const doc = _classPrivateFieldGet(this, _document);
+
+    if (doc instanceof foundry.abstract.Document) {
+      doc === null || doc === void 0 ? true : delete doc.apps[_classPrivateFieldGet(this, _uuidv)];
+
+      _classPrivateFieldSet(this, _document, void 0);
+    }
+
+    _classPrivateFieldGet(this, _options$1).delete = void 0;
+    _classPrivateFieldGet(this, _subscriptions2).length = 0;
   }
-     /**
-   * Handles cleanup when the document is deleted. Invoking any optional delete function set in the constructor.
+  /**
+   * @param {boolean}  [force] - unused - signature from Foundry render function.
    *
-   * @returns {Promise<void>}
+   * @param {object}   [options] - Options from render call; will have document update context.
    */
 
 
@@ -3698,7 +3726,7 @@ class TJSDocument {
 
 
   setOptions(options) {
-    if (!isPlainObject(options)) {
+    if (!isObject(options)) {
       throw new TypeError(`TJSDocument error: 'options' is not a plain object.`);
     }
 
@@ -3706,16 +3734,8 @@ class TJSDocument {
       throw new TypeError(`TJSDocument error: 'delete' attribute in options is not a function.`);
     }
 
-    if (options.notifyOnDelete !== void 0 && typeof options.notifyOnDelete !== 'boolean') {
-      throw new TypeError(`TJSDocument error: 'notifyOnDelete' attribute in options is not a boolean.`);
-    }
-
     if (options.delete === void 0 || typeof options.delete === 'function') {
       _classPrivateFieldGet(this, _options$1).delete = options.delete;
-    }
-
-    if (typeof options.notifyOnDelete === 'boolean') {
-      _classPrivateFieldGet(this, _options$1).notifyOnDelete = options.notifyOnDelete;
     }
   }
   /**
@@ -3729,8 +3749,10 @@ class TJSDocument {
     _classPrivateFieldGet(this, _subscriptions2).push(handler); // Add handler to the array of subscribers.
 
 
-    const updateOptions = this.updateOptions;
-    updateOptions.action = 'subscribe';
+    const updateOptions = {
+      action: 'subscribe',
+      data: void 0
+    };
     handler(_classPrivateFieldGet(this, _document), updateOptions); // Call handler with current value and update options.
     // Return unsubscribe function.
 
@@ -3748,8 +3770,6 @@ class TJSDocument {
  * @typedef {object} TJSDocumentOptions
  *
  * @property {Function} [delete] - Optional delete function to invoke when document is deleted.
- *
- * @property {boolean} [notifyOnDelete] - When true a subscribers are notified of the deletion of the document.
  */
 
 /**
@@ -3768,18 +3788,18 @@ async function _deleted2() {
 
 
   if (doc instanceof foundry.abstract.Document && !(doc !== null && doc !== void 0 && (_doc$collection = doc.collection) !== null && _doc$collection !== void 0 && _doc$collection.has(doc.id))) {
-    delete doc.apps[_classPrivateFieldGet(this, _uuidv)];
+    doc === null || doc === void 0 ? true : delete doc.apps[_classPrivateFieldGet(this, _uuidv)];
 
     _classPrivateFieldSet(this, _document, void 0);
-
-    if (typeof _classPrivateFieldGet(this, _options$1).delete === 'function') {
-      await _classPrivateFieldGet(this, _options$1).delete();
-    }
 
     _classPrivateMethodGet(this, _notify3, _notify4).call(this, false, {
       action: 'delete',
       data: void 0
     });
+
+    if (typeof _classPrivateFieldGet(this, _options$1).delete === 'function') {
+      await _classPrivateFieldGet(this, _options$1).delete();
+    }
 
     _classPrivateFieldSet(this, _updateOptions, void 0);
   }
@@ -3850,8 +3870,8 @@ function degToRad(deg) {
 // Configuration Constants
 
 
-var EPSILON$1 = 0.000001;
-var ARRAY_TYPE$1 = typeof Float32Array !== 'undefined' ? Float32Array : Array;
+var EPSILON = 0.000001;
+var ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array;
 var RANDOM = Math.random;
 
 if (!Math.hypot) Math.hypot = function () {
@@ -3875,10 +3895,10 @@ if (!Math.hypot) Math.hypot = function () {
  * @returns {mat3} a new 3x3 matrix
  */
 
-function create$6$1() {
-  var out = new ARRAY_TYPE$1(9);
+function create$6() {
+  var out = new ARRAY_TYPE(9);
 
-  if (ARRAY_TYPE$1 != Float32Array) {
+  if (ARRAY_TYPE != Float32Array) {
     out[1] = 0;
     out[2] = 0;
     out[3] = 0;
@@ -3904,9 +3924,9 @@ function create$6$1() {
  */
 
 function create$5() {
-  var out = new ARRAY_TYPE$1(16);
+  var out = new ARRAY_TYPE(16);
 
-  if (ARRAY_TYPE$1 != Float32Array) {
+  if (ARRAY_TYPE != Float32Array) {
     out[1] = 0;
     out[2] = 0;
     out[3] = 0;
@@ -3936,7 +3956,7 @@ function create$5() {
 
 
 function clone$5(a) {
-  var out = new ARRAY_TYPE$1(16);
+  var out = new ARRAY_TYPE(16);
   out[0] = a[0];
   out[1] = a[1];
   out[2] = a[2];
@@ -4007,7 +4027,7 @@ function copy$5(out, a) {
 
 
 function fromValues$5(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
-  var out = new ARRAY_TYPE$1(16);
+  var out = new ARRAY_TYPE(16);
   out[0] = m00;
   out[1] = m01;
   out[2] = m02;
@@ -4469,7 +4489,7 @@ function rotate$1(out, a, rad, axis) {
   var b10, b11, b12;
   var b20, b21, b22;
 
-  if (len < EPSILON$1) {
+  if (len < EPSILON) {
     return null;
   }
 
@@ -4746,7 +4766,7 @@ function fromRotation$1(out, rad, axis) {
   var len = Math.hypot(x, y, z);
   var s, c, t;
 
-  if (len < EPSILON$1) {
+  if (len < EPSILON) {
     return null;
   }
 
@@ -4944,7 +4964,7 @@ function fromRotationTranslation$1(out, q, v) {
 
 
 function fromQuat2(out, a) {
-  var translation = new ARRAY_TYPE$1(3);
+  var translation = new ARRAY_TYPE(3);
   var bx = -a[0],
       by = -a[1],
       bz = -a[2],
@@ -5024,7 +5044,7 @@ function getScaling(out, mat) {
 
 
 function getRotation(out, mat) {
-  var scaling = new ARRAY_TYPE$1(3);
+  var scaling = new ARRAY_TYPE(3);
   getScaling(scaling, mat);
   var is1 = 1 / scaling[0];
   var is2 = 1 / scaling[1];
@@ -5519,7 +5539,7 @@ function lookAt(out, eye, center, up) {
   var centery = center[1];
   var centerz = center[2];
 
-  if (Math.abs(eyex - centerx) < EPSILON$1 && Math.abs(eyey - centery) < EPSILON$1 && Math.abs(eyez - centerz) < EPSILON$1) {
+  if (Math.abs(eyex - centerx) < EPSILON && Math.abs(eyey - centery) < EPSILON && Math.abs(eyez - centerz) < EPSILON) {
     return identity$2(out);
   }
 
@@ -5833,7 +5853,7 @@ function equals$5(a, b) {
       b13 = b[13],
       b14 = b[14],
       b15 = b[15];
-  return Math.abs(a0 - b0) <= EPSILON$1 * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON$1 * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= EPSILON$1 * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= EPSILON$1 * Math.max(1.0, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= EPSILON$1 * Math.max(1.0, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= EPSILON$1 * Math.max(1.0, Math.abs(a5), Math.abs(b5)) && Math.abs(a6 - b6) <= EPSILON$1 * Math.max(1.0, Math.abs(a6), Math.abs(b6)) && Math.abs(a7 - b7) <= EPSILON$1 * Math.max(1.0, Math.abs(a7), Math.abs(b7)) && Math.abs(a8 - b8) <= EPSILON$1 * Math.max(1.0, Math.abs(a8), Math.abs(b8)) && Math.abs(a9 - b9) <= EPSILON$1 * Math.max(1.0, Math.abs(a9), Math.abs(b9)) && Math.abs(a10 - b10) <= EPSILON$1 * Math.max(1.0, Math.abs(a10), Math.abs(b10)) && Math.abs(a11 - b11) <= EPSILON$1 * Math.max(1.0, Math.abs(a11), Math.abs(b11)) && Math.abs(a12 - b12) <= EPSILON$1 * Math.max(1.0, Math.abs(a12), Math.abs(b12)) && Math.abs(a13 - b13) <= EPSILON$1 * Math.max(1.0, Math.abs(a13), Math.abs(b13)) && Math.abs(a14 - b14) <= EPSILON$1 * Math.max(1.0, Math.abs(a14), Math.abs(b14)) && Math.abs(a15 - b15) <= EPSILON$1 * Math.max(1.0, Math.abs(a15), Math.abs(b15));
+  return Math.abs(a0 - b0) <= EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)) && Math.abs(a6 - b6) <= EPSILON * Math.max(1.0, Math.abs(a6), Math.abs(b6)) && Math.abs(a7 - b7) <= EPSILON * Math.max(1.0, Math.abs(a7), Math.abs(b7)) && Math.abs(a8 - b8) <= EPSILON * Math.max(1.0, Math.abs(a8), Math.abs(b8)) && Math.abs(a9 - b9) <= EPSILON * Math.max(1.0, Math.abs(a9), Math.abs(b9)) && Math.abs(a10 - b10) <= EPSILON * Math.max(1.0, Math.abs(a10), Math.abs(b10)) && Math.abs(a11 - b11) <= EPSILON * Math.max(1.0, Math.abs(a11), Math.abs(b11)) && Math.abs(a12 - b12) <= EPSILON * Math.max(1.0, Math.abs(a12), Math.abs(b12)) && Math.abs(a13 - b13) <= EPSILON * Math.max(1.0, Math.abs(a13), Math.abs(b13)) && Math.abs(a14 - b14) <= EPSILON * Math.max(1.0, Math.abs(a14), Math.abs(b14)) && Math.abs(a15 - b15) <= EPSILON * Math.max(1.0, Math.abs(a15), Math.abs(b15));
 }
 /**
  * Alias for {@link mat4.multiply}
@@ -5913,10 +5933,10 @@ var mat4 = /*#__PURE__*/Object.freeze({
  * @returns {vec3} a new 3D vector
  */
 
-function create$4$1() {
-  var out = new ARRAY_TYPE$1(3);
+function create$4() {
+  var out = new ARRAY_TYPE(3);
 
-  if (ARRAY_TYPE$1 != Float32Array) {
+  if (ARRAY_TYPE != Float32Array) {
     out[0] = 0;
     out[1] = 0;
     out[2] = 0;
@@ -5933,7 +5953,7 @@ function create$4$1() {
 
 
 function clone$4(a) {
-  var out = new ARRAY_TYPE$1(3);
+  var out = new ARRAY_TYPE(3);
   out[0] = a[0];
   out[1] = a[1];
   out[2] = a[2];
@@ -5947,7 +5967,7 @@ function clone$4(a) {
  */
 
 
-function length$4$1(a) {
+function length$4(a) {
   var x = a[0];
   var y = a[1];
   var z = a[2];
@@ -5963,8 +5983,8 @@ function length$4$1(a) {
  */
 
 
-function fromValues$4$1(x, y, z) {
-  var out = new ARRAY_TYPE$1(3);
+function fromValues$4(x, y, z) {
+  var out = new ARRAY_TYPE(3);
   out[0] = x;
   out[1] = y;
   out[2] = z;
@@ -6259,7 +6279,7 @@ function inverse$2(out, a) {
  */
 
 
-function normalize$4$1(out, a) {
+function normalize$4(out, a) {
   var x = a[0];
   var y = a[1];
   var z = a[2];
@@ -6284,7 +6304,7 @@ function normalize$4$1(out, a) {
  */
 
 
-function dot$4$1(a, b) {
+function dot$4(a, b) {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 /**
@@ -6297,7 +6317,7 @@ function dot$4$1(a, b) {
  */
 
 
-function cross$2$1(out, a, b) {
+function cross$2(out, a, b) {
   var ax = a[0],
       ay = a[1],
       az = a[2];
@@ -6582,7 +6602,7 @@ function angle$1(a, b) {
       mag1 = Math.sqrt(ax * ax + ay * ay + az * az),
       mag2 = Math.sqrt(bx * bx + by * by + bz * bz),
       mag = mag1 * mag2,
-      cosine = mag && dot$4$1(a, b) / mag;
+      cosine = mag && dot$4(a, b) / mag;
   return Math.acos(Math.min(Math.max(cosine, -1), 1));
 }
 /**
@@ -6638,7 +6658,7 @@ function equals$4(a, b) {
   var b0 = b[0],
       b1 = b[1],
       b2 = b[2];
-  return Math.abs(a0 - b0) <= EPSILON$1 * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON$1 * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= EPSILON$1 * Math.max(1.0, Math.abs(a2), Math.abs(b2));
+  return Math.abs(a0 - b0) <= EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2));
 }
 /**
  * Alias for {@link vec3.subtract}
@@ -6676,7 +6696,7 @@ var sqrDist$2 = squaredDistance$2;
  * @function
  */
 
-var len$4$1 = length$4$1;
+var len$4 = length$4;
 /**
  * Alias for {@link vec3.squaredLength}
  * @function
@@ -6697,7 +6717,7 @@ var sqrLen$4 = squaredLength$4;
  */
 
 var forEach$2 = function () {
-  var vec = create$4$1();
+  var vec = create$4();
   return function (a, stride, offset, count, fn, arg) {
     var i, l;
 
@@ -6731,10 +6751,10 @@ var forEach$2 = function () {
 
 var vec3 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  create: create$4$1,
+  create: create$4,
   clone: clone$4,
-  length: length$4$1,
-  fromValues: fromValues$4$1,
+  length: length$4,
+  fromValues: fromValues$4,
   copy: copy$4,
   set: set$4,
   add: add$4,
@@ -6753,9 +6773,9 @@ var vec3 = /*#__PURE__*/Object.freeze({
   squaredLength: squaredLength$4,
   negate: negate$2,
   inverse: inverse$2,
-  normalize: normalize$4$1,
-  dot: dot$4$1,
-  cross: cross$2$1,
+  normalize: normalize$4,
+  dot: dot$4,
+  cross: cross$2,
   lerp: lerp$4,
   hermite: hermite,
   bezier: bezier,
@@ -6776,7 +6796,7 @@ var vec3 = /*#__PURE__*/Object.freeze({
   div: div$2,
   dist: dist$2,
   sqrDist: sqrDist$2,
-  len: len$4$1,
+  len: len$4,
   sqrLen: sqrLen$4,
   forEach: forEach$2
 });
@@ -6791,10 +6811,10 @@ var vec3 = /*#__PURE__*/Object.freeze({
  * @returns {vec4} a new 4D vector
  */
 
-function create$3$1() {
-  var out = new ARRAY_TYPE$1(4);
+function create$3() {
+  var out = new ARRAY_TYPE(4);
 
-  if (ARRAY_TYPE$1 != Float32Array) {
+  if (ARRAY_TYPE != Float32Array) {
     out[0] = 0;
     out[1] = 0;
     out[2] = 0;
@@ -6812,7 +6832,7 @@ function create$3$1() {
  */
 
 
-function normalize$3$1(out, a) {
+function normalize$3(out, a) {
   var x = a[0];
   var y = a[1];
   var z = a[2];
@@ -6843,7 +6863,7 @@ function normalize$3$1(out, a) {
  */
 
 (function () {
-  var vec = create$3$1();
+  var vec = create$3();
   return function (a, stride, offset, count, fn, arg) {
     var i, l;
 
@@ -6887,10 +6907,10 @@ function normalize$3$1(out, a) {
  * @returns {quat} a new quaternion
  */
 
-function create$2$1() {
-  var out = new ARRAY_TYPE$1(4);
+function create$2() {
+  var out = new ARRAY_TYPE(4);
 
-  if (ARRAY_TYPE$1 != Float32Array) {
+  if (ARRAY_TYPE != Float32Array) {
     out[0] = 0;
     out[1] = 0;
     out[2] = 0;
@@ -6910,7 +6930,7 @@ function create$2$1() {
  **/
 
 
-function setAxisAngle$1(out, axis, rad) {
+function setAxisAngle(out, axis, rad) {
   rad = rad * 0.5;
   var s = Math.sin(rad);
   out[0] = s * axis[0];
@@ -6930,7 +6950,7 @@ function setAxisAngle$1(out, axis, rad) {
  */
 
 
-function slerp$1(out, a, b, t) {
+function slerp(out, a, b, t) {
   // benchmarks:
   //    http://jsperf.com/quaternion-slerp-implementations
   var ax = a[0],
@@ -6954,7 +6974,7 @@ function slerp$1(out, a, b, t) {
   } // calculate coefficients
 
 
-  if (1.0 - cosom > EPSILON$1) {
+  if (1.0 - cosom > EPSILON) {
     // standard case (slerp)
     omega = Math.acos(cosom);
     sinom = Math.sin(omega);
@@ -6987,7 +7007,7 @@ function slerp$1(out, a, b, t) {
  */
 
 
-function fromMat3$1(out, m) {
+function fromMat3(out, m) {
   // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
   // article "Quaternion Calculus and Fast Animation".
   var fTrace = m[0] + m[4] + m[8];
@@ -7029,7 +7049,7 @@ function fromMat3$1(out, m) {
  * @function
  */
 
-var normalize$2$1 = normalize$3$1;
+var normalize$2 = normalize$3;
 /**
  * Sets a quaternion to represent the shortest rotation from one
  * vector to another.
@@ -7043,17 +7063,17 @@ var normalize$2$1 = normalize$3$1;
  */
 
 (function () {
-  var tmpvec3 = create$4$1();
-  var xUnitVec3 = fromValues$4$1(1, 0, 0);
-  var yUnitVec3 = fromValues$4$1(0, 1, 0);
+  var tmpvec3 = create$4();
+  var xUnitVec3 = fromValues$4(1, 0, 0);
+  var yUnitVec3 = fromValues$4(0, 1, 0);
   return function (out, a, b) {
-    var dot = dot$4$1(a, b);
+    var dot = dot$4(a, b);
 
     if (dot < -0.999999) {
-      cross$2$1(tmpvec3, xUnitVec3, a);
-      if (len$4$1(tmpvec3) < 0.000001) cross$2$1(tmpvec3, yUnitVec3, a);
-      normalize$4$1(tmpvec3, tmpvec3);
-      setAxisAngle$1(out, tmpvec3, Math.PI);
+      cross$2(tmpvec3, xUnitVec3, a);
+      if (len$4(tmpvec3) < 0.000001) cross$2(tmpvec3, yUnitVec3, a);
+      normalize$4(tmpvec3, tmpvec3);
+      setAxisAngle(out, tmpvec3, Math.PI);
       return out;
     } else if (dot > 0.999999) {
       out[0] = 0;
@@ -7062,12 +7082,12 @@ var normalize$2$1 = normalize$3$1;
       out[3] = 1;
       return out;
     } else {
-      cross$2$1(tmpvec3, a, b);
+      cross$2(tmpvec3, a, b);
       out[0] = tmpvec3[0];
       out[1] = tmpvec3[1];
       out[2] = tmpvec3[2];
       out[3] = 1 + dot;
-      return normalize$2$1(out, out);
+      return normalize$2(out, out);
     }
   };
 })();
@@ -7085,12 +7105,12 @@ var normalize$2$1 = normalize$3$1;
 
 
 (function () {
-  var temp1 = create$2$1();
-  var temp2 = create$2$1();
+  var temp1 = create$2();
+  var temp2 = create$2();
   return function (out, a, b, c, d, t) {
-    slerp$1(temp1, a, d, t);
-    slerp$1(temp2, b, c, t);
-    slerp$1(out, temp1, temp2, 2 * t * (1 - t));
+    slerp(temp1, a, d, t);
+    slerp(temp2, b, c, t);
+    slerp(out, temp1, temp2, 2 * t * (1 - t));
     return out;
   };
 })();
@@ -7107,7 +7127,7 @@ var normalize$2$1 = normalize$3$1;
 
 
 (function () {
-  var matr = create$6$1();
+  var matr = create$6();
   return function (out, view, right, up) {
     matr[0] = right[0];
     matr[3] = right[1];
@@ -7118,7 +7138,7 @@ var normalize$2$1 = normalize$3$1;
     matr[2] = -view[0];
     matr[5] = -view[1];
     matr[8] = -view[2];
-    return normalize$2$1(out, fromMat3$1(out, matr));
+    return normalize$2(out, fromMat3(out, matr));
   };
 })();
 /**
@@ -7132,10 +7152,10 @@ var normalize$2$1 = normalize$3$1;
  * @returns {vec2} a new 2D vector
  */
 
-function create$1() {
-  var out = new ARRAY_TYPE$1(2);
+function create() {
+  var out = new ARRAY_TYPE(2);
 
-  if (ARRAY_TYPE$1 != Float32Array) {
+  if (ARRAY_TYPE != Float32Array) {
     out[0] = 0;
     out[1] = 0;
   }
@@ -7156,7 +7176,7 @@ function create$1() {
  */
 
 (function () {
-  var vec = create$1();
+  var vec = create();
   return function (a, stride, offset, count, fn, arg) {
     var i, l;
 
@@ -10023,13 +10043,13 @@ class StyleCache {
 
     this.el = el;
     this.computed = globalThis.getComputedStyle(el);
-    this.marginLeft = (_styleParsePixels = styleParsePixels$1(el.style.marginLeft)) !== null && _styleParsePixels !== void 0 ? _styleParsePixels : styleParsePixels$1(this.computed.marginLeft);
-    this.marginTop = (_styleParsePixels2 = styleParsePixels$1(el.style.marginTop)) !== null && _styleParsePixels2 !== void 0 ? _styleParsePixels2 : styleParsePixels$1(this.computed.marginTop);
-    this.maxHeight = (_styleParsePixels3 = styleParsePixels$1(el.style.maxHeight)) !== null && _styleParsePixels3 !== void 0 ? _styleParsePixels3 : styleParsePixels$1(this.computed.maxHeight);
-    this.maxWidth = (_styleParsePixels4 = styleParsePixels$1(el.style.maxWidth)) !== null && _styleParsePixels4 !== void 0 ? _styleParsePixels4 : styleParsePixels$1(this.computed.maxWidth); // Note that the computed styles for below will always be 0px / 0 when no style is active.
+    this.marginLeft = (_styleParsePixels = styleParsePixels(el.style.marginLeft)) !== null && _styleParsePixels !== void 0 ? _styleParsePixels : styleParsePixels(this.computed.marginLeft);
+    this.marginTop = (_styleParsePixels2 = styleParsePixels(el.style.marginTop)) !== null && _styleParsePixels2 !== void 0 ? _styleParsePixels2 : styleParsePixels(this.computed.marginTop);
+    this.maxHeight = (_styleParsePixels3 = styleParsePixels(el.style.maxHeight)) !== null && _styleParsePixels3 !== void 0 ? _styleParsePixels3 : styleParsePixels(this.computed.maxHeight);
+    this.maxWidth = (_styleParsePixels4 = styleParsePixels(el.style.maxWidth)) !== null && _styleParsePixels4 !== void 0 ? _styleParsePixels4 : styleParsePixels(this.computed.maxWidth); // Note that the computed styles for below will always be 0px / 0 when no style is active.
 
-    this.minHeight = (_styleParsePixels5 = styleParsePixels$1(el.style.minHeight)) !== null && _styleParsePixels5 !== void 0 ? _styleParsePixels5 : styleParsePixels$1(this.computed.minHeight);
-    this.minWidth = (_styleParsePixels6 = styleParsePixels$1(el.style.minWidth)) !== null && _styleParsePixels6 !== void 0 ? _styleParsePixels6 : styleParsePixels$1(this.computed.minWidth); // Tracks if there already is a will-change property on the inline or computed styles.
+    this.minHeight = (_styleParsePixels5 = styleParsePixels(el.style.minHeight)) !== null && _styleParsePixels5 !== void 0 ? _styleParsePixels5 : styleParsePixels(this.computed.minHeight);
+    this.minWidth = (_styleParsePixels6 = styleParsePixels(el.style.minWidth)) !== null && _styleParsePixels6 !== void 0 ? _styleParsePixels6 : styleParsePixels(this.computed.minWidth); // Tracks if there already is a will-change property on the inline or computed styles.
 
     const willChange = el.style.willChange !== '' ? el.style.willChange : (_ = void 0) !== null && _ !== void 0 ? _ : this.computed.willChange;
     this.hasWillChange = willChange !== '' && willChange !== 'auto'; // Update the tracked element this Position instance is modifying.
@@ -11853,6 +11873,8 @@ class UpdateElementData {
  *
  * @returns {Promise<number>} Returns current time equivalent to `performance.now()`.
  */
+
+
 async function nextAnimationFrame(cntr = 1) {
   if (!Number.isInteger(cntr) || cntr < 1) {
     throw new TypeError(`nextAnimationFrame error: 'cntr' must be a positive integer greater than 0.`);
@@ -13000,11 +13022,15 @@ class Position {
 
 
   get(position = {}, options) {
-    const keys = options === null || options === void 0 ? void 0 : options.keys;
+    var _options$numeric;
 
-    if (isIterable(options === null || options === void 0 ? void 0 : options.keys)) {
+    const keys = options === null || options === void 0 ? void 0 : options.keys;
+    const excludeKeys = options === null || options === void 0 ? void 0 : options.exclude;
+    const numeric = (_options$numeric = options === null || options === void 0 ? void 0 : options.numeric) !== null && _options$numeric !== void 0 ? _options$numeric : false;
+
+    if (isIterable(keys)) {
       // Replace any null values potentially with numeric default values.
-      if (options !== null && options !== void 0 && options.numeric) {
+      if (numeric) {
         for (const key of keys) {
           var _this$key;
 
@@ -13015,11 +13041,31 @@ class Position {
           for (const key of keys) {
             position[key] = this[key];
           }
+        } // Remove any excluded keys.
+
+
+      if (isIterable(excludeKeys)) {
+        for (const key of excludeKeys) {
+          delete position[key];
         }
+      }
 
       return position;
     } else {
-      return Object.assign(position, _classPrivateFieldGet(this, _data$1));
+      const data = Object.assign(position, _classPrivateFieldGet(this, _data$1)); // Remove any excluded keys.
+
+      if (isIterable(excludeKeys)) {
+        for (const key of excludeKeys) {
+          delete data[key];
+        }
+      } // Potentially set numeric defaults.
+
+
+      if (numeric) {
+        setNumericDefaults(data);
+      }
+
+      return data;
     }
   }
   /**
@@ -13602,6 +13648,8 @@ Object.seal(s_VALIDATION_DATA);
  *
  * @property {Iterable<string>} keys - When provided only these keys are copied.
  *
+ * @property {Iterable<string>} exclude - When provided these keys are excluded.
+ *
  * @property {boolean} numeric - When true any `null` values are converted into defaults.
  */
 
@@ -13924,9 +13972,14 @@ class ApplicationState {
    * specification of the duration, easing, and interpolate functions along with configuring a Promise to be
    * returned if awaiting the end of the animation.
    *
+   * Note: If serializing application state any minimized apps will use the before minimized state on initial render
+   * of the app as it is currently not possible to render apps with Foundry VTT core API in the minimized state.
+   *
+   * TODO: THIS METHOD NEEDS TO BE REFACTORED WHEN TRL IS MADE INTO A STANDALONE FRAMEWORK.
+   *
    * @param {ApplicationData}   data - Saved data set name.
    *
-   * @param {object}            opts - Optional parameters
+   * @param {object}            [opts] - Optional parameters
    *
    * @param {boolean}           [opts.async=false] - If animating return a Promise that resolves with any saved data.
    *
@@ -13949,106 +14002,139 @@ class ApplicationState {
     duration = 0.1,
     ease = identity,
     interpolate = lerp$5
-  }) {
-    if (typeof data !== 'object') {
+  } = {}) {
+    if (!isObject(data)) {
       throw new TypeError(`ApplicationState - restore error: 'data' is not an object.`);
     }
 
     const application = _classPrivateFieldGet(this, _application$2);
 
-    if (data) {
-      if (typeof (data === null || data === void 0 ? void 0 : data.position) === 'object') {
-        // Update data directly with no store or inline style updates.
-        if (animateTo) // Animate to saved data.
-          {
-            // Provide special handling to potentially change transform origin as this parameter is not animated.
-            if (data.position.transformOrigin !== application.position.transformOrigin) {
-              application.position.transformOrigin = data.position.transformOrigin;
-            }
+    if (!isObject(data === null || data === void 0 ? void 0 : data.position)) {
+      console.warn(`ApplicationState.set warning: 'data.position' is not an object.`);
+      return application;
+    } // TODO: TAKE NOTE THAT WE ARE ACCESSING A FOUNDRY APP v1 GETTER HERE TO DETERMINE IF APPLICATION IS RENDERED.
+    // TODO: THIS NEEDS TO BE REFACTORED WHEN CONVERTING TRL TO A GENERIC FRAMEWORK.
 
-            if (typeof (data === null || data === void 0 ? void 0 : data.ui) === 'object') {
-              var _data$ui, _application$reactive;
 
-              const minimized = typeof ((_data$ui = data.ui) === null || _data$ui === void 0 ? void 0 : _data$ui.minimized) === 'boolean' ? data.ui.minimized : false;
+    const rendered = application.rendered;
 
-              if (application !== null && application !== void 0 && (_application$reactive = application.reactive) !== null && _application$reactive !== void 0 && _application$reactive.minimized && !minimized) {
-                application.maximize({
-                  animate: false,
-                  duration: 0
-                });
-              }
-            }
+    if (animateTo && !rendered) {
+      console.warn(`ApplicationState.set warning: Application is not rendered and 'animateTo' is true.`);
+      return application;
+    } // Update data directly with no store or inline style updates.
 
-            const promise = application.position.animate.to(data.position, {
-              duration,
-              ease,
-              interpolate
-            }).finished.then(cancelled => {
-              // Merge in saved options to application.
-              if (!cancelled && typeof (data === null || data === void 0 ? void 0 : data.options) === 'object') {
-                application === null || application === void 0 ? void 0 : application.reactive.mergeOptions(data.options);
-              }
 
-              if (!cancelled && typeof (data === null || data === void 0 ? void 0 : data.ui) === 'object') {
-                var _data$ui2, _application$reactive2;
+    if (animateTo) // Animate to saved data.
+      {
+        // Provide special handling to potentially change transform origin as this parameter is not animated.
+        if (data.position.transformOrigin !== application.position.transformOrigin) {
+          application.position.transformOrigin = data.position.transformOrigin;
+        }
 
-                const minimized = typeof ((_data$ui2 = data.ui) === null || _data$ui2 === void 0 ? void 0 : _data$ui2.minimized) === 'boolean' ? data.ui.minimized : false; // Application is currently minimized and stored state is not, so reset minimized state without
-                // animation.
+        if (isObject(data === null || data === void 0 ? void 0 : data.ui)) {
+          var _data$ui, _application$reactive;
 
-                if (!(application !== null && application !== void 0 && (_application$reactive2 = application.reactive) !== null && _application$reactive2 !== void 0 && _application$reactive2.minimized) && minimized) {
-                  application.minimize({
-                    animate: false,
-                    duration: 0
-                  });
-                }
-              }
+          const minimized = typeof ((_data$ui = data.ui) === null || _data$ui === void 0 ? void 0 : _data$ui.minimized) === 'boolean' ? data.ui.minimized : false;
 
-              if (!cancelled && typeof (data === null || data === void 0 ? void 0 : data.beforeMinimized) === 'object') {
-                application.position.state.set(_objectSpread2({
-                  name: '#beforeMinimized'
-                }, data.beforeMinimized));
-              }
+          if (application !== null && application !== void 0 && (_application$reactive = application.reactive) !== null && _application$reactive !== void 0 && _application$reactive.minimized && !minimized) {
+            application.maximize({
+              animate: false,
+              duration: 0
+            });
+          }
+        }
 
-              return application;
-            }); // Return a Promise with the application that resolves after animation ends.
+        const promise = application.position.animate.to(data.position, {
+          duration,
+          ease,
+          interpolate
+        }).finished.then(cancelled => {
+          if (cancelled) {
+            return application;
+          } // Merge in saved options to application.
 
-            if (async) {
-              return promise;
-            }
-          } else {
-          // Merge in saved options to application.
-          if (typeof (data === null || data === void 0 ? void 0 : data.options) === 'object') {
+
+          if (isObject(data === null || data === void 0 ? void 0 : data.options)) {
             application === null || application === void 0 ? void 0 : application.reactive.mergeOptions(data.options);
           }
 
-          if (typeof (data === null || data === void 0 ? void 0 : data.ui) === 'object') {
-            var _data$ui3, _application$reactive3, _application$reactive4;
+          if (isObject(data === null || data === void 0 ? void 0 : data.ui)) {
+            var _data$ui2, _application$reactive2;
 
-            const minimized = typeof ((_data$ui3 = data.ui) === null || _data$ui3 === void 0 ? void 0 : _data$ui3.minimized) === 'boolean' ? data.ui.minimized : false; // Application is currently minimized and stored state is not, so reset minimized state without
+            const minimized = typeof ((_data$ui2 = data.ui) === null || _data$ui2 === void 0 ? void 0 : _data$ui2.minimized) === 'boolean' ? data.ui.minimized : false; // Application is currently minimized and stored state is not, so reset minimized state without
             // animation.
 
-            if (application !== null && application !== void 0 && (_application$reactive3 = application.reactive) !== null && _application$reactive3 !== void 0 && _application$reactive3.minimized && !minimized) {
-              application.maximize({
-                animate: false,
-                duration: 0
-              });
-            } else if (!(application !== null && application !== void 0 && (_application$reactive4 = application.reactive) !== null && _application$reactive4 !== void 0 && _application$reactive4.minimized) && minimized) {
+            if (!(application !== null && application !== void 0 && (_application$reactive2 = application.reactive) !== null && _application$reactive2 !== void 0 && _application$reactive2.minimized) && minimized) {
               application.minimize({
                 animate: false,
-                duration
+                duration: 0
               });
             }
           }
 
-          if (typeof (data === null || data === void 0 ? void 0 : data.beforeMinimized) === 'object') {
+          if (isObject(data === null || data === void 0 ? void 0 : data.beforeMinimized)) {
             application.position.state.set(_objectSpread2({
               name: '#beforeMinimized'
             }, data.beforeMinimized));
-          } // Default options is to set data for an immediate update.
+          }
 
+          return application;
+        }); // Return a Promise with the application that resolves after animation ends.
 
-          application.position.set(data.position);
+        if (async) {
+          return promise;
         }
+      } else {
+      if (rendered) {
+        // Merge in saved options to application.
+        if (isObject(data === null || data === void 0 ? void 0 : data.options)) {
+          application === null || application === void 0 ? void 0 : application.reactive.mergeOptions(data.options);
+        }
+
+        if (isObject(data === null || data === void 0 ? void 0 : data.ui)) {
+          var _data$ui3, _application$reactive3, _application$reactive4;
+
+          const minimized = typeof ((_data$ui3 = data.ui) === null || _data$ui3 === void 0 ? void 0 : _data$ui3.minimized) === 'boolean' ? data.ui.minimized : false; // Application is currently minimized and stored state is not, so reset minimized state without
+          // animation.
+
+          if (application !== null && application !== void 0 && (_application$reactive3 = application.reactive) !== null && _application$reactive3 !== void 0 && _application$reactive3.minimized && !minimized) {
+            application.maximize({
+              animate: false,
+              duration: 0
+            });
+          } else if (!(application !== null && application !== void 0 && (_application$reactive4 = application.reactive) !== null && _application$reactive4 !== void 0 && _application$reactive4.minimized) && minimized) {
+            application.minimize({
+              animate: false,
+              duration
+            });
+          }
+        }
+
+        if (isObject(data === null || data === void 0 ? void 0 : data.beforeMinimized)) {
+          application.position.state.set(_objectSpread2({
+            name: '#beforeMinimized'
+          }, data.beforeMinimized));
+        } // Default options is to set data for an immediate update.
+
+
+        application.position.set(data.position);
+      } else {
+        // When not rendered set position to the 'beforeMinimized' data if it exists otherwise set w/ 'position'.
+        // Currently w/ Foundry core Application API it is impossible to initially render an app in the minimized
+        // state.
+        let positionData = data.position;
+
+        if (isObject(data.beforeMinimized)) {
+          // Take before minimized data.
+          positionData = data.beforeMinimized; // Apply position left / top to before minimized data. This covers the case when an app is minimized,
+          // but then moved. This allows restoration of the before minimized parameters w/ the last position
+          // location.
+
+          positionData.left = data.position.left;
+          positionData.top = data.position.top;
+        }
+
+        application.position.set(positionData);
       }
     }
 
@@ -15215,11 +15301,11 @@ class SvelteApplication extends Application {
   } = {}) {
     if (force || this.popOut) {
       super.bringToTop();
-    } // If the activeElement is not `document.body` then blur the current active element and make `document.body`
-    // focused. This allows <esc> key to close all open apps / windows.
+    } // If the activeElement is not `document.body` and not contained in this app via elementTarget then blur the
+    // current active element and make `document.body`focused. This allows <esc> key to close all open apps / windows.
 
 
-    if (document.activeElement !== document.body) {
+    if (document.activeElement !== document.body && !this.elementTarget.contains(document.activeElement)) {
       // Blur current active element.
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();
@@ -15284,7 +15370,12 @@ class SvelteApplication extends Application {
     const content = el.querySelector('.window-content');
 
     if (content) {
-      content.style.overflow = 'hidden';
+      content.style.overflow = 'hidden'; // Set all children of content to overflow hidden as if there is going to be additional scrolling elements
+      // they are likely one level deep.
+
+      for (let cntr = content.children.length; --cntr >= 0;) {
+        content.children[cntr].style.overflow = 'hidden';
+      }
     } // Dispatch Hooks for closing the base and subclass applications
 
 
@@ -15544,7 +15635,7 @@ class SvelteApplication extends Application {
     animate = true,
     duration = 0.1
   } = {}) {
-    var _this$options$minHeig, _this$options;
+    var _ref, _positionBefore$minHe, _this$options, _ref2, _positionBefore$minWi, _this$options2;
 
     if (!this.popOut || [false, null].includes(this._minimized)) {
       return;
@@ -15556,7 +15647,11 @@ class SvelteApplication extends Application {
 
     const element = this.elementTarget;
     const header = element.querySelector('.window-header');
-    const content = element.querySelector('.window-content'); // First animate / restore width / async.
+    const content = element.querySelector('.window-content'); // Get the complete position before minimized. Used to reset min width & height to initial values later.
+
+    const positionBefore = this.position.state.get({
+      name: '#beforeMinimized'
+    }); // First animate / restore width / async.
 
     if (animate) {
       await this.position.state.restore({
@@ -15611,15 +15706,25 @@ class SvelteApplication extends Application {
       duration: durationMS,
       fill: 'forwards'
     }).finished; // WAAPI in ms.
-    // minHeight needs to be adjusted to options or Foundry default window height.
+    // Restore previous min width & height from saved data, app options, or default Foundry values.
 
-    this.position.minHeight = (_this$options$minHeig = (_this$options = this.options) === null || _this$options === void 0 ? void 0 : _this$options.minHeight) !== null && _this$options$minHeig !== void 0 ? _this$options$minHeig : MIN_WINDOW_HEIGHT;
-    element.classList.remove('minimized');
-    this._minimized = false;
+    this.position.set({
+      minHeight: (_ref = (_positionBefore$minHe = positionBefore.minHeight) !== null && _positionBefore$minHe !== void 0 ? _positionBefore$minHe : (_this$options = this.options) === null || _this$options === void 0 ? void 0 : _this$options.minHeight) !== null && _ref !== void 0 ? _ref : MIN_WINDOW_HEIGHT,
+      minWidth: (_ref2 = (_positionBefore$minWi = positionBefore.minWidth) !== null && _positionBefore$minWi !== void 0 ? _positionBefore$minWi : (_this$options2 = this.options) === null || _this$options2 === void 0 ? void 0 : _this$options2.minWidth) !== null && _ref2 !== void 0 ? _ref2 : MIN_WINDOW_WIDTH
+    }); // Remove inline styles that override any styles assigned to the app.
+
     element.style.minWidth = null;
-    element.style.minHeight = null; // Using a 50ms timeout prevents any instantaneous display of scrollbars with the above maximize animation.
+    element.style.minHeight = null;
+    element.classList.remove('minimized');
+    this._minimized = false; // Using a 50ms timeout prevents any instantaneous display of scrollbars with the above maximize animation.
 
-    setTimeout(() => content.style.overflow = null, 50);
+    setTimeout(() => {
+      content.style.overflow = null; // Reset all children of content removing overflow hidden.
+
+      for (let cntr = content.children.length; --cntr >= 0;) {
+        content.children[cntr].style.overflow = null;
+      }
+    }, 50);
 
     _classPrivateFieldGet(this, _stores).uiOptionsUpdate(options => deepMerge(options, {
       minimized: false
@@ -15659,11 +15764,28 @@ class SvelteApplication extends Application {
     const element = this.elementTarget; // Get content
 
     const header = element.querySelector('.window-header');
-    const content = element.querySelector('.window-content'); // Remove minimum width and height styling rules
+    const content = element.querySelector('.window-content'); // Save current max / min height & width.
+
+    const beforeMinWidth = this.position.minWidth;
+    const beforeMinHeight = this.position.minHeight; // Set minimized min width & height for header bar.
+
+    this.position.set({
+      minWidth: 100,
+      minHeight: 30
+    }); // Also set inline styles to override any styles scoped to the app.
 
     element.style.minWidth = '100px';
     element.style.minHeight = '30px';
-    content.style.overflow = 'hidden';
+
+    if (content) {
+      content.style.overflow = 'hidden'; // Set all children of content to overflow hidden as if there is going to be additional scrolling elements
+      // they are likely one level deep.
+
+      for (let cntr = content.children.length; --cntr >= 0;) {
+        content.children[cntr].style.overflow = 'hidden';
+      }
+    }
+
     const {
       paddingBottom,
       paddingTop
@@ -15692,10 +15814,13 @@ class SvelteApplication extends Application {
     } // Save current position state and add the constraint data to use in `maximize`.
 
 
-    this.position.state.save({
+    const saved = this.position.state.save({
       name: '#beforeMinimized',
       constraints
-    });
+    }); // Set the initial before min width & height.
+
+    saved.minWidth = beforeMinWidth;
+    saved.minHeight = beforeMinHeight;
     const headerOffsetHeight = header.offsetHeight; // minHeight needs to be adjusted to header height.
 
     this.position.minHeight = headerOffsetHeight;
@@ -15936,719 +16061,10 @@ function fade(node, {
   };
 }
 
-/**
- * Common utilities
- * @module glMatrix
- */
-// Configuration Constants
-
-
-var EPSILON = 0.000001;
-var ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array;
-if (!Math.hypot) Math.hypot = function () {
-  var y = 0,
-      i = arguments.length;
-
-  while (i--) {
-    y += arguments[i] * arguments[i];
-  }
-
-  return Math.sqrt(y);
-};
-/**
- * 3x3 Matrix
- * @module mat3
- */
-
-/**
- * Creates a new identity mat3
- *
- * @returns {mat3} a new 3x3 matrix
- */
-
-function create$6() {
-  var out = new ARRAY_TYPE(9);
-
-  if (ARRAY_TYPE != Float32Array) {
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[5] = 0;
-    out[6] = 0;
-    out[7] = 0;
-  }
-
-  out[0] = 1;
-  out[4] = 1;
-  out[8] = 1;
-  return out;
-}
-/**
- * 3 Dimensional Vector
- * @module vec3
- */
-
-/**
- * Creates a new, empty vec3
- *
- * @returns {vec3} a new 3D vector
- */
-
-
-function create$4() {
-  var out = new ARRAY_TYPE(3);
-
-  if (ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-  }
-
-  return out;
-}
-/**
- * Calculates the length of a vec3
- *
- * @param {ReadonlyVec3} a vector to calculate length of
- * @returns {Number} length of a
- */
-
-
-function length$4(a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  return Math.hypot(x, y, z);
-}
-/**
- * Creates a new vec3 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @returns {vec3} a new 3D vector
- */
-
-
-function fromValues$4(x, y, z) {
-  var out = new ARRAY_TYPE(3);
-  out[0] = x;
-  out[1] = y;
-  out[2] = z;
-  return out;
-}
-/**
- * Normalize a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {ReadonlyVec3} a vector to normalize
- * @returns {vec3} out
- */
-
-
-function normalize$4(out, a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  var len = x * x + y * y + z * z;
-
-  if (len > 0) {
-    //TODO: evaluate use of glm_invsqrt here?
-    len = 1 / Math.sqrt(len);
-  }
-
-  out[0] = a[0] * len;
-  out[1] = a[1] * len;
-  out[2] = a[2] * len;
-  return out;
-}
-/**
- * Calculates the dot product of two vec3's
- *
- * @param {ReadonlyVec3} a the first operand
- * @param {ReadonlyVec3} b the second operand
- * @returns {Number} dot product of a and b
- */
-
-
-function dot$4(a, b) {
-  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-}
-/**
- * Computes the cross product of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {ReadonlyVec3} a the first operand
- * @param {ReadonlyVec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function cross$2(out, a, b) {
-  var ax = a[0],
-      ay = a[1],
-      az = a[2];
-  var bx = b[0],
-      by = b[1],
-      bz = b[2];
-  out[0] = ay * bz - az * by;
-  out[1] = az * bx - ax * bz;
-  out[2] = ax * by - ay * bx;
-  return out;
-}
-/**
- * Alias for {@link vec3.length}
- * @function
- */
-
-
-var len$4 = length$4;
-/**
- * Perform some operation over an array of vec3s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec3. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec3s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-(function () {
-  var vec = create$4();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 3;
-    }
-
-    if (!offset) {
-      offset = 0;
-    }
-
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      vec[2] = a[i + 2];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-      a[i + 2] = vec[2];
-    }
-
-    return a;
-  };
-})();
-/**
- * 4 Dimensional Vector
- * @module vec4
- */
-
-/**
- * Creates a new, empty vec4
- *
- * @returns {vec4} a new 4D vector
- */
-
-
-function create$3() {
-  var out = new ARRAY_TYPE(4);
-
-  if (ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-  }
-
-  return out;
-}
-/**
- * Normalize a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {ReadonlyVec4} a vector to normalize
- * @returns {vec4} out
- */
-
-
-function normalize$3(out, a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  var w = a[3];
-  var len = x * x + y * y + z * z + w * w;
-
-  if (len > 0) {
-    len = 1 / Math.sqrt(len);
-  }
-
-  out[0] = x * len;
-  out[1] = y * len;
-  out[2] = z * len;
-  out[3] = w * len;
-  return out;
-}
-/**
- * Perform some operation over an array of vec4s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec4s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-
-(function () {
-  var vec = create$3();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 4;
-    }
-
-    if (!offset) {
-      offset = 0;
-    }
-
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      vec[2] = a[i + 2];
-      vec[3] = a[i + 3];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-      a[i + 2] = vec[2];
-      a[i + 3] = vec[3];
-    }
-
-    return a;
-  };
-})();
-/**
- * Quaternion
- * @module quat
- */
-
-/**
- * Creates a new identity quat
- *
- * @returns {quat} a new quaternion
- */
-
-
-function create$2() {
-  var out = new ARRAY_TYPE(4);
-
-  if (ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-  }
-
-  out[3] = 1;
-  return out;
-}
-/**
- * Sets a quat from the given angle and rotation axis,
- * then returns it.
- *
- * @param {quat} out the receiving quaternion
- * @param {ReadonlyVec3} axis the axis around which to rotate
- * @param {Number} rad the angle in radians
- * @returns {quat} out
- **/
-
-
-function setAxisAngle(out, axis, rad) {
-  rad = rad * 0.5;
-  var s = Math.sin(rad);
-  out[0] = s * axis[0];
-  out[1] = s * axis[1];
-  out[2] = s * axis[2];
-  out[3] = Math.cos(rad);
-  return out;
-}
-/**
- * Performs a spherical linear interpolation between two quat
- *
- * @param {quat} out the receiving quaternion
- * @param {ReadonlyQuat} a the first operand
- * @param {ReadonlyQuat} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {quat} out
- */
-
-
-function slerp(out, a, b, t) {
-  // benchmarks:
-  //    http://jsperf.com/quaternion-slerp-implementations
-  var ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  var bx = b[0],
-      by = b[1],
-      bz = b[2],
-      bw = b[3];
-  var omega, cosom, sinom, scale0, scale1; // calc cosine
-
-  cosom = ax * bx + ay * by + az * bz + aw * bw; // adjust signs (if necessary)
-
-  if (cosom < 0.0) {
-    cosom = -cosom;
-    bx = -bx;
-    by = -by;
-    bz = -bz;
-    bw = -bw;
-  } // calculate coefficients
-
-
-  if (1.0 - cosom > EPSILON) {
-    // standard case (slerp)
-    omega = Math.acos(cosom);
-    sinom = Math.sin(omega);
-    scale0 = Math.sin((1.0 - t) * omega) / sinom;
-    scale1 = Math.sin(t * omega) / sinom;
-  } else {
-    // "from" and "to" quaternions are very close
-    //  ... so we can do a linear interpolation
-    scale0 = 1.0 - t;
-    scale1 = t;
-  } // calculate final values
-
-
-  out[0] = scale0 * ax + scale1 * bx;
-  out[1] = scale0 * ay + scale1 * by;
-  out[2] = scale0 * az + scale1 * bz;
-  out[3] = scale0 * aw + scale1 * bw;
-  return out;
-}
-/**
- * Creates a quaternion from the given 3x3 rotation matrix.
- *
- * NOTE: The resultant quaternion is not normalized, so you should be sure
- * to renormalize the quaternion yourself where necessary.
- *
- * @param {quat} out the receiving quaternion
- * @param {ReadonlyMat3} m rotation matrix
- * @returns {quat} out
- * @function
- */
-
-
-function fromMat3(out, m) {
-  // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
-  // article "Quaternion Calculus and Fast Animation".
-  var fTrace = m[0] + m[4] + m[8];
-  var fRoot;
-
-  if (fTrace > 0.0) {
-    // |w| > 1/2, may as well choose w > 1/2
-    fRoot = Math.sqrt(fTrace + 1.0); // 2w
-
-    out[3] = 0.5 * fRoot;
-    fRoot = 0.5 / fRoot; // 1/(4w)
-
-    out[0] = (m[5] - m[7]) * fRoot;
-    out[1] = (m[6] - m[2]) * fRoot;
-    out[2] = (m[1] - m[3]) * fRoot;
-  } else {
-    // |w| <= 1/2
-    var i = 0;
-    if (m[4] > m[0]) i = 1;
-    if (m[8] > m[i * 3 + i]) i = 2;
-    var j = (i + 1) % 3;
-    var k = (i + 2) % 3;
-    fRoot = Math.sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0);
-    out[i] = 0.5 * fRoot;
-    fRoot = 0.5 / fRoot;
-    out[3] = (m[j * 3 + k] - m[k * 3 + j]) * fRoot;
-    out[j] = (m[j * 3 + i] + m[i * 3 + j]) * fRoot;
-    out[k] = (m[k * 3 + i] + m[i * 3 + k]) * fRoot;
-  }
-
-  return out;
-}
-/**
- * Normalize a quat
- *
- * @param {quat} out the receiving quaternion
- * @param {ReadonlyQuat} a quaternion to normalize
- * @returns {quat} out
- * @function
- */
-
-
-var normalize$2 = normalize$3;
-/**
- * Sets a quaternion to represent the shortest rotation from one
- * vector to another.
- *
- * Both vectors are assumed to be unit length.
- *
- * @param {quat} out the receiving quaternion.
- * @param {ReadonlyVec3} a the initial vector
- * @param {ReadonlyVec3} b the destination vector
- * @returns {quat} out
- */
-
-(function () {
-  var tmpvec3 = create$4();
-  var xUnitVec3 = fromValues$4(1, 0, 0);
-  var yUnitVec3 = fromValues$4(0, 1, 0);
-  return function (out, a, b) {
-    var dot = dot$4(a, b);
-
-    if (dot < -0.999999) {
-      cross$2(tmpvec3, xUnitVec3, a);
-      if (len$4(tmpvec3) < 0.000001) cross$2(tmpvec3, yUnitVec3, a);
-      normalize$4(tmpvec3, tmpvec3);
-      setAxisAngle(out, tmpvec3, Math.PI);
-      return out;
-    } else if (dot > 0.999999) {
-      out[0] = 0;
-      out[1] = 0;
-      out[2] = 0;
-      out[3] = 1;
-      return out;
-    } else {
-      cross$2(tmpvec3, a, b);
-      out[0] = tmpvec3[0];
-      out[1] = tmpvec3[1];
-      out[2] = tmpvec3[2];
-      out[3] = 1 + dot;
-      return normalize$2(out, out);
-    }
-  };
-})();
-/**
- * Performs a spherical linear interpolation with two control points
- *
- * @param {quat} out the receiving quaternion
- * @param {ReadonlyQuat} a the first operand
- * @param {ReadonlyQuat} b the second operand
- * @param {ReadonlyQuat} c the third operand
- * @param {ReadonlyQuat} d the fourth operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {quat} out
- */
-
-
-(function () {
-  var temp1 = create$2();
-  var temp2 = create$2();
-  return function (out, a, b, c, d, t) {
-    slerp(temp1, a, d, t);
-    slerp(temp2, b, c, t);
-    slerp(out, temp1, temp2, 2 * t * (1 - t));
-    return out;
-  };
-})();
-/**
- * Sets the specified quaternion with values corresponding to the given
- * axes. Each axis is a vec3 and is expected to be unit length and
- * perpendicular to all other specified axes.
- *
- * @param {ReadonlyVec3} view  the vector representing the viewing direction
- * @param {ReadonlyVec3} right the vector representing the local "right" direction
- * @param {ReadonlyVec3} up    the vector representing the local "up" direction
- * @returns {quat} out
- */
-
-
-(function () {
-  var matr = create$6();
-  return function (out, view, right, up) {
-    matr[0] = right[0];
-    matr[3] = right[1];
-    matr[6] = right[2];
-    matr[1] = up[0];
-    matr[4] = up[1];
-    matr[7] = up[2];
-    matr[2] = -view[0];
-    matr[5] = -view[1];
-    matr[8] = -view[2];
-    return normalize$2(out, fromMat3(out, matr));
-  };
-})();
-/**
- * 2 Dimensional Vector
- * @module vec2
- */
-
-/**
- * Creates a new, empty vec2
- *
- * @returns {vec2} a new 2D vector
- */
-
-
-function create() {
-  var out = new ARRAY_TYPE(2);
-
-  if (ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-  }
-
-  return out;
-}
-/**
- * Perform some operation over an array of vec2s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec2. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-
-(function () {
-  var vec = create();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 2;
-    }
-
-    if (!offset) {
-      offset = 0;
-    }
-
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-    }
-
-    return a;
-  };
-})();
-
 const s_DEFAULT_TRANSITION = () => void 0;
 
 const s_DEFAULT_TRANSITION_OPTIONS = {};
 
-/**
- * Provides a basic test for a given variable to test if it has the shape of a writable store by having a `subscribe`
- * function and an `update` function.
- *
- * Note: functions are also objects, so test that the variable might be a function w/ a `subscribe` function.
- *
- * @param {*}  store - variable to test that might be a store.
- *
- * @returns {boolean} Whether the variable tested has the shape of a store.
- */
-
-function isUpdatableStore(store) {
-  if (store === null || store === void 0) {
-    return false;
-  }
-
-  switch (typeof store) {
-    case 'function':
-    case 'object':
-      return typeof store.subscribe === 'function' && typeof store.update === 'function';
-  }
-
-  return false;
-}
-
-const s_REGEX = /(\d+)\s*px/;
-/**
- * Parses a pixel string / computed styles. Ex. `100px` returns `100`.
- *
- * @param {string}   value - Value to parse.
- *
- * @returns {number|undefined} The integer component of a pixel string.
- */
-
-function styleParsePixels(value) {
-  if (typeof value !== 'string') {
-    return void 0;
-  }
-
-  const isPixels = s_REGEX.test(value);
-  const number = parseInt(value);
-  return isPixels && Number.isFinite(number) ? number : void 0;
-}
-/**
- * Defines the application shell contract. If Svelte components export getter / setters for the following properties
- * then that component is considered an application shell.
- *
- * @type {string[]}
- */
-
-
-const applicationShellContract = ['elementRoot'];
-Object.freeze(applicationShellContract);
-/**
- * Provides an action to apply style properties provided as an object.
- *
- * @param {HTMLElement} node - Target element
- *
- * @param {object}      properties - Key / value object of properties to set.
- *
- * @returns {Function} Update function.
- */
-
-
-function applyStyles(node, properties) {
-  /** Sets properties on node. */
-  function setProperties() {
-    if (typeof properties !== 'object') {
-      return;
-    }
-
-    for (const prop of Object.keys(properties)) {
-      node.style.setProperty(`${prop}`, properties[prop]);
-    }
-  }
-
-  setProperties();
-  return {
-    update(newProperties) {
-      properties = newProperties;
-      setProperties();
-    }
-
-  };
-}
 /**
  * Provides an action to monitor the given HTMLElement node with `ResizeObserver` posting width / height changes
  * to the target in various ways depending on the shape of the target. The target can be one of the following and the
@@ -16969,6 +16385,38 @@ function s_UPDATE_SUBSCRIBER(subscriber, contentWidth, contentHeight) {
       });
       break;
   }
+}
+/**
+ * Provides an action to apply style properties provided as an object.
+ *
+ * @param {HTMLElement} node - Target element
+ *
+ * @param {object}      properties - Key / value object of properties to set.
+ *
+ * @returns {Function} Update function.
+ */
+
+
+function applyStyles(node, properties) {
+  /** Sets properties on node. */
+  function setProperties() {
+    if (typeof properties !== 'object') {
+      return;
+    }
+
+    for (const prop of Object.keys(properties)) {
+      node.style.setProperty(`${prop}`, properties[prop]);
+    }
+  }
+
+  setProperties();
+  return {
+    update(newProperties) {
+      properties = newProperties;
+      setProperties();
+    }
+
+  };
 }
 /**
  * Provides an action to enable pointer dragging of an HTMLElement and invoke `position.set` on a given {@link Position}
@@ -17471,7 +16919,7 @@ function localize(stringId, data) {
   return result !== void 0 ? result : '';
 }
 
-/* src\component\core\TJSContainer.svelte generated by Svelte v3.48.0 */
+/* src\component\core\TJSContainer.svelte generated by Svelte v3.49.0 */
 
 function add_css$5(target) {
   append_styles(target, "svelte-1s361pr", "p.svelte-1s361pr{color:red;font-size:18px}");
@@ -17845,7 +17293,7 @@ class TJSContainer extends SvelteComponent {
   }
 
 }
-/* src\component\core\TJSGlassPane.svelte generated by Svelte v3.48.0 */
+/* src\component\core\TJSGlassPane.svelte generated by Svelte v3.49.0 */
 
 
 function add_css$4(target) {
@@ -18301,7 +17749,7 @@ class TJSGlassPane extends SvelteComponent {
   }
 
 }
-/* src\component\core\application\TJSHeaderButton.svelte generated by Svelte v3.48.0 */
+/* src\component\core\application\TJSHeaderButton.svelte generated by Svelte v3.49.0 */
 
 
 function create_fragment$7$1(ctx) {
@@ -18448,7 +17896,7 @@ class TJSHeaderButton extends SvelteComponent {
   }
 
 }
-/* src\component\core\application\TJSApplicationHeader.svelte generated by Svelte v3.48.0 */
+/* src\component\core\application\TJSApplicationHeader.svelte generated by Svelte v3.49.0 */
 
 
 function add_css$3(target) {
@@ -18903,7 +18351,7 @@ class TJSApplicationHeader extends SvelteComponent {
   }
 
 }
-/* src\component\core\application\ResizableHandle.svelte generated by Svelte v3.48.0 */
+/* src\component\core\application\ResizableHandle.svelte generated by Svelte v3.49.0 */
 
 
 function create_fragment$5$1(ctx) {
@@ -19189,12 +18637,12 @@ class ResizableHandle extends SvelteComponent {
   }
 
 }
-/* src\component\core\application\ApplicationShell.svelte generated by Svelte v3.48.0 */
+/* src\component\core\application\ApplicationShell.svelte generated by Svelte v3.49.0 */
 
 
 function add_css$2(target) {
   append_styles(target, "svelte-are4no", ".window-app.svelte-are4no.svelte-are4no.svelte-are4no{overflow:inherit}.window-app.svelte-are4no .window-content.svelte-are4no>.svelte-are4no{flex:none}");
-} // (225:6) {:else}
+} // (226:6) {:else}
 
 
 function create_else_block$3(ctx) {
@@ -19250,7 +18698,7 @@ function create_else_block$3(ctx) {
     }
 
   };
-} // (223:6) {#if Array.isArray(allChildren)}
+} // (224:6) {#if Array.isArray(allChildren)}
 
 
 function create_if_block$4$1(ctx) {
@@ -19536,17 +18984,18 @@ function instance$4$1($$self, $$props, $$invalidate) {
 
   const contentResizeObserver = !!contentOffsetHeight || !!contentOffsetWidth ? resizeObserver : () => null; // If the application is a popOut application then when clicked bring to top. Bound to on pointerdown.
 
-  const bringToTop = () => {
+  const bringToTop = event => {
     if (typeof application.options.popOut === 'boolean' && application.options.popOut) {
       var _ui;
 
       if (application !== ((_ui = ui) === null || _ui === void 0 ? void 0 : _ui.activeWindow)) {
         application.bringToTop.call(application);
-      } // If the activeElement is not `document.body` then blur the current active element and make `document.body`
-      // focused. This allows <esc> key to close all open apps / windows.
+      } // If the activeElement is not `document.body` and the event target isn't the activeElement then blur the
+      // current active element and make `document.body` focused. This allows <esc> key to close all open apps /
+      // windows.
 
 
-      if (document.activeElement !== document.body) {
+      if (document.activeElement !== document.body && event.target !== document.activeElement) {
         // Blur current active element.
         if (document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
@@ -19975,7 +19424,7 @@ class ApplicationShell extends SvelteComponent {
   }
 
 }
-/* src\component\core\dialog\DialogContent.svelte generated by Svelte v3.48.0 */
+/* src\component\core\dialog\DialogContent.svelte generated by Svelte v3.49.0 */
 
 
 function add_css(target) {
@@ -20733,7 +20182,7 @@ class DialogContent extends SvelteComponent {
   }
 
 }
-/* src\component\core\dialog\DialogShell.svelte generated by Svelte v3.48.0 */
+/* src\component\core\dialog\DialogShell.svelte generated by Svelte v3.49.0 */
 
 
 function create_else_block(ctx) {
@@ -22117,7 +21566,7 @@ class TJSDialog extends SvelteApplication {
  * @property {number|null} [zIndex] - A specific z-index for the dialog.
  */
 
-/* built\sheets\svelte\action\ActionShell.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\action\ActionShell.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$m(ctx) {
 	let div2;
@@ -23595,7 +23044,7 @@ function prepareActiveEffectCategories(effects) {
   return categories;
 }
 
-/* built\helpers\Character Advancement\ChangeButton.svelte generated by Svelte v3.48.0 */
+/* built\helpers\Character Advancement\ChangeButton.svelte generated by Svelte v3.49.0 */
 
 function create_if_block_1$2(ctx) {
 	let i;
@@ -23872,7 +23321,7 @@ class ChangeButton extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\TDvariants.svelte generated by Svelte v3.48.0 */
+/* built\helpers\Character Advancement\TDvariants.svelte generated by Svelte v3.49.0 */
 
 function create_if_block_10(ctx) {
 	let td;
@@ -24750,7 +24199,7 @@ class TDvariants extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\Attributes.svelte generated by Svelte v3.48.0 */
+/* built\helpers\Character Advancement\Attributes.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$b(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -25139,7 +24588,7 @@ class Attributes extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\Tabs.svelte generated by Svelte v3.48.0 */
+/* built\helpers\Character Advancement\Tabs.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$a(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -25535,7 +24984,7 @@ class Tabs$1 extends SvelteComponent {
 	}
 }
 
-/* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.48.0 */
+/* built\helpers\Character Advancement\cha-adv-shell.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$h(ctx) {
 	let div0;
@@ -26928,7 +26377,7 @@ class ARd20ItemSheet extends ItemSheet {
 
 }
 
-/* built\sheets\svelte\EmptySheet.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\EmptySheet.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$g(ctx) {
 	let t;
@@ -26956,7 +26405,7 @@ class EmptySheet extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\general components\InputForDocumentSheet.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\general components\InputForDocumentSheet.svelte generated by Svelte v3.49.0 */
 
 function create_if_block$7(ctx) {
 	let span;
@@ -27193,7 +26642,7 @@ class InputForDocumentSheet extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\item\ItemItemSheet.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\item\ItemItemSheet.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$e(ctx) {
 	let t;
@@ -27284,7 +26733,7 @@ class ItemItemSheet extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\general components\ImageWithFilePicker.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\general components\ImageWithFilePicker.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$d(ctx) {
 	let img_1;
@@ -27404,7 +26853,7 @@ class ImageWithFilePicker extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\general components\Tabs.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\general components\Tabs.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$9(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -27756,7 +27205,7 @@ class Tabs extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\AttributeTab.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\AttributeTab.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$8(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -27960,7 +27409,7 @@ class AttributeTab extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\InventoryTab.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\InventoryTab.svelte generated by Svelte v3.49.0 */
 
 class InventoryTab extends SvelteComponent {
 	constructor(options) {
@@ -27969,7 +27418,7 @@ class InventoryTab extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\general components\ConfigureItemButton.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\general components\ConfigureItemButton.svelte generated by Svelte v3.49.0 */
 
 function create_if_block_3(ctx) {
 	let i;
@@ -28300,7 +27749,7 @@ class ConfigureItemButton extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\FeaturesTab.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\FeaturesTab.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$7(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -28815,7 +28264,7 @@ class FeaturesTab extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\SpellsTab.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\SpellsTab.svelte generated by Svelte v3.49.0 */
 
 class SpellsTab extends SvelteComponent {
 	constructor(options) {
@@ -28824,7 +28273,7 @@ class SpellsTab extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\EffectsTab.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\EffectsTab.svelte generated by Svelte v3.49.0 */
 
 class EffectsTab extends SvelteComponent {
 	constructor(options) {
@@ -28833,7 +28282,7 @@ class EffectsTab extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\BiographyTab.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\BiographyTab.svelte generated by Svelte v3.49.0 */
 
 class BiographyTab extends SvelteComponent {
 	constructor(options) {
@@ -28842,7 +28291,7 @@ class BiographyTab extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\actor\ActorSheet.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\actor\ActorSheet.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$6(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -29384,7 +28833,7 @@ class ActorSheet$1 extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\item\RaceSheet.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\item\RaceSheet.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$5(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -29745,7 +29194,7 @@ class RaceSheet extends SvelteComponent {
 	}
 }
 
-/* built\sheets\svelte\item\FeatureSheet.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\item\FeatureSheet.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$4(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -30378,7 +29827,7 @@ class ARd20SocketHandler {
 
 }
 
-/* built\general svelte components\SettingsSubmitButton.svelte generated by Svelte v3.48.0 */
+/* built\general svelte components\SettingsSubmitButton.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$5(ctx) {
 	let button;
@@ -30434,7 +29883,7 @@ class SettingsSubmitButton extends SvelteComponent {
 	}
 }
 
-/* built\settings\advancement-rate\advancement-rate-shell.svelte generated by Svelte v3.48.0 */
+/* built\settings\advancement-rate\advancement-rate-shell.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$3(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -31101,7 +30550,7 @@ class AdvancementRateFormApp extends SvelteApplication {
 
 }
 
-/* built\settings\FeatSetting\featSetting-shell.svelte generated by Svelte v3.48.0 */
+/* built\settings\FeatSetting\featSetting-shell.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$2(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -31578,7 +31027,7 @@ class FeatSetting extends SvelteApplication {
 
 }
 
-/* built\settings\ProfSetting\profSetting-shell.svelte generated by Svelte v3.48.0 */
+/* built\settings\ProfSetting\profSetting-shell.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$1(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -32392,7 +31841,7 @@ class ProfSetting extends SvelteApplication {
 
 }
 
-/* built\settings\ProfLevelsSetting\profLevelSetting-shell.svelte generated by Svelte v3.48.0 */
+/* built\settings\ProfLevelsSetting\profLevelSetting-shell.svelte generated by Svelte v3.49.0 */
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -33169,7 +32618,7 @@ function applyChatCardDamage(li, multiplier) {
 }
 /* -------------------------------------------- */
 
-/* built\sheets\svelte\DocumentShell.svelte generated by Svelte v3.48.0 */
+/* built\sheets\svelte\DocumentShell.svelte generated by Svelte v3.49.0 */
 
 function create_default_slot(ctx) {
 	let switch_instance;
