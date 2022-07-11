@@ -21650,10 +21650,23 @@ function create_fragment$m(ctx) {
 
 function instance$l($$self, $$props, $$invalidate) {
 	let { action } = $$props;
+	console.log(action);
 	const { application } = getContext("external");
 
 	async function submit() {
-		const item = action.parent.item;
+		let item;
+		const actorId = action.parent.actor._id;
+		const itemId = action.parent.item._id;
+
+		if (actorId) {
+			item = game.actors.get(actorId).items.get(itemId);
+		} else if (itemId) {
+			item = game.items.get(itemId);
+		} else {
+			console.log("ОШиБКА БЛЯТЬ");
+			return;
+		}
+
 		const actionList = [...item.system.actionList];
 		await item.update({ "system.actionList": actionList });
 		application.close();
@@ -21819,11 +21832,15 @@ class ARd20Action {
    */
 
 
-  async use() {
-    console.log("ACTION USE", this);
-    this.placeTemplate();
-    this.validateTargets();
-    await this.roll();
+  static async use(action) {
+    console.log("ACTION USE", action);
+    const act = new ARd20Action(action, {
+      keepId: true,
+      parent: action.parent
+    });
+    act.placeTemplate();
+    act.validateTargets();
+    await act.roll();
   }
 
   placeTemplate() {
@@ -21870,27 +21887,6 @@ class ARd20Item extends Item {
 
   prepareBaseData() {
     super.prepareBaseData();
-    console.log("mapping actions to our class");
-    const itemData = this.system;
-    console.log('action list before change', itemData.actionList);
-    const actionList = new Array(itemData.actionList.length);
-
-    for (let i = 0; i < actionList.length; i++) {
-      console.log(i, 'ый элемент');
-      actionList[i] = Object.assign(new ARd20Action(), itemData.actionList[i], {
-        keepId: true,
-        parent: {
-          actor: this.actor,
-          item: this
-        }
-      });
-    }
-
-    itemData.actionList = actionList;
-    /*itemData.actionList = itemData.actionList.map((action, key) => {
-      console.log(`#${key} mapping`);
-      return new ARd20Action(action, { keepId: true, parent: { actor: this.actor, item: this } });
-    });*/
   }
 
   prepareDerivedData() {
@@ -22881,16 +22877,15 @@ class ARd20Item extends Item {
 
 
   async addAction(object = {}) {
-    const actionList = [...this.system.actionList, object];
+    const actionList = [...this.system.actionList, new ARd20Action(object, {
+      parent: {
+        actor: this.actor,
+        item: this
+      }
+    })];
     await this.update({
       "system.actionList": actionList
     });
-  }
-
-  _preUpdate(changed, options, user) {
-    console.log('Item _preUpdate, changed, options, user: ', changed, options, user);
-
-    super._preUpdate();
   }
 
 }
@@ -27763,7 +27758,7 @@ function get_each_context_1$4(ctx, list, i) {
 	return child_ctx;
 }
 
-// (45:10) {#if item.system.hasAttack || item.system.hasDamage}
+// (47:10) {#if item.system.hasAttack || item.system.hasDamage}
 function create_if_block$3(ctx) {
 	let i;
 	let mounted;
@@ -27798,7 +27793,7 @@ function create_if_block$3(ctx) {
 	};
 }
 
-// (57:12) {#each item.system.actionList as action}
+// (59:12) {#each item.system.actionList as action}
 function create_each_block_1$4(ctx) {
 	let div;
 	let span;
@@ -27859,7 +27854,7 @@ function create_each_block_1$4(ctx) {
 	};
 }
 
-// (39:4) {#each $doc.itemTypes.feature as item}
+// (41:4) {#each $doc.itemTypes.feature as item}
 function create_each_block$7(ctx) {
 	let tr;
 	let td0;
@@ -28010,7 +28005,7 @@ function create_each_block$7(ctx) {
 				if_block = null;
 			}
 
-			if (dirty & /*$doc*/ 1) {
+			if (dirty & /*ActionSheet, $doc, ARd20Action*/ 1) {
 				each_value_1 = /*item*/ ctx[6].system.actionList;
 				let i;
 
@@ -28157,7 +28152,7 @@ function create_fragment$9(ctx) {
 			if (dirty & /*$doc*/ 1) configureitembutton_changes.doc = /*$doc*/ ctx[0];
 			configureitembutton.$set(configureitembutton_changes);
 
-			if (dirty & /*$doc, itemRoll, ShowDescription*/ 1) {
+			if (dirty & /*$doc, ActionSheet, ARd20Action, itemRoll, ShowDescription*/ 1) {
 				each_value = /*$doc*/ ctx[0].itemTypes.feature;
 				let i;
 
@@ -28250,10 +28245,10 @@ function instance$9($$self, $$props, $$invalidate) {
 	};
 
 	const click_handler_2 = action => {
-		action.use();
+		ARd20Action.use(action);
 	};
 
-	const click_handler_3 = action => action.sheet.render(true, { focus: true });
+	const click_handler_3 = action => new ActionSheet(action).render(true, { focus: true });
 	return [$doc, doc, click_handler, click_handler_1, click_handler_2, click_handler_3];
 }
 

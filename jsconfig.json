@@ -2,5 +2,5 @@
   "scripts": {
     "cypress:open": "cypress open"
   },
-  "include": ["./node_modules/cypress", "cypress/**/*.js"]
+  "include": ["./node_modules/cypress", "cypress/**/*.js","client/**/*","common/**/*"]
 }

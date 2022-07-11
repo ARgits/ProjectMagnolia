@@ -3,6 +3,8 @@
 <script>
   import { getContext } from "svelte";
   import ConfigureItemButton from "../general components/ConfigureItemButton.svelte";
+  import ARd20Action from "../../../documents/action.js";
+  import ActionSheet from "../action/actionSheet";
   const doc = getContext("DocumentSheetObject");
   let highlight = "";
   function ShowDescription(event) {
@@ -58,12 +60,12 @@
               <div class="action">
                 <span
                   on:click={() => {
-                    action.use();
+                    ARd20Action.use(action);
                   }}
                 >
                   {action.name}
                 </span>
-                <i on:click={() => action.sheet.render(true, { focus: true })} class="fa-solid fa-pen-to-square" data-tooltip="edit" />
+                <i on:click={() => new ActionSheet(action).render(true, { focus: true })} class="fa-solid fa-pen-to-square" data-tooltip="edit" />
               </div>
             {/each}
           </div>
