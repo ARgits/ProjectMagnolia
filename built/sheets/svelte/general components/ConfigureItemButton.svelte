@@ -40,6 +40,6 @@
 <style lang="scss">
   i:hover {
     cursor: pointer;
-    text-shadow: 0px 0px 10px red;
+    text-shadow: 0px 0px 10px blue;
   }
 </style>

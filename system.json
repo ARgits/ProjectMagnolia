@@ -8,7 +8,7 @@
     "maximum": 10
   },
   "authors": [{ "name": "ARgits" }],
-  "esmodules": ["built/ard20_1.js"],
+  "esmodules": ["built/index.mjs"],
   "styles": ["css/select2.css", "built/ard20_1.css", "css/ard20.css"],
   "relationships": {
     "requires": [

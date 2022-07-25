@@ -3,33 +3,31 @@
   "version": "1.0.0",
   "description": "CSS compiler for the Boilerplate system",
   "scripts": {
-    "build": "rollup --config",
-    "build-watch": "rollup --watch --config"
+    "build": "vite build",
+    "dev": "vite",
+    "eslint": "eslint ."
   },
   "browserslist": [
     "last 3 versions"
   ],
-  "author": "John Doe",
+  "author": "Aleksander Kudryavtsev",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@typhonjs-fvtt/runtime": "0.0.15",
+    "@typhonjs-fvtt/runtime": "^0.0.18",
     "filtrex": "^2.2.3",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.5.2",
     "select2": "^4.1.0-rc.0",
-    "svelte": "^3.48.0",
-    "svelte-preprocess": "^4.10.7"
+    "svelte": "^3.49.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
     "@league-of-foundry-developers/foundry-vtt-types": "^9.269.0",
-    "@rollup/plugin-babel": "^5",
     "@typhonjs-config/eslint-config": "^0.3.4",
-    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "cypress": "^9.7.0",
-    "eslint": "^8.18.0",
-    "rollup": "^2.75.7"
+    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "eslint": "^8",
+    "vite": "^3",
+    "svelte-preprocess": "^4.10.7"
   }
 }
