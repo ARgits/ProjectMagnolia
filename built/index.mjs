@@ -12828,7 +12828,8 @@ class ARd20Item extends Item {
     return { rollData, parts };
   }
   async addAction(object = {}) {
-    const actionList = [...this.system.actionList, new ARd20Action(object, { parent: { actor: this.actor, item: this } })];
+    const actionList = this.system.actionList;
+    actionList.push(new ARd20Action(object, { parent: { actor: this.actor, item: this } }));
     await this.update({ "system.actionList": actionList });
   }
 }
@@ -18790,8 +18791,8 @@ function instance$6($$self, $$props, $$invalidate) {
     }
   }
   __name(inputfordocumentsheet1_value_binding, "inputfordocumentsheet1_value_binding");
-  const click_handler2 = /* @__PURE__ */ __name(() => {
-    $doc.addAction();
+  const click_handler2 = /* @__PURE__ */ __name(async () => {
+    await $doc.addAction();
   }, "click_handler");
   return [
     $doc,

@@ -32,8 +32,8 @@
   <fieldset>
     <legend
       >Actions <i
-        on:click={() => {
-          $doc.addAction();
+        on:click={async () => {
+          await $doc.addAction();
         }}
         class="fa-solid fa-file-plus"
       /></legend
@@ -43,9 +43,7 @@
         <div class="name">
           {action.name}
         </div>
-        <div class="control">
-          
-        </div>
+        <div class="control" />
       </div>
     {/each}
   </fieldset>

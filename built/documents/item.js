@@ -816,7 +816,8 @@ export class ARd20Item extends Item {
    * @param {object} action - Action data
    */
   async addAction(object = {}) {
-    const actionList = [...this.system.actionList, new ARd20Action(object, { parent: { actor: this.actor, item: this } })];
+    const actionList = this.system.actionList
+    actionList.push(new ARd20Action(object, { parent: { actor: this.actor, item: this } }));
     await this.update({ "system.actionList": actionList });
   }
 }
