@@ -60,7 +60,7 @@
               <div class="action">
                 <span
                   on:click={() => {
-                    ARd20Action.use(action);
+                    action.use();
                   }}
                 >
                   {action.name}

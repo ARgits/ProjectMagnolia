@@ -197,7 +197,8 @@
     "templates": {
       "base": {
         "description": "",
-        "actionList": []
+        "actionList": [],
+        "actionListData":[]
       }
     },
     "item": {

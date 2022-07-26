@@ -13,6 +13,10 @@ export class ARd20Item extends Item {
     super.prepareData();
   }
   prepareBaseData() {
+    const options = { parent: { actor: this.actor, item: this }, keepId: true };
+    this.system.actionList = this.system.actionListData?.map((action) => {
+      return new ARd20Action(action, options);
+    });
     super.prepareBaseData();
   }
   prepareDerivedData() {
@@ -816,8 +820,24 @@ export class ARd20Item extends Item {
    * @param {object} action - Action data
    */
   async addAction(object = {}) {
-    const actionList = this.system.actionList
-    actionList.push(new ARd20Action(object, { parent: { actor: this.actor, item: this } }));
-    await this.update({ "system.actionList": actionList });
+    const actionList = this.system.actionListData;
+    console.log(this.system.actionList);
+    const numberOfNewActions =
+      this.system.actionList.filter((action) => {
+        console.log(action.name.substr(0, 10) === "New Action");
+        return action.name.substr(0, 10) === "New Action";
+      }).length + 1;
+    object.name = numberOfNewActions - 1 ? "New Action" + "#" + numberOfNewActions : "New Action";
+    object.id = uuidv4();
+    actionList.push(object);
+    await this.update({ "system.actionListData": actionList });
+  }
+  async removeAction(id) {
+    const actionList = this.system.actionListData;
+    const actionIndex = actionList.findIndex((action) => {
+      return action.id === id;
+    });
+    if (actionIndex > -1) actionList.splice(actionIndex, 1);
+    await this.update({ "system.actionListData": actionList });
   }
 }

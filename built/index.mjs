@@ -12259,12 +12259,11 @@ class ARd20Action {
       action: action ?? null
     };
   }
-  static async use(action) {
-    console.log("ACTION USE", action);
-    const act = new ARd20Action(action, { keepId: true, parent: action.parent });
-    act.placeTemplate();
-    act.validateTargets();
-    await act.roll();
+  async use() {
+    console.log("ACTION USE", this);
+    this.placeTemplate();
+    this.validateTargets();
+    await this.roll();
   }
   placeTemplate() {
     console.log("Phase: placing template");
@@ -12291,6 +12290,10 @@ class ARd20Item extends Item {
     super.prepareData();
   }
   prepareBaseData() {
+    const options = { parent: { actor: this.actor, item: this }, keepId: true };
+    this.system.actionList = this.system.actionListData?.map((action) => {
+      return new ARd20Action(action, options);
+    });
     super.prepareBaseData();
   }
   prepareDerivedData() {
@@ -12828,9 +12831,25 @@ class ARd20Item extends Item {
     return { rollData, parts };
   }
   async addAction(object = {}) {
-    const actionList = this.system.actionList;
-    actionList.push(new ARd20Action(object, { parent: { actor: this.actor, item: this } }));
-    await this.update({ "system.actionList": actionList });
+    const actionList = this.system.actionListData;
+    console.log(this.system.actionList);
+    const numberOfNewActions = this.system.actionList.filter((action) => {
+      console.log(action.name.substr(0, 10) === "New Action");
+      return action.name.substr(0, 10) === "New Action";
+    }).length + 1;
+    object.name = numberOfNewActions - 1 ? "New Action#" + numberOfNewActions : "New Action";
+    object.id = uuidv4();
+    actionList.push(object);
+    await this.update({ "system.actionListData": actionList });
+  }
+  async removeAction(id) {
+    const actionList = this.system.actionListData;
+    const actionIndex = actionList.findIndex((action) => {
+      return action.id === id;
+    });
+    if (actionIndex > -1)
+      actionList.splice(actionIndex, 1);
+    await this.update({ "system.actionListData": actionList });
   }
 }
 __name(ARd20Item, "ARd20Item");
@@ -17579,7 +17598,7 @@ function instance$9($$self, $$props, $$invalidate) {
     itemRoll(item);
   }, "click_handler_1");
   const click_handler_2 = /* @__PURE__ */ __name((action) => {
-    ARd20Action.use(action);
+    action.use();
   }, "click_handler_2");
   const click_handler_3 = /* @__PURE__ */ __name((action) => new ActionSheet(action).render(true, { focus: true }), "click_handler_3");
   return [$doc, doc, click_handler2, click_handler_1, click_handler_2, click_handler_3];
@@ -18451,7 +18470,7 @@ __name(RaceSheet, "RaceSheet");
 const FeatureSheet_svelte_svelte_type_style_lang = "";
 function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[8] = list[i];
+  child_ctx[9] = list[i];
   return child_ctx;
 }
 __name(get_each_context$4, "get_each_context$4");
@@ -18534,11 +18553,18 @@ __name(create_if_block$2, "create_if_block$2");
 function create_each_block$4(ctx) {
   let div2;
   let div0;
-  let t0_value = ctx[8].name + "";
+  let t0_value = ctx[9].name + "";
   let t0;
   let t1;
   let div1;
+  let i;
   let t2;
+  let mounted;
+  let dispose;
+  function click_handler_1() {
+    return ctx[8](ctx[9]);
+  }
+  __name(click_handler_1, "click_handler_1");
   return {
     c() {
       div2 = element("div");
@@ -18546,10 +18572,13 @@ function create_each_block$4(ctx) {
       t0 = text(t0_value);
       t1 = space();
       div1 = element("div");
+      i = element("i");
       t2 = space();
       attr(div0, "class", "name");
+      attr(i, "class", "fa-solid fa-trash-can");
+      attr(i, "data-tooltip", "delete");
       attr(div1, "class", "control");
-      attr(div2, "class", "action");
+      attr(div2, "class", "action svelte-7vrl7x");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -18557,15 +18586,23 @@ function create_each_block$4(ctx) {
       append(div0, t0);
       append(div2, t1);
       append(div2, div1);
+      append(div1, i);
       append(div2, t2);
+      if (!mounted) {
+        dispose = listen(i, "click", click_handler_1);
+        mounted = true;
+      }
     },
-    p(ctx2, dirty) {
-      if (dirty & 1 && t0_value !== (t0_value = ctx2[8].name + ""))
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & 1 && t0_value !== (t0_value = ctx[9].name + ""))
         set_data(t0, t0_value);
     },
     d(detaching) {
       if (detaching)
         detach(div2);
+      mounted = false;
+      dispose();
     }
   };
 }
@@ -18638,7 +18675,7 @@ function create_fragment$6(ctx) {
       for (let i2 = 0; i2 < each_blocks.length; i2 += 1) {
         each_blocks[i2].c();
       }
-      attr(header, "class", "svelte-zqww4b");
+      attr(header, "class", "svelte-7vrl7x");
       attr(input, "type", "checkbox");
       attr(i, "class", "fa-solid fa-file-plus");
     },
@@ -18794,6 +18831,7 @@ function instance$6($$self, $$props, $$invalidate) {
   const click_handler2 = /* @__PURE__ */ __name(async () => {
     await $doc.addAction();
   }, "click_handler");
+  const click_handler_1 = /* @__PURE__ */ __name((action) => $doc.removeAction(action.id), "click_handler_1");
   return [
     $doc,
     doc,
@@ -18802,7 +18840,8 @@ function instance$6($$self, $$props, $$invalidate) {
     change_handler,
     inputfordocumentsheet0_value_binding,
     inputfordocumentsheet1_value_binding,
-    click_handler2
+    click_handler2,
+    click_handler_1
   ];
 }
 __name(instance$6, "instance$6");

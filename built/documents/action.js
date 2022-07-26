@@ -69,12 +69,11 @@ export default class ARd20Action {
    * 3.
    *
    */
-  static async use(action) {
-    console.log("ACTION USE", action);
-    const act = new ARd20Action(action, {keepId:true, parent:action.parent})
-    act.placeTemplate();
-    act.validateTargets();
-    await act.roll();
+  async use() {
+    console.log("ACTION USE", this);
+    this.placeTemplate();
+    this.validateTargets();
+    await this.roll();
   }
   placeTemplate() {
     console.log("Phase: placing template");

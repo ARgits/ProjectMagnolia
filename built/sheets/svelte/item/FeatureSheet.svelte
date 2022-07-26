@@ -43,7 +43,9 @@
         <div class="name">
           {action.name}
         </div>
-        <div class="control" />
+        <div class="control">
+          <i on:click={() => $doc.removeAction(action.id)} class="fa-solid fa-trash-can" data-tooltip="delete" />
+        </div>
       </div>
     {/each}
   </fieldset>
@@ -53,5 +55,9 @@
   header {
     max-height: 25%;
     display: flex;
+  }
+  .action {
+    display: flex;
+    flex-direction: column;
   }
 </style>
