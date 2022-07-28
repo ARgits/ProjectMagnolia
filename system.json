@@ -9,7 +9,7 @@
   },
   "authors": [{ "name": "ARgits" }],
   "esmodules": ["built/index.mjs"],
-  "styles": ["css/select2.css", "built/ard20_1.css", "css/ard20.css"],
+  "styles": ["built/css/select2.css", "built/style.css", "built/css/ard20.css"],
   "relationships": {
     "requires": [
       {

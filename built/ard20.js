@@ -14,6 +14,7 @@ import * as dice from "./dice/dice.js";
 import * as chat from "./helpers/chat.js";
 import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 import ARd20Action from "../built/documents/action.js";
+import ARd20Token from "../built/documents/token.js"
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -55,6 +56,7 @@ Hooks.once("init", function () {
   // Define custom Document classes
   CONFIG.Actor.documentClass = ARd20Actor;
   CONFIG.Item.documentClass = ARd20Item;
+  CONFIG.Token.objectClass = ARd20Token;
   // Register sheet application classes
   console.log("register sheets");
   Actors.unregisterSheet("core", ActorSheet);
@@ -166,12 +168,12 @@ export function rollItemMacro(itemName) {
 }
 Hooks.on("renderChatMessage", (app, html, data) => {
   // Display action buttons
-  chat.displayChatActionButtons(app, html, data);
+  //chat.displayChatActionButtons(app, html, data);
   // Highlight critical success or failure die
-  chat.highlightCriticalSuccessFailure(app, html, data);
+  //chat.highlightCriticalSuccessFailure(app, html, data);
   // Optionally collapse the content
 });
-Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
+//Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 //@ts-expect-error
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 //@ts-expect-error

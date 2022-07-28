@@ -415,4 +415,26 @@ export class SvelteDocumentSheet extends SvelteApplication {
     super.render(force, options);
     return this;
   }
+  addToFavorite(item) {
+    const doc = this.reactive.document;
+    const uuid = item.uuid
+    if (doc.documentName !== "Actor") return;
+    let favorites = doc.system.favorites;
+    favorites.push(uuid);
+    doc.update({ "system.favorites": favorites });
+  }
+  async createEmbeddedItem(type) {
+    const doc = this.reactive.document;
+    if (doc.documentName !== "Actor") return;
+    const itemNumber = doc.itemTypes[type].filter((document) => {
+      return document.name.slice(0, type.length + 6) === `New ${type} #`;
+    }).length;
+    await Item.create([{ name: `New ${type} #${itemNumber + 1}`, type: type }], { parent: doc });
+  }
+  deleteEmbeddedItem(item) {
+    item.delete()
+  }
+  showEmbeddedItem(item) {
+    item.sheet.render(true);
+  }
 }

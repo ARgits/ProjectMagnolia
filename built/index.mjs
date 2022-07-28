@@ -8378,7 +8378,7 @@ function get_each_context$e(ctx, list, i) {
   return child_ctx;
 }
 __name(get_each_context$e, "get_each_context$e");
-function create_if_block_1$4(ctx) {
+function create_if_block_1$3(ctx) {
   let p;
   return {
     c() {
@@ -8398,8 +8398,8 @@ function create_if_block_1$4(ctx) {
     }
   };
 }
-__name(create_if_block_1$4, "create_if_block_1$4");
-function create_if_block$e(ctx) {
+__name(create_if_block_1$3, "create_if_block_1$3");
+function create_if_block$d(ctx) {
   let each_1_anchor;
   let current;
   let each_value = ctx[1];
@@ -8469,7 +8469,7 @@ function create_if_block$e(ctx) {
     }
   };
 }
-__name(create_if_block$e, "create_if_block$e");
+__name(create_if_block$d, "create_if_block$d");
 function create_each_block$e(ctx) {
   let switch_instance;
   let switch_instance_anchor;
@@ -8550,7 +8550,7 @@ function create_fragment$u(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$e, create_if_block_1$4];
+  const if_block_creators = [create_if_block$d, create_if_block_1$3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (dirty & 2)
@@ -10123,7 +10123,7 @@ function create_else_block$1(ctx) {
   };
 }
 __name(create_else_block$1, "create_else_block$1");
-function create_if_block$d(ctx) {
+function create_if_block$c(ctx) {
   let tjscontainer;
   let current;
   tjscontainer = new TJSContainer({
@@ -10153,7 +10153,7 @@ function create_if_block$d(ctx) {
     }
   };
 }
-__name(create_if_block$d, "create_if_block$d");
+__name(create_if_block$c, "create_if_block$c");
 function create_fragment$p(ctx) {
   let div;
   let tjsapplicationheader;
@@ -10179,7 +10179,7 @@ function create_fragment$p(ctx) {
       draggableOptions: ctx[7]
     }
   });
-  const if_block_creators = [create_if_block$d, create_else_block$1];
+  const if_block_creators = [create_if_block$c, create_else_block$1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (Array.isArray(ctx2[14]))
@@ -10641,7 +10641,7 @@ function get_each_context$c(ctx, list, i) {
   return child_ctx;
 }
 __name(get_each_context$c, "get_each_context$c");
-function create_if_block_3$2(ctx) {
+function create_if_block_3$1(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -10717,8 +10717,8 @@ function create_if_block_3$2(ctx) {
     }
   };
 }
-__name(create_if_block_3$2, "create_if_block_3$2");
-function create_if_block_2$2(ctx) {
+__name(create_if_block_3$1, "create_if_block_3$1");
+function create_if_block_2$1(ctx) {
   let html_tag;
   let html_anchor;
   return {
@@ -10745,8 +10745,8 @@ function create_if_block_2$2(ctx) {
     }
   };
 }
-__name(create_if_block_2$2, "create_if_block_2$2");
-function create_if_block$c(ctx) {
+__name(create_if_block_2$1, "create_if_block_2$1");
+function create_if_block$b(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
@@ -10786,8 +10786,8 @@ function create_if_block$c(ctx) {
     }
   };
 }
-__name(create_if_block$c, "create_if_block$c");
-function create_if_block_1$3(ctx) {
+__name(create_if_block$b, "create_if_block$b");
+function create_if_block_1$2(ctx) {
   let html_tag;
   let raw_value = ctx[15].icon + "";
   let html_anchor;
@@ -10813,7 +10813,7 @@ function create_if_block_1$3(ctx) {
     }
   };
 }
-__name(create_if_block_1$3, "create_if_block_1$3");
+__name(create_if_block_1$2, "create_if_block_1$2");
 function create_each_block$c(key_1, ctx) {
   let button;
   let span;
@@ -10825,7 +10825,7 @@ function create_each_block$c(key_1, ctx) {
   let applyStyles_action;
   let mounted;
   let dispose;
-  let if_block = ctx[15].icon && create_if_block_1$3(ctx);
+  let if_block = ctx[15].icon && create_if_block_1$2(ctx);
   function click_handler2() {
     return ctx[13](ctx[15]);
   }
@@ -10866,7 +10866,7 @@ function create_each_block$c(key_1, ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block_1$3(ctx);
+          if_block = create_if_block_1$2(ctx);
           if_block.c();
           if_block.m(span, t0);
         }
@@ -10909,7 +10909,7 @@ function create_fragment$o(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block_2$2, create_if_block_3$2];
+  const if_block_creators = [create_if_block_2$1, create_if_block_3$1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (typeof ctx2[2] === "string")
@@ -10922,7 +10922,7 @@ function create_fragment$o(ctx) {
   if (~(current_block_type_index = select_block_type(ctx))) {
     if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   }
-  let if_block1 = ctx[1].length && create_if_block$c(ctx);
+  let if_block1 = ctx[1].length && create_if_block$b(ctx);
   return {
     c() {
       t0 = space();
@@ -10984,7 +10984,7 @@ function create_fragment$o(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$c(ctx2);
+          if_block1 = create_if_block$b(ctx2);
           if_block1.c();
           if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
         }
@@ -11288,7 +11288,7 @@ function create_else_block(ctx) {
   };
 }
 __name(create_else_block, "create_else_block");
-function create_if_block$b(ctx) {
+function create_if_block$a(ctx) {
   let tjsglasspane;
   let current;
   const tjsglasspane_spread_levels = [
@@ -11346,7 +11346,7 @@ function create_if_block$b(ctx) {
     }
   };
 }
-__name(create_if_block$b, "create_if_block$b");
+__name(create_if_block$a, "create_if_block$a");
 function create_default_slot_2(ctx) {
   let dialogcontent;
   let updating_autoClose;
@@ -11555,7 +11555,7 @@ function create_fragment$n(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$b, create_else_block];
+  const if_block_creators = [create_if_block$a, create_else_block];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (ctx2[5])
@@ -12254,10 +12254,20 @@ class ARd20Action {
   setParent(object = {}) {
     const { actor, item, action } = object;
     this.parent = {
-      actor: actor ?? null,
-      item: item ?? null,
+      actor: actor.uuid ?? null,
+      item: item.uuid ?? null,
       action: action ?? null
     };
+  }
+  async getActor() {
+    if (!this.parent.actor)
+      return;
+    return await fromUuid(this.parent.actor);
+  }
+  async getItem() {
+    if (!this.parent.item)
+      return;
+    return await fromUuid(this.parent.item);
   }
   async use() {
     console.log("ACTION USE", this);
@@ -12271,7 +12281,28 @@ class ARd20Action {
       return;
   }
   validateTargets() {
+    const actorUuid = this.parent.actor;
+    const activeToken = game.scenes.current.tokens.filter((token) => {
+      return token._object.controlled && token.actor.uuid === actorUuid;
+    })[0];
     console.log("Phase: validatig targets");
+    if (!activeToken)
+      return;
+    const activeTokenUuid = activeToken.uuid;
+    const activeTokenVision = activeToken.object.vision;
+    console.log("Active Token: ", activeToken);
+    const tokens = game.scenes.current.tokens.filter((token) => {
+      return token.uuid !== activeTokenUuid && activeTokenVision.fov.contains(token.x, token.y);
+    });
+    console.log(tokens);
+    tokens.forEach((token) => {
+      token.object.showHighlight(true);
+    });
+    const cancelHighlight = tokens.forEach((token) => {
+      token.object.showHighlight(false);
+    });
+    console.log("Tokens that you see: ", tokens);
+    setTimeout(cancelHighlight, 5e3);
   }
   async roll() {
     console.log("Phase: rolling");
@@ -12280,8 +12311,10 @@ class ARd20Action {
     this.bonus;
     this.formula;
     let roll = new Roll(this.formula);
+    const actor = await this.getActor();
+    const item = await this.getItem();
     await roll.evaluate();
-    await roll.toMessage({ speaker: { alias: `${this.parent.actor.name}: ${this.parent.item.name} (${this.name})` } });
+    await roll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name})` } });
   }
 }
 __name(ARd20Action, "ARd20Action");
@@ -12977,7 +13010,7 @@ function prepareActiveEffectCategories(effects) {
 }
 __name(prepareActiveEffectCategories, "prepareActiveEffectCategories");
 const ChangeButton_svelte_svelte_type_style_lang = "";
-function create_if_block_1$2(ctx) {
+function create_if_block_1$1(ctx) {
   let i;
   let mounted;
   let dispose;
@@ -13007,8 +13040,8 @@ function create_if_block_1$2(ctx) {
     }
   };
 }
-__name(create_if_block_1$2, "create_if_block_1$2");
-function create_if_block$a(ctx) {
+__name(create_if_block_1$1, "create_if_block_1$1");
+function create_if_block$9(ctx) {
   let i;
   let mounted;
   let dispose;
@@ -13038,12 +13071,12 @@ function create_if_block$a(ctx) {
     }
   };
 }
-__name(create_if_block$a, "create_if_block$a");
+__name(create_if_block$9, "create_if_block$9");
 function create_fragment$l(ctx) {
   let t;
   let if_block1_anchor;
-  let if_block0 = ctx[0] !== void 0 && create_if_block_1$2(ctx);
-  let if_block1 = ctx[1] !== void 0 && create_if_block$a(ctx);
+  let if_block0 = ctx[0] !== void 0 && create_if_block_1$1(ctx);
+  let if_block1 = ctx[1] !== void 0 && create_if_block$9(ctx);
   return {
     c() {
       if (if_block0)
@@ -13066,7 +13099,7 @@ function create_fragment$l(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_1$2(ctx2);
+          if_block0 = create_if_block_1$1(ctx2);
           if_block0.c();
           if_block0.m(t.parentNode, t);
         }
@@ -13078,7 +13111,7 @@ function create_fragment$l(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$a(ctx2);
+          if_block1 = create_if_block$9(ctx2);
           if_block1.c();
           if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
         }
@@ -13500,7 +13533,7 @@ function create_if_block_4(ctx) {
   };
 }
 __name(create_if_block_4, "create_if_block_4");
-function create_if_block_3$1(ctx) {
+function create_if_block_3(ctx) {
   let td;
   let changebutton;
   let current;
@@ -13557,8 +13590,8 @@ function create_if_block_3$1(ctx) {
     }
   };
 }
-__name(create_if_block_3$1, "create_if_block_3$1");
-function create_if_block_2$1(ctx) {
+__name(create_if_block_3, "create_if_block_3");
+function create_if_block_2(ctx) {
   let td;
   let t;
   let mounted;
@@ -13589,8 +13622,8 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-__name(create_if_block_2$1, "create_if_block_2$1");
-function create_if_block_1$1(ctx) {
+__name(create_if_block_2, "create_if_block_2");
+function create_if_block_1(ctx) {
   let td;
   let t;
   let mounted;
@@ -13621,8 +13654,8 @@ function create_if_block_1$1(ctx) {
     }
   };
 }
-__name(create_if_block_1$1, "create_if_block_1$1");
-function create_if_block$9(ctx) {
+__name(create_if_block_1, "create_if_block_1");
+function create_if_block$8(ctx) {
   let td;
   let t;
   let td_rowspan_value;
@@ -13650,7 +13683,7 @@ function create_if_block$9(ctx) {
     }
   };
 }
-__name(create_if_block$9, "create_if_block$9");
+__name(create_if_block$8, "create_if_block$8");
 function create_fragment$k(ctx) {
   let tr;
   let show_if_10 = ctx[5].includes("Name");
@@ -13683,10 +13716,10 @@ function create_fragment$k(ctx) {
   let if_block4 = show_if_6 && create_if_block_6(ctx);
   let if_block5 = show_if_5 && create_if_block_5(ctx);
   let if_block6 = show_if_4 && create_if_block_4(ctx);
-  let if_block7 = show_if_3 && create_if_block_3$1(ctx);
-  let if_block8 = show_if_2 && create_if_block_2$1(ctx);
-  let if_block9 = show_if_1 && create_if_block_1$1(ctx);
-  let if_block10 = show_if && create_if_block$9(ctx);
+  let if_block7 = show_if_3 && create_if_block_3(ctx);
+  let if_block8 = show_if_2 && create_if_block_2(ctx);
+  let if_block9 = show_if_1 && create_if_block_1(ctx);
+  let if_block10 = show_if && create_if_block$8(ctx);
   return {
     c() {
       tr = element("tr");
@@ -13878,7 +13911,7 @@ function create_fragment$k(ctx) {
             transition_in(if_block7, 1);
           }
         } else {
-          if_block7 = create_if_block_3$1(ctx2);
+          if_block7 = create_if_block_3(ctx2);
           if_block7.c();
           transition_in(if_block7, 1);
           if_block7.m(tr, t7);
@@ -13896,7 +13929,7 @@ function create_fragment$k(ctx) {
         if (if_block8) {
           if_block8.p(ctx2, dirty);
         } else {
-          if_block8 = create_if_block_2$1(ctx2);
+          if_block8 = create_if_block_2(ctx2);
           if_block8.c();
           if_block8.m(tr, t8);
         }
@@ -13910,7 +13943,7 @@ function create_fragment$k(ctx) {
         if (if_block9) {
           if_block9.p(ctx2, dirty);
         } else {
-          if_block9 = create_if_block_1$1(ctx2);
+          if_block9 = create_if_block_1(ctx2);
           if_block9.c();
           if_block9.m(tr, t9);
         }
@@ -13924,7 +13957,7 @@ function create_fragment$k(ctx) {
         if (if_block10) {
           if_block10.p(ctx2, dirty);
         } else {
-          if_block10 = create_if_block$9(ctx2);
+          if_block10 = create_if_block$8(ctx2);
           if_block10.c();
           if_block10.m(tr, null);
         }
@@ -14538,7 +14571,7 @@ function create_each_block_1$6(ctx) {
   };
 }
 __name(create_each_block_1$6, "create_each_block_1$6");
-function create_if_block$8(ctx) {
+function create_if_block$7(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -14608,11 +14641,11 @@ function create_if_block$8(ctx) {
     }
   };
 }
-__name(create_if_block$8, "create_if_block$8");
+__name(create_if_block$7, "create_if_block$7");
 function create_each_block$a(ctx) {
   let if_block_anchor;
   let current;
-  let if_block = ctx[9].id === ctx[0] && create_if_block$8(ctx);
+  let if_block = ctx[9].id === ctx[0] && create_if_block$7(ctx);
   return {
     c() {
       if (if_block)
@@ -14633,7 +14666,7 @@ function create_each_block$a(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$8(ctx2);
+          if_block = create_if_block$7(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -15851,7 +15884,7 @@ class EmptySheet extends SvelteComponent {
 }
 __name(EmptySheet, "EmptySheet");
 const InputForDocumentSheet_svelte_svelte_type_style_lang = "";
-function create_if_block$7(ctx) {
+function create_if_block$6(ctx) {
   let span;
   let t;
   return {
@@ -15876,7 +15909,7 @@ function create_if_block$7(ctx) {
     }
   };
 }
-__name(create_if_block$7, "create_if_block$7");
+__name(create_if_block$6, "create_if_block$6");
 function create_fragment$f(ctx) {
   let t0;
   let input_1;
@@ -15884,7 +15917,7 @@ function create_fragment$f(ctx) {
   let i;
   let mounted;
   let dispose;
-  let if_block = ctx[1] && create_if_block$7(ctx);
+  let if_block = ctx[1] && create_if_block$6(ctx);
   return {
     c() {
       if (if_block)
@@ -15920,7 +15953,7 @@ function create_fragment$f(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$7(ctx2);
+          if_block = create_if_block$6(ctx2);
           if_block.c();
           if_block.m(t0.parentNode, t0);
         }
@@ -16339,7 +16372,7 @@ function create_each_block_1$5(ctx) {
   };
 }
 __name(create_each_block_1$5, "create_each_block_1$5");
-function create_if_block$6(ctx) {
+function create_if_block$5(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -16404,11 +16437,11 @@ function create_if_block$6(ctx) {
     }
   };
 }
-__name(create_if_block$6, "create_if_block$6");
+__name(create_if_block$5, "create_if_block$5");
 function create_each_block$9(ctx) {
   let if_block_anchor;
   let current;
-  let if_block = ctx[3].id === ctx[0] && create_if_block$6(ctx);
+  let if_block = ctx[3].id === ctx[0] && create_if_block$5(ctx);
   return {
     c() {
       if (if_block)
@@ -16429,7 +16462,7 @@ function create_each_block$9(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$6(ctx2);
+          if_block = create_if_block$5(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -16603,7 +16636,7 @@ function get_each_context$8(ctx, list, i) {
   return child_ctx;
 }
 __name(get_each_context$8, "get_each_context$8");
-function create_if_block$5(ctx) {
+function create_if_block$4(ctx) {
   let t;
   return {
     c() {
@@ -16618,7 +16651,7 @@ function create_if_block$5(ctx) {
     }
   };
 }
-__name(create_if_block$5, "create_if_block$5");
+__name(create_if_block$4, "create_if_block$4");
 function create_each_block$8(ctx) {
   let div;
   let span0;
@@ -16637,7 +16670,7 @@ function create_each_block$8(ctx) {
   let t7;
   let mounted;
   let dispose;
-  let if_block = ctx[3][1].value > 0 && create_if_block$5();
+  let if_block = ctx[3][1].value > 0 && create_if_block$4();
   function click_handler2(...args) {
     return ctx[2](ctx[3], ...args);
   }
@@ -16690,7 +16723,7 @@ function create_each_block$8(ctx) {
         if (if_block)
           ;
         else {
-          if_block = create_if_block$5();
+          if_block = create_if_block$4();
           if_block.c();
           if_block.m(span2, t5);
         }
@@ -16802,226 +16835,31 @@ class InventoryTab extends SvelteComponent {
 }
 __name(InventoryTab, "InventoryTab");
 const ConfigureItemButton_svelte_svelte_type_style_lang = "";
-function create_if_block_3(ctx) {
-  let i;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      i = element("i");
-      attr(i, "class", "fa-solid fa-pen-to-square svelte-1mjd618");
-      attr(i, "data-tooltip", "edit");
-    },
-    m(target, anchor) {
-      insert(target, i, anchor);
-      if (!mounted) {
-        dispose = listen(i, "click", ctx[8]);
-        mounted = true;
-      }
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching)
-        detach(i);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_if_block_3, "create_if_block_3");
-function create_if_block_2(ctx) {
-  let i;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      i = element("i");
-      attr(i, "class", "fa-solid fa-trash-can svelte-1mjd618");
-      attr(i, "data-tooltip", "delete");
-    },
-    m(target, anchor) {
-      insert(target, i, anchor);
-      if (!mounted) {
-        dispose = listen(i, "click", ctx[9]);
-        mounted = true;
-      }
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching)
-        detach(i);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_if_block_2, "create_if_block_2");
-function create_if_block_1(ctx) {
-  let i;
-  let i_data_tooltip_value;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      i = element("i");
-      attr(i, "class", "fa-solid fa-file-plus svelte-1mjd618");
-      attr(i, "data-tooltip", i_data_tooltip_value = "create new " + ctx[1]);
-    },
-    m(target, anchor) {
-      insert(target, i, anchor);
-      if (!mounted) {
-        dispose = listen(i, "click", ctx[10]);
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty & 2 && i_data_tooltip_value !== (i_data_tooltip_value = "create new " + ctx2[1])) {
-        attr(i, "data-tooltip", i_data_tooltip_value);
-      }
-    },
-    d(detaching) {
-      if (detaching)
-        detach(i);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_if_block_1, "create_if_block_1");
-function create_if_block$4(ctx) {
-  let i;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      i = element("i");
-      attr(i, "class", "fa-solid fa-stars svelte-1mjd618");
-      attr(i, "data-tooltip", "add to favorite");
-    },
-    m(target, anchor) {
-      insert(target, i, anchor);
-      if (!mounted) {
-        dispose = listen(i, "click", ctx[11]);
-        mounted = true;
-      }
-    },
-    p: noop,
-    d(detaching) {
-      if (detaching)
-        detach(i);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_if_block$4, "create_if_block$4");
 function create_fragment$a(ctx) {
-  let t0;
-  let t1;
-  let t2;
-  let if_block3_anchor;
-  let if_block0 = ctx[0] === "edit" && create_if_block_3(ctx);
-  let if_block1 = ctx[0] === "delete" && create_if_block_2(ctx);
-  let if_block2 = ctx[0] === "create" && create_if_block_1(ctx);
-  let if_block3 = ctx[0] === "favorite" && create_if_block$4(ctx);
+  let i;
+  let mounted;
+  let dispose;
   return {
     c() {
-      if (if_block0)
-        if_block0.c();
-      t0 = space();
-      if (if_block1)
-        if_block1.c();
-      t1 = space();
-      if (if_block2)
-        if_block2.c();
-      t2 = space();
-      if (if_block3)
-        if_block3.c();
-      if_block3_anchor = empty();
+      i = element("i");
+      attr(i, "class", null_to_empty(ctx[2]) + " svelte-1mjd618");
+      attr(i, "data-tooltip", ctx[3]);
     },
     m(target, anchor) {
-      if (if_block0)
-        if_block0.m(target, anchor);
-      insert(target, t0, anchor);
-      if (if_block1)
-        if_block1.m(target, anchor);
-      insert(target, t1, anchor);
-      if (if_block2)
-        if_block2.m(target, anchor);
-      insert(target, t2, anchor);
-      if (if_block3)
-        if_block3.m(target, anchor);
-      insert(target, if_block3_anchor, anchor);
-    },
-    p(ctx2, [dirty]) {
-      if (ctx2[0] === "edit") {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-        } else {
-          if_block0 = create_if_block_3(ctx2);
-          if_block0.c();
-          if_block0.m(t0.parentNode, t0);
-        }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
-      }
-      if (ctx2[0] === "delete") {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
-        } else {
-          if_block1 = create_if_block_2(ctx2);
-          if_block1.c();
-          if_block1.m(t1.parentNode, t1);
-        }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
-      }
-      if (ctx2[0] === "create") {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
-        } else {
-          if_block2 = create_if_block_1(ctx2);
-          if_block2.c();
-          if_block2.m(t2.parentNode, t2);
-        }
-      } else if (if_block2) {
-        if_block2.d(1);
-        if_block2 = null;
-      }
-      if (ctx2[0] === "favorite") {
-        if (if_block3) {
-          if_block3.p(ctx2, dirty);
-        } else {
-          if_block3 = create_if_block$4(ctx2);
-          if_block3.c();
-          if_block3.m(if_block3_anchor.parentNode, if_block3_anchor);
-        }
-      } else if (if_block3) {
-        if_block3.d(1);
-        if_block3 = null;
+      insert(target, i, anchor);
+      if (!mounted) {
+        dispose = listen(i, "click", ctx[5]);
+        mounted = true;
       }
     },
+    p: noop,
     i: noop,
     o: noop,
     d(detaching) {
-      if (if_block0)
-        if_block0.d(detaching);
       if (detaching)
-        detach(t0);
-      if (if_block1)
-        if_block1.d(detaching);
-      if (detaching)
-        detach(t1);
-      if (if_block2)
-        if_block2.d(detaching);
-      if (detaching)
-        detach(t2);
-      if (if_block3)
-        if_block3.d(detaching);
-      if (detaching)
-        detach(if_block3_anchor);
+        detach(i);
+      mounted = false;
+      dispose();
     }
   };
 }
@@ -17029,102 +16867,39 @@ __name(create_fragment$a, "create_fragment$a");
 function instance$a($$self, $$props, $$invalidate) {
   let { item = null } = $$props;
   let { action } = $$props;
-  let { doc = null } = $$props;
-  let { type = null } = $$props;
-  function OpenItem() {
-    item.sheet.render(true);
-  }
-  __name(OpenItem, "OpenItem");
-  function DeleteItem() {
-    item.delete();
-  }
-  __name(DeleteItem, "DeleteItem");
-  async function CreateItem() {
-    if (!doc)
-      return;
-    let itemNumber = doc.itemTypes[type].filter((item2) => {
-      return item2.name.slice(0, type.length + 6) === `New ${type} #`;
-    }).length;
-    await Item.create(
-      [
-        {
-          name: `New ${type} #${itemNumber + 1}`,
-          type
-        }
-      ],
-      { parent: doc }
-    );
-  }
-  __name(CreateItem, "CreateItem");
-  async function addToFavorite() {
-    if (!doc)
-      return;
-    let favorites = doc.system.favorites;
-    favorites.push(item);
-    doc.update({ "system.favorites": favorites });
-  }
-  __name(addToFavorite, "addToFavorite");
-  const click_handler2 = /* @__PURE__ */ __name(() => OpenItem(), "click_handler");
-  const click_handler_1 = /* @__PURE__ */ __name(() => DeleteItem(), "click_handler_1");
-  const click_handler_2 = /* @__PURE__ */ __name(() => CreateItem(), "click_handler_2");
-  const click_handler_3 = /* @__PURE__ */ __name(() => addToFavorite(), "click_handler_3");
+  const buttons = getContext("ConfigButtons");
+  const func = buttons[action].function;
+  const className = buttons[action].class;
+  const tooltip = action === "create" && item ? buttons[action].tooltip(item) : buttons[action].tooltip;
+  const click_handler2 = /* @__PURE__ */ __name(() => {
+    func(item);
+  }, "click_handler");
   $$self.$$set = ($$props2) => {
     if ("item" in $$props2)
-      $$invalidate(6, item = $$props2.item);
+      $$invalidate(0, item = $$props2.item);
     if ("action" in $$props2)
-      $$invalidate(0, action = $$props2.action);
-    if ("doc" in $$props2)
-      $$invalidate(7, doc = $$props2.doc);
-    if ("type" in $$props2)
-      $$invalidate(1, type = $$props2.type);
+      $$invalidate(4, action = $$props2.action);
   };
-  return [
-    action,
-    type,
-    OpenItem,
-    DeleteItem,
-    CreateItem,
-    addToFavorite,
-    item,
-    doc,
-    click_handler2,
-    click_handler_1,
-    click_handler_2,
-    click_handler_3
-  ];
+  return [item, func, className, tooltip, action, click_handler2];
 }
 __name(instance$a, "instance$a");
 class ConfigureItemButton extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$a, create_fragment$a, safe_not_equal, { item: 6, action: 0, doc: 7, type: 1 });
+    init(this, options, instance$a, create_fragment$a, safe_not_equal, { item: 0, action: 4 });
   }
   get item() {
-    return this.$$.ctx[6];
+    return this.$$.ctx[0];
   }
   set item(item) {
     this.$$set({ item });
     flush();
   }
   get action() {
-    return this.$$.ctx[0];
+    return this.$$.ctx[4];
   }
   set action(action) {
     this.$$set({ action });
-    flush();
-  }
-  get doc() {
-    return this.$$.ctx[7];
-  }
-  set doc(doc) {
-    this.$$set({ doc });
-    flush();
-  }
-  get type() {
-    return this.$$.ctx[1];
-  }
-  set type(type) {
-    this.$$set({ type });
     flush();
   }
 }
@@ -17276,8 +17051,6 @@ function create_each_block$7(ctx) {
   configureitembutton1 = new ConfigureItemButton({
     props: {
       item: ctx[6],
-      doc: ctx[0],
-      type: "feature",
       action: "favorite"
     }
   });
@@ -17402,8 +17175,6 @@ function create_each_block$7(ctx) {
       const configureitembutton1_changes = {};
       if (dirty & 1)
         configureitembutton1_changes.item = ctx2[6];
-      if (dirty & 1)
-        configureitembutton1_changes.doc = ctx2[0];
       configureitembutton1.$set(configureitembutton1_changes);
       const configureitembutton2_changes = {};
       if (dirty & 1)
@@ -17457,11 +17228,7 @@ function create_fragment$9(ctx) {
   let tbody;
   let current;
   configureitembutton = new ConfigureItemButton({
-    props: {
-      doc: ctx[0],
-      type: "feature",
-      action: "create"
-    }
+    props: { item: "feature", action: "create" }
   });
   let each_value = ctx[0].itemTypes.feature;
   let each_blocks = [];
@@ -17514,10 +17281,6 @@ function create_fragment$9(ctx) {
       current = true;
     },
     p(ctx2, [dirty]) {
-      const configureitembutton_changes = {};
-      if (dirty & 1)
-        configureitembutton_changes.doc = ctx2[0];
-      configureitembutton.$set(configureitembutton_changes);
       if (dirty & 1) {
         each_value = ctx2[0].itemTypes.feature;
         let i;
@@ -17635,37 +17398,37 @@ __name(BiographyTab, "BiographyTab");
 const ActorSheet_svelte_svelte_type_style_lang = "";
 function get_each_context$6(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[7] = list[i];
+  child_ctx[8] = list[i];
   return child_ctx;
 }
 __name(get_each_context$6, "get_each_context$6");
 function get_each_context_1$3(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[10] = list[i];
+  child_ctx[11] = list[i];
   return child_ctx;
 }
 __name(get_each_context_1$3, "get_each_context_1$3");
 function create_each_block_1$3(ctx) {
   let div;
   let span0;
-  let t0_value = ctx[10][1].label + "";
+  let t0_value = ctx[11][1].label + "";
   let t0;
   let t1;
   let span1;
   let t2;
-  let t3_value = ctx[10][1].value + "";
+  let t3_value = ctx[11][1].value + "";
   let t3;
   let t4;
   let span2;
   let t5;
-  let t6_value = ctx[10][1].mod + "";
+  let t6_value = ctx[11][1].mod + "";
   let t6;
   let t7;
   let div_data_tooltip_value;
   let mounted;
   let dispose;
   function click_handler2(...args) {
-    return ctx[6](ctx[10], ...args);
+    return ctx[6](ctx[11], ...args);
   }
   __name(click_handler2, "click_handler");
   return {
@@ -17682,7 +17445,7 @@ function create_each_block_1$3(ctx) {
       t5 = text("Mod: ");
       t6 = text(t6_value);
       t7 = space();
-      attr(div, "data-tooltip", div_data_tooltip_value = "click to roll " + ctx[10][1].label);
+      attr(div, "data-tooltip", div_data_tooltip_value = "click to roll " + ctx[11][1].label);
       attr(div, "data-tooltip-direction", "DOWN");
       attr(div, "class", "svelte-rm2f2e");
     },
@@ -17706,13 +17469,13 @@ function create_each_block_1$3(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty & 1 && t0_value !== (t0_value = ctx[10][1].label + ""))
+      if (dirty & 1 && t0_value !== (t0_value = ctx[11][1].label + ""))
         set_data(t0, t0_value);
-      if (dirty & 1 && t3_value !== (t3_value = ctx[10][1].value + ""))
+      if (dirty & 1 && t3_value !== (t3_value = ctx[11][1].value + ""))
         set_data(t3, t3_value);
-      if (dirty & 1 && t6_value !== (t6_value = ctx[10][1].mod + ""))
+      if (dirty & 1 && t6_value !== (t6_value = ctx[11][1].mod + ""))
         set_data(t6, t6_value);
-      if (dirty & 1 && div_data_tooltip_value !== (div_data_tooltip_value = "click to roll " + ctx[10][1].label)) {
+      if (dirty & 1 && div_data_tooltip_value !== (div_data_tooltip_value = "click to roll " + ctx[11][1].label)) {
         attr(div, "data-tooltip", div_data_tooltip_value);
       }
     },
@@ -17727,14 +17490,14 @@ function create_each_block_1$3(ctx) {
 __name(create_each_block_1$3, "create_each_block_1$3");
 function create_each_block$6(ctx) {
   let span0;
-  let t0_value = ctx[7][0] + "";
+  let t0_value = ctx[8][0] + "";
   let t0;
   let t1;
   let span1;
-  let t2_value = ctx[7][1].value + "";
+  let t2_value = ctx[8][1].value + "";
   let t2;
   let t3;
-  let t4_value = ctx[7][1].max + "";
+  let t4_value = ctx[8][1].max + "";
   let t4;
   return {
     c() {
@@ -17756,11 +17519,11 @@ function create_each_block$6(ctx) {
       append(span1, t4);
     },
     p(ctx2, dirty) {
-      if (dirty & 1 && t0_value !== (t0_value = ctx2[7][0] + ""))
+      if (dirty & 1 && t0_value !== (t0_value = ctx2[8][0] + ""))
         set_data(t0, t0_value);
-      if (dirty & 1 && t2_value !== (t2_value = ctx2[7][1].value + ""))
+      if (dirty & 1 && t2_value !== (t2_value = ctx2[8][1].value + ""))
         set_data(t2, t2_value);
-      if (dirty & 1 && t4_value !== (t4_value = ctx2[7][1].max + ""))
+      if (dirty & 1 && t4_value !== (t4_value = ctx2[8][1].max + ""))
         set_data(t4, t4_value);
     },
     d(detaching) {
@@ -18062,10 +17825,38 @@ function create_fragment$8(ctx) {
 }
 __name(create_fragment$8, "create_fragment$8");
 let activeTab = "attributes";
+function getTooltipForItemType(item) {
+  return `Create new ${item}`;
+}
+__name(getTooltipForItemType, "getTooltipForItemType");
 function instance$8($$self, $$props, $$invalidate) {
   let $doc;
   const doc = getContext("DocumentSheetObject");
   component_subscribe($$self, doc, (value) => $$invalidate(0, $doc = value));
+  const { application } = getContext("external");
+  console.log("ActorSheet.svelte, application", application);
+  setContext("ConfigButtons", {
+    edit: {
+      class: "fa-solid fa-pen-to-square",
+      tooltip: "Edit",
+      function: application.showEmbeddedItem
+    },
+    delete: {
+      class: "fa-solid fa-trash-can",
+      tooltip: "Delete",
+      function: application.deleteEmbeddedItem
+    },
+    create: {
+      class: "fa-solid fa-file-plus",
+      tooltip: getTooltipForItemType,
+      function: application.createEmbeddedItem.bind(application)
+    },
+    favorite: {
+      class: "fa-solid fa-stars",
+      tooltip: "Add to favorite",
+      function: application.addToFavorite.bind(application)
+    }
+  });
   let tabs = [
     {
       label: "Attributes",
@@ -21386,88 +21177,6 @@ class ProfFormApp extends FormApplication {
   }
 }
 __name(ProfFormApp, "ProfFormApp");
-const highlightCriticalSuccessFailure = /* @__PURE__ */ __name(function(message, html, data) {
-  if (!message.isRoll || !message.isContentVisible)
-    return;
-  const roll = message.rolls;
-  if (!roll.dice.length)
-    return;
-  const d = roll.dice[0];
-  const isD20 = d.faces === 20 && d.values.length === 1;
-  if (!isD20)
-    return;
-  const isModifiedRoll = "success" in d.results[0] || d.options.marginSuccess || d.options.marginFailure;
-  if (isModifiedRoll)
-    return;
-  const critical = d.options.critical || 20;
-  const fumble = d.options.fumble || 1;
-  if (d.total >= critical)
-    html.find(".dice-total").addClass("critical");
-  else if (d.total <= fumble)
-    html.find(".dice-total").addClass("fumble");
-  else if (d.options.target) {
-    if (roll.total >= d.options.target)
-      html.find(".dice-total").addClass("success");
-    else
-      html.find(".dice-total").addClass("failure");
-  }
-}, "highlightCriticalSuccessFailure");
-const displayChatActionButtons = /* @__PURE__ */ __name(function(message, html, data) {
-  const chatCard = html.find(".ard20.chat-card");
-  if (chatCard.length > 0) {
-    const flavor = html.find(".flavor-text");
-    if (flavor.text() === html.find(".item-name").text())
-      flavor.remove();
-    let actor = game.actors.get(data.message.speaker.actor);
-    if (actor && actor.isOwner)
-      return;
-    else if (game.user.isGM || data.author.id === game.user.id)
-      return;
-    const buttons = chatCard.find("button[data-action]");
-    buttons.each((i, btn) => {
-      if (btn.dataset.action === "save")
-        return;
-      btn.style.display = "none";
-    });
-  }
-}, "displayChatActionButtons");
-const addChatMessageContextOptions = /* @__PURE__ */ __name(function(html, options) {
-  let canApply = /* @__PURE__ */ __name((li) => {
-    const message = game.messages.get(li.data("messageId"));
-    return message?.isRoll && message?.isContentVisible && canvas.tokens?.controlled.length;
-  }, "canApply");
-  options.push({
-    name: game.i18n.localize("ARd20.ChatContextDamage"),
-    icon: '<i class="fas fa-user-minus"></i>',
-    condition: canApply,
-    callback: (li) => applyChatCardDamage(li, 1)
-  }, {
-    name: game.i18n.localize("ARd20.ChatContextHealing"),
-    icon: '<i class="fas fa-user-plus"></i>',
-    condition: canApply,
-    callback: (li) => applyChatCardDamage(li, -1)
-  }, {
-    name: game.i18n.localize("ARd20.ChatContextDoubleDamage"),
-    icon: '<i class="fas fa-user-injured"></i>',
-    condition: canApply,
-    callback: (li) => applyChatCardDamage(li, 2)
-  }, {
-    name: game.i18n.localize("ARd20.ChatContextHalfDamage"),
-    icon: '<i class="fas fa-user-shield"></i>',
-    condition: canApply,
-    callback: (li) => applyChatCardDamage(li, 0.5)
-  });
-  return options;
-}, "addChatMessageContextOptions");
-function applyChatCardDamage(li, multiplier) {
-  const message = game.messages.get(li.data("messageId"));
-  const roll = message.roll;
-  return Promise.all(canvas.tokens.controlled.map((t) => {
-    const a = t.actor;
-    return a.applyDamage(roll.total, multiplier);
-  }));
-}
-__name(applyChatCardDamage, "applyChatCardDamage");
 function create_default_slot(ctx) {
   let switch_instance;
   let switch_instance_anchor;
@@ -21978,8 +21687,52 @@ class SvelteDocumentSheet extends SvelteApplication {
     super.render(force, options);
     return this;
   }
+  addToFavorite(item) {
+    const doc = this.reactive.document;
+    const uuid = item.uuid;
+    if (doc.documentName !== "Actor")
+      return;
+    let favorites = doc.system.favorites;
+    favorites.push(uuid);
+    doc.update({ "system.favorites": favorites });
+  }
+  async createEmbeddedItem(type) {
+    const doc = this.reactive.document;
+    if (doc.documentName !== "Actor")
+      return;
+    const itemNumber = doc.itemTypes[type].filter((document2) => {
+      return document2.name.slice(0, type.length + 6) === `New ${type} #`;
+    }).length;
+    await Item.create([{ name: `New ${type} #${itemNumber + 1}`, type }], { parent: doc });
+  }
+  deleteEmbeddedItem(item) {
+    item.delete();
+  }
+  showEmbeddedItem(item) {
+    item.sheet.render(true);
+  }
 }
 __name(SvelteDocumentSheet, "SvelteDocumentSheet");
+class ARd20Token extends Token {
+  #highlight;
+  async _draw() {
+    await super._draw();
+    this.#highlight = this.addChild(new PIXI.Graphics());
+    this.#highlight.visible = false;
+  }
+  _refresh() {
+    super._refresh();
+    const t = CONFIG.Canvas.objectBorderThickness;
+    const h = Math.round(t / 2);
+    const o = Math.round(h / 2);
+    this.#highlight.lineStyle(t, 0, 0.8).drawRoundedRect(-o, -o, this.w + h, this.h + h, 6);
+    this.#highlight.lineStyle(h, 65280, 1).drawRoundedRect(-o, -o, this.w + h, this.h + h, 6);
+  }
+  showHighlight(visible) {
+    this.#highlight.visible = visible;
+  }
+}
+__name(ARd20Token, "ARd20Token");
 Hooks.once("init", function() {
   console.log("init hoook");
   game.ard20 = {
@@ -22007,6 +21760,7 @@ Hooks.once("init", function() {
   };
   CONFIG.Actor.documentClass = ARd20Actor;
   CONFIG.Item.documentClass = ARd20Item;
+  CONFIG.Token.objectClass = ARd20Token;
   console.log("register sheets");
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: false });
@@ -22079,10 +21833,7 @@ function rollItemMacro(itemName) {
 }
 __name(rollItemMacro, "rollItemMacro");
 Hooks.on("renderChatMessage", (app, html, data) => {
-  displayChatActionButtons(app, html, data);
-  highlightCriticalSuccessFailure(app, html);
 });
-Hooks.on("getChatLogEntryContext", addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
 export {

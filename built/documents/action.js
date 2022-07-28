@@ -14,7 +14,7 @@ export default class ARd20Action {
     this.setTargetLimit(object?.type);
     this.range = object?.range ?? { max: 5, min: 0 };
     this.setParent(options?.parent);
-    this.sheet = new ActionSheet(this)
+    this.sheet = new ActionSheet(this);
     /*this.actionList = object?.actionList
       ? object.actionList.map((action) => {
           return new ARd20Action(action);
@@ -52,10 +52,18 @@ export default class ARd20Action {
   setParent(object = {}) {
     const { actor, item, action } = object;
     this.parent = {
-      actor: actor ?? null,
-      item: item ?? null,
+      actor: actor.uuid ?? null,
+      item: item.uuid ?? null,
       action: action ?? null,
     };
+  }
+  async getActor() {
+    if (!this.parent.actor) return;
+    return await fromUuid(this.parent.actor);
+  }
+  async getItem() {
+    if (!this.parent.item) return;
+    return await fromUuid(this.parent.item);
   }
   /**
    * Use action
@@ -84,7 +92,30 @@ export default class ARd20Action {
     */
   }
   validateTargets() {
+    const actorUuid = this.parent.actor;
+
+    //get token that use that action
+    const activeToken = game.scenes.current.tokens.filter((token) => {
+      return token._object.controlled && token.actor.uuid === actorUuid;
+    })[0];
     console.log("Phase: validatig targets");
+    if (!activeToken) return;
+    const activeTokenUuid = activeToken.uuid;
+    const activeTokenVision = activeToken.object.vision;
+    console.log("Active Token: ", activeToken);
+    //get array of tokens on scene, without our token
+    const tokens = game.scenes.current.tokens.filter((token) => {
+      return token.uuid !== activeTokenUuid && activeTokenVision.fov.contains(token.x, token.y);
+    });
+    console.log(tokens);
+    tokens.forEach((token) => {
+      token.object.showHighlight(true);
+    });
+    const cancelHighlight = tokens.forEach((token) => {
+      token.object.showHighlight(false);
+    });
+    console.log("Tokens that you see: ", tokens);
+    setTimeout(cancelHighlight, 5000);
   }
   async roll() {
     console.log("Phase: rolling");
@@ -92,7 +123,9 @@ export default class ARd20Action {
     let bonus = this.bonus;
     let formula = this.formula;
     let roll = new Roll(this.formula);
+    const actor = await this.getActor();
+    const item = await this.getItem();
     await roll.evaluate();
-    await roll.toMessage({ speaker: { alias: `${this.parent.actor.name}: ${this.parent.item.name} (${this.name})` } });
+    await roll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name})` } });
   }
 }

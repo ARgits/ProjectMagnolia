@@ -35,7 +35,7 @@
     <th>Name</th>
     <th>Actions</th>
     <th>Level</th>
-    <th colspan="3">Config <ConfigureItemButton doc={$doc} type="feature" action="create" /></th>
+    <th colspan="3">Config <ConfigureItemButton item="feature" action="create" /></th>
   </thead>
   <tbody>
     {#each $doc.itemTypes.feature as item}
@@ -75,7 +75,7 @@
           <ConfigureItemButton {item} action="edit" />
         </td>
         <td class="config">
-          <ConfigureItemButton {item} doc={$doc} type="feature" action="favorite" />
+          <ConfigureItemButton {item} action="favorite" />
         </td>
         <td class="config">
           <ConfigureItemButton {item} action="delete" />

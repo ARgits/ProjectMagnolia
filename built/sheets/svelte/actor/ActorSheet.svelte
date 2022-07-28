@@ -11,8 +11,35 @@
   import SpellsTab from "./SpellsTab.svelte";
   import EffectsTab from "./EffectsTab.svelte";
   import BiographyTab from "./BiographyTab.svelte";
-  import { getContext } from "svelte";
+  import { getContext, setContext } from "svelte";
   const doc = getContext("DocumentSheetObject");
+  const { application } = getContext("external");
+  console.log("ActorSheet.svelte, application", application);
+  setContext("ConfigButtons", {
+    edit: {
+      class: "fa-solid fa-pen-to-square",
+      tooltip: "Edit",
+      function: application.showEmbeddedItem,
+    },
+    delete: {
+      class: "fa-solid fa-trash-can",
+      tooltip: "Delete",
+      function: application.deleteEmbeddedItem,
+    },
+    create: {
+      class: "fa-solid fa-file-plus",
+      tooltip: getTooltipForItemType,
+      function: application.createEmbeddedItem.bind(application),
+    },
+    favorite: {
+      class: "fa-solid fa-stars",
+      tooltip: "Add to favorite",
+      function: application.addToFavorite.bind(application),
+    },
+  });
+  function getTooltipForItemType(item) {
+    return `Create new ${item}`;
+  }
   let tabs = [
     { label: "Attributes", id: "attributes", component: AttributeTab },
     { label: "Inventory", id: "inventory", component: InventoryTab },
@@ -39,7 +66,7 @@
         </div>
       </div>
       <div class="health">
-        <InputForDocumentSheet bind:value={$doc.system.health.value} label="health" type="integer"/>
+        <InputForDocumentSheet bind:value={$doc.system.health.value} label="health" type="integer" />
         <span>{$doc.system.health.max}</span>
       </div>
       <div class="level">
@@ -53,7 +80,9 @@
     </div>
     <div class="attributes">
       {#each Object.entries($doc.system.attributes) as attribute}
-        <div data-tooltip='click to roll {attribute[1].label}' data-tooltip-direction='DOWN'
+        <div
+          data-tooltip="click to roll {attribute[1].label}"
+          data-tooltip-direction="DOWN"
           on:click={(event) => {
             event.preventDefault;
             return $doc.rollAttributeTest(attribute[0], { event: event });
@@ -89,7 +118,7 @@
       display: flex;
       flex-direction: column;
 
-      & > :not(.attributes){
+      & > :not(.attributes) {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -117,7 +146,7 @@
       }
     }
   }
-  .cha-img{
+  .cha-img {
     max-width: 150px;
   }
 </style>
