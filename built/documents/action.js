@@ -79,19 +79,18 @@ export default class ARd20Action {
    */
   async use() {
     console.log("ACTION USE", this);
-    this.placeTemplate();
-    this.validateTargets();
-    await this.roll();
+    return this.placeTemplate();
   }
   placeTemplate() {
     console.log("Phase: placing template");
-    if (!this.template) return;
+    if (!this.template)  return this.validateTargets();
     /*TODO: look at 5e https://github.com/foundryvtt/dnd5e/blob/master/module/pixi/ability-template.js
     and then change handlers.mm and handlers.lc events, so it will tell you, that your template "out of the range"
     for measrement use canvas.grid.measureDistance
     */
+    return this.roll();
   }
-  validateTargets() {
+  async validateTargets() {
     const actorUuid = this.parent.actor;
 
     //get token that use that action
@@ -104,17 +103,23 @@ export default class ARd20Action {
     const activeTokenVision = activeToken.object.vision;
     console.log("Active Token: ", activeToken);
     //get array of tokens on scene, without our token
-    const tokens = game.scenes.current.tokens.filter((token) => {
+    const targets = game.scenes.current.tokens.filter((token) => {
       return token.uuid !== activeTokenUuid && activeTokenVision.fov.contains(token.x, token.y);
     });
-    console.log(tokens);
-    tokens.forEach((token) => {
-      token.object.showHighlight(true);
+    console.log(targets);
+    const targetTokens = targets.map((token) => {
+      return token.object;
     });
-    const cancelHighlight = tokens.forEach((token) => {
-      token.object.showHighlight(false);
+    targetTokens.forEach((token) => {
+      token.showHighlight(true);
     });
-    console.log("Tokens that you see: ", tokens);
+    const cancelHighlight = () => {
+      targetTokens.forEach((token) => {
+        token.showHighlight(false);
+      });
+      console.log("Tokens that you see: ", targets);
+      this.roll();
+    };
     setTimeout(cancelHighlight, 5000);
   }
   async roll() {
