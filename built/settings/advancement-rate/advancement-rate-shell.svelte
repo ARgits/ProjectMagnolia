@@ -14,7 +14,7 @@
   let formulaInput = {};
   let variableInput = {};
   let formulaSpan = {};
-  //creaet list of parameters
+  //create list of parameters
   let paramArr = ["attributes", "skills", "features"];
   for (let item of paramArr) {
     spanDiv[item] = "";
@@ -112,7 +112,7 @@
 <ApplicationShell bind:elementRoot>
   <div>
     <div>
-      <label for="Custom Values"> CustomValues </label>
+      <label for="CustomValues"> CustomValues </label>
       <div class="grid grid-2col">
         {#each Object.values(data.variables) as variable}
           <label for={variable.longName}>{variable.longName}</label>
@@ -123,7 +123,7 @@
     <div class="formula">
       {#each paramArr as param}
         <div>
-          <label for="Attribute Formula">Attribute Advancement Formula</label>
+          <label for="AttributeFormula">Attribute Advancement Formula</label>
           <input
             class="transparent"
             type="text"

@@ -157,7 +157,7 @@ export default class ARd20Action
         {
             token.showHighlight(true);
         });
-        return new TokenTargets(this).render(true)
+        return new TokenTargets(activeToken).render(true)
 
     }
 

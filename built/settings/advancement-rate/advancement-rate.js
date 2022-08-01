@@ -10,7 +10,7 @@ export class AdvRateSettingsShim extends FormApplication {
     new AdvancementRateFormApp().render(true, { focus: true });
   }
 
-  async _updateObject(event, formData) {}
+  async _updateObject(event,  formData) {}
   render() {
     this.close();
   }

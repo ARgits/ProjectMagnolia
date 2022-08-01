@@ -14,7 +14,6 @@
   import { getContext, setContext } from "svelte";
   const doc = getContext("DocumentSheetObject");
   const { application } = getContext("external");
-  console.log("ActorSheet.svelte, application", application);
   setContext("ConfigButtons", {
     edit: {
       class: "fa-solid fa-pen-to-square",

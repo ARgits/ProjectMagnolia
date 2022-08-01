@@ -11,7 +11,6 @@ export default class ARd20Token extends Token {
   /** @override */
   _refresh() {
     super._refresh();
-    console.log('change color, _refresh')
     const t = CONFIG.Canvas.objectBorderThickness;
     const h = Math.round(t/2);
     const o = Math.round(h/2);
@@ -20,7 +19,6 @@ export default class ARd20Token extends Token {
   }
 
   showHighlight(visible) {
-    console.log('change visible for token', visible)
     this.#highlight.visible = visible;
   }
 }
