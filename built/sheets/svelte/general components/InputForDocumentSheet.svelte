@@ -1,20 +1,22 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { getContext } from "svelte";
-  export let value;
-  export let type = "text";
-  export let label;
-  const document = getContext("DocumentSheetObject");
-  let data;
-  let labelElem;
-  let input;
-  let feather;
-  console.log(input)
-  $: if (label && input && feather) input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(feather.offsetWidth * 1.5)}px)`;
-  $: {
-    data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
-  }
+    import { getContext } from "svelte";
+
+    export let value;
+    export let type = "text";
+    export let label;
+    const document = getContext("DocumentSheetObject");
+    let data;
+    let labelElem;
+    let input;
+    let feather;
+    $: if (label && input && feather) {
+        input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(feather.offsetWidth * 1.5)}px)`;
+    }
+    $: {
+        data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
+    }
   $: if (type !== "text" && value) value = type === "integer" ? parseInt(value) : parseFloat(value);
 
   /**

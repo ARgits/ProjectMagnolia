@@ -704,11 +704,6 @@ function null_to_empty(value) {
   return value == null ? "" : value;
 }
 __name(null_to_empty, "null_to_empty");
-function set_store_value(store, ret, value) {
-  store.set(value);
-  return ret;
-}
-__name(set_store_value, "set_store_value");
 function action_destroyer(action_result) {
   return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
 }
@@ -8377,12 +8372,12 @@ class SvelteApplication extends Application {
 }
 __name(SvelteApplication, "SvelteApplication");
 const TJSContainer_svelte_svelte_type_style_lang = "";
-function get_each_context$f(ctx, list, i) {
+function get_each_context$e(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[2] = list[i];
   return child_ctx;
 }
-__name(get_each_context$f, "get_each_context$f");
+__name(get_each_context$e, "get_each_context$e");
 function create_if_block_1$3(ctx) {
   let p;
   return {
@@ -8404,13 +8399,13 @@ function create_if_block_1$3(ctx) {
   };
 }
 __name(create_if_block_1$3, "create_if_block_1$3");
-function create_if_block$e(ctx) {
+function create_if_block$d(ctx) {
   let each_1_anchor;
   let current;
   let each_value = ctx[1];
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$f(get_each_context$f(ctx, each_value, i));
+    each_blocks[i] = create_each_block$e(get_each_context$e(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -8434,12 +8429,12 @@ function create_if_block$e(ctx) {
         each_value = ctx2[1];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$f(ctx2, each_value, i);
+          const child_ctx = get_each_context$e(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$f(child_ctx);
+            each_blocks[i] = create_each_block$e(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
@@ -8474,8 +8469,8 @@ function create_if_block$e(ctx) {
     }
   };
 }
-__name(create_if_block$e, "create_if_block$e");
-function create_each_block$f(ctx) {
+__name(create_if_block$d, "create_if_block$d");
+function create_each_block$e(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -8548,14 +8543,14 @@ function create_each_block$f(ctx) {
     }
   };
 }
-__name(create_each_block$f, "create_each_block$f");
-function create_fragment$v(ctx) {
+__name(create_each_block$e, "create_each_block$e");
+function create_fragment$u(ctx) {
   let show_if;
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$e, create_if_block_1$3];
+  const if_block_creators = [create_if_block$d, create_if_block_1$3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (dirty & 2)
@@ -8634,8 +8629,8 @@ function create_fragment$v(ctx) {
     }
   };
 }
-__name(create_fragment$v, "create_fragment$v");
-function instance$u($$self, $$props, $$invalidate) {
+__name(create_fragment$u, "create_fragment$u");
+function instance$t($$self, $$props, $$invalidate) {
   let { warn = false } = $$props;
   let { children: children2 = void 0 } = $$props;
   $$self.$$set = ($$props2) => {
@@ -8646,11 +8641,11 @@ function instance$u($$self, $$props, $$invalidate) {
   };
   return [warn, children2];
 }
-__name(instance$u, "instance$u");
+__name(instance$t, "instance$t");
 class TJSContainer extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$u, create_fragment$v, safe_not_equal, { warn: 0, children: 1 });
+    init(this, options, instance$t, create_fragment$u, safe_not_equal, { warn: 0, children: 1 });
   }
   get warn() {
     return this.$$.ctx[0];
@@ -8681,7 +8676,7 @@ __name(fade, "fade");
 const s_DEFAULT_TRANSITION = /* @__PURE__ */ __name(() => void 0, "s_DEFAULT_TRANSITION");
 const s_DEFAULT_TRANSITION_OPTIONS = {};
 const TJSGlassPane_svelte_svelte_type_style_lang = "";
-function create_fragment$u(ctx) {
+function create_fragment$t(ctx) {
   let div;
   let div_intro;
   let div_outro;
@@ -8761,8 +8756,8 @@ function create_fragment$u(ctx) {
     }
   };
 }
-__name(create_fragment$u, "create_fragment$u");
-function instance$t($$self, $$props, $$invalidate) {
+__name(create_fragment$t, "create_fragment$t");
+function instance$s($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { id = void 0 } = $$props;
   let { zIndex = Number.MAX_SAFE_INTEGER } = $$props;
@@ -8911,11 +8906,11 @@ function instance$t($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$t, "instance$t");
+__name(instance$s, "instance$s");
 class TJSGlassPane extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$t, create_fragment$u, safe_not_equal, {
+    init(this, options, instance$s, create_fragment$t, safe_not_equal, {
       id: 4,
       zIndex: 7,
       background: 8,
@@ -9445,7 +9440,7 @@ function localize(stringId, data) {
   return result !== void 0 ? result : "";
 }
 __name(localize, "localize");
-function create_fragment$t(ctx) {
+function create_fragment$s(ctx) {
   let a;
   let html_tag;
   let t;
@@ -9497,12 +9492,12 @@ function create_fragment$t(ctx) {
     }
   };
 }
-__name(create_fragment$t, "create_fragment$t");
+__name(create_fragment$s, "create_fragment$s");
 const s_REGEX_HTML$1 = /^\s*<.*>$/;
 const pointerdown_handler = /* @__PURE__ */ __name(() => null, "pointerdown_handler");
 const mousedown_handler = /* @__PURE__ */ __name(() => null, "mousedown_handler");
 const dblclick_handler$1 = /* @__PURE__ */ __name(() => null, "dblclick_handler$1");
-function instance$s($$self, $$props, $$invalidate) {
+function instance$r($$self, $$props, $$invalidate) {
   let { button = void 0 } = $$props;
   let icon, label, title, styles;
   function onClick(event) {
@@ -9529,11 +9524,11 @@ function instance$s($$self, $$props, $$invalidate) {
   };
   return [button, icon, label, styles, onClick, title];
 }
-__name(instance$s, "instance$s");
+__name(instance$r, "instance$r");
 class TJSHeaderButton extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$s, create_fragment$t, safe_not_equal, { button: 0 });
+    init(this, options, instance$r, create_fragment$s, safe_not_equal, { button: 0 });
   }
   get button() {
     return this.$$.ctx[0];
@@ -9545,13 +9540,13 @@ class TJSHeaderButton extends SvelteComponent {
 }
 __name(TJSHeaderButton, "TJSHeaderButton");
 const TJSApplicationHeader_svelte_svelte_type_style_lang = "";
-function get_each_context$e(ctx, list, i) {
+function get_each_context$d(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[20] = list[i];
   return child_ctx;
 }
-__name(get_each_context$e, "get_each_context$e");
-function create_each_block$e(ctx) {
+__name(get_each_context$d, "get_each_context$d");
+function create_each_block$d(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -9624,7 +9619,7 @@ function create_each_block$e(ctx) {
     }
   };
 }
-__name(create_each_block$e, "create_each_block$e");
+__name(create_each_block$d, "create_each_block$d");
 function create_key_block(ctx) {
   let header;
   let h4;
@@ -9639,7 +9634,7 @@ function create_key_block(ctx) {
   let each_value = ctx[3];
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$e(get_each_context$e(ctx, each_value, i));
+    each_blocks[i] = create_each_block$d(get_each_context$d(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -9684,12 +9679,12 @@ function create_key_block(ctx) {
         each_value = ctx2[3];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$e(ctx2, each_value, i);
+          const child_ctx = get_each_context$d(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$e(child_ctx);
+            each_blocks[i] = create_each_block$d(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(header, null);
@@ -9731,7 +9726,7 @@ function create_key_block(ctx) {
   };
 }
 __name(create_key_block, "create_key_block");
-function create_fragment$s(ctx) {
+function create_fragment$r(ctx) {
   let previous_key = ctx[0];
   let key_block_anchor;
   let current;
@@ -9776,8 +9771,8 @@ function create_fragment$s(ctx) {
     }
   };
 }
-__name(create_fragment$s, "create_fragment$s");
-function instance$r($$self, $$props, $$invalidate) {
+__name(create_fragment$r, "create_fragment$r");
+function instance$q($$self, $$props, $$invalidate) {
   let $storeHeaderButtons;
   let $storeMinimized;
   let $storeHeaderNoTitleMinimized;
@@ -9892,15 +9887,15 @@ function instance$r($$self, $$props, $$invalidate) {
     $storeDraggable
   ];
 }
-__name(instance$r, "instance$r");
+__name(instance$q, "instance$q");
 class TJSApplicationHeader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$r, create_fragment$s, safe_not_equal, { draggable: 0, draggableOptions: 13 });
+    init(this, options, instance$q, create_fragment$r, safe_not_equal, { draggable: 0, draggableOptions: 13 });
   }
 }
 __name(TJSApplicationHeader, "TJSApplicationHeader");
-function create_fragment$r(ctx) {
+function create_fragment$q(ctx) {
   let div;
   let resizable_action;
   let mounted;
@@ -9940,8 +9935,8 @@ function create_fragment$r(ctx) {
     }
   };
 }
-__name(create_fragment$r, "create_fragment$r");
-function instance$q($$self, $$props, $$invalidate) {
+__name(create_fragment$q, "create_fragment$q");
+function instance$p($$self, $$props, $$invalidate) {
   let $storeElementRoot;
   let $storeMinimized;
   let $storeResizable;
@@ -10073,11 +10068,11 @@ function instance$q($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$q, "instance$q");
+__name(instance$p, "instance$p");
 class ResizableHandle extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$q, create_fragment$r, safe_not_equal, { isResizable: 7 });
+    init(this, options, instance$p, create_fragment$q, safe_not_equal, { isResizable: 7 });
   }
 }
 __name(ResizableHandle, "ResizableHandle");
@@ -10128,7 +10123,7 @@ function create_else_block$1(ctx) {
   };
 }
 __name(create_else_block$1, "create_else_block$1");
-function create_if_block$d(ctx) {
+function create_if_block$c(ctx) {
   let tjscontainer;
   let current;
   tjscontainer = new TJSContainer({
@@ -10158,8 +10153,8 @@ function create_if_block$d(ctx) {
     }
   };
 }
-__name(create_if_block$d, "create_if_block$d");
-function create_fragment$q(ctx) {
+__name(create_if_block$c, "create_if_block$c");
+function create_fragment$p(ctx) {
   let div;
   let tjsapplicationheader;
   let t0;
@@ -10184,7 +10179,7 @@ function create_fragment$q(ctx) {
       draggableOptions: ctx[7]
     }
   });
-  const if_block_creators = [create_if_block$d, create_else_block$1];
+  const if_block_creators = [create_if_block$c, create_else_block$1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (Array.isArray(ctx2[14]))
@@ -10292,8 +10287,8 @@ function create_fragment$q(ctx) {
     }
   };
 }
-__name(create_fragment$q, "create_fragment$q");
-function instance$p($$self, $$props, $$invalidate) {
+__name(create_fragment$p, "create_fragment$p");
+function instance$o($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { elementContent = void 0 } = $$props;
   let { elementRoot = void 0 } = $$props;
@@ -10493,11 +10488,11 @@ function instance$p($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$p, "instance$p");
+__name(instance$o, "instance$o");
 class ApplicationShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$p, create_fragment$q, safe_not_equal, {
+    init(this, options, instance$o, create_fragment$p, safe_not_equal, {
       elementContent: 0,
       elementRoot: 1,
       draggable: 6,
@@ -10640,12 +10635,12 @@ class ApplicationShell extends SvelteComponent {
 __name(ApplicationShell, "ApplicationShell");
 const TJSApplicationShell_svelte_svelte_type_style_lang = "";
 const DialogContent_svelte_svelte_type_style_lang = "";
-function get_each_context$d(ctx, list, i) {
+function get_each_context$c(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[15] = list[i];
   return child_ctx;
 }
-__name(get_each_context$d, "get_each_context$d");
+__name(get_each_context$c, "get_each_context$c");
 function create_if_block_3$1(ctx) {
   let switch_instance;
   let switch_instance_anchor;
@@ -10751,16 +10746,16 @@ function create_if_block_2$1(ctx) {
   };
 }
 __name(create_if_block_2$1, "create_if_block_2$1");
-function create_if_block$c(ctx) {
+function create_if_block$b(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
   let each_value = ctx[1];
   const get_key = /* @__PURE__ */ __name((ctx2) => ctx2[15].id, "get_key");
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$d(ctx, each_value, i);
+    let child_ctx = get_each_context$c(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$d(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$c(key, child_ctx));
   }
   return {
     c() {
@@ -10779,7 +10774,7 @@ function create_if_block$c(ctx) {
     p(ctx2, dirty) {
       if (dirty & 74) {
         each_value = ctx2[1];
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, destroy_block, create_each_block$d, null, get_each_context$d);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, destroy_block, create_each_block$c, null, get_each_context$c);
       }
     },
     d(detaching) {
@@ -10791,7 +10786,7 @@ function create_if_block$c(ctx) {
     }
   };
 }
-__name(create_if_block$c, "create_if_block$c");
+__name(create_if_block$b, "create_if_block$b");
 function create_if_block_1$2(ctx) {
   let html_tag;
   let raw_value = ctx[15].icon + "";
@@ -10819,7 +10814,7 @@ function create_if_block_1$2(ctx) {
   };
 }
 __name(create_if_block_1$2, "create_if_block_1$2");
-function create_each_block$d(key_1, ctx) {
+function create_each_block$c(key_1, ctx) {
   let button;
   let span;
   let t0_value = ctx[15].label + "";
@@ -10903,8 +10898,8 @@ function create_each_block$d(key_1, ctx) {
     }
   };
 }
-__name(create_each_block$d, "create_each_block$d");
-function create_fragment$p(ctx) {
+__name(create_each_block$c, "create_each_block$c");
+function create_fragment$o(ctx) {
   let t0;
   let div;
   let current_block_type_index;
@@ -10927,7 +10922,7 @@ function create_fragment$p(ctx) {
   if (~(current_block_type_index = select_block_type(ctx))) {
     if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   }
-  let if_block1 = ctx[1].length && create_if_block$c(ctx);
+  let if_block1 = ctx[1].length && create_if_block$b(ctx);
   return {
     c() {
       t0 = space();
@@ -10989,7 +10984,7 @@ function create_fragment$p(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$c(ctx2);
+          if_block1 = create_if_block$b(ctx2);
           if_block1.c();
           if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
         }
@@ -11027,9 +11022,9 @@ function create_fragment$p(ctx) {
     }
   };
 }
-__name(create_fragment$p, "create_fragment$p");
+__name(create_fragment$o, "create_fragment$o");
 const s_REGEX_HTML = /^\s*<.*>$/;
-function instance$o($$self, $$props, $$invalidate) {
+function instance$n($$self, $$props, $$invalidate) {
   let { data = {} } = $$props;
   let { autoClose = true } = $$props;
   let { preventDefault = false } = $$props;
@@ -11205,11 +11200,11 @@ function instance$o($$self, $$props, $$invalidate) {
     click_handler2
   ];
 }
-__name(instance$o, "instance$o");
+__name(instance$n, "instance$n");
 class DialogContent extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$o, create_fragment$p, safe_not_equal, {
+    init(this, options, instance$n, create_fragment$o, safe_not_equal, {
       data: 8,
       autoClose: 9,
       preventDefault: 10,
@@ -11293,7 +11288,7 @@ function create_else_block(ctx) {
   };
 }
 __name(create_else_block, "create_else_block");
-function create_if_block$b(ctx) {
+function create_if_block$a(ctx) {
   let tjsglasspane;
   let current;
   const tjsglasspane_spread_levels = [
@@ -11306,7 +11301,7 @@ function create_if_block$b(ctx) {
     { zIndex: ctx[8] }
   ];
   let tjsglasspane_props = {
-    $$slots: { default: [create_default_slot$6] },
+    $$slots: { default: [create_default_slot$5] },
     $$scope: { ctx }
   };
   for (let i = 0; i < tjsglasspane_spread_levels.length; i += 1) {
@@ -11351,7 +11346,7 @@ function create_if_block$b(ctx) {
     }
   };
 }
-__name(create_if_block$b, "create_if_block$b");
+__name(create_if_block$a, "create_if_block$a");
 function create_default_slot_2(ctx) {
   let dialogcontent;
   let updating_autoClose;
@@ -11481,7 +11476,7 @@ function create_default_slot_1(ctx) {
   };
 }
 __name(create_default_slot_1, "create_default_slot_1");
-function create_default_slot$6(ctx) {
+function create_default_slot$5(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let updating_elementContent;
@@ -11554,13 +11549,13 @@ function create_default_slot$6(ctx) {
     }
   };
 }
-__name(create_default_slot$6, "create_default_slot$6");
-function create_fragment$o(ctx) {
+__name(create_default_slot$5, "create_default_slot$5");
+function create_fragment$n(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$b, create_else_block];
+  const if_block_creators = [create_if_block$a, create_else_block];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (ctx2[5])
@@ -11619,9 +11614,9 @@ function create_fragment$o(ctx) {
     }
   };
 }
-__name(create_fragment$o, "create_fragment$o");
+__name(create_fragment$n, "create_fragment$n");
 const s_MODAL_BACKGROUND = "#50505080";
-function instance$n($$self, $$props, $$invalidate) {
+function instance$m($$self, $$props, $$invalidate) {
   let { elementContent = void 0 } = $$props;
   let { elementRoot = void 0 } = $$props;
   let { data = {} } = $$props;
@@ -11826,11 +11821,11 @@ function instance$n($$self, $$props, $$invalidate) {
     applicationshell_elementContent_binding_1
   ];
 }
-__name(instance$n, "instance$n");
+__name(instance$m, "instance$m");
 class DialogShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$n, create_fragment$o, safe_not_equal, {
+    init(this, options, instance$m, create_fragment$n, safe_not_equal, {
       elementContent: 0,
       elementRoot: 1,
       data: 3,
@@ -12064,7 +12059,7 @@ class TJSDialog extends SvelteApplication {
   }
 }
 __name(TJSDialog, "TJSDialog");
-function create_fragment$n(ctx) {
+function create_fragment$m(ctx) {
   let div2;
   let h2;
   let t1;
@@ -12140,8 +12135,8 @@ function create_fragment$n(ctx) {
     }
   };
 }
-__name(create_fragment$n, "create_fragment$n");
-function instance$m($$self, $$props, $$invalidate) {
+__name(create_fragment$m, "create_fragment$m");
+function instance$l($$self, $$props, $$invalidate) {
   let { action } = $$props;
   console.log(action);
   const { application } = getContext("external");
@@ -12181,11 +12176,11 @@ function instance$m($$self, $$props, $$invalidate) {
   };
   return [action, submit, input0_input_handler, input1_input_handler, click_handler2];
 }
-__name(instance$m, "instance$m");
+__name(instance$l, "instance$l");
 class ActionShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$m, create_fragment$n, safe_not_equal, { action: 0 });
+    init(this, options, instance$l, create_fragment$m, safe_not_equal, { action: 0 });
   }
   get action() {
     return this.$$.ctx[0];
@@ -12219,364 +12214,8 @@ class ActionSheet extends TJSDialog {
   }
 }
 __name(ActionSheet, "ActionSheet");
-const TargetsShell_svelte_svelte_type_style_lang = "";
-function get_each_context$c(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[11] = list[i];
-  child_ctx[12] = list;
-  child_ctx[13] = i;
-  return child_ctx;
-}
-__name(get_each_context$c, "get_each_context$c");
-function create_if_block$a(ctx) {
-  let div;
-  let img;
-  let img_src_value;
-  let t0;
-  let span;
-  let t1_value = ctx[11].doc.name + "";
-  let t1;
-  let t2;
-  let mounted;
-  let dispose;
-  function click_handler2() {
-    return ctx[5](ctx[11], ctx[12], ctx[13]);
-  }
-  __name(click_handler2, "click_handler");
-  return {
-    c() {
-      div = element("div");
-      img = element("img");
-      t0 = space();
-      span = element("span");
-      t1 = text(t1_value);
-      t2 = space();
-      if (!src_url_equal(img.src, img_src_value = ctx[11].doc.texture.src))
-        attr(img, "src", img_src_value);
-      attr(img, "alt", "token img");
-      attr(img, "class", "svelte-in7bue");
-      attr(div, "class", "target svelte-in7bue");
-      toggle_class(div, "targeted", ctx[11].doc.object.isTargeted);
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, img);
-      append(div, t0);
-      append(div, span);
-      append(span, t1);
-      append(div, t2);
-      if (!mounted) {
-        dispose = listen(div, "click", click_handler2);
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (dirty & 4 && !src_url_equal(img.src, img_src_value = ctx[11].doc.texture.src)) {
-        attr(img, "src", img_src_value);
-      }
-      if (dirty & 4 && t1_value !== (t1_value = ctx[11].doc.name + ""))
-        set_data(t1, t1_value);
-      if (dirty & 4) {
-        toggle_class(div, "targeted", ctx[11].doc.object.isTargeted);
-      }
-    },
-    d(detaching) {
-      if (detaching)
-        detach(div);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_if_block$a, "create_if_block$a");
-function create_each_block$c(ctx) {
-  let if_block_anchor;
-  let if_block = ctx[11].canSee && create_if_block$a(ctx);
-  return {
-    c() {
-      if (if_block)
-        if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      if (if_block)
-        if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-    },
-    p(ctx2, dirty) {
-      if (ctx2[11].canSee) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-        } else {
-          if_block = create_if_block$a(ctx2);
-          if_block.c();
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
-    },
-    d(detaching) {
-      if (if_block)
-        if_block.d(detaching);
-      if (detaching)
-        detach(if_block_anchor);
-    }
-  };
-}
-__name(create_each_block$c, "create_each_block$c");
-function create_default_slot$5(ctx) {
-  let each_1_anchor;
-  let each_value = ctx[2];
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$c(get_each_context$c(ctx, each_value, i));
-  }
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      each_1_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].m(target, anchor);
-      }
-      insert(target, each_1_anchor, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & 4) {
-        each_value = ctx2[2];
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$c(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block$c(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-    },
-    d(detaching) {
-      destroy_each(each_blocks, detaching);
-      if (detaching)
-        detach(each_1_anchor);
-    }
-  };
-}
-__name(create_default_slot$5, "create_default_slot$5");
-function create_fragment$m(ctx) {
-  let applicationshell;
-  let updating_elementRoot;
-  let current;
-  function applicationshell_elementRoot_binding(value) {
-    ctx[6](value);
-  }
-  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
-  let applicationshell_props = {
-    $$slots: { default: [create_default_slot$5] },
-    $$scope: { ctx }
-  };
-  if (ctx[0] !== void 0) {
-    applicationshell_props.elementRoot = ctx[0];
-  }
-  applicationshell = new ApplicationShell({ props: applicationshell_props });
-  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
-  return {
-    c() {
-      create_component(applicationshell.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(applicationshell, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const applicationshell_changes = {};
-      if (dirty & 16388) {
-        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      if (!updating_elementRoot && dirty & 1) {
-        updating_elementRoot = true;
-        applicationshell_changes.elementRoot = ctx2[0];
-        add_flush_callback(() => updating_elementRoot = false);
-      }
-      applicationshell.$set(applicationshell_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(applicationshell.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(applicationshell.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(applicationshell, detaching);
-    }
-  };
-}
-__name(create_fragment$m, "create_fragment$m");
-function instance$l($$self, $$props, $$invalidate) {
-  let $mainToken, $$unsubscribe_mainToken = noop, $$subscribe_mainToken = /* @__PURE__ */ __name(() => ($$unsubscribe_mainToken(), $$unsubscribe_mainToken = subscribe(mainToken, ($$value) => $$invalidate(4, $mainToken = $$value)), mainToken), "$$subscribe_mainToken");
-  let $allTokens;
-  $$self.$$.on_destroy.push(() => $$unsubscribe_mainToken());
-  let { elementRoot } = $$props;
-  let { mainToken } = $$props;
-  $$subscribe_mainToken();
-  const uuid = $mainToken.uuid;
-  console.log(uuid);
-  const { application } = getContext("external");
-  console.log(application);
-  const allTokens = writable(game.scenes.current.tokens.map((t) => {
-    return {
-      uuid: t.uuid,
-      canSee: false,
-      isTargeted: false,
-      doc: t
-    };
-  }));
-  component_subscribe($$self, allTokens, (value) => $$invalidate(2, $allTokens = value));
-  const click_handler2 = /* @__PURE__ */ __name((target, each_value, target_index) => {
-    target.doc.object.setTarget(!target.doc.object.isTargeted, {
-      groupSelection: true,
-      user: game.user.current,
-      releaseOthers: false
-    });
-    set_store_value(allTokens, each_value[target_index].isTargeted = target.doc.object.isTargeted, $allTokens);
-  }, "click_handler");
-  function applicationshell_elementRoot_binding(value) {
-    elementRoot = value;
-    $$invalidate(0, elementRoot);
-  }
-  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
-  $$self.$$set = ($$props2) => {
-    if ("elementRoot" in $$props2)
-      $$invalidate(0, elementRoot = $$props2.elementRoot);
-    if ("mainToken" in $$props2)
-      $$subscribe_mainToken($$invalidate(1, mainToken = $$props2.mainToken));
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & 20) {
-      {
-        for (const target of $allTokens) {
-          if (target.uuid !== uuid) {
-            const token = target.doc;
-            target.canSee = $mainToken.object.vision.fov.contains(token.x, token.y);
-            target.isTargeted = target.canSee ? target.isTargeted : false;
-            token.object.setTarget(target.isTargeted, {
-              groupSelection: true,
-              user: game.user.current,
-              releaseOthers: false
-            });
-          }
-        }
-      }
-    }
-  };
-  return [
-    elementRoot,
-    mainToken,
-    $allTokens,
-    allTokens,
-    $mainToken,
-    click_handler2,
-    applicationshell_elementRoot_binding
-  ];
-}
-__name(instance$l, "instance$l");
-class TargetsShell extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$l, create_fragment$m, safe_not_equal, { elementRoot: 0, mainToken: 1 });
-  }
-  get elementRoot() {
-    return this.$$.ctx[0];
-  }
-  set elementRoot(elementRoot) {
-    this.$$set({ elementRoot });
-    flush();
-  }
-  get mainToken() {
-    return this.$$.ctx[1];
-  }
-  set mainToken(mainToken) {
-    this.$$set({ mainToken });
-    flush();
-  }
-}
-__name(TargetsShell, "TargetsShell");
-class TokenTargets extends SvelteApplication {
-  #storeDoc = new TJSDocument(void 0);
-  #storeUnsubscribe;
-  constructor(object = {}, options = {}) {
-    super(object);
-    Object.defineProperty(this.reactive, "document", {
-      get: () => this.#storeDoc.get(),
-      set: (document2) => {
-        this.#storeDoc.set(document2);
-      }
-    });
-    this.reactive.document = object;
-  }
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["ard20"],
-      title: "Targets",
-      minimizable: true,
-      resizable: true,
-      width: 600,
-      height: "auto",
-      svelte: {
-        class: TargetsShell,
-        target: document.body,
-        props: function() {
-          return {
-            mainToken: this.#storeDoc
-          };
-        }
-      }
-    });
-  }
-  async #handleDocUpdates(doc, options) {
-    const { action, data, documentType } = options;
-    if ((action === "update" || action === "subscribe") && doc) {
-      this.reactive.x = doc.x;
-      this.reactive.y = doc.y;
-    }
-  }
-  getTargets(doc) {
-    console.log("looking for tokens", doc);
-    const token = doc.object;
-    const uuid = doc.uuid;
-    const vision = token.vision;
-    return game.scenes.current.tokens.filter((t) => {
-      return t.uuid !== uuid && vision.fov.contains(t.x, t.y);
-    });
-  }
-  render(force = false, options = {}) {
-    if (!this.#storeUnsubscribe) {
-      this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdates.bind(this));
-    }
-    super.render(force, options);
-    return this;
-  }
-}
-__name(TokenTargets, "TokenTargets");
 class ARd20Action {
   constructor(object = {}, options = {}) {
-    console.log("creating action");
     this.name = object.name ?? "New Action";
     this.type = object.type ?? "Attack";
     this.formula = object?.formula ?? "2d10";
@@ -12588,7 +12227,6 @@ class ARd20Action {
     this.range = object?.range ?? { max: 5, min: 0 };
     this.setParent(options?.parent);
     this.sheet = new ActionSheet(this);
-    console.log("Action created");
   }
   setHint(object) {
     let icon = object?.icon ?? "";
@@ -12644,6 +12282,7 @@ class ARd20Action {
   }
   async validateTargets() {
     const actorUuid = this.parent.actor;
+    const user = game.users.current;
     const activeToken = game.scenes.current.tokens.filter((token) => {
       return token._object.controlled && token.actor.uuid === actorUuid;
     })[0];
@@ -12651,28 +12290,63 @@ class ARd20Action {
     if (!activeToken) {
       return;
     }
-    ui.controls.controls.find((control) => {
-      return control.layer === "tokens";
-    }).activeTool = "target";
+    const tokenUuid = activeToken.uuid;
+    let fov = activeToken.object.vision.fov;
     if (!canvas.tokens.active) {
       canvas.tokens.activate();
     }
-    const activeTokenUuid = activeToken.uuid;
-    const activeTokenVision = activeToken.object.vision;
-    console.log("Active Token: ", activeToken);
-    const targets = game.scenes.current.tokens.filter((token) => {
-      return token.uuid !== activeTokenUuid && activeTokenVision.fov.contains(token.x, token.y);
+    game.scenes.current.tokens.filter((token) => {
+      return token.uuid !== tokenUuid && fov.contains(token.x, token.y);
     });
-    console.log(targets);
-    const targetTokens = targets.map((token) => {
-      return token.object;
-    });
-    targetTokens.forEach((token) => {
-      token.showHighlight(true);
-    });
-    return new TokenTargets(activeToken).render(true);
+    await game.settings.set("ard20", "actionMouseRewrite", true);
+    const releaseSetting = game.settings.get("core", "leftClickRelease");
+    if (releaseSetting) {
+      await game.settings.set("core", "leftClickRelease", false);
+    }
+    const handlers = {};
+    handlers.leftClick = (event) => {
+      console.log(event);
+      event.stopPropagation();
+      console.log("left click");
+      const center = event.data.getLocalPosition(activeToken.layer);
+      console.log("center", center);
+      console.log("snapped", canvas.grid.getSnappedPosition(center.x, center.y, 2));
+    };
+    handlers.rightClick = async (event) => {
+      console.log("right click");
+      canvas.stage.off("mousedown", handlers.leftClick);
+      canvas.app.view.oncontextmenu = null;
+      canvas.app.view.onwheel = null;
+      await game.settings.set("core", "leftClickRelease", releaseSetting);
+      await game.settings.set("ard20", "actionMouseRewrite", false);
+      await this.roll(user);
+    };
+    handlers.scrollWheel = (event) => {
+      if (event.ctrlKey) {
+        event.stopPropagation();
+        const fov2 = activeToken.object.vision.fov;
+        for (const token of game.scenes.current.tokens) {
+          if (token.uuid !== tokenUuid) {
+            if (!fov2.contains(token.x, token.y)) {
+              if (token.isTargeted) {
+                token.object.setTarget(false, { releaseOthers: false });
+              }
+              if (token.object.isHighlighted) {
+                token.object.showHighlight(false);
+              }
+            } else if (fov2.contains(token.x, token.y) && token.object.isHighlighted) {
+              token.object.showHighlight(true);
+            }
+          }
+        }
+      }
+    };
+    canvas.stage.on("mousedown", handlers.leftClick);
+    canvas.app.view.oncontextmenu = handlers.rightClick;
+    canvas.app.view.onwheel = handlers.scrollWheel;
   }
-  async roll() {
+  async roll(user) {
+    const targets = user.targets;
     console.log("Phase: rolling");
     if (!this.isRoll) {
       return;
@@ -12682,8 +12356,17 @@ class ARd20Action {
     let roll = new Roll(this.formula);
     const actor = await this.getActor();
     const item = await this.getItem();
-    await roll.evaluate();
-    await roll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name})` } });
+    for (const target of targets) {
+      let tokenRoll;
+      if (roll._evaluated) {
+        tokenRoll = await roll.reroll();
+      } else {
+        tokenRoll = await roll.evaluate();
+      }
+      console.log(tokenRoll);
+      await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
+    }
+    user.updateTokenTargets([]);
   }
 }
 __name(ARd20Action, "ARd20Action");
@@ -16366,7 +16049,6 @@ function instance$f($$self, $$props, $$invalidate) {
   let labelElem;
   let input;
   let feather;
-  console.log(input);
   function checkInput(e) {
     console.log(type);
     if (type !== "number" && type !== "integer")
@@ -16420,8 +16102,9 @@ function instance$f($$self, $$props, $$invalidate) {
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 30) {
-      if (label && input && feather)
+      if (label && input && feather) {
         $$invalidate(3, input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(feather.offsetWidth * 1.5)}px)`, input);
+      }
     }
     if ($$self.$$.dirty & 32) {
       {
@@ -21487,6 +21170,12 @@ const registerSystemSettings = /* @__PURE__ */ __name(function() {
     name: "Main dice-roll type",
     hint: "chose main dice mechanic between 1d20, 2d10 and 3d6"
   });
+  game.settings.register("ard20", "actionMouseRewrite", {
+    config: false,
+    type: Boolean,
+    default: false,
+    scope: "client"
+  });
 }, "registerSystemSettings");
 class ProfFormApp extends FormApplication {
   static get defaultOptions() {
@@ -22103,6 +21792,9 @@ class SvelteDocumentSheet extends SvelteApplication {
 __name(SvelteDocumentSheet, "SvelteDocumentSheet");
 class ARd20Token extends Token {
   #highlight;
+  get isHighlighted() {
+    return this.#highlight.visible;
+  }
   async _draw() {
     await super._draw();
     this.#highlight = this.addChild(new PIXI.Graphics());
@@ -22116,11 +21808,42 @@ class ARd20Token extends Token {
     this.#highlight.lineStyle(t, 0, 0.8).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
     this.#highlight.lineStyle(h, 65280, 1).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
   }
+  _onClickLeft(event) {
+    if (game.settings.get("ard20", "actionMouseRewrite")) {
+      console.log("target");
+      return this.setTarget(!this.isTargeted, { releaseOthers: false });
+    }
+    super._onClickLeft(event);
+  }
+  _onClickRight(event) {
+    if (game.settings.get("ard20", "actionMouseRewrite")) {
+      return;
+    }
+    super._onClickRight(event);
+  }
+  _onClickLeft2(event) {
+    if (game.settings.get("ard20", "actionMouseRewrite")) {
+      return;
+    }
+    super._onClickLeft2(event);
+  }
+  _onClickRight2(event) {
+    if (game.settings.get("ard20", "actionMouseRewrite")) {
+      return;
+    }
+    super._onClickRight2(event);
+  }
   showHighlight(visible) {
     this.#highlight.visible = visible;
   }
 }
 __name(ARd20Token, "ARd20Token");
+class ARd20TokenDocument extends TokenDocument {
+  get isTargeted() {
+    return this.object.isTargeted;
+  }
+}
+__name(ARd20TokenDocument, "ARd20TokenDocument");
 Hooks.once("init", function() {
   console.log("init hoook");
   game.ard20 = {
@@ -22139,8 +21862,9 @@ Hooks.once("init", function() {
   CONFIG.Dice.rolls.push(D20Roll);
   CONFIG.Dice.rolls.push(DamageRoll);
   game.socket.on("system.ard20", (data) => {
-    if (data.operation === "updateActorData")
+    if (data.operation === "updateActorData") {
       ARd20SocketHandler.updateActorData(data);
+    }
   });
   CONFIG.Combat.initiative = {
     formula: "1d20 + @abilities.dex.mod",
@@ -22148,6 +21872,7 @@ Hooks.once("init", function() {
   };
   CONFIG.Actor.documentClass = ARd20Actor;
   CONFIG.Item.documentClass = ARd20Item;
+  CONFIG.Token.documentClass = ARd20TokenDocument;
   CONFIG.Token.objectClass = ARd20Token;
   console.log("register sheets");
   Actors.unregisterSheet("core", ActorSheet);
@@ -22181,10 +21906,12 @@ Hooks.once("ready", async function() {
 });
 async function createItemMacro(data, slot) {
   if (game instanceof Game) {
-    if (data.type !== "Item")
+    if (data.type !== "Item") {
       return;
-    if (!("data" in data) && ui.notifications instanceof Notifications)
+    }
+    if (!("data" in data) && ui.notifications instanceof Notifications) {
       return ui.notifications.warn("You can only create macro buttons for owned Items");
+    }
     const item = data.data;
     const command = `game.ard20.rollItemMacro("${item.name}");`;
     let macroList = game.macros.contents.filter((m) => m.name === item.name && m?.command === command);
@@ -22209,13 +21936,16 @@ function rollItemMacro(itemName) {
   if (game instanceof Game) {
     const speaker = ChatMessage.getSpeaker();
     let actor;
-    if (speaker.token)
+    if (speaker.token) {
       actor = game.actors.tokens[speaker.token];
-    if (!actor && typeof speaker.actor === "string")
+    }
+    if (!actor && typeof speaker.actor === "string") {
       actor = game.actors.get(speaker.actor);
+    }
     const item = actor ? actor.items.find((i) => i.name === itemName) : null;
-    if (!item)
+    if (!item) {
       return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+    }
     return item.roll();
   }
 }
@@ -22227,4 +21957,4 @@ Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html))
 export {
   rollItemMacro
 };
-//# sourceMappingURL=index.mjs.map
+//# sourceMappingURL=ard20.js.map

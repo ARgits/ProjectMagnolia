@@ -1,11 +1,13 @@
 {
-  "name": "boilerplate",
+  "name": "ard20",
   "version": "1.0.0",
   "description": "CSS compiler for the Boilerplate system",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "watch": "vite build --watch"
   },
   "browserslist": [
     "last 3 versions"

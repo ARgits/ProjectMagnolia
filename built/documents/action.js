@@ -1,12 +1,8 @@
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 import ActionSheet from "../sheets/svelte/action/actionSheet.js";
-import TokenTargets from "../helpers/tokenTarget/tokenTargets";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
-export default class ARd20Action
-{
-    constructor(object = {}, options = {})
-    {
-        console.log("creating action");
+export default class ARd20Action {
+    constructor(object = {}, options = {}) {
         this.name = object.name ?? "New Action";
         this.type = object.type ?? "Attack";
         this.formula = object?.formula ?? "2d10";
@@ -23,14 +19,12 @@ export default class ARd20Action
               return new ARd20Action(action);
             })
           : [];*/
-        console.log("Action created");
     }
 
     /**
      * Icon and text hint for action
      */
-    setHint(object)
-    {
+    setHint(object) {
         let icon = object?.icon ?? "";
         let text = object?.text ?? "";
         this.hint = { icon, text };
@@ -39,12 +33,10 @@ export default class ARd20Action
     /**
      * How many characters can you target with that action
      */
-    setTargetLimit(target)
-    {
+    setTargetLimit(target) {
         let type = target?.type ?? "single";
         let number;
-        switch (type)
-        {
+        switch (type) {
             case "single" || "self":
                 number = 1;
                 break;
@@ -58,8 +50,7 @@ export default class ARd20Action
         this.targetLimit = { number, type };
     }
 
-    setParent(object = {})
-    {
+    setParent(object = {}) {
         const { actor, item, action } = object;
         this.parent = {
             actor: actor.uuid ?? null,
@@ -68,19 +59,15 @@ export default class ARd20Action
         };
     }
 
-    async getActor()
-    {
-        if (!this.parent.actor)
-        {
+    async getActor() {
+        if (!this.parent.actor) {
             return;
         }
         return await fromUuid(this.parent.actor);
     }
 
-    async getItem()
-    {
-        if (!this.parent.item)
-        {
+    async getItem() {
+        if (!this.parent.item) {
             return;
         }
         return await fromUuid(this.parent.item);
@@ -98,17 +85,14 @@ export default class ARd20Action
      * 3.
      *
      */
-    async use()
-    {
+    async use() {
         console.log("ACTION USE", this);
         return this.placeTemplate();
     }
 
-    placeTemplate()
-    {
+    placeTemplate() {
         console.log("Phase: placing template");
-        if (!this.template)
-        {
+        if (!this.template) {
             return this.validateTargets();
         }
         /*TODO: look at 5e https://github.com/foundryvtt/dnd5e/blob/master/module/pixi/ability-template.js
@@ -118,54 +102,80 @@ export default class ARd20Action
         return this.roll();
     }
 
-    async validateTargets()
-    {
+    async validateTargets() {
         const actorUuid = this.parent.actor;
-
+        const user = game.users.current;
         //get token that use that action
-        const activeToken = game.scenes.current.tokens.filter((token) =>
-        {
+        const activeToken = game.scenes.current.tokens.filter((token) => {
             return token._object.controlled && token.actor.uuid === actorUuid;
         })[0];
         console.log("Phase: validating targets");
-        if (!activeToken)
-        {
+        if (!activeToken) {
             return;
         }
-        ui.controls.controls.find((control) =>
-        {
-            return control.layer === 'tokens';
-        }).activeTool = 'target';
-        if (!canvas.tokens.active)
-        {
+        const tokenUuid = activeToken.uuid;
+        let fov = activeToken.object.vision.fov;
+        if (!canvas.tokens.active) {
             canvas.tokens.activate();
         }
-        const activeTokenUuid = activeToken.uuid;
-        const activeTokenVision = activeToken.object.vision;
-        console.log("Active Token: ", activeToken);
-        //get array of tokens on scene, without our token
-        const targets = game.scenes.current.tokens.filter((token) =>
-        {
-            return token.uuid !== activeTokenUuid && activeTokenVision.fov.contains(token.x, token.y);
+        game.scenes.current.tokens.filter(token => {
+            return token.uuid !== tokenUuid && fov.contains(token.x, token.y);
         });
-        console.log(targets);
-        const targetTokens = targets.map((token) =>
-        {
-            return token.object;
-        });
-        targetTokens.forEach((token) =>
-        {
-            token.showHighlight(true);
-        });
-        return new TokenTargets(activeToken).render(true)
+
+        await game.settings.set('ard20', 'actionMouseRewrite', true);
+        const releaseSetting = game.settings.get('core', 'leftClickRelease');
+        if (releaseSetting) {
+            await game.settings.set('core', 'leftClickRelease', false);
+        }
+        const handlers = {};
+        handlers.leftClick = event => {
+            console.log(event);
+            event.stopPropagation();
+            console.log('left click');
+            const center = event.data.getLocalPosition(activeToken.layer);
+            console.log('center', center);
+            console.log('snapped', canvas.grid.getSnappedPosition(center.x, center.y, 2));
+        };
+        handlers.rightClick = async (event) => {
+            console.log('right click');
+            canvas.stage.off('mousedown', handlers.leftClick);
+            canvas.app.view.oncontextmenu = null;
+            canvas.app.view.onwheel = null;
+            await game.settings.set('core', 'leftClickRelease', releaseSetting);
+            await game.settings.set('ard20', 'actionMouseRewrite', false);
+            await this.roll(user);
+        };
+        handlers.scrollWheel = event => {
+            if (event.ctrlKey) {
+                event.stopPropagation();
+                const fov = activeToken.object.vision.fov;
+                for (const token of game.scenes.current.tokens) {
+                    if (token.uuid !== tokenUuid) {
+                        if (!fov.contains(token.x, token.y)) {
+                            if (token.isTargeted) {
+                                token.object.setTarget(false, { releaseOthers: false });
+                            }
+                            if (token.object.isHighlighted) {
+                                token.object.showHighlight(false);
+                            }
+                        }
+                        else if (fov.contains(token.x, token.y) && token.object.isHighlighted) {
+                            token.object.showHighlight(true);
+                        }
+                    }
+                }
+            }
+        };
+        canvas.stage.on('mousedown', handlers.leftClick);
+        canvas.app.view.oncontextmenu = handlers.rightClick;
+        canvas.app.view.onwheel = handlers.scrollWheel;
 
     }
 
-    async roll()
-    {
+    async roll(user) {
+        const targets = user.targets;
         console.log("Phase: rolling");
-        if (!this.isRoll)
-        {
+        if (!this.isRoll) {
             return;
         }
         let bonus = this.bonus;
@@ -173,7 +183,17 @@ export default class ARd20Action
         let roll = new Roll(this.formula);
         const actor = await this.getActor();
         const item = await this.getItem();
-        await roll.evaluate();
-        await roll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name})` } });
+        for (const target of targets) {
+            let tokenRoll;
+            if (roll._evaluated) {
+                tokenRoll = await roll.reroll();
+            }
+            else {
+                tokenRoll = await roll.evaluate();
+            }
+            console.log(tokenRoll);
+            await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
+        }
+        user.updateTokenTargets([]);
     }
 }

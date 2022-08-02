@@ -1,7 +1,7 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import TargetsShell from "./TargetsShell.svelte";
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-import { derived, get } from "svelte/store";
+import { writable } from "svelte/store";
 
 export default class TokenTargets extends SvelteApplication
 {
@@ -53,17 +53,24 @@ export default class TokenTargets extends SvelteApplication
         }
     }
 
-    getTargets(doc)
-    {
-        console.log('looking for tokens', doc);
+    configureTargets(doc) {
+        let targets = [];
         const token = doc.object;
         const uuid = doc.uuid;
-        const vision = token.vision;
-        return game.scenes.current.tokens.filter((t) =>
-        {
-            return t.uuid !== uuid && vision.fov.contains(t.x, t.y);
-        });
+        const fov = token.vision.fov;
+        const allTokens = game.scenes.current.tokens.filter(t => {return t.uuid !== uuid;});
+        for (const target of allTokens) {
+            const canSee = fov.contains(target.x, target.y);
+            if (canSee) {
+                targets.push(target);
+            }
+            else {
+                target.object.setTarget(false, { releaseOthers: false })
+            }
+        }
+        return writable(targets)
     }
+
     render(force = false, options = {})
     {
         if (!this.#storeUnsubscribe)

@@ -1,31 +1,30 @@
 {
   "id": "ard20",
-  "title":"Project Magnolia (test)",
+  "title": "Project Magnolia (test)",
   "version": "0.0.1.14.0.242",
   "compatibility": {
     "minimum": 10,
     "verified": 10,
     "maximum": 10
   },
-  "authors": [{ "name": "ARgits" }],
-  "esmodules": ["built/index.mjs"],
-  "styles": ["built/css/select2.css", "built/style.css", "built/css/ard20.css"],
-  "relationships": {
-    "requires": [
-      {
-        "id": "typhonjs",
-        "type": "module",
-        "manifest": "https://github.com/typhonjs-fvtt-lib/typhonjs/releases/latest/download/module.json",
-        "compatibility": {
-          "minimum": "0.0.10",
-          "compatible": "0.0.12",
-          "maximum": "0.0.15"
-        }
-      }
-    ]
-  },
-  "scripts": ["lib/filtrex.js", "lib/select2.js", "lib/math.js"],
-  "packs": [],
+  "authors": [
+    {
+      "name": "ARgits"
+    }
+  ],
+  "esmodules": [
+    "ard20.js"
+  ],
+  "styles": [
+    "built/css/select2.css",
+    "style.css",
+    "built/css/ard20.css"
+  ],
+  "scripts": [
+    "lib/filtrex.js",
+    "lib/select2.js",
+    "lib/math.js"
+  ],
   "languages": [
     {
       "lang": "en",

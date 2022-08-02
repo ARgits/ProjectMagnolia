@@ -2,6 +2,7 @@ import { AdvRateSettingsShim } from "./advancement-rate/advancement-rate.js";
 import { FeatSettingsShim } from "./FeatSetting/featSetting.js";
 import { ProfSettingsShim } from "./ProfSetting/profSetting.js";
 import { ProfLevelSettingShim } from "./ProfLevelsSetting/profLevelSetting.js";
+
 export const registerSystemSettings = function () {
   game.settings.register("ard20", "proficiencies", {
     scope: "world",
@@ -124,16 +125,22 @@ export const registerSystemSettings = function () {
   game.settings.register("ard20", "mainDiceType", {
     scope: "world",
     choices:{
-      '1d20':'1d20',
-      '2d10':'2d10',
-      '3d6':'3d6'
+        '1d20': '1d20',
+        '2d10': '2d10',
+        '3d6': '3d6'
     },
-    config: true,
-    default: "1d20",
-    type: String,
-    name: "Main dice-roll type",
-    hint: "chose main dice mechanic between 1d20, 2d10 and 3d6",
+      config: true,
+      default: "1d20",
+      type: String,
+      name: "Main dice-roll type",
+      hint: "chose main dice mechanic between 1d20, 2d10 and 3d6",
   });
+    game.settings.register('ard20', 'actionMouseRewrite', {
+        config: false,
+        type: Boolean,
+        default: false,
+        scope: 'client'
+    });
 };
 class ProfFormApp extends FormApplication {
   static get defaultOptions() {
