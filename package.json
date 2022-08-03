@@ -24,9 +24,7 @@
     "svelte": "^3.49.0"
   },
   "devDependencies": {
-    "@league-of-foundry-developers/foundry-vtt-types": "^9.269.0",
     "@typhonjs-config/eslint-config": "^0.3.4",
-    "cypress": "^9.7.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "eslint": "^8",
     "vite": "^3",

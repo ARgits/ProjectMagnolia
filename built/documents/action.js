@@ -87,6 +87,8 @@ export default class ARd20Action {
      */
     async use() {
         console.log("ACTION USE", this);
+        const actor = await this.getActor();
+        await actor._sheet.minimize();
         return this.placeTemplate();
     }
 
@@ -113,25 +115,20 @@ export default class ARd20Action {
         if (!activeToken) {
             return;
         }
-        const tokenUuid = activeToken.uuid;
-        let fov = activeToken.object.vision.fov;
+        this.checkTokens(null, activeToken);
         if (!canvas.tokens.active) {
             canvas.tokens.activate();
         }
-        game.scenes.current.tokens.filter(token => {
-            return token.uuid !== tokenUuid && fov.contains(token.x, token.y);
-        });
 
         await game.settings.set('ard20', 'actionMouseRewrite', true);
         const releaseSetting = game.settings.get('core', 'leftClickRelease');
         if (releaseSetting) {
             await game.settings.set('core', 'leftClickRelease', false);
         }
+        ui.notifications.info('Левый клик - выбор цели; Правый клик - Применение действия ко всем целям, либо отмена', { permanent: true });
         const handlers = {};
         handlers.leftClick = event => {
-            console.log(event);
             event.stopPropagation();
-            console.log('left click');
             const center = event.data.getLocalPosition(activeToken.layer);
             console.log('center', center);
             console.log('snapped', canvas.grid.getSnappedPosition(center.x, center.y, 2));
@@ -143,29 +140,15 @@ export default class ARd20Action {
             canvas.app.view.onwheel = null;
             await game.settings.set('core', 'leftClickRelease', releaseSetting);
             await game.settings.set('ard20', 'actionMouseRewrite', false);
+            ui.notifications.active.filter((elem) => elem[0].classList.contains('permanent')).forEach((e) => e.remove());
             await this.roll(user);
         };
         handlers.scrollWheel = event => {
-            if (event.ctrlKey) {
-                event.stopPropagation();
-                const fov = activeToken.object.vision.fov;
-                for (const token of game.scenes.current.tokens) {
-                    if (token.uuid !== tokenUuid) {
-                        if (!fov.contains(token.x, token.y)) {
-                            if (token.isTargeted) {
-                                token.object.setTarget(false, { releaseOthers: false });
-                            }
-                            if (token.object.isHighlighted) {
-                                token.object.showHighlight(false);
-                            }
-                        }
-                        else if (fov.contains(token.x, token.y) && token.object.isHighlighted) {
-                            token.object.showHighlight(true);
-                        }
-                    }
-                }
+            if (event.ctrlKey || event.shiftKey) {
+                this.checkTokens(event, activeToken);
             }
         };
+
         canvas.stage.on('mousedown', handlers.leftClick);
         canvas.app.view.oncontextmenu = handlers.rightClick;
         canvas.app.view.onwheel = handlers.scrollWheel;
@@ -192,8 +175,32 @@ export default class ARd20Action {
                 tokenRoll = await roll.evaluate();
             }
             console.log(tokenRoll);
+            ui.notifications.info(`Совершается бросок для цели "${target.name}"`);
             await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
         }
         user.updateTokenTargets([]);
+    }
+
+    async checkTokens(event, activeToken) {
+        console.log(event);
+        let fov = activeToken.object.vision.fov;
+        console.log(fov.config.rotation);
+        let snap = event.ctrlKey ? 15 : event.shiftKey ? 45 : 0;
+
+        for (const token of game.scenes.current.tokens) {
+            if (token.uuid !== tokenUuid) {
+                if (!fov.contains(token.x, token.y)) {
+                    if (token.isTargeted) {
+                        token.object.setTarget(false, { releaseOthers: false });
+                    }
+                    if (token.object.isHighlighted) {
+                        token.object.showHighlight(false);
+                    }
+                }
+                else if (fov.contains(token.x, token.y) && !token.object.isHighlighted) {
+                    token.object.showHighlight(true);
+                }
+            }
+        }
     }
 }

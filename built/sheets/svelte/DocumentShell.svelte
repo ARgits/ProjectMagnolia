@@ -4,9 +4,12 @@
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { setContext } from "svelte";
   import { DocTemplate } from "../../helpers/templates.js";
+
   export let elementRoot;
   export let storeDoc;
   setContext("DocumentSheetObject", storeDoc);
+  console.log(`! DocumentShell - ctor - 0 - object: `, storeDoc);
+  console.trace();
 </script>
 
 <ApplicationShell bind:elementRoot>

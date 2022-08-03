@@ -58,28 +58,28 @@ import {
   require_multicolumn,
   require_object_fit,
   require_picocolors_browser,
-  require_pointer,
-  require_postcss,
-  require_text_decoration,
-  require_text_emphasis,
-  require_text_overflow,
-  require_text_size_adjust,
-  require_transforms2d,
-  require_transforms3d,
-  require_unpacker,
-  require_user_select_none
-} from "./chunk-6SIYO3Q2.js";
-import "./chunk-JS6TPASL.js";
+    require_pointer,
+    require_postcss,
+    require_text_decoration,
+    require_text_emphasis,
+    require_text_overflow,
+    require_text_size_adjust,
+    require_transforms2d,
+    require_transforms3d,
+    require_unpacker,
+    require_user_select_none
+} from "./chunk-3GZT463K.js";
+import "./chunk-KRUPHXZG.js";
 import {
-  __commonJS
+    __commonJS
 } from "./chunk-S5KM4IGW.js";
 
 // node_modules/autoprefixer/lib/utils.js
 var require_utils = __commonJS({
-  "node_modules/autoprefixer/lib/utils.js"(exports, module) {
-    var { list } = require_postcss();
-    module.exports.error = function(text) {
-      let err = new Error(text);
+    "node_modules/autoprefixer/lib/utils.js"(exports, module) {
+        var { list } = require_postcss();
+        module.exports.error = function (text) {
+            let err = new Error(text);
       err.autoprefixer = true;
       throw err;
     };
@@ -2228,10 +2228,12 @@ var require_processor = __commonJS({
           let prop = decl.prop;
           let value = decl.value;
           if (prop === "color-adjust") {
-            result.warn(
-              "Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.",
-              { node: decl }
-            );
+              if (parent.every((i) => i.prop !== "print-color-adjust")) {
+                  result.warn(
+                      "Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.",
+                      { node: decl }
+                  );
+              }
           } else if (prop === "grid-row-span") {
             result.warn(
               "grid-row-span is not part of final Grid Layout. Use grid-row.",

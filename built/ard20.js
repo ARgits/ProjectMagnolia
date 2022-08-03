@@ -73,6 +73,7 @@ Hooks.once("init", function () {
     CONFIG.Item.systemDataModels["race"] = RaceDataModel;
     //register settings
     registerSystemSettings();
+    game.settings.set('ard20', 'actionMouseRewrite', false);
 
     //register Svelte components for Actor/Item types
     setSvelteComponents();

@@ -3,13 +3,14 @@
   "title": "Project Magnolia (test)",
   "version": "0.0.1.14.0.242",
   "compatibility": {
-    "minimum": 10,
-    "verified": 10,
-    "maximum": 10
+    "minimum": "10",
+    "verified": "10",
+    "maximum": "10"
   },
   "authors": [
     {
-      "name": "ARgits"
+      "name": "ARgits",
+      "flags": {}
     }
   ],
   "esmodules": [
@@ -30,8 +31,7 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json",
-      "title": "Project Magnolia (test)",
-      "description": "Попытки сделать свою систему"
+      "flags": {}
     }
   ],
   "socket": true,

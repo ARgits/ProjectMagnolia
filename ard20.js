@@ -12271,6 +12271,8 @@ class ARd20Action {
   }
   async use() {
     console.log("ACTION USE", this);
+    const actor = await this.getActor();
+    await actor._sheet.minimize();
     return this.placeTemplate();
   }
   placeTemplate() {
@@ -12290,24 +12292,19 @@ class ARd20Action {
     if (!activeToken) {
       return;
     }
-    const tokenUuid = activeToken.uuid;
-    let fov = activeToken.object.vision.fov;
+    this.checkTokens(null, activeToken);
     if (!canvas.tokens.active) {
       canvas.tokens.activate();
     }
-    game.scenes.current.tokens.filter((token) => {
-      return token.uuid !== tokenUuid && fov.contains(token.x, token.y);
-    });
     await game.settings.set("ard20", "actionMouseRewrite", true);
     const releaseSetting = game.settings.get("core", "leftClickRelease");
     if (releaseSetting) {
       await game.settings.set("core", "leftClickRelease", false);
     }
+    ui.notifications.info("\u041B\u0435\u0432\u044B\u0439 \u043A\u043B\u0438\u043A - \u0432\u044B\u0431\u043E\u0440 \u0446\u0435\u043B\u0438; \u041F\u0440\u0430\u0432\u044B\u0439 \u043A\u043B\u0438\u043A - \u041F\u0440\u0438\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u043A\u043E \u0432\u0441\u0435\u043C \u0446\u0435\u043B\u044F\u043C, \u043B\u0438\u0431\u043E \u043E\u0442\u043C\u0435\u043D\u0430", { permanent: true });
     const handlers = {};
     handlers.leftClick = (event) => {
-      console.log(event);
       event.stopPropagation();
-      console.log("left click");
       const center = event.data.getLocalPosition(activeToken.layer);
       console.log("center", center);
       console.log("snapped", canvas.grid.getSnappedPosition(center.x, center.y, 2));
@@ -12319,26 +12316,12 @@ class ARd20Action {
       canvas.app.view.onwheel = null;
       await game.settings.set("core", "leftClickRelease", releaseSetting);
       await game.settings.set("ard20", "actionMouseRewrite", false);
+      ui.notifications.active.filter((elem) => elem[0].classList.contains("permanent")).forEach((e) => e.remove());
       await this.roll(user);
     };
     handlers.scrollWheel = (event) => {
-      if (event.ctrlKey) {
-        event.stopPropagation();
-        const fov2 = activeToken.object.vision.fov;
-        for (const token of game.scenes.current.tokens) {
-          if (token.uuid !== tokenUuid) {
-            if (!fov2.contains(token.x, token.y)) {
-              if (token.isTargeted) {
-                token.object.setTarget(false, { releaseOthers: false });
-              }
-              if (token.object.isHighlighted) {
-                token.object.showHighlight(false);
-              }
-            } else if (fov2.contains(token.x, token.y) && token.object.isHighlighted) {
-              token.object.showHighlight(true);
-            }
-          }
-        }
+      if (event.ctrlKey || event.shiftKey) {
+        this.checkTokens(event, activeToken);
       }
     };
     canvas.stage.on("mousedown", handlers.leftClick);
@@ -12364,9 +12347,30 @@ class ARd20Action {
         tokenRoll = await roll.evaluate();
       }
       console.log(tokenRoll);
+      ui.notifications.info(`\u0421\u043E\u0432\u0435\u0440\u0448\u0430\u0435\u0442\u0441\u044F \u0431\u0440\u043E\u0441\u043E\u043A \u0434\u043B\u044F \u0446\u0435\u043B\u0438 "${target.name}"`);
       await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
     }
     user.updateTokenTargets([]);
+  }
+  async checkTokens(event, activeToken) {
+    console.log(event);
+    let fov = activeToken.object.vision.fov;
+    console.log(fov.config.rotation);
+    event.ctrlKey ? 15 : event.shiftKey ? 45 : 0;
+    for (const token of game.scenes.current.tokens) {
+      if (token.uuid !== tokenUuid) {
+        if (!fov.contains(token.x, token.y)) {
+          if (token.isTargeted) {
+            token.object.setTarget(false, { releaseOthers: false });
+          }
+          if (token.object.isHighlighted) {
+            token.object.showHighlight(false);
+          }
+        } else if (fov.contains(token.x, token.y) && !token.object.isHighlighted) {
+          token.object.showHighlight(true);
+        }
+      }
+    }
   }
 }
 __name(ARd20Action, "ARd20Action");
@@ -15205,10 +15209,11 @@ class ARd20ActorSheet extends ActorSheet {
         i.toggleClass = isActive ? "active" : "";
         i.toggleTitle = game.i18n.localize(isActive ? "ARd20.Equipped" : "ARd20.Unequipped");
         i.data.equipped = !isActive;
-        if (i.type === "armor")
+        if (i.type === "armor") {
           armor.push(i);
-        else
+        } else {
           weapons.push(i);
+        }
       }
     }
     context.gear = gear;
@@ -15216,6 +15221,11 @@ class ARd20ActorSheet extends ActorSheet {
     context.spells = spells;
     context.weapons = weapons;
     context.armor = armor;
+  }
+  render(force = false, options = {}) {
+    console.log(this._element);
+    console.trace();
+    return super.render(force, options);
   }
   activateListeners(html) {
     super.activateListeners(html);
@@ -15226,8 +15236,9 @@ class ARd20ActorSheet extends ActorSheet {
       const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
-    if (!this.isEditable)
+    if (!this.isEditable) {
       return;
+    }
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-delete").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
@@ -15243,8 +15254,9 @@ class ARd20ActorSheet extends ActorSheet {
     if (this.actor.isOwner) {
       let handler = /* @__PURE__ */ __name((ev) => this._onDragStart(ev), "handler");
       html.find("li.item").each((i, li) => {
-        if (li.classList.contains("inventory-header"))
+        if (li.classList.contains("inventory-header")) {
           return;
+        }
         li.setAttribute("draggable", "true");
         li.addEventListener("dragstart", handler, false);
       });
@@ -15387,8 +15399,9 @@ class ARd20ActorSheet extends ActorSheet {
             }
           });
           featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
-            if (item.type === "feature")
+            if (item.type === "feature") {
               return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+            }
           });
           const obj = {
             races: { list: raceList, chosen: "" },
@@ -15442,8 +15455,9 @@ class ARd20ActorSheet extends ActorSheet {
     const item = this.actor.items.get(id);
     const hasAttack = item.system.hasAttack;
     const hasDamage = item.system.hasDamage;
-    if (item)
+    if (item) {
       return item.roll({ hasAttack, hasDamage });
+    }
   }
   async _onItemCreate(event) {
     event.preventDefault();
@@ -15467,8 +15481,9 @@ class ARd20ActorSheet extends ActorSheet {
       if (dataset.rollType == "item") {
         const itemid = element2.closest(".item").dataset.itemId;
         const item = this.actor.items.get(itemid);
-        if (item)
+        if (item) {
           return item.roll();
+        }
       }
     }
   }
@@ -15485,8 +15500,9 @@ class ARd20ActorSheet extends ActorSheet {
     }
     const actor = this.actor;
     const allowed = Hooks.call("dropActorSheetData", actor, this, data);
-    if (allowed === false)
+    if (allowed === false) {
       return;
+    }
     switch (data.type) {
       case "ActiveEffect":
         return this._onDropActiveEffect(event, data);
@@ -21360,6 +21376,8 @@ function instance($$self, $$props, $$invalidate) {
   let { storeDoc } = $$props;
   $$subscribe_storeDoc();
   setContext("DocumentSheetObject", storeDoc);
+  console.log(`! DocumentShell - ctor - 0 - object: `, storeDoc);
+  console.trace();
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
     $$invalidate(0, elementRoot);
@@ -21752,7 +21770,7 @@ class SvelteDocumentSheet extends SvelteApplication {
   async #handleDocUpdate(doc, options) {
     const { action, data, documentType } = options;
     if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
-      this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
+      this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assined";
     }
   }
   render(force = false, options = {}) {
@@ -21842,6 +21860,9 @@ class ARd20TokenDocument extends TokenDocument {
   get isTargeted() {
     return this.object.isTargeted;
   }
+  _onUpdateBaseActor(update2 = {}, options = {}) {
+    super._onUpdateBaseActor(update2, options);
+  }
 }
 __name(ARd20TokenDocument, "ARd20TokenDocument");
 Hooks.once("init", function() {
@@ -21883,6 +21904,7 @@ Hooks.once("init", function() {
   Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
   CONFIG.Item.systemDataModels["race"] = RaceDataModel;
   registerSystemSettings();
+  game.settings.set("ard20", "actionMouseRewrite", false);
   setSvelteComponents();
   preloadHandlebarsTemplates();
 });

@@ -1,6 +1,21 @@
-import { require_browserslist, require_fs, require_lib, require_postcss, require_unpacker } from "./chunk-6SIYO3Q2.js";
-import { require_path, require_url } from "./chunk-JS6TPASL.js";
-import { __commonJS, __esm, __export, __require, __toCommonJS } from "./chunk-S5KM4IGW.js";
+import {
+    require_browserslist,
+    require_fs,
+    require_lib,
+    require_postcss,
+    require_unpacker
+} from "./chunk-3GZT463K.js";
+import {
+    require_path,
+    require_url
+} from "./chunk-KRUPHXZG.js";
+import {
+    __commonJS,
+    __esm,
+    __export,
+    __require,
+    __toCommonJS
+} from "./chunk-S5KM4IGW.js";
 
 // node_modules/yaml/browser/dist/PlainValue-b8036b75.js
 function _typeof(obj) {
@@ -39608,35 +39623,30 @@ var require_walker = __commonJS({
 var require_package = __commonJS({
     "node_modules/css-tree/package.json"(exports, module) {
         module.exports = {
-            _args: [
-                [
-                    "css-tree@1.1.3",
-                    "C:\\Users\\vab\\AppData\\Local\\FoundryVTT\\Data\\systems\\ard20"
-                ]
-            ],
-            _from: "css-tree@1.1.3",
+            _from: "css-tree@^1.1.3",
             _id: "css-tree@1.1.3",
             _inBundle: false,
             _integrity: "sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==",
             _location: "/css-tree",
             _phantomChildren: {},
             _requested: {
-                type: "version",
+                type: "range",
                 registry: true,
-                raw: "css-tree@1.1.3",
+                raw: "css-tree@^1.1.3",
                 name: "css-tree",
                 escapedName: "css-tree",
-                rawSpec: "1.1.3",
+                rawSpec: "^1.1.3",
                 saveSpec: null,
-                fetchSpec: "1.1.3"
+                fetchSpec: "^1.1.3"
             },
             _requiredBy: [
                 "/csso",
                 "/svgo"
             ],
             _resolved: "https://registry.npmjs.org/css-tree/-/css-tree-1.1.3.tgz",
-            _spec: "1.1.3",
-            _where: "C:\\Users\\vab\\AppData\\Local\\FoundryVTT\\Data\\systems\\ard20",
+            _shasum: "eb4870fb6fd7707327ec95c2ff2ab09b5e8db91d",
+            _spec: "css-tree@^1.1.3",
+            _where: "C:\\Users\\vab\\AppData\\Local\\FoundryVTT\\Data\\systems\\ard20\\node_modules\\svgo",
             author: {
                 name: "Roman Dvornov",
                 email: "rdvornov@gmail.com",
@@ -39645,10 +39655,12 @@ var require_package = __commonJS({
             bugs: {
                 url: "https://github.com/csstree/csstree/issues"
             },
+            bundleDependencies: false,
             dependencies: {
                 "mdn-data": "2.0.14",
                 "source-map": "^0.6.1"
             },
+            deprecated: false,
             description: "A tool set for CSS: fast detailed parser (CSS \u2192 AST), walker (AST traversal), generator (AST \u2192 CSS) and lexer (validation and matching) based on specs and browser implementations",
             devDependencies: {
                 "@rollup/plugin-commonjs": "^11.0.2",
@@ -43463,34 +43475,29 @@ var require_compress = __commonJS({
 var require_package2 = __commonJS({
     "node_modules/csso/package.json"(exports, module) {
         module.exports = {
-            _args: [
-                [
-                    "csso@4.2.0",
-                    "C:\\Users\\vab\\AppData\\Local\\FoundryVTT\\Data\\systems\\ard20"
-                ]
-            ],
-            _from: "csso@4.2.0",
+            _from: "csso@^4.2.0",
             _id: "csso@4.2.0",
             _inBundle: false,
             _integrity: "sha512-wvlcdIbf6pwKEk7vHj8/Bkc0B4ylXZruLvOgs9doS5eOsOpuodOV2zJChSpkp+pRpYQLQMeF04nr3Z68Sta9jA==",
             _location: "/csso",
             _phantomChildren: {},
             _requested: {
-                type: "version",
+                type: "range",
                 registry: true,
-                raw: "csso@4.2.0",
+                raw: "csso@^4.2.0",
                 name: "csso",
                 escapedName: "csso",
-                rawSpec: "4.2.0",
+                rawSpec: "^4.2.0",
                 saveSpec: null,
-                fetchSpec: "4.2.0"
+                fetchSpec: "^4.2.0"
             },
             _requiredBy: [
                 "/svgo"
             ],
             _resolved: "https://registry.npmjs.org/csso/-/csso-4.2.0.tgz",
-            _spec: "4.2.0",
-            _where: "C:\\Users\\vab\\AppData\\Local\\FoundryVTT\\Data\\systems\\ard20",
+            _shasum: "ea3a561346e8dc9f546d6febedd50187cf389529",
+            _spec: "csso@^4.2.0",
+            _where: "C:\\Users\\vab\\AppData\\Local\\FoundryVTT\\Data\\systems\\ard20\\node_modules\\svgo",
             author: {
                 name: "Sergey Kryzhanovsky",
                 email: "skryzhanovsky@ya.ru",
@@ -43502,9 +43509,11 @@ var require_package2 = __commonJS({
             bugs: {
                 url: "https://github.com/css/csso/issues"
             },
+            bundleDependencies: false,
             dependencies: {
                 "css-tree": "^1.1.2"
             },
+            deprecated: false,
             description: "CSS minifier with structural optimisations",
             devDependencies: {
                 "@rollup/plugin-commonjs": "^11.0.1",
@@ -63725,4 +63734,4 @@ export {
  */
 //! stable.js 0.1.8, https://github.com/Two-Screen/stable
 //! © 2018 Angry Bytes and contributors. MIT licensed.
-//# sourceMappingURL=chunk-CSMY3JRD.js.map
+//# sourceMappingURL=chunk-RAXJ4W27.js.map
