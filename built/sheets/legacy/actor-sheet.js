@@ -159,7 +159,7 @@ export class ARd20ActorSheet extends ActorSheet {
 
     render(force = false, options = {}) {
         console.log(this._element);
-        console.trace();
+        ;
         return super.render(force, options);
     }
 

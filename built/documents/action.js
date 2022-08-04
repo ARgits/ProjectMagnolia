@@ -2,6 +2,7 @@ import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 import ActionSheet from "../sheets/svelte/action/actionSheet.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
 export default class ARd20Action {
+
     constructor(object = {}, options = {}) {
         this.name = object.name ?? "New Action";
         this.type = object.type ?? "Attack";
@@ -14,6 +15,7 @@ export default class ARd20Action {
         this.range = object?.range ?? { max: 5, min: 0 };
         this.setParent(options?.parent);
         this.sheet = new ActionSheet(this);
+        this.template = object?.template ?? null;
         /*this.actionList = object?.actionList
           ? object.actionList.map((action) => {
               return new ARd20Action(action);
@@ -106,16 +108,16 @@ export default class ARd20Action {
 
     async validateTargets() {
         const actorUuid = this.parent.actor;
-        const user = game.users.current;
+        const user = game.user;
         //get token that use that action
-        const activeToken = game.scenes.current.tokens.filter((token) => {
+        const activeToken = canvas.scene.tokens.filter((token) => {
             return token._object.controlled && token.actor.uuid === actorUuid;
         })[0];
         console.log("Phase: validating targets");
         if (!activeToken) {
             return;
         }
-        this.checkTokens(null, activeToken);
+        this.checkTokens(activeToken, this);
         if (!canvas.tokens.active) {
             canvas.tokens.activate();
         }
@@ -129,11 +131,8 @@ export default class ARd20Action {
         const handlers = {};
         handlers.leftClick = event => {
             event.stopPropagation();
-            const center = event.data.getLocalPosition(activeToken.layer);
-            console.log('center', center);
-            console.log('snapped', canvas.grid.getSnappedPosition(center.x, center.y, 2));
         };
-        handlers.rightClick = async (event) => {
+        handlers.rightClick = async () => {
             console.log('right click');
             canvas.stage.off('mousedown', handlers.leftClick);
             canvas.app.view.oncontextmenu = null;
@@ -145,7 +144,9 @@ export default class ARd20Action {
         };
         handlers.scrollWheel = event => {
             if (event.ctrlKey || event.shiftKey) {
-                this.checkTokens(event, activeToken);
+                const check = this.checkTokens;
+                const action = Object.assign({}, this);
+                setTimeout(check, 100, activeToken, action);
             }
         };
 
@@ -178,29 +179,29 @@ export default class ARd20Action {
             ui.notifications.info(`Совершается бросок для цели "${target.name}"`);
             await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
         }
-        user.updateTokenTargets([]);
+        return this.finishAction(user);
+
     }
 
-    async checkTokens(event, activeToken) {
-        console.log(event);
-        let fov = activeToken.object.vision.fov;
-        console.log(fov.config.rotation);
-        let snap = event.ctrlKey ? 15 : event.shiftKey ? 45 : 0;
+    finishAction(user) {
+        user.updateTokenTargets([]);
+        canvas.scene.tokens.forEach(t => t.object.showHighlight(false));
+    }
 
-        for (const token of game.scenes.current.tokens) {
-            if (token.uuid !== tokenUuid) {
-                if (!fov.contains(token.x, token.y)) {
-                    if (token.isTargeted) {
-                        token.object.setTarget(false, { releaseOthers: false });
-                    }
-                    if (token.object.isHighlighted) {
-                        token.object.showHighlight(false);
-                    }
-                }
-                else if (fov.contains(token.x, token.y) && !token.object.isHighlighted) {
-                    token.object.showHighlight(true);
-                }
+    checkTokens(activeToken, action) {
+        const tokenUuid = activeToken.uuid;
+        const activeTokenXY = { x: activeToken.x, y: activeToken.y };
+        for (const token of canvas.scene.tokens) {
+            if (token.uuid === tokenUuid) {
+                continue;
             }
+            const target = token.object;
+            const targetXY = { x: token.x, y: token.y };
+            const range = Math.round(canvas.grid.measureDistance(activeTokenXY, targetXY));
+            const inRange = range <= action.range.max && range >= action.range.min;
+            target.setTarget(target.isVisible && target.isTargeted, { releaseOthers: false });
+            target.showHighlight(target.isVisible && inRange);
+
         }
     }
 }

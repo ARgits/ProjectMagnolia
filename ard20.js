@@ -12060,77 +12060,128 @@ class TJSDialog extends SvelteApplication {
 }
 __name(TJSDialog, "TJSDialog");
 function create_fragment$m(ctx) {
-  let div2;
-  let h2;
-  let t1;
-  let div0;
-  let t2;
-  let input0;
-  let t3;
-  let div1;
-  let t4;
-  let input1;
-  let t5;
-  let button;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div2 = element("div");
-      h2 = element("h2");
-      h2.textContent = "This is main tab";
-      t1 = space();
-      div0 = element("div");
-      t2 = text("Name: ");
-      input0 = element("input");
-      t3 = space();
-      div1 = element("div");
-      t4 = text("Formula: ");
-      input1 = element("input");
-      t5 = space();
-      button = element("button");
-      button.textContent = "Submit";
-      attr(div0, "class", "name");
-      attr(div2, "class", "main");
-    },
+  let div5;
+    let h2;
+    let t1;
+    let div0;
+    let t2;
+    let input0;
+    let t3;
+    let div1;
+    let t4;
+    let input1;
+    let t5;
+    let fieldset;
+    let legend;
+    let t7;
+    let div2;
+    let t8;
+    let input2;
+    let t9;
+    let div3;
+    let t10;
+    let input3;
+    let t11;
+    let div4;
+    let button;
+    let mounted;
+    let dispose;
+    return {
+        c() {
+            div5 = element("div");
+            h2 = element("h2");
+            h2.textContent = "This is main tab";
+            t1 = space();
+            div0 = element("div");
+            t2 = text("Name: ");
+            input0 = element("input");
+            t3 = space();
+            div1 = element("div");
+            t4 = text("Formula: ");
+            input1 = element("input");
+            t5 = space();
+            fieldset = element("fieldset");
+            legend = element("legend");
+            legend.textContent = "Range";
+            t7 = space();
+            div2 = element("div");
+            t8 = text("Minimum: ");
+            input2 = element("input");
+            t9 = space();
+            div3 = element("div");
+            t10 = text("Maximum: ");
+            input3 = element("input");
+            t11 = space();
+            div4 = element("div");
+            button = element("button");
+            button.textContent = "Submit";
+            attr(div0, "class", "name");
+            attr(fieldset, "class", "range");
+            attr(div4, "class", "submit");
+            attr(div5, "class", "main");
+        },
     m(target, anchor) {
-      insert(target, div2, anchor);
-      append(div2, h2);
-      append(div2, t1);
-      append(div2, div0);
-      append(div0, t2);
-      append(div0, input0);
-      set_input_value(input0, ctx[0].name);
-      append(div2, t3);
-      append(div2, div1);
-      append(div1, t4);
-      append(div1, input1);
-      set_input_value(input1, ctx[0].formula);
-      append(div2, t5);
-      append(div2, button);
-      if (!mounted) {
-        dispose = [
-          listen(input0, "input", ctx[2]),
-          listen(input1, "input", ctx[3]),
-          listen(button, "click", ctx[4])
-        ];
+        insert(target, div5, anchor);
+        append(div5, h2);
+        append(div5, t1);
+        append(div5, div0);
+        append(div0, t2);
+        append(div0, input0);
+        set_input_value(input0, ctx[0].name);
+        append(div5, t3);
+        append(div5, div1);
+        append(div1, t4);
+        append(div1, input1);
+        set_input_value(input1, ctx[0].formula);
+        append(div5, t5);
+        append(div5, fieldset);
+        append(fieldset, legend);
+        append(fieldset, t7);
+        append(fieldset, div2);
+        append(div2, t8);
+        append(div2, input2);
+        set_input_value(input2, ctx[0].range.min);
+        append(fieldset, t9);
+        append(fieldset, div3);
+        append(div3, t10);
+        append(div3, input3);
+        set_input_value(input3, ctx[0].range.max);
+        append(div5, t11);
+        append(div5, div4);
+        append(div4, button);
+        if (!mounted) {
+            dispose = [
+                listen(input0, "input", ctx[3]),
+                listen(input1, "input", ctx[4]),
+                listen(input2, "change", ctx[5]),
+                listen(input2, "input", ctx[6]),
+                listen(input3, "change", ctx[7]),
+                listen(input3, "input", ctx[8]),
+                listen(button, "click", ctx[9])
+            ];
         mounted = true;
       }
     },
     p(ctx2, [dirty]) {
-      if (dirty & 1 && input0.value !== ctx2[0].name) {
-        set_input_value(input0, ctx2[0].name);
-      }
-      if (dirty & 1 && input1.value !== ctx2[0].formula) {
-        set_input_value(input1, ctx2[0].formula);
-      }
+        if (dirty & 1 && input0.value !== ctx2[0].name) {
+            set_input_value(input0, ctx2[0].name);
+        }
+        if (dirty & 1 && input1.value !== ctx2[0].formula) {
+            set_input_value(input1, ctx2[0].formula);
+        }
+        if (dirty & 1 && input2.value !== ctx2[0].range.min) {
+            set_input_value(input2, ctx2[0].range.min);
+        }
+        if (dirty & 1 && input3.value !== ctx2[0].range.max) {
+            set_input_value(input3, ctx2[0].range.max);
+        }
     },
     i: noop,
     o: noop,
     d(detaching) {
-      if (detaching)
-        detach(div2);
-      mounted = false;
+      if (detaching){detach(div5);
+      }
+        mounted = false;
       run_all(dispose);
     }
   };
@@ -12141,41 +12192,82 @@ function instance$l($$self, $$props, $$invalidate) {
   console.log(action);
   const { application } = getContext("external");
   async function submit() {
-    let item;
-    const actorId = action.parent.actor._id;
-    const itemId = action.parent.item._id;
-    if (actorId) {
-      item = game.actors.get(actorId).items.get(itemId);
-    } else if (itemId) {
-      item = game.items.get(itemId);
-    } else {
-      console.log("\u041E\u0428\u0438\u0411\u041A\u0410 \u0411\u041B\u042F\u0422\u042C");
-      return;
+      let item;
+      const actorId = action.parent.actor;
+      const itemId = action.parent.item;
+      if (actorId || itemId) {
+          const uuid = itemId || actorId;
+          item = await fromUuid(uuid);
+          console.log(item);
+      }
+      else {
+          console.log("\u041E\u0428\u0438\u0411\u041A\u0410 \u0411\u041B\u042F\u0422\u042C", action);
+          return;
+      }
+      const actionList = [...item.system.actionList];
+      await item.update({ "system.actionList": actionList });
+      application.close();
+  }
+
+    __name(submit, "submit");
+
+    function checkRange(type) {
+        $$invalidate(0, action.range[type] = Math[type](action.range.min, action.range.max), action);
     }
-    const actionList = [...item.system.actionList];
-    await item.update({ "system.actionList": actionList });
-    application.close();
-  }
-  __name(submit, "submit");
-  function input0_input_handler() {
-    action.name = this.value;
-    $$invalidate(0, action);
-  }
-  __name(input0_input_handler, "input0_input_handler");
-  function input1_input_handler() {
-    action.formula = this.value;
-    $$invalidate(0, action);
-  }
-  __name(input1_input_handler, "input1_input_handler");
-  const click_handler2 = /* @__PURE__ */ __name(() => {
-    submit();
-  }, "click_handler");
-  $$self.$$set = ($$props2) => {
-    if ("action" in $$props2)
-      $$invalidate(0, action = $$props2.action);
-  };
-  return [action, submit, input0_input_handler, input1_input_handler, click_handler2];
+
+    __name(checkRange, "checkRange");
+
+    function input0_input_handler() {
+        action.name = this.value;
+        $$invalidate(0, action);
+    }
+
+    __name(input0_input_handler, "input0_input_handler");
+
+    function input1_input_handler() {
+        action.formula = this.value;
+        $$invalidate(0, action);
+    }
+
+    __name(input1_input_handler, "input1_input_handler");
+    const change_handler = /* @__PURE__ */ __name(() => checkRange("min"), "change_handler");
+
+    function input2_input_handler() {
+        action.range.min = this.value;
+        $$invalidate(0, action);
+    }
+
+    __name(input2_input_handler, "input2_input_handler");
+    const change_handler_1 = /* @__PURE__ */ __name(() => checkRange("max"), "change_handler_1");
+
+    function input3_input_handler() {
+        action.range.max = this.value;
+        $$invalidate(0, action);
+    }
+
+    __name(input3_input_handler, "input3_input_handler");
+    const click_handler2 = /* @__PURE__ */ __name(() => {
+        submit();
+    }, "click_handler");
+    $$self.$$set = ($$props2) => {
+        if ("action" in $$props2) {
+            $$invalidate(0, action = $$props2.action);
+        }
+    };
+    return [
+        action,
+        submit,
+        checkRange,
+        input0_input_handler,
+        input1_input_handler,
+        change_handler,
+        input2_input_handler,
+        change_handler_1,
+        input3_input_handler,
+        click_handler2
+    ];
 }
+
 __name(instance$l, "instance$l");
 class ActionShell extends SvelteComponent {
   constructor(options) {
@@ -12226,7 +12318,8 @@ class ARd20Action {
     this.setTargetLimit(object?.type);
     this.range = object?.range ?? { max: 5, min: 0 };
     this.setParent(options?.parent);
-    this.sheet = new ActionSheet(this);
+      this.sheet = new ActionSheet(this);
+      this.template = object?.template ?? null;
   }
   setHint(object) {
     let icon = object?.icon ?? "";
@@ -12283,19 +12376,19 @@ class ARd20Action {
     return this.roll();
   }
   async validateTargets() {
-    const actorUuid = this.parent.actor;
-    const user = game.users.current;
-    const activeToken = game.scenes.current.tokens.filter((token) => {
-      return token._object.controlled && token.actor.uuid === actorUuid;
-    })[0];
-    console.log("Phase: validating targets");
-    if (!activeToken) {
-      return;
-    }
-    this.checkTokens(null, activeToken);
-    if (!canvas.tokens.active) {
-      canvas.tokens.activate();
-    }
+      const actorUuid = this.parent.actor;
+      const user = game.user;
+      const activeToken = canvas.scene.tokens.filter((token) => {
+          return token._object.controlled && token.actor.uuid === actorUuid;
+      })[0];
+      console.log("Phase: validating targets");
+      if (!activeToken) {
+          return;
+      }
+      this.checkTokens(activeToken, this);
+      if (!canvas.tokens.active) {
+          canvas.tokens.activate();
+      }
     await game.settings.set("ard20", "actionMouseRewrite", true);
     const releaseSetting = game.settings.get("core", "leftClickRelease");
     if (releaseSetting) {
@@ -12305,23 +12398,22 @@ class ARd20Action {
     const handlers = {};
     handlers.leftClick = (event) => {
       event.stopPropagation();
-      const center = event.data.getLocalPosition(activeToken.layer);
-      console.log("center", center);
-      console.log("snapped", canvas.grid.getSnappedPosition(center.x, center.y, 2));
     };
-    handlers.rightClick = async (event) => {
-      console.log("right click");
-      canvas.stage.off("mousedown", handlers.leftClick);
-      canvas.app.view.oncontextmenu = null;
-      canvas.app.view.onwheel = null;
-      await game.settings.set("core", "leftClickRelease", releaseSetting);
-      await game.settings.set("ard20", "actionMouseRewrite", false);
-      ui.notifications.active.filter((elem) => elem[0].classList.contains("permanent")).forEach((e) => e.remove());
-      await this.roll(user);
-    };
+      handlers.rightClick = async () => {
+          console.log("right click");
+          canvas.stage.off("mousedown", handlers.leftClick);
+          canvas.app.view.oncontextmenu = null;
+          canvas.app.view.onwheel = null;
+          await game.settings.set("core", "leftClickRelease", releaseSetting);
+          await game.settings.set("ard20", "actionMouseRewrite", false);
+          ui.notifications.active.filter((elem) => elem[0].classList.contains("permanent")).forEach((e) => e.remove());
+          await this.roll(user);
+      };
     handlers.scrollWheel = (event) => {
       if (event.ctrlKey || event.shiftKey) {
-        this.checkTokens(event, activeToken);
+          const check = this.checkTokens;
+          const action = Object.assign({}, this);
+          setTimeout(check, 100, activeToken, action);
       }
     };
     canvas.stage.on("mousedown", handlers.leftClick);
@@ -12340,38 +12432,40 @@ class ARd20Action {
     const actor = await this.getActor();
     const item = await this.getItem();
     for (const target of targets) {
-      let tokenRoll;
-      if (roll._evaluated) {
-        tokenRoll = await roll.reroll();
-      } else {
-        tokenRoll = await roll.evaluate();
-      }
-      console.log(tokenRoll);
-      ui.notifications.info(`\u0421\u043E\u0432\u0435\u0440\u0448\u0430\u0435\u0442\u0441\u044F \u0431\u0440\u043E\u0441\u043E\u043A \u0434\u043B\u044F \u0446\u0435\u043B\u0438 "${target.name}"`);
-      await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
-    }
-    user.updateTokenTargets([]);
-  }
-  async checkTokens(event, activeToken) {
-    console.log(event);
-    let fov = activeToken.object.vision.fov;
-    console.log(fov.config.rotation);
-    event.ctrlKey ? 15 : event.shiftKey ? 45 : 0;
-    for (const token of game.scenes.current.tokens) {
-      if (token.uuid !== tokenUuid) {
-        if (!fov.contains(token.x, token.y)) {
-          if (token.isTargeted) {
-            token.object.setTarget(false, { releaseOthers: false });
-          }
-          if (token.object.isHighlighted) {
-            token.object.showHighlight(false);
-          }
-        } else if (fov.contains(token.x, token.y) && !token.object.isHighlighted) {
-          token.object.showHighlight(true);
+        let tokenRoll;
+        if (roll._evaluated) {
+            tokenRoll = await roll.reroll();
         }
-      }
+        else {
+            tokenRoll = await roll.evaluate();
+        }
+        console.log(tokenRoll);
+        ui.notifications.info(`\u0421\u043E\u0432\u0435\u0440\u0448\u0430\u0435\u0442\u0441\u044F \u0431\u0440\u043E\u0441\u043E\u043A \u0434\u043B\u044F \u0446\u0435\u043B\u0438 "${target.name}"`);
+        await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
     }
+      return this.finishAction(user);
   }
+
+    finishAction(user) {
+        user.updateTokenTargets([]);
+        canvas.scene.tokens.forEach((t) => t.object.showHighlight(false));
+    }
+
+    checkTokens(activeToken, action) {
+        const tokenUuid = activeToken.uuid;
+        const activeTokenXY = { x: activeToken.x, y: activeToken.y };
+        for (const token of canvas.scene.tokens) {
+            if (token.uuid === tokenUuid) {
+                continue;
+            }
+            const target = token.object;
+            const targetXY = { x: token.x, y: token.y };
+            const range = Math.round(canvas.grid.measureDistance(activeTokenXY, targetXY));
+            const inRange = range <= action.range.max && range >= action.range.min;
+            target.setTarget(target.isVisible && target.isTargeted, { releaseOthers: false });
+            target.showHighlight(target.isVisible && inRange);
+        }
+    }
 }
 __name(ARd20Action, "ARd20Action");
 class ARd20Item extends Item {
@@ -12380,34 +12474,39 @@ class ARd20Item extends Item {
   }
   prepareBaseData() {
     const options = { parent: { actor: this.actor, item: this }, keepId: true };
-    this.system.actionList = this.system.actionListData?.map((action) => {
-      return new ARd20Action(action, options);
-    });
+      this.system.actionList = this.system.actionList.map((action) => {
+          return new ARd20Action(action, options);
+      });
     super.prepareBaseData();
   }
   prepareDerivedData() {
-    super.prepareDerivedData();
-    const itemData = this.system;
-    this.labels = {};
-    this._prepareSpellData(itemData);
-    this._prepareWeaponData(itemData);
-    this._prepareFeatureData(itemData);
-    this._prepareRaceData(itemData);
-    this._prepareArmorData(itemData);
-    if (itemData.hasAttack)
-      this._prepareAttack(itemData);
-    if (itemData.hasDamage)
-      this._prepareDamage(itemData);
-    if (!this.isOwned)
-      this.prepareFinalAttributes();
+      super.prepareDerivedData();
+      const itemData = this.system;
+      this.labels = {};
+      this._prepareSpellData(itemData);
+      this._prepareWeaponData(itemData);
+      this._prepareFeatureData(itemData);
+      this._prepareRaceData(itemData);
+      this._prepareArmorData(itemData);
+      if (itemData.hasAttack) {
+          this._prepareAttack(itemData);
+      }
+      if (itemData.hasDamage) {
+          this._prepareDamage(itemData);
+      }
+      if (!this.isOwned) {
+          this.prepareFinalAttributes();
+      }
   }
   _prepareSpellData(itemData) {
-    if (this.type !== "spell")
-      return;
+      if (this.type !== "spell") {
+          return;
+      }
   }
   _prepareWeaponData(itemData) {
-    if (this.type !== "weapon")
-      return;
+      if (this.type !== "weapon") {
+          return;
+      }
     const data = itemData;
     const flags = this.flags;
     data.hasAttack = data.hasAttack || true;
@@ -12434,8 +12533,9 @@ class ARd20Item extends Item {
     data.type.name = game.i18n.localize(CONFIG.ARd20.Rank[data.type.value]) ?? CONFIG.ARd20.Rank[data.type.value];
   }
   _prepareFeatureData(itemData) {
-    if (this.type !== "feature")
-      return;
+      if (this.type !== "feature") {
+          return;
+      }
     const data = itemData;
     data.source.label = "";
     data.source.value.forEach((value, key) => {
@@ -12472,14 +12572,16 @@ class ARd20Item extends Item {
       switch (req.type) {
         case "ability":
           for (let [key2, v] of Object.entries(CONFIG.ARd20.Attributes)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key2]))
-              req.value = key2;
+              if (req.name === game.i18n.localize(CONFIG.ARd20.Attributes[key2])) {
+                  req.value = key2;
+              }
           }
           break;
         case "skill":
           for (let [key2, v] of Object.entries(CONFIG.ARd20.Skills)) {
-            if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key2]))
-              req.value = key2;
+              if (req.name === game.i18n.localize(CONFIG.ARd20.Skills[key2])) {
+                  req.value = key2;
+              }
           }
           break;
       }
@@ -12496,12 +12598,14 @@ class ARd20Item extends Item {
     }
   }
   _prepareRaceData(itemData) {
-    if (this.type !== "race")
-      return;
+      if (this.type !== "race") {
+          return;
+      }
   }
   _prepareArmorData(itemData) {
-    if (this.type !== "armor")
-      return;
+      if (this.type !== "armor") {
+          return;
+      }
     const data = itemData;
     for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
       if (!(key === "force" || key === "radiant" || key === "psychic")) {
@@ -12518,25 +12622,28 @@ class ARd20Item extends Item {
     const itemData = this.system;
     const abil = itemData.abil = {};
     for (let [k, v] of Object.entries(CONFIG.ARd20.Attributes)) {
-      abil[k] = this.isOwned ? getProperty(this.actor.system, `data.attributes.${k}.mod`) : null;
+        abil[k] = this.isOwned ? getProperty(this.actor.system, `attributes.${k}.mod`) : null;
     }
-    let prof_bonus = 0;
-    if (itemData.type === "weapon") {
-      const data = itemData;
-      data.proficiency.level = this.isOwned ? this.actor?.system.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value : 0;
-      data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
-      data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
-      prof_bonus = data.proficiency.level * 4;
-    }
-    if (itemData.hasAttack)
-      this._prepareAttack(itemData, prof_bonus, abil);
-    if (itemData.hasDamage)
-      this._prepareDamage(itemData, abil);
+      let prof_bonus = 0;
+      if (itemData.type === "weapon") {
+          const data = itemData;
+          data.proficiency.level = this.isOwned ? this.actor?.system.proficiencies.weapon.filter((pr) => pr.name === data.sub_type)[0].value : 0;
+          data.proficiency.levelName = game.settings.get("ard20", "profLevel")[data.proficiency.level].label;
+          data.proficiency.key = game.settings.get("ard20", "profLevel")[data.proficiency.level].key;
+          prof_bonus = data.proficiency.level * 4;
+      }
+      if (itemData.hasAttack) {
+          this._prepareAttack(itemData, prof_bonus, abil);
+      }
+      if (itemData.hasDamage) {
+          this._prepareDamage(itemData, abil);
+      }
   }
   _prepareAttack(itemData, prof_bonus, abil) {
     const data = itemData;
-    if (!data.hasAttack)
-      return;
+      if (!data.hasAttack) {
+          return;
+      }
     let mod = itemData.type === "weapon" && abil !== void 0 ? abil.dex : data.atkMod;
     data.attack = {
       formula: "1d20+" + prof_bonus + "+" + mod,
@@ -12545,8 +12652,9 @@ class ARd20Item extends Item {
   }
   _prepareDamage(itemData, abil) {
     const data = itemData;
-    if (!data.hasDamage)
-      return;
+      if (!data.hasDamage) {
+          return;
+      }
     itemData.type === "weapon" && abil !== void 0 ? abil.str : 0;
     const prop = itemData.type === "weapon" ? `damage.common.${data.proficiency.key}.parts` : "damage.parts";
     let baseDamage = getProperty(data, prop);
@@ -12565,8 +12673,9 @@ class ARd20Item extends Item {
     });
   }
   getRollData() {
-    if (!this.actor)
-      return null;
+      if (!this.actor) {
+          return null;
+      }
     const rollData = this.actor.getRollData();
     const hasDamage = this.system.hasDamage;
     const hasAttack = this.system.hasAttack;
@@ -12611,15 +12720,20 @@ class ARd20Item extends Item {
     const action = button.dataset.action;
     const targetUuid = button.closest(".flexrow").dataset.targetId;
     const isTargetted = action === "save";
-    if (!(isTargetted || game.user.isGM || message.isAuthor))
-      return;
+      if (!(isTargetted || game.user.isGM || message.isAuthor)) {
+          return;
+      }
     const actor = await this._getChatCardActor(card);
-    if (!actor)
-      return;
+      if (!actor) {
+          return;
+      }
     const storedData = message.getFlag("ard20", "itemData");
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+        return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {
+            item: card.dataset.itemId,
+            name: actor.name
+        }));
     }
     const spellLevel = parseInt(card.dataset.spellLevel) || null;
     switch (action) {
@@ -12655,8 +12769,9 @@ class ARd20Item extends Item {
         break;
       case "placeTemplate":
         const template = game.ard20.canvas.AbilityTemplate.fromItem(item);
-        if (template)
-          template.drawPreview();
+          if (template) {
+              template.drawPreview();
+          }
         break;
     }
     button.disabled = false;
@@ -12675,8 +12790,9 @@ class ARd20Item extends Item {
       if (!(term instanceof OperatorTerm)) {
         let damageType = term.options.damageType;
         let res = tData.defences.damage[damageType[0]][damageType[1]];
-        if (res.type === "imm")
-          console.log("\u0418\u043C\u043C\u0443\u043D\u0438\u0442\u0435\u0442");
+          if (res.type === "imm") {
+              console.log("\u0418\u043C\u043C\u0443\u043D\u0438\u0442\u0435\u0442");
+          }
         console.log("\u0443\u0440\u043E\u043D \u0443\u043C\u0435\u043D\u044C\u0448\u0438\u043B\u0441\u044F \u0441 ", value);
         value -= res.type === "imm" ? term.total : Math.min(res.value, term.total);
         console.log("\u0434\u043E", value);
@@ -12713,12 +12829,16 @@ class ARd20Item extends Item {
     let tHealth = tData.health.value;
     console.log(tHealth, "\u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 \u0446\u0435\u043B\u0438");
     const actor = await this._getChatCardActor(card);
-    if (!actor)
-      return;
+      if (!actor) {
+          return;
+      }
     const storedData = message.getFlag("ard20", "itemData");
     const item = storedData ? new this(storedData, { parent: actor }) : actor.items.get(card.dataset.itemId);
     if (!item) {
-      return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", { item: card.dataset.itemId, name: actor.name }));
+        return ui.notifications.error(game.i18n.format("ARd20.ActionWarningNoItem", {
+            item: card.dataset.itemId,
+            name: actor.name
+        }));
     }
     const dam = await item.rollDamage({
       event,
@@ -12736,20 +12856,23 @@ class ARd20Item extends Item {
   static async _getChatCardActor(card) {
     if (card.dataset.tokenId) {
       const token = await fromUuid(card.dataset.tokenId);
-      if (!token)
-        return null;
+        if (!token) {
+            return null;
+        }
       return token.actor;
     }
     const actorId = card.dataset.actorId;
     return game.actors.get(actorId) || null;
   }
   static _getChatCardTargets(card) {
-    let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
-    if (!targets.length && game.user.character)
-      targets = targets.concat(game.user.character.getActiveTokens());
-    if (!targets.length)
-      ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
-    return targets;
+      let targets = canvas.tokens.controlled.filter((t) => !!t.actor);
+      if (!targets.length && game.user.character) {
+          targets = targets.concat(game.user.character.getActiveTokens());
+      }
+      if (!targets.length) {
+          ui.notifications.warn(game.i18n.localize("ARd20.ActionWarningNoToken"));
+      }
+      return targets;
   }
   async displayCard({
     rollMode,
@@ -12862,26 +12985,36 @@ class ARd20Item extends Item {
         create: false
       },
       targetValue: targets,
-      canMult,
-      mRoll
+        canMult,
+        mRoll
     };
-    rollConfig = mergeObject(rollConfig, options);
-    const roll = await d20Roll(rollConfig);
-    if (roll === false)
-      return null;
-    return roll;
+      rollConfig = mergeObject(rollConfig, options);
+      const roll = await d20Roll(rollConfig);
+      if (roll === false) {
+          return null;
+      }
+      return roll;
   }
-  rollDamage({ critical = false, event = null, spellLevel = null, versatile = false, options = {}, mRoll = Boolean(), canMult = Boolean() } = {}) {
-    console.log(canMult);
-    const iData = this.system;
-    this.actor.system;
-    const parts = iData.damage.current.parts.map((d) => d[0]);
-    const damType = iData.damage.current.parts.map(
-      (d) => d[1].map((c, ind) => {
-        let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
-        let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
-        let obj = { key: ind, label: `${a} ${b}` };
-        return obj;
+
+    rollDamage({
+                   critical = false,
+                   event = null,
+                   spellLevel = null,
+                   versatile = false,
+                   options = {},
+                   mRoll = Boolean(),
+                   canMult = Boolean()
+               } = {}) {
+        console.log(canMult);
+        const iData = this.system;
+        this.actor.system;
+        const parts = iData.damage.current.parts.map((d) => d[0]);
+        const damType = iData.damage.current.parts.map(
+            (d) => d[1].map((c, ind) => {
+                let a = game.i18n.localize(CONFIG.ARd20.DamageTypes[c[0]]);
+                let b = game.i18n.localize(CONFIG.ARd20.DamageSubTypes[c[1]]);
+                let obj = { key: ind, label: `${a} ${b}` };
+                return obj;
       })
     );
     options.damageType = iData.damage.current.parts.map((d) => d[1]);
@@ -12907,38 +13040,41 @@ class ARd20Item extends Item {
     const rollData = this.getRollData(hasAttack, hasDamage);
     console.log("ROLL DATA", rollData);
     const parts = [];
-    if (itemData.attackBonus) {
-      parts.push(itemData.attackBonus);
-      this.labels.toHit = itemData.attackBonus;
-    }
-    if (!this.isOwned)
+      if (itemData.attackBonus) {
+          parts.push(itemData.attackBonus);
+          this.labels.toHit = itemData.attackBonus;
+      }
+      if (!this.isOwned) {
+          return { rollData, parts };
+      }
+      parts.push("@prof", "@mod");
+      const roll = new Roll(parts.join("+"), rollData);
+      const formula = simplifyRollFormula(roll.formula);
+      this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula;
       return { rollData, parts };
-    parts.push("@prof", "@mod");
-    const roll = new Roll(parts.join("+"), rollData);
-    const formula = simplifyRollFormula(roll.formula);
-    this.labels.toHit = !/^[+-]/.test(formula) ? `+ ${formula}` : formula;
-    return { rollData, parts };
   }
-  async addAction(object = {}) {
-    const actionList = this.system.actionListData;
-    console.log(this.system.actionList);
-    const numberOfNewActions = this.system.actionList.filter((action) => {
-      console.log(action.name.substr(0, 10) === "New Action");
-      return action.name.substr(0, 10) === "New Action";
-    }).length + 1;
-    object.name = numberOfNewActions - 1 ? "New Action#" + numberOfNewActions : "New Action";
-    object.id = uuidv4();
-    actionList.push(object);
-    await this.update({ "system.actionListData": actionList });
-  }
+
+    async addAction(object = {}, options = {}) {
+        const actionList = this.system.actionList;
+        console.log(this.system.actionList);
+        const numberOfNewActions = this.system.actionList.filter((action) => {
+            console.log(action.name.substr(0, 10) === "New Action");
+            return action.name.substr(0, 10) === "New Action";
+        }).length + 1;
+        object.name = numberOfNewActions - 1 ? "New Action#" + numberOfNewActions : "New Action";
+        object.id = uuidv4();
+        actionList.push(object);
+        await this.update({ "system.actionList": actionList });
+    }
   async removeAction(id) {
-    const actionList = this.system.actionListData;
-    const actionIndex = actionList.findIndex((action) => {
-      return action.id === id;
-    });
-    if (actionIndex > -1)
-      actionList.splice(actionIndex, 1);
-    await this.update({ "system.actionListData": actionList });
+      const actionList = this.system.actionList;
+      const actionIndex = actionList.findIndex((action) => {
+          return action.id === id;
+      });
+      if (actionIndex > -1) {
+          actionList.splice(actionIndex, 1);
+      }
+      await this.update({ "system.actionList": actionList });
   }
 }
 __name(ARd20Item, "ARd20Item");
@@ -15224,7 +15360,6 @@ class ARd20ActorSheet extends ActorSheet {
   }
   render(force = false, options = {}) {
     console.log(this._element);
-    console.trace();
     return super.render(force, options);
   }
   activateListeners(html) {
@@ -21376,8 +21511,6 @@ function instance($$self, $$props, $$invalidate) {
   let { storeDoc } = $$props;
   $$subscribe_storeDoc();
   setContext("DocumentSheetObject", storeDoc);
-  console.log(`! DocumentShell - ctor - 0 - object: `, storeDoc);
-  console.trace();
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
     $$invalidate(0, elementRoot);
@@ -21414,8 +21547,7 @@ class DocumentShell extends SvelteComponent {
 }
 __name(DocumentShell, "DocumentShell");
 class SvelteDocumentSheet extends SvelteApplication {
-  #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
-    #onMount = false;
+    #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
     #storeUnsubscribe;
   constructor(object) {
     super(object);
@@ -21778,11 +21910,7 @@ class SvelteDocumentSheet extends SvelteApplication {
       if (!this.#storeUnsubscribe) {
           this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
       }
-      if (!this.#onMount) {
-          this.#onMount = true;
-      }
       console.log(this.reactive.document);
-      console.trace();
       super.render(force, options);
       return this;
   }
@@ -21828,27 +21956,37 @@ class ARd20Token extends Token {
     super._refresh();
     const t = CONFIG.Canvas.objectBorderThickness;
     const h = Math.round(t / 2);
-    const o = Math.round(h / 2);
-    this.#highlight.lineStyle(t, 0, 0.8).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
-    this.#highlight.lineStyle(h, 65280, 1).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
+      const o = Math.round(h / 2);
+      this.#highlight.lineStyle(t, 0, 0.8).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
+      this.#highlight.lineStyle(h, 65280, 1).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
   }
-  _onClickLeft(event) {
-    if (game.settings.get("ard20", "actionMouseRewrite")) {
-      console.log("target");
-      return this.setTarget(!this.isTargeted, { releaseOthers: false });
+
+    _onClickLeft(event) {
+        if (game.settings.get("ard20", "actionMouseRewrite")) {
+            return this.setTarget(!this.isTargeted && this.isHighlighted, { releaseOthers: false });
+        }
+        super._onClickLeft(event);
     }
-    super._onClickLeft(event);
-  }
-  _onClickRight(event) {
-    if (game.settings.get("ard20", "actionMouseRewrite")) {
-      return;
+
+    setTarget(targeted = true, { user = null, releaseOthers = true, groupSelection = false } = {}) {
+        if (game.settings.get("ard20", "actionMouseRewrite") && !this.isHighlighted) {
+            ui.notifications.warn(`\u043D\u0435\u043B\u044C\u0437\u044F \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0442\u043E\u043A\u0435\u043D "${this.name}", \u0434\u0435\u0431\u0438\u043B, \u043E\u043D \u043D\u0435 \u0432\u044B\u0434\u0435\u043B\u0435\u043D`);
+            return;
+        }
+        super.setTarget(targeted, { user: null, releaseOthers: true, groupSelection: false });
     }
-    super._onClickRight(event);
-  }
-  _onClickLeft2(event) {
-    if (game.settings.get("ard20", "actionMouseRewrite")) {
-      return;
+
+    _onClickRight(event) {
+        if (game.settings.get("ard20", "actionMouseRewrite")) {
+            return;
+        }
+        super._onClickRight(event);
     }
+
+    _onClickLeft2(event) {
+        if (game.settings.get("ard20", "actionMouseRewrite")) {
+            return;
+        }
     super._onClickLeft2(event);
   }
   _onClickRight2(event) {
@@ -21860,6 +21998,8 @@ class ARd20Token extends Token {
   showHighlight(visible) {
     this.#highlight.visible = visible;
   }
+
+    _onWheel;
 }
 __name(ARd20Token, "ARd20Token");
 class ARd20TokenDocument extends TokenDocument {

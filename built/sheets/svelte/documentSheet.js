@@ -12,7 +12,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
      */
 
     #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
-    #onMount = false;
     /**
      * Holds the document unsubscription function.
      *
@@ -36,7 +35,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
             },
         });
         /*console.log(`! SvelteDocumentSheet - ctor - 0 - object: `, object);
-        console.trace();*/
+        ;*/
         this.reactive.document = object;
     }
 
@@ -473,11 +472,9 @@ export class SvelteDocumentSheet extends SvelteApplication {
         if (!this.#storeUnsubscribe) {
             this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
         }
-        if (!this.#onMount) {
-            this.#onMount = true;
-        }
+
         console.log(this.reactive.document);
-        console.trace();
+        ;
         super.render(force, options);
         return this;
     }
