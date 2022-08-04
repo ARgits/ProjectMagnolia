@@ -8,9 +8,11 @@ export class SvelteDocumentSheet extends SvelteApplication {
      * Document store that monitors updates to any assigned document.
      *
      * @type {TJSDocument<foundry.abstract.Document>}
+     *
      */
-    #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
 
+    #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
+    #onMount = false;
     /**
      * Holds the document unsubscription function.
      *
@@ -471,6 +473,11 @@ export class SvelteDocumentSheet extends SvelteApplication {
         if (!this.#storeUnsubscribe) {
             this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
         }
+        if (!this.#onMount) {
+            this.#onMount = true;
+        }
+        console.log(this.reactive.document);
+        console.trace();
         super.render(force, options);
         return this;
     }

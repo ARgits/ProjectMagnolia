@@ -21415,7 +21415,8 @@ class DocumentShell extends SvelteComponent {
 __name(DocumentShell, "DocumentShell");
 class SvelteDocumentSheet extends SvelteApplication {
   #storeDoc = new TJSDocument(void 0, { delete: this.close.bind(this) });
-  #storeUnsubscribe;
+    #onMount = false;
+    #storeUnsubscribe;
   constructor(object) {
     super(object);
     Object.defineProperty(this.reactive, "document", {
@@ -21774,11 +21775,16 @@ class SvelteDocumentSheet extends SvelteApplication {
     }
   }
   render(force = false, options = {}) {
-    if (!this.#storeUnsubscribe) {
-      this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
-    }
-    super.render(force, options);
-    return this;
+      if (!this.#storeUnsubscribe) {
+          this.#storeUnsubscribe = this.#storeDoc.subscribe(this.#handleDocUpdate.bind(this));
+      }
+      if (!this.#onMount) {
+          this.#onMount = true;
+      }
+      console.log(this.reactive.document);
+      console.trace();
+      super.render(force, options);
+      return this;
   }
   addToFavorite(item) {
     const doc = this.reactive.document;
@@ -21861,7 +21867,25 @@ class ARd20TokenDocument extends TokenDocument {
     return this.object.isTargeted;
   }
   _onUpdateBaseActor(update2 = {}, options = {}) {
-    super._onUpdateBaseActor(update2, options);
+      if (!this.isLinked) {
+          update2 = foundry.utils.mergeObject(update2, this.actorData, {
+              insertKeys: false,
+              insertValues: false,
+              inplace: false
+          });
+          this.actor.updateSource(update2, options);
+      }
+      const c = this.combatant;
+      if (c && foundry.utils.hasProperty(update2.system || {}, game.combat.settings.resource)) {
+          c.updateResource();
+          ui.combat.render();
+      }
+      if (this.parent.isView) {
+          this.object.drawBars();
+          if ("effects" in update2) {
+              this.object.drawEffects();
+          }
+      }
   }
 }
 __name(ARd20TokenDocument, "ARd20TokenDocument");

@@ -4,6 +4,30 @@ export default class ARd20TokenDocument extends TokenDocument {
     }
 
     _onUpdateBaseActor(update = {}, options = {}) {
-        super._onUpdateBaseActor(update, options);
+        // Update synthetic Actor data
+        if (!this.isLinked) {
+            update = foundry.utils.mergeObject(update, this.actorData, {
+                insertKeys: false,
+                insertValues: false,
+                inplace: false
+            });
+            this.actor.updateSource(update, options);
+            //this.actor.sheet.render(false);
+        }
+
+        // Update tracked Combat resource
+        const c = this.combatant;
+        if (c && foundry.utils.hasProperty(update.system || {}, game.combat.settings.resource)) {
+            c.updateResource();
+            ui.combat.render();
+        }
+
+        // Trigger redraws on the token
+        if (this.parent.isView) {
+            this.object.drawBars();
+            if ("effects" in update) {
+                this.object.drawEffects();
+            }
+        }
     }
 }
