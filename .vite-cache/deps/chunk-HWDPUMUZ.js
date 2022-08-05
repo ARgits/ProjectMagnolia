@@ -1,5 +1,5 @@
 import {
-    require_path
+  require_path
 } from "./chunk-KRUPHXZG.js";
 import {
     __commonJS,
@@ -12,11 +12,9 @@ import {
 function walk(ast, { enter, leave }) {
     visit(ast, null, enter, leave);
 }
-
 function isArray(thing) {
     return toString.call(thing) === "[object Array]";
 }
-
 function visit(node, parent, enter, leave, prop, index) {
     if (!node) {
         return;
@@ -82,11 +80,9 @@ __export(pluginutils_es_exports, {
     extractAssignedNames: () => extractAssignedNames,
     makeLegalIdentifier: () => makeLegalIdentifier
 });
-
 function createCommonjsModule(fn, module) {
     return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
-
 function collatePatterns(neg, pos, options) {
     let onlyNegative = filterPatterns(neg, pos, "-", false, options) || [];
     let onlyPositive = filterPatterns(pos, neg, "", false, options) || [];
@@ -94,7 +90,6 @@ function collatePatterns(neg, pos, options) {
     let subpatterns = onlyNegative.concat(intersected).concat(onlyPositive);
     return subpatterns.join("|");
 }
-
 function splitToRanges(min, max) {
     let nines = 1;
     let zeros2 = 1;
@@ -115,7 +110,6 @@ function splitToRanges(min, max) {
     stops.sort(compare);
     return stops;
 }
-
 function rangeToPattern(start, stop, options) {
     if (start === stop) {
         return { pattern: start, count: [], digits: 0 };
@@ -141,7 +135,6 @@ function rangeToPattern(start, stop, options) {
     }
     return { pattern, count: [count], digits };
 }
-
 function splitToPatterns(min, max, tok, options) {
     let ranges = splitToRanges(min, max);
     let tokens = [];
@@ -170,7 +163,6 @@ function splitToPatterns(min, max, tok, options) {
     }
     return tokens;
 }
-
 function filterPatterns(arr, comparison, prefix, intersection, options) {
     let result = [];
     for (let ele of arr) {
@@ -184,7 +176,6 @@ function filterPatterns(arr, comparison, prefix, intersection, options) {
     }
     return result;
 }
-
 function zip(a, b) {
     let arr = [];
     for (let i = 0; i < a.length; i++) {
@@ -196,19 +187,15 @@ function zip(a, b) {
 function compare(a, b) {
     return a > b ? 1 : b > a ? -1 : 0;
 }
-
 function contains(arr, key, val) {
     return arr.some((ele) => ele[key] === val);
 }
-
 function countNines(min, len) {
     return Number(String(min).slice(0, -len) + "9".repeat(len));
 }
-
 function countZeros(integer, zeros2) {
     return integer - integer % Math.pow(10, zeros2);
 }
-
 function toQuantifier(digits) {
     let [start = 0, stop = ""] = digits;
     if (stop || start > 1) {
@@ -216,15 +203,12 @@ function toQuantifier(digits) {
     }
     return "";
 }
-
 function toCharacterClass(a, b, options) {
     return `[${a}${b - a === 1 ? "" : "-"}${b}]`;
 }
-
 function hasPadding(str) {
     return /^-?(0+)\d/.test(str);
 }
-
 function padZeros(value, tok, options) {
     if (!tok.isPadded) {
         return value;
@@ -243,7 +227,6 @@ function padZeros(value, tok, options) {
         }
     }
 }
-
 function ensureArray(thing) {
     if (Array.isArray(thing)) {
         return thing;
@@ -260,11 +243,9 @@ function getMatcherString(id, resolutionBase) {
     }
     return (0, import_path.resolve)(...typeof resolutionBase === "string" ? [resolutionBase, id] : [id]);
 }
-
 function stringify$2(obj) {
     return (JSON.stringify(obj) || "undefined").replace(/[\u2028\u2029]/g, (char) => `\\u${("000" + char.charCodeAt(0).toString(16)).slice(-4)}`);
 }
-
 function serializeArray(arr, indent, baseIndent) {
     let output = "[";
     const separator = indent ? "\n" + baseIndent + indent : "";
@@ -274,7 +255,6 @@ function serializeArray(arr, indent, baseIndent) {
     }
     return output + `${indent ? "\n" + baseIndent : ""}]`;
 }
-
 function serializeObject(obj, indent, baseIndent) {
     let output = "{";
     const separator = indent ? "\n" + baseIndent + indent : "";
@@ -286,7 +266,6 @@ function serializeObject(obj, indent, baseIndent) {
     }
     return output + `${indent ? "\n" + baseIndent : ""}}`;
 }
-
 function serialize(obj, indent, baseIndent) {
     if (obj === Infinity) {
         return "Infinity";

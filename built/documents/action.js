@@ -4,23 +4,18 @@ import ActionSheet from "../sheets/svelte/action/actionSheet.js";
 export default class ARd20Action {
 
     constructor(object = {}, options = {}) {
-        this.name = object.name ?? "New Action";
-        this.type = object.type ?? "Attack";
+        this.name = object?.name ?? "New Action";
+        this.type = object?.type ?? "Attack";
         this.formula = object?.formula ?? "2d10";
         this.bonus = object?.bonus ?? 0;
         this.dc = object?.dc ?? { type: "parameter", value: "reflex" };
         this.id = options?.keepId ? object?.id ?? uuidv4() : uuidv4();
         this.isRoll = object?.isRoll ?? true;
-        this.setTargetLimit(object?.type);
+        this.setTargetLimit(object?.target);
         this.range = object?.range ?? { max: 5, min: 0 };
         this.setParent(options?.parent);
         this.sheet = new ActionSheet(this);
         this.template = object?.template ?? null;
-        /*this.actionList = object?.actionList
-          ? object.actionList.map((action) => {
-              return new ARd20Action(action);
-            })
-          : [];*/
     }
 
     /**
@@ -35,28 +30,20 @@ export default class ARd20Action {
     /**
      * How many characters can you target with that action
      */
-    setTargetLimit(target) {
-        let type = target?.type ?? "single";
-        let number;
-        switch (type) {
-            case "single" || "self":
-                number = 1;
-                break;
-            case "all":
-                number = Infinity;
-                break;
-            case "custom":
-                number = target?.number ?? 1;
-                break;
-        }
-        this.targetLimit = { number, type };
+    setTargetLimit(target = {}) {
+        const { type, max, min } = target;
+        this.target = {
+            type: type ?? "single",
+            max: type === "custom" ? Math.max(max, min) : null,
+            min: type === "custom" ? Math.min(max, min) : null
+        };
     }
 
     setParent(object = {}) {
         const { actor, item, action } = object;
         this.parent = {
-            actor: actor.uuid ?? null,
-            item: item.uuid ?? null,
+            actor: actor ?? null,
+            item: item ?? null,
             action: action ?? null,
         };
     }
@@ -89,7 +76,10 @@ export default class ARd20Action {
      */
     async use() {
         console.log("ACTION USE", this);
-        const actor = await this.getActor();
+        const doc = await this.getActor();
+        //if this is synthetic actor, go little deeper
+        const actor = doc.documentName === 'Actor' ? doc : doc.actor;
+        console.log(actor);
         await actor._sheet.minimize();
         return this.placeTemplate();
     }
@@ -109,6 +99,8 @@ export default class ARd20Action {
     async validateTargets() {
         const actorUuid = this.parent.actor;
         const user = game.user;
+        const tokenNumber = this.target.type === 'custom' ? this.target.max : this.target.type === 'single' ? 1 : Infinity;
+        await user.setFlag('ard20', 'targetNumber', tokenNumber);
         //get token that use that action
         const activeToken = canvas.scene.tokens.filter((token) => {
             return token._object.controlled && token.actor.uuid === actorUuid;
@@ -127,13 +119,14 @@ export default class ARd20Action {
         if (releaseSetting) {
             await game.settings.set('core', 'leftClickRelease', false);
         }
-        ui.notifications.info('Левый клик - выбор цели; Правый клик - Применение действия ко всем целям, либо отмена', { permanent: true });
+        ui.notifications.info('Left Click - target Token, Right Click - submit selection or cancel Action', { permanent: true });
         const handlers = {};
         handlers.leftClick = event => {
             event.stopPropagation();
         };
         handlers.rightClick = async () => {
             console.log('right click');
+
             canvas.stage.off('mousedown', handlers.leftClick);
             canvas.app.view.oncontextmenu = null;
             canvas.app.view.onwheel = null;
@@ -157,9 +150,19 @@ export default class ARd20Action {
     }
 
     async roll(user) {
-        const targets = user.targets;
+        const targets = [...user.targets];
         console.log("Phase: rolling");
         if (!this.isRoll) {
+            return;
+        }
+        await this.commonRoll(targets);
+        await this.attackRoll(targets);
+        return this.finishAction(user);
+
+    }
+
+    async commonRoll(targets) {
+        if (this.type !== 'Common') {
             return;
         }
         let bonus = this.bonus;
@@ -167,6 +170,7 @@ export default class ARd20Action {
         let roll = new Roll(this.formula);
         const actor = await this.getActor();
         const item = await this.getItem();
+        console.log(targets);
         for (const target of targets) {
             let tokenRoll;
             if (roll._evaluated) {
@@ -176,11 +180,34 @@ export default class ARd20Action {
                 tokenRoll = await roll.evaluate();
             }
             console.log(tokenRoll);
-            ui.notifications.info(`Совершается бросок для цели "${target.name}"`);
+            console.log(`Совершается бросок для цели "${target.name}"`);
             await tokenRoll.toMessage({ speaker: { alias: `${actor.name}: ${item.name} (${this.name}) vs ${target.name}` } });
         }
-        return this.finishAction(user);
+    }
 
+    async attackRoll(targets) {
+        if (this.type !== 'Attack') {
+            return;
+        }
+        const roll = new Roll(this.formula);
+        const results = [];
+        for (const target of targets) {
+            const actor = target.actor;
+            const defence = actor.system.defences.stats.reflex.value;
+            let tokenRoll;
+            if (roll._evaluated) {
+                tokenRoll = await roll.reroll();
+            }
+            else {
+                tokenRoll = await roll.evaluate();
+            }
+            console.log(tokenRoll.total, defence, tokenRoll.total >= defence);
+            const final = tokenRoll.total >= defence ? "hit" : "miss";
+            results.push({ roll: tokenRoll.total, defence, final, actor });
+        }
+        const message = await ChatMessage.create({ user: game.user.id });
+
+        await message.setFlag('world', 'svelte', { results });
     }
 
     finishAction(user) {

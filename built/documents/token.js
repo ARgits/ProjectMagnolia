@@ -25,17 +25,28 @@ export default class ARd20Token extends Token {
 
     _onClickLeft(event) {
         if (game.settings.get('ard20', 'actionMouseRewrite')) {
-            return this.setTarget(!this.isTargeted && this.isHighlighted, { releaseOthers: false });
+            return this.setTarget(!this.isTargeted && this.isHighlighted, { releaseOthers: false, });
         }
         super._onClickLeft(event);
     }
 
     setTarget(targeted = true, { user = null, releaseOthers = true, groupSelection = false } = {}) {
-        if (game.settings.get('ard20', 'actionMouseRewrite') && !this.isHighlighted) {
-            ui.notifications.warn(`нельзя выбрать токен "${this.name}", дебил, он не выделен`);
-            return;
+        if (game.settings.get('ard20', 'actionMouseRewrite')) {
+            if (!this.isHighlighted) {
+                ui.notifications.warn(`you can't target that token "${this.name}", it's not Highlighted`);
+                return;
+            }
+            if (targeted) {
+                const max = game.user.getFlag('ard20', 'targetNumber');
+                const targetNumber = game.user.targets.size;
+                if (targetNumber >= max) {
+                    console.log(targetNumber, ' more than ', max);
+                    ui.notifications.warn(`You can target only ${max} number of tokens`);
+                    return;
+                }
+            }
         }
-        super.setTarget(targeted, { user: null, releaseOthers: true, groupSelection: false });
+        super.setTarget(targeted, { user, releaseOthers, groupSelection });
     }
 
     _onClickRight(event) {

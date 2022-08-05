@@ -15,7 +15,7 @@ export class ARd20Item extends Item {
     }
 
     prepareBaseData() {
-        const options = { parent: { actor: this.actor, item: this }, keepId: true };
+        const options = { parent: { actor: this.actor?.uuid, item: this.uuid }, keepId: true };
         this.system.actionList = this.system.actionList.map((action) => {
             return new ARd20Action(action, options);
         });

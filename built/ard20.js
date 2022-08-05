@@ -15,6 +15,7 @@ import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
 import ARd20Action from "../built/documents/action.js";
 import ARd20Token from "../built/documents/token.js";
 import ARd20TokenDocument from "./documents/tokenDoc.js";
+import MyChatMessage from "./chat/MyChatMessage.svelte";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -189,6 +190,10 @@ Hooks.on("renderChatMessage", (app, html, data) => {
     // Highlight critical success or failure die
     //chat.highlightCriticalSuccessFailure(app, html, data);
     // Optionally collapse the content
+    const flagData = app.getFlag('world', 'svelte');
+    if (typeof flagData === 'object') {
+        new MyChatMessage({ target: html[0], props: flagData });
+    }
 });
 //Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 //@ts-expect-error

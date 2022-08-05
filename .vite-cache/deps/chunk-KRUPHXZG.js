@@ -1,5 +1,5 @@
 import {
-    __commonJS
+  __commonJS
 } from "./chunk-S5KM4IGW.js";
 
 // browser-external:path

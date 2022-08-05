@@ -2,11 +2,21 @@
 
 <script>
     import { getContext } from "svelte";
-    import { min } from "mathjs";
 
     export let action;
     console.log(action);
     const { application } = getContext("external");
+    const targetType = [
+        { id: 1, value: 'single' },
+        { id: 2, value: 'self' },
+        { id: 3, value: 'all' },
+        { id: 4, value: 'custom' }
+    ];
+    const actionType = [
+        { id: 1, value: 'Attack', disabled: false },
+        { id: 2, value: 'Common', disabled: false },
+        { id: 3, value: 'Heal', disabled: true },
+    ];
 
     async function submit() {
         let item;
@@ -26,8 +36,8 @@
         application.close();
     }
 
-    function checkRange(type) {
-        action.range[type] = Math[type](action.range.min, action.range.max);
+    function checkRange(type, val) {
+        action[type][val] = Math[val](action[type].min, action[type].max);
     }
 </script>
 
@@ -39,14 +49,38 @@
     <div>
         Formula: <input bind:value={action.formula}/>
     </div>
+    <div class="type">
+        <select bind:value={action.type}>
+            {#each actionType as type}
+                <option disabled={type.disabled} value={type.value}>{type.value}</option>
+            {/each}
+        </select>
+    </div>
     <fieldset class="range">
         <legend>Range</legend>
         <div>
-            Minimum: <input on:change={()=>checkRange('min')} bind:value={action.range.min}/>
+            Minimum: <input on:change={()=>checkRange('range','min')} bind:value={action.range.min}/>
         </div>
         <div>
-            Maximum: <input on:change={()=>checkRange('max')} bind:value={action.range.max}/>
+            Maximum: <input on:change={()=>checkRange('range','max')} bind:value={action.range.max}/>
         </div>
+    </fieldset>
+    <fieldset class="target">
+        <legend>Target</legend>
+        <select bind:value={action.target.type}>
+            {#each targetType as target (target.id)}
+                <option value={target.value}>
+                    {target.value}
+                </option>
+            {/each}
+        </select>
+        {#if action.target.type === 'custom'}
+            <div>
+                <input bind:value={action.target.min} on:change={()=>checkRange('target','min')}/>
+                <span>/</span>
+                <input bind:value={action.target.max} on:change={()=>checkRange('target','max')}/>
+            </div>
+        {/if}
     </fieldset>
     <div class="submit">
         <button on:click={() => {submit();}}>

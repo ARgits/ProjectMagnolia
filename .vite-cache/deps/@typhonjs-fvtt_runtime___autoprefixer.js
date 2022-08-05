@@ -48,16 +48,16 @@ import {
   require_css_transitions,
   require_css_unicode_bidi,
   require_css_width_stretch,
-  require_css_writing_mode,
-  require_flexbox,
-  require_font_feature,
-  require_font_kerning,
-  require_fullscreen,
-  require_intrinsic_width,
-  require_lib,
-  require_multicolumn,
-  require_object_fit,
-  require_picocolors_browser,
+    require_css_writing_mode,
+    require_flexbox,
+    require_font_feature,
+    require_font_kerning,
+    require_fullscreen,
+    require_intrinsic_width,
+    require_lib,
+    require_multicolumn,
+    require_object_fit,
+    require_picocolors_browser,
     require_pointer,
     require_postcss,
     require_text_decoration,
@@ -80,16 +80,16 @@ var require_utils = __commonJS({
         var { list } = require_postcss();
         module.exports.error = function (text) {
             let err = new Error(text);
-      err.autoprefixer = true;
-      throw err;
-    };
-    module.exports.uniq = function(array) {
-      return [...new Set(array)];
-    };
-    module.exports.removeNote = function(string) {
-      if (!string.includes(" ")) {
-        return string;
-      }
+            err.autoprefixer = true;
+            throw err;
+        };
+        module.exports.uniq = function (array) {
+            return [...new Set(array)];
+        };
+        module.exports.removeNote = function (string) {
+            if (!string.includes(" ")) {
+                return string;
+            }
       return string.split(" ")[0];
     };
     module.exports.escapeRegexp = function(string) {

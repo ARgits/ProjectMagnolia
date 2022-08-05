@@ -41,16 +41,18 @@ var require_binary_search = __commonJS({
             var mid = Math.floor((aHigh - aLow) / 2) + aLow;
             var cmp = aCompare(aNeedle, aHaystack[mid], true);
             if (cmp === 0) {
-        return mid;
-      } else if (cmp > 0) {
-        if (aHigh - mid > 1) {
-          return recursiveSearch(mid, aHigh, aNeedle, aHaystack, aCompare, aBias);
-        }
-        if (aBias == exports.LEAST_UPPER_BOUND) {
-          return aHigh < aHaystack.length ? aHigh : -1;
-        } else {
-          return mid;
-        }
+                return mid;
+            }
+            else if (cmp > 0) {
+                if (aHigh - mid > 1) {
+                    return recursiveSearch(mid, aHigh, aNeedle, aHaystack, aCompare, aBias);
+                }
+                if (aBias == exports.LEAST_UPPER_BOUND) {
+                    return aHigh < aHaystack.length ? aHigh : -1;
+                }
+                else {
+                    return mid;
+                }
       } else {
         if (mid - aLow > 1) {
           return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
