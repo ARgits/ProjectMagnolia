@@ -145,29 +145,92 @@
         },
         "damage": {
           "phys": {
-            "acid": { "bonus": 0, "immune": false },
-            "bludgeoning": { "bonus": 0, "immune": false },
-            "cold": { "bonus": 0, "immune": false },
-            "fire": { "bonus": 0, "immune": false },
-            "lightning": { "bonus": 0, "immune": false },
-            "necr": { "bonus": 0, "immune": false },
-            "piercing": { "bonus": 0, "immune": false },
-            "poison": { "bonus": 0, "immune": false },
-            "slashing": { "bonus": 0, "immune": false }
+            "acid": {
+              "value": 0,
+              "immune": false
+            },
+            "bludgeoning": {
+              "value": 0,
+              "immune": false
+            },
+            "cold": {
+              "value": 0,
+              "immune": false
+            },
+            "fire": {
+              "value": 0,
+              "immune": false
+            },
+            "lightning": {
+              "value": 0,
+              "immune": false
+            },
+            "necr": {
+              "value": 0,
+              "immune": false
+            },
+            "piercing": {
+              "value": 0,
+              "immune": false
+            },
+            "poison": {
+              "value": 0,
+              "immune": false
+            },
+            "slashing": {
+              "value": 0,
+              "immune": false
+            }
           },
           "mag": {
-            "acid": { "bonus": 0, "immune": false },
-            "bludgeoning": { "bonus": 0, "immune": false },
-            "cold": { "bonus": 0, "immune": false },
-            "fire": { "bonus": 0, "immune": false },
-            "lightning": { "bonus": 0, "immune": false },
-            "necr": { "bonus": 0, "immune": false },
-            "piercing": { "bonus": 0, "immune": false },
-            "poison": { "bonus": 0, "immune": false },
-            "slashing": { "bonus": 0, "immune": false },
-            "force": { "bonus": 0, "immune": false },
-            "radiant": { "bonus": 0, "immune": false },
-            "psychic": { "bonus": 0, "immune": false }
+            "acid": {
+              "value": 0,
+              "immune": false
+            },
+            "bludgeoning": {
+              "value": 0,
+              "immune": false
+            },
+            "cold": {
+              "value": 0,
+              "immune": false
+            },
+            "fire": {
+              "value": 0,
+              "immune": false
+            },
+            "lightning": {
+              "value": 0,
+              "immune": false
+            },
+            "necr": {
+              "value": 0,
+              "immune": false
+            },
+            "piercing": {
+              "value": 0,
+              "immune": false
+            },
+            "poison": {
+              "value": 0,
+              "immune": false
+            },
+            "slashing": {
+              "value": 0,
+              "immune": false
+            },
+            "force": {
+              "value": 0,
+              "immune": false
+            },
+            "radiant": {
+              "value": 0,
+              "immune": false
+            },
+            "psychic": {
+              "value": 0,
+              "immune": false
+            }
           }
         },
         "conditions": {}
@@ -338,29 +401,92 @@
       },
       "res": {
         "phys": {
-          "acid": { "bonus": 0, "immune": false },
-          "bludgeoning": { "bonus": 0, "immune": false },
-          "cold": { "bonus": 0, "immune": false },
-          "fire": { "bonus": 0, "immune": false },
-          "lightning": { "bonus": 0, "immune": false },
-          "necr": { "bonus": 0, "immune": false },
-          "piercing": { "bonus": 0, "immune": false },
-          "poison": { "bonus": 0, "immune": false },
-          "slashing": { "bonus": 0, "immune": false }
+          "acid": {
+            "value": 0,
+            "immune": false
+          },
+          "bludgeoning": {
+            "value": 0,
+            "immune": false
+          },
+          "cold": {
+            "value": 0,
+            "immune": false
+          },
+          "fire": {
+            "value": 0,
+            "immune": false
+          },
+          "lightning": {
+            "value": 0,
+            "immune": false
+          },
+          "necr": {
+            "value": 0,
+            "immune": false
+          },
+          "piercing": {
+            "value": 0,
+            "immune": false
+          },
+          "poison": {
+            "value": 0,
+            "immune": false
+          },
+          "slashing": {
+            "value": 0,
+            "immune": false
+          }
         },
         "mag": {
-          "acid": { "bonus": 0, "immune": false },
-          "bludgeoning": { "bonus": 0, "immune": false },
-          "cold": { "bonus": 0, "immune": false },
-          "fire": { "bonus": 0, "immune": false },
-          "lightning": { "bonus": 0, "immune": false },
-          "necr": { "bonus": 0, "immune": false },
-          "piercing": { "bonus": 0, "immune": false },
-          "poison": { "bonus": 0, "immune": false },
-          "slashing": { "bonus": 0, "immune": false },
-          "force": { "bonus": 0, "immune": false },
-          "radiant": { "bonus": 0, "immune": false },
-          "psychic": { "bonus": 0, "immune": false }
+          "acid": {
+            "value": 0,
+            "immune": false
+          },
+          "bludgeoning": {
+            "value": 0,
+            "immune": false
+          },
+          "cold": {
+            "value": 0,
+            "immune": false
+          },
+          "fire": {
+            "value": 0,
+            "immune": false
+          },
+          "lightning": {
+            "value": 0,
+            "immune": false
+          },
+          "necr": {
+            "value": 0,
+            "immune": false
+          },
+          "piercing": {
+            "value": 0,
+            "immune": false
+          },
+          "poison": {
+            "value": 0,
+            "immune": false
+          },
+          "slashing": {
+            "value": 0,
+            "immune": false
+          },
+          "force": {
+            "value": 0,
+            "immune": false
+          },
+          "radiant": {
+            "value": 0,
+            "immune": false
+          },
+          "psychic": {
+            "value": 0,
+            "immune": false
+          }
         }
       }
     },

@@ -14,8 +14,69 @@ export default class ARd20Action {
         this.setTargetLimit(object?.target);
         this.range = object?.range ?? { max: 5, min: 0 };
         this.setParent(options?.parent);
-        this.sheet = new ActionSheet(this);
         this.template = object?.template ?? null;
+        this.useOnFail = this.parent.action ? object?.useOnFail ?? false : false;
+        this.failFormula = this.useOnFail ? object?.failFormula ?? this.formula : this.formula;
+        this.getSubActions(object);
+    }
+
+    get sheet() {
+        return new ActionSheet(this);
+    }
+
+    get documentName() {
+        return 'Action';
+    }
+
+    get uuid() {
+        let uuid = "";
+        if (this.parent.action) {
+            uuid += this.parent.action + ".";
+        }
+        else if (this.parent.item) {
+            uuid += this.parent.item + ".";
+        }
+        else if (this.parent.actor) {
+            uuid += this.parent.actor + ".";
+        }
+        uuid += `Action.${this.id}`;
+        return uuid;
+    }
+
+    async removeSubAction() {
+        const uuidIndex = this.uuid.split('.').findIndex(part => part === 'Action');
+        const parts = this.uuid.split('.').slice(uuidIndex);
+        const doc = await this.getItem() ?? await this.getActor();
+        const action = doc.system.actionList.filter(act => act.id === parts[1])[0];
+        parts.splice(0, 2);
+        action._getSubAction(parts, doc);
+        await doc.update({ 'system.actionList': doc.system.actionList });
+        //TODO: case for world-scope actions
+    }
+
+    _getSubAction(parts, doc) {
+        console.log(parts);
+        if (parts.length > 2) {
+            const action = this.subActions.filter(act => act.id === parts[1])[0];
+            parts.splice(0, 2);
+            action._getSubAction(parts, doc);
+        }
+        else {
+            const index = this.subActions.findIndex(act => act.id === parts[1]);
+            this.subActions.splice(index, 1);
+        }
+    }
+
+    async addSubAction(object = {}, options = {}) {
+        const actionList = this.subActions;
+        const numberOfNewActions =
+            actionList.filter((action) => {
+                console.log(action.name.substring(0, 14) === "New sub-Action");
+                return action.name.substring(0, 14) === "New sub-Action";
+            }).length + 1;
+        object.name = numberOfNewActions - 1 ? "New sub-Action" + "#" + numberOfNewActions : "New sub-Action";
+        object.id = uuidv4();
+        this.subActions = [...actionList, new ARd20Action(object)];
     }
 
     /**
@@ -60,6 +121,14 @@ export default class ARd20Action {
             return;
         }
         return await fromUuid(this.parent.item);
+    }
+
+    getSubActions(object) {
+        const options = {
+            parent: { actor: this.parent.actor, item: this.parent.item, action: this.uuid },
+            keepId: true
+        };
+        this.subActions = object?.subActions?.map(act => new ARd20Action(act, options)) ?? [];
     }
 
     /**
@@ -133,7 +202,7 @@ export default class ARd20Action {
             await game.settings.set('core', 'leftClickRelease', releaseSetting);
             await game.settings.set('ard20', 'actionMouseRewrite', false);
             ui.notifications.active.filter((elem) => elem[0].classList.contains('permanent')).forEach((e) => e.remove());
-            await this.roll(user);
+            await this.roll(user, [...user.targets]);
         };
         handlers.scrollWheel = event => {
             if (event.ctrlKey || event.shiftKey) {
@@ -149,16 +218,16 @@ export default class ARd20Action {
 
     }
 
-    async roll(user) {
-        const targets = [...user.targets];
-        console.log("Phase: rolling");
+    async roll(user, targets) {
+        console.log("Phase: rolling ", "action: ", this.name);
         if (!this.isRoll) {
             return;
         }
-        await this.commonRoll(targets);
-        await this.attackRoll(targets);
-        return this.finishAction(user);
-
+        if (targets.length > 0) {
+            await this.commonRoll(targets);
+            await this.attackRoll(targets);
+            await this.damageRoll(targets);
+        }
     }
 
     async commonRoll(targets) {
@@ -167,10 +236,9 @@ export default class ARd20Action {
         }
         let bonus = this.bonus;
         let formula = this.formula;
-        let roll = new Roll(this.formula);
+        let roll = new Roll(formula);
         const actor = await this.getActor();
         const item = await this.getItem();
-        console.log(targets);
         for (const target of targets) {
             let tokenRoll;
             if (roll._evaluated) {
@@ -190,41 +258,107 @@ export default class ARd20Action {
             return;
         }
         const roll = new Roll(this.formula);
-        const results = [];
-        for (const target of targets) {
-            const actor = target.actor;
+        targets = targets.map(t => {
+            return { target: t, hit: false };
+        });
+        for (const t of targets) {
+            const actor = t.target.actor;
             const defence = actor.system.defences.stats.reflex.value;
             let tokenRoll;
             if (roll._evaluated) {
                 tokenRoll = await roll.reroll();
             }
             else {
-                tokenRoll = await roll.evaluate();
+                tokenRoll = await roll.roll();
             }
-            console.log(tokenRoll.total, defence, tokenRoll.total >= defence);
-            const final = tokenRoll.total >= defence ? "hit" : "miss";
-            results.push({ roll: tokenRoll.total, defence, final, actor });
+            t.hit = tokenRoll.total >= defence;
+            t.actor = actor;
+            t.defence = t.defence ? [...t.defence, defence] : [defence];
+            t.attack = t.attack ? [...t.attack, tokenRoll.total] : [tokenRoll.total];
         }
-        const message = await ChatMessage.create({ user: game.user.id });
-
-        await message.setFlag('world', 'svelte', { results });
+        console.log(targets);
+        return await this.useSubActions(targets);
     }
 
-    finishAction(user) {
-        user.updateTokenTargets([]);
+    async damageRoll(targets) {
+        if (this.type !== 'Damage') {
+            return;
+        }
+        for (const t of targets) {
+            if (this.useOnFail || t.hit) {
+                let damRoll = t.hit ? new Roll(this.formula) : new Roll(this.failFormula);
+                await damRoll.roll();
+                console.log(damRoll, t.hit);
+                t.damage = damRoll.total;
+            }
+        }
+        console.log(targets);
+        return await this.useSubActions(targets);
+    }
+
+    async useSubActions(targets) {
+        for (const action of this.subActions) {
+            await action.roll(null, targets);
+        }
+        if (!this.parent.action) {
+            await this.finishAction(targets);
+        }
+    }
+
+    async finishAction(targets) {
+        const results = targets.map(t => {
+            return {
+                actor: t.target.actor,
+                damage: t.damage,
+                attack: t.attack,
+                defence: t.defence,
+                hit: t.hit ? 'hit' : 'miss'
+            };
+        });
+        game.user.updateTokenTargets([]);
+        await game.user.unsetFlag('ard20', 'targetNumber');
         canvas.scene.tokens.forEach(t => t.object.showHighlight(false));
+        await ChatMessage.create({ user: game.user.id, flags: { world: { svelte: { results } } } });
     }
 
     checkTokens(activeToken, action) {
         const tokenUuid = activeToken.uuid;
-        const activeTokenXY = { x: activeToken.x, y: activeToken.y };
+        const activeTokenObj = activeToken.object;
+        const bounds = activeTokenObj.bounds;
+        /*
+        * TL - TopLeft x,y
+        * TR - TopRight x,y
+        * BL - BottomLeft x,y
+        * BR - BottomRight x,y
+        */
+        const points = {
+            TL: { x: bounds.left, y: bounds.top },
+            TR: { x: bounds.right, y: bounds.top },
+            BL: { x: bounds.left, y: bounds.bottom },
+            BR: { x: bounds.right, y: bounds.bottom }
+        };
+
         for (const token of canvas.scene.tokens) {
             if (token.uuid === tokenUuid) {
                 continue;
             }
+            let pointName = "";
             const target = token.object;
-            const targetXY = { x: token.x, y: token.y };
-            const range = Math.round(canvas.grid.measureDistance(activeTokenXY, targetXY));
+            const targetPoints = {
+                TL: { x: target.bounds.left, y: target.bounds.top },
+                TR: { x: target.bounds.right, y: target.bounds.top },
+                BL: { x: target.bounds.left, y: target.bounds.bottom },
+                BR: { x: target.bounds.right, y: target.bounds.bottom }
+            };
+            pointName += activeToken.y - target.y >= 0 ? "T" : "B";
+            pointName += activeToken.x - target.x >= 0 ? "R" : "L";
+            const distances = [];
+            for (const [key, point] of Object.entries(targetPoints)) {
+                if (key !== pointName) {
+                    distances.push(canvas.grid.measureDistance(points[pointName], point));
+                }
+            }
+            const range = Math.round(Math.min(...distances));
             const inRange = range <= action.range.max && range >= action.range.min;
             target.setTarget(target.isVisible && target.isTargeted, { releaseOthers: false });
             target.showHighlight(target.isVisible && inRange);

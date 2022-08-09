@@ -15,6 +15,7 @@ export default class ARd20Token extends Token {
     /** @override */
     _refresh() {
         super._refresh();
+        this.#highlight.clear();
         const t = CONFIG.Canvas.objectBorderThickness;
         const h = Math.round(t / 2);
         const o = Math.round(h / 2);
@@ -39,7 +40,7 @@ export default class ARd20Token extends Token {
             if (targeted) {
                 const max = game.user.getFlag('ard20', 'targetNumber');
                 const targetNumber = game.user.targets.size;
-                if (targetNumber >= max) {
+                if (targetNumber >= max && max !== null) {
                     console.log(targetNumber, ' more than ', max);
                     ui.notifications.warn(`You can target only ${max} number of tokens`);
                     return;

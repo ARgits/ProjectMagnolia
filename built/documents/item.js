@@ -217,14 +217,14 @@ export class ARd20Item extends Item {
             return;
         }
         const data = itemData;
-        for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+        /*for (let [key, dr] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
             if (!(key === "force" || key === "radiant" || key === "psychic")) {
                 data.res.phys[key].value = parseInt(data.res.phys[key].value) || 0;
                 data.res.phys[key].value += data.res.phys[key].value !== "imm" ? data.res.phys[key].bonus : "";
             }
             data.res.mag[key].value = parseInt(data.res.mag[key].value) || 0;
             data.res.mag[key].value += data.res.mag[key].value !== "imm" ? data.res.mag[key].bonus : "";
-        }
+        }*/
         data.mobility.value = data.mobility.value ?? CONFIG.ARd20.HeavyPoints[data.type][data.slot];
         data.mobility.value += data.mobility.bonus;
     }
@@ -925,8 +925,8 @@ export class ARd20Item extends Item {
         console.log(this.system.actionList);
         const numberOfNewActions =
             this.system.actionList.filter((action) => {
-                console.log(action.name.substr(0, 10) === "New Action");
-                return action.name.substr(0, 10) === "New Action";
+                console.log(action.name.substring(0, 10) === "New Action");
+                return action.name.substring(0, 10) === "New Action";
             }).length + 1;
         object.name = numberOfNewActions - 1 ? "New Action" + "#" + numberOfNewActions : "New Action";
         object.id = uuidv4();

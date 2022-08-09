@@ -3,8 +3,6 @@
 <script>
     import { getContext } from "svelte";
     import ConfigureItemButton from "../general components/ConfigureItemButton.svelte";
-    import ARd20Action from "../../../documents/action.js";
-    import ActionSheet from "../action/actionSheet";
 
     export let canConfig;
     const doc = getContext("DocumentSheetObject");
@@ -14,7 +12,7 @@
         const parent = event.target.parentNode.parentNode;
         const div = parent.getElementsByClassName("description")[0];
         const isHidden = getComputedStyle(div).opacity == 0;
-        div.style.webkitTransition = isHidden ? "opacity 0.75s" : "opacity 0.25s, width 1.1s"; //width transition little bit longer so you can't see that
+        div.style.webkitTransition = isHidden ? "opacity 0.75s" : "opacity 0.25s, width 1.1s"; //width transition little longer so you can't see that
         let divHeight;
         let parentHeight;
         div.style.width = isHidden ? "100%" : div.style.width; //if div was hidden, change width
@@ -49,33 +47,23 @@
     {#each $doc.itemTypes.feature as item}
         <tr>
             <td class="name">
-          <span on:click={(event) => ShowDescription(event)}>
-            {item.name}
-          </span>
+                <span on:click={(event) => ShowDescription(event)}>
+                    {item.name}
+                </span>
                 {#if item.system.hasAttack || item.system.hasDamage}
-                    <i
-                            on:click={() => {
-                itemRoll(item);
-              }}
-                            class="fa-light fa-dice-d20"
-                            data-tooltip="roll"
-                    />
+                    <i on:click={() => {itemRoll(item)}} class="fa-light fa-dice-d20" data-tooltip="roll"></i>
                 {/if}
             </td>
             <td class="actions">
                 <div class="actions">
                     {#each item.system.actionList as action}
                         <div class="action">
-                <span
-                        on:click={() => {
-                    action.use();
-                  }}
-                >
-                  {action.name}
-                </span>
+                            <span on:click={() => {action.use()}}>
+                                {action.name}
+                            </span>
                             {#if canConfig}
                                 <i on:click={() => action.sheet.render(true, { focus: true })}
-                                   class="fa-solid fa-pen-to-square" data-tooltip="edit"/>
+                                   class="fa-solid fa-pen-to-square" data-tooltip="edit"></i>
                             {/if}
                         </div>
                     {/each}
@@ -134,6 +122,7 @@
   div.actions {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
   }
 
   div.description {

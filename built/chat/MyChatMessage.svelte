@@ -1,5 +1,6 @@
 <script>
     export let results;
+    $:console.log(results);
 </script>
 <div>
     this is roll results from attack Action
@@ -8,9 +9,10 @@
     <thead>
     <tr>
         <th>Target</th>
-        <th>Roll Result</th>
-        <th>Target Defence</th>
-        <th>Action Result</th>
+        <th>Attack</th>
+        <th>Defence</th>
+        <th>Hit?</th>
+        <th>Damage</th>
     </tr>
     </thead>
     {#each results as result}
@@ -21,9 +23,10 @@
                     <span>{result.actor.name}</span>
                 </div>
             </td>
-            <td>{result.roll}</td>
+            <td>{result.attack}</td>
             <td>{result.defence}</td>
-            <td>{result.final}</td>
+            <td>{result.hit}</td>
+            <td on:click={()=>{console.log('click')}}>{result.damage ?? ""}</td>
         </tr>
     {/each}
 </table>

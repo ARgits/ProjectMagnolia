@@ -165,6 +165,12 @@ div.dialog-buttons.svelte-14xg9ru {
     padding-top: 8px
 }
 
+div.formula.svelte-1ec92mk {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+
 i.svelte-87fh0g:active {
     -webkit-transform: translateY(0.1em);
     -ms-transform: translateY(0.1em);
@@ -436,52 +442,54 @@ i.svelte-1mjd618:hover {
     text-shadow: 0px 0px 10px blue
 }
 
-tr.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+tr.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     position: relative;
     -webkit-transition: height 0.7s;
     -o-transition: height 0.7s;
     transition: height 0.7s
 }
 
-tr.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0:nth-of-type(odd) {
+tr.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n:nth-of-type(odd) {
     background-color: transparent
 }
 
-tr.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0:nth-of-type(even) {
+tr.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n:nth-of-type(even) {
     background-color: rgba(255, 255, 255, 0.2)
 }
 
-td.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+td.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     vertical-align: top;
     text-align: center
 }
 
-td.config.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+td.config.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     width: 5%
 }
 
-td.svelte-6awbc0:not(.config) > i.svelte-6awbc0.svelte-6awbc0:hover {
+td.svelte-1ug8i0n:not(.config) > i.svelte-1ug8i0n.svelte-1ug8i0n:hover {
     cursor: pointer;
     text-shadow: 0 0 10px red
 }
 
-td.name.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+td.name.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content
 }
 
-div.actions.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+div.actions.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
-    flex-direction: column
+    flex-direction: column;
+    -ms-flex-pack: distribute;
+    justify-content: space-around
 }
 
-div.description.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+div.description.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     width: 0;
     left: 0;
     background-color: rgb(255, 255, 255);
@@ -495,7 +503,7 @@ div.description.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
     transition: opacity 0.5s
 }
 
-div.actions.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
+div.actions.svelte-1ug8i0n.svelte-1ug8i0n.svelte-1ug8i0n {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -507,14 +515,14 @@ div.actions.svelte-6awbc0.svelte-6awbc0.svelte-6awbc0 {
     flex-wrap: wrap
 }
 
-div.actions.svelte-6awbc0 .action.svelte-6awbc0.svelte-6awbc0 {
+div.actions.svelte-1ug8i0n .action.svelte-1ug8i0n.svelte-1ug8i0n {
     margin: 0.25rem;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content
 }
 
-div.actions.svelte-6awbc0 .action span.svelte-6awbc0.svelte-6awbc0 {
+div.actions.svelte-1ug8i0n .action span.svelte-1ug8i0n.svelte-1ug8i0n {
     margin: 0.1rem;
     padding: 0.1rem;
     border: 1px solid;
@@ -522,7 +530,7 @@ div.actions.svelte-6awbc0 .action span.svelte-6awbc0.svelte-6awbc0 {
     background-color: rgba(0, 0, 0, 0.1)
 }
 
-div.actions.svelte-6awbc0 .action span.svelte-6awbc0.svelte-6awbc0:hover, div.actions.svelte-6awbc0 .action span.svelte-6awbc0 + i.svelte-6awbc0:hover {
+div.actions.svelte-1ug8i0n .action span.svelte-1ug8i0n.svelte-1ug8i0n:hover, div.actions.svelte-1ug8i0n .action span.svelte-1ug8i0n + i.svelte-1ug8i0n:hover {
     -webkit-box-shadow: 1px 1px black;
     box-shadow: 1px 1px black;
     cursor: pointer

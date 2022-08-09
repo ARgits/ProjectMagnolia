@@ -11,7 +11,7 @@ import { ARd20 } from "./helpers/config.js";
 import ARd20SocketHandler from "./helpers/socket.js";
 import { registerSystemSettings } from "./settings/settings.js";
 import * as dice from "./dice/dice.js";
-import { SvelteDocumentSheet } from "../built/sheets/svelte/documentSheet.js";
+import { SvelteDocumentSheet } from "./sheets/svelte/documentSheet.js";
 import ARd20Action from "../built/documents/action.js";
 import ARd20Token from "../built/documents/token.js";
 import ARd20TokenDocument from "./documents/tokenDoc.js";
@@ -79,7 +79,7 @@ Hooks.once("init", function () {
     //register Svelte components for Actor/Item types
     setSvelteComponents();
     // Preload Handlebars templates.
-    preloadHandlebarsTemplates();
+    return preloadHandlebarsTemplates();
 });
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
@@ -129,14 +129,12 @@ Hooks.once("ready", async function () {
  */
 async function createItemMacro(data, slot) {
     if (game instanceof Game) {
-        //@ts-expect-error
         if (data.type !== "Item") {
             return;
         }
         if (!("data" in data) && ui.notifications instanceof Notifications) {
             return ui.notifications.warn("You can only create macro buttons for owned Items");
         }
-        //@ts-expect-error
         const item = data.data;
         // Create the macro command
         const command = `game.ard20.rollItemMacro("${item.name}");`;
@@ -178,8 +176,6 @@ export function rollItemMacro(itemName) {
         if (!item) {
             return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
         }
-        // Trigger the item roll
-        //@ts-expect-error
         return item.roll();
     }
 }
@@ -195,8 +191,13 @@ Hooks.on("renderChatMessage", (app, html, data) => {
         new MyChatMessage({ target: html[0], props: flagData });
     }
 });
+Hooks.on('preDeleteChatMessage', (message) => {
+    const flagData = message.getFlag('world', 'svelte');
+
+    if (typeof flagData === 'object' && typeof message?._svelteComponent?.$destroy === 'function') {
+        message._svelteComponent.$destroy();
+    }
+});
 //Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
-//@ts-expect-error
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
-//@ts-expect-error
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
