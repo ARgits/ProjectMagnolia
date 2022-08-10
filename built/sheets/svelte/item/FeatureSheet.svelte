@@ -32,7 +32,7 @@
     </fieldset>
     <fieldset>
         <legend> Actions <i on:click={async () => {await $doc.addAction();}}
-                            class="fa-solid fa-file-plus"/></legend>
+                            class="fa-solid fa-file-plus"></i></legend>
         {#each $doc.system.actionList as action}
             <div class="action">
                 <span class="name">
@@ -40,9 +40,9 @@
                 </span>
                 <div class="control">
                     <i on:click={() => $doc.removeAction(action.id)} class="fa-solid fa-trash-can"
-                       data-tooltip="delete"/>
-                    <i on:click={() => action.sheet.render(true, { focus: true })}
-                       class="fa-solid fa-pen-to-square" data-tooltip="edit"/>
+                       data-tooltip="delete"></i>
+                    <i on:click={() => action.sheet.render(true)}
+                       class="fa-solid fa-pen-to-square" data-tooltip="edit"></i>
                 </div>
             </div>
         {/each}

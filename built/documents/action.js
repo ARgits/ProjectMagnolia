@@ -9,7 +9,7 @@ export default class ARd20Action {
         this.formula = object?.formula ?? "2d10";
         this.bonus = object?.bonus ?? 0;
         this.dc = object?.dc ?? { type: "parameter", value: "reflex" };
-        this.id = options?.keepId ? object?.id ?? uuidv4() : uuidv4();
+        this._id = options?.keepId ? object?._id ?? uuidv4() : uuidv4();
         this.isRoll = object?.isRoll ?? true;
         this.setTargetLimit(object?.target);
         this.range = object?.range ?? { max: 5, min: 0 };
@@ -18,14 +18,19 @@ export default class ARd20Action {
         this.useOnFail = this.parent.action ? object?.useOnFail ?? false : false;
         this.failFormula = this.useOnFail ? object?.failFormula ?? this.formula : this.formula;
         this.getSubActions(object);
-    }
-
-    get sheet() {
-        return new ActionSheet(this);
+        this.damage = object?.damage ?? [];
     }
 
     get documentName() {
         return 'Action';
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    get sheet() {
+        return new ActionSheet(this);
     }
 
     get uuid() {
@@ -223,11 +228,10 @@ export default class ARd20Action {
         if (!this.isRoll) {
             return;
         }
-        if (targets.length > 0) {
-            await this.commonRoll(targets);
-            await this.attackRoll(targets);
-            await this.damageRoll(targets);
-        }
+        await this.commonRoll(targets);
+        await this.attackRoll(targets);
+        await this.damageRoll(targets);
+
     }
 
     async commonRoll(targets) {
@@ -297,8 +301,10 @@ export default class ARd20Action {
     }
 
     async useSubActions(targets) {
-        for (const action of this.subActions) {
-            await action.roll(null, targets);
+        if (targets.length > 0) {
+            for (const action of this.subActions) {
+                await action.roll(null, targets);
+            }
         }
         if (!this.parent.action) {
             await this.finishAction(targets);
@@ -318,7 +324,9 @@ export default class ARd20Action {
         game.user.updateTokenTargets([]);
         await game.user.unsetFlag('ard20', 'targetNumber');
         canvas.scene.tokens.forEach(t => t.object.showHighlight(false));
-        await ChatMessage.create({ user: game.user.id, flags: { world: { svelte: { results } } } });
+        if (results.length > 0) {
+            ChatMessage.create({ user: game.user.id, flags: { world: { svelte: { results } } } });
+        }
     }
 
     checkTokens(activeToken, action) {
@@ -352,13 +360,15 @@ export default class ARd20Action {
             };
             pointName += activeToken.y - target.y >= 0 ? "T" : "B";
             pointName += activeToken.x - target.x >= 0 ? "R" : "L";
-            const distances = [];
-            for (const [key, point] of Object.entries(targetPoints)) {
-                if (key !== pointName) {
-                    distances.push(canvas.grid.measureDistance(points[pointName], point));
+            const range = Object.entries(targetPoints).reduce((previousValue, currentValue) => {
+                const currentRange = canvas.grid.measureDistance(currentValue[1], points[pointName]);
+                if (currentRange < previousValue) {
+                    return currentRange;
                 }
-            }
-            const range = Math.round(Math.min(...distances));
+                else {
+                    return previousValue;
+                }
+            }, canvas.grid.measureDistance(targetPoints[pointName], points[pointName]));
             const inRange = range <= action.range.max && range >= action.range.min;
             target.setTarget(target.isVisible && target.isTargeted, { releaseOthers: false });
             target.showHighlight(target.isVisible && inRange);

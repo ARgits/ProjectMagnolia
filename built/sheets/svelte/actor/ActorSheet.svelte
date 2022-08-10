@@ -3,7 +3,7 @@
 <script>
   import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte";
   import ImageWithFilePicker from "../general components/ImageWithFilePicker.svelte";
-  import ProgressBar from "../../../general svelte components/ProgressBar.svelte";
+  import ProgressBar from "../../../general svelte components and dialogs/ProgressBar.svelte";
   import Tabs from "../general components/Tabs.svelte";
   import AttributeTab from "./AttributeTab.svelte";
   import InventoryTab from "./InventoryTab.svelte";

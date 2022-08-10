@@ -165,10 +165,66 @@ div.dialog-buttons.svelte-14xg9ru {
     padding-top: 8px
 }
 
-div.formula.svelte-1ec92mk {
+.main.svelte-18fqif2.svelte-18fqif2 {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 33%;
+    flex: 1 0 33%
+}
+
+.input-field.svelte-18fqif2.svelte-18fqif2 {
+    width: inherit;
+    height: 30px;
+    border: 1px solid black;
+    padding: 0 0.35rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    min-width: 100%
+}
+
+.options.svelte-18fqif2.svelte-18fqif2 {
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: inherit;
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid black;
+    border-top: none;
+    background: url("../ui/parchment.jpg") repeat
+}
+
+.options.hidden.svelte-18fqif2.svelte-18fqif2 {
+    display: none
+}
+
+label.svelte-18fqif2.svelte-18fqif2 {
+    width: 100%;
+    text-align: center
+}
+
+label.checked.svelte-18fqif2.svelte-18fqif2 {
+    background-color: rgba(0, 255, 0, 0.3)
+}
+
+label.svelte-18fqif2.svelte-18fqif2:hover {
+    cursor: pointer
+}
+
+label.svelte-18fqif2 input[type=checkbox].svelte-18fqif2 {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+    border: none;
+    display: none
 }
 
 i.svelte-87fh0g:active {

@@ -34,8 +34,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
                 this.#storeDoc.set(document);
             },
         });
-        /*console.log(`! SvelteDocumentSheet - ctor - 0 - object: `, object);
-        ;*/
         this.reactive.document = object;
     }
 
@@ -56,7 +54,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
             svelte: {
                 class: DocumentShell,
                 target: document.body,
-                // You can assign a function that is invoked with MyItemApp instance as `this`.
                 props: function () {
                     return { storeDoc: this.#storeDoc };
                 },

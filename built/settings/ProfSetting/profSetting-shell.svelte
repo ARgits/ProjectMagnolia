@@ -1,7 +1,7 @@
 <svelte:options accessors={true} />
 
 <script>
-  import SettingsSubmitButton from "../../general svelte components/SettingsSubmitButton.svelte";
+  import SettingsSubmitButton from "../../general svelte components and dialogs/SettingsSubmitButton.svelte";
   import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
