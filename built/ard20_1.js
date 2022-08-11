@@ -15483,7 +15483,7 @@ class SvelteApplication extends Application {
     }));
   }
   /**
-   * Inject the Svelte components defined in `this.options.svelte`. The Svelte component can attach to the existing
+   * Inject the Svelte components defined in `this.OptionsComponent.svelte`. The Svelte component can attach to the existing
    * pop-out of Application or provide no template and render into a document fragment which is then attached to the
    * DOM.
    *

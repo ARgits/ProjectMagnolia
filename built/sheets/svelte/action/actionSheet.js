@@ -1,13 +1,22 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import ActionShell from "./ActionShell.svelte";
+import { writable } from "svelte/store";
 
 export default class ActionSheet extends SvelteApplication {
-    #action;
+    #action = writable(null);
 
     constructor(object, options) {
         super(object);
         console.log(object, options);
-        this.#action = object;
+        Object.defineProperty(this.reactive, 'action', {
+            get: () => get(this.#action),
+            set: (document) => {
+                this.#action.set(document);
+            }
+        });
+        console.log(object, this.#action);
+        this.reactive.action = object;
+        console.log(this.#action);
     }
 
     static get defaultOptions() {

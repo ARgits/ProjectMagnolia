@@ -165,27 +165,19 @@ div.dialog-buttons.svelte-14xg9ru {
     padding-top: 8px
 }
 
-.main.svelte-18fqif2.svelte-18fqif2 {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 0 33%;
-    flex: 1 0 33%
-}
-
-.input-field.svelte-18fqif2.svelte-18fqif2 {
-    width: inherit;
-    height: 30px;
+div.svelte-175vhzi.svelte-175vhzi {
+    z-index: 9999;
+    position: absolute;
     border: 1px solid black;
-    padding: 0 0.35rem;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    min-width: 100%
+    background-color: rgba(0, 0, 0, 0.5);
+    max-height: 150px;
+    overflow-y: scroll
 }
 
-.options.svelte-18fqif2.svelte-18fqif2 {
+.options.svelte-175vhzi.svelte-175vhzi {
     position: absolute;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: inherit;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -201,30 +193,43 @@ div.dialog-buttons.svelte-14xg9ru {
     background: url("../ui/parchment.jpg") repeat
 }
 
-.options.hidden.svelte-18fqif2.svelte-18fqif2 {
-    display: none
-}
-
-label.svelte-18fqif2.svelte-18fqif2 {
+label.svelte-175vhzi.svelte-175vhzi {
     width: 100%;
     text-align: center
 }
 
-label.checked.svelte-18fqif2.svelte-18fqif2 {
+label.checked.svelte-175vhzi.svelte-175vhzi {
     background-color: rgba(0, 255, 0, 0.3)
 }
 
-label.svelte-18fqif2.svelte-18fqif2:hover {
-    cursor: pointer
+label.svelte-175vhzi.svelte-175vhzi:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1)
 }
 
-label.svelte-18fqif2 input[type=checkbox].svelte-18fqif2 {
+label.svelte-175vhzi input[type=checkbox].svelte-175vhzi {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     margin: 0;
     border: none;
     display: none
+}
+
+.main.svelte-1kthlqz {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 33%;
+    flex: 1 0 33%
+}
+
+.input-field.svelte-1kthlqz {
+    width: inherit;
+    height: 30px;
+    border: 1px solid black;
+    padding: 0 0.35rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    min-width: 100%
 }
 
 i.svelte-87fh0g:active {

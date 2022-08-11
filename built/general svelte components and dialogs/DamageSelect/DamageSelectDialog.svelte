@@ -1,8 +1,17 @@
 <svelte:options accessors={true}/>
 <script>
-    export let choices = [];
+    import { getContext } from "svelte";
+
+    import OptionsComponent from "./OptionsComponent.svelte";
+
+    export let id;
     export let options;
-    let hidden = true;
+    console.log(id);
+    const { application } = getContext('external');
+    let inputField;
+    let element;
+    const doc = getContext(`ActionData-${id}`);
+    console.log(doc);
 
     function clickOutside(node) {
         const handleClick = (event) => {
@@ -10,31 +19,36 @@
                 node.dispatchEvent(new CustomEvent("outclick"));
             }
         };
-
         document.addEventListener("click", handleClick, true);
-
         return {
             destroy() {
                 document.removeEventListener("click", handleClick, true);
             }
         };
     }
+
+    function addComponent() {
+        if (!element) {
+            element = new OptionsComponent({
+                target: document.body,
+                props: { position: inputField.getBoundingClientRect(), options, doc }
+            });
+        }
+        else {
+            removeComponent();
+        }
+    }
+
+    function removeComponent() {
+        if (element) {
+            element.$destroy();
+            element = null;
+        }
+    }
 </script>
 Damage Type
-<div class="main" use:clickOutside on:outclick={()=>{hidden=true}}>
-    <div on:click={()=>{hidden=!hidden}} class="input-field"></div>
-    <div class:hidden class="options">
-        {#each options as type}
-            <label class:checked={choices.includes(["phys",type[0]])}>
-                <input type="checkbox" bind:group={choices} value={["phys",type[0]]}/> {type[1]}
-            </label>
-        {/each}
-        {#each options as type}
-            <label class:checked={choices.includes(["mag",type[0]])}>
-                <input type="checkbox" bind:group={choices} value={["mag",type[0]]}/> {type[1]}
-            </label>
-        {/each}
-    </div>
+<div class="main" use:clickOutside on:outclick={()=>{removeComponent()}}>
+    <div bind:this={inputField} on:click={()=>{addComponent()}} class="input-field">{$doc.damage}</div>
 </div>
 <style lang="scss">
   .main {
@@ -48,41 +62,5 @@ Damage Type
     padding: 0 0.35rem;
     box-sizing: border-box;
     min-width: 100%;
-  }
-
-  .options {
-    position: absolute;
-    box-sizing: border-box;
-    width: inherit;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid black;
-    border-top: none;
-    background: url("../ui/parchment.jpg") repeat;
-
-    &.hidden {
-      display: none;
-    }
-  }
-
-  label {
-    width: 100%;
-    text-align: center;
-
-    &.checked {
-      background-color: rgba(0, 255, 0, 0.3)
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    & input[type="checkbox"] {
-      appearance: none;
-      margin: 0;
-      border: none;
-      display: none
-    }
   }
 </style>
