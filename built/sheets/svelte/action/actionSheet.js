@@ -1,22 +1,26 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 import ActionShell from "./ActionShell.svelte";
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
 
 export default class ActionSheet extends SvelteApplication {
     #action = writable(null);
+    #damageInput = writable(null);
 
     constructor(object, options) {
         super(object);
-        console.log(object, options);
         Object.defineProperty(this.reactive, 'action', {
             get: () => get(this.#action),
             set: (document) => {
                 this.#action.set(document);
             }
         });
-        console.log(object, this.#action);
+        Object.defineProperty(this.reactive, 'damageInput', {
+            get: () => get(this.#damageInput),
+            set: (element) => {
+                this.#damageInput.set(element);
+            }
+        });
         this.reactive.action = object;
-        console.log(this.#action);
     }
 
     static get defaultOptions() {
@@ -35,13 +39,26 @@ export default class ActionSheet extends SvelteApplication {
                 }
             },
         });
-
     }
 
-    render(force = false, options = {}) {
-        console.log(this);
-        console.trace();
-        super.render(force, options);
-        return this;
+    async submit() {
+        let item;
+        const action = this.reactive.action;
+        const actorId = action.parent.actor;
+        const itemId = action.parent.item;
+        if (actorId || itemId) {
+            const uuid = itemId || actorId;
+            item = await fromUuid(uuid);
+        }
+        else {
+            return;
+        }
+        let actionList = [...item.system.actionList];
+        const index = [...item.system.actionList].findIndex(a => a.id === action.id);
+        if (index !== -1) {
+            actionList.splice(index, 1);
+            actionList = [...actionList, action];
+            await item.update({ "system.actionList": actionList });
+        }
     }
 }

@@ -165,7 +165,7 @@ div.dialog-buttons.svelte-14xg9ru {
     padding-top: 8px
 }
 
-div.svelte-175vhzi.svelte-175vhzi {
+div.svelte-1t5gqc7.svelte-1t5gqc7 {
     z-index: 9999;
     position: absolute;
     border: 1px solid black;
@@ -174,7 +174,7 @@ div.svelte-175vhzi.svelte-175vhzi {
     overflow-y: scroll
 }
 
-.options.svelte-175vhzi.svelte-175vhzi {
+.options.svelte-1t5gqc7.svelte-1t5gqc7 {
     position: absolute;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -190,24 +190,24 @@ div.svelte-175vhzi.svelte-175vhzi {
     align-items: center;
     border: 1px solid black;
     border-top: none;
-    background: url("../ui/parchment.jpg") repeat
+    background: rgb(241, 237, 237)
 }
 
-label.svelte-175vhzi.svelte-175vhzi {
+label.svelte-1t5gqc7.svelte-1t5gqc7 {
     width: 100%;
     text-align: center
 }
 
-label.checked.svelte-175vhzi.svelte-175vhzi {
+label.checked.svelte-1t5gqc7.svelte-1t5gqc7 {
     background-color: rgba(0, 255, 0, 0.3)
 }
 
-label.svelte-175vhzi.svelte-175vhzi:hover {
+label.svelte-1t5gqc7.svelte-1t5gqc7:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1)
 }
 
-label.svelte-175vhzi input[type=checkbox].svelte-175vhzi {
+label.svelte-1t5gqc7 input[type=checkbox].svelte-1t5gqc7 {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

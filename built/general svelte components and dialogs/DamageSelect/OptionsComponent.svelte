@@ -1,28 +1,49 @@
 <svelte:options accessors={true}/>
 <script>
     import { applyStyles } from "@typhonjs-fvtt/runtime/svelte/action";
-    import { getContext } from "svelte";
+    import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
 
     export let doc;
     export let options;
-    export let position;
+    export let application;
+    console.log(application.reactive.damageInput);
+    const inputStore = application.reactive.damageInput;
+
+    $:position = inputStore.getBoundingClientRect();
     console.log($doc.damage);
-    const { top, left, width, height } = position;
-    const pos = {
-        left: `${left}px`,
-        top: `${top + height}px`,
-        width: `${width}px`,
+    $: pos = {
+        left: `${position.left}px`,
+        top: `${position.top + position.height}px`,
+        width: `${position.width}px`,
     };
+
+    async function handleDamage(dam) {
+        if (!DamageIncluded(dam)) {
+            $doc.damage = [...$doc.damage, dam];
+        }
+        else {
+            const index = $doc.damage.findIndex(d => d[0] === dam[0] && d[1] === dam[1]);
+            $doc.damage.splice(index, 1);
+            $doc.damage = [...$doc.damage];
+        }
+        await application.submit();
+    }
+
+    function DamageIncluded(dam) {
+        return $doc.damage.filter(d => d[0] === dam[0] && d[1] === dam[1]).length > 0;
+    }
 </script>
 <div use:applyStyles={pos} class="options">
     {#each options as type}
-        <label class:checked={$doc.damage.includes(["phys",type[0]])}>
-            <input type="checkbox" bind:group={$doc.damage} value={["phys",type[0]]}/> {type[1]}
+        <label class:checked={DamageIncluded(["phys",type[0]])}>
+            <input on:click={()=>{handleDamage(["phys",type[0]])}} type="checkbox"
+                   value={["phys",type[0]]}/> Physical {localize(type[1])}
         </label>
     {/each}
     {#each options as type}
-        <label class:checked={$doc.damage.includes(["mag",type[0]])}>
-            <input type="checkbox" bind:group={$doc.damage} value={["mag",type[0]]}/> {type[1]}
+        <label class:checked={DamageIncluded(["mag",type[0]])}>
+            <input on:click={()=>{handleDamage(["mag",type[0]])}} type="checkbox"
+                   value={["mag",type[0]]}/> Magical {localize(type[1])}
         </label>
     {/each}
 </div>
@@ -44,7 +65,7 @@
     align-items: center;
     border: 1px solid black;
     border-top: none;
-    background: url("../ui/parchment.jpg") repeat;
+    background: rgb(241, 237, 237);
   }
 
   label {

@@ -1,14 +1,15 @@
 <svelte:options accessors={true}/>
 <script>
-    import { getContext, tick } from "svelte";
+    import { getContext } from "svelte";
     import { slide } from "svelte/transition";
     import DamageSelectDialog
         from "../../../general svelte components and dialogs/DamageSelect/DamageSelectDialog.svelte";
+    import { writable } from "svelte/store";
 
-    export let id;
-    const action = getContext(`ActionData-${id}`);
-
+    export let uuid;
     const { application } = getContext("external");
+    const rootAction = getContext('TopActionData');
+    const action = uuid === application.reactive.action.uuid ? rootAction : writable($rootAction._getSubAction(uuid, false));
     const targetType = [
         { id: 1, value: 'single' },
         { id: 2, value: 'self' },
@@ -23,24 +24,12 @@
     ];
 
     async function submit() {
-        let item;
-        const actorId = $action.parent.actor;
-        const itemId = $action.parent.item;
-        if (actorId || itemId) {
-            const uuid = itemId || actorId;
-            item = await fromUuid(uuid);
-        }
-        else {
-            return;
-        }
-        console.log($action);
-        const actionList = [...item.system.actionList];
-        await item.update({ "system.actionList": actionList });
-        application.close();
+        await application.submit();
     }
 
-    function checkRange(type, val) {
+    async function checkRange(type, val) {
         $action[type][val] = Math[val]($action[type].min, $action[type].max);
+        await application.submit();
     }
 
     let expanded = !$action?.parent.action;
@@ -52,8 +41,17 @@
     }
 
     async function remove() {
-        await $action.removeSubAction();
-        await tick();
+        const newSubActArr = await $action.removeSubAction();
+        await application.submit();
+        const id = uuid.split('.').slice(0, -2)[-1];
+        let parentSubActArr = id === $rootAction.id ? $rootAction : $rootAction._getSubAction(uuid.split('.').slice(0, -2).join('.')).subActions;
+        parentSubActArr = newSubActArr;
+    }
+
+    async function addSubAction() {
+        const newSubActArr = await $action.addSubAction();
+        await application.submit();
+        $action.subActions = newSubActArr;
     }
 
 </script>
@@ -68,10 +66,10 @@
     {#if expanded}
         <div transition:slide={{duration:300}}>
             <div class="name">
-                Name: <input bind:value={$action.name}/>
+                Name: <input on:change={submit} bind:value={$action.name}/>
             </div>
             <div class="type">
-                <select bind:value={$action.type}>
+                <select on:blur={submit} bind:value={$action.type}>
                     {#each actionType as type}
                         <option disabled={type.disabled} value={type.value}>{type.value}</option>
                     {/each}
@@ -79,19 +77,19 @@
             </div>
             {#if $action.parent.action}
                 <div>
-                    Use on Fail? <input type="checkbox" bind:checked={$action.useOnFail}/>
+                    Use on Fail? <input type="checkbox" on:change={submit} bind:checked={$action.useOnFail}/>
                 </div>
             {/if}
             <div class="formula">
                 <div>
-                    {#if $action.useOnFail}Success{/if}Formula: <input bind:value={$action.formula}/>
+                    {#if $action.useOnFail}Success{/if}Formula: <input on:change={submit} bind:value={$action.formula}/>
                 </div>
                 {#if $action.parent.action && $action.useOnFail}
-                    <div> Fail Formula<input bind:value={$action.failFormula}/></div>
+                    <div> Fail Formula<input on:change={submit} bind:value={$action.failFormula}/></div>
                 {/if}
                 {#if $action.type === 'Damage'}
                     <DamageSelectDialog
-                            id={$action.id}
+                            doc={action}
                             options={Object.entries(CONFIG.ARd20.DamageSubTypes)}
                     />
                 {/if}
@@ -110,7 +108,7 @@
             {#if !$action.parent.action}
                 <fieldset class="target">
                     <legend>Target</legend>
-                    <select bind:value={$action.target.type}>
+                    <select on:blur={submit} bind:value={$action.target.type}>
                         {#each targetType as target (target.id)}
                             <option value={target.value}>
                                 {target.value}
@@ -126,21 +124,21 @@
                     {/if}
                 </fieldset>
             {/if}
-            <!--<fieldset class="actions">
+            <fieldset class="actions">
                 <legend>
-                    Add actions <i on:click={() => { $action.addSubAction();}} class="fa-solid fa-file-plus"></i>
+                    Add actions <i on:click={addSubAction} class="fa-solid fa-file-plus"></i>
                 </legend>
-                {#each $action.subActions as subAct}
-                    <svelte:self id={subAct.id}/>
+                {#each $action.subActions as subAct (subAct.id)}
+                    <svelte:self uuid={subAct.uuid}/>
                 {/each}
-            </fieldset>!-->
-            {#if !$action.parent.action}
+            </fieldset>
+            <!--{#if !$action.parent.action}
                 <div class="submit">
                     <button on:click={submit}>
                         Submit
                     </button>
                 </div>
-            {/if}
+            {/if}!-->
         </div>
     {/if}
 </div>

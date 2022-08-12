@@ -3,15 +3,14 @@
     import { getContext } from "svelte";
 
     import OptionsComponent from "./OptionsComponent.svelte";
+    import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
 
-    export let id;
+    export let doc = void 0;
     export let options;
-    console.log(id);
     const { application } = getContext('external');
     let inputField;
     let element;
-    const doc = getContext(`ActionData-${id}`);
-    console.log(doc);
+    let damageText;
 
     function clickOutside(node) {
         const handleClick = (event) => {
@@ -29,9 +28,11 @@
 
     function addComponent() {
         if (!element) {
+            application.reactive.damageInput = inputField;
+            console.log(application.reactive.damageInput);
             element = new OptionsComponent({
                 target: document.body,
-                props: { position: inputField.getBoundingClientRect(), options, doc }
+                props: { application, options, doc }
             });
         }
         else {
@@ -39,16 +40,28 @@
         }
     }
 
-    function removeComponent() {
-        if (element) {
-            element.$destroy();
-            element = null;
-        }
+    function removeComponent(e) {
+        setTimeout(() => {
+            if (element) {
+                console.log(e, 'removeComponent function');
+                application.reactive.damageInput = null;
+                element.$destroy();
+                element = null;
+            }
+        }, 100);
+    }
+
+    const { top, left } = application.position.stores;
+    $:{
+        const damageArr = [].concat.apply([], $doc.damage);
+        damageText = '';
+        const dTypes = CONFIG.ARd20.DamageSubTypes;
+        damageArr.forEach((t, index) => {damageText += index % 2 === 0 ? t[0].toUpperCase() + t.slice(1).toLowerCase() + 'ical' : ` ${localize(dTypes[t])}; `;});
     }
 </script>
 Damage Type
-<div class="main" use:clickOutside on:outclick={()=>{removeComponent()}}>
-    <div bind:this={inputField} on:click={()=>{addComponent()}} class="input-field">{$doc.damage}</div>
+<div class="main" use:clickOutside on:outclick={(e)=>{removeComponent(e)}}>
+    <div bind:this={inputField} on:click={()=>{addComponent()}} class="input-field">{damageText}</div>
 </div>
 <style lang="scss">
   .main {

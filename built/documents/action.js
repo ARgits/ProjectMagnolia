@@ -17,7 +17,7 @@ export default class ARd20Action {
         this.template = object?.template ?? null;
         this.useOnFail = this.parent.action ? object?.useOnFail ?? false : false;
         this.failFormula = this.useOnFail ? object?.failFormula ?? this.formula : this.formula;
-        this.getSubActions(object);
+        this.subActions = this.getSubActions(object);
         this.damage = object?.damage ?? [];
     }
 
@@ -54,21 +54,38 @@ export default class ARd20Action {
         const doc = await this.getItem() ?? await this.getActor();
         const action = doc.system.actionList.filter(act => act.id === parts[1])[0];
         parts.splice(0, 2);
-        action._getSubAction(parts, doc);
-        await doc.update({ 'system.actionList': doc.system.actionList });
+        //get new array of Actions from its actual parent
         //TODO: case for world-scope actions
+        return action._getSubAction(parts, true);
     }
 
-    _getSubAction(parts, doc) {
+    /** Get SubAction. If its part of remove function, returns new array of subActions
+     * @param parts {string|[]} - SubAction's UUID or array of ids
+     * @param remove {boolean} - delete this subAction or just return its value
+     * @returns {ARd20Action|ARd20Action[]}*/
+    _getSubAction(parts, remove) {
+        if (typeof parts === "string") {
+            const uuidIndex = parts.split('.').findIndex(part => part === 'Action');
+            parts = parts.split('.').slice(uuidIndex);
+            if (parts[1] === this.id) {
+                parts.splice(0, 2);
+            }
+        }
         console.log(parts);
         if (parts.length > 2) {
             const action = this.subActions.filter(act => act.id === parts[1])[0];
             parts.splice(0, 2);
-            action._getSubAction(parts, doc);
+            return action._getSubAction(parts, remove);
         }
-        else {
+        else if (remove) {
             const index = this.subActions.findIndex(act => act.id === parts[1]);
             this.subActions.splice(index, 1);
+            console.log(this.subActions);
+            return this.subActions;
+        }
+        else {
+            console.log(this.subActions.filter(act => act.id === parts[1])[0]);
+            return this.subActions.filter(act => act.id === parts[1])[0];
         }
     }
 
@@ -81,7 +98,10 @@ export default class ARd20Action {
             }).length + 1;
         object.name = numberOfNewActions - 1 ? "New sub-Action" + "#" + numberOfNewActions : "New sub-Action";
         object.id = uuidv4();
-        this.subActions = [...actionList, new ARd20Action(object)];
+        options = {
+            parent: { actor: this.parent.actor, item: this.parent.item, action: this.uuid },
+        };
+        return [...actionList, new ARd20Action(object, options)];
     }
 
     /**
@@ -128,12 +148,15 @@ export default class ARd20Action {
         return await fromUuid(this.parent.item);
     }
 
+    /**Prepare list of SubActions
+     * @returns {ARd20Action[]}
+     * */
     getSubActions(object) {
         const options = {
             parent: { actor: this.parent.actor, item: this.parent.item, action: this.uuid },
             keepId: true
         };
-        this.subActions = object?.subActions?.map(act => new ARd20Action(act, options)) ?? [];
+        return object?.subActions?.map(act => new ARd20Action(act, options)) ?? [];
     }
 
     /**
