@@ -10,6 +10,8 @@ export default class ARd20Token extends Token {
         await super._draw();
         this.#highlight = this.addChild(new PIXI.Graphics());
         this.#highlight.visible = false;
+
+
     }
 
     /** @override */
@@ -21,6 +23,10 @@ export default class ARd20Token extends Token {
         const o = Math.round(h / 2);
         this.#highlight.lineStyle(t, 0x000000, 0.8).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
         this.#highlight.lineStyle(h, 0x00FF00, 1.0).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
+        console.log(this.#highlight.pivot.x, this.#highlight.pivot.y);
+        this.#highlight.pivot.x = this.w + h;
+        this.#highlight.pivot.y = this.h + h;
+        this.#highlight.angle = 45;
     }
 
 

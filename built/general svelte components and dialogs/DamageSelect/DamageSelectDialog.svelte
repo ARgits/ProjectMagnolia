@@ -14,7 +14,7 @@
 
     function clickOutside(node) {
         const handleClick = (event) => {
-            if (!node.contains(event.target)) {
+            if (!node.contains(event.target) && !event.target.classList.contains('selectOption')) {
                 node.dispatchEvent(new CustomEvent("outclick"));
             }
         };
@@ -29,7 +29,6 @@
     function addComponent() {
         if (!element) {
             application.reactive.damageInput = inputField;
-            console.log(application.reactive.damageInput);
             element = new OptionsComponent({
                 target: document.body,
                 props: { application, options, doc }
@@ -41,14 +40,12 @@
     }
 
     function removeComponent(e) {
-        setTimeout(() => {
-            if (element) {
-                console.log(e, 'removeComponent function');
-                application.reactive.damageInput = null;
-                element.$destroy();
-                element = null;
-            }
-        }, 100);
+        if (element) {
+            console.log(e, 'removeComponent function');
+            application.reactive.damageInput = null;
+            element.$destroy();
+            element = null;
+        }
     }
 
     const { top, left } = application.position.stores;
@@ -57,6 +54,9 @@
         damageText = '';
         const dTypes = CONFIG.ARd20.DamageSubTypes;
         damageArr.forEach((t, index) => {damageText += index % 2 === 0 ? t[0].toUpperCase() + t.slice(1).toLowerCase() + 'ical' : ` ${localize(dTypes[t])}; `;});
+        let damageTextArr = damageText.split('; ');
+        console.log(damageTextArr);
+        damageText = damageTextArr.length > 3 ? `${damageTextArr[0]}; ${damageTextArr[1]} and ${damageTextArr.length - 3} more` : damageText;
     }
 </script>
 Damage Type

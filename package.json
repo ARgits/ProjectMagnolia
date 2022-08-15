@@ -20,8 +20,8 @@
     "filtrex": "^2.2.3",
     "logic_fn": "git+https://github.com/milahu/logic_fn.git",
     "mathjs": "^9.5.2",
-    "select2": "^4.1.0-rc.0",
-    "svelte": "^3.49.0"
+    "svelte": "^3.49.0",
+    "svelte-multiselect": "^5.0.6"
   },
   "devDependencies": {
     "@typhonjs-config/eslint-config": "^0.3.4",

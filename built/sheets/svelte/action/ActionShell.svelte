@@ -9,8 +9,7 @@
     export let action;
     setContext(`TopActionData`, action);
     const uuid = $action.uuid;
-    const relativePos = { position: 'relative' };
 </script>
-<ApplicationShell bind:elementRoot stylesContent={relativePos}>
+<ApplicationShell bind:elementRoot>
     <Action {uuid}/>
 </ApplicationShell>

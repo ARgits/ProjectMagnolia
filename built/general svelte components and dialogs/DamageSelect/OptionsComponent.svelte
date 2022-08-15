@@ -6,11 +6,8 @@
     export let doc;
     export let options;
     export let application;
-    console.log(application.reactive.damageInput);
     const inputStore = application.reactive.damageInput;
-
     $:position = inputStore.getBoundingClientRect();
-    console.log($doc.damage);
     $: pos = {
         left: `${position.left}px`,
         top: `${position.top + position.height}px`,
@@ -32,19 +29,21 @@
     function DamageIncluded(dam) {
         return $doc.damage.filter(d => d[0] === dam[0] && d[1] === dam[1]).length > 0;
     }
+
+    $:checkedList = $doc.damage.map(d => d[0] + d[1]);
 </script>
 <div use:applyStyles={pos} class="options">
     {#each options as type}
-        <label class:checked={DamageIncluded(["phys",type[0]])}>
-            <input on:click={()=>{handleDamage(["phys",type[0]])}} type="checkbox"
-                   value={["phys",type[0]]}/> Physical {localize(type[1])}
-        </label>
+        <span class="selectOption" class:checked={checkedList.includes(`phys${type[0]}`)}
+              on:click={()=>{handleDamage(["phys",type[0]])}}>
+            Physical {localize(type[1])}
+        </span>
     {/each}
     {#each options as type}
-        <label class:checked={DamageIncluded(["mag",type[0]])}>
-            <input on:click={()=>{handleDamage(["mag",type[0]])}} type="checkbox"
-                   value={["mag",type[0]]}/> Magical {localize(type[1])}
-        </label>
+        <span class="selectOption" class:checked={checkedList.includes(`mag${type[0]}`)}
+              on:click={()=>{handleDamage(["mag",type[0]])}}>
+            Magical {localize(type[1])}
+        </span>
     {/each}
 </div>
 <style lang="scss">
@@ -68,7 +67,7 @@
     background: rgb(241, 237, 237);
   }
 
-  label {
+  span {
     width: 100%;
 
     text-align: center;
@@ -80,13 +79,6 @@
     &:hover {
       cursor: pointer;
       background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    & input[type="checkbox"] {
-      appearance: none;
-      margin: 0;
-      border: none;
-      display: none
     }
 
   }

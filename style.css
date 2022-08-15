@@ -165,7 +165,7 @@ div.dialog-buttons.svelte-14xg9ru {
     padding-top: 8px
 }
 
-div.svelte-1t5gqc7.svelte-1t5gqc7 {
+div.svelte-4ug5c9 {
     z-index: 9999;
     position: absolute;
     border: 1px solid black;
@@ -174,7 +174,7 @@ div.svelte-1t5gqc7.svelte-1t5gqc7 {
     overflow-y: scroll
 }
 
-.options.svelte-1t5gqc7.svelte-1t5gqc7 {
+.options.svelte-4ug5c9 {
     position: absolute;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -193,27 +193,18 @@ div.svelte-1t5gqc7.svelte-1t5gqc7 {
     background: rgb(241, 237, 237)
 }
 
-label.svelte-1t5gqc7.svelte-1t5gqc7 {
+span.svelte-4ug5c9 {
     width: 100%;
     text-align: center
 }
 
-label.checked.svelte-1t5gqc7.svelte-1t5gqc7 {
+span.checked.svelte-4ug5c9 {
     background-color: rgba(0, 255, 0, 0.3)
 }
 
-label.svelte-1t5gqc7.svelte-1t5gqc7:hover {
+span.svelte-4ug5c9:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1)
-}
-
-label.svelte-1t5gqc7 input[type=checkbox].svelte-1t5gqc7 {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0;
-    border: none;
-    display: none
 }
 
 .main.svelte-1kthlqz {
@@ -230,6 +221,277 @@ label.svelte-1t5gqc7 input[type=checkbox].svelte-1t5gqc7 {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     min-width: 100%
+}
+
+div.svelte-66wdl1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 3pt;
+    border-width: calc(1em / 5);
+    border-style: solid;
+    border-radius: 50%;
+    -webkit-animation: var(--duration) infinite svelte-66wdl1-rotate;
+    animation: var(--duration) infinite svelte-66wdl1-rotate
+}
+
+@-webkit-keyframes svelte-66wdl1-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes svelte-66wdl1-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.svelte-1w91bdr:where(div.multiselect) {
+    position: relative;
+    margin: 1em 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: text;
+    border: 1pt solid lightgray;
+    border: var(--sms-border, 1pt solid lightgray);
+    border-radius: 3pt;
+    border-radius: var(--sms-border-radius, 3pt);
+    background: var(--sms-bg);
+    max-width: var(--sms-max-width);
+    padding: 0 3pt;
+    padding: var(--sms-padding, 0 3pt);
+    color: var(--sms-text-color);
+    font-size: inherit;
+    font-size: var(--sms-font-size, inherit);
+    min-height: 19pt;
+    min-height: var(--sms-min-height, 19pt)
+}
+
+.svelte-1w91bdr:where(div.multiselect.open) {
+    z-index: 4;
+    z-index: var(--sms-open-z-index, 4)
+}
+
+.svelte-1w91bdr:where(div.multiselect[focus-within]) {
+    border: 1pt solid cornflowerblue;
+    border: var(--sms-focus-border, 1pt solid var(--sms-active-color, cornflowerblue))
+}
+
+.svelte-1w91bdr:where(div.multiselect[focus-within]) {
+    border: 1pt solid cornflowerblue;
+    border: 1pt solid cornflowerblue;
+    border: var(--sms-focus-border, 1pt solid var(--sms-active-color, cornflowerblue))
+}
+
+.svelte-1w91bdr:where(div.multiselect:focus-within) {
+    border: 1pt solid cornflowerblue;
+    border: var(--sms-focus-border, 1pt solid var(--sms-active-color, cornflowerblue))
+}
+
+.svelte-1w91bdr:where(div.multiselect.disabled) {
+    background: lightgray;
+    background: var(--sms-disabled-bg, lightgray);
+    cursor: not-allowed
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li) {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 3pt;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 2pt;
+    line-height: normal;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.15);
+    background: var(--sms-selected-bg, rgba(0, 0, 0, 0.15));
+    padding: 1pt 5pt;
+    padding: var(--sms-selected-li-padding, 1pt 5pt);
+    color: var(--sms-text-color);
+    color: var(--sms-selected-text-color, var(--sms-text-color))
+}
+
+.svelte-1w91bdr:where(div.multiselect button) {
+    border-radius: 50%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin: 0 0 0 3pt
+}
+
+.svelte-1w91bdr:where(div.multiselect button.remove-all) {
+    margin: 0 3pt
+}
+
+.svelte-1w91bdr:where(ul.selected > li button:hover, button.remove-all:hover, button:focus) {
+    color: lightskyblue;
+    color: var(--sms-button-hover-color, lightskyblue)
+}
+
+.svelte-1w91bdr:where(div.multiselect input) {
+    margin: auto 0;
+    padding: 0
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li > input) {
+    border: none;
+    outline: none;
+    background: none;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    min-width: 2em;
+    color: var(--sms-text-color);
+    font-size: inherit;
+    cursor: inherit;
+    border-radius: 0
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li > input)::-webkit-input-placeholder {
+    padding-left: 5pt;
+    color: var(--sms-placeholder-color);
+    opacity: var(--sms-placeholder-opacity)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li > input)::-moz-placeholder {
+    padding-left: 5pt;
+    color: var(--sms-placeholder-color);
+    opacity: var(--sms-placeholder-opacity)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li > input):-ms-input-placeholder {
+    padding-left: 5pt;
+    color: var(--sms-placeholder-color);
+    opacity: var(--sms-placeholder-opacity)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li > input)::-ms-input-placeholder {
+    padding-left: 5pt;
+    color: var(--sms-placeholder-color);
+    opacity: var(--sms-placeholder-opacity)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.selected > li > input)::placeholder {
+    padding-left: 5pt;
+    color: var(--sms-placeholder-color);
+    opacity: var(--sms-placeholder-opacity)
+}
+
+.svelte-1w91bdr:where(div.multiselect > input.form-control) {
+    width: 2em;
+    position: absolute;
+    background: transparent;
+    border: none;
+    outline: none;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options) {
+    list-style: none;
+    padding: 4pt 0;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    border-radius: 1ex;
+    overflow: auto;
+    background: white;
+    background: var(--sms-options-bg, white);
+    max-height: 50vh;
+    max-height: var(--sms-options-max-height, 50vh);
+    -ms-scroll-chaining: none;
+    overscroll-behavior: none;
+    -ms-scroll-chaining: var(--sms-options-overscroll, none);
+    overscroll-behavior: var(--sms-options-overscroll, none);
+    -webkit-box-shadow: 0 0 14pt -8pt black;
+    box-shadow: 0 0 14pt -8pt black;
+    -webkit-box-shadow: var(--sms-options-shadow, 0 0 14pt -8pt black);
+    box-shadow: var(--sms-options-shadow, 0 0 14pt -8pt black);
+    -webkit-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options.hidden) {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translateY(50px);
+    -ms-transform: translateY(50px);
+    transform: translateY(50px)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options > li) {
+    padding: 3pt 2ex;
+    cursor: pointer;
+    scroll-margin: 100px;
+    scroll-margin: var(--sms-options-scroll-margin, 100px)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options span) {
+    padding: 3pt 2ex
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options > li.selected) {
+    background: var(--sms-li-selected-bg);
+    color: var(--sms-li-selected-color)
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options > li.active) {
+    background: rgba(0, 0, 0, 0.15);
+    background: var(--sms-li-active-bg, var(--sms-active-color, rgba(0, 0, 0, 0.15)))
+}
+
+.svelte-1w91bdr:where(div.multiselect > ul.options > li.disabled) {
+    cursor: not-allowed;
+    background: #f5f5f6;
+    background: var(--sms-li-disabled-bg, #f5f5f6);
+    color: #b8b8b8;
+    color: var(--sms-li-disabled-text, #b8b8b8)
+}
+
+button.remove-all {
+    width: auto;
+    width: initial
+}
+
+span.svelte-r7awl1 {
+    padding: 0 5px;
+    background-color: rgba(0, 0, 0, 0.1)
 }
 
 i.svelte-87fh0g:active {

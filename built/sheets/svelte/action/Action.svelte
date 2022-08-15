@@ -5,6 +5,8 @@
     import DamageSelectDialog
         from "../../../general svelte components and dialogs/DamageSelect/DamageSelectDialog.svelte";
     import { writable } from "svelte/store";
+    import MultiSelect from "svelte-multiselect/MultiSelect.svelte";
+    import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
 
     export let uuid;
     const { application } = getContext("external");
@@ -40,12 +42,13 @@
         }
     }
 
-    async function remove() {
-        const newSubActArr = await $action.removeSubAction();
-        await application.submit();
-        const id = uuid.split('.').slice(0, -2)[-1];
-        let parentSubActArr = id === $rootAction.id ? $rootAction : $rootAction._getSubAction(uuid.split('.').slice(0, -2).join('.')).subActions;
-        parentSubActArr = newSubActArr;
+    async function remove(id) {
+        let subActArr = [...$action.subActions];
+        const index = subActArr.findIndex(act => act.id === id);
+        if (index !== -1) {
+            subActArr.splice(index, 1);
+            $action.subActions = [...subActArr];
+        }
     }
 
     async function addSubAction() {
@@ -54,14 +57,20 @@
         $action.subActions = newSubActArr;
     }
 
+    let damageTypeOptions = [];
+    for (const [key1, label1] of Object.entries(CONFIG.ARd20.DamageTypes)) {
+        for (const [key2, label2] of Object.entries(CONFIG.ARd20.DamageSubTypes)) {
+            damageTypeOptions = [...damageTypeOptions, {
+                label: `${localize(label1)} ${localize(label2)}`,
+                value: [key1, key2]
+            }];
+        }
+    }
 </script>
 <div class:expanded class:isSubAction={$action.parent.action} class="main">
-
     <h3>
         <span on:click={toggle}>{$action.name}</span>
-        {#if $action.parent.action}
-            <i on:click={remove} class="fa-solid fa-trash-can"></i>
-        {/if}
+        <slot name="removeIcon"></slot>
     </h3>
     {#if expanded}
         <div transition:slide={{duration:300}}>
@@ -88,10 +97,9 @@
                     <div> Fail Formula<input on:change={submit} bind:value={$action.failFormula}/></div>
                 {/if}
                 {#if $action.type === 'Damage'}
-                    <DamageSelectDialog
-                            doc={action}
-                            options={Object.entries(CONFIG.ARd20.DamageSubTypes)}
-                    />
+                    <MultiSelect on:change={submit} bind:selected={$action.damage} options={damageTypeOptions}>
+                        <i slot="remove-icon" class="fa-solid fa-xmark"></i>
+                    </MultiSelect>
                 {/if}
             </div>
             {#if !$action.parent.action}
@@ -129,7 +137,9 @@
                     Add actions <i on:click={addSubAction} class="fa-solid fa-file-plus"></i>
                 </legend>
                 {#each $action.subActions as subAct (subAct.id)}
-                    <svelte:self uuid={subAct.uuid}/>
+                    <svelte:self uuid={subAct.uuid}>
+                        <i slot="removeIcon" on:click={()=>{remove(subAct.id)}} class="fa-solid fa-trash-can"></i>
+                    </svelte:self>
                 {/each}
             </fieldset>
             <!--{#if !$action.parent.action}
@@ -143,4 +153,7 @@
     {/if}
 </div>
 <style lang="scss">
+  :global(button.remove-all) {
+    width: initial;
+  }
 </style>

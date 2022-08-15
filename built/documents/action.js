@@ -1,5 +1,6 @@
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 import ActionSheet from "../sheets/svelte/action/actionSheet.js";
+import DamageTypeDialog from "../sheets/svelte/DamageTypeDialog.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
 export default class ARd20Action {
 
@@ -315,7 +316,7 @@ export default class ARd20Action {
             if (this.useOnFail || t.hit) {
                 let damRoll = t.hit ? new Roll(this.formula) : new Roll(this.failFormula);
                 await damRoll.roll();
-                console.log(damRoll, t.hit);
+                await this.applyDamage(damRoll, t);
                 t.damage = damRoll.total;
             }
         }
@@ -397,5 +398,38 @@ export default class ARd20Action {
             target.showHighlight(target.isVisible && inRange);
 
         }
+    }
+
+    async applyDamage(roll, target) {
+        const actor = target.actor;
+        const actorData = actor.system;
+        const formula = this.formula;
+        let value = roll.total;
+        const damageTypeData = this.damage;
+        let damageType;
+        if (damageTypeData.length > 1) {
+            damageType = await this.configureDialog({ target, formula, damageTypeData });
+        }
+        else {
+            damageType = this.damage[0].value;
+        }
+        console.log('урон до резистов: ', value);
+        const res = actorData.defences.damage[damageType[0]][damageType[1]];
+        value -= res.value;
+        console.log('урон после резистов', value);
+    }
+
+    async configureDialog({ target, formula, damageTypeData }) {
+        return new Promise(resolve => {
+            new DamageTypeDialog({
+                target, formula, damageTypeData,
+                submit: {
+                    label: 'submit',
+                    callback: (value) => {
+                        resolve(value);
+                    }
+                }
+            }).render(true);
+        });
     }
 }

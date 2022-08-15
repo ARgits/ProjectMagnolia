@@ -5,8 +5,12 @@ import { writable, get } from "svelte/store";
 export default class ActionSheet extends SvelteApplication {
     #action = writable(null);
     #damageInput = writable(null);
+    /**
+     * @type {Function}
+     */
+    #storeUnsubscribe;
 
-    constructor(object, options) {
+    constructor(object) {
         super(object);
         Object.defineProperty(this.reactive, 'action', {
             get: () => get(this.#action),
@@ -30,7 +34,6 @@ export default class ActionSheet extends SvelteApplication {
             resizable: true,
             width: 400,
             height: 600,
-            id: "",
             svelte: {
                 class: ActionShell,
                 target: document.body,
@@ -60,5 +63,16 @@ export default class ActionSheet extends SvelteApplication {
             actionList = [...actionList, action];
             await item.update({ "system.actionList": actionList });
         }
+    }
+
+    render(force = false, options = {}) {
+        if (!this.#storeUnsubscribe) {
+            this.#storeUnsubscribe = this.#action.subscribe(this.#handleDocUpdate.bind(this));
+        }
+        super.render(force, options);
+        return this;
+    }
+
+    async #handleDocUpdate(doc, options) {
     }
 }

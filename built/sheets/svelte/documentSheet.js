@@ -461,7 +461,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
         const { action, data, documentType } = options;
 
         if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
-            this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assined";
+            this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
         }
     }
 
@@ -471,7 +471,6 @@ export class SvelteDocumentSheet extends SvelteApplication {
         }
 
         console.log(this.reactive.document);
-        ;
         super.render(force, options);
         return this;
     }
