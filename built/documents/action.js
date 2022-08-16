@@ -1,6 +1,7 @@
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 import ActionSheet from "../sheets/svelte/action/actionSheet.js";
 import DamageTypeDialog from "../sheets/svelte/DamageTypeDialog.js";
+import ARd20Token from "./token.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
 export default class ARd20Action {
 
@@ -20,6 +21,7 @@ export default class ARd20Action {
         this.failFormula = this.useOnFail ? object?.failFormula ?? this.formula : this.formula;
         this.subActions = this.getSubActions(object);
         this.damage = object?.damage ?? [];
+        this.resource = this.setResource(object);
     }
 
     get documentName() {
@@ -47,6 +49,13 @@ export default class ARd20Action {
         }
         uuid += `Action.${this.id}`;
         return uuid;
+    }
+
+    setResource(object = {}) {
+        return {
+            type: object?.resource?.type ?? "none",
+            value: object?.resource?.value ?? null
+        };
     }
 
     async removeSubAction() {
@@ -90,20 +99,6 @@ export default class ARd20Action {
         }
     }
 
-    async addSubAction(object = {}, options = {}) {
-        const actionList = this.subActions;
-        const numberOfNewActions =
-            actionList.filter((action) => {
-                console.log(action.name.substring(0, 14) === "New sub-Action");
-                return action.name.substring(0, 14) === "New sub-Action";
-            }).length + 1;
-        object.name = numberOfNewActions - 1 ? "New sub-Action" + "#" + numberOfNewActions : "New sub-Action";
-        object.id = uuidv4();
-        options = {
-            parent: { actor: this.parent.actor, item: this.parent.item, action: this.uuid },
-        };
-        return [...actionList, new ARd20Action(object, options)];
-    }
 
     /**
      * Icon and text hint for action
@@ -147,6 +142,21 @@ export default class ARd20Action {
             return;
         }
         return await fromUuid(this.parent.item);
+    }
+
+    async addSubAction(object = {}, options = {}) {
+        const actionList = this.subActions;
+        const numberOfNewActions =
+            actionList.filter((action) => {
+                console.log(action.name.substring(0, 14) === "New sub-Action");
+                return action.name.substring(0, 14) === "New sub-Action";
+            }).length + 1;
+        object.name = numberOfNewActions - 1 ? "New sub-Action" + "#" + numberOfNewActions : "New sub-Action";
+        object.id = uuidv4();
+        options = {
+            parent: { actor: this.parent.actor, item: this.parent.item, action: this.uuid },
+        };
+        return [...actionList, new ARd20Action(object, options)];
     }
 
     /**Prepare list of SubActions
@@ -221,6 +231,9 @@ export default class ARd20Action {
         const handlers = {};
         handlers.leftClick = event => {
             event.stopPropagation();
+            if (event.target instanceof ARd20Token) {
+                event.target._onClickLeft(event);
+            }
         };
         handlers.rightClick = async () => {
             console.log('right click');
@@ -231,7 +244,22 @@ export default class ARd20Action {
             await game.settings.set('core', 'leftClickRelease', releaseSetting);
             await game.settings.set('ard20', 'actionMouseRewrite', false);
             ui.notifications.active.filter((elem) => elem[0].classList.contains('permanent')).forEach((e) => e.remove());
-            await this.roll(user, [...user.targets]);
+            for (const token of canvas.scene.tokens) {
+                if (!token.object.isTargeted) {
+                    token.object.showHighlight(false);
+                }
+            }
+            const targets = [...user.targets].map(t => {
+                return {
+                    target: t,
+                    actor: t.actor,
+                    damage: [],
+                    attack: [],
+                    hit: [],
+                    defence: []
+                };
+            });
+            await this.roll(user, targets, targets);
         };
         handlers.scrollWheel = event => {
             if (event.ctrlKey || event.shiftKey) {
@@ -247,18 +275,25 @@ export default class ARd20Action {
 
     }
 
-    async roll(user, targets) {
-        console.log("Phase: rolling ", "action: ", this.name);
+    /**
+     *
+     * @param user {User}
+     * @param targets {Object[]}
+     * @param newTargets{Object[]}
+     * @returns {Promise<void>}
+     */
+    async roll(user, targets, newTargets) {
+        console.log("Phase: rolling ", "action: ", this.name, targets, newTargets);
         if (!this.isRoll) {
             return;
         }
-        await this.commonRoll(targets);
-        await this.attackRoll(targets);
-        await this.damageRoll(targets);
+        await this.commonRoll(targets, newTargets);
+        await this.attackRoll(targets, newTargets);
+        await this.damageRoll(targets, newTargets);
 
     }
 
-    async commonRoll(targets) {
+    async commonRoll(targets, newTargets) {
         if (this.type !== 'Common') {
             return;
         }
@@ -281,15 +316,13 @@ export default class ARd20Action {
         }
     }
 
-    async attackRoll(targets) {
+    async attackRoll(targets, newTargets) {
         if (this.type !== 'Attack') {
             return;
         }
+
         const roll = new Roll(this.formula);
-        targets = targets.map(t => {
-            return { target: t, hit: false };
-        });
-        for (const t of targets) {
+        for (const t of newTargets) {
             const actor = t.target.actor;
             const defence = actor.system.defences.stats.reflex.value;
             let tokenRoll;
@@ -299,35 +332,34 @@ export default class ARd20Action {
             else {
                 tokenRoll = await roll.roll();
             }
-            t.hit = tokenRoll.total >= defence;
-            t.actor = actor;
-            t.defence = t.defence ? [...t.defence, defence] : [defence];
-            t.attack = t.attack ? [...t.attack, tokenRoll.total] : [tokenRoll.total];
+            t.hit.push(tokenRoll.total >= defence);
+            t.defence.push(defence);
+            t.attack.push(tokenRoll.total);
         }
-        console.log(targets);
-        return await this.useSubActions(targets);
+        newTargets = newTargets.filter(t => t.hit.slice(-1)[0]);
+        return await this.useSubActions(targets, newTargets);
     }
 
-    async damageRoll(targets) {
+    async damageRoll(targets, newTargets) {
         if (this.type !== 'Damage') {
             return;
         }
-        for (const t of targets) {
-            if (this.useOnFail || t.hit) {
-                let damRoll = t.hit ? new Roll(this.formula) : new Roll(this.failFormula);
-                await damRoll.roll();
-                await this.applyDamage(damRoll, t);
-                t.damage = damRoll.total;
-            }
+        for (const t of newTargets) {
+            let damRoll = t.hit ? new Roll(this.damage) : new Roll(this.formula);
+            await damRoll.roll();
+            const totalValue = await this.applyDamage(damRoll, t);
+            t.damage.push(totalValue);
+            t.hit.push(totalValue > 0);
         }
-        console.log(targets);
-        return await this.useSubActions(targets);
+        console.log(newTargets);
+        newTargets = newTargets.filter(t => t.hit.slice(-1)[0]);
+        return await this.useSubActions(targets, newTargets);
     }
 
-    async useSubActions(targets) {
-        if (targets.length > 0) {
+    async useSubActions(targets, newTargets) {
+        if (newTargets.length > 0) {
             for (const action of this.subActions) {
-                await action.roll(null, targets);
+                await action.roll(null, targets, newTargets);
             }
         }
         if (!this.parent.action) {
@@ -342,7 +374,7 @@ export default class ARd20Action {
                 damage: t.damage,
                 attack: t.attack,
                 defence: t.defence,
-                hit: t.hit ? 'hit' : 'miss'
+                hit: t.hit
             };
         });
         game.user.updateTokenTargets([]);
@@ -417,6 +449,7 @@ export default class ARd20Action {
         const res = actorData.defences.damage[damageType[0]][damageType[1]];
         value -= res.value;
         console.log('урон после резистов', value);
+        return value;
     }
 
     async configureDialog({ target, formula, damageTypeData }) {

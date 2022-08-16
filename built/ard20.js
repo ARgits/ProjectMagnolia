@@ -16,6 +16,7 @@ import ARd20Action from "../built/documents/action.js";
 import ARd20Token from "../built/documents/token.js";
 import ARd20TokenDocument from "./documents/tokenDoc.js";
 import MyChatMessage from "./chat/MyChatMessage.svelte";
+import ARd20DamageRoll from "./dice/DamageRoll.js";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -32,7 +33,7 @@ Hooks.once("init", function () {
         },
         rollItemMacro,
         config: ARd20,
-        dice: dice,
+        dice: { dice, ARd20DamageRoll },
     };
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20;

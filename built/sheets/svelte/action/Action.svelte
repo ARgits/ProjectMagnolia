@@ -2,11 +2,10 @@
 <script>
     import { getContext } from "svelte";
     import { slide } from "svelte/transition";
-    import DamageSelectDialog
-        from "../../../general svelte components and dialogs/DamageSelect/DamageSelectDialog.svelte";
+
     import { writable } from "svelte/store";
-    import MultiSelect from "svelte-multiselect/MultiSelect.svelte";
     import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
+    import ActionDamageComponent from "./ActionDamageComponent.svelte";
 
     export let uuid;
     const { application } = getContext("external");
@@ -19,11 +18,14 @@
         { id: 4, value: 'custom' }
     ];
     const actionType = [
-        { id: 1, value: 'Attack', disabled: false },
-        { id: 2, value: 'Common', disabled: false },
+        { id: 1, value: 'Attack', disabled: true },
+        { id: 2, value: 'Common', disabled: true },
         { id: 3, value: 'Heal', disabled: true },
         { id: 4, value: 'Damage', disabled: false }
     ];
+    const components = {
+        damage: ActionDamageComponent
+    };
 
     async function submit() {
         await application.submit();
@@ -47,6 +49,7 @@
         const index = subActArr.findIndex(act => act.id === id);
         if (index !== -1) {
             subActArr.splice(index, 1);
+            await application.submit();
             $action.subActions = [...subActArr];
         }
     }
@@ -90,17 +93,7 @@
                 </div>
             {/if}
             <div class="formula">
-                <div>
-                    {#if $action.useOnFail}Success{/if}Formula: <input on:change={submit} bind:value={$action.formula}/>
-                </div>
-                {#if $action.parent.action && $action.useOnFail}
-                    <div> Fail Formula<input on:change={submit} bind:value={$action.failFormula}/></div>
-                {/if}
-                {#if $action.type === 'Damage'}
-                    <MultiSelect on:change={submit} bind:selected={$action.damage} options={damageTypeOptions}>
-                        <i slot="remove-icon" class="fa-solid fa-xmark"></i>
-                    </MultiSelect>
-                {/if}
+                <svelte:component this={components[$action.type.toLowerCase()]} actionStore={action}/>
             </div>
             {#if !$action.parent.action}
                 <fieldset class="range">
@@ -153,7 +146,5 @@
     {/if}
 </div>
 <style lang="scss">
-  :global(button.remove-all) {
-    width: initial;
-  }
+
 </style>

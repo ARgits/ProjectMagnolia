@@ -1,4 +1,5 @@
 export default class ARd20Token extends Token {
+
     #highlight;
 
     get isHighlighted() {
@@ -21,12 +22,8 @@ export default class ARd20Token extends Token {
         const t = CONFIG.Canvas.objectBorderThickness;
         const h = Math.round(t / 2);
         const o = Math.round(h / 2);
-        this.#highlight.lineStyle(t, 0x000000, 0.8).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
-        this.#highlight.lineStyle(h, 0x00FF00, 1.0).drawRoundedRect(-o, -o, this.w + h, this.h + h, 3);
-        console.log(this.#highlight.pivot.x, this.#highlight.pivot.y);
-        this.#highlight.pivot.x = this.w + h;
-        this.#highlight.pivot.y = this.h + h;
-        this.#highlight.angle = 45;
+        this.#highlight.lineStyle(t, 0x000000, 0.8).drawEllipse(-o + this.w / 2, -o + this.h / 2, (this.w + 20 * h) / 2, (this.h + 20 * h) / 2);
+        this.#highlight.lineStyle(h, 0x00FF00, 1.0).drawEllipse(-o + this.w / 2, -o + this.h / 2, (this.w + 20 * h) / 2, (this.h + 20 * h) / 2);
     }
 
 

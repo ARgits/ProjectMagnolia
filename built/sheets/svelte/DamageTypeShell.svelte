@@ -17,6 +17,7 @@
      * @param hover {boolean}*/
     function onHoverToken(token, hover) {
         token.hover = hover;
+        token.refresh();
     }
 </script>
 <div>You're attacking <span on:mouseenter={()=>onHoverToken(target.target, true)}
@@ -34,7 +35,8 @@
 <button on:click={close}>{submit.label}</button>
 <style>
     span {
-        padding: 0 5px;
+        padding: 0 10px;
         background-color: rgba(0, 0, 0, 0.1);
+        border: 1px solid black
     }
 </style>
