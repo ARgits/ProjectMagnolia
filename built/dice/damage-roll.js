@@ -6,7 +6,7 @@
  * @param {number} [options.criticalBonusDice=0]      A number of bonus damage dice that are added for critical hits
  * @param {number} [options.criticalMultiplier=2]     A critical hit multiplier which is applied to critical hits
  * @param {boolean} [options.multiplyNumeric=false]   Multiply numeric terms by the critical multiplier
- * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful criticals" house rule to critical hits
+ * @param {boolean} [options.powerfulCritical=false]  Apply the "powerful critical" house rule to critical hits
  *
  */
 //@ts-expect-error

@@ -32,6 +32,11 @@
         $actionStore.damage = [...$actionStore.damage, newDamage];
         await application.submit();
     }
+
+    async function changeFailFormula(index) {
+        $actionStore.damage[index].fail = $actionStore.damage[index].sameOnFail ? $actionStore.damage[index].normal : $actionStore.damage[index].fail;
+        await application.submit();
+    }
 </script>
 {#each $actionStore.damage as dam, index (index)}
     <div class="damage">
@@ -40,10 +45,11 @@
             <i slot="remove-icon" class="fa-solid fa-xmark"></i>
         </MultiSelect>
         <label class:hidden={!$actionStore.useOnFail}>
-            <input type="checkbox" on:change={submit}
+            <input type="checkbox" on:change={()=>changeFailFormula(index)}
                    bind:checked={dam.sameOnFail}/>same on fail</label>
 
-        <input class:hidden={dam.sameOnFail||!$actionStore.useOnFail} class="input fail" on:change={submit}
+        <input class:hidden={dam.sameOnFail||!$actionStore.useOnFail || !$actionStore.isSubAction} class="input fail"
+               on:change={submit}
                bind:value={dam.fail[0]}/>
         <MultiSelect on:change={submit} bind:selected={dam.fail[1]}
                      options={damageTypeOptions}>

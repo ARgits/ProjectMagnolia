@@ -70,7 +70,7 @@
         }
     }
 </script>
-<div class:expanded class:isSubAction={$action.parent.action} class="main">
+<div class:expanded class:isSubAction={$action.isSubAction} class="main">
     <h3>
         <span on:click={toggle}>{$action.name}</span>
         <slot name="removeIcon"></slot>
@@ -87,7 +87,7 @@
                     {/each}
                 </select>
             </div>
-            {#if $action.parent.action}
+            {#if $action.isSubAction}
                 <div>
                     Use on Fail? <input type="checkbox" on:change={submit} bind:checked={$action.useOnFail}/>
                 </div>
@@ -95,7 +95,7 @@
             <div class="formula">
                 <svelte:component this={components[$action.type.toLowerCase()]} actionStore={action}/>
             </div>
-            {#if !$action.parent.action}
+            {#if !$action.isSubAction}
                 <fieldset class="range">
                     <legend>Range</legend>
                     <div>
@@ -106,7 +106,7 @@
                     </div>
                 </fieldset>
             {/if}
-            {#if !$action.parent.action}
+            {#if !$action.isSubAction}
                 <fieldset class="target">
                     <legend>Target</legend>
                     <select on:blur={submit} bind:value={$action.target.type}>

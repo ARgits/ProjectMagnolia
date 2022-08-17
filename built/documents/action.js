@@ -36,6 +36,10 @@ export default class ARd20Action {
         return new ActionSheet(this);
     }
 
+    get isSubAction() {
+        return this.parent.action !== null;
+    }
+
     get uuid() {
         let uuid = "";
         if (this.parent.action) {
@@ -122,6 +126,11 @@ export default class ARd20Action {
     }
 
     setParent(object = {}) {
+        /**
+         * @param actor {string}
+         * @param item {string}
+         * @param action {string}
+         */
         const { actor, item, action } = object;
         this.parent = {
             actor: actor ?? null,
@@ -130,9 +139,13 @@ export default class ARd20Action {
         };
     }
 
+    /**
+     *
+     * @returns {Promise<ARd20Actor|null>}
+     */
     async getActor() {
         if (!this.parent.actor) {
-            return;
+            return null;
         }
         return await fromUuid(this.parent.actor);
     }
