@@ -17,6 +17,7 @@ import ARd20Token from "../built/documents/token.js";
 import ARd20TokenDocument from "./documents/tokenDoc.js";
 import MyChatMessage from "./chat/MyChatMessage.svelte";
 import ARd20DamageRoll from "./dice/DamageRoll.js";
+import ARd20CombatEncounterSheet from "./Combat/combatSheet.js";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -71,6 +72,8 @@ Hooks.once("init", function () {
     //@ts-expect-error
     Items.registerSheet("ard20", ARd20ItemSheet, { makeDefault: false });
     Items.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
+    //CombatEncounters.registerSheet("ard20", ARd20CombatEncounterSheet, {makeDefault:true})
+    //CONFIG.ui.combat = ARd20CombatEncounterSheet;
 
     CONFIG.Item.systemDataModels["race"] = RaceDataModel;
     //register settings
@@ -182,6 +185,7 @@ export function rollItemMacro(itemName) {
 }
 
 Hooks.on("renderChatMessage", (app, html, data) => {
+    console.log('rendering chatMessage', app, html, data);
     // Display action buttons
     //chat.displayChatActionButtons(app, html, data);
     // Highlight critical success or failure die

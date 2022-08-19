@@ -40,22 +40,25 @@
 </script>
 {#each $actionStore.damage as dam, index (index)}
     <div class="damage">
-        <input class="input normal" on:change={submit} bind:value={dam.normal[0]}/>
-        <MultiSelect on:change={submit} bind:selected={dam.normal[1]} options={damageTypeOptions}>
-            <i slot="remove-icon" class="fa-solid fa-xmark"></i>
-        </MultiSelect>
+        <div class="dam">
+            <input class="input normal" on:change={submit} bind:value={dam.normal[0]}/>
+            <MultiSelect on:change={submit} bind:selected={dam.normal[1]} options={damageTypeOptions}>
+                <i slot="remove-icon" class="fa-solid fa-xmark"></i>
+            </MultiSelect>
+            <input class:hidden={dam.sameOnFail||!$actionStore.useOnFail || !$actionStore.isSubAction}
+                   class="input fail"
+                   on:change={submit}
+                   bind:value={dam.fail[0]}/>
+            <MultiSelect on:change={submit} bind:selected={dam.fail[1]}
+                         options={damageTypeOptions}>
+                <i slot="remove-icon" class="fa-solid fa-xmark"></i>
+            </MultiSelect>
+        </div>
         <label class:hidden={!$actionStore.useOnFail}>
-            <input type="checkbox" on:change={()=>changeFailFormula(index)}
-                   bind:checked={dam.sameOnFail}/>same on fail</label>
-
-        <input class:hidden={dam.sameOnFail||!$actionStore.useOnFail || !$actionStore.isSubAction} class="input fail"
-               on:change={submit}
-               bind:value={dam.fail[0]}/>
-        <MultiSelect on:change={submit} bind:selected={dam.fail[1]}
-                     options={damageTypeOptions}>
-            <i slot="remove-icon" class="fa-solid fa-xmark"></i>
-        </MultiSelect>
-
+            <input type="checkbox" on:change={submit}
+                   bind:checked={dam.sameOnFail}/>
+            same on fail
+        </label>
         <i on:click={()=>{deleteDamage(index)}} class="fa-solid fa-minus"></i>
     </div>
 {/each}
@@ -67,9 +70,14 @@
 
   .damage {
     display: flex;
+    flex-wrap: wrap;
 
-    & > *:not(.hidden) {
+    & > .dam {
+      flex-basis: 70%
+    }
 
+    & > :not(.dam) {
+      flex: 0.3 0 15%;
     }
   }
 
@@ -77,11 +85,12 @@
     align-self: center;
   }
 
+  :global(.input.hidden + div.multiselect),
   .hidden {
-    opacity: 0;
+    display: none;
   }
 
-  :global(.input.hidden + div.multiselect) {
-    opacity: 0;
+  i.fa-minus {
+    align-self: center;
   }
 </style>

@@ -66,7 +66,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
         buttons.unshift({
             class: "configure-sheet",
             icon: "fas fa-cog",
-            title: "open sheet configurator",
+            title: "Open sheet configurator",
             onclick: (ev) => this._onCofigureSheet(ev),
         });
         const canConfigure = game.user.isGM || (this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE"));

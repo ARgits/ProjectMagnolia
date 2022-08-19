@@ -1,5 +1,5 @@
 import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
-import ActionShell from "./ActionShell.svelte";
+import ActionShell from "./action/ActionShell.svelte";
 import { writable, get } from "svelte/store";
 
 export default class ActionSheet extends SvelteApplication {

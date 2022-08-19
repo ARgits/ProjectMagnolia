@@ -1,5 +1,5 @@
 import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
-import ActionSheet from "../sheets/svelte/action/actionSheet.js";
+import ActionSheet from "../sheets/svelte/actionSheet.js";
 import DamageTypeDialog from "../sheets/svelte/DamageTypeDialog.js";
 import ARd20Token from "./token.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
@@ -262,17 +262,14 @@ export default class ARd20Action {
                     token.object.showHighlight(false);
                 }
             }
-            const targets = [...user.targets].map(t => {
-                return {
+            const targets = new Map([...user.targets].map(t =>
+                [t.id, {
                     target: t,
                     actor: t.actor,
-                    damage: [],
-                    attack: [],
-                    hit: [],
-                    defence: []
-                };
-            });
-            await this.roll(user, targets, targets);
+                    stats: new Map()
+                }
+                ]));
+            await this.roll(user, targets);
         };
         handlers.scrollWheel = event => {
             if (event.ctrlKey || event.shiftKey) {
@@ -291,22 +288,21 @@ export default class ARd20Action {
     /**
      *
      * @param user {User}
-     * @param targets {Object[]}
-     * @param newTargets{Object[]}
+     * @param targets {Map<string, {actor: (Actor|null), stats: Map<any, any>, target: Token}>}
      * @returns {Promise<void>}
      */
-    async roll(user, targets, newTargets) {
-        console.log("Phase: rolling ", "action: ", this.name, targets, newTargets);
+    async roll(user, targets) {
+        console.log("Phase: rolling ", "action: ", this.name, targets);
         if (!this.isRoll) {
             return;
         }
-        await this.commonRoll(targets, newTargets);
-        await this.attackRoll(targets, newTargets);
-        await this.damageRoll(targets, newTargets);
+        await this.commonRoll(targets);
+        await this.attackRoll(targets);
+        await this.damageRoll(targets);
 
     }
 
-    async commonRoll(targets, newTargets) {
+    async commonRoll(targets) {
         if (this.type !== 'Common') {
             return;
         }
@@ -329,71 +325,83 @@ export default class ARd20Action {
         }
     }
 
-    async attackRoll(targets, newTargets) {
+
+    async attackRoll(targets) {
         if (this.type !== 'Attack') {
             return;
         }
-
         const roll = new Roll(this.formula);
-        for (const t of newTargets) {
-            const actor = t.target.actor;
-            const defence = actor.system.defences.stats.reflex.value;
-            let tokenRoll;
-            if (roll._evaluated) {
-                tokenRoll = await roll.reroll();
+        let hit = null;
+        const parentID = this.parent.action?.split('.').slice(-1)[0] ?? null;
+        const currentTargets = parentID && !this.useOnFail ? [...targets].filter(t => t[1].stats.get(parentID)?.hit) : targets;
+        for (const [key, t] of currentTargets) {
+            if (t.stats.has(parentID)) {
+                hit = t.stats.get(parentID)?.hit ?? null;
             }
-            else {
-                tokenRoll = await roll.roll();
+            if (!this.isSubAction || this.useOnFail || hit) {
+                const actor = t.target.actor;
+                const defence = actor.system.defences.stats.reflex.value;
+                let tokenRoll;
+                if (roll._evaluated) {
+                    tokenRoll = await roll.reroll();
+                }
+                else {
+                    tokenRoll = await roll.roll();
+                }
+                const stat = {
+                    hit: tokenRoll.total >= defence,
+                    defence,
+                    attack: tokenRoll.total,
+                    actionName: this.name,
+                };
+                t.stats.set(this.id, stat);
+                targets.set(key, t);
             }
-            t.hit.push(tokenRoll.total >= defence);
-            t.defence.push(defence);
-            t.attack.push(tokenRoll.total);
         }
-        newTargets = newTargets.filter(t => t.hit.slice(-1)[0]);
-        return await this.useSubActions(targets, newTargets);
+        return await this.useSubActions(targets);
+
     }
 
-    async damageRoll(targets, newTargets) {
+    async damageRoll(targets) {
         if (this.type !== 'Damage') {
             return;
         }
-        for (const t of newTargets) {
-            let damRoll = t.hit ? new Roll(this.damage) : new Roll(this.formula);
-            await damRoll.roll();
-            const totalValue = await this.applyDamage(damRoll, t);
+        for (const t of targets) {
+            const totalValue = await this.applyDamage(t);
             t.damage.push(totalValue);
             t.hit.push(totalValue > 0);
         }
-        console.log(newTargets);
-        newTargets = newTargets.filter(t => t.hit.slice(-1)[0]);
-        return await this.useSubActions(targets, newTargets);
+        return await this.useSubActions(targets);
     }
 
-    async useSubActions(targets, newTargets) {
-        if (newTargets.length > 0) {
-            for (const action of this.subActions) {
-                await action.roll(null, targets, newTargets);
-            }
+    async useSubActions(targets) {
+        const hit = [...targets].filter(t => t[1].stats.get(this.id)?.hit).length > 0;
+        const subActions = hit ? this.subActions : this.subActions.filter(sub => sub.useOnFail);
+        console.log(hit, subActions);
+        for (const action of subActions) {
+            await action.roll(null, targets);
         }
         if (!this.parent.action) {
+            console.log('finish');
             await this.finishAction(targets);
         }
     }
 
     async finishAction(targets) {
-        const results = targets.map(t => {
+        const results = [...targets].map((t) => {
             return {
-                actor: t.target.actor,
-                damage: t.damage,
-                attack: t.attack,
-                defence: t.defence,
-                hit: t.hit
+                actor: t[1].target.actor,
+                damage: [...t[1].stats].map(s => s[1].damage),
+                attack: [...t[1].stats].map(s => s[1].attack),
+                defence: [...t[1].stats].map(s => s[1].defence),
+                hit: [...t[1].stats].map(s => s[1].hit)
             };
         });
         game.user.updateTokenTargets([]);
         await game.user.unsetFlag('ard20', 'targetNumber');
         canvas.scene.tokens.forEach(t => t.object.showHighlight(false));
         if (results.length > 0) {
+            console.log(results, 'making message');
             ChatMessage.create({ user: game.user.id, flags: { world: { svelte: { results } } } });
         }
     }
@@ -445,11 +453,11 @@ export default class ARd20Action {
         }
     }
 
-    async applyDamage(roll, target) {
+    async applyDamage(target) {
         const actor = target.actor;
         const actorData = actor.system;
-        const formula = this.formula;
-        let value = roll.total;
+        const hit = target.hit.slice(-1)[0];
+        const damage = this.damage;
         const damageTypeData = this.damage;
         let damageType;
         if (damageTypeData.length > 1) {

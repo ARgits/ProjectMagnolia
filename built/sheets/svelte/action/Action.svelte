@@ -92,9 +92,9 @@
                     Use on Fail? <input type="checkbox" on:change={submit} bind:checked={$action.useOnFail}/>
                 </div>
             {/if}
-            <div class="formula">
+            <fieldset class="formula">
                 <svelte:component this={components[$action.type.toLowerCase()]} actionStore={action}/>
-            </div>
+            </fieldset>
             {#if !$action.isSubAction}
                 <fieldset class="range">
                     <legend>Range</legend>
