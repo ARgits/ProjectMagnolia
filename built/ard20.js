@@ -35,6 +35,7 @@ Hooks.once("init", function () {
         rollItemMacro,
         config: ARd20,
         dice: { dice, ARd20DamageRoll },
+        prepareAndRollDamage,
     };
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20;
@@ -206,3 +207,19 @@ Hooks.on('preDeleteChatMessage', (message) => {
 //Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => ARd20Item.chatListeners(html));
 Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html));
+
+/*
+* Prepare array of damage fields with its types to Roll class, then roll it
+*
+* @param damage {Array} - damageArray
+*  */
+export function prepareAndRollDamage(damage) {
+    const damageValue = damage.map(dam => `{${dam[0]}}`);
+    console.log('damageValue: ', damageValue);
+    const damageType = damage.map(dam => dam[1]);
+    console.log('damageType: ', damageType);
+    const damageFormula = damageValue.join(' + ');
+    console.log('damageFormula: ', damageFormula);
+    return new ARd20DamageRoll(damageFormula, {}, { damageType });
+
+}

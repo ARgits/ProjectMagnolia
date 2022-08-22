@@ -1,49 +1,55 @@
 <script>
     export let results;
+
+    async function onHoverToken(tokenUUID, hover) {
+        const token = await fromUuid(tokenUUID);
+        token._object.hover = hover;
+        token._object.refresh();
+    }
+
     $:console.log(results);
 </script>
 <div>
     this is roll results from attack Action
 </div>
-<table>
-    <thead>
-    <tr>
-        <th>Target</th>
-        <th>Attack</th>
-        <th>Defence</th>
-        <th>Hit?</th>
-        <th>Damage</th>
-    </tr>
-    </thead>
-    {#each results as result}
-        <tr>
-            <td class="target">
-                <div>
-                    <img alt="target pic" src={result.actor.img}/>
-                    <span>{result.actor.name}</span>
-                </div>
-            </td>
-            <td>{result.attack}</td>
-            <td>{result.defence}</td>
-            <td>{result.hit}</td>
-            <td on:click={()=>{console.log('click')}}>{result.damage ?? ""}</td>
-        </tr>
-    {/each}
-</table>
+{#each results as result,index(index)}
+    <div class="result">
+        <div class="target" on:mouseenter={()=>onHoverToken(result.token, true)}
+             on:mouseleave={()=>onHoverToken(result.token, false)}>
+            <img alt="target pic" src={result.targetIcon}/>
+            <span>{result.targetName}: </span>
+        </div>
+        {#each result.stats as stat,index}
+            <div class="stat">
+                {stat.actionName}: {stat.attack ?? stat.damage} - {stat.hit ? "success" : "fail"}
+            </div>
+            {#if index !== result.stats.length - 1}
+                <i class="fa-solid fa-arrow-right-long"></i>
+            {/if}
+        {/each}
+    </div>
+{/each}
 <style>
-    .target div {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
+    .target,
+    .stat {
+        flex: 1 0
     }
 
     img {
-        width: 35%
+        width: 3rem;
     }
 
-    td, th {
-        text-align: center;
+    .stat {
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 0.2rem;
+        margin: 0.1rem;
     }
 
+    .result {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+    }
 </style>

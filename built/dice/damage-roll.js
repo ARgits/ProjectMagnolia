@@ -148,6 +148,7 @@ export default class DamageRoll extends Roll {
      * @private
      */
     //@ts-expect-error
+    //TODO:take this for the future "optional" bonuses
     _onDialogSubmit(html, isCritical) {
         const form = html[0].querySelector("form");
         // Append a situational bonus term

@@ -2,6 +2,7 @@ import { uuidv4 } from "@typhonjs-fvtt/runtime/svelte/util";
 import ActionSheet from "../sheets/svelte/actionSheet.js";
 import DamageTypeDialog from "../sheets/svelte/DamageTypeDialog.js";
 import ARd20Token from "./token.js";
+import { prepareAndRollDamage } from "../ard20.js";
 //TODO: https://svelte.dev/repl/788dff6fc20349f0a8ab500f8b2e8403?version=3.21.0 drag&drop
 export default class ARd20Action {
 
@@ -214,7 +215,6 @@ export default class ARd20Action {
         and then change handlers.mm and handlers.lc events, so it will tell you, that your template "out of the range"
         for measurement use canvas.grid.measureDistance
         */
-        return this.roll();
     }
 
     async validateTargets() {
@@ -366,10 +366,30 @@ export default class ARd20Action {
         if (this.type !== 'Damage') {
             return;
         }
-        for (const t of targets) {
-            const totalValue = await this.applyDamage(t);
-            t.damage.push(totalValue);
-            t.hit.push(totalValue > 0);
+        let hit = null;
+        const parentID = this.parent.action?.split('.').slice(-1)[0] ?? null;
+        const currentTargets = parentID && !this.useOnFail ? [...targets].filter(t => t[1].stats.get(parentID)?.hit) : targets;
+        for (const [key, t] of currentTargets) {
+            if (t.stats.has(parentID)) {
+                hit = t.stats.get(parentID)?.hit ?? null;
+            }
+            const damage = this.damage.map(dam => {
+                if (hit || !this.isSubAction) {
+                    return dam.normal;
+                }
+                else {
+                    return dam.fail;
+                }
+            });
+
+            const totalValue = await this.applyDamage(t, damage);
+            const stat = {
+                hit: totalValue > 0,
+                damage: totalValue,
+                actionName: this.name,
+            };
+            t.stats.set(this.id, stat);
+            targets.set(key, t);
         }
         return await this.useSubActions(targets);
     }
@@ -388,13 +408,14 @@ export default class ARd20Action {
     }
 
     async finishAction(targets) {
+        console.log(targets);
         const results = [...targets].map((t) => {
             return {
                 actor: t[1].target.actor,
-                damage: [...t[1].stats].map(s => s[1].damage),
-                attack: [...t[1].stats].map(s => s[1].attack),
-                defence: [...t[1].stats].map(s => s[1].defence),
-                hit: [...t[1].stats].map(s => s[1].hit)
+                stats: [...t[1].stats].map(st => st[1]),
+                token: t[1].target.document.uuid,
+                targetName: t[1].target.name,
+                targetIcon: t[1].target.document.texture.src
             };
         });
         game.user.updateTokenTargets([]);
@@ -453,23 +474,45 @@ export default class ARd20Action {
         }
     }
 
-    async applyDamage(target) {
+    async applyDamage(target, damage) {
         const actor = target.actor;
         const actorData = actor.system;
-        const hit = target.hit.slice(-1)[0];
-        const damage = this.damage;
-        const damageTypeData = this.damage;
-        let damageType;
-        if (damageTypeData.length > 1) {
-            damageType = await this.configureDialog({ target, formula, damageTypeData });
+        const roll = prepareAndRollDamage(damage);
+        console.log(roll);
+        const rollResult = await roll.roll();
+        const formula = rollResult.formula;
+        let value = rollResult.total;
+        console.log('урон до резистов: ', value);
+        const terms = roll.terms.filter(t => !(t instanceof OperatorTerm));
+        for (const term of terms) {
+            const damageTypeData = term.options.damageType;
+            let damageType;
+            if (damageTypeData.length > 1) {
+                damageType = await this.configureDialog({ target, formula, damageTypeData });
+            }
+            else {
+                damageType = damageTypeData[0].value;
+            }
+            const res = actorData.defences.damage[damageType[0]][damageType[1]];
+            value -= res.value;
+        }
+        console.log('урон после резистов', value);
+        let obj = {};
+        obj["system.health.value"] = actor.system.health.value - value;
+        if (game.user.isGM) {
+            console.log("GM applying damage");
+            console.log(actor);
+            await actor.update(obj);
         }
         else {
-            damageType = this.damage[0].value;
+            console.log("not GM applying damage");
+            game.socket.emit("system.ard20", {
+                operation: "updateActorData",
+                tokenId: target.target.document.uuid,
+                update: obj,
+                value: value,
+            });
         }
-        console.log('урон до резистов: ', value);
-        const res = actorData.defences.damage[damageType[0]][damageType[1]];
-        value -= res.value;
-        console.log('урон после резистов', value);
         return value;
     }
 
