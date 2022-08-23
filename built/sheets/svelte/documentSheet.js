@@ -393,8 +393,8 @@ export class SvelteDocumentSheet extends SvelteApplication {
                 let temp_feat_list = feat_pack_list.concat(feat_folder_list.filter((item) => !pack_name.includes(item.name)));
                 let learnedFeatures = [];
                 actor.itemTypes.feature.forEach((item) => {
-                    if (item.data.type === "feature") {
-                        let FeatureItem = { ...item.data };
+                    if (item.type === "feature") {
+                        let FeatureItem = { ...item };
                         learnedFeatures.push(FeatureItem);
                     }
                 });
@@ -411,7 +411,7 @@ export class SvelteDocumentSheet extends SvelteApplication {
             });
             featList.temp_feat_list = featList.temp_feat_list.filter((item) => {
                 if (item.type === "feature") {
-                    return !name_array.includes(item.name) || item.data.level.current !== item.data.level.max;
+                    return !name_array.includes(item.name) || item.system.level.current !== item.system.level.max;
                 }
             });
             const obj = {
@@ -503,5 +503,12 @@ export class SvelteDocumentSheet extends SvelteApplication {
 
     showEmbeddedItem(item) {
         item.sheet.render(true);
+    }
+
+    async updateDocument(path, value) {
+        const document = this.reactive.document;
+        const update = {};
+        update[path] = value;
+        await document.update(update);
     }
 }

@@ -1,50 +1,46 @@
-<svelte:options accessors={true} />
+<svelte:options accessors={true}/>
 
 <script>
     import { getContext } from "svelte";
+    import { derived } from "svelte/store";
 
-    export let value;
+    export let valuePath;
     export let type = "text";
     export let label;
     const document = getContext("DocumentSheetObject");
-    let data;
-    let labelElem;
-    let input;
-    let feather;
-    $: if (label && input && feather) {
-        input.style.width = `calc(100% - ${Math.ceil(labelElem.offsetWidth * 1.5)}px - ${Math.ceil(feather.offsetWidth * 1.5)}px)`;
-    }
-    $: {
-        data = { img: $document.img, system: $document.system, flags: $document.flags, name: $document.name };
-    }
-  $: if (type !== "text" && value) value = type === "integer" ? parseInt(value) : parseFloat(value);
+    const { application } = getContext('external');
+    let value = derived(document, $document => getProperty($document, valuePath));
 
-  /**
-   * Forbid to type anything but digits
-   * @param e - input event
-   */
-  function checkInput(e) {
-    console.log(type);
-    if (type !== "number" && type !== "integer") return;
-    const input = e.target.value;
-    if (!/[0-9\.,-]/.test(e.key)) e.preventDefault();
-    else if (e.key === "-" && input.length > 0) e.preventDefault();
-    else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(",") || input.includes("."))) e.preventDefault();
-  }
+    function update() {
+        application.updateDocument(valuePath, $value);
+    }
+
+    /**
+     * Forbid to type anything but digits
+     * @param e - input event
+     */
+    function checkInput(e) {
+        console.log(type);
+        if (type !== "number" && type !== "integer") {
+            return;
+        }
+        const input = e.target.value;
+        if (!/[0-9\.,-]/.test(e.key)) {
+            e.preventDefault();
+        }
+        else if (e.key === "-" && input.length > 0) {
+            e.preventDefault();
+        }
+        else if (/[\.,]/.test(e.key) && (type === "integer" || input.includes(",") || input.includes("."))) {
+            e.preventDefault();
+        }
+    }
 </script>
-
 {#if label}
-  <span bind:this={labelElem}>{label}</span>
+    <label>{label} <input bind:value={$value} on:change={update}/></label>
+{:else}
+    <input bind:value={$value} on:change={update}/>
 {/if}
-<input
-  bind:this={input}
-  bind:value
-  on:keypress={(e) => checkInput(e)}
-  on:change={() => {
-    $document.update(data);
-  }}
-/>
-<i bind:this={feather} class="fa-solid fa-feather-pointed" />
 
 <style lang="scss">
   input,
@@ -52,6 +48,7 @@
     background-color: inherit;
     color: inherit;
   }
+
   input {
     font-size: inherit;
     border: 0 solid black;

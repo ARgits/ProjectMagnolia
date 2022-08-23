@@ -61,19 +61,19 @@
         <div>
             <div class="nameAndRace">
                 <div class="name">
-                    <InputForDocumentSheet bind:value={$doc.name} label="name"/>
+                    <InputForDocumentSheet valuePath="name" label="name" type="text"/>
                 </div>
                 <div class="race">
                     Race: {$doc.itemTypes.race[0]?.name || "none"}
                 </div>
             </div>
             <div class="health">
-                <InputForDocumentSheet bind:value={$doc.system.health.value} label="health" type="integer"/>
+                <InputForDocumentSheet valuePath="system.health.value" label="health" type="integer"/>
                 <span>{$doc.system.health.max}</span>
             </div>
             <div class="level">
                 <div>
-                    <InputForDocumentSheet bind:value={$doc.system.advancement.xp.get} type="number" label="XP earned"/>
+                    <InputForDocumentSheet valuePath="system.advancement.xp.get" type="number" label="XP earned"/>
                 </div>
                 <div>
                     XP used: {$doc.system.advancement.xp.used}

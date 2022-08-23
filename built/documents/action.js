@@ -293,16 +293,18 @@ export default class ARd20Action {
      */
     async roll(user, targets) {
         console.log("Phase: rolling ", "action: ", this.name, targets);
+        const parentID = this.parent.action?.split('.').slice(-1)[0] ?? null;
+        let level = !this.isSubAction ? 0 : [...targets].filter(t => t[1].stats.has(parentID))?.[0][1].stats.get(parentID).level + 1;
         if (!this.isRoll) {
             return;
         }
-        await this.commonRoll(targets);
-        await this.attackRoll(targets);
-        await this.damageRoll(targets);
+        await this.commonRoll(targets, level);
+        await this.attackRoll(targets, level);
+        await this.damageRoll(targets, level);
 
     }
 
-    async commonRoll(targets) {
+    async commonRoll(targets, level) {
         if (this.type !== 'Common') {
             return;
         }
@@ -326,7 +328,7 @@ export default class ARd20Action {
     }
 
 
-    async attackRoll(targets) {
+    async attackRoll(targets, level) {
         if (this.type !== 'Attack') {
             return;
         }
@@ -353,6 +355,9 @@ export default class ARd20Action {
                     defence,
                     attack: tokenRoll.total,
                     actionName: this.name,
+                    id: this.id,
+                    parentID,
+                    level
                 };
                 t.stats.set(this.id, stat);
                 targets.set(key, t);
@@ -362,7 +367,7 @@ export default class ARd20Action {
 
     }
 
-    async damageRoll(targets) {
+    async damageRoll(targets, level) {
         if (this.type !== 'Damage') {
             return;
         }
@@ -387,6 +392,9 @@ export default class ARd20Action {
                 hit: totalValue > 0,
                 damage: totalValue,
                 actionName: this.name,
+                id: this.id,
+                level,
+                parentID
             };
             t.stats.set(this.id, stat);
             targets.set(key, t);
@@ -415,7 +423,7 @@ export default class ARd20Action {
                 stats: [...t[1].stats].map(st => st[1]),
                 token: t[1].target.document.uuid,
                 targetName: t[1].target.name,
-                targetIcon: t[1].target.document.texture.src
+                targetIcon: t[1].target.document.texture.src,
             };
         });
         game.user.updateTokenTargets([]);

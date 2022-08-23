@@ -1,8 +1,11 @@
-<svelte:options accessors={true} />
+<svelte:options accessors={true}/>
 
 <script>
-  import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte";
-  export let doc;
+    import InputForDocumentSheet from "../general components/InputForDocumentSheet.svelte";
+    import { getContext } from "svelte";
+
+    const doc = getContext("DocumentSheetObject");
 </script>
 
-Name: <InputForDocumentSheet bind:value={doc.name}/>
+Name:
+<InputForDocumentSheet valuePath="name" type="text"/>

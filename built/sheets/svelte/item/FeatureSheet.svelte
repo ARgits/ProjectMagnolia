@@ -11,7 +11,7 @@
 <header>
     <ImageWithFilePicker path={"img"} alt={"item portrait"}/>
     <h1>
-        <InputForDocumentSheet bind:value={$doc.name} label="name"/>
+        <InputForDocumentSheet valuePath="name" label="name"/>
     </h1>
 </header>
 <main>
@@ -25,9 +25,9 @@
       }}
         />
         {#if $doc.system.level.has}
-            <InputForDocumentSheet bind:value={$doc.system.level.current} type="integer"/>
+            <InputForDocumentSheet valuePath="system.level.min" type="integer"/>
             /
-            <InputForDocumentSheet bind:value={$doc.system.level.max} type="integer"/>
+            <InputForDocumentSheet valuePath="system.level.max" type="integer"/>
         {/if}
     </fieldset>
     <fieldset>

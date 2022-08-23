@@ -4,7 +4,6 @@ import { writable, get } from "svelte/store";
 
 export default class ActionSheet extends SvelteApplication {
     #action = writable(null);
-    #damageInput = writable(null);
     /**
      * @type {Function}
      */
@@ -16,12 +15,6 @@ export default class ActionSheet extends SvelteApplication {
             get: () => get(this.#action),
             set: (document) => {
                 this.#action.set(document);
-            }
-        });
-        Object.defineProperty(this.reactive, 'damageInput', {
-            get: () => get(this.#damageInput),
-            set: (element) => {
-                this.#damageInput.set(element);
             }
         });
         this.reactive.action = object;
@@ -74,5 +67,6 @@ export default class ActionSheet extends SvelteApplication {
     }
 
     async #handleDocUpdate(doc, options) {
+        console.log(doc, options);
     }
 }
