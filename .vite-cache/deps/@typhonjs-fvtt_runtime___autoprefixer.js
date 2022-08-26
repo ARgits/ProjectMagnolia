@@ -38,16 +38,16 @@ import {
   require_css_print_color_adjust,
   require_css_read_only_write,
   require_css_regions,
-  require_css_selection,
-  require_css_shapes,
-  require_css_snappoints,
-  require_css_sticky,
-  require_css_text_align_last,
-  require_css_text_orientation,
-  require_css_text_spacing,
-  require_css_transitions,
-  require_css_unicode_bidi,
-  require_css_width_stretch,
+    require_css_selection,
+    require_css_shapes,
+    require_css_snappoints,
+    require_css_sticky,
+    require_css_text_align_last,
+    require_css_text_orientation,
+    require_css_text_spacing,
+    require_css_transitions,
+    require_css_unicode_bidi,
+    require_css_width_stretch,
     require_css_writing_mode,
     require_flexbox,
     require_font_feature,
@@ -68,7 +68,7 @@ import {
     require_transforms3d,
     require_unpacker,
     require_user_select_none
-} from "./chunk-3GZT463K.js";
+} from "./chunk-4SVYGT36.js";
 import "./chunk-KRUPHXZG.js";
 import {
     __commonJS
@@ -90,16 +90,16 @@ var require_utils = __commonJS({
             if (!string.includes(" ")) {
                 return string;
             }
-      return string.split(" ")[0];
-    };
-    module.exports.escapeRegexp = function(string) {
-      return string.replace(/[$()*+-.?[\\\]^{|}]/g, "\\$&");
-    };
-    module.exports.regexp = function(word, escape = true) {
-      if (escape) {
-        word = this.escapeRegexp(word);
-      }
-      return new RegExp(`(^|[\\s,(])(${word}($|[\\s(,]))`, "gi");
+            return string.split(" ")[0];
+        };
+        module.exports.escapeRegexp = function (string) {
+            return string.replace(/[$()*+-.?[\\\]^{|}]/g, "\\$&");
+        };
+        module.exports.regexp = function (word, escape = true) {
+            if (escape) {
+                word = this.escapeRegexp(word);
+            }
+            return new RegExp(`(^|[\\s,(])(${word}($|[\\s(,]))`, "gi");
     };
     module.exports.editList = function(value, callback) {
       let origin = list.comma(value);

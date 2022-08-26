@@ -8,7 +8,7 @@ import {
     require_source_map_generator,
     require_src,
     require_util
-} from "./chunk-RAXJ4W27.js";
+} from "./chunk-KCXFO5A5.js";
 import {
     init_pluginutils_es,
     pluginutils_es_exports,
@@ -18,7 +18,7 @@ import {
     require_fs,
     require_lib,
     require_postcss
-} from "./chunk-3GZT463K.js";
+} from "./chunk-4SVYGT36.js";
 import {
     require_path
 } from "./chunk-KRUPHXZG.js";
@@ -53,16 +53,18 @@ var require_binary_search = __commonJS({
                 else {
                     return mid;
                 }
-      } else {
-        if (mid - aLow > 1) {
-          return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
-        }
-        if (aBias == exports.LEAST_UPPER_BOUND) {
-          return mid;
-        } else {
-          return aLow < 0 ? -1 : aLow;
-        }
-      }
+            }
+            else {
+                if (mid - aLow > 1) {
+                    return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
+                }
+                if (aBias == exports.LEAST_UPPER_BOUND) {
+                    return mid;
+                }
+                else {
+                    return aLow < 0 ? -1 : aLow;
+                }
+            }
     }
     exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
       if (aHaystack.length === 0) {

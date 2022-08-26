@@ -17,7 +17,6 @@ export default class ActionStatistics extends SvelteApplication {
             svelte: {
                 class: ActionStatisticsShell,
                 target: document.body,
-                props: this.statistics
             },
         });
     }
@@ -26,17 +25,18 @@ export default class ActionStatistics extends SvelteApplication {
         console.log(object);
         this.statistics = object;
         this.actions = [];
-        return;
         for (const target of object) {
-            const mainAct = target.stats.filter(t => t.level === 0)[0];
-            const index = object.findIndex((t) => t.level === 0 && t.parentID === null);
+            const newObj = [...target.stats];
+            const mainAct = newObj.filter(t => t.level === 0)[0];
+            const index = newObj.findIndex((t) => t.level === 0 && t.parentID === null);
             if (index) {
-                object.splice(index, 1);
+                newObj.splice(index, 1);
             }
             console.log(mainAct);
-            mainAct.subAct = createTree(object, 1, mainAct.id);
+            mainAct.subAct = createTree(newObj, 1, mainAct.id);
 
             function createTree(obj, level, parentId) {
+
                 console.log(level, parentId);
                 let act = obj.filter((t) => t.level === level && t.parentID === parentId);
                 for (let ac of act) {
@@ -57,7 +57,7 @@ export default class ActionStatistics extends SvelteApplication {
             }
 
             console.log(mainAct);
-            this.actions.push(target.token, mainAct);
+            this.actions.push([target.token, mainAct]);
         }
     }
 }

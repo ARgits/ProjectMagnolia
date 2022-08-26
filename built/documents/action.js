@@ -353,9 +353,10 @@ export default class ARd20Action {
                 const stat = {
                     hit: tokenRoll.total >= defence,
                     defence,
-                    attack: tokenRoll.total,
+                    result: tokenRoll.total,
                     actionName: this.name,
                     id: this.id,
+                    rollData: roll,
                     parentID,
                     level
                 };
@@ -387,12 +388,13 @@ export default class ARd20Action {
                 }
             });
 
-            const totalValue = await this.applyDamage(t, damage);
+            const rollResult = await this.applyDamage(t, damage);
             const stat = {
-                hit: totalValue > 0,
-                damage: totalValue,
+                hit: rollResult.totalValue > 0,
+                result: rollResult.totalValue,
                 actionName: this.name,
                 id: this.id,
+                rollData: rollResult.rollData,
                 level,
                 parentID
             };
@@ -453,11 +455,11 @@ export default class ARd20Action {
         };
 
         for (const token of canvas.scene.tokens) {
-            if (token.uuid === tokenUuid) {
+            if (token.uuid === tokenUuid || !token.object.isVisible) {
                 continue;
             }
-            let pointName = "";
             const target = token.object;
+            let pointName = "";
             const targetPoints = {
                 TL: { x: target.bounds.left, y: target.bounds.top },
                 TR: { x: target.bounds.right, y: target.bounds.top },
@@ -476,6 +478,7 @@ export default class ARd20Action {
                 }
             }, canvas.grid.measureDistance(targetPoints[pointName], points[pointName]));
             const inRange = range <= action.range.max && range >= action.range.min;
+            console.log(target.isTargeted, target.name);
             target.setTarget(target.isVisible && target.isTargeted, { releaseOthers: false });
             target.showHighlight(target.isVisible && inRange);
 
@@ -521,7 +524,7 @@ export default class ARd20Action {
                 value: value,
             });
         }
-        return value;
+        return { totalValue: value, rollData: rollResult };
     }
 
     async configureDialog({ target, formula, damageTypeData }) {

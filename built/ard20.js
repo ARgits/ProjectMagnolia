@@ -196,6 +196,7 @@ Hooks.on("renderChatMessage", (app, html, data) => {
     if (typeof flagData === 'object') {
         new MyChatMessage({ target: html[0], props: flagData });
     }
+
 });
 Hooks.on('preDeleteChatMessage', (message) => {
     const flagData = message.getFlag('world', 'svelte');

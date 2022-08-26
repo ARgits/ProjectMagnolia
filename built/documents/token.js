@@ -35,6 +35,7 @@ export default class ARd20Token extends Token {
     }
 
     setTarget(targeted = true, { user = null, releaseOthers = true, groupSelection = false } = {}) {
+        console.log(targeted, this.name);
         if (game.settings.get('ard20', 'actionMouseRewrite')) {
             if (!this.isHighlighted) {
                 ui.notifications.warn(`you can't target that token "${this.name}", it's not Highlighted`);

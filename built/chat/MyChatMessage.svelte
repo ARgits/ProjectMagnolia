@@ -8,8 +8,10 @@
 
     async function onHoverToken(tokenUUID, hover) {
         const token = await fromUuid(tokenUUID);
-        token._object.hover = hover;
-        token._object.refresh();
+        if (token._object) {
+            token._object.hover = hover;
+            token._object.refresh();
+        }
     }
 
     function calculateDamage(stats) {

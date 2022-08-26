@@ -4,7 +4,7 @@ import {
     require_lib,
     require_postcss,
     require_unpacker
-} from "./chunk-3GZT463K.js";
+} from "./chunk-4SVYGT36.js";
 import {
     require_path,
     require_url
@@ -32,28 +32,35 @@ function _typeof(obj) {
     }
     return _typeof(obj);
 }
+
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
     }
 }
+
 function _defineProperties(target, props) {
     for (var i2 = 0; i2 < props.length; i2++) {
         var descriptor = props[i2];
         descriptor.enumerable = descriptor.enumerable || false;
         descriptor.configurable = true;
-        if ("value" in descriptor)
+        if ("value" in descriptor) {
             descriptor.writable = true;
+        }
         Object.defineProperty(target, descriptor.key, descriptor);
     }
 }
+
 function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps)
+    if (protoProps) {
         _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps)
+    }
+    if (staticProps) {
         _defineProperties(Constructor, staticProps);
+    }
     return Constructor;
 }
+
 function _defineProperty(obj, key, value) {
     if (key in obj) {
         Object.defineProperty(obj, key, {
@@ -68,6 +75,7 @@ function _defineProperty(obj, key, value) {
     }
     return obj;
 }
+
 function _inherits(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
         throw new TypeError("Super expression must either be null or a function");
@@ -79,15 +87,18 @@ function _inherits(subClass, superClass) {
             configurable: true
         }
     });
-    if (superClass)
+    if (superClass) {
         _setPrototypeOf(subClass, superClass);
+    }
 }
+
 function _getPrototypeOf(o2) {
     _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o3) {
         return o3.__proto__ || Object.getPrototypeOf(o3);
     };
     return _getPrototypeOf(o2);
 }
+
 function _setPrototypeOf(o2, p2) {
     _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o3, p3) {
         o3.__proto__ = p3;
@@ -95,13 +106,17 @@ function _setPrototypeOf(o2, p2) {
     };
     return _setPrototypeOf(o2, p2);
 }
+
 function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct)
+    if (typeof Reflect === "undefined" || !Reflect.construct) {
         return false;
-    if (Reflect.construct.sham)
+    }
+    if (Reflect.construct.sham) {
         return false;
-    if (typeof Proxy === "function")
+    }
+    if (typeof Proxy === "function") {
         return true;
+    }
     try {
         Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {
         }));
@@ -110,6 +125,7 @@ function _isNativeReflectConstruct() {
         return false;
     }
 }
+
 function _construct(Parent, args, Class) {
     if (_isNativeReflectConstruct()) {
         _construct = Reflect.construct;
@@ -120,27 +136,32 @@ function _construct(Parent, args, Class) {
             a2.push.apply(a2, args2);
             var Constructor = Function.bind.apply(Parent2, a2);
             var instance = new Constructor();
-            if (Class2)
+            if (Class2) {
                 _setPrototypeOf(instance, Class2.prototype);
+            }
             return instance;
         };
     }
     return _construct.apply(null, arguments);
 }
+
 function _isNativeFunction(fn) {
     return Function.toString.call(fn).indexOf("[native code]") !== -1;
 }
+
 function _wrapNativeSuper(Class) {
     var _cache = typeof Map === "function" ? /* @__PURE__ */ new Map() : void 0;
     _wrapNativeSuper = function _wrapNativeSuper2(Class2) {
-        if (Class2 === null || !_isNativeFunction(Class2))
+        if (Class2 === null || !_isNativeFunction(Class2)) {
             return Class2;
+        }
         if (typeof Class2 !== "function") {
             throw new TypeError("Super expression must either be null or a function");
         }
         if (typeof _cache !== "undefined") {
-            if (_cache.has(Class2))
+            if (_cache.has(Class2)) {
                 return _cache.get(Class2);
+            }
             _cache.set(Class2, Wrapper);
         }
 
@@ -160,18 +181,21 @@ function _wrapNativeSuper(Class) {
     };
     return _wrapNativeSuper(Class);
 }
+
 function _assertThisInitialized(self2) {
     if (self2 === void 0) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
     return self2;
 }
+
 function _possibleConstructorReturn(self2, call) {
     if (call && (typeof call === "object" || typeof call === "function")) {
         return call;
     }
     return _assertThisInitialized(self2);
 }
+
 function _createSuper(Derived) {
     var hasNativeReflectConstruct = _isNativeReflectConstruct();
     return function _createSuperInternal() {
@@ -186,14 +210,17 @@ function _createSuper(Derived) {
         return _possibleConstructorReturn(this, result);
     };
 }
+
 function _superPropBase(object, property) {
     while (!Object.prototype.hasOwnProperty.call(object, property)) {
         object = _getPrototypeOf(object);
-        if (object === null)
+        if (object === null) {
             break;
+        }
     }
     return object;
 }
+
 function _get(target, property, receiver) {
     if (typeof Reflect !== "undefined" && Reflect.get) {
         _get = Reflect.get;
@@ -201,8 +228,9 @@ function _get(target, property, receiver) {
     else {
         _get = function _get2(target2, property2, receiver2) {
             var base = _superPropBase(target2, property2);
-            if (!base)
+            if (!base) {
                 return;
+            }
             var desc = Object.getOwnPropertyDescriptor(base, property2);
             if (desc.get) {
                 return desc.get.call(receiver2);
@@ -212,23 +240,31 @@ function _get(target, property, receiver) {
     }
     return _get(target, property, receiver || target);
 }
+
 function _slicedToArray(arr, i2) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i2) || _unsupportedIterableToArray(arr, i2) || _nonIterableRest();
 }
+
 function _toArray(arr) {
     return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
 }
+
 function _arrayWithHoles(arr) {
-    if (Array.isArray(arr))
+    if (Array.isArray(arr)) {
         return arr;
+    }
 }
+
 function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter))
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) {
         return Array.from(iter);
+    }
 }
+
 function _iterableToArrayLimit(arr, i2) {
-    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr)))
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) {
         return;
+    }
     var _arr = [];
     var _n = true;
     var _d = false;
@@ -236,62 +272,78 @@ function _iterableToArrayLimit(arr, i2) {
     try {
         for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
             _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
+            if (i2 && _arr.length === i2) {
                 break;
+            }
         }
     } catch (err) {
         _d = true;
         _e = err;
     } finally {
         try {
-            if (!_n && _i["return"] != null)
+            if (!_n && _i["return"] != null) {
                 _i["return"]();
+            }
         } finally {
-            if (_d)
+            if (_d) {
                 throw _e;
+            }
         }
     }
     return _arr;
 }
+
 function _unsupportedIterableToArray(o2, minLen) {
-    if (!o2)
+    if (!o2) {
         return;
-    if (typeof o2 === "string")
+    }
+    if (typeof o2 === "string") {
         return _arrayLikeToArray(o2, minLen);
+    }
     var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-    if (n2 === "Object" && o2.constructor)
+    if (n2 === "Object" && o2.constructor) {
         n2 = o2.constructor.name;
-    if (n2 === "Map" || n2 === "Set")
+    }
+    if (n2 === "Map" || n2 === "Set") {
         return Array.from(o2);
-    if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
+    }
+    if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2)) {
         return _arrayLikeToArray(o2, minLen);
+    }
 }
+
 function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length)
+    if (len == null || len > arr.length) {
         len = arr.length;
-    for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
+    }
+    for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
         arr2[i2] = arr[i2];
+    }
     return arr2;
 }
+
 function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
+
 function _createForOfIteratorHelper(o2, allowArrayLike) {
     var it;
     if (typeof Symbol === "undefined" || o2[Symbol.iterator] == null) {
         if (Array.isArray(o2) || (it = _unsupportedIterableToArray(o2)) || allowArrayLike && o2 && typeof o2.length === "number") {
-            if (it)
+            if (it) {
                 o2 = it;
+            }
             var i2 = 0;
             var F = function () {
             };
             return {
                 s: F,
                 n: function () {
-                    if (i2 >= o2.length)
+                    if (i2 >= o2.length) {
                         return {
                             done: true
                         };
+                    }
                     return {
                         done: false,
                         value: o2[i2++]
@@ -321,15 +373,18 @@ function _createForOfIteratorHelper(o2, allowArrayLike) {
         },
         f: function () {
             try {
-                if (!normalCompletion && it.return != null)
+                if (!normalCompletion && it.return != null) {
                     it.return();
+                }
             } finally {
-                if (didErr)
+                if (didErr) {
                     throw err;
+                }
             }
         }
     };
 }
+
 function findLineStarts(src) {
     var ls = [0];
     var offset = src.indexOf("\n");
@@ -340,6 +395,7 @@ function findLineStarts(src) {
     }
     return ls;
 }
+
 function getSrcInfo(cst) {
     var lineStarts, src;
     if (typeof cst === "string") {
@@ -347,11 +403,13 @@ function getSrcInfo(cst) {
         src = cst;
     }
     else {
-        if (Array.isArray(cst))
+        if (Array.isArray(cst)) {
             cst = cst[0];
+        }
         if (cst && cst.context) {
-            if (!cst.lineStarts)
+            if (!cst.lineStarts) {
                 cst.lineStarts = findLineStarts(cst.context.src);
+            }
             lineStarts = cst.lineStarts;
             src = cst.context.src;
         }
@@ -361,12 +419,15 @@ function getSrcInfo(cst) {
         src
     };
 }
+
 function getLinePos(offset, cst) {
-    if (typeof offset !== "number" || offset < 0)
+    if (typeof offset !== "number" || offset < 0) {
         return null;
+    }
     var _getSrcInfo = getSrcInfo(cst), lineStarts = _getSrcInfo.lineStarts, src = _getSrcInfo.src;
-    if (!lineStarts || !src || offset > src.length)
+    if (!lineStarts || !src || offset > src.length) {
         return null;
+    }
     for (var i2 = 0; i2 < lineStarts.length; ++i2) {
         var start = lineStarts[i2];
         if (offset < start) {
@@ -375,11 +436,12 @@ function getLinePos(offset, cst) {
                 col: offset - lineStarts[i2 - 1] + 1
             };
         }
-        if (offset === start)
+        if (offset === start) {
             return {
                 line: i2 + 1,
                 col: 1
             };
+        }
     }
     var line = lineStarts.length;
     return {
@@ -387,10 +449,12 @@ function getLinePos(offset, cst) {
         col: offset - lineStarts[line - 1] + 1
     };
 }
+
 function getLine(line, cst) {
     var _getSrcInfo2 = getSrcInfo(cst), lineStarts = _getSrcInfo2.lineStarts, src = _getSrcInfo2.src;
-    if (!lineStarts || !(line >= 1) || line > lineStarts.length)
+    if (!lineStarts || !(line >= 1) || line > lineStarts.length) {
         return null;
+    }
     var start = lineStarts[line - 1];
     var end = lineStarts[line];
     while (end && end > start && src[end - 1] === "\n") {
@@ -398,12 +462,14 @@ function getLine(line, cst) {
     }
     return src.slice(start, end);
 }
+
 function getPrettyContext(_ref, cst) {
     var start = _ref.start, end = _ref.end;
     var maxWidth = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 80;
     var src = getLine(start.line, cst);
-    if (!src)
+    if (!src) {
         return null;
+    }
     var col = start.col;
     if (src.length > maxWidth) {
         if (col <= maxWidth - 10) {
@@ -411,8 +477,9 @@ function getPrettyContext(_ref, cst) {
         }
         else {
             var halfWidth = Math.round(maxWidth / 2);
-            if (src.length > col + halfWidth)
+            if (src.length > col + halfWidth) {
                 src = src.substr(0, col + halfWidth - 1) + "\u2026";
+            }
             col -= src.length - maxWidth;
             src = "\u2026" + src.substr(1 - maxWidth);
         }
@@ -1142,37 +1209,45 @@ function grabCollectionEndComments(node) {
     while (cnode instanceof CollectionItem) {
         cnode = cnode.node;
     }
-    if (!(cnode instanceof Collection))
+    if (!(cnode instanceof Collection)) {
         return null;
+    }
     var len = cnode.items.length;
     var ci = -1;
     for (var i2 = len - 1; i2 >= 0; --i2) {
         var n2 = cnode.items[i2];
         if (n2.type === Type.COMMENT) {
             var _n$context = n2.context, indent = _n$context.indent, lineStart = _n$context.lineStart;
-            if (indent > 0 && n2.range.start >= lineStart + indent)
+            if (indent > 0 && n2.range.start >= lineStart + indent) {
                 break;
+            }
             ci = i2;
         }
-        else if (n2.type === Type.BLANK_LINE)
+        else if (n2.type === Type.BLANK_LINE) {
             ci = i2;
-        else
+        }
+        else {
             break;
+        }
     }
-    if (ci === -1)
+    if (ci === -1) {
         return null;
+    }
     var ca = cnode.items.splice(ci, len - ci);
     var prevEnd = ca[0].range.start;
     while (true) {
         cnode.range.end = prevEnd;
-        if (cnode.valueRange && cnode.valueRange.end > prevEnd)
+        if (cnode.valueRange && cnode.valueRange.end > prevEnd) {
             cnode.valueRange.end = prevEnd;
-        if (cnode === node)
+        }
+        if (cnode === node) {
             break;
+        }
         cnode = cnode.context.parent;
     }
     return ca;
 }
+
 function createNewNode(type, props) {
     switch (type) {
         case Type.ALIAS:
@@ -1198,12 +1273,14 @@ function createNewNode(type, props) {
             return null;
     }
 }
+
 function parse(src) {
     var cr = [];
     if (src.indexOf("\r") !== -1) {
         src = src.replace(/\r\n?/g, function (match, offset2) {
-            if (match.length > 1)
+            if (match.length > 1) {
                 cr.push(offset2);
+            }
             return "\n";
         });
     }
@@ -1218,8 +1295,9 @@ function parse(src) {
         documents.push(doc);
     } while (offset < src.length);
     documents.setOrigRanges = function () {
-        if (cr.length === 0)
+        if (cr.length === 0) {
             return false;
+        }
         for (var i2 = 1; i2 < cr.length; ++i2) {
             cr[i2] -= i2;
         }
@@ -2712,35 +2790,43 @@ var init_parse_cst = __esm({
 
 // node_modules/yaml/browser/dist/resolveSeq-492ab440.js
 function addCommentBefore(str, indent, comment) {
-    if (!comment)
+    if (!comment) {
         return str;
+    }
     var cc = comment.replace(/[\s\S]^/gm, "$&".concat(indent, "#"));
     return "#".concat(cc, "\n").concat(indent).concat(str);
 }
+
 function addComment(str, indent, comment) {
     return !comment ? str : comment.indexOf("\n") === -1 ? "".concat(str, " #").concat(comment) : "".concat(str, "\n") + comment.replace(/^/gm, "".concat(indent || "", "#"));
 }
+
 function toJSON(value, arg, ctx) {
-    if (Array.isArray(value))
+    if (Array.isArray(value)) {
         return value.map(function (v2, i2) {
             return toJSON(v2, String(i2), ctx);
         });
+    }
     if (value && typeof value.toJSON === "function") {
         var anchor = ctx && ctx.anchors && ctx.anchors.get(value);
-        if (anchor)
+        if (anchor) {
             ctx.onCreate = function (res2) {
                 anchor.res = res2;
                 delete ctx.onCreate;
             };
+        }
         var res = value.toJSON(arg, ctx);
-        if (anchor && ctx.onCreate)
+        if (anchor && ctx.onCreate) {
             ctx.onCreate(res);
+        }
         return res;
     }
-    if ((!ctx || !ctx.keep) && typeof value === "bigint")
+    if ((!ctx || !ctx.keep) && typeof value === "bigint") {
         return Number(value);
+    }
     return value;
 }
+
 function collectionFromPath(schema, path, value) {
     var v2 = value;
     for (var i2 = path.length - 1; i2 >= 0; --i2) {
@@ -2763,12 +2849,15 @@ function collectionFromPath(schema, path, value) {
     }
     return schema.createNode(v2, false);
 }
+
 function asItemIndex(key) {
     var idx = key instanceof Scalar ? key.value : key;
-    if (idx && typeof idx === "string")
+    if (idx && typeof idx === "string") {
         idx = Number(idx);
+    }
     return Number.isInteger(idx) && idx >= 0 ? idx : null;
 }
+
 function findPair(items, key) {
     var k2 = key instanceof Scalar ? key.value : key;
     var _iterator = _createForOfIteratorHelper(items), _step;
@@ -2776,10 +2865,12 @@ function findPair(items, key) {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var it = _step.value;
             if (it instanceof Pair) {
-                if (it.key === key || it.key === k2)
+                if (it.key === key || it.key === k2) {
                     return it;
-                if (it.key && it.key.value === k2)
+                }
+                if (it.key && it.key.value === k2) {
                     return it;
+                }
             }
         }
     } catch (err) {
@@ -2789,6 +2880,7 @@ function findPair(items, key) {
     }
     return void 0;
 }
+
 function resolveScalar(str, tags2, scalarFallback) {
     var _iterator = _createForOfIteratorHelper(tags2), _step;
     try {
@@ -2799,10 +2891,12 @@ function resolveScalar(str, tags2, scalarFallback) {
                 var match = str.match(test);
                 if (match) {
                     var res = resolve27.apply(null, match);
-                    if (!(res instanceof Scalar))
+                    if (!(res instanceof Scalar)) {
                         res = new Scalar(res);
-                    if (format)
+                    }
+                    if (format) {
                         res.format = format;
+                    }
                     return res;
                 }
             }
@@ -2812,28 +2906,34 @@ function resolveScalar(str, tags2, scalarFallback) {
     } finally {
         _iterator.f();
     }
-    if (scalarFallback)
+    if (scalarFallback) {
         str = scalarFallback(str);
+    }
     return new Scalar(str);
 }
+
 function foldFlowLines(text, indent, mode, _ref) {
     var indentAtStart = _ref.indentAtStart, _ref$lineWidth = _ref.lineWidth,
         lineWidth = _ref$lineWidth === void 0 ? 80 : _ref$lineWidth, _ref$minContentWidth = _ref.minContentWidth,
         minContentWidth = _ref$minContentWidth === void 0 ? 20 : _ref$minContentWidth, onFold = _ref.onFold,
         onOverflow = _ref.onOverflow;
-    if (!lineWidth || lineWidth < 0)
+    if (!lineWidth || lineWidth < 0) {
         return text;
+    }
     var endStep = Math.max(1 + minContentWidth, 1 + lineWidth - indent.length);
-    if (text.length <= endStep)
+    if (text.length <= endStep) {
         return text;
+    }
     var folds = [];
     var escapedFolds = {};
     var end = lineWidth - indent.length;
     if (typeof indentAtStart === "number") {
-        if (indentAtStart > lineWidth - Math.max(2, minContentWidth))
+        if (indentAtStart > lineWidth - Math.max(2, minContentWidth)) {
             folds.push(0);
-        else
+        }
+        else {
             end = lineWidth - indentAtStart;
+        }
     }
     var split = void 0;
     var prev = void 0;
@@ -2843,8 +2943,9 @@ function foldFlowLines(text, indent, mode, _ref) {
     var escEnd = -1;
     if (mode === FOLD_BLOCK) {
         i2 = consumeMoreIndentedLines(text, i2);
-        if (i2 !== -1)
+        if (i2 !== -1) {
             end = i2 + endStep;
+        }
     }
     for (var ch; ch = text[i2 += 1];) {
         if (mode === FOLD_QUOTED && ch === "\\") {
@@ -2865,16 +2966,18 @@ function foldFlowLines(text, indent, mode, _ref) {
             escEnd = i2;
         }
         if (ch === "\n") {
-            if (mode === FOLD_BLOCK)
+            if (mode === FOLD_BLOCK) {
                 i2 = consumeMoreIndentedLines(text, i2);
+            }
             end = i2 + endStep;
             split = void 0;
         }
         else {
             if (ch === " " && prev && prev !== " " && prev !== "\n" && prev !== "	") {
                 var next = text[i2 + 1];
-                if (next && next !== " " && next !== "\n" && next !== "	")
+                if (next && next !== " " && next !== "\n" && next !== "	") {
                     split = i2;
+                }
             }
             if (i2 >= end) {
                 if (split) {
@@ -2889,8 +2992,9 @@ function foldFlowLines(text, indent, mode, _ref) {
                         overflow = true;
                     }
                     var j2 = i2 > escEnd + 1 ? i2 - 2 : escStart - 1;
-                    if (escapedFolds[j2])
+                    if (escapedFolds[j2]) {
                         return text;
+                    }
                     folds.push(j2);
                     escapedFolds[j2] = true;
                     end = j2 + endStep;
@@ -2903,51 +3007,63 @@ function foldFlowLines(text, indent, mode, _ref) {
         }
         prev = ch;
     }
-    if (overflow && onOverflow)
+    if (overflow && onOverflow) {
         onOverflow();
-    if (folds.length === 0)
+    }
+    if (folds.length === 0) {
         return text;
-    if (onFold)
+    }
+    if (onFold) {
         onFold();
+    }
     var res = text.slice(0, folds[0]);
     for (var _i = 0; _i < folds.length; ++_i) {
         var fold = folds[_i];
         var _end = folds[_i + 1] || text.length;
-        if (fold === 0)
+        if (fold === 0) {
             res = "\n".concat(indent).concat(text.slice(0, _end));
+        }
         else {
-            if (mode === FOLD_QUOTED && escapedFolds[fold])
+            if (mode === FOLD_QUOTED && escapedFolds[fold]) {
                 res += "".concat(text[fold], "\\");
+            }
             res += "\n".concat(indent).concat(text.slice(fold + 1, _end));
         }
     }
     return res;
 }
+
 function lineLengthOverLimit(str, lineWidth, indentLength) {
-    if (!lineWidth || lineWidth < 0)
+    if (!lineWidth || lineWidth < 0) {
         return false;
+    }
     var limit = lineWidth - indentLength;
     var strLen = str.length;
-    if (strLen <= limit)
+    if (strLen <= limit) {
         return false;
+    }
     for (var i2 = 0, start = 0; i2 < strLen; ++i2) {
         if (str[i2] === "\n") {
-            if (i2 - start > limit)
+            if (i2 - start > limit) {
                 return true;
+            }
             start = i2 + 1;
-            if (strLen - start <= limit)
+            if (strLen - start <= limit) {
                 return false;
+            }
         }
     }
     return true;
 }
+
 function doubleQuotedString(value, ctx) {
     var implicitKey = ctx.implicitKey;
     var _strOptions$doubleQuo = strOptions.doubleQuoted, jsonEncoding = _strOptions$doubleQuo.jsonEncoding,
         minMultiLineLength = _strOptions$doubleQuo.minMultiLineLength;
     var json2 = JSON.stringify(value);
-    if (jsonEncoding)
+    if (jsonEncoding) {
         return json2;
+    }
     var indent = ctx.indent || (containsDocumentMarker(value) ? "  " : "");
     var str = "";
     var start = 0;
@@ -2958,7 +3074,7 @@ function doubleQuotedString(value, ctx) {
             start = i2;
             ch = "\\";
         }
-        if (ch === "\\")
+        if (ch === "\\") {
             switch (json2[i2 + 1]) {
                 case "u": {
                     str += json2.slice(start, i2);
@@ -2989,10 +3105,12 @@ function doubleQuotedString(value, ctx) {
                             str += "\\P";
                             break;
                         default:
-                            if (code.substr(0, 2) === "00")
+                            if (code.substr(0, 2) === "00") {
                                 str += "\\x" + code.substr(2);
-                            else
+                            }
+                            else {
                                 str += json2.substr(i2, 6);
+                            }
                     }
                     i2 += 5;
                     start = i2 + 1;
@@ -3009,8 +3127,9 @@ function doubleQuotedString(value, ctx) {
                             i2 += 2;
                         }
                         str += indent;
-                        if (json2[i2 + 2] === " ")
+                        if (json2[i2 + 2] === " ") {
                             str += "\\";
+                        }
                         i2 += 1;
                         start = i2 + 1;
                     }
@@ -3018,23 +3137,28 @@ function doubleQuotedString(value, ctx) {
                 default:
                     i2 += 1;
             }
+        }
     }
     str = start ? str + json2.slice(start) : json2;
     return implicitKey ? str : foldFlowLines(str, indent, FOLD_QUOTED, getFoldOptions(ctx));
 }
+
 function singleQuotedString(value, ctx) {
     if (ctx.implicitKey) {
-        if (/\n/.test(value))
+        if (/\n/.test(value)) {
             return doubleQuotedString(value, ctx);
+        }
     }
     else {
-        if (/[ \t]\n|\n[ \t]/.test(value))
+        if (/[ \t]\n|\n[ \t]/.test(value)) {
             return doubleQuotedString(value, ctx);
+        }
     }
     var indent = ctx.indent || (containsDocumentMarker(value) ? "  " : "");
     var res = "'" + value.replace(/'/g, "''").replace(/\n+/g, "$&\n".concat(indent)) + "'";
     return ctx.implicitKey ? res : foldFlowLines(res, indent, FOLD_FLOW, getFoldOptions(ctx));
 }
+
 function blockString(_ref2, ctx, onComment, onChompKeep) {
     var comment = _ref2.comment, type = _ref2.type, value = _ref2.value;
     if (/\n[\t ]+$/.test(value) || /^\s*$/.test(value)) {
@@ -3044,8 +3168,9 @@ function blockString(_ref2, ctx, onComment, onChompKeep) {
     var indentSize = indent ? "2" : "1";
     var literal = type === Type.BLOCK_FOLDED ? false : type === Type.BLOCK_LITERAL ? true : !lineLengthOverLimit(value, strOptions.fold.lineWidth, indent.length);
     var header = literal ? "|" : ">";
-    if (!value)
+    if (!value) {
         return header + "\n";
+    }
     var wsStart = "";
     var wsEnd = "";
     value = value.replace(/[\n\t ]*$/, function (ws) {
@@ -3055,14 +3180,16 @@ function blockString(_ref2, ctx, onComment, onChompKeep) {
         }
         else if (value === ws || n2 !== ws.length - 1) {
             header += "+";
-            if (onChompKeep)
+            if (onChompKeep) {
                 onChompKeep();
+            }
         }
         wsEnd = ws.replace(/\n$/, "");
         return "";
     }).replace(/^[\n ]*/, function (ws) {
-        if (ws.indexOf(" ") !== -1)
+        if (ws.indexOf(" ") !== -1) {
             header += indentSize;
+        }
         var m2 = ws.match(/ +$/);
         if (m2) {
             wsStart = ws.slice(0, -m2[0].length);
@@ -3073,17 +3200,21 @@ function blockString(_ref2, ctx, onComment, onChompKeep) {
             return "";
         }
     });
-    if (wsEnd)
+    if (wsEnd) {
         wsEnd = wsEnd.replace(/\n+(?!\n|$)/g, "$&".concat(indent));
-    if (wsStart)
+    }
+    if (wsStart) {
         wsStart = wsStart.replace(/\n+/g, "$&".concat(indent));
+    }
     if (comment) {
         header += " #" + comment.replace(/ ?[\r\n]+/g, " ");
-        if (onComment)
+        if (onComment) {
             onComment();
+        }
     }
-    if (!value)
+    if (!value) {
         return "".concat(header).concat(indentSize, "\n").concat(indent).concat(wsEnd);
+    }
     if (literal) {
         value = value.replace(/\n+/g, "$&".concat(indent));
         return "".concat(header, "\n").concat(indent).concat(wsStart).concat(value).concat(wsEnd);
@@ -3092,6 +3223,7 @@ function blockString(_ref2, ctx, onComment, onChompKeep) {
     var body = foldFlowLines("".concat(wsStart).concat(value).concat(wsEnd), indent, FOLD_BLOCK, strOptions.fold);
     return "".concat(header, "\n").concat(indent).concat(body);
 }
+
 function plainString(item, ctx, onComment, onChompKeep) {
     var comment = item.comment, type = item.type, value = item.value;
     var actualString = ctx.actualString, implicitKey = ctx.implicitKey, indent = ctx.indent, inFlow = ctx.inFlow;
@@ -3112,17 +3244,20 @@ function plainString(item, ctx, onComment, onChompKeep) {
     if (actualString) {
         var tags2 = ctx.doc.schema.tags;
         var resolved = resolveScalar(str, tags2, tags2.scalarFallback).value;
-        if (typeof resolved !== "string")
+        if (typeof resolved !== "string") {
             return doubleQuotedString(value, ctx);
+        }
     }
     var body = implicitKey ? str : foldFlowLines(str, indent, FOLD_FLOW, getFoldOptions(ctx));
     if (comment && !inFlow && (body.indexOf("\n") !== -1 || comment.indexOf("\n") !== -1)) {
-        if (onComment)
+        if (onComment) {
             onComment();
+        }
         return addCommentBefore(body, indent, comment);
     }
     return body;
 }
+
 function stringifyString(item, ctx, onComment, onChompKeep) {
     var defaultType = strOptions.defaultType;
     var implicitKey = ctx.implicitKey, inFlow = ctx.inFlow;
@@ -3157,17 +3292,21 @@ function stringifyString(item, ctx, onComment, onChompKeep) {
     var res = _stringify(type);
     if (res === null) {
         res = _stringify(defaultType);
-        if (res === null)
+        if (res === null) {
             throw new Error("Unsupported default string type ".concat(defaultType));
+        }
     }
     return res;
 }
+
 function stringifyNumber(_ref) {
     var format = _ref.format, minFractionDigits = _ref.minFractionDigits, tag = _ref.tag, value = _ref.value;
-    if (typeof value === "bigint")
+    if (typeof value === "bigint") {
         return String(value);
-    if (!isFinite(value))
+    }
+    if (!isFinite(value)) {
         return isNaN(value) ? ".nan" : value < 0 ? "-.inf" : ".inf";
+    }
     var n2 = JSON.stringify(value);
     if (!format && minFractionDigits && (!tag || tag === "tag:yaml.org,2002:float") && /^\d/.test(n2)) {
         var i2 = n2.indexOf(".");
@@ -3182,6 +3321,7 @@ function stringifyNumber(_ref) {
     }
     return n2;
 }
+
 function checkFlowCollectionEnd(errors, cst) {
     var char, name;
     switch (cst.type) {
@@ -3214,12 +3354,14 @@ function checkFlowCollectionEnd(errors, cst) {
         }
         else {
             err = new YAMLSemanticError(lastItem, msg);
-            if (lastItem.range && lastItem.range.end)
+            if (lastItem.range && lastItem.range.end) {
                 err.offset = lastItem.range.end - lastItem.range.start;
+            }
         }
         errors.push(err);
     }
 }
+
 function checkFlowCommentSpace(errors, comment) {
     var prev = comment.context.src[comment.range.start - 1];
     if (prev !== "\n" && prev !== "	" && prev !== " ") {
@@ -3227,11 +3369,13 @@ function checkFlowCommentSpace(errors, comment) {
         errors.push(new YAMLSemanticError(comment, msg));
     }
 }
+
 function getLongKeyError(source, key) {
     var sk = String(key);
     var k2 = sk.substr(0, 8) + "..." + sk.substr(-8);
     return new YAMLSemanticError(source, 'The "'.concat(k2, '" key is too long'));
 }
+
 function resolveComments(collection, comments) {
     var _iterator = _createForOfIteratorHelper(comments), _step;
     try {
@@ -3241,24 +3385,30 @@ function resolveComments(collection, comments) {
             var item = collection.items[before];
             if (!item) {
                 if (comment !== void 0) {
-                    if (collection.comment)
+                    if (collection.comment) {
                         collection.comment += "\n" + comment;
-                    else
+                    }
+                    else {
                         collection.comment = comment;
+                    }
                 }
             }
             else {
-                if (afterKey && item.value)
+                if (afterKey && item.value) {
                     item = item.value;
+                }
                 if (comment === void 0) {
-                    if (afterKey || !item.commentBefore)
+                    if (afterKey || !item.commentBefore) {
                         item.spaceBefore = true;
+                    }
                 }
                 else {
-                    if (item.commentBefore)
+                    if (item.commentBefore) {
                         item.commentBefore += "\n" + comment;
-                    else
+                    }
+                    else {
                         item.commentBefore = comment;
+                    }
                 }
             }
         }
@@ -3268,19 +3418,24 @@ function resolveComments(collection, comments) {
         _iterator.f();
     }
 }
+
 function resolveString(doc, node) {
     var res = node.strValue;
-    if (!res)
+    if (!res) {
         return "";
-    if (typeof res === "string")
+    }
+    if (typeof res === "string") {
         return res;
+    }
     res.errors.forEach(function (error) {
-        if (!error.source)
+        if (!error.source) {
             error.source = node;
+        }
         doc.errors.push(error);
     });
     return res.str;
 }
+
 function resolveTagHandle(doc, node) {
     var _node$tag = node.tag, handle = _node$tag.handle, suffix = _node$tag.suffix;
     var prefix = doc.tagPrefixes.find(function (p2) {
@@ -3288,15 +3443,18 @@ function resolveTagHandle(doc, node) {
     });
     if (!prefix) {
         var dtp = doc.getDefaults().tagPrefixes;
-        if (dtp)
+        if (dtp) {
             prefix = dtp.find(function (p2) {
                 return p2.handle === handle;
             });
-        if (!prefix)
+        }
+        if (!prefix) {
             throw new YAMLSemanticError(node, "The ".concat(handle, " tag handle is non-default and was not declared."));
+        }
     }
-    if (!suffix)
+    if (!suffix) {
         throw new YAMLSemanticError(node, "The ".concat(handle, " tag has no suffix."));
+    }
     if (handle === "!" && (doc.version || doc.options.version) === "1.0") {
         if (suffix[0] === "^") {
             doc.warnings.push(new YAMLWarning(node, "YAML 1.0 ^ tag expansion is not supported"));
@@ -3309,14 +3467,16 @@ function resolveTagHandle(doc, node) {
     }
     return prefix.prefix + decodeURIComponent(suffix);
 }
+
 function resolveTagName(doc, node) {
     var tag = node.tag, type = node.type;
     var nonSpecific = false;
     if (tag) {
         var handle = tag.handle, suffix = tag.suffix, verbatim = tag.verbatim;
         if (verbatim) {
-            if (verbatim !== "!" && verbatim !== "!!")
+            if (verbatim !== "!" && verbatim !== "!!") {
                 return verbatim;
+            }
             var msg = "Verbatim tags aren't resolved, so ".concat(verbatim, " is invalid.");
             doc.errors.push(new YAMLSemanticError(node, msg));
         }
@@ -3349,6 +3509,7 @@ function resolveTagName(doc, node) {
             return null;
     }
 }
+
 function resolveByTagName(doc, node, tagName) {
     var tags2 = doc.schema.tags;
     var matchWithTest = [];
@@ -3357,8 +3518,9 @@ function resolveByTagName(doc, node, tagName) {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var tag = _step.value;
             if (tag.tag === tagName) {
-                if (tag.test)
+                if (tag.test) {
                     matchWithTest.push(tag);
+                }
                 else {
                     var res = tag.resolve(doc, node);
                     return res instanceof Collection2 ? res : new Scalar(res);
@@ -3371,10 +3533,12 @@ function resolveByTagName(doc, node, tagName) {
         _iterator.f();
     }
     var str = resolveString(doc, node);
-    if (typeof str === "string" && matchWithTest.length > 0)
+    if (typeof str === "string" && matchWithTest.length > 0) {
         return resolveScalar(str, matchWithTest, tags2.scalarFallback);
+    }
     return null;
 }
+
 function getFallbackTagName(_ref) {
     var type = _ref.type;
     switch (type) {
@@ -3388,24 +3552,28 @@ function getFallbackTagName(_ref) {
             return defaultTags.STR;
     }
 }
+
 function resolveTag(doc, node, tagName) {
     try {
         var res = resolveByTagName(doc, node, tagName);
         if (res) {
-            if (tagName && node.tag)
+            if (tagName && node.tag) {
                 res.tag = tagName;
+            }
             return res;
         }
     } catch (error) {
-        if (!error.source)
+        if (!error.source) {
             error.source = node;
+        }
         doc.errors.push(error);
         return null;
     }
     try {
         var fallback = getFallbackTagName(node);
-        if (!fallback)
+        if (!fallback) {
             throw new Error("The tag ".concat(tagName, " is unavailable"));
+        }
         var msg = "The tag ".concat(tagName, " is unavailable, falling back to ").concat(fallback);
         doc.warnings.push(new YAMLWarning(node, msg));
         var _res = resolveByTagName(doc, node, fallback);
@@ -3418,6 +3586,7 @@ function resolveTag(doc, node, tagName) {
         return null;
     }
 }
+
 function resolveNodeProps(errors, node) {
     var comments = {
         before: [],
@@ -3468,6 +3637,7 @@ function resolveNodeProps(errors, node) {
         hasTag
     };
 }
+
 function resolveNodeValue(doc, node) {
     var anchors = doc.anchors, errors = doc.errors, schema = doc.schema;
     if (node.type === Type.ALIAS) {
@@ -3483,8 +3653,9 @@ function resolveNodeValue(doc, node) {
         return res;
     }
     var tagName = resolveTagName(doc, node);
-    if (tagName)
+    if (tagName) {
         return resolveTag(doc, node, tagName);
+    }
     if (node.type !== Type.PLAIN) {
         var _msg3 = "Failed to resolve ".concat(node.type, " node here");
         errors.push(new YAMLSyntaxError(node, _msg3));
@@ -3494,25 +3665,30 @@ function resolveNodeValue(doc, node) {
         var str = resolveString(doc, node);
         return resolveScalar(str, schema.tags, schema.tags.scalarFallback);
     } catch (error) {
-        if (!error.source)
+        if (!error.source) {
             error.source = node;
+        }
         errors.push(error);
         return null;
     }
 }
+
 function resolveNode(doc, node) {
-    if (!node)
+    if (!node) {
         return null;
-    if (node.error)
+    }
+    if (node.error) {
         doc.errors.push(node.error);
+    }
     var _resolveNodeProps = resolveNodeProps(doc.errors, node), comments = _resolveNodeProps.comments,
         hasAnchor = _resolveNodeProps.hasAnchor, hasTag = _resolveNodeProps.hasTag;
     if (hasAnchor) {
         var anchors = doc.anchors;
         var name = node.anchor;
         var prev = anchors.getNode(name);
-        if (prev)
+        if (prev) {
             anchors.map[anchors.newName(name)] = prev;
+        }
         anchors.map[name] = node;
     }
     if (node.type === Type.ALIAS && (hasAnchor || hasTag)) {
@@ -3522,20 +3698,24 @@ function resolveNode(doc, node) {
     var res = resolveNodeValue(doc, node);
     if (res) {
         res.range = [node.range.start, node.range.end];
-        if (doc.options.keepCstNodes)
+        if (doc.options.keepCstNodes) {
             res.cstNode = node;
-        if (doc.options.keepNodeTypes)
+        }
+        if (doc.options.keepNodeTypes) {
             res.type = node.type;
+        }
         var cb = comments.before.join("\n");
         if (cb) {
             res.commentBefore = res.commentBefore ? "".concat(res.commentBefore, "\n").concat(cb) : cb;
         }
         var ca = comments.after.join("\n");
-        if (ca)
+        if (ca) {
             res.comment = res.comment ? "".concat(res.comment, "\n").concat(ca) : ca;
+        }
     }
     return node.resolved = res;
 }
+
 function resolveMap(doc, cst) {
     if (cst.type !== Type.MAP && cst.type !== Type.FLOW_MAP) {
         var msg = "A ".concat(cst.type, " node cannot be resolved as a mapping");
@@ -3550,8 +3730,9 @@ function resolveMap(doc, cst) {
     var hasCollectionKey = false;
     for (var i2 = 0; i2 < items.length; ++i2) {
         var iKey = items[i2].key;
-        if (iKey instanceof Collection2)
+        if (iKey instanceof Collection2) {
             hasCollectionKey = true;
+        }
         if (doc.schema.merge && iKey && iKey.value === MERGE_KEY) {
             items[i2] = new Merge(items[i2]);
             var sources = items[i2].value.items;
@@ -3559,14 +3740,16 @@ function resolveMap(doc, cst) {
             sources.some(function (node) {
                 if (node instanceof Alias2) {
                     var type = node.source.type;
-                    if (type === Type.MAP || type === Type.FLOW_MAP)
+                    if (type === Type.MAP || type === Type.FLOW_MAP) {
                         return false;
+                    }
                     return error = "Merge nodes aliases can only point to maps";
                 }
                 return error = "Merge nodes can only have Alias nodes as values";
             });
-            if (error)
+            if (error) {
                 doc.errors.push(new YAMLSemanticError(cst, error));
+            }
         }
         else {
             for (var j2 = i2 + 1; j2 < items.length; ++j2) {
@@ -3586,9 +3769,11 @@ function resolveMap(doc, cst) {
     cst.resolved = map2;
     return map2;
 }
+
 function resolvePairComment(item, pair) {
-    if (!valueHasPairComment(item))
+    if (!valueHasPairComment(item)) {
         return;
+    }
     var comment = item.getPropValue(0, Char.COMMENT, true);
     var found = false;
     var cb = pair.value.commentBefore;
@@ -3603,9 +3788,11 @@ function resolvePairComment(item, pair) {
             found = true;
         }
     }
-    if (found)
+    if (found) {
         pair.comment = comment;
+    }
 }
+
 function resolveBlockMapItems(doc, cst) {
     var comments = [];
     var items = [];
@@ -3628,18 +3815,22 @@ function resolveBlockMapItems(doc, cst) {
                 });
                 break;
             case Type.MAP_KEY:
-                if (key !== void 0)
+                if (key !== void 0) {
                     items.push(new Pair(key));
-                if (item.error)
+                }
+                if (item.error) {
                     doc.errors.push(item.error);
+                }
                 key = resolveNode(doc, item.node);
                 keyStart = null;
                 break;
             case Type.MAP_VALUE: {
-                if (key === void 0)
+                if (key === void 0) {
                     key = null;
-                if (item.error)
+                }
+                if (item.error) {
                     doc.errors.push(item.error);
+                }
                 if (!item.context.atLineStart && item.node && item.node.type === Type.MAP && !item.node.context.atLineStart) {
                     var msg = "Nested mappings are not allowed in compact mappings";
                     doc.errors.push(new YAMLSemanticError(item.node, msg));
@@ -3670,20 +3861,23 @@ function resolveBlockMapItems(doc, cst) {
                 resolvePairComment(item, pair);
                 items.push(pair);
                 if (key && typeof keyStart === "number") {
-                    if (item.range.start > keyStart + 1024)
+                    if (item.range.start > keyStart + 1024) {
                         doc.errors.push(getLongKeyError(cst, key));
+                    }
                 }
                 key = void 0;
                 keyStart = null;
             }
                 break;
             default:
-                if (key !== void 0)
+                if (key !== void 0) {
                     items.push(new Pair(key));
+                }
                 key = resolveNode(doc, item);
                 keyStart = item.range.start;
-                if (item.error)
+                if (item.error) {
                     doc.errors.push(item.error);
+                }
                 next:
                     for (var j2 = i2 + 1; ; ++j2) {
                         var nextItem = cst.items[j2];
@@ -3706,13 +3900,15 @@ function resolveBlockMapItems(doc, cst) {
                 }
         }
     }
-    if (key !== void 0)
+    if (key !== void 0) {
         items.push(new Pair(key));
+    }
     return {
         comments,
         items
     };
 }
+
 function resolveFlowMapItems(doc, cst) {
     var comments = [];
     var items = [];
@@ -3729,8 +3925,9 @@ function resolveFlowMapItems(doc, cst) {
                 continue;
             }
             if (char === ":") {
-                if (key === void 0)
+                if (key === void 0) {
                     key = null;
+                }
                 if (next === ":") {
                     next = ",";
                     continue;
@@ -3738,8 +3935,9 @@ function resolveFlowMapItems(doc, cst) {
             }
             else {
                 if (explicitKey) {
-                    if (key === void 0 && char !== ",")
+                    if (key === void 0 && char !== ",") {
                         key = null;
+                    }
                     explicitKey = false;
                 }
                 if (key !== void 0) {
@@ -3752,8 +3950,9 @@ function resolveFlowMapItems(doc, cst) {
                 }
             }
             if (char === "}") {
-                if (i2 === cst.items.length - 1)
+                if (i2 === cst.items.length - 1) {
                     continue;
+                }
             }
             else if (char === next) {
                 next = ":";
@@ -3779,26 +3978,30 @@ function resolveFlowMapItems(doc, cst) {
             });
         }
         else if (key === void 0) {
-            if (next === ",")
+            if (next === ",") {
                 doc.errors.push(new YAMLSemanticError(item, "Separator , missing in flow map"));
+            }
             key = resolveNode(doc, item);
         }
         else {
-            if (next !== ",")
+            if (next !== ",") {
                 doc.errors.push(new YAMLSemanticError(item, "Indicator : missing in flow map entry"));
+            }
             items.push(new Pair(key, resolveNode(doc, item)));
             key = void 0;
             explicitKey = false;
         }
     }
     checkFlowCollectionEnd(doc.errors, cst);
-    if (key !== void 0)
+    if (key !== void 0) {
         items.push(new Pair(key));
+    }
     return {
         comments,
         items
     };
 }
+
 function resolveSeq(doc, cst) {
     if (cst.type !== Type.SEQ && cst.type !== Type.FLOW_SEQ) {
         var msg = "A ".concat(cst.type, " node cannot be resolved as a sequence");
@@ -3819,6 +4022,7 @@ function resolveSeq(doc, cst) {
     cst.resolved = seq2;
     return seq2;
 }
+
 function resolveBlockSeqItems(doc, cst) {
     var comments = [];
     var items = [];
@@ -3837,8 +4041,9 @@ function resolveBlockSeqItems(doc, cst) {
                 });
                 break;
             case Type.SEQ_ITEM:
-                if (item.error)
+                if (item.error) {
                     doc.errors.push(item.error);
+                }
                 items.push(resolveNode(doc, item.node));
                 if (item.hasProps) {
                     var msg = "Sequence items cannot have tags or anchors before the - indicator";
@@ -3846,8 +4051,9 @@ function resolveBlockSeqItems(doc, cst) {
                 }
                 break;
             default:
-                if (item.error)
+                if (item.error) {
                     doc.errors.push(item.error);
+                }
                 doc.errors.push(new YAMLSyntaxError(item, "Unexpected ".concat(item.type, " node in sequence")));
         }
     }
@@ -3856,6 +4062,7 @@ function resolveBlockSeqItems(doc, cst) {
         items
     };
 }
+
 function resolveFlowSeqItems(doc, cst) {
     var comments = [];
     var items = [];
@@ -3869,8 +4076,9 @@ function resolveFlowSeqItems(doc, cst) {
         if (typeof item.char === "string") {
             var char = item.char, offset = item.offset;
             if (char !== ":" && (explicitKey || key !== void 0)) {
-                if (explicitKey && key === void 0)
+                if (explicitKey && key === void 0) {
                     key = next ? items.pop() : null;
+                }
                 items.push(new Pair(key));
                 explicitKey = false;
                 key = void 0;
@@ -3893,8 +4101,9 @@ function resolveFlowSeqItems(doc, cst) {
                     }
                     if (!explicitKey && typeof keyStart === "number") {
                         var keyEnd = item.range ? item.range.start : item.offset;
-                        if (keyEnd > keyStart + 1024)
+                        if (keyEnd > keyStart + 1024) {
                             doc.errors.push(getLongKeyError(cst, key));
+                        }
                         var src = prevItem.context.src;
                         for (var _i = keyStart; _i < keyEnd; ++_i) {
                             if (src[_i] === "\n") {
@@ -3950,8 +4159,9 @@ function resolveFlowSeqItems(doc, cst) {
         }
     }
     checkFlowCollectionEnd(doc.errors, cst);
-    if (key !== void 0)
+    if (key !== void 0) {
         items.push(new Pair(key));
+    }
     return {
         comments,
         items
@@ -4916,24 +5126,28 @@ function parsePairs(doc, cst) {
     var seq2 = resolveSeq(doc, cst);
     for (var i2 = 0; i2 < seq2.items.length; ++i2) {
         var item = seq2.items[i2];
-        if (item instanceof Pair)
+        if (item instanceof Pair) {
             continue;
+        }
         else if (item instanceof YAMLMap) {
             if (item.items.length > 1) {
                 var msg = "Each pair must have its own sequence indicator";
                 throw new YAMLSemanticError(cst, msg);
             }
             var pair = item.items[0] || new Pair();
-            if (item.commentBefore)
+            if (item.commentBefore) {
                 pair.commentBefore = pair.commentBefore ? "".concat(item.commentBefore, "\n").concat(pair.commentBefore) : item.commentBefore;
-            if (item.comment)
+            }
+            if (item.comment) {
                 pair.comment = pair.comment ? "".concat(item.comment, "\n").concat(pair.comment) : item.comment;
+            }
             item = pair;
         }
         seq2.items[i2] = item instanceof Pair ? item : new Pair(item);
     }
     return seq2;
 }
+
 function createPairs(schema, iterable, ctx) {
     var pairs2 = new YAMLSeq(schema);
     pairs2.tag = "tag:yaml.org,2002:pairs";
@@ -4947,8 +5161,9 @@ function createPairs(schema, iterable, ctx) {
                     key = it[0];
                     value = it[1];
                 }
-                else
+                else {
                     throw new TypeError("Expected [key, value] tuple: ".concat(it));
+                }
             }
             else if (it && it instanceof Object) {
                 var keys = Object.keys(it);
@@ -4956,8 +5171,9 @@ function createPairs(schema, iterable, ctx) {
                     key = keys[0];
                     value = it[key];
                 }
-                else
+                else {
                     throw new TypeError("Expected { key: value } tuple: ".concat(it));
+                }
             }
             else {
                 key = it;
@@ -4972,6 +5188,7 @@ function createPairs(schema, iterable, ctx) {
     }
     return pairs2;
 }
+
 function parseOMap(doc, cst) {
     var pairs2 = parsePairs(doc, cst);
     var seenKeys = [];
@@ -4996,18 +5213,22 @@ function parseOMap(doc, cst) {
     }
     return Object.assign(new YAMLOMap(), pairs2);
 }
+
 function createOMap(schema, iterable, ctx) {
     var pairs2 = createPairs(schema, iterable, ctx);
     var omap2 = new YAMLOMap();
     omap2.items = pairs2.items;
     return omap2;
 }
+
 function parseSet(doc, cst) {
     var map2 = resolveMap(doc, cst);
-    if (!map2.hasAllNullValues())
+    if (!map2.hasAllNullValues()) {
         throw new YAMLSemanticError(cst, "Set items must all have null values");
+    }
     return Object.assign(new YAMLSet(), map2);
 }
+
 function createSet(schema, iterable, ctx) {
     var set2 = new YAMLSet();
     var _iterator = _createForOfIteratorHelper(iterable), _step;
@@ -5023,27 +5244,33 @@ function createSet(schema, iterable, ctx) {
     }
     return set2;
 }
+
 function shouldWarn(deprecation) {
     var env = typeof process !== "undefined" && process.env || {};
     if (deprecation) {
-        if (typeof YAML_SILENCE_DEPRECATION_WARNINGS !== "undefined")
+        if (typeof YAML_SILENCE_DEPRECATION_WARNINGS !== "undefined") {
             return !YAML_SILENCE_DEPRECATION_WARNINGS;
+        }
         return !env.YAML_SILENCE_DEPRECATION_WARNINGS;
     }
-    if (typeof YAML_SILENCE_WARNINGS !== "undefined")
+    if (typeof YAML_SILENCE_WARNINGS !== "undefined") {
         return !YAML_SILENCE_WARNINGS;
+    }
     return !env.YAML_SILENCE_WARNINGS;
 }
+
 function warn(warning, type) {
     if (shouldWarn(false)) {
         var emit = typeof process !== "undefined" && process.emitWarning;
-        if (emit)
+        if (emit) {
             emit(warning, type);
+        }
         else {
             console.warn(type ? "".concat(type, ": ").concat(warning) : warning);
         }
     }
 }
+
 function warnOptionDeprecation(name, alternative) {
     if (!warned[name] && shouldWarn(true)) {
         warned[name] = true;
@@ -5379,6 +5606,7 @@ function createMap(schema, obj, ctx) {
     }
     return map2;
 }
+
 function createSeq(schema, obj, ctx) {
     var seq2 = new YAMLSeq(schema);
     if (obj && obj[Symbol.iterator]) {
@@ -5397,12 +5625,15 @@ function createSeq(schema, obj, ctx) {
     }
     return seq2;
 }
+
 function intStringify$1(node, radix, prefix) {
     var value = node.value;
-    if (intIdentify$2(value) && value >= 0)
+    if (intIdentify$2(value) && value >= 0) {
         return prefix + value.toString(radix);
+    }
     return stringifyNumber(node);
 }
+
 function intResolve2(sign, src, radix) {
     var str = src.replace(/_/g, "");
     if (intOptions.asBigInt) {
@@ -5423,6 +5654,7 @@ function intResolve2(sign, src, radix) {
     var n2 = parseInt(str, radix);
     return sign === "-" ? -1 * n2 : n2;
 }
+
 function intStringify(node, radix, prefix) {
     var value = node.value;
     if (intIdentify3(value)) {
@@ -5431,6 +5663,7 @@ function intStringify(node, radix, prefix) {
     }
     return stringifyNumber(node);
 }
+
 function findTagObject(value, tagName, tags2) {
     if (tagName) {
         var match = tags2.filter(function (t2) {
@@ -5439,27 +5672,33 @@ function findTagObject(value, tagName, tags2) {
         var tagObj = match.find(function (t2) {
             return !t2.format;
         }) || match[0];
-        if (!tagObj)
+        if (!tagObj) {
             throw new Error("Tag ".concat(tagName, " not found"));
+        }
         return tagObj;
     }
     return tags2.find(function (t2) {
         return (t2.identify && t2.identify(value) || t2.class && value instanceof t2.class) && !t2.format;
     });
 }
+
 function createNode4(value, tagName, ctx) {
-    if (value instanceof Node2)
+    if (value instanceof Node2) {
         return value;
+    }
     var defaultPrefix = ctx.defaultPrefix, onTagObj = ctx.onTagObj, prevObjects = ctx.prevObjects, schema = ctx.schema,
         wrapScalars = ctx.wrapScalars;
-    if (tagName && tagName.startsWith("!!"))
+    if (tagName && tagName.startsWith("!!")) {
         tagName = defaultPrefix + tagName.slice(2);
+    }
     var tagObj = findTagObject(value, tagName, schema.tags);
     if (!tagObj) {
-        if (typeof value.toJSON === "function")
+        if (typeof value.toJSON === "function") {
             value = value.toJSON();
-        if (!value || _typeof(value) !== "object")
+        }
+        if (!value || _typeof(value) !== "object") {
             return wrapScalars ? new Scalar(value) : value;
+        }
         tagObj = value instanceof Map ? map : value[Symbol.iterator] ? seq : map;
     }
     if (onTagObj) {
@@ -5481,10 +5720,12 @@ function createNode4(value, tagName, ctx) {
         prevObjects.set(value, obj);
     }
     obj.node = tagObj.createNode ? tagObj.createNode(ctx.schema, value, ctx) : wrapScalars ? new Scalar(value) : value;
-    if (tagName && obj.node instanceof Node2)
+    if (tagName && obj.node instanceof Node2) {
         obj.node.tag = tagName;
+    }
     return obj.node;
 }
+
 function getSchemaTags(schemas2, knownTags, customTags, schemaId) {
     var tags2 = schemas2[schemaId.replace(/\W/g, "")];
     if (!tags2) {
@@ -5975,11 +6216,13 @@ var dist_exports = {};
 __export(dist_exports, {
     YAML: () => YAML
 });
+
 function stringifyTag(doc, tag) {
     if ((doc.version || doc.options.version) === "1.0") {
         var priv = tag.match(/^tag:private\.yaml\.org,2002:([^:/]+)$/);
-        if (priv)
+        if (priv) {
             return "!" + priv[1];
+        }
         var vocab = tag.match(/^tag:([a-zA-Z0-9-]+)\.yaml\.org,2002:(.*)/);
         return vocab ? "!".concat(vocab[1], "/").concat(vocab[2]) : "!".concat(tag.replace(/^tag:/, ""));
     }
@@ -5992,8 +6235,9 @@ function stringifyTag(doc, tag) {
             return tag.indexOf(p3.prefix) === 0;
         });
     }
-    if (!p2)
+    if (!p2) {
         return tag[0] === "!" ? tag : "!<".concat(tag, ">");
+    }
     var suffix = tag.substr(p2.prefix.length).replace(/[!,[\]{}]/g, function (ch) {
         return {
             "!": "%21",
@@ -6006,17 +6250,20 @@ function stringifyTag(doc, tag) {
     });
     return p2.handle + suffix;
 }
+
 function getTagObject(tags2, item) {
-    if (item instanceof Alias2)
+    if (item instanceof Alias2) {
         return Alias2;
+    }
     if (item.tag) {
         var match = tags2.filter(function (t2) {
             return t2.tag === item.tag;
         });
-        if (match.length > 0)
+        if (match.length > 0) {
             return match.find(function (t2) {
                 return t2.format === item.format;
             }) || match[0];
+        }
     }
     var tagObj, obj;
     if (item instanceof Scalar) {
@@ -6042,6 +6289,7 @@ function getTagObject(tags2, item) {
     }
     return tagObj;
 }
+
 function stringifyProps(node, tagObj, _ref) {
     var anchors = _ref.anchors, doc = _ref.doc;
     var props = [];
@@ -6058,6 +6306,7 @@ function stringifyProps(node, tagObj, _ref) {
     }
     return props.join(" ");
 }
+
 function stringify$1(item, ctx, onComment, onChompKeep) {
     var _ctx$doc = ctx.doc, anchors = _ctx$doc.anchors, schema = _ctx$doc.schema;
     var tagObj;
@@ -6087,18 +6336,23 @@ function stringify$1(item, ctx, onComment, onChompKeep) {
             _iterator.f();
         }
     }
-    if (item instanceof Pair)
+    if (item instanceof Pair) {
         return item.toString(ctx, onComment, onChompKeep);
-    if (!tagObj)
+    }
+    if (!tagObj) {
         tagObj = getTagObject(schema.tags, item);
+    }
     var props = stringifyProps(item, tagObj, ctx);
-    if (props.length > 0)
+    if (props.length > 0) {
         ctx.indentAtStart = (ctx.indentAtStart || 0) + props.length + 1;
+    }
     var str = typeof tagObj.stringify === "function" ? tagObj.stringify(item, ctx, onComment, onChompKeep) : item instanceof Scalar ? stringifyString(item, ctx, onComment, onChompKeep) : item.toString(ctx, onComment, onChompKeep);
-    if (!props)
+    if (!props) {
         return str;
+    }
     return item instanceof Scalar || str[0] === "{" || str[0] === "[" ? "".concat(props, " ").concat(str) : "".concat(props, "\n").concat(ctx.indent).concat(str);
 }
+
 function parseContents(doc, contents) {
     var comments = {
         before: [],
@@ -6153,6 +6407,7 @@ function parseContents(doc, contents) {
         doc.comment = comments.after.join("\n") || null;
     }
 }
+
 function resolveTagDirective(_ref, directive) {
     var tagPrefixes = _ref.tagPrefixes;
     var _directive$parameters = _slicedToArray(directive.parameters, 2), handle = _directive$parameters[0],
@@ -6172,10 +6427,12 @@ function resolveTagDirective(_ref, directive) {
         prefix
     };
 }
+
 function resolveYamlDirective(doc, directive) {
     var _directive$parameters2 = _slicedToArray(directive.parameters, 1), version = _directive$parameters2[0];
-    if (directive.name === "YAML:1.0")
+    if (directive.name === "YAML:1.0") {
         version = "1.0";
+    }
     if (!version) {
         var msg = "Insufficient parameters given for %YAML directive";
         throw new YAMLSemanticError(directive, msg);
@@ -6187,6 +6444,7 @@ function resolveYamlDirective(doc, directive) {
     }
     return version;
 }
+
 function parseDirectives(doc, directives, prevDoc) {
     var directiveComments = [];
     var hasDirectives = false;
@@ -6223,8 +6481,9 @@ function parseDirectives(doc, directives, prevDoc) {
                         doc.warnings.push(new YAMLWarning(directive, _msg3));
                     }
             }
-            if (comment)
+            if (comment) {
                 directiveComments.push(comment);
+            }
         }
     } catch (err) {
         _iterator.e(err);
@@ -6244,11 +6503,14 @@ function parseDirectives(doc, directives, prevDoc) {
     }
     doc.commentBefore = directiveComments.join("\n") || null;
 }
+
 function assertCollection(contents) {
-    if (contents instanceof Collection2)
+    if (contents instanceof Collection2) {
         return true;
+    }
     throw new Error("Expected a YAML collection as document contents");
 }
+
 function createNode5(value) {
     var wrapScalars = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
     var tag = arguments.length > 2 ? arguments[2] : void 0;
@@ -6260,6 +6522,7 @@ function createNode5(value) {
     var schema = new Schema(options);
     return schema.createNode(value, wrapScalars, tag);
 }
+
 function parseAllDocuments(src, options) {
     var stream = [];
     var prev;
@@ -6279,6 +6542,7 @@ function parseAllDocuments(src, options) {
     }
     return stream;
 }
+
 function parseDocument(src, options) {
     var cst = parse(src);
     var doc = new Document2(options).parse(cst[0]);
@@ -6288,20 +6552,24 @@ function parseDocument(src, options) {
     }
     return doc;
 }
+
 function parse2(src, options) {
     var doc = parseDocument(src, options);
     doc.warnings.forEach(function (warning) {
         return warn(warning);
     });
-    if (doc.errors.length > 0)
+    if (doc.errors.length > 0) {
         throw doc.errors[0];
+    }
     return doc.toJSON();
 }
+
 function stringify15(value, options) {
     var doc = new Document2(options);
     doc.contents = value;
     return String(doc);
 }
+
 var defaultOptions, scalarOptions, documentOptions, Anchors, visit, listTagNames, Document$1, Document2, YAML;
 var init_dist = __esm({
     "node_modules/yaml/browser/dist/index.js"() {
@@ -7633,6 +7901,7 @@ __export(main_exports, {
     cssDeclarationSorter: () => cssDeclarationSorter,
     default: () => main_default
 });
+
 function processCss({ css, comparator }) {
     const comments = [];
     const rulesCache = [];
@@ -7684,6 +7953,7 @@ function processCss({ css, comparator }) {
         pairedNode.parent && pairedNode.parent["insert" + node.insertPosition](pairedNode, node.comment);
     });
 }
+
 function sortCssDeclarations({ nodes, comparator }) {
     nodes.sort((a2, b2) => {
         if (a2.type === "decl" && b2.type === "decl") {
@@ -7694,33 +7964,40 @@ function sortCssDeclarations({ nodes, comparator }) {
         }
     });
 }
+
 function withOverridesComparator(shorthandData2) {
     return function (comparator) {
         return function (a2, b2) {
             a2 = removeVendorPrefix(a2);
             b2 = removeVendorPrefix(b2);
-            if (shorthandData2[a2] && shorthandData2[a2].includes(b2))
+            if (shorthandData2[a2] && shorthandData2[a2].includes(b2)) {
                 return 0;
-            if (shorthandData2[b2] && shorthandData2[b2].includes(a2))
+            }
+            if (shorthandData2[b2] && shorthandData2[b2].includes(a2)) {
                 return 0;
+            }
             return comparator(a2, b2);
         };
     };
 }
+
 function orderComparator(order) {
     return function (a2, b2) {
         return order.indexOf(a2) - order.indexOf(b2);
     };
 }
+
 function compareDifferentType(a2, b2) {
     if (b2.type === "atrule") {
         return 0;
     }
     return a2.type === "decl" ? -1 : b2.type === "decl" ? 1 : 0;
 }
+
 function removeVendorPrefix(property) {
     return property.replace(/^-\w+-/, "");
 }
+
 var builtInOrders, cssDeclarationSorter, main_default;
 var init_main = __esm({
     "node_modules/css-declaration-sorter/src/main.mjs"() {
@@ -9486,6 +9763,7 @@ var names_exports = {};
 __export(names_exports, {
     default: () => names_default
 });
+
 function names_default(e2, f2) {
     var a2 = {
         white: "#ffffff",
@@ -9637,20 +9915,25 @@ function names_default(e2, f2) {
         olivedrab: "#6b8e23",
         olive: "#808000"
     }, r2 = {};
-    for (var d2 in a2)
+    for (var d2 in a2) {
         r2[a2[d2]] = d2;
+    }
     var l2 = {};
     e2.prototype.toName = function (f3) {
-        if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b))
+        if (!(this.rgba.a || this.rgba.r || this.rgba.g || this.rgba.b)) {
             return "transparent";
+        }
         var d3, i2, n2 = r2[this.toHex()];
-        if (n2)
+        if (n2) {
             return n2;
+        }
         if (null == f3 ? void 0 : f3.closest) {
             var o2 = this.toRgb(), t2 = 1 / 0, b2 = "black";
-            if (!l2.length)
-                for (var c2 in a2)
+            if (!l2.length) {
+                for (var c2 in a2) {
                     l2[c2] = new e2(a2[c2]).toRgb();
+                }
+            }
             for (var g2 in a2) {
                 var u2 = (d3 = o2, i2 = l2[g2], Math.pow(d3.r - i2.r, 2) + Math.pow(d3.g - i2.g, 2) + Math.pow(d3.b - i2.b, 2));
                 u2 < t2 && (t2 = u2, b2 = g2);
@@ -9663,6 +9946,7 @@ function names_default(e2, f2) {
         return d3 ? new e2(d3).toRgb() : null;
     }, "name"]);
 }
+
 var init_names = __esm({
     "node_modules/colord/plugins/names.mjs"() {
     }
@@ -14267,19 +14551,24 @@ function isTraversal(selector) {
             return false;
     }
 }
+
 function funescape(_, escaped, escapedWhitespace) {
     const high = parseInt(escaped, 16) - 65536;
     return high !== high || escapedWhitespace ? escaped : high < 0 ? String.fromCharCode(high + 65536) : String.fromCharCode(high >> 10 | 55296, high & 1023 | 56320);
 }
+
 function unescapeCSS(str) {
     return str.replace(reEscape, funescape);
 }
+
 function isQuote(c2) {
     return c2 === 39 || c2 === 34;
 }
+
 function isWhitespace(c2) {
     return c2 === 32 || c2 === 9 || c2 === 10 || c2 === 12 || c2 === 13;
 }
+
 function parse3(selector) {
     const subselects = [];
     const endIndex = parseSelector(subselects, `${selector}`, 0);
@@ -14288,6 +14577,7 @@ function parse3(selector) {
     }
     return subselects;
 }
+
 function parseSelector(subselects, selector, selectorIndex) {
     let tokens = [];
 
@@ -14328,8 +14618,9 @@ function parseSelector(subselects, selector, selectorIndex) {
 
     function isEscaped(pos) {
         let slashCount = 0;
-        while (selector.charCodeAt(--pos) === 92)
+        while (selector.charCodeAt(--pos) === 92) {
             slashCount++;
+        }
         return (slashCount & 1) === 1;
     }
 
@@ -14593,6 +14884,7 @@ function parseSelector(subselects, selector, selectorIndex) {
     finalizeSubselector();
     return selectorIndex;
 }
+
 var reName, reEscape, actionTypes, unpackPseudos, stripQuotesFromPseudos;
 var init_parse = __esm({
     "node_modules/css-what/lib/es/parse.js"() {
@@ -14624,6 +14916,7 @@ var init_parse = __esm({
 function stringify16(selector) {
     return selector.map((token) => token.map(stringifyToken).join("")).join(", ");
 }
+
 function stringifyToken(token, index, arr) {
     switch (token.type) {
         case SelectorType.Child:
@@ -14661,6 +14954,7 @@ function stringifyToken(token, index, arr) {
         }
     }
 }
+
 function getActionValue(action) {
     switch (action) {
         case AttributeAction.Equals:
@@ -14681,12 +14975,15 @@ function getActionValue(action) {
             throw new Error("Shouldn't be here");
     }
 }
+
 function getNamespacedName(token) {
     return `${getNamespace(token.namespace)}${escapeName(token.name, charsToEscapeInName)}`;
 }
+
 function getNamespace(namespace) {
     return namespace !== null ? `${namespace === "*" ? "*" : escapeName(namespace, charsToEscapeInName)}|` : "";
 }
+
 function escapeName(str, charsToEscape) {
     let lastIdx = 0;
     let ret = "";
@@ -14698,6 +14995,7 @@ function escapeName(str, charsToEscape) {
     }
     return ret.length > 0 ? ret + str.slice(lastIdx) : str;
 }
+
 var attribValChars, pseudoValChars, charsToEscapeInAttributeValue, charsToEscapeInPseudoValue, charsToEscapeInName;
 var init_stringify = __esm({
     "node_modules/css-what/lib/es/stringify.js"() {
@@ -57524,17 +57822,21 @@ var minify_exports = {};
 __export(minify_exports, {
     default: () => minify_default
 });
+
 function minify_default(t2) {
     var r2 = function (t3) {
         var r3, n3, e2, a2 = t3.toHex(), i2 = t3.alpha(), h2 = a2.split(""), s2 = h2[1], o2 = h2[2], u2 = h2[3],
             l2 = h2[4], p2 = h2[5], f2 = h2[6], g2 = h2[7], v2 = h2[8];
-        if (i2 > 0 && i2 < 1 && (r3 = parseInt(g2 + v2, 16) / 255, void 0 === (n3 = 2) && (n3 = 0), void 0 === e2 && (e2 = Math.pow(10, n3)), Math.round(e2 * r3) / e2 + 0 !== i2))
+        if (i2 > 0 && i2 < 1 && (r3 = parseInt(g2 + v2, 16) / 255, void 0 === (n3 = 2) && (n3 = 0), void 0 === e2 && (e2 = Math.pow(10, n3)), Math.round(e2 * r3) / e2 + 0 !== i2)) {
             return null;
+        }
         if (s2 === o2 && u2 === l2 && p2 === f2) {
-            if (1 === i2)
+            if (1 === i2) {
                 return "#" + s2 + u2 + p2;
-            if (g2 === v2)
+            }
+            if (g2 === v2) {
                 return "#" + s2 + u2 + p2 + g2;
+            }
         }
         return a2;
     }, n2 = function (t3) {
@@ -57549,19 +57851,22 @@ function minify_default(t2) {
             var v2 = r2(this);
             v2 && g2.push(v2);
         }
-        if (f2.rgb && g2.push(1 === p2 ? "rgb(" + a2 + "," + i2 + "," + h2 + ")" : "rgba(" + a2 + "," + i2 + "," + h2 + "," + p2 + ")"), f2.hsl && g2.push(1 === p2 ? "hsl(" + o2 + "," + u2 + "%," + l2 + "%)" : "hsla(" + o2 + "," + u2 + "%," + l2 + "%," + p2 + ")"), f2.transparent && 0 === a2 && 0 === i2 && 0 === h2 && 0 === p2)
+        if (f2.rgb && g2.push(1 === p2 ? "rgb(" + a2 + "," + i2 + "," + h2 + ")" : "rgba(" + a2 + "," + i2 + "," + h2 + "," + p2 + ")"), f2.hsl && g2.push(1 === p2 ? "hsl(" + o2 + "," + u2 + "%," + l2 + "%)" : "hsla(" + o2 + "," + u2 + "%," + l2 + "%," + p2 + ")"), f2.transparent && 0 === a2 && 0 === i2 && 0 === h2 && 0 === p2) {
             g2.push("transparent");
+        }
         else if (1 === p2 && f2.name && "function" == typeof this.toName) {
             var c2 = this.toName();
             c2 && g2.push(c2);
         }
         return function (t4) {
-            for (var r3 = t4[0], n3 = 1; n3 < t4.length; n3++)
+            for (var r3 = t4[0], n3 = 1; n3 < t4.length; n3++) {
                 t4[n3].length < r3.length && (r3 = t4[n3]);
+            }
             return r3;
         }(g2);
     };
 }
+
 var init_minify = __esm({
     "node_modules/colord/plugins/minify.mjs"() {
     }
@@ -63429,4 +63734,4 @@ export {
  */
 //! stable.js 0.1.8, https://github.com/Two-Screen/stable
 //! © 2018 Angry Bytes and contributors. MIT licensed.
-//# sourceMappingURL=chunk-RAXJ4W27.js.map
+//# sourceMappingURL=chunk-KCXFO5A5.js.map

@@ -1,77 +1,83 @@
 {
-  "hash": "95c44f6f",
-  "browserHash": "d710341a",
+  "hash": "857e987d",
+  "browserHash": "acf6b98f",
   "optimized": {
     "svelte/animate": {
       "src": "../../node_modules/svelte/animate/index.mjs",
       "file": "svelte_animate.js",
-      "fileHash": "633f87e7",
+      "fileHash": "ab7f4cb9",
       "needsInterop": false
     },
     "svelte/easing": {
       "src": "../../node_modules/svelte/easing/index.mjs",
       "file": "svelte_easing.js",
-      "fileHash": "89738148",
+      "fileHash": "095e49af",
       "needsInterop": false
     },
     "svelte/internal": {
       "src": "../../node_modules/svelte/internal/index.mjs",
       "file": "svelte_internal.js",
-      "fileHash": "876cd249",
+      "fileHash": "13e3a2cf",
       "needsInterop": false
     },
     "svelte/motion": {
       "src": "../../node_modules/svelte/motion/index.mjs",
       "file": "svelte_motion.js",
-      "fileHash": "ca40dd2a",
+      "fileHash": "e34e8e20",
       "needsInterop": false
     },
     "svelte/store": {
       "src": "../../node_modules/svelte/store/index.mjs",
       "file": "svelte_store.js",
-      "fileHash": "f63620ca",
+      "fileHash": "f18253ee",
       "needsInterop": false
     },
     "svelte/transition": {
       "src": "../../node_modules/svelte/transition/index.mjs",
       "file": "svelte_transition.js",
-      "fileHash": "e044c8b3",
+      "fileHash": "022debe5",
       "needsInterop": false
     },
     "svelte": {
       "src": "../../node_modules/svelte/index.mjs",
       "file": "svelte.js",
-      "fileHash": "1d0fc32e",
+      "fileHash": "593362ab",
       "needsInterop": false
     },
     "@typhonjs-fvtt/runtime > autoprefixer": {
       "src": "../../node_modules/autoprefixer/lib/autoprefixer.js",
       "file": "@typhonjs-fvtt_runtime___autoprefixer.js",
-      "fileHash": "c9fed5bb",
+      "fileHash": "28106837",
       "needsInterop": true
     },
     "@typhonjs-fvtt/runtime > cssnano": {
       "src": "../../node_modules/cssnano/src/index.js",
       "file": "@typhonjs-fvtt_runtime___cssnano.js",
-      "fileHash": "087be120",
+      "fileHash": "71c52593",
       "needsInterop": true
     },
     "@typhonjs-fvtt/runtime > rollup-plugin-postcss": {
       "src": "../../node_modules/rollup-plugin-postcss/dist/index.js",
       "file": "@typhonjs-fvtt_runtime___rollup-plugin-postcss.js",
-      "fileHash": "dbd50731",
+      "fileHash": "868889c5",
       "needsInterop": true
     },
     "@typhonjs-fvtt/runtime > rollup-plugin-svelte": {
       "src": "../../node_modules/rollup-plugin-svelte/index.js",
       "file": "@typhonjs-fvtt_runtime___rollup-plugin-svelte.js",
-      "fileHash": "072281db",
+      "fileHash": "217d56c0",
       "needsInterop": true
+    },
+    "@typhonjs-fvtt/runtime/_dist/svelte/helper/index.js": {
+      "src": "../../node_modules/@typhonjs-fvtt/runtime/_dist/svelte/helper/index.js",
+      "file": "@typhonjs-fvtt_runtime__dist_svelte_helper_index__js.js",
+      "fileHash": "2ae93249",
+      "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-RAXJ4W27": {
-      "file": "chunk-RAXJ4W27.js"
+    "chunk-KCXFO5A5": {
+      "file": "chunk-KCXFO5A5.js"
     },
     "chunk-HWDPUMUZ": {
       "file": "chunk-HWDPUMUZ.js"
@@ -85,8 +91,8 @@
     "chunk-KQZHA2PN": {
       "file": "chunk-KQZHA2PN.js"
     },
-    "chunk-3GZT463K": {
-      "file": "chunk-3GZT463K.js"
+    "chunk-4SVYGT36": {
+      "file": "chunk-4SVYGT36.js"
     },
     "chunk-KRUPHXZG": {
       "file": "chunk-KRUPHXZG.js"
