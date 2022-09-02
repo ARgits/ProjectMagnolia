@@ -39,12 +39,13 @@ Hooks.once("init", function () {
     };
     // Add custom constants for configuration.
     CONFIG.ARd20 = ARd20;
-    //@ts-expect-error
     CONFIG.Dice.DamageRoll = dice.DamageRoll;
-    //@ts-expect-error
     CONFIG.Dice.D20Roll = dice.D20Roll;
+    CONFIG.Dice.Roll = Roll;
+    CONFIG.Dice.ARd20DamageRoll = ARd20DamageRoll;
     CONFIG.Dice.rolls.push(dice.D20Roll);
     CONFIG.Dice.rolls.push(dice.DamageRoll);
+    CONFIG.Dice.rolls.push(ARd20DamageRoll);
     game.socket.on("system.ard20", (data) => {
         if (data.operation === "updateActorData") {
             ARd20SocketHandler.updateActorData(data);

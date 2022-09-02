@@ -7,17 +7,20 @@
 
     export let elementRoot;
     const { application } = getContext('external');
-    const actions = application.actions;
+    const actions = application.statistics;
+
+    function firstAction(target) {
+        return target.stats.filter((stat) => stat.parentID === null)[0];
+    }
 
     console.log(actions);
 </script>
 <ApplicationShell bind:elementRoot>
-    <h1>this is statistics</h1>
     <div class="container">
-        {#each actions as stat (stat[0])}
+        {#each actions as target (target.token)}
             <div class="stat">
-                <TargetComponent uuid={stat[0]}/>
-                <ActionComponent stat={stat[1]}/>
+                <TargetComponent uuid={target.token}/>
+                <ActionComponent stat={firstAction(target)} target={target}/>
             </div>
         {/each}
     </div>

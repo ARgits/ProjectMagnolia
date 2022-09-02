@@ -24,6 +24,7 @@ export default class ActionStatistics extends SvelteApplication {
     prepareData(object) {
         console.log(object);
         this.statistics = object;
+        return;
         this.actions = [];
         for (const target of object) {
             const newObj = [...target.stats];
