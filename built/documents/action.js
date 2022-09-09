@@ -498,6 +498,7 @@ export default class ARd20Action {
         for (const term of terms) {
             const damageTypeData = term.options.damageType;
             let damageType;
+            console.log(damageTypeData);
             if (damageTypeData.length > 1) {
                 damageType = await this.configureDialog({ target, formula, damageTypeData });
             }

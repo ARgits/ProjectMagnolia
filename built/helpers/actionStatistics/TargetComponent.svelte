@@ -20,14 +20,16 @@
     display: flex;
     flex-direction: column;
     flex: 1 0 15%;
+    align-items: center;
 
     & img {
-      width: inherit
+      width: min(100%, 100px)
     }
 
     & > * {
       margin: 0.25rem 0;
     }
+
 
 
   }

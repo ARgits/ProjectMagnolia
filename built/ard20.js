@@ -23,7 +23,6 @@ import ARd20CombatEncounterSheet from "./Combat/combatSheet.js";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 Hooks.once("init", function () {
-    console.log("init hoook");
     // Add utility classes to the global game object so that they're more easily
     // accessible in global contexts.
     game.ard20 = {
@@ -66,7 +65,6 @@ Hooks.once("init", function () {
     CONFIG.Token.documentClass = ARd20TokenDocument;
     CONFIG.Token.objectClass = ARd20Token;
     // Register sheet application classes
-    console.log("register sheets");
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("ard20", ARd20ActorSheet, { makeDefault: false });
     Actors.registerSheet("ard20", SvelteDocumentSheet, { makeDefault: true });
@@ -187,7 +185,6 @@ export function rollItemMacro(itemName) {
 }
 
 Hooks.on("renderChatMessage", (app, html, data) => {
-    console.log('rendering chatMessage', app, html, data);
     // Display action buttons
     //chat.displayChatActionButtons(app, html, data);
     // Highlight critical success or failure die
@@ -217,11 +214,8 @@ Hooks.on("renderChatPopout", (app, html, data) => ARd20Item.chatListeners(html))
 *  */
 export function prepareAndRollDamage(damage) {
     const damageValue = damage.map(dam => `{${dam[0]}}`);
-    console.log('damageValue: ', damageValue);
     const damageType = damage.map(dam => dam[1]);
-    console.log('damageType: ', damageType);
     const damageFormula = damageValue.join(' + ');
-    console.log('damageFormula: ', damageFormula);
     return new ARd20DamageRoll(damageFormula, {}, { damageType });
 
 }

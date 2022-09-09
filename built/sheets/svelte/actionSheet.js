@@ -25,7 +25,7 @@ export default class ActionSheet extends SvelteApplication {
             title: "Action Config",
             minimizable: true,
             resizable: true,
-            width: 400,
+            width: 800,
             height: 600,
             svelte: {
                 class: ActionShell,

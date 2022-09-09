@@ -28,7 +28,12 @@
     }
 
     async function addDamage() {
-        let newDamage = { normal: ['', []], fail: ['', []], sameOnFail: true };
+        const damValue = ['1d4', [{ label: 'Magical Acid', value: ['mag', 'acid'] }]];
+        const newDamage = {
+            normal: damValue,
+            fail: damValue,
+            sameOnFail: true
+        };
         $actionStore.damage = [...$actionStore.damage, newDamage];
         await application.submit();
     }

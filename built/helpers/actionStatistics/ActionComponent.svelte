@@ -5,6 +5,7 @@
 
     export let stat;
     export let target;
+    const hit = stat.hit;
     const rollData = stat.rollData;
     let rollInstance, tooltipDataPromise;
     if (rollData) {
@@ -15,16 +16,17 @@
     const subActions = target.stats.filter((act) => act.parentID === stat.id);
 
 </script>
-<div class="container">
+<div class="container" class:parent={!stat.parentID}>
     {#if stat.parentID}
         <i class="fa-solid fa-arrow-right"></i>
     {/if}
     <div class="data">
-        {stat.actionName}: <span class='result {stat?.hit?"hit":"fail"}'>{stat?.result}</span>
+        {stat.actionName}
         {#if rollData}
             {#await tooltipDataPromise}
+                ...loading
             {:then data}
-                <RollTooltip {data} rollClass={rollData.class}/>
+                <RollTooltip {data} rollClass={rollData.class} {hit}/>
             {/await}
         {/if}
     </div>
@@ -41,6 +43,10 @@
     display: flex;
     align-items: baseline;
 
+    &.parent {
+      border-left: 1px solid;
+    }
+
     & i {
       margin-right: 0.25rem;
     }
@@ -54,15 +60,6 @@
     border-radius: 5px;
     padding: 0.25rem;
     margin: 0.25rem;
-
-
-    & .result.hit {
-      color: green;
-    }
-
-    & .result.fail {
-      color: red;
-    }
   }
 
   .subActions {

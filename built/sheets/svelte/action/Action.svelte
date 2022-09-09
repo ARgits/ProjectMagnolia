@@ -146,5 +146,12 @@
     {/if}
 </div>
 <style lang="scss">
+  .main > div {
+    display: flex;
+    flex-wrap: wrap;
 
+    & fieldset.actions {
+      flex: 100%;
+    }
+  }
 </style>
